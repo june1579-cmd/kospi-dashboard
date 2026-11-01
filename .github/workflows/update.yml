@@ -42,7 +42,7 @@ jobs:
       - name: 결과 저장(commit & push)
         run: |
           git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
-          git add -A data/통합_원자료.xlsx data/update_summary.json data/collect out report state
+          git add -A data out report state 2>/dev/null || git add -A data out report
           git commit -m "자동 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M') ${{ steps.tag.outputs.tag }}" || echo "변경 없음"
           git pull --rebase -q || true
           git push
