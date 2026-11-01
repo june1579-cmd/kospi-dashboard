@@ -1,0 +1,10 @@
+period,market,investor,value_jo,source
+10/12~16,KOSPI,외국인,-11.21,KRX 원자료
+10/12~16,KOSPI,개인,4.31,KRX 원자료
+10/12~16,KOSPI,기관,3.42,KRX 원자료
+10/12~16,KOSDAQ,외국인,0.04,이투데이
+10/12~16,KOSDAQ,개인,0.26,이투데이
+10/12~16,KOSDAQ,기관,-0.34,이투데이
+10/6~15,KOSPI,외국인,-17.98,KRX 원자료
+10/6~15,KOSPI,개인,11.18,KRX 원자료
+10/6~15,KOSPI,기관,1.67,KRX 원자료

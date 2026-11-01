@@ -1,0 +1,151 @@
+{
+ "run": "2026-11-01 09:05",
+ "tag": "1840",
+ "kospi_last": "2026-10-30",
+ "kofia_last": "2026-10-29",
+ "vkospi_last": "2026-10-30",
+ "night_last": "2026-10-28",
+ "errors": [],
+ "files": {
+  "alarms": {
+   "sha256": "5f20ed234531d68e9f39fc4729dc0d4acfd8e5a3be9e44a9f63a4b65f98dad07",
+   "bytes": 29190,
+   "last_date": "2026-09-18"
+  },
+  "buy3": {
+   "sha256": "5c08a612e94fa3f90eab2ba3240e76ae7fbad86694542d92de72ebfa7969cd87",
+   "bytes": 147041,
+   "last_date": "2026-10-16"
+  },
+  "combo": {
+   "sha256": "7da064c4a2e1e42cf93c2af0ab352480fca32011ff620cf57765aebd94f71d0a",
+   "bytes": 231125,
+   "last_date": "2026-10-30"
+  },
+  "credit": {
+   "sha256": "676f84161db856a3e25e26f9fa9cdd1ee8cb55e41adac0a6a936092eb8a6c031",
+   "bytes": 332123,
+   "last_date": "2026-10-29"
+  },
+  "etf_lev": {
+   "sha256": "e8a331fed2780d317784a0e6eda72622c99f2cdb113c0b32a7058c79941d50cf",
+   "bytes": 50905,
+   "last_date": "2026-10-26"
+  },
+  "flows_daily": {
+   "sha256": "bc654877783b1e3d9b017e3334cb262804a245c6af81c9c260456d30d642b6fb",
+   "bytes": 489215,
+   "last_date": "2026-10-30"
+  },
+  "fut_daily": {
+   "sha256": "ee6d7e14cdfcbab62eeefd93fd8f8cb94bc9d2b8b614f604aeb1f8f9dffff8c0",
+   "bytes": 151240,
+   "last_date": "2026-10-30"
+  },
+  "fx_daily": {
+   "sha256": "7634f26a57c022e59e931fc313ea79a9cf84641a40ae0cac7de094d24bce60af",
+   "bytes": 569184,
+   "last_date": "2026-10-30"
+  },
+  "gap_table": {
+   "sha256": "c6d8f0a3f4f27a10f16eb503b3882eecc2c2633518ff3b79bfa7b0b87cf72b36",
+   "bytes": 1054,
+   "last_date": "전체"
+  },
+  "lag": {
+   "sha256": "2b6d0e10e6676aa71c1d0bacd3039f0388c539a3e43ca536284111d3348a794d",
+   "bytes": 2603,
+   "last_date": "10/15"
+  },
+  "lead_cmp": {
+   "sha256": "dc16cf6a9ae2b1f1eef3839f9fd0a3c8386c3ca8ee476628e0b89b967e330217",
+   "bytes": 1756,
+   "last_date": "2026 1위"
+  },
+  "liq_daily": {
+   "sha256": "cc3dd3f7e905325a2eb3bce7c936cb0a65e0a24d4ed7327748b7a7e68aee4184",
+   "bytes": 350388,
+   "last_date": "2026-10-29"
+  },
+  "market_daily": {
+   "sha256": "05c5d36c27f68ade8265d2a0ac76d0c66edd6312b9ed3986917ce93cf0235109",
+   "bytes": 546139,
+   "last_date": "2026-10-30"
+  },
+  "monthly": {
+   "sha256": "617ecf3d22504e9c288d5855f39635f1c9bcf2134d42522633e8315537b3de80",
+   "bytes": 31928,
+   "last_date": "2026-10"
+  },
+  "night_fut": {
+   "sha256": "7aa9b1e157216c90b2850e38fdc7b4942e64eb0c2f7d7b505cf446bc608853db",
+   "bytes": 45965,
+   "last_date": "2026-10-27"
+  },
+  "q_attr": {
+   "sha256": "36b5fbccc3e03ec88b5629e08236fb1deb57f2c6aa03d4136df72815511ecb9f",
+   "bytes": 3713,
+   "last_date": "feat"
+  },
+  "q_daily": {
+   "sha256": "1ec6ad865164bf102e465f4f7ffea7cbe7213c6bc925ad12724e94808ee32e1f",
+   "bytes": 161404,
+   "last_date": "2026-10-30"
+  },
+  "q_ic": {
+   "sha256": "5cb1b2748a35a082bc47bd11ccfa72e5e09aea04ad9205f91909e39323e0e8da",
+   "bytes": 1335,
+   "last_date": "거래대금/예탁금"
+  },
+  "q_models": {
+   "sha256": "d0decd16edc38bc23dba9afd619bfa8ec133a2f848e25cfe6cbfdd43a5727b4e",
+   "bytes": 421,
+   "last_date": "5일 내 급락·청산"
+  },
+  "q_now": {
+   "sha256": "4c9cc5c1e8a9e0b5b7b8c42dfa8d4a427976ffc8f4fe8e6f39a99d545ab837ab",
+   "bytes": 1807,
+   "last_date": "다음 거래일 국면 기준선"
+  },
+  "q_sens": {
+   "sha256": "2576d5ad0853d02eb3eb060fdd3b20ebffcb1a1be040697c1b8053169c6a872a",
+   "bytes": 193,
+   "last_date": "+20%"
+  },
+  "q_strat": {
+   "sha256": "c2814af6d7c71d08d01df6b1ba9779940088403a2899951ab6f5b3d002ba5a24",
+   "bytes": 468,
+   "last_date": "로지스틱 매수·위험 시 보류"
+  },
+  "q_years": {
+   "sha256": "f31018659bec859ad1fca98d716309edcce6b8e19abe269945db1cd60a7fd4e6",
+   "bytes": 687,
+   "last_date": "2026"
+  },
+  "reentry": {
+   "sha256": "bcd290fe67d1389219674c2fafe9fe79780e357d045deb4c0df127d6b938a054",
+   "bytes": 12189,
+   "last_date": "2026-08-12"
+  },
+  "sell3": {
+   "sha256": "3bc4c3fc620070c2010152220784335251dc4d5e7991e1563c155270f2485b83",
+   "bytes": 745412,
+   "last_date": "2026-10-14"
+  },
+  "trend_champ": {
+   "sha256": "7f344e919493020322d612d4624bc4b2b20218df1424d996aa688b6bbdeca496",
+   "bytes": 183895,
+   "last_date": "2026-10-30"
+  },
+  "trend_champ_rules": {
+   "sha256": "28ff2d72a06be4c209c88aefd8bb0b78467fb25a215bf9b9b6c301ffbc3b15e6",
+   "bytes": 5036,
+   "last_date": "2026"
+  },
+  "trend_years": {
+   "sha256": "cb8f94c518a6716348686fa79eb589b49f36c98399fd93967d7ff4625bfe86fa",
+   "bytes": 761,
+   "last_date": "평균"
+  }
+ }
+}

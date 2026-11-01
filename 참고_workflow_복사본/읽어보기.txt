@@ -1,0 +1,3 @@
+GitHub 웹에서 폴더를 끌어다 올릴 때 .github 폴더가 빠졌다면:
+저장소 → Add file → Create new file → 파일 이름 칸에  .github/workflows/update.yml  입력 → 이 폴더의 update.yml 내용을 붙여 넣고 Commit.
+(.github 폴더가 올라갔으면 이 폴더는 지워도 된다.)

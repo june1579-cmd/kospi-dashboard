@@ -1,0 +1,50 @@
+name: dashboard-update
+on:
+  schedule:
+    - cron: '40 6 * * 1-5'    # 15:40 KST 잠정(정규장 마감 뒤 시세·투자자별 잠정치)
+    - cron: '40 9 * * 1-5'    # 18:40 KST 확정(KRX 투자자별 확정치·ETF 투자자별)
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: '1540(잠정) 또는 1840(확정)'
+        default: '1840'
+permissions:
+  contents: write
+concurrency:
+  group: dashboard-update
+  cancel-in-progress: false
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: 실행 구분(15:40 → 1540, 18:40 → 1840)
+        id: tag
+        run: |
+          if [ -n "${{ github.event.inputs.tag }}" ]; then T="${{ github.event.inputs.tag }}"; else H=$(TZ=Asia/Seoul date +%H%M); if [ "$H" -lt 1730 ]; then T=1540; else T=1840; fi; fi
+          echo "tag=$T" >> "$GITHUB_OUTPUT"; echo "실행 구분 $T ($(TZ=Asia/Seoul date))"
+      - name: 수집 → 엑셀 갱신 → 재계산 → 보고 → 카카오톡
+        env:
+          KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
+          KRX_ID: ${{ secrets.KRX_ID }}
+          KRX_PW: ${{ secrets.KRX_PW }}
+          KAKAO_REST_KEY: ${{ secrets.KAKAO_REST_KEY }}
+          KAKAO_REFRESH_TOKEN: ${{ secrets.KAKAO_REFRESH_TOKEN }}
+          KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
+          DASH_LINK: https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c
+        run: python run_pipeline.py --tag "${{ steps.tag.outputs.tag }}"
+      - name: 결과 저장(commit & push)
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add -A data/통합_원자료.xlsx data/update_summary.json data/collect out report state
+          git commit -m "자동 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M') ${{ steps.tag.outputs.tag }}" || echo "변경 없음"
+          git pull --rebase -q || true
+          git push
+      - name: 보고문 요약
+        run: cat report/latest.md | head -40
