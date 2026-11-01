@@ -24,6 +24,8 @@ jobs:
           python-version: '3.12'
           cache: pip
       - run: pip install -r requirements.txt
+      - name: 한글 글꼴(그래프용)
+        run: sudo apt-get install -y -q fonts-nanum >/dev/null && fc-cache -f >/dev/null || echo "글꼴 설치 실패 — 그래프는 영문 표기"
       - name: 실행 구분(15:40 → 1540, 18:40 → 1840)
         id: tag
         run: |
@@ -38,13 +40,25 @@ jobs:
           KAKAO_REFRESH_TOKEN: ${{ secrets.KAKAO_REFRESH_TOKEN }}
           KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
           DASH_LINK: https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c
-        run: python run_pipeline.py --tag "${{ steps.tag.outputs.tag }}"
+        run: python run_pipeline.py --tag "${{ steps.tag.outputs.tag }}" --no-kakao
       - name: 결과 저장(commit & push)
         run: |
           git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
-          git add -A data out report state 2>/dev/null || git add -A data out report
+          mkdir -p state out report; git add -A data out report state
           git commit -m "자동 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M') ${{ steps.tag.outputs.tag }}" || echo "변경 없음"
           git pull --rebase -q || true
           git push
+      - name: 카카오톡(그래프 + 요약) — push 뒤라 그래프 주소가 열린다
+        env:
+          KAKAO_REST_KEY: ${{ secrets.KAKAO_REST_KEY }}
+          KAKAO_REFRESH_TOKEN: ${{ secrets.KAKAO_REFRESH_TOKEN }}
+          KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
+          DASH_LINK: https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c
+        run: |
+          if [ -s report/kakao.txt ]; then
+            if [ -f report/alerts.json ] && [ -f report/chart.png ]; then B="https://raw.githubusercontent.com/${{ github.repository }}/$(git rev-parse HEAD)/report"; export CHART_URL="$B/chart.png"; [ -f report/signals.png ] && export SIGNAL_URL="$B/signals.png"; sleep 10; fi
+            python kakao_send.py --file report/kakao.txt || echo "카카오톡 발송 실패(위 로그 참고)"
+            git add -A state && git commit -m "카카오 토큰 연장" -q && git push -q || true
+          fi
       - name: 보고문 요약
         run: cat report/latest.md | head -40
