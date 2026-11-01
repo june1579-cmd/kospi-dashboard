@@ -1,5 +1,5 @@
 {
- "run": "2026-11-01 09:05",
+ "run": "2026-11-01 17:28",
  "tag": "1840",
  "kospi_last": "2026-10-30",
  "kofia_last": "2026-10-29",
@@ -13,7 +13,7 @@
    "last_date": "2026-09-18"
   },
   "buy3": {
-   "sha256": "5c08a612e94fa3f90eab2ba3240e76ae7fbad86694542d92de72ebfa7969cd87",
+   "sha256": "80d46bfabe34e7f13b77bc0ca1d2e19e57bcb270f4af051ae5001c6959a54d15",
    "bytes": 147041,
    "last_date": "2026-10-16"
   },
@@ -128,7 +128,7 @@
    "last_date": "2026-08-12"
   },
   "sell3": {
-   "sha256": "3bc4c3fc620070c2010152220784335251dc4d5e7991e1563c155270f2485b83",
+   "sha256": "0512c84c199ca43cb1d32ad3f1dc7b6e5fc753b72a659ab16bceb91f1ccdd01e",
    "bytes": 745412,
    "last_date": "2026-10-14"
   },
