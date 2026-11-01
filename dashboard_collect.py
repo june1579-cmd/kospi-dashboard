@@ -114,7 +114,9 @@ def krx_etf_detail(s8, e8, today, now, out):
     except Exception as e: fail.append((fn, repr(e) + ' — 실패하면 KRX 정보데이터시스템 > 증권상품 > ETF > 개별종목 시세 추이에서 KODEX 레버리지(상장좌수 열이 있는 화면)'))
 
 # ---------------------------------------------------------------- 09 야간선물: KRX '파생상품 전종목 시세' 화면(MDCSTAT12501)을 날짜마다 시장구분=야간으로 조회
-NIGHT_PARAM_CANDIDATES = [{}, {'mktTpCd': '2'}, {'mktTpCd': 'N'}, {'mktTpCd': '3'}, {'trdTpCd': '2'}, {'mktId': 'NGT'}, {'mktTpCd': 'NGT'}]
+# pykrx 자체 호출과 같게 rghtTpCd='T'(권리 전체)를 꼭 붙인다 — 빠지면 빈 응답. mktTpCd T(전체)면 '(주간)'·'(야간)' 행이 함께 온다
+NIGHT_PARAM_CANDIDATES = [{'mktTpCd': 'T', 'rghtTpCd': 'T'}, {'mktTpCd': '2', 'rghtTpCd': 'T'}, {'mktTpCd': 'N', 'rghtTpCd': 'T'}, {'mktTpCd': '3', 'rghtTpCd': 'T'}, {'rghtTpCd': 'T'}, {}]
+def _is_night(r): nm = str(r.get('ISU_NM', '')); return ('야간' in nm) or ('Night' in nm) or ('NIGHT' in nm.upper())
 def night_futures(s8, e8, today, now, out):
     fn = '09_야간선물_일별'
     try:
@@ -122,14 +124,16 @@ def night_futures(s8, e8, today, now, out):
         import time as _t
         days = pd.bdate_range(pd.to_datetime(s8), pd.to_datetime(e8))
         if now.time() < dt.time(6, 30): days = days[days.date < today]       # 06:00 끝나는 야간장이 안 끝났으면 오늘 표기분 제외
-        rows = []; found_param = None
+        rows = []; found_param = None; seen_names = []
         for d in days:
             got = None
             for extra in ([found_param] if found_param is not None else NIGHT_PARAM_CANDIDATES):
                 js = 전종목시세().read(trdDd=d.strftime('%Y%m%d'), prodId='KRDRVFUK2I', **extra)
                 outp = js.get('output') or []
-                night = [r for r in outp if '야간' in str(r.get('ISU_NM', ''))]
+                night = [r for r in outp if _is_night(r)]
                 if night: got = night; found_param = extra; break
+                if outp and not seen_names: seen_names.extend(sorted({str(r.get('ISU_NM', ''))[-8:] for r in outp})[:6])
+                _t.sleep(0.3)
             if not got: continue
             # 근월물(거래량 최대, 스프레드 제외)
             fut = [r for r in got if 'SP' not in str(r.get('ISU_NM', ''))]
@@ -142,7 +146,7 @@ def night_futures(s8, e8, today, now, out):
                          '대비': num(best.get('CMPPREVDD_PRC')), '거래량': num(best.get('ACC_TRDVOL')), '미결제약정': num(best.get('ACC_OPNINT_QTY')),
                          '원본': 'KRX 정보데이터시스템 파생상품 전종목 시세(야간) ' + str(found_param)})
             _t.sleep(0.7)
-        if not rows: raise ValueError('야간 시세 행을 못 찾음(시장구분 야간 파라미터 불일치 가능) — KRX 정보데이터시스템 > 파생상품 > 종목시세 > 전종목 시세에서 시장구분 "야간"으로 받아 주세요')
+        if not rows: raise ValueError('야간 시세 행을 못 찾음' + (f'(받은 종목명 끝부분 예: {seen_names})' if seen_names else '(응답 비어 있음)') + ' — KRX 정보데이터시스템 > 파생상품 > 종목시세 > 전종목 시세에서 시장구분 "야간"으로 받아 주세요')
         save(pd.DataFrame(rows), f'{out}/{fn}.csv', fn)
     except Exception as e: fail.append((fn, repr(e)))
 
