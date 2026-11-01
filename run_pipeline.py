@@ -66,6 +66,9 @@ def main():
     ok6 = run([sys.executable, 'report_signals.py', '--out', 'out', '--report', 'report', '--tag', tag, '--summary', 'data/update_summary.json'], '6 보고문')
     # 새 자료가 없는 날(휴장 등): 18:40 에만 한 줄
     newdata = (kl == today.isoformat())
+    # 6b 카카오톡용 그래프·중요 변동(새 자료가 있는 날만)
+    if os.path.exists('report/alerts.json'): os.remove('report/alerts.json')
+    if newdata: run([sys.executable, 'make_chart.py', '--out', 'out', '--report', 'report', '--signals', 'report/latest.json'], '6b 그래프')
     if not newdata:
         note = f'[대시보드 {today:%m/%d} {tag}] 오늘 날짜 자료 없음(휴장 또는 미공표). 최신 코스피 {kl}'
         if errors: note += '\n오류: ' + ' | '.join(errors)[:120]
