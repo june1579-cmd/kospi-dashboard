@@ -1,5 +1,5 @@
 {
- "run": "2026-11-01 18:29",
+ "run": "2026-11-02 07:23",
  "tag": "1840",
  "kospi_last": "2026-10-30",
  "kofia_last": "2026-10-29",
@@ -138,7 +138,7 @@
    "last_date": "2026-10-30"
   },
   "trend_champ_rules": {
-   "sha256": "28ff2d72a06be4c209c88aefd8bb0b78467fb25a215bf9b9b6c301ffbc3b15e6",
+   "sha256": "0cf93d6901e84a6d0c7d9abbc712d6fb01cc6599f70f2ac4d93847945f27de01",
    "bytes": 5036,
    "last_date": "2026"
   },
