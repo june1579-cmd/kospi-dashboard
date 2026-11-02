@@ -22,7 +22,7 @@ def korean_font():
 def md(d): d = str(d); return f'{int(d[5:7])}/{int(d[8:10])}'
 def sg(v, n=1): return ('+' if v > 0 else '−' if v < 0 else '±') + f'{abs(v):,.{n}f}'
 
-def alerts(o, sig_new=None):
+def alerts(o, sig_new=None, LJ=None):
     A = []; M = rd(f'{o}/market_daily.csv'); Q = rd(f'{o}/q_daily.csv'); L = rd(f'{o}/liq_daily.csv'); C = rd(f'{o}/credit.csv')
     F = rd(f'{o}/flows_daily.csv'); CB = rd(f'{o}/combo.csv'); TC = rd(f'{o}/trend_champ.csv')
     if M is not None and len(M) > 1:
@@ -58,6 +58,10 @@ def alerts(o, sig_new=None):
         if u.iloc[-1] != u.iloc[-2] and abs(u.iloc[-1] - u.iloc[-2]) >= 2 or (u.iloc[-1] * 2 > n.iloc[-1]) != (u.iloc[-2] * 2 > n.iloc[-2]):
             A.append(f"12개 해 합의 상승 {u.iloc[-2]} → {u.iloc[-1]}/{n.iloc[-1]}")
     for s in (sig_new or []): A.append('★ 새 신호: ' + s)
+    # 매수×매도 조합 1위 교체·성적 저하(combo_now vs 직전 latest.json)
+    cb = ((LJ or {}).get('combo') or {})
+    if cb.get('prev_top'): A.append(f"조합 1위 교체 「{cb['prev_top']}」 ⇒ 「{cb['top_combo']}」")
+    if cb.get('warn_new'): A.append(f"조합 1위 성적 저하: {str(cb.get('warn'))[:40]}")
     return A
 
 
@@ -209,7 +213,7 @@ def main():
     a = ap.parse_args(); os.makedirs(a.report, exist_ok=True)
     LJ = json.load(open(a.signals, encoding='utf-8')) if a.signals and os.path.exists(a.signals) else {}
     sig = LJ.get('signals_new', [])
-    A = alerts(a.out, sig)
+    A = alerts(a.out, sig, LJ)
     ko = chart(a.out, os.path.join(a.report, 'chart.png'))
     on_today = signal_chart(a.out, os.path.join(a.report, 'signals.png'))
     M = rd(f'{a.out}/market_daily.csv'); d = str(M[M['kospi'].notna()].iloc[-1]['date'])

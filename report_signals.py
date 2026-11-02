@@ -126,6 +126,17 @@ def main():
         same_as_prev = prev.get('date') == today and (prev.get('consensus') or {}).get('now') == cn
         if (abs(cn['up'] - cp['up']) >= 2 or side(cn) != side(cp)) and not same_as_prev:
             msgs.append(f"[{md(today)} 큰 흐름 12개 해 합의]\n상승 {cn['up']}·하락 {cn['dn']}(상승 {cn['pct']:.0f}%)\n전 거래일 {cp['up']}·{cp['dn']}({cp['pct']:.0f}%) → {pm(cn['pct'] - cp['pct'])}%p")
+    # ---- 매수×매도 조합 감시(combo_now): 1위 조합이 바뀌었거나 성적 저하 경고가 새로 켜졌을 때만 한 통
+    CN = rd(f'{a.out}/combo_now.csv'); combo = None
+    if CN is not None and len(CN):
+        cn = CN.iloc[-1]; combo = {k: (None if pd.isna(cn[k]) else (cn[k].item() if hasattr(cn[k], 'item') else cn[k])) for k in CN.columns}
+        pc = (prev.get('combo') or {}) if prev else {}
+        combo['prev_top'] = pc.get('top_combo') if (pc.get('top_combo') and pc.get('top_combo') != combo['top_combo']) else None
+        combo['warn_new'] = bool(combo.get('warn')) and combo['warn'] != pc.get('warn')
+        if combo['prev_top']:
+            msgs.append(f"[{md(today)} 조합 1위 교체]\n「{pc.get('top_combo')}」 ⇒ 「{combo['top_combo']}」\n지난 250일 {combo['win_ret_250']:+.1f}% · 거래 {combo['win_trades']}건 적중 {combo['win_hit']:.0f}%\n지금 {combo['state']} · 규칙: 매월 첫 거래일 재선정"[:200])
+        elif combo.get('warn') and combo['warn'] != pc.get('warn'):
+            msgs.append(f"[{md(today)} 조합 1위 성적 저하]\n{combo['top_combo']} ({md(combo['chosen_since'])}~)\n{combo['warn']}\n다음 재선정 {combo['next_select']}"[:200])
     # 15:40 → 18:40 차이
     diffs = []
     if prev and prev.get('date') == today and prev.get('tag', '')[:4] != a.tag[:4]:
@@ -143,7 +154,7 @@ def main():
                         'regime': q['regime'], 'p_up': float(q['p_up']), 'p_risk': float(q['p_risk']), 'q_trade': qtrade, 'reentry_state': None if re_state is None else re_state['state']},
              'signals_new': [s['label'] for s in sig_new if not s.get('repeat')] + [s['label'] + '(늦게 확인)' for s in late], 'signals_late': late, 'vkospi_hold': vk_hold, 'signals_on': [s['label'] for s in sig_on], 'signals_off': [s['label'] for s in sig_off], 'top_buy_since': top_buy, 'top_sell_since': top_sell,
              'data_dates': {'kospi': today, 'kofia': c['date'], 'vkospi': vk_row['date'], 'night': None if NF is None or not len(NF) else NF.iloc[-1]['night_date']},
-             'update_summary': {k: v for k, v in summ.items() if k != 'changes'}, 'changes_n': len(summ.get('changes', [])), 'kakao': msgs, 'diffs_vs_1540': diffs, 'consensus': cons}
+             'update_summary': {k: v for k, v in summ.items() if k != 'changes'}, 'changes_n': len(summ.get('changes', [])), 'kakao': msgs, 'diffs_vs_1540': diffs, 'consensus': cons, 'combo': combo}
     json.dump(state, open(os.path.join(a.report, 'latest.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     open(os.path.join(a.report, 'kakao.txt'), 'w', encoding='utf-8').write('\n=====\n'.join(msgs) + '\n')
     # 사람용 md
@@ -168,6 +179,10 @@ def main():
         md_lines += ['', '## 큰 흐름: 그해 1위 조합 중 지금 잘 맞는 순(최근 60거래일)', '', '| 순서 | 그해 1위 | 조합·설정 | 최근 60일 | 최근 20일 | 올해 | 다음 해(실사용) | 지금 |', '|---|---|---|---|---|---|---|---|']
         md_lines += [f"| {i + 1} | {int(r['year'])} | {r['rule']} | {r['acc_r60']} | {r['acc_r20']} | {r['acc_last_year']} | {'' if pd.isna(r['acc_next']) else r['acc_next']} | {r['now']} |" for i, (_, r) in enumerate(tc.head(5).iterrows())]
         md_lines += [f"- 12줄의 지금 판단: " + (cons_txt(cons) if cons else f"상승 {(TC['now'] == '상승').sum()} · 하락 {(TC['now'] == '하락').sum()}") + ". 올해 1위는 자료가 들어올 때마다 다시 찾는다(실제 큰 흐름 마지막 구간은 10% 되돌림 확인 전까지 잠정)."]
+    if combo:
+        md_lines += ['', '## 매수×매도 신호 조합 감시', '', f"- 지금 1위: **{combo['top_combo']}** ({md(combo['chosen_since'])} 선정, 지난 250거래일 {combo['win_ret_250']:+.1f}%, 거래 {combo['win_trades']}건 적중 {combo['win_hit']:.0f}%) · 지금 {combo['state']}",
+                     f"- 선정 뒤: 수익 {combo['since_ret']:+.1f}% (코스피 {combo['since_kospi']:+.1f}%), 닫힌 거래 {combo['since_trades']}건 중 {combo['since_wins']}건 적중 · 2015~25 적중률 {combo['hit_2015_25']}%",
+                     f"- 경고: {combo['warn'] or '없음'} · 다음 재선정 {combo['next_select']} · 규칙: {combo['rule']}"]
     md_lines += ['', '## 자료 갱신', '', f"- 수집 실행: {summ.get('run', '—')} · 코스피 {summ.get('kospi_last', '—')} · 금투협 {summ.get('kofia_last', '—')} · VKOSPI {summ.get('vkospi_last', '—')} · 야간선물 {summ.get('night_last', '—')}",
                 f"- 들어온 자료: " + ', '.join(f"{x[0]} {x[1]}" for x in summ.get('files', [])), f"- 값 교체 {len(summ.get('changes', []))}건(엑셀 「값_교체_기록」)"]
     if diffs: md_lines += ['', '## 직전 실행 대비 변경', ''] + [f'- {d}' for d in diffs]
