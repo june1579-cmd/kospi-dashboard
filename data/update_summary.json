@@ -1,5 +1,5 @@
 {
- "run": "2026-11-02 17:19 1840",
+ "run": "2026-11-02 17:48 1840",
  "kospi_last": "2026-11-02",
  "kofia_last": "2026-10-30",
  "vkospi_last": "2026-10-30",
@@ -52,7 +52,7 @@
   ],
   [
    "VIX",
-   "미국 VIX 종가 Yahoo Finance ^VIX(새 날짜 0건)",
+   "미국 VIX 종가 Yahoo Finance ^VIX(새 날짜 1건)",
    "참고_VIX_유가"
   ]
  ],
@@ -62,4050 +62,702 @@
    "2026-10-12",
    "종가",
    "869.0",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
    "40.73",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-12",
    "대비",
    "832.19",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
    "3.92",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-12",
    "등락률(%)",
    "2260.77",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
    "10.65",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-12",
    "시가",
    "874.83",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
    "38.05",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-12",
    "고가",
    "881.7",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
    "40.75",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-12",
    "저가",
    "867.81",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
    "37.94",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-12",
-   "종가",
-   "40.73",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "12502.69",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-12",
-   "대비",
-   "3.92",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "12465.88",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-12",
-   "등락률(%)",
-   "10.65",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "33865.47",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-12",
-   "시가",
-   "38.05",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "12867.52",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-12",
-   "고가",
-   "40.75",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "12893.61",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-12",
-   "저가",
-   "37.94",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "12473.84",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-12",
-   "종가",
-   "12502.69",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "12723.4",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-12",
-   "대비",
-   "12465.88",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "12686.59",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-12",
-   "등락률(%)",
-   "33865.47",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "34465.06",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-12",
-   "시가",
-   "12867.52",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "13024.53",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-12",
-   "고가",
-   "12893.61",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "13063.46",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-12",
-   "저가",
-   "12473.84",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "12673.27",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-12",
-   "종가",
-   "12723.4",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1103.55",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-12",
-   "대비",
-   "12686.59",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1066.74",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-12",
-   "등락률(%)",
-   "34465.06",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "2897.96",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-12",
-   "시가",
-   "13024.53",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1108.54",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-12",
-   "고가",
-   "13063.46",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1112.36",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-12",
-   "저가",
-   "12673.27",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1102.45",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-12",
-   "종가",
-   "1103.55",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "869.0",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-12",
-   "대비",
-   "1066.74",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "832.19",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-12",
-   "등락률(%)",
-   "2897.96",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "2260.77",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-12",
-   "시가",
-   "1108.54",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "874.83",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-12",
-   "고가",
-   "1112.36",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "881.7",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-12",
-   "저가",
-   "1102.45",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "867.81",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-13",
    "종가",
    "12133.01",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "852.46",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "48.53",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-13",
    "대비",
    "11264.01",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "-16.54",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "7.8",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-13",
    "등락률(%)",
    "1296.2",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "-1.9",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "19.15",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-13",
    "시가",
    "12141.34",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "869.07",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "41.51",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-13",
    "고가",
    "12178.15",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "875.87",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "51.57",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-13",
    "저가",
    "11784.69",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "849.66",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-13",
-   "종가",
-   "852.46",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "12392.42",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-13",
-   "대비",
-   "-16.54",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11523.42",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-13",
-   "등락률(%)",
-   "-1.9",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1326.06",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-13",
-   "시가",
-   "869.07",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "12399.47",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-13",
-   "고가",
-   "875.87",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "12399.91",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-13",
-   "저가",
-   "849.66",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "12012.8",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-13",
-   "종가",
-   "12392.42",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1060.05",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-13",
-   "대비",
-   "11523.42",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "191.05",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-13",
-   "등락률(%)",
-   "1326.06",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "21.99",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-13",
-   "시가",
-   "12399.47",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1117.04",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-13",
-   "고가",
-   "12399.91",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1124.69",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-13",
-   "저가",
-   "12012.8",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1059.13",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-13",
-   "종가",
-   "1060.05",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "48.53",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-13",
-   "대비",
-   "191.05",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "-820.47",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-13",
-   "등락률(%)",
-   "21.99",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "-94.42",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-13",
-   "시가",
-   "1117.04",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "41.51",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-13",
-   "고가",
-   "1124.69",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "51.57",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-13",
-   "저가",
-   "1059.13",
    "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
    "41.48",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-13",
-   "종가",
-   "48.53",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "12133.01",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-13",
-   "대비",
-   "-820.47",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11264.01",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-13",
-   "등락률(%)",
-   "-94.42",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1296.2",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-13",
-   "시가",
-   "41.51",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "12141.34",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-13",
-   "고가",
-   "51.57",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "12178.15",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-13",
-   "저가",
-   "41.48",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11784.69",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-14",
    "종가",
    "835.1",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
    "44.91",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-14",
    "대비",
    "-11297.91",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "-12088.1",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "-3.62",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-14",
    "등락률(%)",
    "-93.12",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "-99.63",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "-7.46",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-14",
    "시가",
    "833.63",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
    "48.19",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-14",
    "고가",
    "850.02",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
    "48.19",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-14",
    "저가",
    "833.54",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
    "44.46",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-14",
-   "종가",
-   "44.91",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "12070.35",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-14",
-   "대비",
-   "-12088.1",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "-62.66",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-14",
-   "등락률(%)",
-   "-99.63",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "-0.52",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-14",
-   "시가",
-   "48.19",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "12175.6",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-14",
-   "고가",
-   "48.19",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "12312.17",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-14",
-   "저가",
-   "44.46",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11938.31",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-14",
-   "종가",
-   "12070.35",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "12355.86",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-14",
-   "대비",
-   "-62.66",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "222.85",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-14",
-   "등락률(%)",
-   "-0.52",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1.84",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-14",
-   "시가",
-   "12175.6",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "12413.25",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-14",
-   "고가",
-   "12312.17",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "12604.77",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-14",
-   "저가",
-   "11938.31",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "12239.96",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-14",
-   "종가",
-   "12355.86",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1083.22",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-14",
-   "대비",
-   "222.85",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "-11049.79",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-14",
-   "등락률(%)",
-   "1.84",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "-91.07",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-14",
-   "시가",
-   "12413.25",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1060.13",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-14",
-   "고가",
-   "12604.77",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1083.66",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-14",
-   "저가",
-   "12239.96",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1060.13",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-14",
-   "종가",
-   "1083.22",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "835.1",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-14",
-   "대비",
-   "-11049.79",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "-11297.91",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-14",
-   "등락률(%)",
-   "-91.07",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "-93.12",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-14",
-   "시가",
-   "1060.13",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "833.63",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-14",
-   "고가",
-   "1083.66",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "850.02",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-14",
-   "저가",
-   "1060.13",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "833.54",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-15",
    "종가",
    "11318.1",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "775.0",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "55.38",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-15",
    "대비",
    "10483.0",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "-60.1",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "10.47",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-15",
    "등락률(%)",
    "1255.3",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "-7.2",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "23.31",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-15",
    "시가",
    "11527.99",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "836.58",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "48.05",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-15",
    "고가",
    "11660.6",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "837.21",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "57.22",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-15",
    "저가",
    "11117.48",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "774.9",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-15",
-   "종가",
-   "775.0",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11755.88",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-15",
-   "대비",
-   "-60.1",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "10920.78",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-15",
-   "등락률(%)",
-   "-7.2",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1307.72",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-15",
-   "시가",
-   "836.58",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11857.29",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-15",
-   "고가",
-   "837.21",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "12013.98",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-15",
-   "저가",
-   "774.9",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11542.86",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-15",
-   "종가",
-   "11755.88",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1010.84",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-15",
-   "대비",
-   "10920.78",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "175.74",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-15",
-   "등락률(%)",
-   "1307.72",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "21.04",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-15",
-   "시가",
-   "11857.29",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1085.12",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-15",
-   "고가",
-   "12013.98",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1087.48",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-15",
-   "저가",
-   "11542.86",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1010.29",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-15",
-   "종가",
-   "1010.84",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "55.38",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-15",
-   "대비",
-   "175.74",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "-779.72",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-15",
-   "등락률(%)",
-   "21.04",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "-93.37",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-15",
-   "시가",
-   "1085.12",
    "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
    "48.05",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-15",
-   "고가",
-   "1087.48",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "57.22",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-15",
-   "저가",
-   "1010.29",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "48.05",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-15",
-   "종가",
-   "55.38",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11318.1",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-15",
-   "대비",
-   "-779.72",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "10483.0",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-15",
-   "등락률(%)",
-   "-93.37",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1255.3",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-15",
-   "시가",
-   "48.05",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11527.99",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-15",
-   "고가",
-   "57.22",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11660.6",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-15",
-   "저가",
-   "48.05",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11117.48",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-16",
    "종가",
    "775.54",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
    "48.89",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-16",
    "대비",
    "-10542.56",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "-11269.21",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "-6.49",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-16",
    "등락률(%)",
    "-93.15",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "-99.57",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "-11.72",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-16",
    "시가",
    "775.07",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
    "51.48",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-16",
    "고가",
    "775.56",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
    "57.94",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-16",
    "저가",
    "774.86",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
    "47.83",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-16",
-   "종가",
-   "48.89",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11484.15",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-16",
-   "대비",
-   "-11269.21",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "166.05",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-16",
-   "등락률(%)",
-   "-99.57",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1.47",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-16",
-   "시가",
-   "51.48",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11464.95",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-16",
-   "고가",
-   "57.94",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11694.84",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-16",
-   "저가",
-   "47.83",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11394.79",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-16",
-   "종가",
-   "11484.15",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11996.71",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-16",
-   "대비",
-   "166.05",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "678.61",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-16",
-   "등락률(%)",
-   "1.47",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "6.0",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-16",
-   "시가",
-   "11464.95",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11902.79",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-16",
-   "고가",
-   "11694.84",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "12225.0",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-16",
-   "저가",
-   "11394.79",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11890.8",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-16",
-   "종가",
-   "11996.71",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1033.56",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-16",
-   "대비",
-   "678.61",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "-10284.54",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-16",
-   "등락률(%)",
-   "6.0",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "-90.87",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-16",
-   "시가",
-   "11902.79",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1010.92",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-16",
-   "고가",
-   "12225.0",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1033.56",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-16",
-   "저가",
-   "11890.8",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1010.85",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-16",
-   "종가",
-   "1033.56",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "775.54",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-16",
-   "대비",
-   "-10284.54",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "-10542.56",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-16",
-   "등락률(%)",
-   "-90.87",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "-93.15",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-16",
-   "시가",
-   "1010.92",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "775.07",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-16",
-   "고가",
-   "1033.56",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "775.56",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-16",
-   "저가",
-   "1010.85",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "774.86",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-19",
-   "종가",
-   "48.57",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "12270.18",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-19",
    "대비",
    "-726.97",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "11494.64",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "-0.32",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-19",
    "등락률(%)",
    "-93.74",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "1482.15",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-19",
-   "시가",
-   "50.08",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "11747.36",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-19",
-   "고가",
-   "52.69",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "12270.18",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-19",
-   "저가",
-   "48.56",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "11747.36",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-19",
-   "종가",
-   "12270.18",
    "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "803.45",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-19",
-   "대비",
-   "11494.64",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "27.91",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-19",
-   "등락률(%)",
-   "1482.15",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "3.6",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-19",
-   "시가",
-   "11747.36",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "801.69",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-19",
-   "고가",
-   "12270.18",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "803.66",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-19",
-   "저가",
-   "11747.36",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "787.92",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-19",
-   "종가",
-   "803.45",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1016.42",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-19",
-   "대비",
-   "27.91",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "240.88",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-19",
-   "등락률(%)",
-   "3.6",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "31.06",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-19",
-   "시가",
-   "801.69",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1033.81",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-19",
-   "고가",
-   "803.66",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1034.14",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-19",
-   "저가",
-   "787.92",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1009.41",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-19",
-   "종가",
-   "1016.42",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11755.34",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-19",
-   "대비",
-   "240.88",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "10979.8",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-19",
-   "등락률(%)",
-   "31.06",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1415.76",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-19",
-   "시가",
-   "1033.81",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11191.63",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-19",
-   "고가",
-   "1034.14",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11755.34",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-19",
-   "저가",
-   "1009.41",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11191.63",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-19",
-   "종가",
-   "11755.34",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "48.57",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-19",
-   "대비",
-   "10979.8",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "-726.97",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-19",
-   "등락률(%)",
-   "1415.76",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "-93.74",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-19",
-   "시가",
-   "11191.63",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "50.08",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-19",
-   "고가",
-   "11755.34",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "52.69",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-19",
-   "저가",
-   "11191.63",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "48.56",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "-0.65",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-20",
    "종가",
    "795.35",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
    "49.42",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-20",
    "대비",
    "746.78",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
    "0.85",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-20",
    "등락률(%)",
    "1537.53",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
    "1.75",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-20",
    "시가",
    "803.52",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
    "48.25",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-20",
    "고가",
    "804.11",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
    "49.96",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-20",
    "저가",
    "795.15",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
    "47.77",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
-   "2026-10-20",
-   "종가",
-   "49.42",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11379.52",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-20",
+   "2026-10-21",
    "대비",
-   "0.85",
+   "-747.09",
    "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11330.95",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "-1.16",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
-   "2026-10-20",
+   "2026-10-21",
    "등락률(%)",
+   "-93.93",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "-2.35",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-22",
+   "종가",
+   "809.82",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "49.61",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-22",
+   "대비",
+   "761.56",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "1.35",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-22",
+   "등락률(%)",
+   "1578.04",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "2.8",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-22",
+   "시가",
+   "809.13",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "48.49",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-22",
+   "고가",
+   "809.85",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "50.07",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-22",
+   "저가",
+   "809.13",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "48.19",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-23",
+   "대비",
+   "-757.77",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "2.44",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-23",
+   "등락률(%)",
+   "-93.57",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "4.92",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-26",
+   "종가",
+   "787.27",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "52.46",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-26",
+   "대비",
+   "735.22",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "0.41",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-26",
+   "등락률(%)",
+   "1412.53",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "0.79",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-26",
+   "시가",
+   "786.9",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "54.01",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-26",
+   "고가",
+   "787.27",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "54.09",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-26",
+   "저가",
+   "786.9",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "52.38",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-27",
+   "종가",
+   "11555.59",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "51.33",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-27",
+   "대비",
+   "10768.32",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "-1.13",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-27",
+   "등락률(%)",
+   "1367.81",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "-2.15",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-27",
+   "시가",
+   "11598.8",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "53.91",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-27",
+   "고가",
+   "11681.11",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "53.91",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-27",
+   "저가",
+   "11492.18",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "51.32",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-28",
+   "종가",
+   "784.66",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "51.85",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-28",
+   "대비",
+   "-10770.93",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "0.52",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-28",
+   "등락률(%)",
+   "-93.21",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "1.01",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-28",
+   "시가",
+   "787.0",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "51.75",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-28",
+   "고가",
+   "787.0",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "52.11",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-28",
+   "저가",
+   "784.61",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "51.26",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-29",
+   "종가",
+   "785.84",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "51.42",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-29",
+   "대비",
+   "1.18",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "-0.43",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-29",
+   "등락률(%)",
+   "0.15",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "-0.83",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-29",
+   "시가",
+   "784.71",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "51.75",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-29",
+   "고가",
+   "786.24",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "51.77",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-29",
+   "저가",
+   "784.29",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "51.25",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-30",
+   "종가",
+   "787.23",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "52.32",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-30",
+   "대비",
+   "1.39",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "0.9",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
+  ],
+  [
+   "VKOSPI_일별",
+   "2026-10-30",
+   "등락률(%)",
+   "0.18",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
    "1.75",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "23329.11",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-20",
-   "시가",
-   "48.25",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11684.8",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-20",
-   "고가",
-   "49.96",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11707.92",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-20",
-   "저가",
-   "47.77",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11312.22",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-20",
-   "종가",
-   "11379.52",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11861.83",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-20",
-   "대비",
-   "11330.95",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11813.26",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-20",
-   "등락률(%)",
-   "23329.11",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "24322.13",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-20",
-   "시가",
-   "11684.8",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "12177.48",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-20",
-   "고가",
-   "11707.92",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "12231.3",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-20",
-   "저가",
-   "11312.22",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11775.79",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-20",
-   "종가",
-   "11861.83",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1013.04",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-20",
-   "대비",
-   "11813.26",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "964.47",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-20",
-   "등락률(%)",
-   "24322.13",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1985.73",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-20",
-   "시가",
-   "12177.48",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1016.5",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-20",
-   "고가",
-   "12231.3",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1025.85",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-20",
-   "저가",
-   "11775.79",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1012.83",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-20",
-   "종가",
-   "1013.04",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "795.35",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-20",
-   "대비",
-   "964.47",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "746.78",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-20",
-   "등락률(%)",
-   "1985.73",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1537.53",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-20",
-   "시가",
-   "1016.5",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "803.52",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-20",
-   "고가",
-   "1025.85",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "804.11",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-20",
-   "저가",
-   "1012.83",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "795.15",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-21",
-   "종가",
-   "48.26",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "801.61",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-21",
-   "대비",
-   "-747.09",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "6.26",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-21",
-   "등락률(%)",
-   "-93.93",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "0.79",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-21",
-   "시가",
-   "49.01",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "795.33",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-21",
-   "고가",
-   "50.9",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "803.53",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-21",
-   "저가",
-   "48.22",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "794.72",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-21",
-   "종가",
-   "801.61",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1033.54",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-21",
-   "대비",
-   "6.26",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "238.19",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-21",
-   "등락률(%)",
-   "0.79",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "29.95",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-21",
-   "시가",
-   "795.33",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1013.13",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-21",
-   "고가",
-   "803.53",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1033.56",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-21",
-   "저가",
-   "794.72",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1012.63",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-21",
-   "종가",
-   "1033.54",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "12058.44",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-21",
-   "대비",
-   "238.19",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11263.09",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-21",
-   "등락률(%)",
-   "29.95",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1416.12",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-21",
-   "시가",
-   "1013.13",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11998.75",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-21",
-   "고가",
-   "1033.56",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "12161.16",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-21",
-   "저가",
-   "1012.63",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11908.47",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-21",
-   "종가",
-   "12058.44",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11528.79",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-21",
-   "대비",
-   "11263.09",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "10733.44",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-21",
-   "등락률(%)",
-   "1416.12",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1349.52",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-21",
-   "시가",
-   "11998.75",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11517.94",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-21",
-   "고가",
-   "12161.16",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11670.35",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-21",
-   "저가",
-   "11908.47",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11448.17",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-21",
-   "종가",
-   "11528.79",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "48.26",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-21",
-   "대비",
-   "10733.44",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "-747.09",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-21",
-   "등락률(%)",
-   "1349.52",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "-93.93",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-21",
-   "시가",
-   "11517.94",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "49.01",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-21",
-   "고가",
-   "11670.35",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "50.9",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-21",
-   "저가",
-   "11448.17",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "48.22",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-22",
-   "종가",
-   "809.82",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "49.61",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-22",
-   "대비",
-   "761.56",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "1.35",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-22",
-   "등락률(%)",
-   "1578.04",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "2.8",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-22",
-   "시가",
-   "809.13",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "48.49",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-22",
-   "고가",
-   "809.85",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "50.07",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-22",
-   "저가",
-   "809.13",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "48.19",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-22",
-   "종가",
-   "49.61",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11177.0",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-22",
-   "대비",
-   "1.35",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11128.74",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-22",
-   "등락률(%)",
-   "2.8",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "23059.97",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-22",
-   "시가",
-   "48.49",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11451.83",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-22",
-   "고가",
-   "50.07",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11527.51",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-22",
-   "저가",
-   "48.19",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11115.16",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-22",
-   "종가",
-   "11177.0",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11753.48",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-22",
-   "대비",
-   "11128.74",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11705.22",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-22",
-   "등락률(%)",
-   "23059.97",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "24254.5",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-22",
-   "시가",
-   "11451.83",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11944.1",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-22",
-   "고가",
-   "11527.51",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "12040.53",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-22",
-   "저가",
-   "11115.16",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11682.08",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-22",
-   "종가",
-   "11753.48",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1045.99",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-22",
-   "대비",
-   "11705.22",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "997.73",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-22",
-   "등락률(%)",
-   "24254.5",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "2067.41",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-22",
-   "시가",
-   "11944.1",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1044.84",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-22",
-   "고가",
-   "12040.53",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1046.01",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-22",
-   "저가",
-   "11682.08",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1044.81",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-22",
-   "종가",
-   "1045.99",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "809.82",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-22",
-   "대비",
-   "997.73",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "761.56",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-22",
-   "등락률(%)",
-   "2067.41",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1578.04",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-22",
-   "시가",
-   "1044.84",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "809.13",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-22",
-   "고가",
-   "1046.01",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "809.85",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-22",
-   "저가",
-   "1044.81",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "809.13",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-23",
-   "종가",
-   "52.05",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "786.74",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-23",
-   "대비",
-   "-757.77",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "-23.08",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-23",
-   "등락률(%)",
-   "-93.57",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "-2.85",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-23",
-   "시가",
-   "51.34",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "786.87",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-23",
-   "고가",
-   "54.3",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "787.09",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-23",
-   "저가",
-   "51.34",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "786.74",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-23",
-   "종가",
-   "786.74",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1008.9",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-23",
-   "대비",
-   "-23.08",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "199.08",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-23",
-   "등락률(%)",
-   "-2.85",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "24.58",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-23",
-   "시가",
-   "786.87",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1009.18",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-23",
-   "고가",
-   "787.09",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1009.49",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-23",
-   "저가",
-   "786.74",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1008.9",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-23",
-   "종가",
-   "1008.9",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11590.4",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-23",
-   "대비",
-   "199.08",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "10780.58",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-23",
-   "등락률(%)",
-   "24.58",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1331.23",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-23",
-   "시가",
-   "1009.18",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11483.31",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-23",
-   "고가",
-   "1009.49",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11590.4",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-23",
-   "저가",
-   "1008.9",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11320.1",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-23",
-   "종가",
-   "11590.4",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11044.15",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-23",
-   "대비",
-   "10780.58",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "10234.33",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-23",
-   "등락률(%)",
-   "1331.23",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1263.78",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-23",
-   "시가",
-   "11483.31",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "10941.15",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-23",
-   "고가",
-   "11590.4",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11044.15",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-23",
-   "저가",
-   "11320.1",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "10757.42",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-23",
-   "종가",
-   "11044.15",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "52.05",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-23",
-   "대비",
-   "10234.33",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "-757.77",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-23",
-   "등락률(%)",
-   "1263.78",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "-93.57",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-23",
-   "시가",
-   "10941.15",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "51.34",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-23",
-   "고가",
-   "11044.15",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "54.3",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-23",
-   "저가",
-   "10757.42",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "51.34",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-26",
-   "종가",
-   "787.27",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "52.46",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-26",
-   "대비",
-   "735.22",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "0.41",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-26",
-   "등락률(%)",
-   "1412.53",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "0.79",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-26",
-   "시가",
-   "786.9",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "54.01",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-26",
-   "고가",
-   "787.27",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "54.09",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-26",
-   "저가",
-   "786.9",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "52.38",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-26",
-   "종가",
-   "52.46",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "10786.28",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-26",
-   "대비",
-   "0.41",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "10734.23",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-26",
-   "등락률(%)",
-   "0.79",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "20622.92",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-26",
-   "시가",
-   "54.01",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "10940.77",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-26",
-   "고가",
-   "54.09",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11010.81",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-26",
-   "저가",
-   "52.38",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "10786.28",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-26",
-   "종가",
-   "10786.28",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11362.76",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-26",
-   "대비",
-   "10734.23",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11310.71",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-26",
-   "등락률(%)",
-   "20622.92",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "21730.47",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-26",
-   "시가",
-   "10940.77",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11463.12",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-26",
-   "고가",
-   "11010.81",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11558.51",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-26",
-   "저가",
-   "10786.28",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11360.85",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-26",
-   "종가",
-   "11362.76",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1012.4",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-26",
-   "대비",
-   "11310.71",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "960.35",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-26",
-   "등락률(%)",
-   "21730.47",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1845.05",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-26",
-   "시가",
-   "11463.12",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1013.91",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-26",
-   "고가",
-   "11558.51",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1014.21",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-26",
-   "저가",
-   "11360.85",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1012.1",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-26",
-   "종가",
-   "1012.4",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "787.27",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-26",
-   "대비",
-   "960.35",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "735.22",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-26",
-   "등락률(%)",
-   "1845.05",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1412.53",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-26",
-   "시가",
-   "1013.91",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "786.9",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-26",
-   "고가",
-   "1014.21",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "787.27",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-26",
-   "저가",
-   "1012.1",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "786.9",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-27",
-   "종가",
-   "11555.59",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "786.94",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-27",
-   "대비",
-   "10768.32",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "-0.33",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-27",
-   "등락률(%)",
-   "1367.81",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "-0.04",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-27",
-   "시가",
-   "11598.8",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "787.32",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-27",
-   "고가",
-   "11681.11",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "787.32",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-27",
-   "저가",
-   "11492.18",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "786.53",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-27",
-   "종가",
-   "786.94",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1020.23",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-27",
-   "대비",
-   "-0.33",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "232.96",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-27",
-   "등락률(%)",
-   "-0.04",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "29.59",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-27",
-   "시가",
-   "787.32",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1006.01",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-27",
-   "고가",
-   "787.32",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1020.93",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-27",
-   "저가",
-   "786.53",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1005.08",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-27",
-   "종가",
-   "1020.23",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11047.39",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-27",
-   "대비",
-   "232.96",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "10260.12",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-27",
-   "등락률(%)",
-   "29.59",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1303.25",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-27",
-   "시가",
-   "1006.01",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11042.05",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-27",
-   "고가",
-   "1020.93",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11217.22",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-27",
-   "저가",
-   "1005.08",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "10995.0",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-27",
-   "종가",
-   "11047.39",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "51.33",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-27",
-   "대비",
-   "10260.12",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "-735.94",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-27",
-   "등락률(%)",
-   "1303.25",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "-93.48",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-27",
-   "시가",
-   "11042.05",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "53.91",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-27",
-   "고가",
-   "11217.22",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "53.91",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-27",
-   "저가",
-   "10995.0",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "51.32",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-27",
-   "종가",
-   "51.33",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11555.59",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-27",
-   "대비",
-   "-735.94",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "10768.32",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-27",
-   "등락률(%)",
-   "-93.48",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1367.81",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-27",
-   "시가",
-   "53.91",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11598.8",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-27",
-   "고가",
-   "53.91",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11681.11",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-27",
-   "저가",
-   "51.32",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11492.18",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-28",
-   "종가",
-   "784.66",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "51.85",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-28",
-   "대비",
-   "-10770.93",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "-11503.74",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-28",
-   "등락률(%)",
-   "-93.21",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "-99.55",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-28",
-   "시가",
-   "787.0",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "51.75",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-28",
-   "고가",
-   "787.0",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "52.11",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-28",
-   "저가",
-   "784.61",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "51.26",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-28",
-   "종가",
-   "51.85",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11525.68",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-28",
-   "대비",
-   "-11503.74",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "-29.91",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-28",
-   "등락률(%)",
-   "-99.55",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "-0.26",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-28",
-   "시가",
-   "51.75",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11184.54",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-28",
-   "고가",
-   "52.11",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11559.35",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-28",
-   "저가",
-   "51.26",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11157.13",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-28",
-   "종가",
-   "11525.68",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "12045.65",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-28",
-   "대비",
-   "-29.91",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "490.06",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-28",
-   "등락률(%)",
-   "-0.26",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "4.24",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-28",
-   "시가",
-   "11184.54",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11744.02",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-28",
-   "고가",
-   "11559.35",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "12103.75",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-28",
-   "저가",
-   "11157.13",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11733.17",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-28",
-   "종가",
-   "12045.65",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1059.01",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-28",
-   "대비",
-   "490.06",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "-10496.58",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-28",
-   "등락률(%)",
-   "4.24",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "-90.84",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-28",
-   "시가",
-   "11744.02",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1035.85",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-28",
-   "고가",
-   "12103.75",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1059.29",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-28",
-   "저가",
-   "11733.17",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1034.94",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-28",
-   "종가",
-   "1059.01",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "784.66",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-28",
-   "대비",
-   "-10496.58",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "-10770.93",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-28",
-   "등락률(%)",
-   "-90.84",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "-93.21",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-28",
-   "시가",
-   "1035.85",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "787.0",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-28",
-   "고가",
-   "1059.29",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "787.0",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-28",
-   "저가",
-   "1034.94",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "784.61",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-29",
-   "종가",
-   "785.84",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "11428.1",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-29",
-   "대비",
-   "1.18",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "10643.44",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-29",
-   "등락률(%)",
-   "0.15",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "1356.44",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-29",
-   "시가",
-   "784.71",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "11531.56",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-29",
-   "고가",
-   "786.24",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "11565.92",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-29",
-   "저가",
-   "784.29",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "11173.4",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-29",
-   "종가",
-   "11428.1",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "51.42",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-29",
-   "대비",
-   "10643.44",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "-733.24",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-29",
-   "등락률(%)",
-   "1356.44",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "-93.45",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-29",
-   "시가",
-   "11531.56",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "51.75",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-29",
-   "고가",
-   "11565.92",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "51.77",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-29",
-   "저가",
-   "11173.4",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "51.25",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-29",
-   "종가",
-   "51.42",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11883.71",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-29",
-   "대비",
-   "-733.24",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11099.05",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-29",
-   "등락률(%)",
-   "-93.45",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1414.5",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-29",
-   "시가",
-   "51.75",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "12015.74",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-29",
-   "고가",
-   "51.77",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "12031.29",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-29",
-   "저가",
-   "51.25",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11700.71",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-29",
-   "종가",
-   "11883.71",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1090.28",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-29",
-   "대비",
-   "11099.05",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "305.62",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-29",
-   "등락률(%)",
-   "1414.5",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "38.95",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-29",
-   "시가",
-   "12015.74",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1089.0",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-29",
-   "고가",
-   "12031.29",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1090.99",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-29",
-   "저가",
-   "11700.71",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1088.96",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-29",
-   "종가",
-   "1090.28",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "785.84",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-29",
-   "대비",
-   "305.62",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1.18",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-29",
-   "등락률(%)",
-   "38.95",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "0.15",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-29",
-   "시가",
-   "1089.0",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "784.71",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-29",
-   "고가",
-   "1090.99",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "786.24",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-29",
-   "저가",
-   "1088.96",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "784.29",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-30",
-   "종가",
-   "787.23",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "11665.38",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-30",
-   "대비",
-   "1.39",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "10879.54",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-30",
-   "등락률(%)",
-   "0.18",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "1384.45",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-30",
    "시가",
    "787.11",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "11699.59",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "51.79",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-30",
    "고가",
    "787.27",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "11727.35",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
+   "53.3",
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ],
   [
    "VKOSPI_일별",
    "2026-10-30",
    "저가",
    "786.97",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 16:13 1540",
-   "11453.05",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-30",
-   "종가",
-   "11665.38",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1089.41",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-30",
-   "대비",
-   "10879.54",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "303.57",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-30",
-   "등락률(%)",
-   "1384.45",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "38.63",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-30",
-   "시가",
-   "11699.59",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1089.1",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-30",
-   "고가",
-   "11727.35",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1089.46",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-30",
-   "저가",
-   "11453.05",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1089.0",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-30",
-   "종가",
-   "1089.41",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "52.32",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-30",
-   "대비",
-   "303.57",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "-733.52",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-30",
-   "등락률(%)",
-   "38.63",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "-93.34",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-30",
-   "시가",
-   "1089.1",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "51.79",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-30",
-   "고가",
-   "1089.46",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "53.3",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-30",
-   "저가",
-   "1089.0",
    "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
    "51.76",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-30",
-   "종가",
-   "52.32",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11156.92",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-30",
-   "대비",
-   "-733.52",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "10371.08",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-30",
-   "등락률(%)",
-   "-93.34",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1319.74",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-30",
-   "시가",
-   "51.79",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11205.82",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-30",
-   "고가",
-   "53.3",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "11227.86",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-30",
-   "저가",
-   "51.76",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "10955.13",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-30",
-   "종가",
-   "11156.92",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "787.23",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-30",
-   "대비",
-   "10371.08",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "1.39",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-30",
-   "등락률(%)",
-   "1319.74",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "0.18",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-30",
-   "시가",
-   "11205.82",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "787.11",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-30",
-   "고가",
-   "11227.86",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "787.27",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
-  ],
-  [
-   "VKOSPI_일별",
-   "2026-10-30",
-   "저가",
-   "10955.13",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840",
-   "786.97",
-   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:19 1840)"
+   "자동 수집 10 VKOSPI(KRX Open API idx/drvprod_dd_trd, 2026-11-02 17:48 1840)"
   ]
  ]
 }
