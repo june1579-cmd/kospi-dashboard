@@ -3,7 +3,7 @@
    08:31(tag 0831, 전 거래일 확정 + VKOSPI 반영 — 공개 저장소가 08:10~08:15 에 VKOSPI 를 넣으므로 들어올 때까지 최대 30분 기다림)
    15:37(tag 1540, 그날 종가·투자자별 잠정) · 20:37(tag 1840, 애프터마켓 20:00 마감 뒤 투자자별)
    1 수집(dashboard_collect.py) → 2 공개 저장소 받기 → 3 통합 원자료 엑셀 갱신(daily_update.py) → 4 대시보드 자료 재계산(pkg/reproduce.py)
-   → 5 fx_daily·manifest → 6 보고문(report_signals.py) → 7 카카오톡(kakao_send.py)
+   → 5 fx_daily·manifest → 6 보고문(report_signals.py) → 6b 그래프(make_chart.py) → 6c 웹판(build_web.py → docs/) → 7 카카오톡(kakao_send.py)
    어느 단계가 실패해도 다음 단계로 가고, 실패 내용은 report/latest.md 와 카카오톡에 적는다.
    사용: python run_pipeline.py --tag 0831|1540|1840 [--no-collect] [--no-kakao] [--no-wait]
 """
@@ -98,6 +98,8 @@ def main():
     # 6b 카카오톡용 그래프·중요 변동(새 자료가 있는 날 — 세 번 실행 모두)
     if os.path.exists('report/alerts.json'): os.remove('report/alerts.json')
     if newdata: run([sys.executable, 'make_chart.py', '--out', 'out', '--report', 'report', '--signals', 'report/latest.json', '--tag', tag], '6b 그래프')
+    # 6c 웹판(GitHub Pages, docs/) 자료 — 매 실행(새 자료가 없어도 보고문·상태는 갱신)
+    run([sys.executable, 'build_web.py', '--out', 'out', '--report', 'report', '--docs', 'docs'], '6c 웹판')
     if not newdata:
         note = f'[대시보드 {today:%m/%d} {tag}] ' + ('새 자료 없음(휴장 다음 날 또는 이미 보냄)' if tag == '0831' else '오늘 날짜 자료 없음(휴장 또는 미공표)') + f'. 최신 코스피 {kl}'
         if errors: note += '\n오류: ' + ' | '.join(errors)[:120]

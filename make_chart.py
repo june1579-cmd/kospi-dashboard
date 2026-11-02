@@ -118,10 +118,10 @@ def mark_signals(ax, X, price, rows):
         for k, c in enumerate(cs): ax.scatter(i, price[i] + rng * (.06 + .055 * k), marker='v', s=44, color=c, zorder=5, edgecolor='white', lw=.6)
     return up, dn
 
-def signal_chart(o, path):
+def signal_chart(o, path, days_n=60):
     import matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt
     ko = korean_font(); T = (lambda k, e: k) if ko else (lambda k, e: e)
-    M = rd(f'{o}/market_daily.csv'); M = M[M['kospi'].notna()].tail(60).reset_index(drop=True)
+    M = rd(f'{o}/market_daily.csv'); M = M[M['kospi'].notna()].tail(days_n).reset_index(drop=True)
     days = list(M['date']); X = np.arange(len(days)); P = M['kospi'].values; n = len(days)
     rows = signal_rows(o, days)
     fig, ax = plt.subplots(2, 1, figsize=(8, 8.4), dpi=110, sharex=True, gridspec_kw={'height_ratios': [1.25, 2]})
@@ -129,7 +129,7 @@ def signal_chart(o, path):
     ax[0].plot(X, P, color='#1f3a93', lw=2); up, dn = mark_signals(ax[0], X, P, rows)
     lo, hi = np.nanmin(P), np.nanmax(P); ax[0].set_ylim(lo - (hi - lo) * .3, hi + (hi - lo) * .3)
     on_today = [r[0] for r in rows if (n - 1) in r[2]]
-    ax[0].set_title(T(f"매매 신호 전부 · 최근 60거래일 (~{md(days[-1])})", f"All signals, last 60 days (~{days[-1]})"), fontsize=12, loc='left')
+    ax[0].set_title(T(f"매매 신호 전부 · 최근 {n}거래일 (~{md(days[-1])})", f"All signals, last {n} days (~{days[-1]})"), fontsize=12, loc='left')
     _vk = M[M['vkospi'].notna()]['date'].max() if 'vkospi' in M.columns else None
     if _vk and _vk != days[-1]: ax[0].text(0.01, 0.10, T(f'VKOSPI {md(_vk)}까지 반영 → 매수 최적화 1~3위·매도 민감·중간·엄격형 판정 보류', f'VKOSPI to {_vk}: VKOSPI signals pending'), transform=ax[0].transAxes, fontsize=7.5, color='#a33')
     ax[0].text(0.01, 0.03, T('▲ 매수 시작   ▼ 매도·청산 시작   색 = 아래 신호 이름 색(같은 날 여러 개면 쌓아 표시)', '^ buy start  v sell start'), transform=ax[0].transAxes, fontsize=7.5, color='#444')
@@ -155,12 +155,12 @@ def signal_chart(o, path):
     fig.tight_layout(); fig.savefig(path, facecolor='white'); plt.close(fig)
     return on_today
 
-def chart(o, path):
+def chart(o, path, days_n=60):
     import matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt
     ko = korean_font()
     T = (lambda k, e: k) if ko else (lambda k, e: e)
     M = rd(f'{o}/market_daily.csv'); Q = rd(f'{o}/q_daily.csv'); L = rd(f'{o}/liq_daily.csv'); C = rd(f'{o}/credit.csv'); F = rd(f'{o}/flows_daily.csv'); TC = rd(f'{o}/trend_champ.csv')
-    M = M[M['kospi'].notna()].copy(); M['ma20'] = M['kospi'].rolling(20).mean(); M = M.tail(60).reset_index(drop=True)
+    M = M[M['kospi'].notna()].copy(); M['ma20'] = M['kospi'].rolling(20).mean(); M = M.tail(days_n).reset_index(drop=True)
     days = list(M['date']); x = {d: i for i, d in enumerate(days)}; X = np.arange(len(days))
     def sub(df, col): df = df[df['date'].isin(x)].copy(); return [x[d] for d in df['date']], df[col].values
     fig, ax = plt.subplots(4, 1, figsize=(8, 8.4), dpi=110, sharex=True, gridspec_kw={'height_ratios': [2.2, 1.2, 1, 1.2]})
@@ -209,13 +209,15 @@ def chart(o, path):
     return ko
 
 def main():
-    ap = argparse.ArgumentParser(); ap.add_argument('--out', default='out'); ap.add_argument('--report', default='report'); ap.add_argument('--signals', default=''); ap.add_argument('--tag', default='')
+    ap = argparse.ArgumentParser(); ap.add_argument('--out', default='out'); ap.add_argument('--report', default='report'); ap.add_argument('--signals', default=''); ap.add_argument('--tag', default=''); ap.add_argument('--web-days', type=int, default=250)
     a = ap.parse_args(); os.makedirs(a.report, exist_ok=True)
     LJ = json.load(open(a.signals, encoding='utf-8')) if a.signals and os.path.exists(a.signals) else {}
     sig = LJ.get('signals_new', [])
     A = alerts(a.out, sig, LJ)
     ko = chart(a.out, os.path.join(a.report, 'chart.png'))
     on_today = signal_chart(a.out, os.path.join(a.report, 'signals.png'))
+    if a.web_days:   # 웹판용 긴 그래프(카톡에는 안 보냄)
+        chart(a.out, os.path.join(a.report, f'chart_{a.web_days}.png'), a.web_days); signal_chart(a.out, os.path.join(a.report, f'signals_{a.web_days}.png'), a.web_days)
     M = rd(f'{a.out}/market_daily.csv'); d = str(M[M['kospi'].notna()].iloc[-1]['date'])
     json.dump({'date': d, 'tag': a.tag, 'label': {'0831': '아침 확정', '1540': '잠정 15:37', '1840': '확정 20:37'}.get(a.tag, a.tag), 'alerts': A, 'korean_font': ko, 'signals_on_today': on_today, 'vkospi_hold': LJ.get('vkospi_hold', False), 'vkospi_date': (LJ.get('values') or {}).get('vkospi_date')}, open(os.path.join(a.report, 'alerts.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     print('그래프 report/chart.png · report/signals.png ·', '한글 글꼴' if ko else '한글 글꼴 없음(영문 표기)', '· 중요 변동', len(A), '건'); [print(' -', x) for x in A]

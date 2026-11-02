@@ -33,7 +33,7 @@ def save_refresh(rest_key, token, env_token):
     json.dump({'token': f.encrypt(token.encode()).decode(), 'seed': hashlib.sha256(env_token.encode()).hexdigest()[:16]}, open(STATE, 'w', encoding='utf-8'))
 
 def main():
-    ap = argparse.ArgumentParser(); ap.add_argument('--file', default='report/kakao.txt'); ap.add_argument('--alerts', default='report/alerts.json'); ap.add_argument('--link', default=os.environ.get('DASH_LINK', 'https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c'))
+    ap = argparse.ArgumentParser(); ap.add_argument('--file', default='report/kakao.txt'); ap.add_argument('--alerts', default='report/alerts.json'); ap.add_argument('--link', default=os.environ.get('DASH_LINK', 'https://june1579-cmd.github.io/kospi-dashboard/'))
     a = ap.parse_args()
     key = os.environ.get('KAKAO_REST_KEY', '').strip(); secret = os.environ.get('KAKAO_CLIENT_SECRET', '').strip()
     if not key: print('KAKAO_REST_KEY 없음 — 카카오톡 발송 건너뜀'); return 0
