@@ -1,12 +1,13 @@
 name: dashboard-update
 on:
   schedule:
-    - cron: '40 6 * * 1-5'    # 15:40 KST 잠정(정규장 마감 뒤 시세·투자자별 잠정치)
-    - cron: '40 9 * * 1-5'    # 18:40 KST 확정(KRX 투자자별 확정치·ETF 투자자별)
+    - cron: '31 23 * * 0-4'   # 08:31 KST 월~금(UTC 일~목 23:31) 아침 확정 — 전 거래일 VKOSPI(공개 저장소 08:10~08:15)·투자자별 확정치·간밤 VIX
+    - cron: '37 6 * * 1-5'    # 15:37 KST 잠정 — 15:30 정규장 마감 종가·투자자별 잠정치·금투협 전 거래일분
+    - cron: '37 11 * * 1-5'   # 20:37 KST 확정 — 애프터마켓 20:00 마감 뒤 투자자별·ETF 투자자별
   workflow_dispatch:
     inputs:
       tag:
-        description: '1540(잠정) 또는 1840(확정)'
+        description: '0831(아침 확정) · 1540(잠정) · 1840(확정)'
         default: '1840'
 permissions:
   contents: write
@@ -16,7 +17,7 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -26,10 +27,10 @@ jobs:
       - run: pip install -r requirements.txt
       - name: 한글 글꼴(그래프용)
         run: sudo apt-get install -y -q fonts-nanum >/dev/null && fc-cache -f >/dev/null || echo "글꼴 설치 실패 — 그래프는 영문 표기"
-      - name: 실행 구분(15:40 → 1540, 18:40 → 1840)
+      - name: 실행 구분(08:31 → 0831, 15:37 → 1540, 20:37 → 1840)
         id: tag
         run: |
-          if [ -n "${{ github.event.inputs.tag }}" ]; then T="${{ github.event.inputs.tag }}"; else H=$(TZ=Asia/Seoul date +%H%M); if [ "$H" -lt 1730 ]; then T=1540; else T=1840; fi; fi
+          if [ -n "${{ github.event.inputs.tag }}" ]; then T="${{ github.event.inputs.tag }}"; else H=$(TZ=Asia/Seoul date +%H%M); if [ "$H" -lt 1200 ]; then T=0831; elif [ "$H" -lt 1730 ]; then T=1540; else T=1840; fi; fi
           echo "tag=$T" >> "$GITHUB_OUTPUT"; echo "실행 구분 $T ($(TZ=Asia/Seoul date))"
       - name: 수집 → 엑셀 갱신 → 재계산 → 보고 → 카카오톡
         env:
