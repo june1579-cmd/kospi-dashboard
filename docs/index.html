@@ -39,6 +39,8 @@ html,body{margin:0;background:var(--color-bg);color:var(--color-fg);font-family:
 window.dash = (function(){
   const FILES = {"lead_cmp": "lead_cmp.csv", "fut_daily": "fut_daily.csv", "credit": "credit.csv", "alarms": "alarms.csv", "ind_risk": "ind_risk.csv", "ind_scores": "ind_scores.csv", "events": "events.csv", "trend_years": "trend_years.csv", "q_years": "q_years.csv", "buy3": "buy3.csv", "flows": "flows.csv", "gap_table": "gap_table.csv", "episodes": "episodes.csv", "monthly": "monthly.csv", "credit_change": "credit_change.csv", "q_strat": "q_strat.csv", "q_models": "q_models.csv", "ret26": "ret26.csv", "leverage": "leverage.csv", "etf_lev": "etf_lev.csv", "trend_champ_rules": "trend_champ_rules.csv", "ind_now": "ind_now.csv", "ind_warn": "ind_warn.csv", "combo_wf": "combo_wf.csv", "reentry": "reentry.csv", "q_ic": "q_ic.csv", "q_daily": "q_daily.csv", "combo": "combo.csv", "q_sens": "q_sens.csv", "night_fut": "night_fut.csv", "concentration": "concentration.csv", "combo_select": "combo_select.csv", "ind_trade": "ind_trade.csv", "lag": "lag.csv", "q_attr": "q_attr.csv", "combo_table": "combo_table.csv", "liq": "liq_daily.csv", "market": "market_daily.csv", "fx_daily": "fx_daily.csv", "combo_now": "combo_now.csv", "flows_daily": "flows_daily.csv", "trend_champ": "trend_champ.csv", "q_now": "q_now.csv", "sell3": "sell3.csv"};
   const store = {}, calcs = {}, cbs = []; let loaded = false;
+  // 대시보드 실행기처럼 숫자 글자는 숫자로 바꾼다(날짜 '2026-10-30' 같은 글자는 그대로). 글자 그대로 두면 최소·최대 계산이 사전순이 되어 선이 엉킨다
+  const NUM = row => { for (const k in row) { const v = row[k]; if (v !== '' && v != null && /^-?\d+(\.\d+)?$/.test(v)) row[k] = +v; } return row; };
   for (const id in FILES) store[id] = {status: 'loading', data: null};
   const api = {
     colors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#17becf'],
@@ -49,7 +51,7 @@ window.dash = (function(){
       const v = Date.now();
       await Promise.all(Object.keys(FILES).map(async id => {
         try { const r = await fetch('data/' + FILES[id] + '?v=' + v, {cache: 'no-store'}); if (!r.ok) throw new Error('HTTP ' + r.status);
-          store[id] = {status: 'ok', data: d3.csvParse(await r.text())}; }
+          store[id] = {status: 'ok', data: d3.csvParse(await r.text(), NUM)}; }
         catch (e) { store[id] = {status: 'missing', data: null, error: String(e)}; }
       }));
       for (const id in calcs) runCalc(id);
