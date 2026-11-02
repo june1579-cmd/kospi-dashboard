@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
-"""run_pipeline.py — 하루 두 번(15:40 잠정, 18:40 확정) GitHub Actions 가 실행하는 전체 순서.
+"""run_pipeline.py — 평일 세 번 GitHub Actions 가 실행하는 전체 순서.
+   08:31(tag 0831, 전 거래일 확정 + VKOSPI 반영 — 공개 저장소가 08:10~08:15 에 VKOSPI 를 넣으므로 들어올 때까지 최대 30분 기다림)
+   15:37(tag 1540, 그날 종가·투자자별 잠정) · 20:37(tag 1840, 애프터마켓 20:00 마감 뒤 투자자별)
    1 수집(dashboard_collect.py) → 2 공개 저장소 받기 → 3 통합 원자료 엑셀 갱신(daily_update.py) → 4 대시보드 자료 재계산(pkg/reproduce.py)
    → 5 fx_daily·manifest → 6 보고문(report_signals.py) → 7 카카오톡(kakao_send.py)
    어느 단계가 실패해도 다음 단계로 가고, 실패 내용은 report/latest.md 와 카카오톡에 적는다.
-   사용: python run_pipeline.py --tag 1540|1840 [--no-collect] [--no-kakao]
+   사용: python run_pipeline.py --tag 0831|1540|1840 [--no-collect] [--no-kakao] [--no-wait]
 """
 import argparse, datetime as dt, glob, hashlib, json, os, shutil, subprocess, sys, traceback
 import pandas as pd
@@ -21,10 +23,33 @@ def run(cmd, name, timeout=1500):
         print(r.stderr[-3000:]); errors.append(f'{name} 실패(코드 {r.returncode}): ' + (r.stderr.strip().splitlines()[-1] if r.stderr.strip() else '')); return False
     return True
 
+def pub_sync():
+    if os.path.isdir(os.path.join(PUB, '.git')): return run(['git', '-C', PUB, 'pull', '--ff-only', '-q'], '공개 저장소 pull')
+    return run(['git', 'clone', '--depth', '1', '-q', PUB_URL, PUB], '공개 저장소 clone')
+def pub_dates():
+    """공개 저장소의 마지막 코스피 날짜와 마지막 VKOSPI 날짜"""
+    try:
+        ix = max(json.load(open(f'{PUB}/data/ledger/daum_index.json', encoding='utf-8'))['rows'])
+        vk = max(json.load(open(f'{PUB}/data/ledger/krx_vkospi.json', encoding='utf-8'))['rows'])
+        return ix, vk
+    except Exception as e: return None, None
+def wait_vkospi(limit_min=30, step_min=5):
+    """아침 실행: 공개 저장소에 전 거래일 VKOSPI 가 들어올 때까지 5분 간격, 최대 30분 기다린다"""
+    import time
+    t0 = time.time()
+    while True:
+        pub_sync(); ix, vk = pub_dates()
+        log(f'VKOSPI 확인: 공개 저장소 코스피 {ix} · VKOSPI {vk}')
+        if ix and vk and vk >= ix: return True
+        if time.time() - t0 >= limit_min * 60:
+            errors.append(f'VKOSPI {ix} 미반영(공개 저장소 {vk}까지, {limit_min}분 기다림) — VKOSPI 신호 판정 보류'); return False
+        time.sleep(step_min * 60)
+
 def main():
-    ap = argparse.ArgumentParser(); ap.add_argument('--tag', default=''); ap.add_argument('--no-collect', action='store_true'); ap.add_argument('--no-kakao', action='store_true'); ap.add_argument('--days', type=int, default=12); ap.add_argument('--collect-dir', default='', help='--no-collect 일 때 쓸 수집 폴더(없으면 수집 자료 없이 진행)')
+    ap = argparse.ArgumentParser(); ap.add_argument('--tag', default=''); ap.add_argument('--no-collect', action='store_true'); ap.add_argument('--no-kakao', action='store_true'); ap.add_argument('--days', type=int, default=12); ap.add_argument('--no-wait', action='store_true'); ap.add_argument('--collect-dir', default='', help='--no-collect 일 때 쓸 수집 폴더(없으면 수집 자료 없이 진행)')
     a = ap.parse_args(); now = dt.datetime.now(KST); today = now.date()
-    tag = a.tag or ('1540' if now.time() < dt.time(17, 30) else '1840')
+    tag = a.tag or ('0831' if now.time() < dt.time(12, 0) else '1540' if now.time() < dt.time(17, 30) else '1840')
+    if tag == '0831' and not a.no_wait: wait_vkospi()
     os.makedirs('data/collect', exist_ok=True); os.makedirs('out', exist_ok=True); os.makedirs('report', exist_ok=True)
     # 1 수집
     cdir = f'data/collect/dashboard_{today:%Y%m%d}_{tag}'
@@ -66,11 +91,15 @@ def main():
     ok6 = run([sys.executable, 'report_signals.py', '--out', 'out', '--report', 'report', '--tag', tag, '--summary', 'data/update_summary.json'], '6 보고문')
     # 새 자료가 없는 날(휴장 등): 18:40 에만 한 줄
     newdata = (kl == today.isoformat())
-    # 6b 카카오톡용 그래프·중요 변동(새 자료가 있는 날만)
+    if tag == '0831':
+        lm = 'state/last_morning.txt'; prev_kl = open(lm).read().strip() if os.path.exists(lm) else ''
+        newdata = bool(kl) and kl != prev_kl and (today - dt.date.fromisoformat(kl)).days <= 5
+        if newdata: os.makedirs('state', exist_ok=True); open(lm, 'w').write(kl)
+    # 6b 카카오톡용 그래프·중요 변동(새 자료가 있는 날 — 세 번 실행 모두)
     if os.path.exists('report/alerts.json'): os.remove('report/alerts.json')
-    if newdata: run([sys.executable, 'make_chart.py', '--out', 'out', '--report', 'report', '--signals', 'report/latest.json'], '6b 그래프')
+    if newdata: run([sys.executable, 'make_chart.py', '--out', 'out', '--report', 'report', '--signals', 'report/latest.json', '--tag', tag], '6b 그래프')
     if not newdata:
-        note = f'[대시보드 {today:%m/%d} {tag}] 오늘 날짜 자료 없음(휴장 또는 미공표). 최신 코스피 {kl}'
+        note = f'[대시보드 {today:%m/%d} {tag}] ' + ('새 자료 없음(휴장 다음 날 또는 이미 보냄)' if tag == '0831' else '오늘 날짜 자료 없음(휴장 또는 미공표)') + f'. 최신 코스피 {kl}'
         if errors: note += '\n오류: ' + ' | '.join(errors)[:120]
         if tag == '1840' or errors: open('report/kakao.txt', 'w', encoding='utf-8').write(note[:200] + '\n')
         else: open('report/kakao.txt', 'w', encoding='utf-8').write('')

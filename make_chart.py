@@ -126,6 +126,8 @@ def signal_chart(o, path):
     lo, hi = np.nanmin(P), np.nanmax(P); ax[0].set_ylim(lo - (hi - lo) * .3, hi + (hi - lo) * .3)
     on_today = [r[0] for r in rows if (n - 1) in r[2]]
     ax[0].set_title(T(f"매매 신호 전부 · 최근 60거래일 (~{md(days[-1])})", f"All signals, last 60 days (~{days[-1]})"), fontsize=12, loc='left')
+    _vk = M[M['vkospi'].notna()]['date'].max() if 'vkospi' in M.columns else None
+    if _vk and _vk != days[-1]: ax[0].text(0.01, 0.10, T(f'VKOSPI {md(_vk)}까지 반영 → 매수 최적화 1~3위·매도 민감·중간·엄격형 판정 보류', f'VKOSPI to {_vk}: VKOSPI signals pending'), transform=ax[0].transAxes, fontsize=7.5, color='#a33')
     ax[0].text(0.01, 0.03, T('▲ 매수 시작   ▼ 매도·청산 시작   색 = 아래 신호 이름 색(같은 날 여러 개면 쌓아 표시)', '^ buy start  v sell start'), transform=ax[0].transAxes, fontsize=7.5, color='#444')
     ax[0].text(0.99, 0.95, T('오늘 켜짐: ' + (', '.join(on_today) if on_today else '없음'), 'on today: ' + str(len(on_today))), transform=ax[0].transAxes, ha='right', va='top', fontsize=8, color='#a33', wrap=True,
                bbox=dict(facecolor='white', edgecolor='none', alpha=.85))
@@ -203,14 +205,15 @@ def chart(o, path):
     return ko
 
 def main():
-    ap = argparse.ArgumentParser(); ap.add_argument('--out', default='out'); ap.add_argument('--report', default='report'); ap.add_argument('--signals', default='')
+    ap = argparse.ArgumentParser(); ap.add_argument('--out', default='out'); ap.add_argument('--report', default='report'); ap.add_argument('--signals', default=''); ap.add_argument('--tag', default='')
     a = ap.parse_args(); os.makedirs(a.report, exist_ok=True)
-    sig = json.load(open(a.signals, encoding='utf-8')).get('signals_new', []) if a.signals and os.path.exists(a.signals) else []
+    LJ = json.load(open(a.signals, encoding='utf-8')) if a.signals and os.path.exists(a.signals) else {}
+    sig = LJ.get('signals_new', [])
     A = alerts(a.out, sig)
     ko = chart(a.out, os.path.join(a.report, 'chart.png'))
     on_today = signal_chart(a.out, os.path.join(a.report, 'signals.png'))
     M = rd(f'{a.out}/market_daily.csv'); d = str(M[M['kospi'].notna()].iloc[-1]['date'])
-    json.dump({'date': d, 'alerts': A, 'korean_font': ko, 'signals_on_today': on_today}, open(os.path.join(a.report, 'alerts.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    json.dump({'date': d, 'tag': a.tag, 'label': {'0831': '아침 확정', '1540': '잠정 15:37', '1840': '확정 20:37'}.get(a.tag, a.tag), 'alerts': A, 'korean_font': ko, 'signals_on_today': on_today, 'vkospi_hold': LJ.get('vkospi_hold', False), 'vkospi_date': (LJ.get('values') or {}).get('vkospi_date')}, open(os.path.join(a.report, 'alerts.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     print('그래프 report/chart.png · report/signals.png ·', '한글 글꼴' if ko else '한글 글꼴 없음(영문 표기)', '· 중요 변동', len(A), '건'); [print(' -', x) for x in A]
 
 if __name__ == '__main__': main()

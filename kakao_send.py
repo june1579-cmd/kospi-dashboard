@@ -53,7 +53,7 @@ def main():
         al = json.load(open(a.alerts, encoding='utf-8')); A = al.get('alerts', [])
         d = al.get('date', ''); dd = f'{int(d[5:7])}/{int(d[8:10])}' if len(d) >= 10 else d
         desc = ('\n'.join('· ' + x for x in A[:5]) + (f'\n외 {len(A) - 5}건' if len(A) > 5 else '')) if A else '중요 변동 없음 — 아래 요약 참고'
-        feed = {'object_type': 'feed', 'content': {'title': f'대시보드 {dd} · 중요 변동 {len(A)}건', 'description': desc[:230], 'image_url': chart, 'image_width': 800, 'image_height': 840,
+        feed = {'object_type': 'feed', 'content': {'title': f"대시보드 {dd} {al.get('label', '')} · 중요 변동 {len(A)}건", 'description': desc[:230], 'image_url': chart, 'image_width': 800, 'image_height': 840,
                                                    'link': {'web_url': a.link, 'mobile_web_url': a.link}},
                 'buttons': [{'title': '대시보드 열기', 'link': {'web_url': a.link, 'mobile_web_url': a.link}}]}
         t = requests.post('https://kapi.kakao.com/v2/api/talk/memo/default/send', headers=H, data={'template_object': json.dumps(feed, ensure_ascii=False)}, timeout=30)
@@ -64,6 +64,7 @@ def main():
         if sig_url:
             on = al.get('signals_on_today') or []
             sdesc = ('오늘 켜진 신호: ' + ', '.join(on)) if on else '오늘 켜진 신호 없음'
+            if al.get('vkospi_hold'): sdesc += f"\nVKOSPI {al.get('vkospi_date', '')}까지 → VKOSPI 신호 6개 판정 보류(다음 날 08:31 확정)"
             sdesc += '\n▲ 매수 시작 ▼ 매도·청산 시작 · 막대 = 켜진 기간'
             feed2 = {'object_type': 'feed', 'content': {'title': f'매매 신호 전부 {dd} · 켜짐 {len(on)}개', 'description': sdesc[:230], 'image_url': sig_url, 'image_width': 800, 'image_height': 840,
                                                         'link': {'web_url': a.link, 'mobile_web_url': a.link}},
