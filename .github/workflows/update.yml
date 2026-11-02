@@ -52,7 +52,7 @@ jobs:
           git commit -m "자동 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M') ${{ steps.tag.outputs.tag }}" || echo "변경 없음"
           git pull --rebase -q || true
           git push
-      - name: 카카오톡(그래프 + 요약) — push 뒤라 그래프 주소가 열린다
+      - name: 카카오톡(매수·매도 신호 발생/미발생 + 결론, 글만)
         env:
           KAKAO_REST_KEY: ${{ secrets.KAKAO_REST_KEY }}
           KAKAO_REFRESH_TOKEN: ${{ secrets.KAKAO_REFRESH_TOKEN }}
@@ -60,7 +60,6 @@ jobs:
           DASH_LINK: https://june1579-cmd.github.io/kospi-dashboard/   # 카톡 [대시보드 열기] → 웹판(GitHub Pages)
         run: |
           if [ -s report/kakao.txt ]; then
-            if [ -f report/alerts.json ] && [ -f report/chart.png ]; then B="https://raw.githubusercontent.com/${{ github.repository }}/$(git rev-parse HEAD)/report"; export CHART_URL="$B/chart.png"; [ -f report/signals.png ] && export SIGNAL_URL="$B/signals.png"; sleep 10; fi
             python kakao_send.py --file report/kakao.txt || echo "카카오톡 발송 실패(위 로그 참고)"
             git add -A state && git commit -m "카카오 토큰 연장" -q && git push -q || true
           fi
