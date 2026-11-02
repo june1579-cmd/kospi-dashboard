@@ -4,128 +4,78 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>미수 반대매매·신용 대시보드 웹판</title>
-<meta name="description" content="코스피 미수 반대매매·신용·매매 신호 — GitHub Actions 가 평일 08:31·15:37·20:37 자동 갱신">
+<meta name="description" content="코스피 미수 반대매매·신용·매매 신호 대시보드 웹판 — 저장소에 올라온 자료까지 보여준다">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
 <style>
-:root{--bg:#f6f7f9;--card:#fff;--tx:#1b1f24;--mut:#6b7280;--line:#e5e7eb;--up:#c62828;--dn:#1565c0;--acc:#1f3a93;--warn:#b45309;--hold:#6a1b9a;--chip:#eef0f4}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1216;--card:#171b21;--tx:#e6e8eb;--mut:#9aa3ad;--line:#2a3038;--up:#ef5350;--dn:#64b5f6;--acc:#90a4e8;--warn:#f59e0b;--hold:#ce93d8;--chip:#232932}}
-:root[data-theme="dark"]{--bg:#0f1216;--card:#171b21;--tx:#e6e8eb;--mut:#9aa3ad;--line:#2a3038;--up:#ef5350;--dn:#64b5f6;--acc:#90a4e8;--warn:#f59e0b;--hold:#ce93d8;--chip:#232932}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--tx);font-family:-apple-system,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",system-ui,sans-serif;font-size:15px;line-height:1.5;font-variant-numeric:tabular-nums}
-.wrap{max-width:860px;margin:0 auto;padding:12px 16px 48px}
-h1{font-size:19px;margin:8px 0 2px}
-h2{font-size:16px;margin:0 0 8px;color:var(--acc)}
-.sub{color:var(--mut);font-size:13px;margin:0 0 12px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin:0 0 12px}
-.tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-@media(min-width:600px){.tiles{grid-template-columns:repeat(4,1fr)}}
-.tile{background:var(--chip);border-radius:10px;padding:10px}
-.tile .k{font-size:12px;color:var(--mut)}
-.tile .v{font-size:18px;font-weight:700;margin-top:2px}
-.tile .d{font-size:12px;color:var(--mut)}
-.up{color:var(--up)}.dn{color:var(--dn)}.warn{color:var(--warn);font-weight:600}
-ul{margin:0;padding-left:18px}li{margin:3px 0}
-.sig{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-@media(min-width:600px){.sig{grid-template-columns:repeat(3,1fr)}}
-.chip{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:8px 10px;border-radius:9px;background:var(--chip);font-size:13px}
-.chip .st{font-weight:700;white-space:nowrap}
-.chip.on{outline:2px solid var(--up)}
-.chip.on.sell{outline-color:var(--dn)}
-.chip.hold{opacity:.75}
-.chip small{display:block;color:var(--mut);font-size:11px}
-.seg{display:flex;gap:6px;margin:0 0 8px;flex-wrap:wrap}
-.seg button{border:1px solid var(--line);background:var(--card);color:var(--tx);border-radius:999px;padding:5px 12px;font-size:13px;cursor:pointer}
-.seg button[aria-pressed="true"]{background:var(--acc);color:#fff;border-color:var(--acc)}
-img.chart{width:100%;height:auto;border-radius:8px;display:block;background:#fff}
-.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-table{border-collapse:collapse;width:100%;font-size:13px;white-space:nowrap}
-th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
-th{color:var(--mut);font-weight:600;font-size:12px}
-td.n,th.n{text-align:right}
-td.wrap{white-space:normal;min-width:220px}
-.note{font-size:12px;color:var(--mut);margin:8px 0 0}
-.foot{font-size:12px;color:var(--mut);text-align:center;margin-top:20px}
-a{color:var(--acc)}
-.err{background:#fde8e8;color:#8a1c1c;padding:10px;border-radius:8px}
-details summary{cursor:pointer;color:var(--acc);font-size:14px;margin:4px 0}
+:root{--font-anthropic-sans:-apple-system,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",system-ui,sans-serif;--font-anthropic-serif:"Noto Serif KR","Apple SD Gothic Neo",Georgia,serif;
+--color-bg:#f6f7f9;--color-panel:#ffffff;--color-fg:#1b1f24;--color-fg-muted:#6b7280;--color-border-line:#e5e7eb;--color-ok:#2e7d32;--color-bad:#c62828;
+--cds-font-size-title:22px;--cds-font-size-heading:17px;--cds-font-size-body:15px;--cds-font-size-caption:12.5px;--cds-font-weight-medium:600;
+--cds-gap-xs:6px;--cds-gap-sm:10px;--cds-gap-md:14px;--cds-gap-xl:28px;--cds-pad-xs:6px;--cds-pad-sm:10px;--cds-pad-md:14px;--cds-pad-lg:20px;--cds-radius:12px;--cds-border:1px solid var(--color-border-line);
+--cds-chart-grid:#e5e7eb;--cds-chart-axis:#9aa3ad;--cds-chart-reference:#9aa3ad;--cds-chart-muted:#b0b7c0;--cds-chart-status-critical:#c62828;--cds-text-secondary:#6b7280;--cds-surface-popover:#ffffff;--cds-shadow-popover:0 4px 16px rgba(0,0,0,.15);--cds-dur-slow:.3s}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--color-bg:#0f1216;--color-panel:#171b21;--color-fg:#e6e8eb;--color-fg-muted:#9aa3ad;--color-border-line:#2a3038;--color-ok:#66bb6a;--color-bad:#ef5350;--cds-chart-grid:#2a3038;--cds-chart-axis:#8a93a0;--cds-chart-reference:#8a93a0;--cds-chart-muted:#5c6570;--cds-text-secondary:#9aa3ad;--cds-surface-popover:#1e232b;--cds-shadow-popover:0 4px 16px rgba(0,0,0,.5)}}
+:root[data-theme="dark"]{--color-bg:#0f1216;--color-panel:#171b21;--color-fg:#e6e8eb;--color-fg-muted:#9aa3ad;--color-border-line:#2a3038;--color-ok:#66bb6a;--color-bad:#ef5350;--cds-chart-grid:#2a3038;--cds-chart-axis:#8a93a0;--cds-chart-reference:#8a93a0;--cds-chart-muted:#5c6570;--cds-text-secondary:#9aa3ad;--cds-surface-popover:#1e232b;--cds-shadow-popover:0 4px 16px rgba(0,0,0,.5)}
+html,body{margin:0;background:var(--color-bg);color:var(--color-fg);font-family:var(--font-anthropic-sans);font-size:var(--cds-font-size-body);line-height:1.5}
+#dash-root{max-width:1180px;margin:0 auto;padding:12px 14px 40px}
+#dash-root .rv-card{background:var(--color-panel)}
+.web-bar{font-size:12.5px;color:var(--color-fg-muted);margin:0 0 10px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
+.web-bar a{color:inherit}
+.web-bar button{border:1px solid var(--color-border-line);background:var(--color-panel);color:var(--color-fg);border-radius:999px;padding:3px 12px;font-size:12.5px;cursor:pointer}
+.dash-skeleton{position:relative;min-height:1em}
+.dash-skeleton::after{content:"";position:absolute;inset:0;border-radius:6px;background:linear-gradient(90deg,rgba(128,128,128,.08),rgba(128,128,128,.18),rgba(128,128,128,.08));background-size:200% 100%;animation:sk 1.2s infinite}
+@keyframes sk{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.web-err{background:#fde8e8;color:#8a1c1c;padding:10px;border-radius:8px;margin:0 0 12px}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <h1>2026 미수 반대매매·신용 대시보드 <span style="font-weight:400;font-size:14px;color:var(--mut)">웹판</span></h1>
-  <p class="sub" id="hdr">자료 불러오는 중…</p>
-  <div id="app"></div>
-  <p class="foot">자료: KRX·금융투자협회·공개 수집 저장소 · 계산: GitHub Actions(평일 08:31·15:37·20:37) · <a href="https://github.com/june1579-cmd/kospi-dashboard" target="_blank" rel="noopener">저장소</a> · <a href="https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c" target="_blank" rel="noopener">Claude 대시보드(결론 카드)</a><br>투자 권유 아님</p>
+<div id="dash-root">
+<div class="web-bar" id="web-bar"><span>웹판 · 자료 읽는 중…</span> <button type="button" onclick="location.href=location.pathname+'?r='+Date.now()">갱신</button> <a href="https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c" target="_blank" rel="noopener">Claude 대시보드</a> <a href="https://github.com/june1579-cmd/kospi-dashboard" target="_blank" rel="noopener">저장소</a></div>
+<div id="page"></div>
+<p class="web-bar" style="justify-content:center;margin-top:20px">투자 권유 아님</p>
 </div>
 <script>
+// 웹판 = Claude 대시보드 페이지(page.html, 아티팩트 files/index.html 과 같은 글)를 그대로 읽어 붙이고,
+// 대시보드 실행기(dash) 대신 data/*.csv 를 읽는 같은 API 를 제공한다. 자료는 저장소에 올라온 것까지(열 때마다 새로 읽음).
+// 업그레이드: 대시보드 페이지가 바뀌면 page.html 한 파일만 바꾸면 된다. 자료 파일 목록(data/*.csv)은 FILES 에 있다.
+window.dash = (function(){
+  const FILES = {"lead_cmp": "lead_cmp.csv", "fut_daily": "fut_daily.csv", "credit": "credit.csv", "alarms": "alarms.csv", "ind_risk": "ind_risk.csv", "ind_scores": "ind_scores.csv", "events": "events.csv", "trend_years": "trend_years.csv", "q_years": "q_years.csv", "buy3": "buy3.csv", "flows": "flows.csv", "gap_table": "gap_table.csv", "episodes": "episodes.csv", "monthly": "monthly.csv", "credit_change": "credit_change.csv", "q_strat": "q_strat.csv", "q_models": "q_models.csv", "ret26": "ret26.csv", "leverage": "leverage.csv", "etf_lev": "etf_lev.csv", "trend_champ_rules": "trend_champ_rules.csv", "ind_now": "ind_now.csv", "ind_warn": "ind_warn.csv", "combo_wf": "combo_wf.csv", "reentry": "reentry.csv", "q_ic": "q_ic.csv", "q_daily": "q_daily.csv", "combo": "combo.csv", "q_sens": "q_sens.csv", "night_fut": "night_fut.csv", "concentration": "concentration.csv", "combo_select": "combo_select.csv", "ind_trade": "ind_trade.csv", "lag": "lag.csv", "q_attr": "q_attr.csv", "combo_table": "combo_table.csv", "liq": "liq_daily.csv", "market": "market_daily.csv", "fx_daily": "fx_daily.csv", "combo_now": "combo_now.csv", "flows_daily": "flows_daily.csv", "trend_champ": "trend_champ.csv", "q_now": "q_now.csv", "sell3": "sell3.csv"};
+  const store = {}, calcs = {}, cbs = []; let loaded = false;
+  for (const id in FILES) store[id] = {status: 'loading', data: null};
+  const api = {
+    colors: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#17becf'],
+    data(id){ return store[id] || {status: 'missing', data: null}; },
+    calc(id, spec){ calcs[id] = spec; store[id] = {status: 'loading', data: null}; if (loaded) runCalc(id); },
+    onData(cb){ cbs.push(cb); if (loaded) cb(); },
+    async load(){
+      const v = Date.now();
+      await Promise.all(Object.keys(FILES).map(async id => {
+        try { const r = await fetch('data/' + FILES[id] + '?v=' + v, {cache: 'no-store'}); if (!r.ok) throw new Error('HTTP ' + r.status);
+          store[id] = {status: 'ok', data: d3.csvParse(await r.text())}; }
+        catch (e) { store[id] = {status: 'missing', data: null, error: String(e)}; }
+      }));
+      for (const id in calcs) runCalc(id);
+      loaded = true; cbs.forEach(cb => { try { cb(); } catch (e) { console.error(e); } });
+      const miss = Object.keys(store).filter(k => store[k].status === 'missing' && !(k in calcs));
+      if (miss.length) { const d = document.createElement('div'); d.className = 'web-err'; d.textContent = '읽지 못한 자료: ' + miss.join(', '); document.getElementById('page').prepend(d); }
+      try { const r = await fetch('meta.json?v=' + v, {cache: 'no-store'}); const m = await r.json();
+        document.querySelector('#web-bar span').textContent = `웹판 · ${m.label} · 계산 ${m.run_at} KST · 코스피 ${m.kospi} · 금투협 ${m.kofia} · VKOSPI ${m.vkospi} 기준 · 자료 ${m.built_at}`; } catch (e) {}
+    }
+  };
+  function runCalc(id){ const s = calcs[id]; const ins = s.inputs.map(k => store[k]);
+    if (ins.every(x => x && x.status === 'ok')) { try { store[id] = {status: 'ok', data: s.fn(...ins.map(x => x.data))}; } catch (e) { store[id] = {status: 'error', data: null, error: String(e)}; } }
+    else store[id] = {status: ins.some(x => !x || ['error','missing'].includes(x.status)) ? 'missing' : 'loading', data: null}; }
+  return api;
+})();
 (async function(){
-  const $ = (h) => { const d = document.createElement('div'); d.innerHTML = h; return d.firstElementChild; };
-  const app = document.getElementById('app'), hdr = document.getElementById('hdr');
-  const md = s => s ? (+s.slice(5,7)) + '/' + (+s.slice(8,10)) : '—';
-  const f = (v, n=2) => (v == null || v === '' || isNaN(+v)) ? '—' : (+v).toLocaleString('ko-KR', {minimumFractionDigits:n, maximumFractionDigits:n});
-  const sg = (v, n=2) => (v == null || v === '' || isNaN(+v)) ? '—' : ((+v > 0 ? '+' : (+v < 0 ? '−' : '')) + f(Math.abs(+v), n));
-  const cls = v => (+v > 0 ? 'up' : (+v < 0 ? 'dn' : ''));
-  const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-  let D;
-  try { const r = await fetch('data.json?t=' + Date.now(), {cache:'no-store'}); if (!r.ok) throw new Error('HTTP ' + r.status); D = await r.json(); }
-  catch (e) { hdr.textContent = ''; app.appendChild($('<div class="err">자료(data.json)를 읽지 못했습니다: ' + esc(e.message) + ' — GitHub Actions 가 아직 한 번도 돌지 않았거나 Pages 설정(Settings → Pages → main /docs)이 안 된 상태입니다.</div>')); return; }
-  const L = D.latest || {}, V = L.values || {}, dd = L.data_dates || {};
-  hdr.textContent = `${D.label} · 코스피 ${dd.kospi || '—'} · 금투협 ${dd.kofia || '—'} · VKOSPI ${dd.vkospi || '—'} 기준 · 계산 ${L.run_at || '—'} KST · 페이지 자료 ${D.built_at}`;
-
-  // 1. 오늘 요약
-  const q = D.q[D.q.length - 1] || {}, m = D.market[D.market.length - 1] || {}, c = D.credit[D.credit.length - 1] || {}, l = D.liq[D.liq.length - 1] || {}, fl = D.flows[D.flows.length - 1] || {};
-  const cd = c.credit_jo && c.deposit_jo ? c.credit_jo / c.deposit_jo * 100 : null;
-  const tiles = [
-    ['코스피 ' + md(m.date), `<span class="${cls(m.kospi_chg_pct)}">${f(m.kospi)}</span>`, `${sg(m.kospi_chg_pct)}%` + (m.kosdaq ? ` · 코스닥 ${f(m.kosdaq)}` : '')],
-    ['VKOSPI ' + md(V.vkospi_date || dd.vkospi), f(V.vkospi), (dd.vkospi !== dd.kospi ? '당일 미수집(다음 날 08:31 반영)' : '당일 종가')],
-    ['국면', esc(q.regime || '—'), `5일 급락 ${f(q.p_risk*100,0)}% (기준 27%) · 10일↑ ${f(q.p_up*100,0)}%`],
-    ['신용융자 ' + md(c.date), f(c.credit_jo) + '조', `${sg(c.chg_pct)}% · 예탁금 ${f(c.deposit_jo,1)}조 · 비율 ${f(cd,1)}%`],
-    ['미수 반대매매 ' + md(l.date), f(l.liq_eok,0) + '억', `비중 ${f(l.ratio_pct,1)}% (경계 5%) · 미수금 ${f(l.misu_eok,0)}억`],
-    ['외국인 ' + md(fl.date), `<span class="${cls(fl.foreign_jo)}">${sg(fl.foreign_jo*10000,0)}억</span>`, `기관 ${sg(fl.inst_jo*10000,0)} · 개인 ${sg(fl.indiv_jo*10000,0)}` + (/잠정/.test(fl.basis||'') ? ' (잠정)' : '')],
-  ];
-  const cs = (L.consensus || {}).now, cp = (L.consensus || {}).p1;
-  if (cs) tiles.push(['12개 해 합의', `상승 ${cs.up} · 하락 ${cs.dn}`, `상승 ${f(cs.pct,0)}%` + (cp ? ` (전 거래일 ${f(cp.pct,0)}%)` : '')]);
-  const nt = (D.night || [])[0];
-  if (nt) tiles.push(['야간선물 ' + md(nt.night_date), `<span class="${cls(nt.night_pct)}">${sg(nt.night_pct)}%</span>`, `${f(nt.night_close)} (주간 ${f(nt.day_close)})` + (nt.gap_next != null ? ` · 다음 날 갭 ${sg(nt.gap_next)}%` : '')]);
-  app.appendChild($(`<div class="card"><h2>오늘 요약</h2><div class="tiles">${tiles.map(t => `<div class="tile"><div class="k">${t[0]}</div><div class="v">${t[1]}</div><div class="d">${t[2]}</div></div>`).join('')}</div></div>`));
-
-  // 2. 중요 변동
-  const A = D.alerts || [];
-  app.appendChild($(`<div class="card"><h2>중요 변동 ${A.length ? A.length + '건' : ''}</h2>${A.length ? '<ul>' + A.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul>' : '<p class="sub" style="margin:0">중요 변동 없음(코스피 ±3%, VKOSPI 5일 +25%, 국면·확률·반대매매 비중 경계 통과, 신용 −2.5%, 외국인 ±1조, 큰 흐름 줄 전환, 12개 해 합의 2줄 이상, 새 신호, 조합 1위 교체)</p>'}</div>`));
-
-  // 3. 매매 신호
-  const hold = !!L.vkospi_hold;
-  const chips = D.signals.map(s => { const sell = s.side === '매도'; const pending = hold && s.vk && !s.on;
-    return `<div class="chip ${s.on ? 'on' : ''} ${sell ? 'sell' : ''} ${pending ? 'hold' : ''}"><span>${esc(s.name)}<small>마지막 시작 ${s.last_start ? md(s.last_start) + (s.last_start.slice(0,4) !== (dd.kospi||'').slice(0,4) ? '/' + s.last_start.slice(2,4) : '') : '—'}</small></span><span class="st ${s.on ? (sell ? 'dn' : 'up') : ''}">${s.on ? '켜짐' : (pending ? '보류' : '꺼짐')}</span></div>`; }).join('');
-  const re = D.reentry, qt = D.q_trade, cb = L.combo || {};
-  const late = (L.signals_late || []).map(s => `★ 늦게 확인(VKOSPI 반영): ${esc(s.label)} ${md(s.date)} 시작`);
-  const extra = [`재진입 규칙: <b class="${re && re.state === '보유' ? 'up' : ''}">${re ? esc(re.state) : '—'}</b> (마지막 ${re ? md(re.date) + ' ' + esc(re.action) : '—'})`,
-                 `정밀 검증 전략: ${qt ? (qt.trade === 'enter' ? '<b class="up">보유</b>' : '현금') + ' (마지막 ' + md(qt.date) + ' ' + (qt.trade === 'enter' ? '진입' : '청산') + ')' : '—'}`,
-                 cb.top_combo ? `조합 1위(매월 재선정): <b>${esc(cb.top_combo)}</b> · ${md(cb.chosen_since)} 선정 · 지금 ${esc(cb.state)}` + (cb.warn ? ` · <span class="warn">경고: ${esc(cb.warn)}</span>` : '') : ''].filter(Boolean);
-  app.appendChild($(`<div class="card"><h2>매매 신호 14개 — ${md(dd.kospi)} 종가 기준</h2>${hold ? `<p class="sub">VKOSPI 가 ${md(dd.vkospi)}까지만 있어 VKOSPI 가 들어가는 신호 6개(매수 최적화 1~3위, 매도 민감·중간·엄격형)는 <b>판정 보류</b> — 다음 날 08:31 실행에서 확정</p>` : ''}${late.length ? '<ul>' + late.map(x => '<li class="warn">' + x + '</li>').join('') + '</ul>' : ''}<div class="sig">${chips}</div><ul style="margin-top:10px">${extra.map(x => '<li>' + x + '</li>').join('')}</ul><p class="note">빨간 테두리 = 매수 신호 켜짐, 파란 테두리 = 매도 신호 켜짐. 규칙은 아래 표 참고.</p></div>`));
-
-  // 4. 그래프
-  const im = D.images || {}; const has = k => k in im;
-  const period = localStorage ? (function(){ try { return localStorage.getItem('web_period') || '60'; } catch(e) { return '60'; } })() : '60';
-  const gcard = $(`<div class="card"><h2>그래프</h2><div class="seg" role="group"><button data-p="60">최근 60거래일</button><button data-p="250">최근 250거래일</button></div><img class="chart" id="img1" alt="코스피·반대매매·신용·외국인 그래프"><div style="height:10px"></div><img class="chart" id="img2" alt="매매 신호 전부 그래프"><p class="note">위: 코스피(국면 배경색, ▲매수·▼매도 신호 시작), 미수 반대매매·비중, 신용융자, 외국인·12개 해 합의. 아래: 신호 14개의 켜진 기간(막대)과 시작(▲▼), 색은 신호별. 카카오톡으로 받는 그림과 같다.</p></div>`);
-  app.appendChild(gcard);
-  function setP(p){ if (p === '250' && !has('chart_250.png')) p = '60'; gcard.querySelectorAll('.seg button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.p === p)));
-    gcard.querySelector('#img1').src = `img/chart_${p}.png?v=${im['chart_' + p + '.png'] || 0}`; gcard.querySelector('#img2').src = `img/signals_${p}.png?v=${im['signals_' + p + '.png'] || 0}`; try { localStorage.setItem('web_period', p); } catch(e) {} }
-  gcard.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => setP(b.dataset.p))); setP(period);
-
-  // 5. 큰 흐름: 12개 해 합의 + 그해 1위 표
-  const cr = (D.champ_rules || []).slice().sort((a, b) => (+b.acc_r60 - +a.acc_r60) || (+b.acc_r20 - +a.acc_r20));
-  const ys = D.champ_years || [];
-  app.appendChild($(`<div class="card"><h2>큰 흐름 — 그해 1위 조합 12줄</h2><p class="sub">지금 판단: ${ys.map(y => `<span class="${y.dir === 1 ? 'up' : (y.dir === -1 ? 'dn' : '')}">${y.year.slice(2)}년 ${y.dir === 1 ? '↑' : (y.dir === -1 ? '↓' : '—')}</span>`).join(' · ')}${cs ? ` → 상승 ${cs.up}/12 (${f(cs.pct,0)}%)` : ''}</p><div class="tbl-wrap"><table><thead><tr><th>그해</th><th>조합</th><th class="n">최근 60일</th><th class="n">최근 20일</th><th class="n">올해</th><th class="n">다음 해</th><th>지금</th></tr></thead><tbody>${cr.map(r => `<tr><td>${esc(r.year)}</td><td class="wrap">${esc(r.rule)}</td><td class="n">${f(r.acc_r60,1)}</td><td class="n">${f(r.acc_r20,1)}</td><td class="n">${f(r.acc_last_year,1)}</td><td class="n">${r.acc_next === '' || r.acc_next == null ? '—' : f(r.acc_next,1)}</td><td class="${r.now === '상승' ? 'up' : 'dn'}">${esc(r.now)}</td></tr>`).join('')}</tbody></table></div><p class="note">숫자 = 그 기간에 판단이 실제 큰 흐름(10% 전환 기준)과 같았던 날 비율(%). 현재 적합순(최근 60일). '다음 해'가 실제로 썼을 때의 성적.</p></div>`));
-
-  // 6. 조합 감시
-  const cn = (D.combo_now || [])[0], wf = D.combo_wf || [], ct = (D.combo_table || []).filter(r => r.eligible === true || r.eligible === 'True' || r.eligible === 1).slice(0, 12);
-  app.appendChild($(`<div class="card"><h2>매수×매도 조합 49개 — 1위 자동 선정</h2>${cn ? `<p class="sub"><b>지금 1위: ${esc(cn.top_combo)}</b> (${md(cn.chosen_since)} 선정 · 지난 250거래일 ${sg(cn.win_ret_250,1)}%, 거래 ${cn.win_trades}건 적중 ${f(cn.win_hit,0)}%) · 지금 <b>${esc(cn.state)}</b> · 선정 뒤 ${sg(cn.since_ret,1)}% (코스피 ${sg(cn.since_kospi,1)}%) · 다음 재선정 ${esc(cn.next_select)}${cn.warn ? ` · <span class="warn">경고: ${esc(cn.warn)}</span>` : ''}</p>` : ''}
-    <details><summary>선택 규칙 걸어가며 검증(2016~)</summary><div class="tbl-wrap"><table><thead><tr><th>연도</th><th class="n">선택 규칙 %</th><th class="n">코스피 %</th><th class="n">고정 조합 %</th><th class="n">교체</th><th>가장 오래 뽑힌 조합</th></tr></thead><tbody>${wf.map(r => `<tr><td>${esc(r.year)}</td><td class="n ${cls(r.walkforward_ret)}">${sg(r.walkforward_ret,1)}</td><td class="n">${sg(r.kospi_ret,1)}</td><td class="n">${sg(r.fixed_ret,1)}</td><td class="n">${r.changes}</td><td>${esc(r.top_combo)}</td></tr>`).join('')}</tbody></table></div><p class="note">규칙: 매월 첫 거래일에 지난 250거래일 수익 1위(닫힌 거래 2건 이상). 고정 조합 = ${esc((wf[0]||{}).fixed_combo || '')}. 2016~24년은 신호를 만든 구간이라 사후 성적이 섞여 있고, 2025~26년이 실사용 성적.</p></details>
-    <details><summary>조합 성적표 상위 12 (최근 250거래일 순)</summary><div class="tbl-wrap"><table><thead><tr><th class="n">순위</th><th>매수 → 매도</th><th class="n">250일 %</th><th class="n">거래·적중</th><th class="n">낙폭 %</th><th class="n">2026 %</th><th class="n">2015~25 %</th><th class="n">적중 %</th><th>지금</th></tr></thead><tbody>${ct.map(r => `<tr><td class="n">${f(r.rank_250,0)}</td><td>${esc(r.combo)}</td><td class="n ${cls(r.ret_250)}">${sg(r.ret_250,1)}</td><td class="n">${r.trades_250}건 · ${f(r.hit_250,0)}%</td><td class="n">${sg(r.mdd_250,1)}</td><td class="n">${sg(r.ret_2026,1)}</td><td class="n">${sg(r.ret_2015_25,1)}</td><td class="n">${f(r.hit_2015_25,0)}</td><td>${esc(r.state)}${r.open_since ? ' (' + md(r.open_since) + '~ ' + sg(r.open_ret,1) + '%)' : ''}</td></tr>`).join('')}</tbody></table></div></details></div>`));
-
-  // 7. 정밀 검증 현재 값 + 신호 규칙
-  app.appendChild($(`<div class="card"><h2>정밀 검증 현재 값</h2><div class="tbl-wrap"><table><thead><tr><th>항목</th><th class="n">값</th><th>설명</th></tr></thead><tbody>${(D.q_now||[]).map(r => `<tr><td>${esc(r.item)}</td><td class="n">${r.value == null || r.value === '' ? '—' : f(r.value,1)}</td><td class="wrap">${esc(r.text)}</td></tr>`).join('')}</tbody></table></div>
-    <details style="margin-top:8px"><summary>신호 14개 규칙</summary><div class="tbl-wrap"><table><thead><tr><th>신호</th><th>규칙</th></tr></thead><tbody>${D.signals.map(s => `<tr><td>${esc(s.name)}</td><td class="wrap">${esc(s.rule)}</td></tr>`).join('')}<tr><td>재진입 규칙</td><td class="wrap">엄격형 매수·매도 신호로 사고팔고, 산 뒤 10거래일부터 10일선 &lt; 104일선이면 다시 팔고(재매도), 판 뒤 RSI14 &gt; 60이면 다시 산다(재매수)</td></tr><tr><td>정밀 검증 전략</td><td class="wrap">부스팅 모형 10일 상승 확률 규칙으로 진입, 10일 보유 뒤 청산(위험 신호 시 보류)</td></tr></tbody></table></div></details></div>`));
+  const host = document.getElementById('page');
+  try {
+    const r = await fetch('page.html?v=' + Date.now(), {cache: 'no-store'}); if (!r.ok) throw new Error('HTTP ' + r.status);
+    const doc = new DOMParser().parseFromString(await r.text(), 'text/html');
+    doc.querySelectorAll('style').forEach(s => document.head.appendChild(s.cloneNode(true)));
+    const scripts = Array.from(doc.querySelectorAll('script')); scripts.forEach(s => s.remove());
+    Array.from(doc.body.childNodes).forEach(n => host.appendChild(document.importNode(n, true)));
+    scripts.forEach(s => { const e = document.createElement('script'); e.textContent = s.textContent; document.body.appendChild(e); });   // 페이지 코드 실행(대시보드와 같은 코드)
+    await window.dash.load();
+  } catch (e) { host.innerHTML = '<div class="web-err">페이지(page.html)를 읽지 못했습니다: ' + String(e).replace(/</g, '&lt;') + '</div>'; }
 })();
 </script>
 </body>

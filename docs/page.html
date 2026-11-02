@@ -1,0 +1,1760 @@
+<style>
+#dash-root .rv{font-family:var(--font-anthropic-sans);display:flex;flex-direction:column;gap:var(--cds-gap-md);font-variant-numeric:tabular-nums}
+.rv .rv-head h1{font-family:var(--font-anthropic-serif);font-weight:400;font-size:var(--cds-font-size-title);margin:0}
+.rv .rv-lede{font-size:var(--cds-font-size-body);margin:var(--cds-gap-xs) 0 0;max-width:62rem;line-height:1.55}
+.rv .rv-lede b,.rv .rv-card b,.rv .rv-concl b{font-weight:500}
+.rv .rv-asof{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin:var(--cds-gap-xs) 0 0}
+.rv .rv-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,9rem),1fr));gap:var(--cds-gap-sm)}
+.rv details.rv-more>summary{cursor:pointer;font-size:var(--cds-font-size-body);font-weight:var(--cds-font-weight-medium);padding:var(--cds-pad-sm) 0;color:var(--color-fg-muted)}
+.rv details.rv-more[open]>summary{margin-bottom:var(--cds-gap-md)}
+.rv .rv-more-body{display:flex;flex-direction:column;gap:var(--cds-gap-xl)}
+.rv .rv-all-card{padding:var(--cds-pad-md)}
+.rv .rv-kpi,.rv .rv-card{background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:var(--cds-radius)}
+.rv .rv-kpi{padding:var(--cds-pad-sm) var(--cds-pad-md);display:flex;flex-direction:column;gap:2px}
+.rv .rv-kpi-l{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.rv .rv-kpi-v{font-family:var(--font-anthropic-serif);font-weight:400;font-size:var(--cds-font-size-heading)}
+.rv .rv-kpi-u{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin-left:.15rem}
+.rv .rv-kpi-n{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.rv h2{font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0 0 var(--cds-gap-sm)}
+.rv .rv-sec-note{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin:0 0 var(--cds-gap-md)}
+.rv .rv-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,26rem),1fr));gap:var(--cds-gap-md)}
+.rv .rv-card{padding:var(--cds-pad-lg);min-width:0}
+.rv .rv-card h3{font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0}
+.rv .rv-note{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin:var(--cds-gap-xs) 0 var(--cds-gap-sm);line-height:1.5}
+.rv .rv-chart{position:relative;min-height:260px}
+.rv .rv-chart.rv-tall{min-height:300px}
+.rv .rv-chart svg{display:block;overflow:visible}
+.rv .rv-tick{font-size:var(--cds-font-size-caption);fill:var(--color-fg-muted)}
+.rv .rv-legend{display:flex;flex-wrap:wrap;gap:var(--cds-gap-md);font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin-bottom:var(--cds-gap-xs)}
+.rv .rv-legend span{display:inline-flex;align-items:center;gap:.35rem}
+.rv .rv-sw{display:inline-block;width:.6rem;height:.6rem;border-radius:2px;flex:none}
+.rv .rv-tip{position:absolute;z-index:2;background:var(--cds-surface-popover);border:1px solid var(--cds-border);border-radius:var(--cds-radius);box-shadow:var(--cds-shadow-popover);padding:var(--cds-pad-xs) var(--cds-pad-sm);font-size:var(--cds-font-size-caption);pointer-events:none;white-space:nowrap}
+.rv .rv-tip-h{color:var(--cds-text-secondary);margin-bottom:2px}
+.rv .rv-tip-r{display:flex;align-items:center;gap:.35rem}
+.rv .rv-fail{display:flex;align-items:center;justify-content:center;gap:.5rem;min-height:inherit;color:var(--color-fg-muted);font-size:var(--cds-font-size-caption)}
+.rv .rv-dot{width:.375rem;height:.375rem;border-radius:50%;background:var(--color-bad)}
+.rv .rv-tbl-wrap{overflow:auto;max-height:28rem}
+.rv table.rv-tbl{width:100%;border-collapse:collapse;font-size:var(--cds-font-size-caption)}
+.rv .rv-tbl th{text-align:left;font-weight:var(--cds-font-weight-medium);color:var(--color-fg-muted);padding:var(--cds-pad-xs) var(--cds-pad-sm);border-bottom:1px solid var(--color-border-line);position:sticky;top:0;background:var(--color-panel)}
+.rv .rv-tbl td{padding:var(--cds-pad-xs) var(--cds-pad-sm);border-bottom:1px solid var(--color-border-line);vertical-align:top}
+.rv .rv-tbl .rv-num{text-align:right;white-space:nowrap}
+.rv .rv-tbl th.rv-num{text-align:right}
+.rv .rv-concl{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,20rem),1fr));gap:var(--cds-gap-md)}
+.rv .rv-list{margin:var(--cds-gap-sm) 0 0;padding-left:1.1rem;font-size:var(--cds-font-size-body);line-height:1.55}
+.rv .rv-list li{margin-bottom:var(--cds-gap-xs)}
+.rv .rv-concl ul{margin:var(--cds-gap-sm) 0 0;padding-left:1.1rem;font-size:var(--cds-font-size-body);line-height:1.55}
+.rv .rv-concl li{margin-bottom:var(--cds-gap-xs)}
+.rv .rv-verdict{font-family:var(--font-anthropic-serif);font-size:var(--cds-font-size-heading);margin:var(--cds-gap-sm) 0 0;line-height:1.45}
+.rv .rv-all-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:var(--cds-gap-md)}
+.rv .rv-seg{display:inline-flex;border:1px solid var(--color-border-line);border-radius:var(--cds-radius);overflow:hidden;flex:none}
+.rv .rv-seg button{font:inherit;font-size:var(--cds-font-size-caption);background:transparent;color:var(--color-fg-muted);border:0;padding:var(--cds-pad-xs) var(--cds-pad-sm);cursor:pointer}
+.rv .rv-seg button[aria-pressed=true]{background:var(--color-bg);color:var(--color-fg)}
+.rv .rv-ctl{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:var(--cds-gap-sm)}
+.rv .rv-zoom button{min-width:2.1rem;font-size:var(--cds-font-size-body);color:var(--color-fg)}
+.rv .rv-seg button:disabled{opacity:.35;cursor:default}
+.rv .rv-tsort{flex-wrap:wrap;max-width:100%}
+.rv .rv-ctl-lab{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.rv .rv-tbl tr.rv-ref td{color:var(--color-fg-muted)}
+.rv .rv-tbl td.rv-rule{min-width:16rem}
+.rv .rv-tbl td.rv-nw{white-space:nowrap}
+@media (max-width:560px){.rv .rv-tsort .rv-yy{display:none}}
+.rv .rv-win{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);white-space:nowrap}
+.rv .rv-per-d{margin:var(--cds-gap-xs) 0 0}
+@media (max-width:560px){.rv .rv-per .rv-yy{display:none}}
+.rv .rv-lgbtn{font:inherit;display:inline-flex;align-items:center;gap:.35rem;background:transparent;border:0;padding:0;color:var(--color-fg);cursor:pointer}
+.rv .rv-lgbtn[aria-pressed=false]{color:var(--color-fg-muted);text-decoration:line-through;opacity:.6}
+.rv .rv-ptitle{font-size:var(--cds-font-size-caption);fill:var(--color-fg);font-weight:500}
+.rv .rv-sigsw{display:inline-block;width:.7rem;height:.6rem;margin-right:.35rem;vertical-align:baseline}
+.rv #sig-tbl{min-width:40rem}
+.rv #sig-tbl td:first-child,.rv #sig-tbl td:nth-child(3){white-space:nowrap}
+.rv #lead-tbl{min-width:58rem}
+.rv #lead-tbl td:first-child{white-space:nowrap}
+.rv #lead-tbl td:nth-child(6){min-width:16rem}
+.rv .rv-ovnote{font-size:var(--cds-font-size-caption);color:var(--color-fg);margin:0 0 var(--cds-gap-xs);font-weight:500}
+.rv [data-dash-source-state=empty]{color:transparent}
+.rv [data-dash-source-state=refreshing]{opacity:.5;transition:opacity var(--cds-dur-slow)}
+.rv .rv-qa-list{margin:var(--cds-gap-xs) 0 0;padding-left:1.1rem;font-size:var(--cds-font-size-body);line-height:1.55}
+.rv .rv-qa-list li{margin-bottom:var(--cds-gap-xs)}
+.rv .rv-qa-h{font-size:var(--cds-font-size-caption);font-weight:var(--cds-font-weight-medium);margin:0 0 var(--cds-gap-xs)}
+.rv #qa-card .rv-tbl td.rv-miss{color:var(--color-fg-muted);font-style:italic}
+</style>
+
+<div class="rv">
+  <header class="rv-head" id="top">
+    <h1>2026 미수 반대매매·신용 대시보드</h1>
+    <p class="rv-lede">10월 미수 반대매매는 10/14 <b><span class="rv-v dash-skeleton" data-source="liq" data-field="liq_eok" data-where="date=2026-10-14" data-fmt="1">—</span>억원</b>(미수금 대비 <span class="rv-v" data-source="liq" data-field="ratio_pct" data-where="date=2026-10-14" data-fmt="1">—</span>%)으로 정점이었지만 6/9 정점 <span class="rv-v" data-source="liq" data-field="liq_eok" data-where="date=2026-06-09" data-fmt="1">—</span>억원보다 작다. 10/15 급락분의 청산도 10/16 <span class="rv-v" data-source="liq" data-field="liq_eok" data-where="date=2026-10-16" data-fmt="0">—</span>억원, 10/19 <span class="rv-v" data-source="liq" data-field="liq_eok" data-where="date=2026-10-19" data-fmt="0">—</span>억원(비중 <span class="rv-v" data-source="liq" data-field="ratio_pct" data-where="date=2026-10-16" data-fmt="1">—</span>·<span class="rv-v" data-source="liq" data-field="ratio_pct" data-where="date=2026-10-19" data-fmt="1">—</span>%)으로 줄었고, 신용 일일 감소율도 10/19 <span class="rv-v" data-source="credit_change" data-field="chg_pct" data-where="event=2026년 10월 19일" data-fmt="1">—</span>%로 과거 항복 구간(<span class="rv-v" data-source="credit_change" data-field="chg_pct" data-where="event=2020년 3월" data-fmt="0">—</span>~<span class="rv-v" data-source="credit_change" data-field="chg_pct" data-where="event=2008년 9월" data-fmt="0">—</span>%)에 못 미친다. 청산 정점은 지났을 수 있지만 레버리지 정리는 끝나지 않았다.</p>
+    <p class="rv-asof" id="asof-auto">기준: 자료를 읽는 중…</p>
+    <p class="rv-asof">자료는 평일 08:31(전 거래일 확정·VKOSPI 반영)·15:37(정규장 마감 뒤 잠정)·20:37(확정) 세 번 자동 수집해 반영한다(GitHub Actions → 대시보드·웹판). 시가·고가·저가처럼 받지 못한 칸은 추정으로 채우지 않고 비워 둔다. 수기 메모(10/27판): 코스피·투자자별·코스피200·레버리지 ETF 10/20~10/26은 KRX 정보데이터시스템 자동 수집(pykrx) 파일, 10/20~10/22는 먼저 받은 KRX 파일과 일치. VKOSPI 10/26은 KRX 종가를 공개 수집으로(시가·고가·저가 확인 불가). 원/달러 10/26부터는 국제 현물 환율(10/23까지의 중간값과 기준이 약간 다름). 레버리지 ETF 설정·환매는 상장좌수가 있는 날까지, 투자자별은 10/20까지. 야간선물 10/23 저녁장은 HTS 일자별(공개 사이트 종가 861.70 일치).</p>
+    <p class="rv-asof">미수 반대매매 = 금투협 '위탁매매 미수금 대비 실제 반대매매'. 신용융자 담보부족 반대매매는 포함되지 않는다. 비중 = 당일 미수 반대매매 ÷ 전일 미수금. 참고: 금감원 발표 5월 일평균(주요 10개 증권사 기준) 신용+미수 반대매매 373.6억원, 이 중 미수 297.6억원(미수 비중 약 80%, 파이낸셜뉴스 6/24 보도). 집계 기준이 달라 이 대시보드 수치와 합산하지 않는다.</p>
+  </header>
+
+  <section id="qtop">
+    <div class="rv-grid">
+      <div class="rv-card" style="grid-column:1/-1">
+        <h3 id="q-title">코스피 국면과 검증 구간의 확률·매매</h3>
+        <p class="rv-note">8. 정밀 검증(2006~2026 자료 · 12년 학습 · 연도별 검증)의 그래프. 해마다 앞 12년 자료로 학습한 모형이 그 해를 처음 보는 자료로 예측한 확률(2018년부터, 자료가 들어올 때마다 다시 계산). 위: 코스피와 국면 색 띠 — 고변동 청산 = 신용 5일 −3% 이하 또는 VKOSPI 5일 +25% 이상, 상승·하락 추세 = 20일선 위·아래이면서 20일 수익률 ±3% 밖, 나머지 횡보. 아래: 10일 상승 확률과 5일 내 급락·청산 확률(부스팅). 2018~2026 검증 AUC는 10일 상승 <span class="rv-v" data-source="q_models" data-field="auc" data-where="target=10일 상승&amp;model=부스팅" data-fmt="2">—</span>(0.5 = 동전 던지기), 급락·청산 <span class="rv-v" data-source="q_models" data-field="auc" data-where="target=5일 내 급락·청산&amp;model=부스팅" data-fmt="2">—</span>. 처음엔 2025~2026, 단추로 2년씩.</p>
+        <div class="rv-seg rv-per" id="q-per" role="group" aria-label="2년 단위 기간"></div>
+        <div class="rv-legend" id="q-legend"></div>
+        <div class="rv-chart dash-skeleton" id="q-chart" data-source="q_daily" style="min-height:360px"></div>
+      </div>
+      <div class="rv-card" style="grid-column:1/-1" id="qa-card">
+        <h3>확률이 바뀐 이유 <span id="qa-dates" style="font-weight:400;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)"></span></h3>
+        <ul id="qa-sum" class="rv-qa-list"><li class="dash-skeleton">자료를 읽는 중…</li></ul>
+        <div class="rv-grid" style="margin-top:var(--cds-gap-sm)">
+          <div><h4 class="rv-qa-h">10일 상승 확률 — 입력별 영향</h4><div class="rv-tbl-wrap"><table class="rv-tbl" id="qa-up-tbl"><thead><tr><th>입력</th><th class="rv-num">전 거래일</th><th class="rv-num">오늘</th><th class="rv-num">영향(%p)</th></tr></thead><tbody></tbody></table></div></div>
+          <div><h4 class="rv-qa-h">5일 내 급락·청산 확률 — 입력별 영향</h4><div class="rv-tbl-wrap"><table class="rv-tbl" id="qa-risk-tbl"><thead><tr><th>입력</th><th class="rv-num">전 거래일</th><th class="rv-num">오늘</th><th class="rv-num">영향(%p)</th></tr></thead><tbody></tbody></table></div></div>
+        </div>
+        <p class="rv-note">자료가 들어올 때마다 자동. 영향(%p) = 그 입력만 전 거래일 값으로 되돌렸을 때와, 전 거래일에 그 입력만 오늘 값을 넣었을 때 확률이 달라지는 폭의 평균. 입력끼리 겹치는 부분이 있어 합이 실제 변화와 조금 다를 수 있다. 영향이 큰 6개와 그날 자료가 빈 입력(빈칸 = 그날 KRX 거래대금·고가·저가 등이 아직 없어 빈 값으로 계산, 들어오면 다시 계산)을 보인다. 국면은 확률이 아니라 지난 20일 상태 이름표다(고변동 청산 → 상승 추세 → 하락 추세 → 횡보 순으로 판정). 10일 상승 쪽 모형은 검증 AUC 0.53이라 참고만.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="concl">
+    <h2>9. 결론 <span class="rv-yy" style="font-weight:400;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)">(<span id="concl-asof">—</span> 장 마감 기준 · 첫 카드는 자료가 들어올 때마다 자동, 나머지 글은 수기)</span></h2>
+    <div class="rv-concl">
+      <div class="rv-card" id="concl-auto">
+        <h3>오늘 상태(자동 · 최신 자료 기준)</h3>
+        <ul id="concl-auto-list"><li class="dash-skeleton">자료를 읽는 중…</li></ul>
+        <p class="rv-note">위 줄은 대시보드 자료(코스피·금투협·투자자별·정밀 검증·신호 표·야간선물)의 마지막 날짜 값을 그대로 읽어 쓴다. 평일 15:40 잠정치, 18:40 확정치로 바뀐다. 아래 네 카드는 10/30 장 마감(투자자별·VKOSPI 확정치)·금투협 10/29분 기준 수기 분석(11/1 09시 작성). 금투협 10/30분은 11/2 15시 무렵 공표.</p>
+      </div>
+      <div class="rv-card">
+        <h3>국면 판단</h3>
+        <p class="rv-verdict">10/30 −3.48%로 5,731 — 10/26 저점 대비 +4.8%. 10/28 +9.9%까지 갔던 반등이 이틀 만에 절반으로 줄었다. '실제 큰 흐름'은 하락 구간 그대로(상승 확정선 6,016까지 +5.0%). 맨 위 그래프의 국면은 고변동 청산(신용 5일 −4.2%), 5일 내 급락·청산 확률은 39.8%로 다시 신호 기준(27%) 위.</p>
+        <ul>
+          <li><b>투매(10/13~15)</b>: 외국인 3일 −9.52조원, VKOSPI 10/15 <span class="rv-v" data-source="market" data-field="vkospi" data-where="date=2026-10-15" data-fmt="2">—</span>, 미수 반대매매 10/14 <span class="rv-v" data-source="liq" data-field="liq_eok" data-where="date=2026-10-14" data-fmt="1">—</span>억원(비중 <span class="rv-v" data-source="liq" data-field="ratio_pct" data-where="date=2026-10-14" data-fmt="1">—</span>%), 신용융자 10/12 34.29조원 정점.</li>
+          <li><b>진정(10/16~26)</b>: 반대매매 비중 1% 안팎, 신용 −12%. 10/22·10/26 신저가(<span class="rv-v" data-source="market" data-field="kospi" data-where="date=2026-10-26" data-fmt="2">—</span>)는 VKOSPI·반대매매가 정점 아래인 '투매 없는 신저가'였다.</li>
+          <li><b>반등과 되밀림(10/27~30)</b>: +<span class="rv-v" data-source="market" data-field="kospi_chg_pct" data-where="date=2026-10-27" data-fmt="2">—</span>%·+<span class="rv-v" data-source="market" data-field="kospi_chg_pct" data-where="date=2026-10-28" data-fmt="2">—</span>% 뒤 <span class="rv-v" data-source="market" data-field="kospi_chg_pct" data-where="date=2026-10-29" data-fmt="2">—</span>%·<span class="rv-v" data-source="market" data-field="kospi_chg_pct" data-where="date=2026-10-30" data-fmt="2">—</span>%로 <span class="rv-v" data-source="market" data-field="kospi" data-where="date=2026-10-30" data-fmt="2">—</span>(10/30 매도 사이드카, 보도). 외국인은 10/27~29 사흘 +1.99조원(확정치 — 10/29는 18시 집계 +932억이 확정치 +6,660억으로 크게 바뀜, 차이의 원인은 확인 불가) 뒤 10/30 −1.61조원. 10/30 기관 +7,540억(연기금 +8,929억)·개인 +5,781억·기타법인 +2,828억. 코스피200 선물 외국인 +6,002계약(현물 매도·선물 매수).</li>
+          <li><b>큰 흐름</b>: 그해 일치 1위 12줄 중 상승 5개(16·19·20·23·25년판) — 큰 흐름 비교 맨 아래 「12개 해 합의」 42%(10/29 50%에서 −8%p, 21년판이 하락으로). '2026 1위' 줄도 10/30 하락으로 바뀌어 기존 5줄(빠른 전환·조합·67일선·3개 다수결·2026 1위)이 모두 하락.</li>
+        </ul>
+      </div>
+      <div class="rv-card">
+        <h3>1~2주 재확대 리스크</h3>
+        <ul>
+          <li>VKOSPI 10/30 <span class="rv-v" data-source="market" data-field="vkospi" data-where="date=2026-10-30" data-fmt="2">—</span>(10/29 <span class="rv-v" data-source="market" data-field="vkospi" data-where="date=2026-10-29" data-fmt="2">—</span>) — 급등일에도 급락일에도 50대에서 움직이지 않는다. 고변동 상태가 3주째.</li>
+          <li>지수는 20일선 6,046·60일선 6,509·200일선 6,487·67일선 6,488 아래. 외국인 20거래일 누적 −18.6조원.</li>
+          <li>맨 위 그래프의 5일 내 급락·청산 확률 10/30 39.8%(10/29 23.8%) — 20일 이격도가 더 벌어져(+17.0%p) 신호 기준 27% 위로 다시 올라왔다(검증 AUC 0.72). 10일 상승 확률 79.4%는 AUC 0.53이라 참고만.</li>
+          <li>금투협 10/29: 미수 반대매매 <span class="rv-v" data-source="liq" data-field="liq_eok" data-where="date=2026-10-29" data-fmt="1">—</span>억원(비중 <span class="rv-v" data-source="liq" data-field="ratio_pct" data-where="date=2026-10-29" data-fmt="1">—</span>%), 신용융자 <span class="rv-v" data-source="credit" data-field="credit_jo" data-where="date=2026-10-29" data-fmt="2">—</span>조원(−0.82%, 10/12 정점 대비 −15.2%), 예탁금 <span class="rv-v" data-source="credit" data-field="deposit_jo" data-where="date=2026-10-29" data-fmt="2">—</span>조원(+0.42조), 신용/예탁금 <span class="rv-v" data-source="credit_ratio" data-field="ratio" data-where="date=2026-10-29" data-fmt="1">—</span>%. 10/30 급락분(반대매매·신용)은 11/2 15시 무렵 공표.</li>
+          <li>미국: 10/29 알파벳 −12.6%(실적) → 나스닥 −1.38%, VIX 17.20(FRED). 10/30 S&amp;P500 −1.8%·나스닥 −2.9%·러셀2000 −1.7%(AP 보도) — 아마존·인텔 실적 실망과 중간선거(11/3) 앞 경계. VIX 10/30 종가는 FRED 미공표로 확인 불가. 코스피200 야간선물(10/30 저녁장)은 02:07 속보 872.45(주간 종가 899.45 대비 −3%) — 06:00 마감값 확인 불가.</li>
+          <li>레버리지 ETF는 미수 반대매매 통계 밖이라 실제 강제 청산 규모는 더 클 수 있다(10/27~30 설정·환매는 KRX 자료가 없어 확인 불가).</li>
+        </ul>
+      </div>
+      <div class="rv-card">
+        <h3>체크 지표(11/2 종가 기준선)</h3>
+        <ul>
+          <li><b>6,016 이상</b>: 10/26 저점 5,469 대비 +10% — '실제 큰 흐름'이 상승으로 확정(10/27부터 상승으로 기록). 10/30 종가에서 +5.0%. <b>5,469 아래</b>면 신저가 — 바닥 확인 실패(10/30 종가에서 −4.6%).</li>
+          <li>빠른 전환은 약 6,090, 67일선·3개 다수결은 약 6,490 이상에서 상승으로 바뀐다(10/29 기준 6,300·6,515에서 내려옴. 외국인 −1.6조~+5,000억원 가정에서 같은 값, 5포인트 단위 계산).</li>
+          <li><b>'2026 1위' 하락 → 상승</b>: 외국인이 하루 약 2,230억원 넘게 순매수하면 다시 상승으로 돌아간다(지수 5,500~6,000 어디서나 같은 선).</li>
+          <li>맨 위 그래프 국면: 11/2 종가 5,998 아래면 하락 추세, 7,181 넘으면 상승 추세, 그 사이 횡보 — 단 금투협 10/30분 신용이 29.25조원 이하(10/29 29.09조 대비 +0.55% 미만)면 고변동 청산이 먼저.</li>
+          <li>금투협 10/30분(11/2 15시 무렵 공표): −3.5% 급락일의 반대매매 비중이 5%를 넘는지(10/14 7.2%가 정점), 신용이 29조원 아래로 내려가는지.</li>
+          <li><b>12개 해 합의 7/12 이상</b>(큰 흐름 비교 맨 아래 줄, 10/30 5/12): 과반이 상승으로 넘어가는지. 올해판(26년)을 뺀 11줄은 10/28~29 6/11 과반 상승이었다가 10/30 5/11로 다시 과반 하락 — 2015~2026 이렇게 과반이 하락으로 바뀐 날(결과가 나온 75번)은 20거래일 뒤 상승 56%(평소 57%), 평균 +0.2%(평소 +1.0%)로 방향 정보가 거의 없었다. 과반이 상승으로 바뀐 날 76번은 상승 67%, 평균 +0.9%(둘 다 자기 해 뺀 11줄 기준).</li>
+          <li>5일 내 급락·청산 확률이 신호 기준 27% 아래로 다시 내려오는지(10/30 39.8%).</li>
+        </ul>
+      </div>
+      <div class="rv-card">
+        <h3>신호 해석과 단기 수급</h3>
+        <ul>
+          <li><b>10/16 매수 최적화 1위</b>(VKOSPI 5일 +33% 뒤 하루 −11.7%): 신호일 5,668 → 10/30 5,731(+1.1%), 그 사이 최고 +6.1%(10/28)·최저 −3.5%(10/26). 같은 두 조건이 켜진 2015~2026 33번(10/16 제외)은 20일 뒤 85% 상승(중앙 +3.1%, 평소 57%) — 20거래일째는 11/13. 대부분 규칙을 고른 2015~2024 구간이라 사후 성적이 섞여 있다.</li>
+          <li><b>'투매 없는 신저가'</b>(60일 신저가 · 고점 대비 −15% 이하 · 반대매매 비중이 최근 20일 정점의 절반 이하): 2006~2026 결과가 나온 5번은 20일 뒤 모두 상승(중앙 +5.3%). 이번(10/22·10/26)은 10/30 기준 +4.8%(10/28 +9.9%까지). 표본 5개라 방향 참고.</li>
+          <li><b>'2026 1위'</b>는 2026년 성적으로 고른 조합이라 올해 일치율은 사후 성적이다(2015~2025 상승 전환 120번의 20일 뒤 상승 49%). 그해 1위 12줄의 올해판(26년)은 10/30 다시 찾아도 같은 조합(SMA60>SMA150 · 8% 되돌림 전환 · 기타법인 20일 역추세)이고 하락.</li>
+          <li><b>KOSPI·KOSDAQ 10/30</b>: 코스피 −3.48%, 코스닥 <span class="rv-v" data-source="market" data-field="kosdaq" data-where="date=2026-10-30" data-fmt="2">—</span>(−3.83%) — 코스닥 외국인 +2억·개인 +1,253억·기관 −1,342억(확정치). 삼성전자 −3.0%·SK하이닉스 −7.1%(보도). 정밀 검증의 10일 상승 확률 79.4%는 검증 AUC 0.53이라 근거로 삼지 않는다.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="rv-kpis" id="kpis">
+    <div class="rv-kpi"><div class="rv-kpi-l">미수 반대매매 정점 · 10/14</div><div><span class="rv-kpi-v rv-v dash-skeleton" data-source="liq" data-field="liq_eok" data-where="date=2026-10-14" data-fmt="1">—</span><span class="rv-kpi-u">억원</span></div><div class="rv-kpi-n">금투협 위탁매매 미수금 대비 실제 반대매매</div></div>
+    <div class="rv-kpi"><div class="rv-kpi-l">미수금 대비 비중 · 10/14</div><div><span class="rv-kpi-v rv-v dash-skeleton" data-source="liq" data-field="ratio_pct" data-where="date=2026-10-14" data-fmt="1">—</span><span class="rv-kpi-u">%</span></div><div class="rv-kpi-n">5% 이상은 패닉 구간</div></div>
+    <div class="rv-kpi"><div class="rv-kpi-l">신용융자 잔고 · <span class="rv-v" data-source="credit" data-field="date" data-where="last" data-fmt="md">—</span></div><div><span class="rv-kpi-v rv-v dash-skeleton" data-source="credit" data-field="credit_jo" data-where="last" data-fmt="2">—</span><span class="rv-kpi-u">조원</span></div><div class="rv-kpi-n">연중 최저(8/4) <span class="rv-v" data-source="credit" data-field="credit_jo" data-where="date=2026-08-04" data-fmt="2">—</span>조원</div></div>
+    <div class="rv-kpi"><div class="rv-kpi-l">신용/예탁금 비율 · <span class="rv-v" data-source="credit_ratio" data-field="date" data-where="last" data-fmt="md">—</span></div><div><span class="rv-kpi-v rv-v dash-skeleton" data-source="credit_ratio" data-field="ratio" data-where="last" data-fmt="1">—</span><span class="rv-kpi-u">%</span></div><div class="rv-kpi-n">7/22 <span class="rv-v" data-source="credit_ratio" data-field="ratio" data-where="date=2026-07-22" data-fmt="1">—</span>%</div></div>
+    <div class="rv-kpi"><div class="rv-kpi-l">VKOSPI · 10/15 종가</div><div><span class="rv-kpi-v rv-v dash-skeleton" data-source="market" data-field="vkospi" data-where="date=2026-10-15" data-fmt="2">—</span></div><div class="rv-kpi-n">10/8 <span class="rv-v" data-source="market" data-field="vkospi" data-where="date=2026-10-08" data-fmt="2">—</span></div></div>
+    <div class="rv-kpi"><div class="rv-kpi-l">외국인 코스피 순매수 · 10/12~16</div><div><span class="rv-kpi-v rv-v dash-skeleton" data-source="flows" data-field="value_jo" data-where="period=10/12~16&amp;market=KOSPI&amp;investor=외국인" data-fmt="2">—</span><span class="rv-kpi-u">조원</span></div><div class="rv-kpi-n">개인 <span class="rv-v" data-source="flows" data-field="value_jo" data-where="period=10/12~16&amp;market=KOSPI&amp;investor=개인" data-fmt="2">—</span>조 · 기관 <span class="rv-v" data-source="flows" data-field="value_jo" data-where="period=10/12~16&amp;market=KOSPI&amp;investor=기관" data-fmt="2">—</span>조</div></div>
+  </section>
+
+  <section id="gapnext">
+    <div class="rv-card">
+      <h3 id="gap-title">다음 날 시초가 — 야간선물 기준</h3>
+      <p class="rv-note" id="gap-basis">야간선물 자료를 불러오는 중…</p>
+      <div class="rv-kpis dash-skeleton" id="gap-kpis" data-source="night_fut gap_table" style="margin:var(--cds-gap-sm) 0"></div>
+      <p class="rv-verdict" id="gap-read"></p>
+      <p class="rv-note" id="gap-method">확률·크기는 같은 야간 등락 구간에 있던 과거 날들의 실제 결과다(야간장 = 18:00~다음 날 06:00 코스피200 선물 근월물, 등락 = 야간 종가 ÷ 직전 주간장 종가). 시초가 = 다음 날 코스피 시가 ÷ 오늘 종가. 야간 ±0.25% 안에서는 방향이 반반에 가까워 판단을 보류한다. 아침 6시 뒤 뉴스·주말 소식은 반영되지 않는다. 투자 권유가 아니다.</p>
+      <div class="rv-tbl-wrap">
+        <table class="rv-tbl dash-skeleton" id="gap-tbl" data-source="gap_table">
+          <thead><tr><th>야간선물 등락</th><th class="rv-num">날 수</th><th class="rv-num">시초가 상승 비율</th><th class="rv-num">방향 일치</th><th class="rv-num">오를 때 중앙값</th><th class="rv-num">내릴 때 중앙값</th><th class="rv-num">갭 중앙값</th><th class="rv-num">10~90% 범위</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <details class="rv-more" style="margin-top:var(--cds-gap-sm)">
+        <summary>최근 15일: 야간선물 vs 실제 시초가</summary>
+        <div class="rv-tbl-wrap">
+          <table class="rv-tbl" id="gap-recent" data-source="night_fut">
+            <thead><tr><th>판단한 날(장 마감)</th><th>시초가 날</th><th class="rv-num">야간 종가</th><th class="rv-num">야간 등락</th><th class="rv-num">실제 시초가</th><th>방향</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section id="all">
+    <div class="rv-card rv-all-card">
+      <div class="rv-all-head">
+        <div>
+          <h3 id="all-title">한눈에 보기: 지수 · 신용 · 예탁금 · 변동성 · 미수 반대매매 · 수급</h3>
+          <p class="rv-note">위: 왼쪽 축은 코스피 지수. 신용·예탁금·VKOSPI·원/달러 환율(점선) 등 다른 선은 보고 있는 2년(기본 2025~2026) 안에서 각자의 최저~최고 범위를 코스피의 최저~최고 범위에 맞춰 겹쳤다. 기간은 2015-01-02부터: 처음엔 2025~2026을 보여 주고, 단추로 2015~16·2017~18·2019~20·2021~22·2023~24를 2년씩 골라 볼 수 있다(2025~26 안에서는 2026년·6월~·10월만 보기, + −로 확대·축소, ◀ ▶로 과거·최근으로 이동하면 2년 경계도 넘어간다). 원/달러는 2015~2025년이 미국 연준 H.10 뉴욕 정오 기준이라 2026년분(국제 시세 중간값)과 기준이 다르고, 미국 휴일은 값이 없어 이어 그렸다. 코스닥과 외국인 선물은 2024-10-02부터, 레버리지 ETF는 2025-10-21부터라 그 전 기간에는 없다. 조합 줄의 2025-10-27 이전은 같은 규칙을 2015년부터의 자료로 계산한 값이다. 그래서 선 높이는 코스피 대비 상대 위치만 뜻하고, 실제 값은 마우스를 올리면 나온다. 범례의 선 이름을 누르면 켜고 끈다. 맨 아래 투자자별 칸의 점선은 외국인 코스피200 선물 순매수로, 전 월물 합계 계약 수 × 그날 선물 종가 × 25만원으로 조원 환산했다(기사 금액과 0.5% 안팎 차이). 큰 흐름 비교 띠는 아래 11년 표 참고. 조합은 올해만 보고 고른 것이고(2026년 86.6%, 11년 평균 63%), 67일선은 11년 동안 가장 꾸준했던 지표다(평균 78%, 전환점보다 평균 12거래일 늦음). 3개 다수결은 300만 개 재검색에서 가장 안정적으로 뽑힌 조합으로, 헛신호는 적지만 더 늦다(평균 78%, 2026년 64%, 중앙 14거래일 지연). 2026 1위는 올해 수익률이 가장 높았던 신호(외국인 당일 순매수 상위 20% · 개인 10일 순매수 하위 20% · 52일선>95일선 중 2개 이상이면 보유)인데, 확정 수급을 보고 다음날 매매하면 올해 수익이 0% 안팎으로 줄어든다. 아래: 미수 반대매매와 외국인 수급 막대. 코스닥은 보도된 날만 점으로 찍고 값이 없는 구간은 선을 끊었다. 미수 반대매매·미수금·예탁금·신용은 금투협 원자료 전 거래일.</p>
+        </div>
+        <div class="rv-ctl">
+          <div class="rv-seg rv-per" id="all-per" role="group" aria-label="2년 단위 기간">
+            <button type="button" data-r="p15" aria-pressed="false" aria-label="2015~2016"><span class="rv-yy">20</span>15~16</button>
+            <button type="button" data-r="p17" aria-pressed="false" aria-label="2017~2018"><span class="rv-yy">20</span>17~18</button>
+            <button type="button" data-r="p19" aria-pressed="false" aria-label="2019~2020"><span class="rv-yy">20</span>19~20</button>
+            <button type="button" data-r="p21" aria-pressed="false" aria-label="2021~2022"><span class="rv-yy">20</span>21~22</button>
+            <button type="button" data-r="p23" aria-pressed="false" aria-label="2023~2024"><span class="rv-yy">20</span>23~24</button>
+            <button type="button" data-r="all" aria-pressed="true" aria-label="2025~2026"><span class="rv-yy">20</span>25~26</button>
+          </div>
+          <div class="rv-seg" id="all-range" role="group" aria-label="2025~2026 안에서 좁혀 보기">
+            <button type="button" data-r="y26" aria-pressed="false">2026</button>
+            <button type="button" data-r="h2" aria-pressed="false">6월~</button>
+            <button type="button" data-r="oct" aria-pressed="false">10월</button>
+          </div>
+          <div class="rv-seg rv-zoom" id="all-zoom" role="group" aria-label="확대·축소·이동">
+            <button type="button" data-z="out" aria-label="축소(기간 넓게)" title="축소(기간 넓게)">−</button>
+            <button type="button" data-z="in" aria-label="확대(기간 좁게)" title="확대(기간 좁게)">+</button>
+            <button type="button" data-z="left" aria-label="과거로 이동" title="과거로 이동">◀</button>
+            <button type="button" data-z="right" aria-label="최근으로 이동" title="최근으로 이동">▶</button>
+          </div>
+          <span class="rv-win" id="all-win"></span>
+          <span class="rv-ctl-lab">큰 흐름 비교 줄</span>
+          <div class="rv-seg" id="strip-champ" role="group" aria-label="그해 1위 12줄 보이기"><button type="button" aria-pressed="true" title="해마다 그해 실제 큰 흐름과 가장 잘 맞은 1위 조합 12줄을 큰 흐름 비교 칸에 넣거나 뺀다">그해 1위 12줄</button></div>
+          <div class="rv-seg rv-tsort" role="group" aria-label="큰 흐름 비교 줄 정렬">
+            <button type="button" data-s="base" aria-pressed="false" title="기존 줄 다음 연도순">기본</button>
+            <button type="button" data-s="now" aria-pressed="true" title="최근 60거래일 동안 실제 큰 흐름과 같았던 날 비율이 높은 순(자료가 들어올 때마다 자동으로 다시 정렬)">현재 적합순</button>
+            <button type="button" data-s="year" aria-pressed="false" title="올해 1월부터 실제 큰 흐름과 같았던 날 비율이 높은 순">올해순</button>
+            <button type="button" data-s="all" aria-pressed="false" title="2015년부터 전체 기간 일치율이 높은 순">전체순</button>
+          </div>
+        </div>
+      </div>
+      <div class="rv-legend" id="all-legend"></div>
+      <p class="rv-ovnote" id="all-ovnote">다른 선은 모양 비교용입니다. 높이·교차점은 실제 크기 비교가 아닙니다.</p>
+      <p class="rv-note" id="all-alnote">▼ 매도 신호(코스피 선 위) · ▲ 매수 신호(선 아래): 세 조건이 같은 날 모두 켜진 날. 여섯 가지를 모두 다른 색으로 구분했고 범례에서 하나씩 켜고 끌 수 있다. 같은 날 여러 신호가 켜지면 색별로 층층이 쌓았다(선에 가까운 쪽부터 민감·중간·엄격·재진입). 조건과 검증 결과는 그래프 아래 표. 2026년 가장 큰 하락 2번(6/22, 9/23 고점)과 상승 2번(3/31, 7/30 바닥)에 맞춰 고른 설정이라 2015~2025년으로 따로 확인했다. 고점·바닥 당일이 아니라 구간 진입 신호라 최대 2주 일찍 켜질 수 있다. 청록 ▲(재매수)·자주 ▼(재매도) = 재진입 조합: 엄격형 매도·매수 신호에, 신호가 헛신호일 때 다시 사고파는 규칙을 더한 것(판 뒤 RSI14가 60을 넘으면 재매수, 산 뒤 10거래일부터 10일선이 104일선 아래로 내려가면 재매도). 2015~2026 자료로 약 5억 6천만 번 시뮬레이션해 찾았고, 2015~2023만 보고 고른 판이 처음 보는 2024~2026에 정확도 77%(67일선 75%, 늘 보유 73%)였다. 금색 ▲ = 2015~2024(2025~26 제외)에서 누적 수익률이 가장 높았던 매수 조합 1위(2·3위는 그래프에 그리지 않고 아래 표에만. 2026-10-26 탐색: 조건 544개의 1~4개 조합 38억 개, 다른 논리·보유 기간·손절까지 시험). 다음 날 시가 매수, 1위는 60일·2위는 20일·3위는 120일 보유 기준 +308%·+294%·+283%(그냥 보유 +25%). 다만 같은 탐색을 수익률 열을 돌린 가짜 자료에 하면 최고가 +309~337%로 나와 이 성과는 우연의 범위 안이고, 앞 기간에서 고른 1위를 다음 기간에 쓰면 평범했다(걷기 검증). 1위의 "대주 누적 하위10%"는 공매도 금지 기간(2020-03~2021-05)에만 켜지는 국면 표시다. 금색 ▼ = 같은 방식으로 고른 매도 조합 1위(2·3위는 아래 표에만. 보유하다 신호 뒤 20일 현금, 2015~24 전략 +398%·+304%·+304% vs 그냥 보유 +25%). 매도 쪽은 2025~26에서 1위는 한 번도 안 켜지고 2·3위는 상승장 중에 현금이라(전략 +30%·−21% vs 보유 +125%) 기존 매도 신호(엄격형 +234%)보다 못했다. 걷기 검증(앞 기간 1위 60개를 다음 2년에 적용)에서도 그냥 보유를 이긴 것은 23개, 같은 가족 조합 중 백분위 평균 50 — 아무 조합이나 고른 것과 같았다. 1위는 켜진 날이 수백 일이라 시작일(앞 5거래일에 신호가 없던 날)만 ▲▼로 표시한다. 참고용이지 추천이 아니다.</p>
+      <p class="rv-note" id="cons-note" data-source="trend_champ trend_champ_rules combo"></p>
+      <div class="rv-chart dash-skeleton" id="all-chart" data-source="market credit liq events monthly flows_daily combo alarms fx_daily fut_daily etf_lev reentry buy3 sell3 trend_champ trend_champ_rules" style="min-height:600px"></div>
+      <div class="rv-tbl-wrap" style="margin-top:var(--cds-gap-sm)">
+        <table class="rv-tbl" id="sig-tbl" data-source="alarms reentry buy3 sell3">
+          <thead><tr><th>신호</th><th>조건(셋 다 켜질 때)</th><th>2026 신호일(시작)</th><th class="rv-num">2015~2025 큰 전환 직전</th><th class="rv-num">헛신호(11년)</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="rv-note">큰 전환 = 15% 이상 하락(6번)·상승(7번). 직전 = 고점·바닥 10거래일 전부터 지수가 고점 대비 5% 빠지거나 바닥 대비 5% 오르기 전까지. 헛신호 = 이후 20거래일 안에 10% 이상 움직이지 않았고 하락·상승 구간도 아니었던 신호. 금투협 신용·예탁금은 전날 공시분으로 계산.</p>
+      <p class="rv-note" id="re-now" data-source="reentry"></p>
+    </div>
+  </section>
+
+  <section id="trend11">
+    <div class="rv-card">
+      <h3 id="t11-title">큰 흐름 정확도 11년 비교 (2015~2026)</h3>
+      <p class="rv-note">그날의 판단(상승/하락)이 실제 큰 흐름(코스피 10% 전환 기준, 사후 판정)과 같았던 날의 비율(%). '항상 상승'은 아무것도 안 하고 상승이라고만 했을 때. '연도별 검증'은 매년 그 전 해들까지 가장 잘 맞은 지표를 골라 그해에 쓴 결과로, 실제로 쓸 때와 같은 조건이다. 2차 검색에서 단일 지표 9,272개, 2개 조합 128만 개, 3개 다수결 175만 개, 머신러닝까지 시험했다. 미리 고른 결과는 3개 다수결이 평균 77%로 가장 높았고 매년 거의 같은 구성(ADX10>30 방향 + 67~77일선 + MACD 계열)이 뽑혔다. 90%를 넘은 해는 없었다. '1차 연도별 검증'은 앞서 3만 4천 개로 돌린 결과. '빠른 전환'은 맞힌 날 비율은 비슷하거나 조금 낮지만 전환을 훨씬 빨리 따라간다(아래 표). '그해 1위(사후)'는 그해 자료로 고른 1위 조합의 그해 일치율(아래 '해마다 그해 가장 잘 맞은 1위 조합' 표) — 미리 알 수 없는 사후 최적이라 다른 열과 같은 조건이 아니다.</p>
+      <div class="rv-tbl-wrap">
+        <table class="rv-tbl" id="t11-tbl" data-source="trend_years" data-row-key="year">
+          <thead><tr><th data-field="year">연도</th><th class="rv-num" data-field="pivots">전환점</th><th class="rv-num" data-field="always_up">항상 상승</th><th class="rv-num" data-field="fast">빠른 전환</th><th class="rv-num" data-field="ema67">67일선</th><th class="rv-num" data-field="vote3">3개 다수결</th><th class="rv-num" data-field="combo">조합</th><th class="rv-num" data-field="wf3">다수결 연도별 검증</th><th class="rv-num" data-field="wf">1차 연도별 검증</th><th data-field="wf_pick">그해 고른 지표</th><th class="rv-num" data-field="champ">그해 1위(사후)</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="rv-card" id="champ-card">
+      <h3 id="champ-title">해마다 그해 가장 잘 맞은 1위 조합 (2015~2026)</h3>
+      <p class="rv-note">해마다 그해 거래일만 놓고, 판단(상승/하락)이 실제 큰 흐름(코스피 10% 전환 기준, 사후 판정)과 같았던 날이 가장 많은 조합과 설정을 찾았다. 후보는 단일 지표 <span class="rv-v" data-source="trend_champ_rules" data-field="n_singles" data-where="last" data-fmt="0">—</span>개(가격 이평·교차·MACD·수익률·신고가 돌파·ATR 추적·x% 되돌림 전환·ADX·RSI·볼린저·이격도 역추세, 외국인·기관·개인·기타법인 n일 순매수 부호·분위, 금투협 신용·예탁금·미수금·미수 반대매매(전날 공시분), VKOSPI·VIX)와 그 조합(둘 다 상승일 때만 상승 · 둘 중 하나라도 상승이면 상승 · 3개 중 2개)으로 해마다 약 7,400만 개. 같은 점수면 그해 판단이 덜 바뀐 쪽, 그다음 단순한 쪽을 골랐다. 2015~2025년은 마지막 전환점이 확정돼 조합을 고정하고 값만 다시 계산하며, 올해는 자료가 들어올 때마다(평일 15:40·18:40) 다시 찾는다.</p>
+      <p class="rv-note"><b>읽는 법.</b> '그해'는 그해 자료를 보고 고른 사후 최적이라 높을 수밖에 없다(89~100%). 실제로 썼을 때의 성적은 '다음 해' 열이다. <b>현재 적합순</b> = 최근 60거래일 동안 실제 큰 흐름과 같았던 날 비율이 높은 순(같으면 최근 20일 → 올해 순). 실제 큰 흐름의 마지막 구간은 10% 되돌림이 확인되기 전까지 잠정이라, 바닥·고점이 확정되면 최근 칸의 숫자와 순서가 바뀐다. 회색 줄은 위 그래프의 기존 비교 줄(참고).</p>
+      <div class="rv-ctl" style="justify-content:flex-start;margin:var(--cds-gap-xs) 0">
+        <span class="rv-ctl-lab">정렬</span>
+        <div class="rv-seg rv-tsort" role="group" aria-label="그해 1위 표 정렬">
+          <button type="button" data-s="base" aria-pressed="false">연도순</button>
+          <button type="button" data-s="now" aria-pressed="true">현재 적합순<span class="rv-yy">(최근 60거래일)</span></button>
+          <button type="button" data-s="year" aria-pressed="false">올해 적합순</button>
+          <button type="button" data-s="all" aria-pressed="false">전체 기간순<span class="rv-yy">(2015~)</span></button>
+        </div>
+      </div>
+      <p class="rv-note" id="champ-sum"></p>
+      <div class="rv-tbl-wrap">
+        <table class="rv-tbl" id="champ-tbl" data-source="trend_champ_rules trend_champ combo">
+          <thead><tr><th class="rv-num">순서</th><th>줄</th><th>조합 · 설정</th><th class="rv-num">그해(사후)</th><th class="rv-num">다음 해</th><th class="rv-num">전체 2015~</th><th class="rv-num">올해</th><th class="rv-num">최근 60일</th><th class="rv-num">최근 20일</th><th>지금</th><th class="rv-num">그해 전환</th><th>동점 · 시험</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="rv-note">숫자는 그 기간 거래일 중 판단이 실제 큰 흐름과 같았던 날의 비율(%). 그해 전환 = 그해 판단이 바뀐 횟수. 동점 = 그해 최고 점수와 같은 조합 수(400개까지 셈, 많을수록 그해 1위는 우연히 고른 하나), 시험 = 그해 판단이 모두 있는 후보 수. 투자 권유가 아니다.</p>
+    </div>
+    <div class="rv-card">
+      <h3 id="lead-title">전환 시점 비교: 실제 전환보다 며칠 늦게(−면 먼저) 바뀌나</h3>
+      <p class="rv-note">실제 = 코스피 종가가 10% 이상 되돌린 전환점(사후 판정). 시차 = 실제 전환일부터 그 줄이 새 방향으로 바뀌어 이후 10거래일 중 8일 이상 유지된 첫날까지의 거래일 수(중앙값). 놓침 = 짧은 구간을 아예 반영하지 못한 전환. 칸마다 '시차 · 맞힌 날 비율 · 1년 전환 횟수'. 실제 전환은 2015~2023년 연 2회, 2024~2026년 연 약 6회, 2026년은 9번.</p>
+      <div class="rv-tbl-wrap">
+        <table class="rv-tbl" id="lead-tbl" data-source="lead_cmp" data-row-key="strip">
+          <thead><tr><th>줄</th><th>규칙</th><th>2015~2023</th><th>2024~2026</th><th>2026년</th><th>2026년 전환점별 시차(+ 늦음, − 먼저)</th><th>고른 방법</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="rv-note">지표·설정 약 30만 개를 시험했다: 단일 10,019개(기존 9,272개 + 새 자료 747개), 상승·하락을 서로 다른 규칙으로 정하는 조합 25만 쌍, 매도·매수 경보 결합 2만 1천 개, '큰 하루 전환' 1,600개와 확인일·경보 결합 1만 4,850개, 3개 다수결 3,276개. 쓴 자료는 코스피·VKOSPI·투자자별 순매수, 금투협 신용(시장별)·예탁금·미수금·미수 반대매매·대주·담보융자·파생 예수금·RP, 원/달러(2015~), 유가, VIX, 매도/매수 경보 6개, 그리고 2024년 10월 이후 자료인 코스피200 선물 투자자별·미결제약정, 등락 종목 수, 외국인 보유 비중, 연기금·투신·사모 등 세부 주체, 코스닥 수급, 삼성전자·SK하이닉스 수급, 미국 금리, 레버리지 ETF 자금이다. 2015~2023년에서만 골랐고(하루 늦을 때마다 맞힌 날 1%p 감점, 전환 연 9회 이하), 2024~2026년으로 확인했다. 비슷한 설정(기간·배수·분위 ±1단계) 18개도 2024~2026 시차 2~4일, 맞힌 날 67~76%로 비슷했고, 무작위로 시점을 밀어 본 것보다 맞힌 날이 뚜렷이 높았다(2015~2023 상위 5% 경계 59% vs 76%).</p>
+      <p class="rv-note">결론: 실제 전환보다 먼저 바뀌는 조합은 검증을 통과하지 못했다. 먼저 바뀌는 것들은 2015~2023년 맞힌 날이 58~60%로 헛전환이 많았거나, 9/22 이후 자료가 없는 VIX나 올해를 보고 만든 경보에 기대는 것이었다. 2024년 10월 이후 자료(선물·등락 종목 수 등)는 2년뿐이라 단독으로 쓸 만한 것이 없었다. 가장 빠른 것은 '빠른 전환'으로 실제보다 보통 3~4거래일 늦게 따라간다(67일선은 8~19일). 대신 전환이 잦고, 9/23 고점처럼 큰 하루 없이 서서히 빠지면 늦다(10/13 -5.46% 날에야 하락 전환, +10일).</p>
+    </div>
+    <div class="rv-card">
+      <h3 id="r26-title">2026년에만 적용한 수익률 상위 10</h3>
+      <p class="rv-note">단일·2개·3개 조합 약 650만 개를 2026년 1/2~10/20 수익률로 줄 세웠다. 3개 중 2개 이상이 상승이면 보유, 아니면 현금. 매매마다 왕복 0.3% 비용을 뺐다. '당일 종가 매매'는 그날 외국인·개인 수급을 장 마감 전에 안다고 가정한 것이고(장중 잠정치로 판단), 확정 수급은 장 마감 뒤에 나오므로 '다음날 매매'가 현실에 더 가깝다. '2015~2025'는 같은 신호를 그 전 11년에 썼을 때의 누적 수익률(그냥 보유 +119%). 올해 결과에 맞춘 순위라 앞으로의 성과를 뜻하지 않는다. 1위는 위 그래프의 '2026 1위' 띠.</p>
+      <div class="rv-tbl-wrap">
+        <table class="rv-tbl" id="r26-tbl" data-source="ret26" data-row-key="rank">
+          <thead><tr><th data-field="rank">순위</th><th data-field="signal">신호</th><th class="rv-num" data-field="ret26">당일 종가 매매 %</th><th class="rv-num" data-field="ret26_next">다음날 매매 %</th><th class="rv-num" data-field="mdd26">최대 낙폭 %</th><th class="rv-num" data-field="trades26">매매 횟수</th><th class="rv-num" data-field="hold26">보유 비중 %</th><th class="rv-num" data-field="prev">2015~2025 %</th><th data-field="now">지금</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="rv-card" id="cmb-card">
+      <h3 id="cmb-title">매수×매도 신호 조합 49개 — 적중률 감시와 1위 자동 선정</h3>
+      <p class="rv-note">위 그래프의 매수 신호 7개(경보 민감·중간·엄격형, 최적화 1~3위, 정밀 검증 진입)와 매도 신호 7개(경보 3개, 최적화 1~3위, 정밀 검증 청산)를 짝지은 49개 조합. 매수 신호가 시작된 다음 날 종가에 사고 매도 신호가 시작된 다음 날 종가에 팔며(그 사이 현금), 왕복 0.3% 비용을 뺐다. VKOSPI 가 들어가는 신호는 다음 날 아침에 확정되므로 '다음 날 체결'이 실제 지연과 같다. 성적은 자료가 들어올 때마다 다시 계산한다.</p>
+      <p class="rv-note"><b>선택 규칙(미리 고정).</b> 매월 첫 거래일에 지난 250거래일 수익률 1위 조합(닫힌 거래 2건 이상, 동점은 거래당 적중률)을 뽑아 그 달은 그 조합대로 매매한다. 2016년부터 달마다 이 규칙으로 뽑았을 때의 실제 성적이 아래 '선택 규칙' 열이다. 비교용 '고정 조합'은 2015~2024년 누적 1위를 그 뒤로 계속 쓴 것. 경보·최적화 신호 자체가 2015~2024년 자료로 만든 것이라 2016~2024년 성적은 사후 성적이 섞여 있고, <b>2025~26년이 실사용 성적</b>이다. 그해 1위가 다음 해에도 좋다는 보장은 없어서, 1위 조합이 뽑힌 뒤 적중률이 2015~25년보다 15%p 넘게 낮아지거나 수익이 코스피보다 10%p 넘게 뒤지면 경고를 띄우고 카카오톡으로 알린다.</p>
+      <p class="rv-note" id="cmb-now"></p>
+      <div class="rv-tbl-wrap">
+        <table class="rv-tbl" id="cmb-wf-tbl" data-source="combo_wf" data-row-key="year">
+          <thead><tr><th>연도</th><th class="rv-num">선택 규칙 %</th><th class="rv-num">코스피 보유 %</th><th class="rv-num">고정 조합 %</th><th class="rv-num">교체 횟수</th><th>그해 가장 오래 뽑힌 조합</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="rv-tbl-wrap">
+        <table class="rv-tbl" id="cmb-tbl" data-source="combo_table" data-row-key="combo">
+          <thead><tr><th class="rv-num">순위(최근 250일)</th><th>매수 → 매도</th><th class="rv-num">최근 250일 %</th><th class="rv-num">거래 · 적중</th><th class="rv-num">최대 낙폭 %</th><th class="rv-num">최근 60일 %</th><th class="rv-num">2026 %</th><th class="rv-num">2025 %</th><th class="rv-num">2015~25 %</th><th class="rv-num">2015~25 적중 %</th><th>지금</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="rv-note">순위가 '—'인 조합은 최근 250거래일에 닫힌 거래가 2건 미만이라 후보에서 뺀 것. 경보형 매수 3개는 올해 같은 날 켜져 성적이 같다. 거래가 한 해 2~3번뿐이라 적중률 하나하나는 우연의 영향이 크고, 믿을 것은 2016년부터 쌓인 선택 규칙의 긴 성적이다. 투자 권유가 아니다.</p>
+    </div>
+  </section>
+
+  <details class="rv-more" id="more">
+  <summary>세부 차트 · 표 펼치기</summary>
+  <div class="rv-more-body">
+  <section id="oct">
+    <h2>1. 10월 급락과 미수 반대매매</h2>
+    <p class="rv-sec-note">지수·외국인 수급·변동성이 같은 날 겹쳤다. 미수 반대매매는 급락일과 그 뒤 1~3거래일에 몰린다.</p>
+    <div class="rv-grid">
+      <div class="rv-card">
+        <h3 id="oct-title">코스피와 일별 미수 반대매매</h3>
+        <p class="rv-note">막대 미수 반대매매(억원, 왼쪽 축), 선 코스피 종가(오른쪽 축). 10/8·10/13 지수는 다음 날 등락률로 역산.</p>
+        <div class="rv-legend"><span><i class="rv-sw" id="lg-oct-b"></i>미수 반대매매</span><span><i class="rv-sw" id="lg-oct-l"></i>코스피</span></div>
+        <div class="rv-chart dash-skeleton" id="oct-chart" data-source="liq market"></div>
+      </div>
+      <div class="rv-card">
+        <h3 id="for-title">외국인 순매수와 VKOSPI</h3>
+        <p class="rv-note">막대 외국인 코스피 순매수(억원, KRX 원자료), 선 VKOSPI. 10/16·10/19 외국인 소폭 순매수 뒤 10/20 다시 순매도.</p>
+        <div class="rv-legend"><span><i class="rv-sw" id="lg-for-n"></i>순매도</span><span><i class="rv-sw" id="lg-for-p"></i>순매수</span><span><i class="rv-sw" id="lg-for-l"></i>VKOSPI</span></div>
+        <div class="rv-chart dash-skeleton" id="for-chart" data-source="flows_daily market"></div>
+      </div>
+      <div class="rv-card">
+        <h3 id="flows-title">투자자별 순매수</h3>
+        <p class="rv-note">단위 조원. 코스피는 KRX 원자료 합계, 코스닥은 보도치.</p>
+        <div class="rv-tbl-wrap">
+          <table class="rv-tbl" id="flows-tbl">
+            <thead><tr><th>기간 · 시장</th><th class="rv-num">외국인</th><th class="rv-num">개인</th><th class="rv-num">기관</th></tr></thead>
+            <tbody>
+              <tr><td>10/12~16 · KOSPI</td><td class="rv-num"><span class="rv-v" data-source="flows" data-field="value_jo" data-where="period=10/12~16&amp;market=KOSPI&amp;investor=외국인" data-fmt="2">—</span></td><td class="rv-num"><span class="rv-v" data-source="flows" data-field="value_jo" data-where="period=10/12~16&amp;market=KOSPI&amp;investor=개인" data-fmt="2">—</span></td><td class="rv-num"><span class="rv-v" data-source="flows" data-field="value_jo" data-where="period=10/12~16&amp;market=KOSPI&amp;investor=기관" data-fmt="2">—</span></td></tr>
+              <tr><td>10/12~16 · KOSDAQ</td><td class="rv-num"><span class="rv-v" data-source="flows" data-field="value_jo" data-where="period=10/12~16&amp;market=KOSDAQ&amp;investor=외국인" data-fmt="2">—</span></td><td class="rv-num"><span class="rv-v" data-source="flows" data-field="value_jo" data-where="period=10/12~16&amp;market=KOSDAQ&amp;investor=개인" data-fmt="2">—</span></td><td class="rv-num"><span class="rv-v" data-source="flows" data-field="value_jo" data-where="period=10/12~16&amp;market=KOSDAQ&amp;investor=기관" data-fmt="2">—</span></td></tr>
+              <tr><td>10/6~15 · KOSPI</td><td class="rv-num"><span class="rv-v" data-source="flows" data-field="value_jo" data-where="period=10/6~15&amp;market=KOSPI&amp;investor=외국인" data-fmt="2">—</span></td><td class="rv-num"><span class="rv-v" data-source="flows" data-field="value_jo" data-where="period=10/6~15&amp;market=KOSPI&amp;investor=개인" data-fmt="2">—</span></td><td class="rv-num"><span class="rv-v" data-source="flows" data-field="value_jo" data-where="period=10/6~15&amp;market=KOSPI&amp;investor=기관" data-fmt="2">—</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="rv-note">코스피는 외국인이 팔고 개인·기관이 받았다. 코스닥은 기관 매도가 컸고 규모는 작다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="lag">
+    <h2>2. 시차와 정점의 크기</h2>
+    <p class="rv-sec-note">미수거래는 결제일(D+2)까지 대금을 못 내면 다음 날 장 전에 처분된다. 그래서 급락 당일(T0)보다 1~3거래일 뒤에 미수 반대매매가 커진다.</p>
+    <div class="rv-grid">
+      <div class="rv-card" style="grid-column:1/-1">
+        <h3 id="lag-title">급락일 기준 미수 반대매매 (T0~T+3) · 코스피 -5% 이하 전 거래일</h3>
+        <p class="rv-note">억원, 금투협 원자료. 올해 코스피 등락률이 -5% 이하였던 거래일을 모두 넣었다(KRX 원자료). T+1~T+3은 휴장일을 뺀 거래일. <span id="lag-sum"></span> '겹침'은 앞뒤 급락일과 T0~T+3 구간이 겹쳐 두 급락의 청산이 섞인 날이라 색을 달리했다.</p>
+        <div class="rv-legend" id="lag-legend"></div>
+        <div class="rv-chart dash-skeleton" id="lag-chart" data-source="lag"></div>
+      </div>
+      <div class="rv-card">
+        <h3 id="year-title">확인된 일별 미수 반대매매 (2025~2026)</h3>
+        <div class="rv-seg rv-per rv-per-d" role="group" aria-label="2년 단위 기간"></div>
+        <p class="rv-note">금투협 원자료 2015-01-02~<span class="rv-v" data-source="liq" data-field="date" data-where="last" data-fmt="ymd">—</span> 전 거래일(처음엔 2025~2026, 단추로 2년씩). 붉은 막대는 미수금 대비 5% 이상. 2025~2026의 큰 정점은 6/9 → 7/9 → 7/31 → 10/14로 6월 이후 갈수록 작아졌다. 2015년 이후 가장 큰 것은 2023년 10월 영풍제지 하한가 때로, 10/18~10/24 닷새 동안 하루 2,768~5,497억원(10/19 비중 69.0%)이었다.</p>
+        <div class="rv-legend"><span><i class="rv-sw" id="lg-yr-c"></i>비중 5% 이상</span><span><i class="rv-sw" id="lg-yr-n"></i>그 외</span></div>
+        <div class="rv-chart dash-skeleton" id="year-chart" data-source="liq"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="credit">
+    <h2>3. 레버리지 잔고</h2>
+    <p class="rv-sec-note">미수 반대매매가 줄어도 신용 잔고가 높으면 다음 급락 때 다시 청산 물량이 나온다.</p>
+    <div class="rv-grid">
+      <div class="rv-card">
+        <h3 id="credit-title">신용융자 잔고 (시장별)</h3>
+        <div class="rv-seg rv-per rv-per-d" role="group" aria-label="2년 단위 기간"></div>
+        <p class="rv-note">조원. 금투협 원자료(신용공여 잔고 추이) 2015-01-02~<span class="rv-v" data-source="credit" data-field="date" data-where="last" data-fmt="ymd">—</span> 전 거래일(처음엔 2025~2026, 단추로 2년씩). 2026년 최고 6/24(2015년 이후 최고), 2026년 최저 8/4. 2025년 전 최고는 2021-09-13 25.65조원.</p>
+        <div class="rv-legend" id="credit-legend"></div>
+        <div class="rv-chart dash-skeleton" id="credit-chart" data-source="credit"></div>
+      </div>
+      <div class="rv-card">
+        <h3 id="ratio-title">예탁금 대비 신용 비율</h3>
+        <div class="rv-seg rv-per rv-per-d" role="group" aria-label="2년 단위 기간"></div>
+        <p class="rv-note">신용융자 ÷ 투자자예탁금. 같은 날 두 수치가 모두 보도된 날만 계산. 40%를 넘으면 과열로 보는 시각이 있다. 2015년 이후 범위는 14.0%(2020-04-01)~48.0%(2018-10-10).</p>
+        <div class="rv-chart dash-skeleton" id="ratio-chart" data-source="credit_ratio"></div>
+      </div>
+      <div class="rv-card">
+        <h3 id="chg-title">신용 일일 감소율 vs 과거 항복 구간</h3>
+        <p class="rv-note">%. 2026년 값은 금투협 원자료로 계산한 일간 감소율 상위 날짜. 점선은 과거 항복 구간(2020년 3월 -9%, 2004·2008년 -14%). 올해 그 수준을 넘은 날은 7/31 하루뿐이다.</p>
+        <div class="rv-chart dash-skeleton" id="chg-chart" data-source="credit_change"></div>
+      </div>
+      <div class="rv-card">
+        <h3 id="monthly-title">월별 미수 반대매매 일평균</h3>
+        <div class="rv-seg rv-per rv-per-d" role="group" aria-label="2년 단위 기간"></div>
+        <p class="rv-note">억원. 금투협 원자료로 직접 계산한 월별 일평균. 빗금 막대는 아직 끝나지 않은 부분월(막대 위에 기간·거래일 수). 2025~2026에서는 2026년 6월이 가장 컸고(2025년 월 일평균은 46~150억원), 7월 월합은 보도된 약 8,700억이 아니라 9,928억이다. 2015년 이후로는 2023년 10월(일평균 1,562억원, 영풍제지 사태)이 가장 크다.</p>
+        <div class="rv-chart dash-skeleton" id="monthly-chart" data-source="monthly"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="conc">
+    <h2>4. 쏠림: 반도체 두 종목과 레버리지 ETF</h2>
+    <p class="rv-sec-note">신용과 레버리지 ETF가 삼성전자·SK하이닉스에 몰려 있어, 두 종목의 낙폭이 담보 부족을 가장 직접 설명한다. 2차전지 등 다른 업종 신용은 확인 불가.</p>
+    <div class="rv-grid">
+      <div class="rv-card">
+        <h3 id="conc-title">신용 쏠림과 주가 낙폭</h3>
+        <div class="rv-tbl-wrap">
+          <table class="rv-tbl" id="conc-tbl" data-source="concentration" data-row-key="item">
+            <thead><tr><th data-field="item">항목</th><th class="rv-num" data-field="value">값</th><th data-field="unit">단위</th><th data-field="period">기준</th><th data-field="note">비고</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="rv-card">
+        <h3 id="lev-title">단일종목 레버리지 ETF 개인 순매수</h3>
+        <p class="rv-note">억원. 6/16~7/16 개인은 레버리지 ETF 4종에 본주 순매수의 <b><span class="rv-v" data-source="lev_share" data-field="share_pct" data-fmt="1">—</span>%</b>를 넣었다. 신용 대신 ETF로 레버리지가 옮겨간 몫이라 금투협 미수 반대매매 통계에 잡히지 않는다.</p>
+        <div class="rv-tbl-wrap">
+          <table class="rv-tbl" id="lev-tbl" data-source="leverage" data-row-key="item">
+            <thead><tr><th data-field="item">항목</th><th class="rv-num" data-field="value_eok">억원</th><th data-field="period">기간</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="past">
+    <h2>5. 과거 청산 국면과 비교</h2>
+    <div class="rv-card">
+      <p class="rv-note" style="margin-top:0">미수 반대매매 정점(억원), 미수금 대비 비중(%), 신용 일일 감소율(%), 예탁금 대비 신용 비율(%). 비중은 2020·2021년이 월평균, 2026년이 일별 정점이라 직접 비교하기 어렵다(비중 기준 칸).</p>
+      <div class="rv-tbl-wrap">
+        <table class="rv-tbl" id="ep-tbl" data-source="episodes" data-row-key="episode">
+          <thead><tr><th data-field="episode">국면</th><th class="rv-num" data-field="peak_liq_eok">정점</th><th class="rv-num" data-field="peak_ratio_pct">비중</th><th data-field="ratio_basis">비중 기준</th><th class="rv-num" data-field="credit_drop_pct">신용 감소율</th><th class="rv-num" data-field="credit_deposit_pct">신용/예탁금</th><th data-field="note">메모</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="events">
+    <h2>6. 트리거와 신용 한도 조치</h2>
+    <div class="rv-card">
+      <p class="rv-note" style="margin-top:0">10/1 한도 축소와 10/19 종목별 15% 관리가 이번 국면 한가운데에 걸려 있다. 정점이 작아진 이유가 한도 관리인지 청산 완료인지는 아직 구분할 수 없다. 미국 현지 날짜 이벤트는 한국 시장이 반응한 다음 거래일(휴장일 제외)에 놓고 현지 날짜를 함께 적었다.</p>
+      <div class="rv-tbl-wrap">
+        <table class="rv-tbl" id="ev-tbl" data-source="events" data-row-key="date,event">
+          <thead><tr><th data-field="date">일자</th><th data-field="category">구분</th><th data-field="event">내용</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="ind">
+    <h2>7. 보조지표 검증</h2>
+    <p class="rv-sec-note">후보 지표 수십 개를 2026년 일별 원자료로 계산해, 코스피 방향을 맞힌 매매 지표와 급락을 미리 경고한 위험 지표를 골랐다. 금투협 수치는 다음 날 공시되므로 하루 늦춰 썼고, 1~6월로 기준을 정해 7~10월에 그대로 적용해 확인했다. 표본이 1년이라 우연일 가능성도 크다.</p>
+    <div class="rv-grid">
+      <div class="rv-card" style="grid-column:1/-1">
+        <h3 id="score-title">매매 점수 · 위험 점수와 코스피</h3>
+        <p class="rv-note">매매 점수(-100~+100) = 외국인 20일 순매수(+), VKOSPI(−), 신용/예탁금 비율(−), MACD(+)의 과거 대비 백분위 평균. 위험 점수(0~100) = 외국인 20일 순매도, VKOSPI, 미수 반대매매 5일 합계, 거래대금/예탁금의 과거 대비 백분위 평균. 점선: 매매 ±30, 위험 70.</p>
+        <div class="rv-legend" id="score-legend"></div>
+        <div class="rv-chart dash-skeleton" id="score-chart" data-source="ind_scores" style="min-height:380px"></div>
+      </div>
+      <div class="rv-card">
+        <h3 id="now-title">현재 값 (10/20 기준)</h3>
+        <p class="rv-note">백분위는 1월부터 그날까지 중 위치(%). 경고 기준은 1~6월로 정한 임계값.</p>
+        <div class="rv-tbl-wrap">
+          <table class="rv-tbl" id="now-tbl" data-source="ind_now" data-row-key="name">
+            <thead><tr><th data-field="name">지표</th><th class="rv-num" data-field="value">값</th><th data-field="unit">단위</th><th class="rv-num" data-field="pct">백분위</th><th class="rv-num" data-field="threshold">기준</th><th data-field="status">상태</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="rv-card">
+        <h3 id="trade-title">매매 지표 순위 (코스피 방향 예측)</h3>
+        <p class="rv-note">IC = 지표와 이후 5·10·20일 수익률의 순위 상관(+면 높을수록 상승, −면 높을수록 하락). 상·하위 20%는 지표가 그 구간일 때 10일 평균 수익률(%). 일관성은 1~6월과 7~10월 부호가 같은지.</p>
+        <div class="rv-tbl-wrap">
+          <table class="rv-tbl" id="trade-tbl" data-source="ind_trade" data-row-key="name">
+            <thead><tr><th class="rv-num" data-field="rank">#</th><th data-field="name">지표</th><th class="rv-num" data-field="ic5">IC5</th><th class="rv-num" data-field="ic10">IC10</th><th class="rv-num" data-field="ic20">IC20</th><th class="rv-num" data-field="ic10_train">1~6월</th><th class="rv-num" data-field="ic10_test">7~10월</th><th class="rv-num" data-field="top20_r10">상위20%</th><th class="rv-num" data-field="bot20_r10">하위20%</th><th data-field="consistent">일관성</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="rv-card">
+        <h3 id="risk-title">위험 지표 순위 (5거래일 안 급락·청산 사건 예측)</h3>
+        <p class="rv-note">사건 = 코스피 -5% 이하, 미수 반대매매 비중 7% 이상, VKOSPI 하루 +20% 이상. AUC 0.5는 무작위, 1에 가까울수록 좋음. 임계값은 1~6월에 정하고 재현율·정밀도·오경보는 7~10월 결과.</p>
+        <div class="rv-tbl-wrap">
+          <table class="rv-tbl" id="risk-tbl" data-source="ind_risk" data-row-key="name">
+            <thead><tr><th class="rv-num" data-field="rank">#</th><th data-field="name">지표</th><th data-field="direction">방향</th><th class="rv-num" data-field="auc5">AUC</th><th class="rv-num" data-field="auc5_test">AUC 7~10월</th><th class="rv-num" data-field="auc_dd">AUC 낙폭10%</th><th class="rv-num" data-field="threshold">임계값</th><th class="rv-num" data-field="recall_test">재현율%</th><th class="rv-num" data-field="precision_test">정밀도%</th><th class="rv-num" data-field="false_test">오경보</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="rv-card">
+        <h3 id="warn-title">코스피 -5% 급락일에 며칠 전부터 경고했나</h3>
+        <p class="rv-note">급락 1~5거래일 전 중 가장 이른 경고일(일). —는 경고 없음. 6~8월은 경고가 계속 켜져 있던 구간이라 5일이 많다.</p>
+        <div class="rv-tbl-wrap">
+          <table class="rv-tbl" id="warn-tbl" data-source="ind_warn" data-row-key="date">
+            <thead><tr><th data-field="date">급락일</th><th class="rv-num" data-field="kospi_chg">코스피%</th><th class="rv-num" data-field="w_foreign20">외국인20일</th><th class="rv-num" data-field="w_vk">VKOSPI</th><th class="rv-num" data-field="w_liq5">미수 반대매매5일</th><th class="rv-num" data-field="w_turn">거래대금/예탁</th><th class="rv-num" data-field="w_score">위험점수</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="rv-card" style="grid-column:1/-1">
+        <h3>찾은 것</h3>
+        <ul class="rv-list">
+          <li><b>가장 잘 맞은 매매 지표는 외국인 20일 누적 순매수</b>였다. 많이 산 상위 20% 구간 뒤 10일 평균 <span class="rv-v" data-source="ind_trade" data-field="top20_r10" data-where="name=외국인 20일 순매수" data-fmt="1">—</span>%, 많이 판 하위 20% 뒤 <span class="rv-v" data-source="ind_trade" data-field="bot20_r10" data-where="name=외국인 20일 순매수" data-fmt="1">—</span>%. 1~6월과 7~10월 모두 같은 방향으로 맞았다. 추세를 따르는 지표가 통했다.</li>
+          <li><b>'공포에 사라'는 올해 안 맞았다.</b> VKOSPI가 높을수록, 미수 반대매매 5일 합계가 클수록 이후 20일 수익률은 낮았다. 미수 반대매매 정점 직후 1주 반등은 있었지만 한 달 기준으로는 더 빠졌다.</li>
+          <li><b>신용/예탁금 비율이 높을수록 이후 수익률이 낮았다</b>(상위 20% 구간 10일 <span class="rv-v" data-source="ind_trade" data-field="top20_r10" data-where="name=신용/예탁금 비율" data-fmt="1">—</span>%, 하위 20% <span class="rv-v" data-source="ind_trade" data-field="bot20_r10" data-where="name=신용/예탁금 비율" data-fmt="1">—</span>%). 지금 이 비율은 연중 상위 5%다.</li>
+          <li><b>가장 좋은 위험 경고는 외국인 20일 순매수 <span class="rv-v" data-source="ind_risk" data-field="threshold" data-where="name=외국인 20일 순매수" data-fmt="1">—</span>조원 이하, VKOSPI <span class="rv-v" data-source="ind_risk" data-field="threshold" data-where="name=VKOSPI" data-fmt="1">—</span> 이상, 미수 반대매매 5일 합계 <span class="rv-v" data-source="ind_risk" data-field="threshold" data-where="name=미수 반대매매 5일 합계" data-fmt="0">—</span>억원 이상</b>이었다. 올해 −5% 급락일마다 외국인·미수 반대매매 지표가 대부분 미리 켜져 있었다(오른쪽 표). 다만 6~8월처럼 경고가 몇 주씩 켜져 있는 때가 많아 '언제' 터질지는 못 짚는다.</li>
+          <li>RSI, 볼린저, 20일 이격도 같은 가격 기술지표는 올해 위험 예측력이 없었다(무작위 수준 이하).</li>
+          <li><b>현재(10/20):</b> 매매 점수 <span class="rv-v" data-source="ind_now" data-field="value" data-where="name=매매 점수(-100~%2B100)" data-fmt="1">—</span>로 약세 구간, 위험 점수 <span class="rv-v" data-source="ind_now" data-field="value" data-where="name=위험 점수(0~100)" data-fmt="1">—</span>로 경고선 아래. 외국인 20일 순매수(<span class="rv-v" data-source="ind_now" data-field="value" data-where="name=외국인 20일 순매수" data-fmt="2">—</span>조원)와 미수 반대매매 5일 합계(<span class="rv-v" data-source="ind_now" data-field="value" data-where="name=미수 반대매매 5일 합계" data-fmt="0">—</span>억원)는 경고 상태, VKOSPI(<span class="rv-v" data-source="ind_now" data-field="value" data-where="name=VKOSPI" data-fmt="2">—</span>)는 기준 아래로 내려왔다. 추가 급락 경고는 일부 남아 있고, 추세 지표는 아직 매수 쪽으로 돌지 않았다.</li>
+        </ul>
+        <p class="rv-note">지표 검증 결과일 뿐 투자 권유가 아니다. 많은 지표를 한꺼번에 시험했기 때문에 일부는 우연히 좋아 보일 수 있다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="quant">
+    <h2>8. 정밀 검증 (2006~2026 자료 · 12년 학습 · 연도별 검증)</h2>
+    <p class="rv-sec-note">10/20판(2026년 자료만, 80거래일 학습·20거래일 검증)의 결론이 "데이터 기간이 먼저"였기에, 10/27에 2015년부터의 같은 자료로 다시 만들었고, 같은 날 저녁 사용자 첨부 2006~ 장기 자료(금투협 예탁금·신용·미수·반대매매, 코스피 시세, 투자자별)를 앞에 붙여 학습 기간을 3년 → 12년으로 늘렸다(3·4·5·6·8·12년과 전부를 걷기 검증으로 비교: 급락·청산 AUC가 0.66 → 0.72로 꾸준히 오르고 방향은 그대로. VKOSPI는 2015년부터만 있어 그 전은 빈칸). 해마다 앞 12년(끝의 10거래일은 비움)으로 학습해 그 해를 처음 보는 자료로 예측(2018~2026), 기준값은 학습 구간에서만 정했고 거래비용 왕복 0.3%를 뺐다. 지표 16개: 신용/예탁금 비율, 예탁금 5일 변화율, MACD, ATR14/종가, 외국인·개인 20일 순매수, 거래대금/20일 평균·/예탁금, VKOSPI와 5일 변화율, 신용 연중고점 대비·5일·일간 증감률, 미수 반대매매 5일 합계, 20일 이격도·수익률(금투협 값은 전날 공시분). 예측 대상: 10일 상승 = 10거래일 뒤 종가가 오늘보다 높음, 5일 내 급락·청산 = 다음 5거래일 안에 코스피 하루 −3% 이하·미수 반대매매 금액 250일 상위 5%·VKOSPI 하루 +20% 중 하나(10/20판의 '비중 7%'는 2019~23년엔 늘 넘고 2024~25년엔 1% 아래라 해마다 비교가 안 돼 금액 분위로 바꿈). 자료를 넣을 때마다 전부 다시 계산한다. 국면·확률 그래프는 대시보드 맨 위에 있다.</p>
+    <div class="rv-grid">
+      <div class="rv-card">
+        <h3 id="qm-title">모형별 검증 구간 성과</h3>
+        <p class="rv-note">검증 구간 2018~2026 전체(해마다 앞 12년으로 학습). AUC 0.5는 동전 던지기 수준. 정밀도·재현율·기준 비율은 %. 기준 비율은 실제로 그 일이 일어난 날의 비율. 신호일 = 확률이 학습 구간 기준 비율 이상인 날(단순 규칙은 외국인 20일 순매수 학습 구간 60% 분위 이상 = 매수, VKOSPI 80% 분위 이상 = 위험).</p>
+        <div class="rv-tbl-wrap"><table class="rv-tbl" id="qm-tbl" data-source="q_models" data-row-key="target,model">
+          <thead><tr><th data-field="target">예측 대상</th><th data-field="model">모형</th><th class="rv-num" data-field="auc">AUC</th><th class="rv-num" data-field="precision">정밀도</th><th class="rv-num" data-field="recall">재현율</th><th class="rv-num" data-field="base">기준 비율</th><th class="rv-num" data-field="signals">신호일</th></tr></thead><tbody></tbody></table></div>
+      </div>
+      <div class="rv-card">
+        <h3 id="qy-title">연도별 AUC (해마다 처음 보는 해)</h3>
+        <p class="rv-note">학습 = 그 해 앞 12년(2006~ 장기 자료). 기준 = 실제로 일어난 날 비율(%). 해마다 0.5 근처를 오가면 그 모형은 우연 수준이다.</p>
+        <div class="rv-tbl-wrap"><table class="rv-tbl" id="qy-tbl" data-source="q_years" data-row-key="year">
+          <thead><tr><th data-field="year">해</th><th data-field="train">학습</th><th class="rv-num" data-field="base_up">상승 기준%</th><th class="rv-num" data-field="auc_up_rule">상승 규칙</th><th class="rv-num" data-field="auc_up_log">상승 로지스틱</th><th class="rv-num" data-field="auc_up_bst">상승 부스팅</th><th class="rv-num" data-field="base_risk">급락 기준%</th><th class="rv-num" data-field="auc_risk_rule">급락 규칙</th><th class="rv-num" data-field="auc_risk_log">급락 로지스틱</th><th class="rv-num" data-field="auc_risk_bst">급락 부스팅</th></tr></thead><tbody></tbody></table></div>
+      </div>
+      <div class="rv-card">
+        <h3 id="qs-title">매매 시뮬레이션 (2018~2026 검증 구간, 비용 차감)</h3>
+        <p class="rv-note">신호 다음 날 종가 진입, 10거래일 보유, 왕복 0.3%. 위험 시 보류 = 위험 신호가 켜진 날은 진입 안 함. 무작위 대비 백분위 = 같은 횟수·보유 기간으로 1,000번 아무 날 진입했을 때보다 나은 비율(%).</p>
+        <div class="rv-tbl-wrap"><table class="rv-tbl" id="qs-tbl" data-source="q_strat" data-row-key="strategy">
+          <thead><tr><th data-field="strategy">전략</th><th class="rv-num" data-field="total">총수익%</th><th class="rv-num" data-field="mdd">최대낙폭%</th><th class="rv-num" data-field="sharpe">샤프</th><th class="rv-num" data-field="trades">거래</th><th class="rv-num" data-field="win">승률%</th><th class="rv-num" data-field="exposure">노출%</th><th class="rv-num" data-field="rand_pct">무작위 대비</th></tr></thead><tbody></tbody></table></div>
+      </div>
+      <div class="rv-card">
+        <h3 id="qsen-title">민감도 (기준값을 바꿔 보면)</h3>
+        <p class="rv-note">단순 규칙의 분위(매수 60%·위험 80%)를 ±10~20% 옮겨 같은 전략을 다시 돌렸다(2018~2026).</p>
+        <div class="rv-tbl-wrap"><table class="rv-tbl" id="qsen-tbl" data-source="q_sens" data-row-key="shift">
+          <thead><tr><th data-field="shift">기준값 변화</th><th class="rv-num" data-field="total">총수익%</th><th class="rv-num" data-field="mdd">최대낙폭%</th><th class="rv-num" data-field="sharpe">샤프</th><th class="rv-num" data-field="trades">거래</th><th class="rv-num" data-field="win">승률%</th></tr></thead><tbody></tbody></table></div>
+      </div>
+      <div class="rv-card">
+        <h3 id="qic-title">지표 선별 (IC, 거짓 발견률 보정, 국면별)</h3>
+        <p class="rv-note">2015~2026 전체. IC = 지표와 이후 10·20일 수익률의 순위 상관. q10 = 다중 검정(거짓 발견률) 보정한 유의확률. 연도별 안정성 = 10일 IC 부호가 전체와 같은 해 수. 국면별 IC는 그 국면 날짜만으로 계산(—는 표본 부족). 대표 = 서로 상관 0.8 넘는 지표 중 IC가 큰 쪽.</p>
+        <div class="rv-tbl-wrap"><table class="rv-tbl" id="qic-tbl" data-source="q_ic" data-row-key="name">
+          <thead><tr><th data-field="name">지표</th><th class="rv-num" data-field="ic10">IC10</th><th class="rv-num" data-field="ic20">IC20</th><th class="rv-num" data-field="q10">q10</th><th data-field="stability">연도별 안정성</th><th class="rv-num" data-field="ic_up">상승</th><th class="rv-num" data-field="ic_down">하락</th><th class="rv-num" data-field="ic_hv">고변동</th><th class="rv-num" data-field="ic_side">횡보</th><th data-field="rep">대표</th></tr></thead><tbody></tbody></table></div>
+      </div>
+      <div class="rv-card">
+        <h3 id="qnow-title">현재</h3>
+        <div class="rv-tbl-wrap"><table class="rv-tbl" id="qnow-tbl" data-source="q_now" data-row-key="item">
+          <thead><tr><th data-field="item">항목</th><th class="rv-num" data-field="value">값</th><th data-field="text">설명</th></tr></thead><tbody></tbody></table></div>
+      </div>
+      <div class="rv-card" style="grid-column:1/-1">
+        <h3>결론: 학습을 12년으로 늘려도 '10일 방향'은 못 맞히고, '급락·청산 위험'은 더 또렷해졌다(AUC 0.66 → 0.72)</h3>
+        <ul class="rv-list">
+          <li><b>방향 예측은 여전히 동전 던지기다.</b> 2018~2026 검증 구간 10일 상승 AUC가 부스팅 <span class="rv-v" data-source="q_models" data-field="auc" data-where="target=10일 상승&amp;model=부스팅" data-fmt="2">—</span>, 로지스틱 <span class="rv-v" data-source="q_models" data-field="auc" data-where="target=10일 상승&amp;model=로지스틱" data-fmt="2">—</span>, 단순 규칙 <span class="rv-v" data-source="q_models" data-field="auc" data-where="target=10일 상승&amp;model=단순 규칙" data-fmt="2">—</span>. 해마다 0.38~0.8을 오가고 어떤 모형도 꾸준하지 않다.</li>
+          <li><b>급락·청산 위험은 조금 미리 보인다.</b> 5일 내 급락·청산 AUC 부스팅 <span class="rv-v" data-source="q_models" data-field="auc" data-where="target=5일 내 급락·청산&amp;model=부스팅" data-fmt="2">—</span>, VKOSPI 단순 규칙 <span class="rv-v" data-source="q_models" data-field="auc" data-where="target=5일 내 급락·청산&amp;model=단순 규칙" data-fmt="2">—</span>. 2026년(기준 비율 70%)도 부스팅 <span class="rv-v" data-source="q_years" data-field="auc_risk_bst" data-where="year=2026" data-fmt="2">—</span>, 로지스틱 <span class="rv-v" data-source="q_years" data-field="auc_risk_log" data-where="year=2026" data-fmt="2">—</span>. 3년 학습 때는 2026년이 0.40으로 반대였는데, 2008·2011·2020년 같은 급락기를 학습에 넣자 처음 보는 올해도 맞히기 시작했다.</li>
+          <li><b>매매로 바꾸면 전부 보유보다 못하다.</b> 2018~2026 코스피 보유 <span class="rv-v" data-source="q_strat" data-field="total" data-where="strategy=코스피 보유(비교)" data-fmt="1">—</span>% vs 단순 규칙 <span class="rv-v" data-source="q_strat" data-field="total" data-where="strategy=단순 규칙 매수(외국인20)·위험 시 보류" data-fmt="1">—</span>%, 부스팅 <span class="rv-v" data-source="q_strat" data-field="total" data-where="strategy=부스팅 매수·위험 시 보류" data-fmt="1">—</span>%, 로지스틱 <span class="rv-v" data-source="q_strat" data-field="total" data-where="strategy=로지스틱 매수·위험 시 보류" data-fmt="1">—</span>%. 무작위 진입 대비 백분위도 4~34%로 아무 날 들어간 것만 못했다.</li>
+          <li><b>강건성은 낮다.</b> 단순 규칙의 기준값을 ±10~20% 옮기면 총수익이 −56%~+10% 사이에서 흔들린다.</li>
+          <li><b>11년 내내 같은 방향이었던 지표는 둘뿐이다.</b> 신용/예탁금 비율(IC10 <span class="rv-v" data-source="q_ic" data-field="ic10" data-where="name=신용/예탁금 비율" data-fmt="2">—</span>, 연도별 안정성 <span class="rv-v" data-source="q_ic" data-field="stability" data-where="name=신용/예탁금 비율" data-fmt="2">—</span>)과 VKOSPI(IC10 <span class="rv-v" data-source="q_ic" data-field="ic10" data-where="name=VKOSPI" data-fmt="2">—</span>, 안정성 <span class="rv-v" data-source="q_ic" data-field="stability" data-where="name=VKOSPI" data-fmt="2">—</span>). 10/20판에서 1위였던 외국인 20일 순매수는 11년 전체로는 IC10 <span class="rv-v" data-source="q_ic" data-field="ic10" data-where="name=외국인 20일 순매수" data-fmt="2">—</span> — 2026년 한 해에만 맞았던 지표다.</li>
+          <li><b>10/20판과 비교.</b> 그때 결론("데이터 기간이 먼저")대로 2015년부터 3년 학습·연도별 검증으로 바꿨더니 방향 예측력은 없고 위험 예측력만 남았고, 2006년부터 12년 학습으로 늘리자 위험 예측력이 더 좋아졌다(지표를 공매도·등락종목수·코스닥·미국 지수·VIX·DXY·금리·환율로 늘려 본 것은 AUC 변화 ±0.02로 효과 없음 — 같은 걷기 검증). 확률이 높게 나와도 AUC가 0.5 근처인 대상은 참고만 한다.</li>
+        </ul>
+        <p class="rv-note">투자 권유가 아니다. 결과가 좋지 않은 것도 그대로 적었다.</p>
+      </div>
+    </div>
+  </section>
+
+  </div>
+  </details>
+</div>
+
+<script>
+(function(){
+  const P = d3.utcParse('%Y-%m-%d');
+  const md = s => { const d = P(s); return d ? (d.getUTCMonth()+1) + '/' + d.getUTCDate() : s; };
+  const ymd = s => String(s).slice(0, 4) + '-' + md(s);                                   // 툴팁 날짜(연도 포함)
+  const yd = s => String(s).slice(2, 4) + '.' + (+String(s).slice(5, 7)) + '.' + (+String(s).slice(8, 10));   // 두 해에 걸친 x축 날짜
+  const mlab = d => (d.getUTCMonth() === 0 ? (d.getUTCFullYear() % 100) + '년 ' : '') + (d.getUTCMonth() + 1) + '월';
+  const num = v => (v === '' || v == null || isNaN(+v)) ? null : +v;
+  const f0 = d3.format(',.0f'), f1 = d3.format(',.1f'), f2 = d3.format(',.2f');
+  const FMT = {'0': f0, '1': f1, '2': f2};
+  const BAD = ['error','connect','declined','missing'];
+  const C = () => dash.colors;
+  const CRIT = 'var(--cds-chart-status-critical)', MUTED = 'var(--cds-chart-muted)';
+  const REB = '#0ea5c6', RES = '#c026d3';   // 재진입 조합: 재매수(청록)·재매도(자주)
+  const B3C = ['#eab308', '#ea580c', '#78350f'];   // 2015~2024 최적화 매수 1·2·3위(금·주황·갈색)
+  // KOSPI closes taken from news (not yet replaced by the KRX file)
+  const repDates = () => { const d = dash.data('market'); return new Set(d.status === 'ok' ? d.data.filter(r => /보도치/.test(r.basis || '')).map(r => r.date) : []); };
+  const REP_TXT = '코스피 종가 보도치(KRX 파일 받으면 교체 예정)';
+
+  dash.calc('credit_ratio', {
+    inputs: ['credit'],
+    title: '신용/예탁금 비율',
+    description: '같은 날 신용융자 잔고와 투자자예탁금이 모두 있는 날의 신용÷예탁금(%).',
+    fn: (credit) => credit
+      .filter(r => r.credit_jo !== '' && r.deposit_jo !== '' && r.credit_jo != null && r.deposit_jo != null)
+      .map(r => ({date: r.date, ratio: Math.round(Number(r.credit_jo) / Number(r.deposit_jo) * 1000) / 10, credit_jo: Number(r.credit_jo), deposit_jo: Number(r.deposit_jo)}))
+  });
+  dash.calc('lev_share', {
+    inputs: ['leverage'],
+    title: '레버리지 ETF/본주 비율',
+    description: '6/16~7/16 개인의 레버리지 ETF 4종 순매수 ÷ 삼성전자·SK하이닉스 본주 순매수(%).',
+    fn: (leverage) => {
+      const etf = leverage.find(r => r.item === '대표 레버리지 ETF 4종 개인 순매수');
+      const stk = leverage.find(r => r.item === '삼성전자·SK하이닉스 본주 개인 순매수');
+      return [{share_pct: Math.round(Number(etf.value_eok) / Number(stk.value_eok) * 1000) / 10}];
+    }
+  });
+
+  // x scale over trading days only: weekends and holidays take no space
+  function tradeX(days, range){
+    const ds = Array.from(new Set(days)).filter(Boolean).sort(); const n = ds.length;
+    const lin = d3.scaleLinear([0, Math.max(1, n - 1)], range);
+    const key = d => typeof d === 'string' ? d.slice(0, 10) : d3.utcFormat('%Y-%m-%d')(d);
+    const pos = d => { const s = key(d); const i = d3.bisectLeft(ds, s); return (i < n && ds[i] === s) ? i : Math.max(-0.5, Math.min(n - 0.5, i - 0.5)); };
+    const x = d => lin(pos(d));
+    x.invert = px => P(ds[Math.max(0, Math.min(n - 1, Math.round(lin.invert(px))))]);
+    x.step = () => Math.abs(lin(1) - lin(0));
+    x.monthTicks = every => { const out = []; let last = null, k = 0; ds.forEach(s => { const m = s.slice(0, 7); if (m !== last) { if (k % every === 0) out.push(P(s)); k++; last = m; } }); return out; };
+    x.dayTicks = every => ds.filter((s, i) => i % every === 0).map(P);
+    x.monthSpan = m => { const ii = ds.map((s, i) => s.startsWith(m) ? i : -1).filter(i => i >= 0); return ii.length ? [lin(ii[0] - 0.5), lin(ii[ii.length - 1] + 0.5)] : null; };
+    return x;
+  }
+
+  function fitTicks(svg, ticks, xf, labf, left, yr){   // 눈금 글자가 겹치지 않게 앞에서부터 남김. yr: 남긴 첫 눈금과 해가 바뀐 첫 눈금에 연도
+    const out = []; let lastR = -Infinity;
+    ticks.forEach((d, i) => {
+      let lab = labf(d, i);
+      if (yr && !/년/.test(lab) && (!out.length || out[out.length - 1].d.getUTCFullYear() !== d.getUTCFullYear())) lab = (d.getUTCFullYear() % 100) + '년 ' + lab;
+      const w = tw(svg, lab), px = xf(d), st = !out.length && px - left < w / 2, L = st ? px : px - w / 2;
+      if (L > lastR + 6) { out.push({d, lab, px, st}); lastR = L + w; }
+    });
+    return out;
+  }
+
+  function gate(box, ids){
+    const st = ids.map(id => dash.data(id).status);
+    box.querySelectorAll('svg,.rv-tip,.rv-fail').forEach(n => n.remove());
+    if (st.every(s => s === 'ok')) { box.classList.remove('dash-skeleton'); return true; }
+    if (st.some(s => BAD.includes(s))) {
+      box.classList.remove('dash-skeleton');
+      const f = document.createElement('div'); f.className = 'rv-fail';
+      const d = document.createElement('span'); d.className = 'rv-dot';
+      const t = document.createElement('span'); t.textContent = 'Failed to load';
+      f.append(d, t); box.appendChild(f);
+    } else box.classList.add('dash-skeleton');
+    return false;
+  }
+  function tw(svg, s){ const t = svg.append('text').attr('class','rv-tick').text(s); const w = t.node().getComputedTextLength(); t.remove(); return w; }
+  function newSvg(box, W, H){ return d3.select(box).append('svg').attr('width','100%').attr('viewBox', `0 0 ${W} ${H}`).attr('height', H); }
+  function tipBox(box){ const t = document.createElement('div'); t.className = 'rv-tip'; t.hidden = true; box.appendChild(t); return t; }
+  function showTip(tip, box, x, y, title, lines){
+    tip.replaceChildren();
+    const h = document.createElement('div'); h.className = 'rv-tip-h'; h.textContent = title; tip.appendChild(h);
+    lines.forEach(([c, name, val]) => {
+      const r = document.createElement('div'); r.className = 'rv-tip-r';
+      if (c) { const s = document.createElement('span'); s.className = 'rv-sw'; s.style.background = c; r.appendChild(s); }
+      const n = document.createElement('span'); n.textContent = name;
+      const v = document.createElement('b'); v.textContent = val;
+      r.append(n, v); tip.appendChild(r);
+    });
+    tip.hidden = false;
+    const bw = box.clientWidth, w = tip.offsetWidth;
+    let left = x + 14; if (left + w > bw) left = Math.max(0, x - 14 - w);
+    tip.style.left = left + 'px'; tip.style.top = Math.max(0, y - 12) + 'px';
+  }
+  function grid(svg, y, ticks, x1, x2){
+    svg.append('g').selectAll('line').data(ticks).join('line')
+      .attr('x1', x1).attr('x2', x2).attr('y1', d => y(d)).attr('y2', d => y(d))
+      .style('stroke', 'var(--cds-chart-grid)');
+  }
+
+  // bars by category with optional line on a second axis
+  function combo(box, o){
+    const W = Math.max(280, box.clientWidth), H = o.height || 260;
+    const svg = newSvg(box, W, H);
+    const ds = o.dates;
+    const bv = ds.map(o.bar.get).filter(v => v != null);
+    const yb = d3.scaleLinear([Math.min(0, d3.min(bv) ?? 0), Math.max(0, d3.max(bv) ?? 1)], [H - 28, 22]).nice();
+    const bT = yb.ticks(4);
+    let yl = null, lT = [];
+    if (o.line) {
+      const lv = ds.map(o.line.get).filter(v => v != null);
+      const [a, b] = d3.extent(lv); const pad = (b - a) * 0.15 || 1;
+      yl = d3.scaleLinear([a - pad, b + pad], [H - 28, 22]).nice(); lT = yl.ticks(4);
+    }
+    const ml = (d3.max(bT, t => tw(svg, o.bar.tick(t))) || 0) + 10;
+    const mr = o.line ? (d3.max(lT, t => tw(svg, o.line.tick(t))) || 0) + 10 : 8;
+    const m = {t: 22, r: mr, b: 28, l: ml};
+    const x = d3.scaleBand(ds, [m.l, W - m.r]).padding(0.28);
+    grid(svg, yb, bT, m.l, W - m.r);
+    svg.append('g').selectAll('text').data(bT).join('text').attr('class','rv-tick')
+      .attr('x', m.l - 6).attr('y', d => yb(d)).attr('dy','0.32em').attr('text-anchor','end').text(o.bar.tick);
+    if (o.line) svg.append('g').selectAll('text').data(lT).join('text').attr('class','rv-tick')
+      .attr('x', W - m.r + 6).attr('y', d => yl(d)).attr('dy','0.32em').text(o.line.tick);
+    svg.append('text').attr('class','rv-tick').attr('x', 0).attr('y', 10).text(o.bar.unit);
+    if (o.line) svg.append('text').attr('class','rv-tick').attr('x', W).attr('y', 10).attr('text-anchor','end').text(o.line.unit);
+    svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', yb(0)).attr('y2', yb(0)).style('stroke','var(--cds-chart-axis)');
+    const bw = Math.min(32, x.bandwidth());
+    const hatch = o.bar.hatch || (() => false), patId = 'hatch-' + box.id;
+    if (o.bar.hatch) {
+      const pt = svg.append('defs').append('pattern').attr('id', patId).attr('patternUnits', 'userSpaceOnUse').attr('width', 6).attr('height', 6).attr('patternTransform', 'rotate(45)');
+      pt.append('line').attr('x1', 0).attr('y1', 0).attr('x2', 0).attr('y2', 6).style('stroke', o.bar.hatchColor).attr('stroke-width', 2.2);
+    }
+    svg.append('g').selectAll('rect').data(ds.filter(d => o.bar.get(d) != null)).join('rect')
+      .attr('x', d => x(d) + (x.bandwidth() - bw) / 2).attr('width', bw)
+      .attr('y', d => Math.min(yb(o.bar.get(d)), yb(0)))
+      .attr('height', d => Math.max(1, Math.abs(yb(o.bar.get(d)) - yb(0)))).attr('rx', 3)
+      .style('fill', d => hatch(d) ? `url(#${patId})` : o.bar.color(d))
+      .style('stroke', d => hatch(d) ? o.bar.hatchColor : null).attr('stroke-width', d => hatch(d) ? 1.2 : null);
+    if (o.bar.label) svg.append('g').selectAll('text').data(ds.filter(d => o.bar.get(d) != null && o.bar.label(d))).join('text').attr('class', 'rv-tick')
+      .attr('x', d => x(d) + (x.bandwidth() + bw) / 2).attr('y', d => yb(o.bar.get(d)) - 6).attr('text-anchor', 'end').text(o.bar.label);
+    if (o.line) {
+      const pts = ds.filter(d => o.line.get(d) != null);
+      svg.append('path').datum(pts).attr('fill','none').style('stroke', o.line.color).attr('stroke-width', 2)
+        .attr('stroke-linecap','round').attr('stroke-linejoin','round')
+        .attr('d', d3.line(d => x(d) + x.bandwidth() / 2, d => yl(o.line.get(d))));
+      svg.append('g').selectAll('circle').data(pts).join('circle')
+        .attr('cx', d => x(d) + x.bandwidth() / 2).attr('cy', d => yl(o.line.get(d))).attr('r', 3).style('fill', o.line.color);
+    }
+    const maxN = Math.max(2, Math.floor((W - m.l - m.r) / Math.max(46, (ds.length ? tw(svg, o.xfmt(ds[ds.length - 1])) : 0) + 14)));
+    const step = Math.ceil(ds.length / maxN);
+    svg.append('g').selectAll('text').data(ds.filter((d, i) => i % step === 0)).join('text').attr('class','rv-tick')
+      .attr('x', d => x(d) + x.bandwidth() / 2).attr('y', H - 8).attr('text-anchor','middle').text(o.xfmt);
+    const tip = tipBox(box);
+    svg.append('g').selectAll('rect').data(ds).join('rect')
+      .attr('x', d => x(d) - x.step() * x.paddingInner() / 2).attr('width', x.step())
+      .attr('y', m.t).attr('height', H - m.t - m.b).attr('fill','transparent')
+      .on('mousemove', (e, d) => {
+        const [px, py] = d3.pointer(e, box);
+        const v = o.bar.get(d);
+        const lines = [[o.bar.swatch ? o.bar.swatch(d) : null, o.bar.name + ' ', v == null ? '—' : o.bar.fmt(v)]];
+        if (o.line) { const lv = o.line.get(d); lines.push([o.line.color, o.line.name + ' ', lv == null ? '—' : o.line.fmt(lv)]); }
+        (o.extra || []).forEach(f => { const r = f(d); if (r) lines.push(r); });
+        showTip(tip, box, px, py, o.xfull(d), lines);
+      })
+      .on('mouseleave', () => { tip.hidden = true; });
+  }
+
+  const liqRows = () => dash.data('liq').data;
+  const mkRows = () => dash.data('market').data;
+  const byDate = (rows, k) => { const m = new Map(rows.map(r => [r.date, num(r[k])])); return d => m.has(d) ? m.get(d) : null; };
+
+  function drawOct(){
+    const box = document.getElementById('oct-chart'); if (!gate(box, ['liq','market'])) return;
+    const liq = liqRows().filter(r => r.date >= '2026-10-01' && num(r.liq_eok) != null);
+    const mk = mkRows().filter(r => r.date >= '2026-10-01' && num(r.kospi) != null);
+    const dates = Array.from(new Set([...liq.map(r => r.date), ...mk.map(r => r.date)])).sort();
+    const gl = byDate(liq, 'liq_eok'), gr = byDate(liq, 'ratio_pct'), gk = byDate(mk, 'kospi'), gc = byDate(mk, 'kospi_chg_pct'), rep = repDates();
+    combo(box, {dates, height: 260, xfmt: md, xfull: d => '2026-' + md(d),
+      bar: {get: gl, name: '미수 반대매매', unit: '억원', tick: f0, fmt: v => f1(v) + '억원', color: () => C()[0], swatch: () => C()[0]},
+      line: {get: gk, name: '코스피', unit: '코스피', tick: f0, fmt: f2, color: C()[1]},
+      extra: [d => gr(d) == null ? null : [null, '비중(당일 미수 반대매매 ÷ 전일 미수금) ', f1(gr(d)) + '%'], d => gc(d) == null ? null : [null, '코스피 등락 ', d3.format('+.2f')(gc(d)) + '%'], d => rep.has(d) ? [null, '', REP_TXT] : null]});
+    document.getElementById('lg-oct-b').style.background = C()[0];
+    document.getElementById('lg-oct-l').style.background = C()[1];
+  }
+  function drawFor(){
+    const box = document.getElementById('for-chart'); if (!gate(box, ['flows_daily','market'])) return;
+    const fl = dash.data('flows_daily').data.filter(r => r.date >= '2026-10-01');
+    const mk = mkRows().filter(r => r.date >= '2026-10-01');
+    const dates = fl.map(r => r.date).sort();
+    const fm = new Map(fl.map(r => [r.date, num(r.foreign_jo) * 10000])); const gf = d => fm.has(d) ? fm.get(d) : null;
+    const gv = byDate(mk, 'vkospi');
+    const col = d => (gf(d) ?? 0) < 0 ? CRIT : C()[0];
+    combo(box, {dates, height: 260, xfmt: md, xfull: d => '2026-' + md(d),
+      bar: {get: gf, name: '외국인', unit: '억원', tick: f0, fmt: v => d3.format('+,.0f')(v) + '억원', color: col, swatch: col},
+      line: {get: gv, name: 'VKOSPI', unit: 'VKOSPI', tick: f0, fmt: f2, color: C()[2]}});
+    document.getElementById('lg-for-n').style.background = CRIT;
+    document.getElementById('lg-for-p').style.background = C()[0];
+    document.getElementById('lg-for-l').style.background = C()[2];
+  }
+  function drawYear(){
+    const box = document.getElementById('year-chart'); if (!gate(box, ['liq'])) return;
+    document.getElementById('year-title').textContent = '확인된 일별 미수 반대매매 (' + perLab(per) + ')';
+    const rows = liqRows().filter(r => num(r.liq_eok) != null && inPer(r.date));
+    const dates = rows.map(r => r.date).sort();
+    const gl = byDate(rows, 'liq_eok'), gr = byDate(rows, 'ratio_pct');
+    const basis = new Map(rows.map(r => [r.date, r.basis]));
+    const col = d => (gr(d) ?? 0) >= 5 ? CRIT : C()[0];
+    combo(box, {dates, height: 260, xfmt: yd, xfull: ymd,
+      bar: {get: gl, name: '미수 반대매매', unit: '억원', tick: f0, fmt: v => f1(v) + '억원', color: col, swatch: col},
+      extra: [d => gr(d) == null ? null : [null, '비중(당일 미수 반대매매 ÷ 전일 미수금) ', f1(gr(d)) + '%'], d => basis.get(d) && !['보도','금투협 원자료'].includes(basis.get(d)) ? [null, '', basis.get(d)] : null]});
+    document.getElementById('lg-yr-c').style.background = CRIT;
+    document.getElementById('lg-yr-n').style.background = C()[0];
+  }
+  function drawMonthly(){
+    const box = document.getElementById('monthly-chart'); if (!gate(box, ['monthly'])) return;
+    document.getElementById('monthly-title').textContent = '월별 미수 반대매매 일평균 (' + perLab(per) + ')';
+    const rows = dash.data('monthly').data.filter(r => inPer(r.month + '-01'));
+    const dates = rows.map(r => r.month);
+    const m = new Map(rows.map(r => [r.month, r]));
+    combo(box, {dates, height: 240, xfmt: s => (s.slice(5) === '01' ? s.slice(2, 4) + '년 ' : '') + (+s.slice(5)) + '월', xfull: s => s.slice(0,4) + '년 ' + (+s.slice(5)) + '월',
+      bar: {get: d => num(m.get(d).avg_eok), name: '미수 반대매매 일평균', unit: '억원', tick: f0, fmt: v => f0(v) + '억원',
+        color: d => d === '2026-10' ? C()[0] : MUTED,
+        hatch: d => !!m.get(d).partial, hatchColor: C()[0], label: d => m.get(d).partial || null},
+      extra: [d => m.get(d).partial ? [null, '부분월 ', m.get(d).partial] : null, d => [null, '', m.get(d).basis]]});
+  }
+  function drawRatio(){
+    const box = document.getElementById('ratio-chart'); if (!gate(box, ['credit_ratio'])) return;
+    document.getElementById('ratio-title').textContent = '예탁금 대비 신용 비율 (' + perLab(per) + ')';
+    const rows = dash.data('credit_ratio').data.filter(r => inPer(r.date));
+    const dates = rows.map(r => r.date);
+    const m = new Map(rows.map(r => [r.date, r]));
+    combo(box, {dates, height: 240, xfmt: yd, xfull: ymd,
+      bar: {get: d => m.get(d).ratio, name: '신용/예탁금', unit: '%', tick: f0, fmt: v => f1(v) + '%',
+        color: d => d >= '2026-10-01' ? C()[0] : MUTED},
+      extra: [d => [null, '신용 ', f2(m.get(d).credit_jo) + '조원'], d => [null, '예탁금 ', f2(m.get(d).deposit_jo) + '조원']]});
+  }
+
+  function drawLag(){
+    const box = document.getElementById('lag-chart'); if (!gate(box, ['lag'])) return;
+    const rows = dash.data('lag').data.slice().sort((a, b) => a.date < b.date ? -1 : 1);
+    const keys = ['t0','t1','t2','t3'], names = ['T0(급락일)','T+1','T+2','T+3'];
+    const SGC = C()[0], OVC = C()[2], col = r => r.overlap ? OVC : SGC;
+    const pend = (r, k) => (r.pending || '').split(' ').includes(k);
+    const pkI = r => r.peak === 'T0' ? 0 : Number(String(r.peak).slice(2));
+    const lg = document.getElementById('lag-legend'); lg.replaceChildren();
+    [[SGC, '단독 급락일'], [OVC, '겹침: 앞뒤 급락일과 T0~T+3 구간이 겹침'], [null, '미공시: 아직 공시 전 · 굵은 숫자 = 그 급락일의 정점']].forEach(([c, n]) => { const sp = document.createElement('span'); if (c) { const sw = document.createElement('i'); sw.className = 'rv-sw'; sw.style.background = c; sp.appendChild(sw); } sp.appendChild(document.createTextNode(n)); lg.appendChild(sp); });
+    const sum = document.getElementById('lag-sum');
+    if (sum) {
+      const single = rows.filter(r => !r.overlap), late = rows.filter(r => r.peak !== 'T0').length, sLate = single.filter(r => r.peak !== 'T0').length;
+      const pp = rows.filter(r => r.pending).map(r => r.crash + '의 ' + r.pending.split(' ').map(k => (k === 't0' ? 'T0' : 'T+' + k[1]) + (r['d' + k[1]] ? '(' + md(r['d' + k[1]]) + ')' : '')).join('·'));
+      sum.textContent = `${rows.length}일 중 정점이 T+1~T+3에 온 날은 ${late}일, 겹침 없는 ${single.length}일만 보면 ${sLate}일이다.` + (pp.length ? ` 미공시: ${pp.join(', ')}.` : '');
+    }
+    const W = Math.max(300, box.clientWidth), rowH = 22, top = 30, H = top + rows.length * rowH + 6;
+    const svg = newSvg(box, W, H);
+    const pct = r => d3.format('+.2f')(num(r.crash_pct)) + '%';
+    const lab = r => r.crash + '  ' + pct(r);
+    const tagW = tw(svg, '겹침') + 8;
+    const ml = d3.max(rows, r => tw(svg, lab(r))) + tagW + 14;
+    const cw = (W - ml) / 4, valW = tw(svg, '1,698') + 10;
+    const vmax = d3.max(rows.flatMap(r => keys.map(k => num(r[k]))).filter(v => v != null)) || 1;
+    const bx = d3.scaleLinear([0, vmax], [0, Math.max(8, cw - valW - 8)]);
+    svg.append('text').attr('class', 'rv-tick').attr('x', 0).attr('y', 14).text('급락일 · 코스피');
+    const hd = cw < tw(svg, names[0]) + 14 ? ['T0', 'T+1', 'T+2', 'T+3'] : names;
+    svg.append('g').selectAll('text').data(hd).join('text').attr('class', 'rv-tick').attr('x', (d, i) => ml + i * cw + 4).attr('y', 14).text(d => d);
+    svg.append('line').attr('x1', 0).attr('x2', W).attr('y1', top - 6).attr('y2', top - 6).style('stroke', 'var(--cds-chart-axis)');
+    svg.append('g').selectAll('line').data([0, 1, 2, 3]).join('line').attr('x1', i => ml + i * cw).attr('x2', i => ml + i * cw).attr('y1', top - 6).attr('y2', H - 2).style('stroke', 'var(--cds-chart-grid)');
+    const g = svg.append('g').selectAll('g').data(rows).join('g').attr('transform', (r, i) => `translate(0,${top + i * rowH})`);
+    g.append('text').attr('class', 'rv-tick').attr('x', 0).attr('y', rowH / 2).attr('dy', '0.32em').style('fill', 'var(--color-fg)').text(lab);
+    g.filter(r => r.overlap).append('text').attr('class', 'rv-tick').attr('x', ml - 8).attr('y', rowH / 2).attr('dy', '0.32em').attr('text-anchor', 'end').style('fill', OVC).text('겹침');
+    keys.forEach((k, i) => {
+      const x0 = ml + i * cw + 4;
+      const has = g.filter(r => num(r[k]) != null);
+      has.append('rect').attr('x', x0).attr('y', 5).attr('height', rowH - 10).attr('width', r => Math.max(1, bx(num(r[k])))).attr('rx', 2).style('fill', col);
+      has.append('text').attr('class', 'rv-tick').attr('x', r => x0 + Math.max(1, bx(num(r[k]))) + 4).attr('y', rowH / 2).attr('dy', '0.32em')
+        .style('fill', r => pkI(r) === i ? 'var(--color-fg)' : null).style('font-weight', r => pkI(r) === i ? 600 : null).text(r => f0(num(r[k])));
+      g.filter(r => num(r[k]) == null).append('text').attr('class', 'rv-tick').attr('x', x0).attr('y', rowH / 2).attr('dy', '0.32em').style('font-style', 'italic').text(r => pend(r, k) ? '미공시' : '—');
+    });
+    const tip = tipBox(box);
+    g.append('rect').attr('x', 0).attr('width', W).attr('y', 0).attr('height', rowH).attr('fill', 'transparent')
+      .on('mousemove', (e, r) => { const [px, py] = d3.pointer(e, box);
+        showTip(tip, box, px, py, `${r.crash} 급락 · 코스피 ${pct(r)}` + (r.overlap ? ` · 겹침(${r.overlap_with})` : ''),
+          keys.map((k, i) => [num(r[k]) == null ? null : col(r), `${names[i]} ${r['d' + i] ? md(r['d' + i]) : ''} `, num(r[k]) == null ? (pend(r, k) ? '미공시' : '—') : f1(num(r[k])) + '억원']).concat([[null, '', r.note]])); })
+      .on('mouseleave', () => { tip.hidden = true; });
+    box.style.minHeight = H + 'px';
+  }
+
+  function drawCredit(){
+    const box = document.getElementById('credit-chart'); if (!gate(box, ['credit'])) return;
+    document.getElementById('credit-title').textContent = '신용융자 잔고 (시장별 · ' + perLab(per) + ')';
+    const rows = dash.data('credit').data.filter(r => inPer(r.date)).sort((a, b) => a.date < b.date ? -1 : 1);
+    const series = [{k: 'credit_jo', n: '전체', c: C()[0]}, {k: 'kospi_jo', n: '코스피', c: C()[1]}, {k: 'kosdaq_jo', n: '코스닥', c: C()[2]}];
+    const lg = document.getElementById('credit-legend'); lg.replaceChildren();
+    series.forEach(s => { const sp = document.createElement('span'); const sw = document.createElement('i'); sw.className = 'rv-sw'; sw.style.background = s.c; sp.append(sw, document.createTextNode(s.n)); lg.appendChild(sp); });
+    const W = Math.max(280, box.clientWidth), H = 280;
+    const svg = newSvg(box, W, H);
+    const all = rows.flatMap(r => series.map(s => num(r[s.k]))).filter(v => v != null);
+    const y = d3.scaleLinear([0, d3.max(all)], [H - 28, 22]).nice(); const yT = y.ticks(5);
+    const ml = d3.max(yT, t => tw(svg, f0(t))) + 10;
+    const x = tradeX(rows.map(r => r.date), [ml, W - 12]);
+    grid(svg, y, yT, ml, W - 12);
+    svg.append('g').selectAll('text').data(yT).join('text').attr('class','rv-tick').attr('x', ml - 6).attr('y', d => y(d)).attr('dy','0.32em').attr('text-anchor','end').text(f0);
+    svg.append('text').attr('class','rv-tick').attr('x', 0).attr('y', 10).text('조원');
+    const mT = fitTicks(svg, x.monthTicks(W < 520 ? 6 : W < 900 ? 2 : 1), d => x(d), mlab, ml, true);
+    svg.append('g').selectAll('text').data(mT).join('text').attr('class','rv-tick').attr('x', o => o.px).attr('y', H - 8).attr('text-anchor', o => o.st ? 'start' : 'middle').text(o => o.lab);
+    series.forEach(s => {
+      const pts = rows.filter(r => num(r[s.k]) != null);
+      svg.append('path').datum(pts).attr('fill','none').style('stroke', s.c).attr('stroke-width', 2).attr('stroke-linecap','round').attr('stroke-linejoin','round')
+        .attr('d', d3.line(r => x(P(r.date)), r => y(num(r[s.k]))));
+      if (pts.length < 60) svg.append('g').selectAll('circle').data(pts).join('circle').attr('cx', r => x(P(r.date))).attr('cy', r => y(num(r[s.k]))).attr('r', 2.5).style('fill', s.c);
+    });
+    const tip = tipBox(box);
+    const rule = svg.append('line').attr('y1', 22).attr('y2', H - 28).style('stroke','var(--cds-chart-reference)').attr('opacity', 0);
+    const bis = d3.bisector(r => P(r.date)).center;
+    svg.append('rect').attr('x', ml).attr('width', W - 12 - ml).attr('y', 22).attr('height', H - 50).attr('fill','transparent')
+      .on('mousemove', (e) => { const [px, py] = d3.pointer(e, box); const r = rows[bis(rows, x.invert(px))];
+        rule.attr('x1', x(P(r.date))).attr('x2', x(P(r.date))).attr('opacity', 1);
+        const lines = series.map(s => [s.c, s.n + ' ', num(r[s.k]) == null ? '—' : f2(num(r[s.k])) + '조원']);
+        if (num(r.deposit_jo) != null) lines.push([null, '예탁금 ', f2(num(r.deposit_jo)) + '조원']);
+        lines.push([null, '', r.basis]);
+        showTip(tip, box, px, py, ymd(r.date), lines); })
+      .on('mouseleave', () => { tip.hidden = true; rule.attr('opacity', 0); });
+  }
+
+  function drawChg(){
+    const box = document.getElementById('chg-chart'); if (!gate(box, ['credit_change'])) return;
+    const rows = dash.data('credit_change').data;
+    const W = Math.max(280, box.clientWidth), rowH = 28, H = rows.length * rowH + 40;
+    const svg = newSvg(box, W, H);
+    const lab = r => r.basis_label ? r.event + ' · ' + r.basis_label : r.event;
+    const ml = d3.max(rows, r => tw(svg, lab(r))) + 12;
+    const vmin = d3.min(rows, r => num(r.chg_pct));
+    const vlw = tw(svg, f1(vmin)) + 8;
+    const x = d3.scaleLinear([vmin * 1.05, 0], [ml + vlw, W - 10]);
+    const y = d3.scaleBand(rows.map(r => r.event), [16, H - 24]).padding(0.3);
+    const xT = x.ticks(4);
+    svg.append('g').selectAll('line').data(xT).join('line').attr('x1', d => x(d)).attr('x2', d => x(d)).attr('y1', 16).attr('y2', H - 24).style('stroke','var(--cds-chart-grid)');
+    svg.append('g').selectAll('text').data(xT).join('text').attr('class','rv-tick').attr('x', d => x(d)).attr('y', H - 8).attr('text-anchor','middle').text(d => f0(d) + '%');
+    const refs = rows.filter(r => r.event === '2020년 3월' || r.event === '2008년 9월');
+    svg.append('g').selectAll('line').data(refs).join('line').attr('x1', r => x(num(r.chg_pct))).attr('x2', r => x(num(r.chg_pct))).attr('y1', 10).attr('y2', H - 24)
+      .style('stroke','var(--cds-chart-reference)').attr('stroke-dasharray','4 3');
+    const bh = Math.min(18, y.bandwidth());
+    svg.append('g').selectAll('rect').data(rows).join('rect')
+      .attr('x', r => x(num(r.chg_pct))).attr('width', r => x(0) - x(num(r.chg_pct)))
+      .attr('y', r => y(r.event) + (y.bandwidth() - bh) / 2).attr('height', bh).attr('rx', 3)
+      .style('fill', r => r.event.startsWith('2026년 10월') ? C()[0] : (r.event.startsWith('2026') ? C()[1] : MUTED));
+    svg.append('g').selectAll('text').data(rows).join('text').attr('class','rv-tick').attr('x', ml - 6).attr('y', r => y(r.event) + y.bandwidth() / 2).attr('dy','0.32em').attr('text-anchor','end').text(lab);
+    svg.append('g').selectAll('text').data(rows).join('text').attr('class','rv-tick').attr('x', r => x(num(r.chg_pct)) - 4).attr('y', r => y(r.event) + y.bandwidth() / 2).attr('dy','0.32em').attr('text-anchor','end').text(r => f1(num(r.chg_pct)));
+    const tip = tipBox(box);
+    svg.append('g').selectAll('rect').data(rows).join('rect').attr('x', ml).attr('width', W - ml).attr('y', r => y(r.event)).attr('height', y.bandwidth()).attr('fill','transparent')
+      .on('mousemove', (e, r) => { const [px, py] = d3.pointer(e, box); showTip(tip, box, px, py, r.event, [[null, '일일 변화율 ', f1(num(r.chg_pct)) + '%']].concat(r.basis_label ? [[null, '기준 ', r.basis_label]] : [], [[null, '', r.basis]])); })
+      .on('mouseleave', () => { tip.hidden = true; });
+    box.style.minHeight = H + 'px';
+  }
+
+  // one chart: overlaid lines (peak = 100) on top, bar panels below, shared time axis
+  let range = 'all';
+  const RANGES = {all: ['2025-01-01', '2026-10-26'], y26: ['2026-01-01', '2026-10-26'], h2: ['2026-05-25', '2026-10-26'], oct: ['2026-09-25', '2026-10-26'],
+    p15: ['2015-01-01', '2016-12-31'], p17: ['2017-01-01', '2018-12-31'], p19: ['2019-01-01', '2020-12-31'], p21: ['2021-01-01', '2022-12-31'], p23: ['2023-01-01', '2024-12-31']};
+  const PERIODS = [['p15', 2015], ['p17', 2017], ['p19', 2019], ['p21', 2021], ['p23', 2023], ['all', 2025]];   // 2년 단위 기간(all = 2025~2026, 처음 화면)
+  let qper = 'all';
+  let tSort = 'now', tChamp = true;   // 큰 흐름 비교 줄 정렬(기본·현재 적합순·올해·전체)과 그해 1위 12줄 보이기
+  try { const v = localStorage.getItem('rv_tsort'); if (['base', 'now', 'year', 'all'].includes(v)) tSort = v; const w = localStorage.getItem('rv_tchamp'); if (w) tChamp = w === '1'; } catch (e) {}    // 맨 위 정밀 검증 그래프의 2년 기간
+  let per = 'all';     // 아래 세부 날짜 그래프(일별 미수 반대매매·신용 잔고·신용/예탁금·월별)의 2년 기간
+  const perLab = k => { const p = PERIODS.find(q => q[0] === k) || PERIODS[PERIODS.length - 1]; return p[1] + '~' + (p[1] + 1); };
+  const inPer = d => { const [s, e] = RANGES[per]; d = String(d); return d >= s && d <= e; };
+  const blockOf = cur => (PERIODS.find(([k]) => cur[0] >= RANGES[k][0] && cur[1] <= RANGES[k][1]) || [null])[0];   // 보이는 기간이 통째로 들어가는 2년(없으면 null)
+  const hidden = new Set(['kosdaq', 'cr_kospi', 'cr_kosdaq']);
+  let view = null;     // + − 확대·축소, ◀ ▶ 이동으로 정한 기간 [시작, 끝] (없으면 기간 단추대로)
+  function syncCtl(){
+    const bk = blockOf(view || RANGES[range]);
+    document.querySelectorAll('#all-per button').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.r === bk)));
+    document.querySelectorAll('#all-range button').forEach(x => x.setAttribute('aria-pressed', String(!view && x.dataset.r === range)));
+    document.querySelectorAll('.rv-per-d button').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.r === per)));
+  }
+  function setPer(k){ if (!k || k === per) return; per = k; if (document.getElementById('more').open) { drawYear(); drawCredit(); drawRatio(); drawMonthly(); } }   // 세부 그래프도 같은 2년으로
+  function pickRange(r){ range = r; view = null; setPer(blockOf(RANGES[r])); syncCtl(); drawAll(); }
+  document.querySelectorAll('#all-per button, #all-range button').forEach(b => b.addEventListener('click', () => pickRange(b.dataset.r)));
+  document.querySelectorAll('.rv-per-d').forEach(el => PERIODS.forEach(([k, y]) => {
+    const b = document.createElement('button'); b.type = 'button'; b.dataset.r = k; b.setAttribute('aria-label', y + '~' + (y + 1)); b.setAttribute('aria-pressed', String(k === per));
+    const yy = document.createElement('span'); yy.className = 'rv-yy'; yy.textContent = '20';
+    b.append(yy, document.createTextNode(String(y).slice(2) + '~' + String(y + 1).slice(2)));
+    b.addEventListener('click', () => pickRange(k)); el.appendChild(b);
+  }));
+  const zoomDays = () => Array.from(new Set(mkRows().map(r => String(r.date)).filter(d => d <= RANGES.all[1]))).sort();   // 2015-01-02부터 전 기간
+  function zoomIdx(days){                       // 지금 보이는 기간의 처음·끝 거래일 위치
+    const cur = view || RANGES[range]; let i0 = days.findIndex(d => d >= cur[0]); if (i0 < 0) i0 = 0;
+    let i1 = days.length - 1; while (i1 > 0 && days[i1] > cur[1]) i1--;
+    return [i0, Math.max(i0, i1)];
+  }
+  function zoomTo(kind){
+    const days = zoomDays(); if (!days.length) return;
+    const [i0, i1] = zoomIdx(days), n = i1 - i0 + 1, last = days.length - 1;
+    let len = n, s;
+    if (kind === 'in') len = Math.max(10, Math.round(n / 1.6));
+    if (kind === 'out') len = Math.min(days.length, Math.round(n * 1.6));
+    if (kind === 'left' || kind === 'right') { const sh = Math.max(1, Math.round(n / 3)); s = i0 + (kind === 'left' ? -sh : sh); }
+    else s = i1 >= last ? last - len + 1 : Math.round((i0 + i1) / 2 - (len - 1) / 2);   // 맨 끝을 보고 있으면 끝을 붙잡고, 아니면 가운데를 중심으로
+    s = Math.max(0, Math.min(last - len + 1, s));
+    view = [days[s], days[s + len - 1]];
+    setPer(blockOf(view)); syncCtl(); drawAll();
+  }
+  document.querySelectorAll('#all-zoom button').forEach(b => b.addEventListener('click', () => zoomTo(b.dataset.z)));
+  const EVC = c => c === '신용 한도' ? C()[3] : c === '외부 변수' ? C()[4] : c === '시장' ? CRIT : c === '레버리지' ? C()[5] : MUTED;
+
+  function legendItem(parent, color, label, opts){
+    const el = document.createElement(opts && opts.toggle ? 'button' : 'span');
+    if (opts && opts.toggle) { el.type = 'button'; el.className = 'rv-lgbtn'; el.setAttribute('aria-pressed', String(!opts.off)); el.addEventListener('click', opts.toggle); }
+    const sw = document.createElement('i'); sw.className = 'rv-sw'; sw.style.background = color;
+    if (opts && opts.shape === 'dot') sw.style.borderRadius = '50%';
+    if (opts && opts.shape === 'line') { sw.style.height = '3px'; sw.style.width = '.9rem'; }
+    if (opts && opts.shape === 'thick') { sw.style.height = '5px'; sw.style.width = '.9rem'; }
+    if (opts && opts.shape === 'dash') { sw.style.height = '3px'; sw.style.width = '.9rem'; sw.style.borderRadius = '0'; sw.style.background = `repeating-linear-gradient(90deg, ${color} 0 4px, transparent 4px 6px)`; }
+    if (opts && opts.shape === 'triup') { sw.style.width = '.75rem'; sw.style.height = '.65rem'; sw.style.borderRadius = '0'; sw.style.clipPath = 'polygon(50% 0, 100% 100%, 0 100%)'; }
+    if (opts && opts.shape === 'tri') { sw.style.width = '.75rem'; sw.style.height = '.65rem'; sw.style.borderRadius = '0'; sw.style.clipPath = 'polygon(0 0, 100% 0, 50% 100%)'; }
+    el.append(sw, document.createTextNode(label)); parent.appendChild(el);
+  }
+
+  // ---- 큰 흐름 비교: 그해 1위 12줄(trend_champ)과 정렬
+  const BASE_STRIPS = [['fast', '빠른 전환'], ['combo', '조합'], ['ema67', '67일선'], ['vote3', '3개 다수결'], ['top26', '2026 1위']];
+  const isChamp = k => /^y\d{4}$/.test(k);
+  function champRules(){ const d = dash.data('trend_champ_rules'); return d.status === 'ok' ? d.data.filter(r => /^\d{4}$/.test(String(r.year))) : []; }
+  // 12개 해 합의: 그해 1위 12줄이 그날 상승·하락 중 어느 쪽인지 센 비율. p1 = 전 거래일, p5 = 5거래일 전. ue·de = 자기 해 줄을 뺀 11줄(확인용)
+  function consRows(){
+    const d = dash.data('trend_champ'); if (d.status !== 'ok') return null;
+    const ks = champRules().map(r => 'y' + r.year); if (!ks.length) return null;
+    const rows = d.data.filter(r => r.date).slice().sort((u, v) => String(u.date) < String(v.date) ? -1 : 1).map(r => {
+      const own = 'y' + String(r.date).slice(0, 4); let up = 0, dn = 0, ue = 0, de = 0;
+      ks.forEach(k => { const v = num(r[k]); if (v === 1) { up++; if (k !== own) ue++; } else if (v === -1) { dn++; if (k !== own) de++; } });
+      return {date: String(r.date), up, dn, n: up + dn, pct: up + dn ? up / (up + dn) * 100 : null, ue, de};
+    });
+    rows.forEach((r, i) => { r.p1 = i >= 1 ? rows[i - 1] : null; r.p5 = i >= 5 ? rows[i - 5] : null; });
+    const m = new Map(rows.map(r => [r.date, r])); m.rows = rows; return m;
+  }
+  const consPm = v => (v > 0 ? '+' : v < 0 ? '−' : '±') + f0(Math.abs(v));
+  const consTxt = c => `상승 ${c.up} · 하락 ${c.dn}(상승 ${f0(c.pct)}%)`;
+  const consChg = (c, p) => (!c || !p || c.pct == null || p.pct == null) ? '—' : `${md(p.date)} ${f0(p.pct)}%에서 ${consPm(c.pct - p.pct)}%p(상승 줄 ${consPm(c.up - p.up)})`;
+  function consLine(ups, dns){
+    const cs = consRows(), cl = cs && cs.rows.length ? cs.rows[cs.rows.length - 1] : null;
+    return cl && cl.n ? `12개 해 합의 ${consTxt(cl)}` + (cl.p1 ? ` — 전 거래일 ${consChg(cl, cl.p1)}` : '') + (cl.p5 ? `, 5거래일 전 ${consChg(cl, cl.p5)}` : '') : `12줄 중 상승 ${ups} · 하락 ${dns}`;
+  }
+  function champMap(){ const d = dash.data('trend_champ'); if (d.status !== 'ok') return null; const m = new Map(); d.data.forEach(r => m.set(String(r.date), r)); return m; }
+  function stripVal(r, k, cm){ return isChamp(k) ? (cm && cm.get(String(r.date)) ? num(cm.get(String(r.date))[k]) : null) : num(r[k]); }
+  function stripFits(cm){
+    const cd = dash.data('combo'); if (cd.status !== 'ok') return {};
+    const rows = cd.data.filter(r => num(r.leg) != null).sort((u, v) => u.date < v.date ? -1 : 1);
+    const lastY = rows.length ? String(rows[rows.length - 1].date).slice(0, 4) : '';
+    const keys = BASE_STRIPS.map(s => s[0]).concat(champRules().map(r => 'y' + r.year));
+    const fit = (rr, k) => { let n = 0, h = 0; rr.forEach(r => { const v = stripVal(r, k, cm), l = num(r.leg); if (v != null) { n++; if (v === l) h++; } }); return n ? h / n * 100 : null; };
+    const r60 = rows.slice(-60), r20 = rows.slice(-20), ry = rows.filter(r => String(r.date).startsWith(lastY));
+    const out = {}; keys.forEach(k => { const lr = rows.length ? stripVal(rows[rows.length - 1], k, cm) : null; out[k] = {r60: fit(r60, k), r20: fit(r20, k), year: fit(ry, k), all: fit(rows, k), now: lr}; });
+    out._last = rows.length ? rows[rows.length - 1].date : ''; out._lastY = lastY;
+    return out;
+  }
+  const SORTKEY = {now: 'r60', year: 'year', all: 'all'};
+  function sortStrips(list, fits){
+    if (tSort === 'base') return list.slice().sort((a, b) => a.ord - b.ord);
+    const k = SORTKEY[tSort], g = (s, kk) => (fits[s.k] && fits[s.k][kk] != null) ? fits[s.k][kk] : -1;
+    return list.slice().sort((a, b) => g(b, k) - g(a, k) || g(b, 'r20') - g(a, 'r20') || g(b, 'year') - g(a, 'year') || a.ord - b.ord);
+  }
+  function setTSort(v){ tSort = v; try { localStorage.setItem('rv_tsort', v); } catch (e) {} syncTSort(); drawAll(); fillChamp(); }
+  function syncTSort(){ document.querySelectorAll('.rv-tsort button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.s === tSort)));
+    const cb = document.querySelector('#strip-champ button'); if (cb) cb.setAttribute('aria-pressed', String(tChamp)); }
+  document.querySelectorAll('.rv-tsort button').forEach(b => b.addEventListener('click', () => setTSort(b.dataset.s)));
+  { const cbn = document.querySelector('#strip-champ button'); if (cbn) cbn.addEventListener('click', () => { tChamp = !tChamp; try { localStorage.setItem('rv_tchamp', tChamp ? '1' : '0'); } catch (e) {} syncTSort(); drawAll(); }); }
+  syncTSort();
+  function fillChamp(){
+    const tbl = document.getElementById('champ-tbl'); if (!tbl) return; const tb = tbl.tBodies[0]; tb.replaceChildren();
+    const st = ['trend_champ_rules', 'trend_champ', 'combo'].map(id => dash.data(id).status);
+    if (!st.every(x => x === 'ok')) { tbl.classList.toggle('dash-skeleton', !st.some(x => BAD.includes(x))); return; }
+    tbl.classList.remove('dash-skeleton');
+    const cm = champMap(), fits = stripFits(cm), crs = champRules();
+    const list = crs.map((r, i) => ({k: 'y' + r.year, lab: r.year + '년 일치 1위', ord: i, r})).concat(BASE_STRIPS.map(([k, lab], i) => ({k, lab: lab + ' (기존 줄)', ord: 100 + i, ref: true})));
+    const sorted = sortStrips(list, fits);
+    const pc = v => (v == null || v === '' || isNaN(+v)) ? '—' : f1(+v);
+    const dir = v => v === 1 ? '상승' : (v === -1 ? '하락' : '—');
+    sorted.forEach((s, i) => {
+      const tr = document.createElement('tr'); if (s.ref) tr.className = 'rv-ref'; tr.dataset.key = s.k;
+      const f = fits[s.k] || {}, r = s.r || {};
+      const cells = [[String(i + 1), 1], [s.lab, 0, 'rv-nw'], [s.ref ? '위 그래프·아래 전환 시점 표 참고' : r.rule, 0, 'rv-rule'], [s.ref ? '' : pc(r.acc_year), 1], [s.ref ? '' : pc(r.acc_next), 1], [pc(f.all), 1], [pc(f.year), 1], [pc(f.r60), 1], [pc(f.r20), 1], [dir(f.now), 0, 'rv-nw'],
+                     [s.ref ? '' : (r.flips_year ?? ''), 1], [s.ref ? '' : ((r.ties !== '' && r.ties != null ? '동점 ' + r.ties : '') + (r.tested ? ' · 시험 ' + d3.format(',')(+r.tested) : '')), 0]];
+      cells.forEach(([t, n, cls]) => { const td = document.createElement('td'); td.textContent = (t === '' || t == null) ? '—' : t; if (n) td.className = 'rv-num'; if (cls) td.classList.add(cls); tr.appendChild(td); });
+      tb.appendChild(tr);
+    });
+    const sum = document.getElementById('champ-sum');
+    if (sum) {
+      const champs = sortStrips(crs.map((r, i) => ({k: 'y' + r.year, ord: i, r})), fits);
+      const top = champs[0], ups = crs.filter(r => (fits['y' + r.year] || {}).now === 1).length, dns = crs.filter(r => (fits['y' + r.year] || {}).now === -1).length;
+      const nx = crs.filter(r => r.acc_next !== '' && r.acc_next != null).map(r => +r.acc_next), mean = nx.length ? d3.mean(nx) : null;
+      const lab = {now: '최근 60거래일', year: '올해', all: '2015년부터 전체 기간', base: '최근 60거래일'}[tSort];
+      const tk = tSort === 'base' ? 'r60' : SORTKEY[tSort];
+      const tops = sortStrips(crs.map((r, i) => ({k: 'y' + r.year, ord: i, r})), fits).slice(0, 3);
+      sum.textContent = (top ? `${lab} 기준으로 가장 잘 맞는 그해 1위: ${tops.map(t => t.r.year + '년(' + pc((fits[t.k] || {})[tk]) + '%, 지금 ' + dir((fits[t.k] || {}).now) + ')').join(' · ')}. ` : '') +
+        `12줄의 지금 판단: 상승 ${ups} · 하락 ${dns}${(() => { const cs = consRows(), cl = cs && cs.rows.length ? cs.rows[cs.rows.length - 1] : null; return cl && cl.p1 ? `(상승 ${f0(cl.pct)}%, 전 거래일 ${consChg(cl, cl.p1)} — 위 그래프 큰 흐름 비교 맨 아래 「12개 해 합의」 줄)` : ''; })()}. 그해 1위를 다음 해에 그대로 쓰면 평균 ${mean == null ? '—' : f1(mean)}%만 맞았다(그해 평균 ${f1(d3.mean(crs, r => +r.acc_year))}%) — 해마다 맞는 조합이 바뀐다는 뜻이다. 기준일 ${fits._last ? md(fits._last) : '—'}.`;
+    }
+  }
+
+  function drawAll(){
+    const box = document.getElementById('all-chart');
+    if (!gate(box, ['market','credit','liq','events','monthly','flows_daily','combo','alarms','fx_daily','fut_daily','etf_lev','reentry','buy3','sell3'])) return;
+    const [a, b] = (view || RANGES[range]).map(P);
+    const inR = r => { const d = P(r.date); return d && d >= a && d <= b; };
+    const allMk = mkRows(), allCr = dash.data('credit').data;
+    const mk = allMk.filter(inR), cr = allCr.filter(inR), lq = liqRows().filter(inR), ev = dash.data('events').data.filter(inR);
+    { const ds = Array.from(new Set(mk.map(r => String(r.date)))).sort(), wl = document.getElementById('all-win');
+      if (wl) wl.textContent = ds.length ? ds[0] + ' ~ ' + ds[ds.length - 1] + ' · ' + ds.length + '거래일' : '';
+      const days = zoomDays(), [i0, i1] = zoomIdx(days), zb = k => document.querySelector('#all-zoom button[data-z="' + k + '"]');
+      if (zb('in')) { zb('in').disabled = i1 - i0 + 1 <= 10; zb('out').disabled = i0 === 0 && i1 === days.length - 1; zb('left').disabled = i0 === 0; zb('right').disabled = i1 >= days.length - 1; } }
+    const mStart = r => P(r.month + '-01'), mEnd = r => d3.utcMonth.offset(mStart(r), 1);
+    const mon = dash.data('monthly').data.filter(r => mStart(r) <= b && mEnd(r) > a);
+    const jo = v => f2(v) + '조원';
+    const LINES = [
+      {id: 'kospi', n: '코스피', c: C()[1], rows: allMk, k: 'kospi', fmt: v => f2(v) + 'pt'},
+      {id: 'kosdaq', n: '코스닥', c: C()[7], rows: allMk, k: 'kosdaq', fmt: v => f2(v) + 'pt'},
+      {id: 'credit', n: '신용융자 전체', c: C()[0], rows: allCr, k: 'credit_jo', fmt: jo},
+      {id: 'cr_kospi', n: '신용 코스피', c: C()[2], rows: allCr, k: 'kospi_jo', fmt: jo},
+      {id: 'cr_kosdaq', n: '신용 코스닥', c: C()[6], rows: allCr, k: 'kosdaq_jo', fmt: jo},
+      {id: 'deposit', n: '투자자예탁금', c: C()[5], rows: allCr, k: 'deposit_jo', fmt: jo},
+      {id: 'vkospi', n: 'VKOSPI', c: C()[3], rows: allMk, k: 'vkospi', fmt: f2},
+      {id: 'fx', n: '원/달러 환율', c: MUTED, rows: dash.data('fx_daily').data, k: 'usdkrw', fmt: v => f1(v) + '원', dash: '5 3'}
+    ];
+    // KOSPI is the axis; every other line is mapped so its low–high inside the shown 2-year block(s) spans KOSPI's low–high there (기본 2025~2026)
+    const curV = view || RANGES[range], blk = s => 2015 + 2 * Math.floor((+String(s).slice(0, 4) - 2015) / 2);
+    const nY0 = blk(curV[0]), nY1 = blk(curV[1]) + 1, nS = nY0 + '-01-01', nE = nY1 + '-12-31';
+    const inN = r => { const s = String(r.date); return s >= nS && s <= nE; };
+    const kAll = allMk.filter(inN).map(r => num(r.kospi)).filter(v => v != null);
+    const kMin = d3.min(kAll), kMax = d3.max(kAll);
+    const kFirst = allMk.filter(inN).map(r => String(r.date)).sort()[0] || nS;
+    LINES.forEach(s => {
+      const all = s.rows.filter(r => num(r[s.k]) != null && inN(r));
+      s.min = d3.min(all, r => num(r[s.k])); s.max = d3.max(all, r => num(r[s.k]));
+      const map = s.id === 'kospi' ? (v => v) : (v => kMin + (v - s.min) / ((s.max - s.min) || 1) * (kMax - kMin));
+      s.map = map; s.count = all.length; s.first = all.length ? all.map(r => String(r.date)).sort()[0] : null;
+      s.pts = all.filter(inR).sort((u, v) => u.date < v.date ? -1 : 1).map(r => ({date: r.date, raw: num(r[s.k]), v: map(num(r[s.k]))}));
+      s.on = s.id === 'kospi' || !hidden.has(s.id);
+    });
+
+    // sell / buy signals before big turns (sensitive · middle · strict), each in its own colour
+    const SIGS = [
+      {key: 's1', side: '매도', type: '민감형', c: C()[2], rule: '20일 신고가 + VKOSPI 3일 +5% 이상(지수도 상승) + 신용/예탁금 비율 10일 +0.5%p 이상', hit: '6번 중 5번', fls: '21번'},
+      {key: 's3', side: '매도', type: '중간형', c: C()[4], rule: '20일 신고가 + VKOSPI 3일 +5% 이상(지수도 상승) + 예탁금 10일 -3% 이하', hit: '6번 중 2번', fls: '4번'},
+      {key: 's2', side: '매도', type: '엄격형', c: CRIT, rule: 'VKOSPI 10일 +10% 이상(지수도 상승) + 신용 3일 +1% 이상 + 신용/예탁금 비율 20일 +0.5%p 이상', hit: '6번 중 2번', fls: '6번'},
+      {key: 'b1', side: '매수', type: '민감형', c: C()[0], rule: '60일선보다 3% 이상 아래 + 개인 5일 순매수 상위 20% + 신용 5일 -1% 이하', hit: '7번 중 5번', fls: '11번'},
+      {key: 'b3', side: '매수', type: '중간형', c: C()[5], rule: '15일 -7% 이상 하락 + 개인 5일 순매수 상위 20% + 신용 5일 -1% 이하', hit: '7번 중 3번', fls: '3번'},
+      {key: 'b2', side: '매수', type: '엄격형', c: 'var(--color-ok)', rule: '3일 -7% 이상 급락 + 20일 저점 1% 이내 + 신용 5일 -1% 이하', hit: '7번 중 2번', fls: '1번'}];
+    const sigOf = r => SIGS.find(z => z.side === r.side && z.type === r.type);
+    const alAll = dash.data('alarms').data.filter(inR).filter(r => num(r.kospi) != null && sigOf(r));
+    const tb = document.querySelector('#sig-tbl tbody'); tb.replaceChildren();
+    SIGS.forEach(a => {
+      const tr = document.createElement('tr');
+      const d26 = dash.data('alarms').data.filter(r => r.side === a.side && r.type === a.type && r.start === '시작' && String(r.date) >= '2026').map(r => md(r.date));
+      [[a.side + ' ' + a.type, a.c], [a.rule], [d26.join(', ') || '—'], [a.hit, null, 1], [a.fls, null, 1]].forEach(([t, col, n]) => {
+        const td = document.createElement('td'); if (n) td.className = 'rv-num';
+        if (col) { const sw = document.createElement('i'); sw.className = 'rv-sigsw'; sw.style.background = col; sw.style.clipPath = a.side === '매도' ? 'polygon(0 0, 100% 0, 50% 100%)' : 'polygon(50% 0, 100% 100%, 0 100%)'; td.appendChild(sw); }
+        td.appendChild(document.createTextNode(t)); tr.appendChild(td);
+      });
+      tb.appendChild(tr);
+    });
+    // 재진입 조합(헛신호 때 다시 사고팔기): 신호 표 2줄 + 지금 판단
+    const reData = dash.data('reentry').data;
+    const RE = [
+      {key: 're_b', act: '재매수', side: '매수', c: REB, rule: '판 뒤(엄격형 매도·재매도) RSI14 > 60이면 다시 산다', good: r => /^(상승 구간 중|20일 안 10%|큰 상승 직전)/.test(r.result), bad: r => /^헛신호/.test(r.result)},
+      {key: 're_s', act: '재매도', side: '매도', c: RES, rule: '산 뒤(엄격형 매수·재매수) 10거래일부터 10일선 < 104일선이면 다시 판다', good: r => /^(하락 구간 중|10% 이상 하락 앞|큰 하락 직전)/.test(r.result), bad: r => /^헛경보/.test(r.result)}];
+    const reOf = r => RE.find(z => z.act === r.action);
+    RE.forEach(a => {
+      const evs = reData.filter(r => r.action === a.act), old = evs.filter(r => String(r.date) < '2026');
+      const d26 = evs.filter(r => String(r.date) >= '2026').map(r => md(r.date));
+      const tr = document.createElement('tr');
+      [[a.act + '(재진입 조합)', a.c], [a.rule], [d26.join(', ') || '—'], ['맞은 방향 ' + old.filter(a.good).length + '/' + old.length + '번', null, 1], [old.filter(a.bad).length + '번', null, 1]].forEach(([t, col, n]) => {
+        const td = document.createElement('td'); if (n) td.className = 'rv-num';
+        if (col) { const sw = document.createElement('i'); sw.className = 'rv-sigsw'; sw.style.background = col; sw.style.clipPath = a.side === '매도' ? 'polygon(0 0, 100% 0, 50% 100%)' : 'polygon(50% 0, 100% 100%, 0 100%)'; td.appendChild(sw); }
+        td.appendChild(document.createTextNode(t)); tr.appendChild(td);
+      });
+      tb.appendChild(tr);
+    });
+    // 2015~2024 최적화 매수 신호 1·2·3위(2026-10-26 탐색): 표 3줄
+    const b3Data = dash.data('buy3').data.filter(r => num(r.kospi) != null);
+    const BT = [1, 2, 3].map(k => { const r0 = b3Data.find(r => +r.rank === k) || {}; return {key: 'b3_' + k, rank: k, type: '최적화 ' + k + '위', c: B3C[k - 1], rule: r0.rule || '', note: r0.note || ''}; });
+    const b3Of = r => BT[+r.rank - 1];
+    BT.forEach(a => {
+      const evs = b3Data.filter(r => +r.rank === a.rank && r.start === '시작'), old = evs.filter(r => String(r.date) < '2026');
+      const big = new Set(old.map(r => (String(r.result).match(/큰 상승 직전\(([^→]+)→/) || [])[1]).filter(Boolean)).size;
+      const good = old.filter(r => /^(큰 상승 직전|20일 안 10%|상승 구간 중)/.test(r.result)).length, bad = old.filter(r => /^헛신호/.test(r.result)).length;
+      const d26 = evs.filter(r => String(r.date) >= '2026').map(r => md(r.date));
+      const tr = document.createElement('tr');
+      [['매수 ' + a.type + '(2015~24 최적화)', a.c], [a.rule + ' — ' + a.note], [d26.join(', ') || '—'], ['7번 중 ' + big + '번 · 맞은 방향 ' + good + '/' + old.length, null, 1], [bad + '번', null, 1]].forEach(([t, col, n]) => {
+        const td = document.createElement('td'); if (n) td.className = 'rv-num';
+        if (col) { const sw = document.createElement('i'); sw.className = 'rv-sigsw'; sw.style.background = col; sw.style.clipPath = 'polygon(50% 0, 100% 100%, 0 100%)'; td.appendChild(sw); }
+        td.appendChild(document.createTextNode(t)); tr.appendChild(td);
+      });
+      tb.appendChild(tr);
+    });
+    // 2015~2024 최적화 매도 신호 1·2·3위: 표 3줄(보유 + 신호 뒤 현금 20일 기준으로 고른 것)
+    const s3Data = dash.data('sell3').data.filter(r => num(r.kospi) != null);
+    const ST3 = [1, 2, 3].map(k => { const r0 = s3Data.find(r => +r.rank === k) || {}; return {key: 's3_' + k, rank: k, type: '최적화 ' + k + '위', c: B3C[k - 1], rule: r0.rule || '', note: r0.note || ''}; });
+    const s3Of = r => ST3[+r.rank - 1];
+    ST3.forEach(a => {
+      const evs = s3Data.filter(r => +r.rank === a.rank && r.start === '시작'), old = evs.filter(r => String(r.date) < '2026');
+      const big = new Set(old.map(r => (String(r.result).match(/큰 하락 직전\(([^→]+)→/) || [])[1]).filter(Boolean)).size;
+      const good = old.filter(r => /^(큰 하락 직전|10% 이상 하락 앞|하락 구간 중)/.test(r.result)).length, bad = old.filter(r => /^헛경보/.test(r.result)).length;
+      const d26 = evs.filter(r => String(r.date) >= '2026').map(r => md(r.date));
+      const tr = document.createElement('tr');
+      [['매도 ' + a.type + '(2015~24 최적화)', a.c], [a.rule + ' — ' + a.note], [d26.join(', ') || '—'], ['6번 중 ' + big + '번 · 맞은 방향 ' + good + '/' + old.length, null, 1], [bad + '번', null, 1]].forEach(([t, col, n]) => {
+        const td = document.createElement('td'); if (n) td.className = 'rv-num';
+        if (col) { const sw = document.createElement('i'); sw.className = 'rv-sigsw'; sw.style.background = col; sw.style.clipPath = 'polygon(0 0, 100% 0, 50% 100%)'; td.appendChild(sw); }
+        td.appendChild(document.createTextNode(t)); tr.appendChild(td);
+      });
+      tb.appendChild(tr);
+    });
+    const reNow = document.getElementById('re-now'), reLast = reData[reData.length - 1];
+    if (reNow && reLast) reNow.textContent = '재진입 조합 지금 판단: ' + reLast.state + ' — ' + reLast.date + ' ' + reLast.action + '(' + reLast.reason + ') 뒤 ' + reLast.held_days + '거래일, 그동안 코스피 ' + d3.format('+.1f')(num(reLast.held_chg_pct)) + '%. 재매수·재매도는 전환을 확인한 뒤 따라가는 신호라 표의 큰 전환 직전 칸에는 대신 그 뒤 실제 흐름과 맞은 횟수(상승·하락 구간 중이거나 20일 안 10% 움직임, 2015~2025)를 적었다.';
+    // legend: line toggles, then bars and events
+    const lg = document.getElementById('all-legend'); lg.replaceChildren();
+    const since = s => !s.count ? ' · 이 기간 자료 없음' : (P(s.first) - P(kFirst) > 20 * 864e5 ? ' · ' + yd(s.first) + '부터' : '');   // 첫날이 3주 넘게 늦게 시작하는 선만(미국 휴일 하루 차이는 표시 안 함)
+    LINES.forEach(s => s.id === 'kospi' ? legendItem(lg, s.c, '코스피(기준축, 굵은 선)', {shape: 'thick'}) : legendItem(lg, s.c, (s.gaps ? `${s.n}(보도된 날만, ${s.count}일)` : (s.dash ? s.n + '(점선)' : s.n)) + since(s), {shape: s.gaps ? 'dot' : (s.dash ? 'dash' : 'line'), off: !s.on, toggle: () => { hidden.has(s.id) ? hidden.delete(s.id) : hidden.add(s.id); drawAll(); }}));
+    SIGS.forEach(a => legendItem(lg, a.c, a.side + ' ' + a.type, {shape: a.side === '매도' ? 'tri' : 'triup', off: hidden.has(a.key), toggle: () => { hidden.has(a.key) ? hidden.delete(a.key) : hidden.add(a.key); drawAll(); }}));
+    RE.forEach(a => legendItem(lg, a.c, a.act + '(재진입 조합)', {shape: a.side === '매도' ? 'tri' : 'triup', off: hidden.has(a.key), toggle: () => { hidden.has(a.key) ? hidden.delete(a.key) : hidden.add(a.key); drawAll(); }}));
+    BT.filter(a => a.rank === 1).forEach(a => legendItem(lg, a.c, '매수 ' + a.type + '(2015~24 최적화, 시작일만)', {shape: 'triup', off: hidden.has(a.key), toggle: () => { hidden.has(a.key) ? hidden.delete(a.key) : hidden.add(a.key); drawAll(); }}));
+    ST3.filter(a => a.rank === 1).forEach(a => legendItem(lg, a.c, '매도 ' + a.type + '(2015~24 최적화, 시작일만)', {shape: 'tri', off: hidden.has(a.key), toggle: () => { hidden.has(a.key) ? hidden.delete(a.key) : hidden.add(a.key); drawAll(); }}));
+    legendItem(lg, C()[0], '미수 반대매매(막대)');
+    legendItem(lg, 'var(--color-ok)', '큰 흐름 상승');
+    legendItem(lg, CRIT, '큰 흐름 하락 · 비중 5%↑ · 신용 -2.5%↓');
+    [['외국인', C()[0]], ['기관', C()[6]], ['개인', C()[7]]].forEach(([n, c]) => legendItem(lg, c, n + ' 순매수', {shape: 'line'}));
+    legendItem(lg, '#e6b800', '외국인 선물 순매수(노란 점선, 조원 환산, 2024-10-02부터)', {shape: 'dash'});
+    legendItem(lg, C()[4], '미수금 대비 %(짧은 선)', {shape: 'line'});
+    legendItem(lg, C()[6], '월 미수 반대매매 일평균(점선 = 부분월)', {shape: 'line'});
+    ['신용 한도','외부 변수','시장','레버리지'].forEach(c => legendItem(lg, EVC(c), '이벤트: ' + c, {shape: 'dot'}));
+
+    const W = Math.max(300, box.clientWidth);
+    const TOP = 24, PT = 16, GAP = 12, BOT = 22;
+    const CMAP = champMap(), FITS = stripFits(CMAP), CONS = consRows();
+    let SL = BASE_STRIPS.map(([k, lab], i) => ({k, lab, ord: i}));
+    if (tChamp && CMAP) SL = SL.concat(champRules().map((r, i) => ({k: 'y' + r.year, lab: String(r.year).slice(2) + '년 일치1위', ord: 10 + i})));
+    SL = sortStrips(SL, FITS);
+    const nStrip = SL.length + 1;
+    const total = Math.min(700, Math.max(540, Math.round((window.innerHeight || 800) * 0.76))) + Math.max(0, nStrip - 6) * 9;
+    const panels = [
+      {kind: 'over', title: '코스피 기준 · 다른 선은 ' + nY0 + '~' + nY1 + '년 최저~최고를 코스피 최저~최고에 맞춤', w: 2},
+      {kind: 'combo', title: '큰 흐름 비교 · 초록 = 상승(보유), 빨강 = 하락(현금) · ' + (tSort === 'base' ? '기본 순서' : {now: '현재 적합순(최근 60거래일)', year: '올해 적합순', all: '전체 기간순'}[tSort] + ' · 오른쪽 % = 그 기간 일치율') + ' · 각 줄 설명은 아래 표', w: 1.1 * nStrip / 6},
+      {kind: 'liq', title: '미수 반대매매 억원(좌) · 미수금 대비 비중 %(우)', w: 1},
+      {kind: 'chg', title: '신용융자 일간 증감률 % (금투협 원자료, 붉은 막대 = -2.5% 이하, 점선 = 과거 항복선 -9%)', w: 0.9},
+      {kind: 'for', title: '투자자별 순매수 조원(KRX) · 노란 점선 = 외국인 선물(환산)', w: 1}
+    ];
+    const avail = total - TOP - BOT - panels.length * PT - (panels.length - 1) * GAP;
+    const sw = d3.sum(panels, p => p.w);
+    let yy = TOP;
+    const KH = CONS ? Math.round(Math.max(24, Math.min(36, avail * panels[1].w / sw / nStrip * 2.6))) : 0;   // 맨 아래 12개 해 합의 줄 높이
+    panels.forEach(p => { p.h = Math.round(avail * p.w / sw) + (p.kind === 'combo' && KH ? KH + 6 : 0); p.top = yy + PT; p.bot = p.top + p.h; yy = p.bot + GAP; });
+    const H = panels[panels.length - 1].bot + BOT;
+    const svg = newSvg(box, W, H);
+
+    // scales
+    const P0 = panels[0], PC = panels[1], P1 = panels[2], P3 = panels[3], P2 = panels[4];
+    PC.yL = d3.scaleLinear([0, 1], [PC.bot, PC.top]); PC.tL = []; PC.fL = f0;
+    const ov = LINES.filter(s => s.on).flatMap(s => s.pts.map(p => p.v));
+    // 매매 신호 표시 목록: 같은 날 같은 쪽(매도 ▼ 선 위 / 매수 ▲ 선 아래) 신호는 색(종류)별로 층층이 — 선에 가까운 쪽부터 민감 → 중간 → 엄격 → 재진입
+    const alOn = alAll.filter(r => !hidden.has(sigOf(r).key));
+    const reOn = reData.filter(inR).filter(r => reOf(r) && num(r.kospi) != null && !hidden.has(reOf(r).key));
+    const b3On = b3Data.filter(inR).filter(r => b3Of(r) && !hidden.has(b3Of(r).key));
+    const s3On = s3Data.filter(inR).filter(r => s3Of(r) && !hidden.has(s3Of(r).key));
+    const MK = alOn.map(r => ({date: r.date, sell: r.side === '매도', c: sigOf(r).c, o: SIGS.indexOf(sigOf(r)) % 3, kospi: num(r.kospi)}))
+      .concat(reOn.map(r => ({date: r.date, sell: r.action === '재매도', c: reOf(r).c, o: 3, kospi: num(r.kospi)})))
+      .concat(b3On.filter(r => +r.rank === 1 && r.start === '시작').map(r => ({date: r.date, sell: false, c: b3Of(r).c, o: 4, kospi: num(r.kospi)})))   // 최적화 매수 1위(시작일만): 재진입 다음 층. 2·3위는 아래 표에만
+      .concat(s3On.filter(r => +r.rank === 1 && r.start === '시작').map(r => ({date: r.date, sell: true, c: s3Of(r).c, o: 4, kospi: num(r.kospi)})));   // 최적화 매도 1위(시작일만). 2·3위는 아래 표에만
+    let dS = 0, dB = 0;
+    d3.group(MK, m => m.date + (m.sell ? 's' : 'b')).forEach(g => { g.sort((u, v) => u.o - v.o).forEach((m, k) => { m.k = k; }); if (g[0].sell) dS = Math.max(dS, g.length); else dB = Math.max(dB, g.length); });
+    const LAYER = 11, MK0 = 11;                  // 선에서 첫 층까지, 층 사이 간격(px)
+    const ovE = ov.length ? d3.extent(ov) : [kMin, kMax], ovR = (ovE[1] - ovE[0]) || 100, h0 = P0.bot - P0.top;
+    const fT = Math.min(0.35, (dS ? MK0 + (dS - 1) * LAYER + 8 : 0) / h0), fB = Math.min(0.35, (dB ? MK0 + (dB - 1) * LAYER + 8 : 0) / h0), Sx = ovR / (1 - fT - fB);
+    const padT = Math.max(ovR * 0.1, fT * Sx), padB = Math.max(ovR * 0.1, fB * Sx);   // 쌓인 신호가 칸 밖으로 나가지 않을 만큼 위아래 여유
+    P0.yL = d3.scaleLinear([ovE[0] - padB, ovE[1] + padT], [P0.bot, P0.top]).nice(); P0.tL = P0.yL.ticks(4); P0.fL = f0;
+    const liqV = lq.map(r => num(r.liq_eok)).concat(mon.map(r => num(r.avg_eok))).filter(v => v != null);
+    P1.yL = d3.scaleLinear([0, (d3.max(liqV) || 1) * 1.08], [P1.bot, P1.top]).nice(); P1.tL = P1.yL.ticks(3); P1.fL = f0;
+    const ratV = lq.map(r => num(r.ratio_pct)).filter(v => v != null);
+    P1.yR = d3.scaleLinear([0, (d3.max(ratV) || 1) * 1.1], [P1.bot, P1.top]).nice(); P1.tR = P1.yR.ticks(3); P1.fR = v => f0(v) + '%';
+    // daily investor flows (KRX)
+    const FL = [{k: 'foreign_jo', n: '외국인', c: C()[0], w: 2}, {k: 'inst_jo', n: '기관', c: C()[6], w: 1.3}, {k: 'indiv_jo', n: '개인', c: C()[7], w: 1.3}];
+    const flAll = dash.data('flows_daily').data.filter(inR).sort((u, v) => u.date < v.date ? -1 : 1);
+    const forRows = flAll;
+    const fuAll = dash.data('fut_daily').data.filter(inR).filter(r => num(r.foreign_jo) != null).sort((u, v) => u.date < v.date ? -1 : 1);   // KOSPI200 futures, foreign, 조원 환산
+    const fv = flAll.flatMap(r => FL.map(s => num(r[s.k]))).concat(fuAll.map(r => num(r.foreign_jo))).filter(v => v != null);
+    P2.yL = d3.scaleLinear([Math.min(0, d3.min(fv) ?? 0) * 1.08, Math.max(0, d3.max(fv) ?? 1) * 1.08 || 1], [P2.bot, P2.top]).nice(); P2.tL = P2.yL.ticks(3); P2.fL = v => d3.format(',.1f')(v) + '조';
+
+    const chgRows = cr.filter(r => num(r.chg_pct) != null);
+    const cv = chgRows.map(r => num(r.chg_pct));
+    P3.yL = d3.scaleLinear([Math.min(-10.5, d3.min(cv) ?? -1), Math.max(1, d3.max(cv) ?? 1)], [P3.bot, P3.top]).nice(); P3.tL = P3.yL.ticks(3); P3.fL = v => f0(v) + '%';
+    const STRIPS = [['leg', '실제']].concat(SL.map(s => [s.k, s.lab]));
+    const twFs = (s0, fs) => { const t = svg.append('text').attr('class', 'rv-tick').style('font-size', fs + 'px').text(s0); const w = t.node().getComputedTextLength(); t.remove(); return w; };
+    const ml = Math.max(d3.max(panels, p => d3.max(p.tL, t => tw(svg, p.fL(t)))) + 10, d3.max(STRIPS, s => tw(svg, s[1])) + 12, KH ? Math.max(twFs('12개 해 합의', 11), twFs('초록 = 상승 비율', 9)) + 12 : 0);
+    const mr = Math.max(28, d3.max(P1.tR, t => tw(svg, P1.fR(t))) + 10, KH ? Math.max(twFs('100%', 10), twFs('−25%p', 9)) + 8 : 0);
+    const x = tradeX(allMk.filter(inR).filter(r => num(r.kospi) != null).map(r => r.date).concat(cr.map(r => r.date), lq.map(r => r.date), flAll.map(r => r.date)), [ml, W - mr]);
+    const dayW = x.step();
+    const bw = Math.max(2, Math.min(14, dayW * 0.8));
+    const lastBot = panels[panels.length - 1].bot;
+
+    // events
+    svg.append('g').selectAll('line').data(ev).join('line')
+      .attr('x1', r => x(P(r.date))).attr('x2', r => x(P(r.date))).attr('y1', 18).attr('y2', lastBot)
+      .style('stroke', r => EVC(r.category)).attr('stroke-dasharray', '2 4').attr('opacity', 0.5);
+    svg.append('g').selectAll('circle').data(ev).join('circle')
+      .attr('cx', r => x(P(r.date))).attr('cy', 12).attr('r', 4.5).style('fill', r => EVC(r.category));
+
+    panels.forEach(p => {
+      svg.append('text').attr('class', 'rv-ptitle').attr('x', ml).attr('y', p.top - 5).text(p.title);
+      grid(svg, p.yL, p.tL, ml, W - mr);
+      svg.append('g').selectAll('text').data(p.tL).join('text').attr('class', 'rv-tick').attr('x', ml - 6).attr('y', d => p.yL(d)).attr('dy', '0.32em').attr('text-anchor', 'end').text(p.fL);
+    });
+    svg.append('g').selectAll('text').data(P1.tR).join('text').attr('class', 'rv-tick').attr('x', W - mr + 6).attr('y', d => P1.yR(d)).attr('dy', '0.32em').text(P1.fR);
+    [P1, P3, P2].forEach(p => svg.append('line').attr('x1', ml).attr('x2', W - mr).attr('y1', p.yL(0)).attr('y2', p.yL(0)).style('stroke', 'var(--cds-chart-axis)'));
+
+    // big-trend strips: actual zigzag leg vs combo state
+    const cb = dash.data('combo').data.filter(inR);
+    const sClip = 'rvsc' + Math.random().toString(36).slice(2, 8);   // 비교 줄·합의 줄 자르는 틀(확대했을 때 양끝 칸이 이름·% 글자를 덮지 않게)
+    svg.append('defs').append('clipPath').attr('id', sClip).append('rect').attr('x', ml).attr('y', PC.top - 2).attr('width', Math.max(0, W - mr - ml)).attr('height', PC.bot - PC.top + 4);
+    const SC = v => num(v) === 1 ? 'var(--color-ok)' : (num(v) === -1 ? CRIT : 'transparent');
+    const SB = PC.bot - (KH ? KH + 6 : 0), hC = (SB - PC.top) / STRIPS.length;   // SB = 비교 줄 아래 끝(그 아래 12개 해 합의 줄)
+    STRIPS.map(([k, lab], i) => [k, PC.top + i * hC + (i ? 1 : 0), PC.top + (i + 1) * hC - (i < STRIPS.length - 1 ? 1 : 0), lab]).forEach(([k, y0, y1, lab]) => {
+      svg.append('g').attr('clip-path', 'url(#' + sClip + ')').selectAll('rect').data(cb).join('rect')   // 다음 거래일까지 채움(금투협만 있는 휴장일 칸에 틈이 생기지 않게)
+        .attr('x', r => x(P(r.date)) - dayW / 2).attr('width', (r, i) => (i + 1 < cb.length ? x(P(cb[i + 1].date)) - x(P(r.date)) : dayW) + 0.5).attr('y', y0).attr('height', Math.max(1, y1 - y0))
+        .style('fill', r => SC(k === 'leg' ? r[k] : stripVal(r, k, CMAP))).attr('opacity', 0.75);
+      if (k !== 'leg' && tSort !== 'base' && FITS[k] && FITS[k][SORTKEY[tSort]] != null)
+        svg.append('text').attr('class', 'rv-tick').attr('x', W - mr + 4).attr('y', (y0 + y1) / 2).attr('dy', '0.32em').style('font-size', Math.max(8, Math.min(10, hC - 2)) + 'px').text(f0(FITS[k][SORTKEY[tSort]]) + '%');
+      svg.append('text').attr('class', 'rv-tick').attr('x', ml - 6).attr('y', (y0 + y1) / 2).attr('dy', '0.32em').attr('text-anchor', 'end').style('font-size', Math.max(8, Math.min(11, hC - 2)) + 'px').text(lab);
+    });
+    // 12개 해 합의 줄: 그날 그해 1위 12줄 중 상승 줄 비율(초록, 아래부터)·하락 줄 비율(빨강, 위부터). 점선 = 절반. 오른쪽 = 보이는 기간 마지막 날 상승 비율과 전 거래일 대비 변화
+    if (KH) {
+      const ky0 = SB + 6, ky1 = PC.bot, kh = ky1 - ky0, kM = (ky0 + ky1) / 2;
+      const kr = cb.map((r, i) => ({r, i, c: CONS.get(String(r.date))})).filter(o => o.c && o.c.n);
+      const kx = o => x(P(o.r.date)) - dayW / 2, kw = o => (o.i + 1 < cb.length ? x(P(cb[o.i + 1].date)) - x(P(o.r.date)) : dayW) + 0.5;
+      const kp = kr.map(o => ({x0: kx(o), x1: kx(o) + kw(o) - 0.5, u: kh * o.c.up / o.c.n, d: kh * o.c.dn / o.c.n}));
+      if (kp.length) {   // 계단 면 두 장(이음매 없이): 초록 = 아래에서 상승 비율만큼, 빨강 = 위에서 하락 비율만큼
+        const r1 = v => Math.round(v * 10) / 10;
+        const area = (base, sg, key) => 'M' + r1(kp[0].x0) + ',' + r1(base) + kp.map(p => 'L' + r1(p.x0) + ',' + r1(base + sg * p[key]) + 'L' + r1(p.x1) + ',' + r1(base + sg * p[key])).join('') + 'L' + r1(kp[kp.length - 1].x1) + ',' + r1(base) + 'Z';
+        svg.append('path').attr('clip-path', 'url(#' + sClip + ')').attr('d', area(ky1, -1, 'u')).style('fill', 'var(--color-ok)').attr('opacity', 0.75);
+        svg.append('path').attr('clip-path', 'url(#' + sClip + ')').attr('d', area(ky0, 1, 'd')).style('fill', CRIT).attr('opacity', 0.75);
+      }
+      svg.append('line').attr('x1', ml).attr('x2', W - mr).attr('y1', kM).attr('y2', kM).style('stroke', 'var(--color-panel)').attr('stroke-width', 1).attr('stroke-dasharray', '3 3');
+      svg.append('text').attr('class', 'rv-tick').attr('x', ml - 6).attr('y', kM - 6).attr('dy', '0.32em').attr('text-anchor', 'end').style('font-size', '11px').style('fill', 'var(--color-fg)').text('12개 해 합의');
+      svg.append('text').attr('class', 'rv-tick').attr('x', ml - 6).attr('y', kM + 7).attr('dy', '0.32em').attr('text-anchor', 'end').style('font-size', '9px').text('초록 = 상승 비율');
+      const kl = kr.length ? kr[kr.length - 1].c : null;
+      if (kl) {
+        svg.append('text').attr('class', 'rv-tick').attr('x', W - mr + 4).attr('y', kM - 6).attr('dy', '0.32em').style('font-size', '10px').style('fill', 'var(--color-fg)').text(f0(kl.pct) + '%');
+        if (kl.p1 && kl.p1.pct != null) { const dp = kl.pct - kl.p1.pct;
+          svg.append('text').attr('class', 'rv-tick').attr('x', W - mr + 4).attr('y', kM + 7).attr('dy', '0.32em').style('font-size', '9px').style('fill', dp > 0 ? 'var(--color-ok)' : (dp < 0 ? CRIT : 'var(--color-fg-muted)')).text(consPm(dp) + '%p'); }
+      }
+    }
+
+    // overlay lines
+    LINES.filter(s => s.on).sort((u, v) => (v.id === 'kospi') - (u.id === 'kospi')).forEach(s => {
+      if (s.gaps) {
+        // every trading day in range; days without a value break the line
+        const full = allMk.filter(inR).filter(r => num(r.kospi) != null || num(r[s.k]) != null).sort((u, v) => u.date < v.date ? -1 : 1)
+          .map(r => ({date: r.date, v: num(r[s.k]) == null ? null : s.map(num(r[s.k]))}));
+        svg.append('path').datum(full).attr('fill', 'none').style('stroke', s.c).attr('stroke-width', 1.5).attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round')
+          .attr('d', d3.line().defined(p => p.v != null).x(p => x(P(p.date))).y(p => P0.yL(p.v)));
+        svg.append('g').selectAll('circle').data(s.pts).join('circle').attr('cx', p => x(P(p.date))).attr('cy', p => P0.yL(p.v)).attr('r', 3).style('fill', s.c);
+        return;
+      }
+      svg.append('path').datum(s.pts).attr('fill', 'none').style('stroke', s.c).attr('stroke-width', s.id === 'kospi' ? 4 : 1.5)
+        .attr('stroke-dasharray', s.dash || null).attr('stroke-linecap', s.dash ? 'butt' : 'round').attr('stroke-linejoin', 'round')
+        .attr('d', d3.line(p => x(P(p.date)), p => P0.yL(p.v)));
+      if (s.pts.length < 60) svg.append('g').selectAll('circle').data(s.pts).join('circle').attr('cx', p => x(P(p.date))).attr('cy', p => P0.yL(p.v)).attr('r', 2.2).style('fill', s.c);
+    });
+
+    // signal markers: 같은 날 같은 쪽 신호는 색별로 층층이(위 MK 목록)
+    svg.append('g').selectAll('path').data(MK).join('path')
+      .attr('d', d3.symbol(d3.symbolTriangle, 64))
+      .attr('transform', m => `translate(${x(P(m.date))},${P0.yL(m.kospi) + (m.sell ? -1 : 1) * (MK0 + m.k * LAYER)})` + (m.sell ? ' rotate(180)' : ''))
+      .style('fill', m => m.c).style('stroke', 'var(--color-panel)').attr('stroke-width', 1);
+
+    // reverse-trading bars, monthly step, ratio dots
+    const lqDays = liqRows().filter(r => num(r.liq_eok) != null).map(r => r.date);
+    const mx = r => { const dd = lqDays.filter(d => d.startsWith(r.month)); if (!dd.length) return x.monthSpan(r.month) || [0, 0]; return [x(P(dd[0])) - dayW / 2, x(P(dd[dd.length - 1])) + dayW / 2]; };
+    const monV = mon.filter(r => num(r.avg_eok) != null);
+    svg.append('g').selectAll('path').data(monV).join('path').attr('fill', 'none')
+      .style('stroke', C()[6]).attr('stroke-width', 2.5).attr('stroke-linecap', r => r.partial ? 'butt' : 'round')
+      .attr('stroke-dasharray', r => r.partial ? '5 3' : null).attr('opacity', r => r.partial ? 0.75 : 1)
+      .attr('d', r => { const [s, e] = mx(r); return `M${s + 1},${P1.yL(num(r.avg_eok))}H${e - 1}`; });
+    monV.filter(r => r.partial).forEach(r => { const t = (+r.month.slice(5)) + '월 일평균(점선): ' + r.partial; if (tw(svg, P1.title) + tw(svg, t) + 24 <= W - ml - mr) svg.append('text').attr('class', 'rv-tick').attr('x', W - mr).attr('y', P1.top - 5).attr('text-anchor', 'end').text(t); });
+    const lqb = lq.filter(r => num(r.liq_eok) != null);
+    svg.append('g').selectAll('rect').data(lqb).join('rect')
+      .attr('x', r => x(P(r.date)) - bw / 2).attr('width', bw).attr('y', r => P1.yL(num(r.liq_eok))).attr('height', r => Math.max(1, P1.yL(0) - P1.yL(num(r.liq_eok))))
+      .attr('rx', Math.min(3, bw / 2)).style('fill', r => (num(r.ratio_pct) ?? 0) >= 5 ? CRIT : C()[0]);
+    const tickW = Math.max(6, Math.min(16, bw + 4));
+    svg.append('g').selectAll('line').data(lq.filter(r => num(r.ratio_pct) != null)).join('line')
+      .attr('x1', r => x(P(r.date)) - tickW / 2).attr('x2', r => x(P(r.date)) + tickW / 2)
+      .attr('y1', r => P1.yR(num(r.ratio_pct))).attr('y2', r => P1.yR(num(r.ratio_pct)))
+      .style('stroke', C()[4]).attr('stroke-width', 2).attr('stroke-linecap', 'round');
+
+    // credit daily change
+    svg.append('line').attr('x1', ml).attr('x2', W - mr).attr('y1', P3.yL(-9)).attr('y2', P3.yL(-9)).style('stroke', 'var(--cds-chart-reference)').attr('stroke-dasharray', '4 3');
+    svg.append('g').selectAll('rect').data(chgRows).join('rect')
+      .attr('x', r => x(P(r.date)) - bw / 2).attr('width', bw)
+      .attr('y', r => Math.min(P3.yL(num(r.chg_pct)), P3.yL(0))).attr('height', r => Math.max(1, Math.abs(P3.yL(num(r.chg_pct)) - P3.yL(0))))
+      .attr('rx', Math.min(2, bw / 2)).style('fill', r => num(r.chg_pct) <= -2.5 ? CRIT : (num(r.chg_pct) < 0 ? C()[0] : MUTED));
+    // foreign flows
+    FL.slice().reverse().forEach(s => svg.append('path').datum(flAll.filter(r => num(r[s.k]) != null)).attr('fill', 'none').style('stroke', s.c).attr('stroke-width', s.w)
+      .attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round').attr('opacity', s.k === 'foreign_jo' ? 1 : 0.8)
+      .attr('d', d3.line(r => x(P(r.date)), r => P2.yL(num(r[s.k])))));
+    svg.append('path').datum(fuAll).attr('fill', 'none').style('stroke', '#e6b800').attr('stroke-width', 1.5).attr('stroke-dasharray', '4 3')
+      .attr('d', d3.line(r => x(P(r.date)), r => P2.yL(num(r.foreign_jo))));
+
+    // x axis
+    const nDays = new Set(allMk.filter(inR).map(r => r.date)).size, mSpan = nDays / 21, dayAx = nDays <= 45;
+    const xT = fitTicks(svg, dayAx ? x.dayTicks(W < 520 ? 5 : 2) : x.monthTicks(W < 520 ? (mSpan > 14 ? 6 : mSpan > 7 ? 2 : 1) : W < 900 ? (mSpan > 14 ? 2 : 1) : 1), d => x(d),
+      d => dayAx ? (d.getUTCMonth() + 1) + '/' + d.getUTCDate() : mlab(d), ml, true);
+    svg.append('g').selectAll('text').data(xT).join('text').attr('class', 'rv-tick').attr('x', o => o.px).attr('y', H - 6).attr('text-anchor', o => o.st ? 'start' : 'middle').text(o => o.lab);
+
+    // hover
+    const dates = Array.from(new Set([...mk, ...cr, ...lq, ...ev, ...flAll].map(r => r.date))).sort();
+    const byD = rows => { const m = new Map(rows.map(r => [r.date, r])); return d => m.get(d); };
+    const gq = byD(lq), gm = byD(mk), repSet = repDates();
+    const tip = tipBox(box);
+    const rule = svg.append('line').attr('y1', 18).attr('y2', lastBot).style('stroke', 'var(--cds-chart-reference)').attr('opacity', 0);
+    const focus = svg.append('g');
+    svg.append('rect').attr('x', ml).attr('width', W - mr - ml + Math.min(8, mr)).attr('y', 0).attr('height', lastBot).attr('fill', 'transparent')   // a few px past the last day so it can be hovered
+      .on('mousemove', (e) => {
+        if (!dates.length) return;
+        const [px, py] = d3.pointer(e, box);
+        const t = x.invert(px);
+        const d = dates.reduce((best, s) => Math.abs(P(s) - t) < Math.abs(P(best) - t) ? s : best, dates[0]);
+        rule.attr('x1', x(P(d))).attr('x2', x(P(d))).attr('opacity', 1);
+        const lines = [], dots = [];
+        const rp = repSet.has(d) ? ' (보도치)' : '';
+        LINES.filter(s => s.on).forEach(s => { const p = s.pts.find(q => q.date === d); if (p) { lines.push([s.c, s.n + ' ', s.fmt(p.raw) + (s.id === 'kospi' ? rp : '')]); dots.push({c: s.c, y: P0.yL(p.v)}); } });
+        ['매도', '매수'].forEach(side => {
+          const g = alOn.filter(r => r.date === d && r.side === side).sort((u, v) => SIGS.indexOf(sigOf(u)) - SIGS.indexOf(sigOf(v)));
+          if (!g.length) return;
+          lines.push([sigOf(g[0]).c, side + ' 신호 ', g.map(r => r.type).join('·') + (g.some(r => r.start === '시작') ? ' 켜짐(시작)' : ' 켜짐')]);
+          g.forEach(r => lines.push([sigOf(r).c, '', r.rule]));
+          const r0 = g[0];
+          if (side === '매도' && num(r0.dn20) != null) lines.push([null, '이후 20거래일 최저 ', d3.format('+.1f')(num(r0.dn20)) + '%']);
+          if (side === '매수' && num(r0.up20) != null) lines.push([null, '이후 20거래일 최고 ', d3.format('+.1f')(num(r0.up20)) + '% (최저 ' + d3.format('+.1f')(num(r0.dn20)) + '%)']);
+          lines.push([null, '', r0.result]);
+        });
+        reOn.filter(r => r.date === d).forEach(r => { const a = reOf(r);
+          lines.push([a.c, a.act + '(재진입 조합) ', r.reason]); lines.push([a.c, '', a.rule]);
+          if (num(r.up20) != null) lines.push([null, '이후 20거래일 ', '최고 ' + d3.format('+.1f')(num(r.up20)) + '% · 최저 ' + d3.format('+.1f')(num(r.dn20)) + '%']);
+          lines.push([null, '', r.result]); });
+        b3On.filter(r => r.date === d && +r.rank === 1).forEach(r => { const a = b3Of(r);
+          lines.push([a.c, '매수 ' + a.type + '(2015~24 최적화) ', (r.start === '시작' ? '켜짐(시작)' : '켜짐')]); lines.push([a.c, '', a.rule]);
+          if (num(r.up20) != null) lines.push([null, '이후 20거래일 ', '최고 ' + d3.format('+.1f')(num(r.up20)) + '% · 최저 ' + d3.format('+.1f')(num(r.dn20)) + '%']);
+          lines.push([null, '', r.result]); });
+        s3On.filter(r => r.date === d && +r.rank === 1).forEach(r => { const a = s3Of(r);
+          lines.push([a.c, '매도 ' + a.type + '(2015~24 최적화) ', (r.start === '시작' ? '켜짐(시작)' : '켜짐')]); lines.push([a.c, '', a.rule]);
+          if (num(r.dn20) != null) lines.push([null, '이후 20거래일 ', '최저 ' + d3.format('+.1f')(num(r.dn20)) + '% · 최고 ' + d3.format('+.1f')(num(r.up20)) + '%']);
+          lines.push([null, '', r.result]); });
+        const reS = reData.filter(r => String(r.date) <= d).pop();
+        lines.push([reS && reS.state === '현금' ? RES : REB, '재진입 조합 판단 ', reS ? reS.state : '보유']);
+        const m = gm(d), q = gq(d);
+        if (m && num(m.kospi_chg_pct) != null) lines.push([null, '코스피 등락 ', d3.format('+.2f')(num(m.kospi_chg_pct)) + '%' + rp]);
+        if (rp) lines.push([null, '', REP_TXT]);
+        const cq = cr.find(r => r.date === d);
+        if (cq && num(cq.chg_pct) != null) lines.push([null, '신용 일간 증감 ', d3.format('+.2f')(num(cq.chg_pct)) + '%']);
+        if (q && num(q.liq_eok) != null) lines.push([C()[0], '미수 반대매매 ', f1(num(q.liq_eok)) + '억원']);
+        if (q && num(q.ratio_pct) != null) lines.push([C()[4], '비중(당일 미수 반대매매 ÷ 전일 미수금) ', f1(num(q.ratio_pct)) + '%']);
+        if (q && num(q.misu_eok) != null) lines.push([null, '미수금 ', f0(num(q.misu_eok)) + '억원']);
+        const bq = cb.find(r => r.date === d);
+        if (bq) { const t = v => num(v) === 1 ? '상승' : (num(v) === -1 ? '하락' : '—'); lines.push([SC(bq.leg), '실제 큰 흐름 ', t(bq.leg)]); if (num(bq.fast) != null) lines.push([SC(bq.fast), '빠른 전환 판단 ', t(bq.fast) + (num(bq.leg) === num(bq.fast) ? ' (일치)' : ' (불일치)')]); lines.push([SC(bq.combo), '조합 판단 ', t(bq.combo) + (num(bq.leg) === num(bq.combo) ? ' (일치)' : ' (불일치)')]); lines.push([SC(bq.ema67), '67일선 판단 ', t(bq.ema67) + (num(bq.leg) === num(bq.ema67) ? ' (일치)' : ' (불일치)')]); lines.push([SC(bq.vote3), '3개 다수결 ', t(bq.vote3) + (num(bq.leg) === num(bq.vote3) ? ' (일치)' : ' (불일치)')]); if (num(bq.top26) != null) lines.push([SC(bq.top26), '2026 1위 ', num(bq.top26) === 1 ? '보유' : '현금']); }
+        if (CONS) { const c0 = CONS.get(d); if (c0 && c0.n) { lines.push([c0.pct > 50 ? 'var(--color-ok)' : (c0.pct < 50 ? CRIT : null), '12개 해 합의(맨 아래 줄) ', consTxt(c0)]);
+          if (c0.p1) lines.push([null, '합의 변화 · 전 거래일 ', consChg(c0, c0.p1)]); if (c0.p5) lines.push([null, '합의 변화 · 5거래일 전 ', consChg(c0, c0.p5)]); } }
+        if (CMAP && tChamp) { const cr0 = CMAP.get(d); if (cr0) {
+          const tp = SL[0]; if (tp && tSort !== 'base') { const v0 = stripVal({date: d, ...(cb.find(r => r.date === d) || {})}, tp.k, CMAP); lines.push([SC(v0), '정렬 1위 줄(' + tp.lab + ') ', v0 === 1 ? '상승' : (v0 === -1 ? '하락' : '—')]); } } }
+        const fq = flAll.find(r => r.date === d);
+        if (fq) FL.forEach(s => lines.push([s.c, s.n + ' 순매수 ', d3.format('+,.2f')(num(fq[s.k])) + '조원']));
+        const uq = fuAll.find(r => r.date === d);
+        const lq2 = dash.data('etf_lev').data.find(r => r.date === d);
+        if (lq2 && num(lq2.flow_eok) != null) lines.push([null, '레버리지 ETF 자금 유출입(설정·환매) ', d3.format('+,.0f')(num(lq2.flow_eok)) + '억원']);
+        if (lq2 && num(lq2.indiv_eok) != null) lines.push([null, '레버리지 ETF 순매수 ', ['개인', 'indiv_eok', '외국인', 'foreign_eok', '기관', 'inst_eok'].reduce((a, v, i, arr) => i % 2 ? a : a.concat(v + ' ' + d3.format('+,.1f')(num(lq2[arr[i + 1]])) + '억'), []).join(' · ')]);
+        if (uq) lines.push(['#e6b800', '외국인 선물 순매수 ', d3.format('+,')(num(uq.foreign_ct)) + '계약 (≈' + d3.format('+,.2f')(num(uq.foreign_jo)) + '조원)']);
+        const mr2 = mon.find(r => d.startsWith(r.month));
+        if (mr2) {
+          if (num(mr2.avg_eok) != null) lines.push([C()[6], (+mr2.month.slice(5)) + '월' + (mr2.partial ? '(' + mr2.partial + ')' : '') + ' 미수 반대매매 일평균 ', f0(num(mr2.avg_eok)) + '억원']);
+          if (num(mr2.foreign_jo) != null) lines.push([null, (+mr2.month.slice(5)) + '월 외국인 ', d3.format('+,.2f')(num(mr2.foreign_jo)) + '조원']);
+
+        }
+        ev.filter(r => r.date === d).forEach(r => { lines.push([EVC(r.category), r.category + ': ', r.event.length > 34 ? r.event.slice(0, 34) + '…' : r.event]); if (r.us_date) lines.push([null, '', '미국 현지 ' + md(r.us_date) + ' → 한국 반영 ' + md(r.date)]); });
+        focus.selectAll('circle').data(dots).join('circle').attr('cx', x(P(d))).attr('cy', o => o.y).attr('r', 4.5).style('fill', o => o.c).style('stroke', 'var(--color-panel)').attr('stroke-width', 1.5);
+        showTip(tip, box, px, py, ymd(d), lines);
+      })
+      .on('mouseleave', () => { tip.hidden = true; rule.attr('opacity', 0); focus.selectAll('circle').remove(); });
+    box.style.minHeight = H + 'px';
+  }
+
+  function drawScores(){
+    const box = document.getElementById('score-chart'); if (!gate(box, ['ind_scores'])) return;
+    const rows = dash.data('ind_scores').data.filter(r => r.date).sort((a, b) => a.date < b.date ? -1 : 1);
+    const lg = document.getElementById('score-legend'); lg.replaceChildren();
+    [['코스피', C()[1]], ['매매 점수', C()[0]], ['위험 점수', CRIT]].forEach(([n, c]) => { const s = document.createElement('span'); const sw = document.createElement('i'); sw.className = 'rv-sw'; sw.style.background = c; sw.style.height = '3px'; s.append(sw, document.createTextNode(n)); lg.appendChild(s); });
+    const W = Math.max(300, box.clientWidth), H = 380, T = 18, G = 14, B = 22;
+    const svg = newSvg(box, W, H);
+    const ph = [(H - T - B - 2 * G - 3 * 14) * 0.4, (H - T - B - 2 * G - 3 * 14) * 0.3, (H - T - B - 2 * G - 3 * 14) * 0.3];
+    let y0 = T; const pans = ph.map(hh => { const p = {top: y0 + 14, bot: y0 + 14 + hh}; y0 = p.bot + G; return p; });
+    const kv = rows.map(r => num(r.kospi)).filter(v => v != null);
+    const yK = d3.scaleLinear(d3.extent(kv), [pans[0].bot, pans[0].top]).nice();
+    const yT = d3.scaleLinear([-100, 100], [pans[1].bot, pans[1].top]);
+    const yR = d3.scaleLinear([0, 100], [pans[2].bot, pans[2].top]);
+    const ys = [[yK, yK.ticks(3), f0, '코스피'], [yT, [-100, -30, 0, 30, 100], f0, '매매 점수'], [yR, [0, 70, 100], f0, '위험 점수']];
+    const ml = d3.max(ys, ([s, t, f]) => d3.max(t, v => tw(svg, f(v)))) + 10;
+    const x = tradeX(rows.map(r => r.date), [ml, W - 10]);
+    ys.forEach(([s, t, f, title], i) => {
+      grid(svg, s, t, ml, W - 10);
+      svg.append('g').selectAll('text').data(t).join('text').attr('class', 'rv-tick').attr('x', ml - 6).attr('y', d => s(d)).attr('dy', '0.32em').attr('text-anchor', 'end').text(f);
+      svg.append('text').attr('class', 'rv-ptitle').attr('x', ml).attr('y', pans[i].top - 4).text(title);
+    });
+    [[yT, 30], [yT, -30], [yR, 70]].forEach(([s, v]) => svg.append('line').attr('x1', ml).attr('x2', W - 10).attr('y1', s(v)).attr('y2', s(v)).style('stroke', 'var(--cds-chart-reference)').attr('stroke-dasharray', '4 3'));
+    const line = (k, s, c, w) => svg.append('path').datum(rows.filter(r => num(r[k]) != null)).attr('fill', 'none').style('stroke', c).attr('stroke-width', w).attr('stroke-linejoin', 'round').attr('d', d3.line(r => x(P(r.date)), r => s(num(r[k]))));
+    line('kospi', yK, C()[1], 2); line('trade_score', yT, C()[0], 1.6); line('risk_score', yR, CRIT, 1.6);
+    svg.append('g').selectAll('text').data(x.monthTicks(W < 520 ? 2 : 1)).join('text').attr('class', 'rv-tick').attr('x', d => x(d)).attr('y', H - 6).attr('text-anchor', 'middle').text(d => (d.getUTCMonth() + 1) + '월');
+    const tip = tipBox(box); const rule = svg.append('line').attr('y1', pans[0].top).attr('y2', pans[2].bot).style('stroke', 'var(--cds-chart-reference)').attr('opacity', 0);
+    const bis = d3.bisector(r => P(r.date)).center;
+    svg.append('rect').attr('x', ml).attr('width', W - 10 - ml).attr('y', 0).attr('height', H - B).attr('fill', 'transparent')
+      .on('mousemove', e => { const [px, py] = d3.pointer(e, box); const r = rows[bis(rows, x.invert(px))]; rule.attr('x1', x(P(r.date))).attr('x2', x(P(r.date))).attr('opacity', 1);
+        showTip(tip, box, px, py, '2026-' + md(r.date), [[C()[1], '코스피 ', num(r.kospi) == null ? '—' : f2(num(r.kospi)) + (/보도치/.test(r.kospi_basis || '') ? ' (보도치)' : '')], [C()[0], '매매 점수 ', num(r.trade_score) == null ? '—' : d3.format('+.1f')(num(r.trade_score))], [CRIT, '위험 점수 ', num(r.risk_score) == null ? '—' : f1(num(r.risk_score))]]); })
+      .on('mouseleave', () => { tip.hidden = true; rule.attr('opacity', 0); });
+  }
+
+  function drawQuant(){
+    const box = document.getElementById('q-chart'); if (!gate(box, ['q_daily'])) return;
+    const [qa, qb] = RANGES[qper];
+    const rows = dash.data('q_daily').data.filter(r => r.date && String(r.date) >= qa && String(r.date) <= qb).sort((a, b) => a.date < b.date ? -1 : 1);
+    const RC = {'상승 추세': 'var(--color-ok)', '하락 추세': CRIT, '고변동 청산': C()[4], '횡보': MUTED};
+    { const el = document.getElementById('q-per'); if (el && !el.children.length) PERIODS.forEach(([k, y]) => {
+        const b = document.createElement('button'); b.type = 'button'; b.dataset.r = k; b.setAttribute('aria-label', y + '~' + (y + 1));
+        const yy = document.createElement('span'); yy.className = 'rv-yy'; yy.textContent = '20';
+        b.append(yy, document.createTextNode(String(y).slice(2) + '~' + String(y + 1).slice(2)));
+        b.addEventListener('click', () => { if (qper !== k) { qper = k; drawQuant(); } }); el.appendChild(b); });
+      document.querySelectorAll('#q-per button').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.r === qper))); }
+    if (!rows.length) return;
+    const lg = document.getElementById('q-legend'); lg.replaceChildren();
+    const li = (c, n, round) => { const s = document.createElement('span'); const sw = document.createElement('i'); sw.className = 'rv-sw'; sw.style.background = c; if (round) sw.style.borderRadius = '50%'; s.append(sw, document.createTextNode(n)); lg.appendChild(s); };
+    Object.entries(RC).forEach(([n, c]) => li(c, '국면: ' + n)); li(C()[1], '코스피'); li(C()[0], '10일 상승 확률(부스팅, 처음 보는 해 예측)'); li(C()[3], '5일 내 급락·청산 확률(부스팅)');
+    const W = Math.max(300, box.clientWidth), H = 360, B = 22;
+    const svg = newSvg(box, W, H);
+    const p1 = {top: 30, bot: 210}, p2 = {top: 248, bot: H - B - 8};
+    const kv = rows.map(r => num(r.kospi)).filter(v => v != null);
+    const yK = d3.scaleLinear(d3.extent(kv), [p1.bot, p1.top]).nice(); const yP = d3.scaleLinear([0, 1], [p2.bot, p2.top]);
+    const tK = yK.ticks(4), tP = [0, 0.5, 1];
+    const ml = Math.max(d3.max(tK, v => tw(svg, f0(v))), d3.max(tP, v => tw(svg, d3.format('.0%')(v)))) + 10;
+    const x = tradeX(rows.map(r => r.date), [ml, W - 10]);
+    const dW = x.step();
+    // regime bands
+    svg.append('g').selectAll('rect').data(rows.filter(r => RC[r.regime])).join('rect')
+      .attr('x', r => x(P(r.date)) - dW / 2).attr('width', dW + 0.5).attr('y', p1.top).attr('height', p1.bot - p1.top)
+      .style('fill', r => RC[r.regime]).attr('opacity', 0.12);
+    [[yK, tK, f0, p1, '코스피 · 국면'], [yP, tP, d3.format('.0%'), p2, '검증 확률(앞 12년으로 학습, 그 해는 처음 보는 자료 · 2018년부터)']].forEach(([s, t, f, p, title]) => {
+      grid(svg, s, t, ml, W - 10);
+      svg.append('g').selectAll('text').data(t).join('text').attr('class', 'rv-tick').attr('x', ml - 6).attr('y', d => s(d)).attr('dy', '0.32em').attr('text-anchor', 'end').text(f);
+      svg.append('text').attr('class', 'rv-ptitle').attr('x', ml).attr('y', p.top - 6).text(title);
+    });
+    svg.append('line').attr('x1', ml).attr('x2', W - 10).attr('y1', yP(0.5)).attr('y2', yP(0.5)).style('stroke', 'var(--cds-chart-reference)').attr('stroke-dasharray', '4 3');
+    const ln = (k, s, c, w) => svg.append('path').datum(rows.filter(r => num(r[k]) != null)).attr('fill', 'none').style('stroke', c).attr('stroke-width', w).attr('stroke-linejoin', 'round').attr('d', d3.line(r => x(P(r.date)), r => s(num(r[k]))));
+    ln('kospi', yK, C()[1], 2); ln('p_up', yP, C()[0], 1.6); ln('p_risk', yP, C()[3], 1.6);
+    const qT = fitTicks(svg, x.monthTicks(W < 600 ? 2 : 1), d => x(d), d => mlab(d), ml, true);
+    svg.append('g').selectAll('text').data(qT).join('text').attr('class', 'rv-tick').attr('x', o => o.px).attr('y', H - 6).attr('text-anchor', o => o.st ? 'start' : 'middle').text(o => o.lab);
+    const tip = tipBox(box); const rule = svg.append('line').attr('y1', p1.top).attr('y2', p2.bot).style('stroke', 'var(--cds-chart-reference)').attr('opacity', 0);
+    const bis = d3.bisector(r => P(r.date)).center;
+    svg.append('rect').attr('x', ml).attr('width', W - 10 - ml).attr('y', 0).attr('height', H - B).attr('fill', 'transparent')
+      .on('mousemove', e => { const [px, py] = d3.pointer(e, box); const r = rows[bis(rows, x.invert(px))]; rule.attr('x1', x(P(r.date))).attr('x2', x(P(r.date))).attr('opacity', 1);
+        const L = [[RC[r.regime] || null, '국면 ', r.regime || '—'], [C()[1], '코스피 ', num(r.kospi) == null ? '—' : f2(num(r.kospi)) + (/보도치/.test(r.kospi_basis || '') ? ' (보도치)' : '')]];
+        if (num(r.p_up) != null) L.push([C()[0], '10일 상승 확률 ', d3.format('.0%')(num(r.p_up))]);
+        if (num(r.p_risk) != null) L.push([C()[3], '5일 내 급락 확률 ', d3.format('.0%')(num(r.p_risk))]);
+        if (r.trade === 'exit' && num(r.trade_ret) != null) L.push([null, '부스팅 전략 청산 ', d3.format('+.2f')(num(r.trade_ret)) + '%']); else if (r.trade === 'enter') L.push([null, '', '부스팅 전략 진입(다음 날 종가)']);
+        showTip(tip, box, px, py, ymd(r.date), L); })
+      .on('mouseleave', () => { tip.hidden = true; rule.attr('opacity', 0); });
+  }
+
+  // next-day opening gap from the KOSPI200 night futures close (bucket table of past outcomes)
+  function drawGap(){
+    const kp = document.getElementById('gap-kpis'), basis = document.getElementById('gap-basis'), read = document.getElementById('gap-read');
+    const nfD = dash.data('night_fut'), gtD = dash.data('gap_table');
+    if (nfD.status !== 'ok' || gtD.status !== 'ok') { if ([nfD.status, gtD.status].some(s => BAD.includes(s))) { kp.classList.remove('dash-skeleton'); basis.textContent = '야간선물 자료를 불러오지 못했습니다.'; } return; }
+    kp.classList.remove('dash-skeleton'); kp.replaceChildren();
+    const rows = nfD.data, tab = gtD.data.filter(r => r.bucket !== '전체'), all = gtD.data.find(r => r.bucket === '전체');
+    const last = rows[rows.length - 1];
+    const pct = v => (v > 0 ? '+' : v < 0 ? '−' : '') + f2(Math.abs(v)) + '%';
+    const inB = (r, x) => (r.lo === '' || x > +r.lo) && (r.hi === '' || x <= +r.hi);
+    const fresh = last && (last.gap_next === '' || last.gap_next == null);
+    const x = last ? num(last.night_pct) : null, b = x == null ? null : tab.find(r => inB(r, x));
+    const wd = s => ['일','월','화','수','목','금','토'][P(s).getUTCDay()];
+    if (!last) { basis.textContent = '야간선물 자료가 없습니다.'; return; }
+    basis.textContent = (fresh ? '' : '최신 야간장 자료가 아직 없어 마지막 자료를 보여 줍니다. ') +
+      `${md(last.date)}(${wd(last.date)}) 저녁 야간장 종가 ${f2(+last.night_close)} — 주간장 종가 ${f2(+last.day_close)} 대비 ${pct(x)}${last.night_high_pct !== '' && last.night_high_pct != null && last.night_low_pct !== '' && last.night_low_pct != null ? ` (고가 ${pct(+last.night_high_pct)}, 저가 ${pct(+last.night_low_pct)})` : ''} → ${md(last.night_date)}(${wd(last.night_date)}) 시초가` + (fresh ? '' : ` (실제 ${pct(+last.gap_next)})`);
+    const kpi = (l, v, u, n) => { const d = document.createElement('div'); d.className = 'rv-kpi';
+      const a = document.createElement('div'); a.className = 'rv-kpi-l'; a.textContent = l;
+      const w = document.createElement('div'); const s = document.createElement('span'); s.className = 'rv-kpi-v'; s.textContent = v; w.appendChild(s);
+      if (u) { const uu = document.createElement('span'); uu.className = 'rv-kpi-u'; uu.textContent = u; w.appendChild(uu); }
+      const c = document.createElement('div'); c.className = 'rv-kpi-n'; c.textContent = n; d.append(a, w, c); kp.appendChild(d); };
+    if (b) {
+      const p = +b.p_up;
+      kpi('시초가 상승 확률', d3.format('.0%')(p), '', `같은 구간(${b.bucket}) 과거 ${b.n}일 중`);
+      kpi('예상 갭(중앙값)', pct(+b.med_gap), '', `오르면 ${b.med_up === '' ? '—' : pct(+b.med_up)} · 내리면 ${b.med_dn === '' ? '—' : pct(+b.med_dn)}`);
+      kpi('10~90% 범위', `${pct(+b.q10)} ~ ${pct(+b.q90)}`, '', '과거 같은 구간 실제 시초가');
+      kpi('이 방법의 방향 적중', d3.format('.0%')(+all.hit), '', `${all.period}, ${all.n}일 (야간 부호 = 시초가 부호)`);
+      read.textContent = Math.abs(x) < 0.25 ? '판단 보류 — 야간장이 거의 움직이지 않아 방향이 반반에 가깝습니다.'
+        : p >= 0.8 ? '상승 쪽이 강합니다.' : p <= 0.2 ? '하락 쪽이 강합니다.' : p >= 0.6 ? '상승 쪽이 우세합니다.' : p <= 0.4 ? '하락 쪽이 우세합니다.' : '방향이 엇갈립니다.';
+    }
+    // bucket table (current bucket in bold)
+    const tbl = document.getElementById('gap-tbl'), tb = tbl.tBodies[0]; tbl.classList.remove('dash-skeleton'); tb.replaceChildren();
+    gtD.data.forEach(r => {
+      const tr = document.createElement('tr'); if (b && r.bucket === b.bucket) tr.style.fontWeight = '600';
+      const cells = [r.bucket + (b && r.bucket === b.bucket ? ' ◀ 지금' : ''), r.n, r.p_up === '' ? '—' : d3.format('.0%')(+r.p_up), r.hit === '' ? '—' : d3.format('.0%')(+r.hit),
+        r.med_up === '' ? '—' : pct(+r.med_up), r.med_dn === '' ? '—' : pct(+r.med_dn), r.med_gap === '' ? '—' : pct(+r.med_gap), r.q10 === '' ? '—' : `${pct(+r.q10)} ~ ${pct(+r.q90)}`];
+      cells.forEach((v, i) => { const td = document.createElement('td'); td.textContent = v; if (i) td.className = 'rv-num'; tr.appendChild(td); });
+      tb.appendChild(tr);
+    });
+    // recent nights
+    const rt = document.getElementById('gap-recent').tBodies[0]; rt.replaceChildren();
+    rows.slice(-15).reverse().forEach(r => {
+      const tr = document.createElement('tr'); const g = r.gap_next === '' ? null : +r.gap_next, n = +r.night_pct;
+      const ok = g == null ? '예상' : (Math.abs(n) < 0.25 ? '보류' : (Math.sign(n) === Math.sign(g) ? '맞음' : '틀림'));
+      [md(r.date), md(r.night_date), f2(+r.night_close), pct(n), g == null ? '—' : pct(g), ok].forEach((v, i) => { const td = document.createElement('td'); td.textContent = v; if (i >= 2 && i <= 4) td.className = 'rv-num'; tr.appendChild(td); });
+      rt.appendChild(tr);
+    });
+  }
+
+  function fillTable(id, tblId, cols, keyFn){
+    const tbl = document.getElementById(tblId), tb = tbl.tBodies[0];
+    tb.replaceChildren();
+    const d = dash.data(id);
+    if (d.status !== 'ok') { tbl.classList.toggle('dash-skeleton', !BAD.includes(d.status)); return; }
+    tbl.classList.remove('dash-skeleton');
+    d.data.forEach(r => {
+      const tr = document.createElement('tr');
+      if (keyFn) tr.dataset.key = keyFn(r);
+      cols.forEach(c => {
+        const td = document.createElement('td');
+        const v = r[c.k];
+        td.textContent = c.fr ? c.fr(r) : ((v === '' || v == null) ? '—' : (c.f ? c.f(v) : v));
+        if (c.n) td.className = 'rv-num';
+        tr.appendChild(td);
+      });
+      tb.appendChild(tr);
+    });
+  }
+  const nf = fmt => v => fmt(Number(v));
+
+  function fillMarks(){
+    document.querySelectorAll('#dash-root .rv-v').forEach(el => {
+      const d = dash.data(el.dataset.source);
+      if (d.status !== 'ok') { el.textContent = '—'; if (BAD.includes(d.status)) el.classList.remove('dash-skeleton'); return; }
+      const rows = Array.isArray(d.data) ? d.data : [];
+      let row; const wh = el.dataset.where || '';
+      if (wh === 'last') row = rows.length ? rows[rows.length - 1] : null;                 // 마지막 줄(최신 날짜)
+      else { const w = Array.from(new URLSearchParams(wh)); row = rows.find(r => w.every(([k, v]) => String(r[k]) === v)); }
+      const raw = row ? row[el.dataset.field] : null, v = num(raw);
+      if (el.dataset.fmt === 'md' || el.dataset.fmt === 'ymd') { el.textContent = raw ? (el.dataset.fmt === 'md' ? md(String(raw)) : String(raw)) : '—'; el.classList.remove('dash-skeleton'); return; }
+      el.textContent = v == null ? ((raw == null || raw === '') ? '—' : String(raw)) : FMT[el.dataset.fmt || '1'](v);   // 숫자가 아닌 값(예: '11/12')은 글자 그대로
+      el.classList.remove('dash-skeleton');
+    });
+  }
+
+  document.getElementById('more').addEventListener('toggle', e => { if (e.target.open) { drawQuant(); drawScores(); drawOct(); drawFor(); drawLag(); drawYear(); drawCredit(); drawRatio(); drawChg(); drawMonthly(); } });
+  const lastRow = (name, pred) => { const d = dash.data(name); if (d.status !== 'ok' || !Array.isArray(d.data)) return null; const rows = pred ? d.data.filter(pred) : d.data; return rows.length ? rows[rows.length - 1] : null; };
+  const sgn = x => (x > 0 ? '+' : x < 0 ? '−' : '') + f2(Math.abs(x));
+  function asofText(){
+    const m = lastRow('market'), v = lastRow('market', r => num(r.vkospi) != null), l = lastRow('liq'), f = lastRow('flows_daily'), fx = lastRow('fx_daily'), e = lastRow('etf_lev'), eu = lastRow('etf_lev', r => num(r.units) != null), nf = lastRow('night_fut');
+    const wd = s => ['일','월','화','수','목','금','토'][P(s).getUTCDay()];
+    const parts = [];
+    if (m) parts.push(`기준: ${md(m.date)}(${wd(m.date)}) 장 마감. 코스피·코스닥·매도/매수 신호는 ${md(m.date)}까지`);
+    if (f) parts.push(`투자자별 순매수는 ${md(f.date)}까지` + (/잠정/.test(f.basis || '') ? '(잠정치 — 다음 날 아침 확정치로 교체)' : ''));
+    if (v) parts.push(`VKOSPI ${md(v.date)}까지` + (m && v.date !== m.date ? '(당일분은 다음 영업일 수집)' : ''));
+    if (l) parts.push(`미수 반대매매·미수금·예탁금·신용융자는 금투협 ${md(l.date)}분까지(기준일 다음 영업일 아침 공시)`);
+    if (fx) parts.push(`원/달러 ${md(fx.date)}까지`);
+    if (e) parts.push(`레버리지 ETF 시세 ${md(e.date)}까지` + (eu ? `(설정·환매는 상장좌수가 있는 ${md(eu.date)}까지)` : ''));
+    if (nf) parts.push(`야간선물 ${md(nf.date)} 저녁장(${md(nf.night_date)} 표기분)까지`);
+    return parts.join(', ') + '.';
+  }
+  function buildAutoConcl(){
+    const ul = document.getElementById('concl-auto-list'); if (!ul) return;
+    const m = lastRow('market'), v = lastRow('market', r => num(r.vkospi) != null), q = lastRow('q_daily'), l = lastRow('liq'), c = lastRow('credit'), cr = lastRow('credit_ratio'), f = lastRow('flows_daily'), nf = lastRow('night_fut');
+    const items = [];
+    if (m) items.push(`코스피 ${md(m.date)} ${f2(+m.kospi)}(${sgn(+m.kospi_chg_pct)}%)` + (num(m.kosdaq) != null ? `, 코스닥 ${f2(+m.kosdaq)}` : '') + (v ? `, VKOSPI ${f2(+v.vkospi)}` + (v.date !== m.date ? `(${md(v.date)})` : '') : ''));
+    if (q) items.push(`정밀 검증(맨 위 그래프) ${md(q.date)}: 국면 ${q.regime}, 10일 상승 확률 ${f0(+q.p_up * 100)}%(검증 AUC 0.53 — 참고만), 5일 내 급락·청산 확률 ${f0(+q.p_risk * 100)}%(검증 AUC 0.72, 신호 기준 27%)` + (q.trade ? `, 전략 ${q.trade === 'enter' ? '진입' : '청산'}` : ''));
+    { const qa = dash.data('q_attr'); if (qa.status === 'ok') { const sgp = v => (v > 0 ? '+' : v < 0 ? '−' : '') + f1(Math.abs(v)); const ss = qa.data.filter(r => r.kind === 'sum');
+      if (ss.length) items.push('확률이 바뀐 이유(맨 위 그래프 아래 표): ' + ss.map(s0 => { const tf = qa.data.filter(r => r.kind === 'feat' && r.target === s0.target && +r.missing !== 1).sort((a, b) => Math.abs(+b.contrib_pp) - Math.abs(+a.contrib_pp)).slice(0, 2);
+        return `${s0.target} ${f1(+s0.p_prev)}% → ${f1(+s0.p_now)}%(` + tf.map(r => r.name + ' ' + sgp(+r.contrib_pp) + '%p').join(' · ') + (Math.abs(+s0.missing_pp) >= 0.05 ? ' · 그날 자료 빈칸 ' + sgp(+s0.missing_pp) + '%p' : '') + ')'; }).join(', ')); } }
+    if (l) items.push(`금투협 ${md(l.date)}: 미수 반대매매 ${f1(+l.liq_eok)}억원(미수금 대비 ${f1(+l.ratio_pct)}%)` + (c ? `, 신용융자 ${f2(+c.credit_jo)}조원(전일 대비 ${sgn(+c.chg_pct)}%), 예탁금 ${f1(+c.deposit_jo)}조원` : '') + (cr ? `, 신용/예탁금 ${f1(+cr.ratio)}%` : ''));
+    if (f) items.push(`투자자별 ${md(f.date)}: 외국인 ${sgn(+f.foreign_jo)}조, 기관 ${sgn(+f.inst_jo)}조, 개인 ${sgn(+f.indiv_jo)}조원` + (/잠정/.test(f.basis || '') ? ' (잠정치 — 다음 날 아침 확정)' : ''));
+    const sigs = [];
+    const al = dash.data('alarms'); if (al.status === 'ok' && m) al.data.filter(r => r.date === m.date).forEach(r => sigs.push(`${r.side} ${r.type} 신호 시작`));
+    const top = (name, lab) => { const d = dash.data(name); if (d.status !== 'ok' || !m) return; const rows = d.data.filter(r => String(r.rank) === '1'); const t = rows.filter(r => r.date === m.date); if (!t.length) return; const st = rows.filter(r => r.start === '시작' && r.date <= m.date); sigs.push(`${lab} 최적화 1위 ${t[0].start === '시작' ? '시작' : '지속(' + md(st[st.length - 1].date) + '~)'}`); };
+    top('buy3', '매수'); top('sell3', '매도');
+    const re = lastRow('reentry'); if (re) sigs.push(`재진입 조합 ${re.state}(${md(re.date)} ${re.action} 뒤)`);
+    items.push('신호: ' + (sigs.length ? sigs.join(' · ') : '새로 켜진 것 없음'));
+    { const cm = champMap(), crs = champRules(); if (cm && crs.length) { const fits = stripFits(cm); const tops = crs.map((r, i) => ({k: 'y' + r.year, ord: i, r})).sort((a, b) => ((fits[b.k] || {}).r60 ?? -1) - ((fits[a.k] || {}).r60 ?? -1) || ((fits[b.k] || {}).r20 ?? -1) - ((fits[a.k] || {}).r20 ?? -1));
+      const ups = crs.filter(r => (fits['y' + r.year] || {}).now === 1).length, dir = v => v === 1 ? '상승' : (v === -1 ? '하락' : '—');
+      items.push(`큰 흐름: 최근 60거래일에 가장 잘 맞는 그해 1위 = ${tops.slice(0, 2).map(t => t.r.year + '년(' + f0((fits[t.k] || {}).r60) + '%, 지금 ' + dir((fits[t.k] || {}).now) + ')').join(' · ')}, ` + consLine(ups, crs.length - ups) + '(큰 흐름 비교 맨 아래 줄)'); } }
+    if (nf) items.push(`야간선물 ${md(nf.date)} 저녁장 ${f2(+nf.night_close)}(${sgn(+nf.night_pct)}%)` + (num(nf.gap_next) != null ? `, 다음 날 시초가 갭 ${sgn(+nf.gap_next)}%` : (m && String(m.date) >= String(nf.night_date || '9') ? ', 다음 날 시초가 갭 확인 불가(그날 시가 자료 없음)' : ' → 다음 날 시초가 갭은 장이 열리면')));
+    ul.replaceChildren(...items.map(t => { const li = document.createElement('li'); li.textContent = t; return li; }));
+    const h = document.getElementById('concl-asof'); if (h && m) h.textContent = md(m.date);
+    const a = document.getElementById('asof-auto'); if (a) a.textContent = asofText();
+  }
+  function fillCons(){
+    const el = document.getElementById('cons-note'); if (!el) return;
+    const cs = consRows(), cd = dash.data('combo'); if (!cs || cd.status !== 'ok' || !cs.rows.length) return;
+    const cl = cs.rows[cs.rows.length - 1], yrs = d3.extent(champRules(), r => +r.year);
+    let n = 0, h = 0, nl = 0, up = 0, d0 = '', d1 = '';
+    cd.data.forEach(r => { const l = num(r.leg); if (l == null) return; nl++; if (l === 1) up++; const c = cs.get(String(r.date)); if (!c) return;
+      const mj = c.ue > c.de ? 1 : (c.de > c.ue ? -1 : 0); if (!mj) return; n++; if (mj === l) h++; if (!d0 || r.date < d0) d0 = r.date; if (!d1 || r.date > d1) d1 = r.date; });
+    const nx = champRules().filter(r => r.acc_next !== '' && r.acc_next != null && !isNaN(+r.acc_next)).map(r => +r.acc_next);
+    el.textContent = `큰 흐름 비교 맨 아래 「12개 해 합의」 줄 = 그해 1위 12줄(${yrs[0]}~${yrs[1]}년) 가운데 그날 상승·하락 판단 비율. 초록 높이 = 상승 비율, 빨강 = 하락 비율, 가운데 점선 = 절반, 오른쪽 숫자 = 보이는 기간 마지막 날의 상승 비율과 전 거래일 대비 변화(%p). `
+      + `지금(${md(cl.date)}) ${consTxt(cl)}` + (cl.p1 ? ` — 전 거래일 ${consChg(cl, cl.p1)}` : '') + (cl.p5 ? `, 5거래일 전 ${consChg(cl, cl.p5)}` : '') + '. '
+      + (n ? `확인: 자기 해 줄을 뺀 11줄의 과반으로 보면 ${String(d0).slice(0, 4)}~${String(d1).slice(0, 4)}년 ${d3.format(',')(n)}거래일 중 실제 큰 흐름과 같았던 날 ${f1(h / n * 100)}%(그해 1위 한 줄을 다음 해에 그대로 쓴 평균 ${nx.length ? f1(d3.mean(nx)) : '—'}%, 항상 상승 ${f1(up / nl * 100)}%). 실제 큰 흐름은 10% 전환 기준 사후 판정이라, 이후 수익률을 맞힌다는 뜻은 아니다.` : '');
+  }
+  function fillAttr(){
+    const ul = document.getElementById('qa-sum'); if (!ul) return;
+    const d = dash.data('q_attr');
+    if (d.status !== 'ok') { if (BAD.includes(d.status)) { const li = document.createElement('li'); li.textContent = '자료 없음'; ul.replaceChildren(li); } return; }
+    const sgp = v => (v > 0 ? '+' : v < 0 ? '−' : '') + f1(Math.abs(v));
+    const fmtV = (v, u) => (v === '' || v == null || isNaN(+v)) ? '빈칸(자료 없음)' : (u === '조원' ? f2(+v) + '조' : u === '억원' ? f0(+v) + '억' : u === '%' ? f2(+v) + '%' : u === '배' ? f2(+v) + '배' : f2(+v));
+    const sums = d.data.filter(r => r.kind === 'sum'), feats = d.data.filter(r => r.kind === 'feat');
+    const qn = dash.data('q_now'), qi = k => (qn.status === 'ok' ? qn.data.find(r => r.item === k) : null);
+    const items = sums.map(s0 => { const tf = feats.filter(r => r.target === s0.target && +r.missing !== 1).sort((a, b) => Math.abs(+b.contrib_pp) - Math.abs(+a.contrib_pp)).slice(0, 3);
+      return `${s0.target} ${f1(+s0.p_prev)}% → ${f1(+s0.p_now)}%(${sgp(+s0.delta_pp)}%p): ` + tf.map(r => r.name + ' ' + sgp(+r.contrib_pp) + '%p').join(' · ')
+        + (Math.abs(+s0.missing_pp) >= 0.05 ? ` · 그날 자료 빈칸 ${sgp(+s0.missing_pp)}%p` : '') + (s0.note ? ' · ' + s0.note : ''); });
+    const r1 = qi('국면 판정 이유'), r2 = qi('다음 거래일 국면 기준선');
+    if (r1) items.push('국면 ' + r1.text); if (r2) items.push(r2.text);
+    ul.replaceChildren(...items.map(t => { const li = document.createElement('li'); li.textContent = t; return li; }));
+    const dl = document.getElementById('qa-dates'); if (dl && sums[0]) dl.textContent = `(${md(sums[0].prev_date)} → ${md(sums[0].date)} · 자동)`;
+    [['10일 상승', 'qa-up-tbl'], ['5일 내 급락·청산', 'qa-risk-tbl']].forEach(([tn, id]) => {
+      const tbl = document.getElementById(id); if (!tbl) return; const tb = tbl.tBodies[0]; tb.replaceChildren();
+      const fr = feats.filter(r => r.target === tn).sort((a, b) => Math.abs(+b.contrib_pp) - Math.abs(+a.contrib_pp));
+      const top = fr.slice(0, 6); fr.filter(r => +r.missing === 1 && !top.includes(r)).forEach(r => top.push(r));
+      top.forEach(r => { const tr = document.createElement('tr');
+        [[r.name + (+r.missing === 1 ? ' (그날 빈칸)' : ''), ''], [fmtV(r.prev_value, r.unit), 'rv-num'], [fmtV(r.value, r.unit), 'rv-num' + (+r.missing === 1 ? ' rv-miss' : '')], [sgp(+r.contrib_pp), 'rv-num']].forEach(([t, cls]) => {
+          const td = document.createElement('td'); td.textContent = t; if (cls) td.className = cls; tr.appendChild(td); });
+        tb.appendChild(tr); });
+    });
+  }
+  dash.onData(() => {
+    const mEnd = lastRow('market'); if (mEnd && mEnd.date) ['all', 'y26', 'h2', 'oct'].forEach(k => { RANGES[k][1] = mEnd.date; });   // 기간 끝 = 자료의 마지막 날짜
+    fillMarks(); buildAutoConcl(); fillAttr(); fillCons();
+    drawGap();
+    drawAll(); drawOct(); drawFor(); drawLag(); drawYear(); drawCredit(); drawRatio(); drawChg(); drawMonthly();
+    fillTable('concentration', 'conc-tbl', [{k:'item'}, {k:'value', n:1, f: nf(f1)}, {k:'unit'}, {k:'period'}, {k:'note', fr: r => r.note || ''}]);
+    fillTable('leverage', 'lev-tbl', [{k:'item'}, {k:'value_eok', n:1, f: nf(f0)}, {k:'period'}]);
+    fillTable('episodes', 'ep-tbl', [{k:'episode'}, {k:'peak_liq_eok', n:1, f: nf(f1)}, {k:'peak_ratio_pct', n:1, f: nf(f1)}, {k:'ratio_basis'}, {k:'credit_drop_pct', n:1, f: nf(f1)}, {k:'credit_deposit_pct', n:1, f: nf(f1)}, {k:'note'}]);
+    drawScores();
+    const s3 = v => d3.format('+.2f')(Number(v)), p1 = v => d3.format('+.1f')(Number(v));
+    drawQuant();
+    const t2 = v => d3.format('+.2f')(Number(v));
+    fillTable('q_models', 'qm-tbl', [{k:'target'}, {k:'model'}, {k:'auc', n:1, f: nf(f2)}, {k:'precision', n:1, f: nf(f0)}, {k:'recall', n:1, f: nf(f0)}, {k:'base', n:1, f: nf(f0)}, {k:'signals', n:1}], r => encodeURIComponent(r.target) + ',' + encodeURIComponent(r.model));
+    fillTable('q_strat', 'qs-tbl', [{k:'strategy'}, {k:'total', n:1, f: t2}, {k:'mdd', n:1, f: t2}, {k:'sharpe', n:1, f: t2}, {k:'trades', n:1}, {k:'win', n:1, f: nf(f0)}, {k:'exposure', n:1, f: nf(f0)}, {k:'rand_pct', n:1, f: nf(f0)}]);
+    fillTable('q_sens', 'qsen-tbl', [{k:'shift'}, {k:'total', n:1, f: t2}, {k:'mdd', n:1, f: t2}, {k:'sharpe', n:1, f: t2}, {k:'trades', n:1}, {k:'win', n:1, f: nf(f0)}]);
+    fillTable('q_ic', 'qic-tbl', [{k:'name'}, {k:'ic10', n:1, f: t2}, {k:'ic20', n:1, f: t2}, {k:'q10', n:1, f: nf(d3.format('.3f'))}, {k:'stability'}, {k:'ic_up', n:1, f: t2}, {k:'ic_down', n:1, f: t2}, {k:'ic_hv', n:1, f: t2}, {k:'ic_side', n:1, f: t2}, {k:'rep'}]);
+    fillTable('q_now', 'qnow-tbl', [{k:'item'}, {k:'value', n:1, f: nf(f1)}, {k:'text'}]);
+    fillTable('q_years', 'qy-tbl', [{k:'year'}, {k:'train'}, {k:'base_up', n:1, f: nf(f0)}, {k:'auc_up_rule', n:1, f: nf(f2)}, {k:'auc_up_log', n:1, f: nf(f2)}, {k:'auc_up_bst', n:1, f: nf(f2)}, {k:'base_risk', n:1, f: nf(f0)}, {k:'auc_risk_rule', n:1, f: nf(f2)}, {k:'auc_risk_log', n:1, f: nf(f2)}, {k:'auc_risk_bst', n:1, f: nf(f2)}]);
+    { const qd = dash.data('q_daily'); const el = document.getElementById('qnow-title'); if (el && qd.status === 'ok' && qd.data.length) el.textContent = '현재 (' + md(qd.data[qd.data.length - 1].date) + ' · 앞 12년으로 학습한 모형)'; }
+    const sg = v => d3.format('+,')(Number(v));
+    fillTable('ret26', 'r26-tbl', [{k:'rank'}, {k:'signal'}, {k:'ret26', n:1, f: sg}, {k:'ret26_next', n:1, f: sg}, {k:'mdd26', n:1, f: sg}, {k:'trades26', n:1}, {k:'hold26', n:1}, {k:'prev', n:1, f: sg}, {k:'now'}], r => encodeURIComponent(r.rank));
+    { const cn = dash.data('combo_now'); const el = document.getElementById('cmb-now');
+      if (el && cn.status === 'ok' && cn.data.length) { const r = cn.data[0]; el.innerHTML = `<b>지금 1위: ${r.top_combo}</b> (${md(r.chosen_since)} 선정 · 지난 250거래일 ${sg(r.win_ret_250)}%, 거래 ${r.win_trades}건 적중 ${r.win_hit}%) · 지금 <b>${r.state}</b>. 선정 뒤 ${sg(r.since_ret)}%(같은 기간 코스피 ${sg(r.since_kospi)}%), 닫힌 거래 ${r.since_trades}건 중 ${r.since_wins}건 적중(2015~25 적중률 ${r.hit_2015_25}%). 경고: ${r.warn || '없음'}. 다음 재선정 ${r.next_select}. 기준일 ${md(r.date)}.`; } }
+    fillTable('combo_wf', 'cmb-wf-tbl', [{k:'year'}, {k:'walkforward_ret', n:1, f: sg}, {k:'kospi_ret', n:1, f: sg}, {k:'fixed_ret', n:1, f: sg}, {k:'changes', n:1}, {k:'top_combo'}], r => encodeURIComponent(r.year));
+    fillTable('combo_table', 'cmb-tbl', [{k:'rank_250', n:1, f: v => (v === '' || v == null || isNaN(+v)) ? '—' : f0(+v)}, {k:'combo'}, {k:'ret_250', n:1, f: sg}, {k:'trades_250', fr: r => r.trades_250 + '건 · ' + ((r.hit_250 === '' || r.hit_250 == null) ? '—' : f0(+r.hit_250) + '%')}, {k:'mdd_250', n:1, f: sg}, {k:'ret_60', n:1, f: sg}, {k:'ret_2026', n:1, f: sg}, {k:'ret_2025', n:1, f: sg}, {k:'ret_2015_25', n:1, f: sg}, {k:'hit_2015_25', n:1, f: nf(f0)}, {k:'state', fr: r => r.state + (r.open_since ? ' (' + md(r.open_since) + '~ ' + sg(r.open_ret) + '%)' : '')}], r => encodeURIComponent(r.combo));
+    const lg_ = v => v === '' || v == null ? '—' : (+v > 0 ? '+' : (+v < 0 ? '−' : '')) + Math.abs(+v) + '일';
+    const cell = (p) => r => lg_(r[p + '_lag']) + ' · ' + r[p + '_acc'] + '% · ' + r[p + '_flips'] + '회' + (+r[p + '_miss'] ? ' · 놓침 ' + r[p + '_miss'] + '번' : '');
+    fillTable('lead_cmp', 'lead-tbl', [{k:'strip'}, {k:'rule'}, {k:'tr', fr: cell('tr')}, {k:'te', fr: cell('te')}, {k:'y26', fr: cell('y26')}, {k:'turns26', fr: r => r.turns26.replace(/-(\d)/g, '−$1')}, {k:'note'}], r => encodeURIComponent(r.strip));
+    fillTable('trend_years', 't11-tbl', [{k:'year'}, {k:'pivots', n:1}, {k:'always_up', n:1}, {k:'fast', n:1}, {k:'ema67', n:1}, {k:'vote3', n:1}, {k:'combo', n:1}, {k:'wf3', n:1}, {k:'wf', n:1}, {k:'wf_pick'}, {k:'champ', n:1, f: nf(f1)}]);
+    fillChamp();
+    fillTable('ind_now', 'now-tbl', [{k:'name'}, {k:'value', n:1, f: nf(f2)}, {k:'unit'}, {k:'pct', n:1, f: nf(f0)}, {k:'threshold', n:1, f: nf(f2)}, {k:'status'}]);
+    fillTable('ind_trade', 'trade-tbl', [{k:'rank', n:1}, {k:'name'}, {k:'ic5', n:1, f: s3}, {k:'ic10', n:1, f: s3}, {k:'ic20', n:1, f: s3}, {k:'ic10_train', n:1, f: s3}, {k:'ic10_test', n:1, f: s3}, {k:'top20_r10', n:1, f: p1}, {k:'bot20_r10', n:1, f: p1}, {k:'consistent'}]);
+    fillTable('ind_risk', 'risk-tbl', [{k:'rank', n:1}, {k:'name'}, {k:'direction'}, {k:'auc5', n:1, f: nf(f2)}, {k:'auc5_test', n:1, f: nf(f2)}, {k:'auc_dd', n:1, f: nf(f2)}, {k:'threshold', n:1, f: nf(f2)}, {k:'recall_test', n:1, f: nf(f0)}, {k:'precision_test', n:1, f: nf(f0)}, {k:'false_test', n:1, f: nf(f0)}]);
+    fillTable('ind_warn', 'warn-tbl', [{k:'date'}, {k:'kospi_chg', n:1, f: nf(d3.format('+.2f'))}, {k:'w_foreign20', n:1, f: nf(f0)}, {k:'w_vk', n:1, f: nf(f0)}, {k:'w_liq5', n:1, f: nf(f0)}, {k:'w_turn', n:1, f: nf(f0)}, {k:'w_score', n:1, f: nf(f0)}]);
+    fillTable('events', 'ev-tbl', [{k:'date', fr: r => r.us_date ? `${r.date} (미국 현지 ${md(r.us_date)} → 한국 반영 ${md(r.date)})` : r.date}, {k:'category'}, {k:'event'}], r => encodeURIComponent(r.date) + ',' + encodeURIComponent(r.event));
+  });
+})();
+</script>
