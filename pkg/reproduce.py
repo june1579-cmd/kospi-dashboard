@@ -4,7 +4,7 @@ reproduce.py — '코스피_반대매매_원자료_통합' 엑셀 하나로 대�
 
 사용:  python3 reproduce.py 통합.xlsx 출력폴더 [--trend-end 2026-10-20]
 출력:  market_daily, liq_daily, credit, monthly, flows_daily, lag, alarms, combo, lead_cmp,
-       trend_years(계산 열만 다시 계산), trend_champ·trend_champ_rules(해마다 그해 1위 조합), fut_daily, etf_lev, reentry, buy3, sell3, night_fut, gap_table, q_*(정밀 검증)  (+ checks.txt 검증용 매매 결과)
+       trend_years(계산 열만 다시 계산), trend_champ·trend_champ_rules(해마다 그해 1위 조합), fut_daily, etf_lev, reentry, buy3, sell3, night_fut, gap_table, q_*(정밀 검증), combo_table·combo_select·combo_wf·combo_now(매수×매도 조합 감시)  (+ checks.txt 검증용 매매 결과)
 고정 자료(fx_daily, events, ind_*, ret26, concentration, episodes, credit_change, leverage, flows)는
 패키지의 datasets/ 폴더 것을 그대로 쓴다 — 이 스크립트는 만들지 않는다.
 
@@ -695,6 +695,7 @@ if __name__ == '__main__':
     outs.update(champ.run(D, _leg, _prev))
     _cr = outs['trend_champ_rules'].set_index('year')['acc_year']
     outs['trend_years']['champ'] = [(_cr.get(str(y)[:4], '') if str(y)[:4].isdigit() else (round(float(_cr.mean()), 1) if len(_cr) else '')) for y in outs['trend_years']['year']]
+    import combo_track; outs.update(combo_track.run(D, outs.get('q_daily')))   # 매수×매도 신호 49개 조합 성적표·걸어가며 검증·지금 1위(combo_table, combo_select, combo_wf, combo_now)
     nf = night_fut(D)
     if nf is not None: outs['night_fut'] = nf; outs['gap_table'] = gap_table(nf)
     for k, v in outs.items(): v.to_csv(os.path.join(a.out, k + '.csv'), index=False)
