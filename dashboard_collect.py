@@ -165,7 +165,7 @@ def vkospi_ohlc(s8, e8, today, now, out):
             if str(js.get('respCode')) == '401': raise ValueError("KRX Open API '파생상품지수 일별시세' 미승인(401) — openapi.krx.co.kr 에서 서비스 이용신청")
             for x in js.get('OutBlock_1', []):
                 nm = x.get('IDX_NM', '')
-                if '변동성' in nm and '선물' not in nm:
+                if nm.replace(' ', '') == '코스피200변동성지수':      # VKOSPI 만. '최소변동성지수'·'가치저변동성'·'변동성매칭 양매도' 등은 다른 지수(10/12~30 오염 원인)
                     g = lambda k: pd.to_numeric(str(x.get(k, '')).replace(',', ''), errors='coerce')
                     rows.append({'일자': d.strftime('%Y-%m-%d'), '지수명': nm, '시가': g('OPNPRC_IDX'), '고가': g('HGPRC_IDX'), '저가': g('LWPRC_IDX'), '종가': g('CLSPRC_IDX'), '원본': 'KRX Open API idx/drvprod_dd_trd'})
             _t.sleep(0.3)
@@ -252,7 +252,7 @@ def vkospi_probe(s8, e8, today, now, out):
                 for key in ('output', 'OutBlock_1', 'block1'):
                     for x in js.get(key, []) or []:
                         nm = str(x.get('IDX_NM', '')) + str(x.get('IDX_IND_NM', ''))
-                        if '변동성' in nm and '선물' not in nm:
+                        if nm.replace(' ', '') == '코스피200변동성지수':
                             g = lambda k: pd.to_numeric(str(x.get(k, '')).replace(',', ''), errors='coerce')
                             rows.append({'일자': today.isoformat(), '지수명': nm, '시가': g('OPNPRC_IDX'), '고가': g('HGPRC_IDX'), '저가': g('LWPRC_IDX'), '종가': g('CLSPRC_IDX'), '원본': f'KRX 정보데이터시스템 파생상품지수 {bld}'})
                 if rows: break

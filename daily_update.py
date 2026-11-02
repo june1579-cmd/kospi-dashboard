@@ -112,6 +112,8 @@ def main():
     df = X['VKOSPI_일별']; v10 = cut(rd(f('10_VKOSPI*.csv')), '일자')
     if v10 is not None:
         v10['일자'] = pd.to_datetime(v10['일자']); vsrc = str(v10['원본'].iloc[-1]) if '원본' in v10.columns else 'KRX'
+        if '지수명' in v10.columns: v10 = v10[v10['지수명'].astype(str).str.replace(' ', '') == '코스피200변동성지수']   # 다른 변동성 지수 행 제외
+        v10 = v10[(pd.to_numeric(v10['종가'], errors='coerce') > 5) & (pd.to_numeric(v10['종가'], errors='coerce') < 150)]   # VKOSPI 범위 밖(다른 지수가 섞인 것)은 쓰지 않는다
         for _, r in v10.sort_values('일자').iterrows():
             d = r['일자']; prev = df[df['일자'] < d].sort_values('일자'); pc = prev.iloc[-1]['종가'] if len(prev) else np.nan
             new = {'일자': d, '종가': r['종가'], '대비': round(r['종가'] - pc, 2) if pd.notna(pc) else np.nan, '등락률(%)': round((r['종가'] / pc - 1) * 100, 2) if pd.notna(pc) else np.nan,
