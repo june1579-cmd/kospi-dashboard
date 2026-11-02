@@ -45,6 +45,9 @@ jobs:
       - name: 결과 저장(commit & push)
         run: |
           git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          # data/public 은 공개 저장소 clone(중첩 git)이라 저장소에 넣지 않는다 — 가짜 서브모듈(gitlink)로 들어가면 Pages 배포(checkout)가 실패한다
+          git rm -r --cached --quiet data/public 2>/dev/null || true
+          printf 'data/public/\ndata/collect/*.zip\n__pycache__/\n*.pyc\n' > .gitignore; git add .gitignore
           mkdir -p state out report docs; git add -A data out report state docs
           git commit -m "자동 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M') ${{ steps.tag.outputs.tag }}" || echo "변경 없음"
           git pull --rebase -q || true
