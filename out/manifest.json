@@ -1,11 +1,13 @@
 {
- "run": "2026-11-02 17:43",
- "tag": "1840",
+ "run": "2026-11-03 01:31",
+ "tag": "0831",
  "kospi_last": "2026-11-02",
  "kofia_last": "2026-10-30",
  "vkospi_last": "2026-10-30",
  "night_last": "2026-10-28",
- "errors": [],
+ "errors": [
+  "VKOSPI 2026-11-02 미반영(공개 저장소 2026-10-30까지, 30분 기다림) — VKOSPI 신호 판정 보류"
+ ],
  "files": {
   "alarms": {
    "sha256": "5f20ed234531d68e9f39fc4729dc0d4acfd8e5a3be9e44a9f63a4b65f98dad07",
@@ -48,18 +50,18 @@
    "last_date": "2026-10-30"
   },
   "etf_lev": {
-   "sha256": "a24a75ca9c61346ed989b8b734b923fc303673e5306b0c97a7265e7725d126b1",
+   "sha256": "02834369857170daa5b3e285cf5e4ca43cfbe37bbb37b0610288e607339d813c",
    "bytes": 52087,
    "last_date": "2026-11-02"
   },
   "flows_daily": {
-   "sha256": "6fb1dfb438e75045543b412f9caaeb5406a972655c5f30a5becbb46654426284",
-   "bytes": 489611,
+   "sha256": "a8975c4f59c28f2820a46507855b26f115fae0d92ed6046a19056d570173ca78",
+   "bytes": 489616,
    "last_date": "2026-11-02"
   },
   "fut_daily": {
-   "sha256": "1d4cf2e4d3acde6d73c77d84f7db1e70e5a10ede2846f7c72e229d6412e89442",
-   "bytes": 151542,
+   "sha256": "9a119f7aa7a76d07cb9de061c2f3e4d8f6f6e7d1a88f771071d560043da09d70",
+   "bytes": 151540,
    "last_date": "2026-11-02"
   },
   "fx_daily": {
@@ -88,7 +90,7 @@
    "last_date": "2026-10-30"
   },
   "market_daily": {
-   "sha256": "49e7010910e3e405e8e3cdd2e37404b718bcbc36acfd91c0d9417688b35e0161",
+   "sha256": "812c315a11fa1e1239ca77beb5d4b2318cdff648b968cb0871050cd31dddd367",
    "bytes": 545914,
    "last_date": "2026-11-02"
   },
@@ -103,12 +105,12 @@
    "last_date": "2026-10-27"
   },
   "q_attr": {
-   "sha256": "3aed69851c4af03a8066b85dc20642820794603301fdc64994278c950a0dd2d6",
-   "bytes": 3884,
+   "sha256": "d93e0e9d763bdec4e6dcbacdbf799f6bf8b0c6a933a534d8dfdfb857c9dba7a4",
+   "bytes": 3883,
    "last_date": "feat"
   },
   "q_daily": {
-   "sha256": "02236fdf7f3f829bfa5f025f269fbbcd9a61b161e9a0bea27c2bb1d88f44e0ca",
+   "sha256": "c0c4f52ca6abc5453c101b0f812b87fd946c88a0a11a3117789da99708afaafc",
    "bytes": 161480,
    "last_date": "2026-11-02"
   },
@@ -123,7 +125,7 @@
    "last_date": "5일 내 급락·청산"
   },
   "q_now": {
-   "sha256": "4b03b20f98ecfd74d20813dd592790f99c2cb4ef2706778b9b85d4706ec25cbd",
+   "sha256": "4dc67e7d81b165469acbf1c3195669b99165795367b7089eab31ece47bf048d5",
    "bytes": 1902,
    "last_date": "다음 거래일 국면 기준선"
   },
@@ -158,7 +160,7 @@
    "last_date": "2026-11-02"
   },
   "trend_champ_rules": {
-   "sha256": "c34794c95a68a7f2c63ba6fe08af2d92f1da4d5ea03dc46bd36b7f63c40004d3",
+   "sha256": "75b30df878767f3a4b60f06962d098afad6f5c8e5fd11d66db39fd13a38c337d",
    "bytes": 5036,
    "last_date": "2026"
   },
