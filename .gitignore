@@ -1,0 +1,4 @@
+data/public/
+data/collect/*.zip
+__pycache__/
+*.pyc

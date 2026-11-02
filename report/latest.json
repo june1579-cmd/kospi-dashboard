@@ -1,52 +1,66 @@
 {
- "date": "2026-10-30",
+ "date": "2026-11-02",
  "tag": "1540",
- "run_at": "2026-11-02 09:08",
+ "run_at": "2026-11-02 16:13",
  "prelim": true,
  "values": {
-  "kospi": 5730.74,
-  "kospi_chg_pct": -3.48,
-  "vkospi": 52.32,
+  "kospi": 5859.08,
+  "kospi_chg_pct": 2.24,
+  "vkospi": 787.23,
   "vkospi_date": "2026-10-30",
-  "credit_jo": 29.089,
-  "deposit_jo": 88.713,
-  "credit_date": "2026-10-29",
-  "liq_eok": 36.62,
+  "credit_jo": 29.066,
+  "deposit_jo": 90.235,
+  "credit_date": "2026-10-30",
+  "liq_eok": 32.92,
   "liq_ratio": 0.4,
-  "liq_date": "2026-10-29",
-  "foreign_jo": -1.6149,
-  "inst_jo": 0.754,
-  "indiv_jo": 0.5781,
+  "liq_date": "2026-10-30",
+  "foreign_jo": -0.3743,
+  "inst_jo": 1.2331,
+  "indiv_jo": -1.3466,
   "regime": "고변동 청산",
-  "p_up": 0.782,
-  "p_risk": 0.346,
-  "q_trade": null,
+  "p_up": 0.849,
+  "p_risk": 0.122,
+  "q_trade": "exit",
   "reentry_state": "현금"
  },
- "signals_new": [],
- "signals_late": [],
- "vkospi_hold": false,
+ "signals_new": [
+  "매도 최적화 3위",
+  "매수 최적화 1위(늦게 확인)"
+ ],
+ "signals_late": [
+  {
+   "label": "매수 최적화 1위",
+   "date": "2026-10-28",
+   "rule": "3개 중 2개: VKOSPI 5일 상승 · VKOSPI 하루 −10%↓ · 대주 누적 하위10%"
+  }
+ ],
+ "vkospi_hold": true,
  "signals_on": [],
  "signals_off": [],
  "top_buy_since": null,
  "top_sell_since": null,
  "data_dates": {
-  "kospi": "2026-10-30",
-  "kofia": "2026-10-29",
+  "kospi": "2026-11-02",
+  "kofia": "2026-10-30",
   "vkospi": "2026-10-30",
   "night": "2026-10-28"
  },
  "update_summary": {
-  "run": "2026-11-02 09:07 1540",
-  "kospi_last": "2026-10-30",
-  "kofia_last": "2026-10-29",
+  "run": "2026-11-02 16:13 1540",
+  "kospi_last": "2026-11-02",
+  "kofia_last": "2026-10-30",
   "vkospi_last": "2026-10-30",
   "night_last": "2026-10-28",
   "files": [
    [
     "01",
-    "코스피 일별시세 2026-10-12~2026-10-30",
+    "코스피 일별시세 2026-10-12~2026-11-02",
     "코스피_일별"
+   ],
+   [
+    "10",
+    "VKOSPI 시가·고가·저가·종가(KRX Open API idx/drvprod_dd_trd)",
+    "VKOSPI_일별"
    ],
    [
     "03",
@@ -90,29 +104,51 @@
    ]
   ]
  },
- "changes_n": 0,
+ "changes_n": 427,
  "kakao": [
-  "[대시보드 10/30 잠정 15:37]\n코스피 5,730.74(-3.48%) VKOSPI 52.32\n고변동 청산 · 10일↑ 78% · 5일 급락 35%\n신용 29.09조 예탁 88.7조 비율 33%(10/29)\n반대매매 37억·0.4%(10/29)\n외인 -16,149억 기관 +7,540 개인 +5,781\n신호: 재진입 현금"
+  "[대시보드 11/2 잠정 15:37]\n코스피 5,859.08(+2.24%) VKOSPI 787.23(10/30)\n고변동 청산 · 10일↑ 85% · 5일 급락 12%\n신용 29.07조 예탁 90.2조 비율 32%(10/30)\n신호: ★늦게 확인 매수 최적화 1위(10/28) / ★새 매도 최적화 3위 / VKOSPI 10/30까지 → VKOSPI 신호 보류",
+  "[11/2 신호 상세]\n★ 늦게 확인(VKOSPI 반영) 매수 최적화 1위 10/28 시작: 3개 중 2개: VKOSPI 5일 상승 · VKOSPI 하루 −10%↓ · 대주 누적 하위\n판정 보류(그날 VKOSPI 없음, 10/30까지): 매수 최적화 1~3위·매도 민감·중간·엄격형 → 다음 날 08:31 확정\n★ 매도 최적화 3위 시작: 3개 중 2개…",
+  "[11/2 큰 흐름 12개 해 합의]\n상승 6·하락 6(상승 50%)\n전 거래일 5·7(42%) → +8%p"
  ],
  "diffs_vs_1540": [],
  "consensus": {
   "now": {
+   "date": "2026-11-02",
+   "up": 6,
+   "dn": 6,
+   "pct": 50.0
+  },
+  "p1": {
    "date": "2026-10-30",
    "up": 5,
    "dn": 7,
    "pct": 41.67
   },
-  "p1": {
-   "date": "2026-10-29",
-   "up": 6,
-   "dn": 6,
-   "pct": 50.0
-  },
   "p5": {
-   "date": "2026-10-23",
-   "up": 4,
-   "dn": 8,
-   "pct": 33.33
+   "date": "2026-10-26",
+   "up": 3,
+   "dn": 9,
+   "pct": 25.0
   }
+ },
+ "combo": {
+  "date": "2026-11-02",
+  "top_combo": "민감형 → 중간형",
+  "chosen_since": "2026-08-03",
+  "win_ret_250": 195.8,
+  "win_trades": 3,
+  "win_hit": 100,
+  "since_ret": 6.5,
+  "since_kospi": -11.2,
+  "since_trades": 1,
+  "since_wins": 1,
+  "hit_2015_25": 80,
+  "state": "현금",
+  "warn": null,
+  "rule": "매월 첫 거래일, 지난 250거래일 수익 1위(닫힌 거래 2건 이상), 동점은 적중률",
+  "fixed_combo": "최적화 1위 → 최적화 2위",
+  "next_select": "2026-12",
+  "prev_top": null,
+  "warn_new": false
  }
 }
