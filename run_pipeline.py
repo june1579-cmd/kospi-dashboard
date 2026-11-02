@@ -101,7 +101,7 @@ def main():
     # 6c 웹판(GitHub Pages, docs/) 자료 — 매 실행(새 자료가 없어도 보고문·상태는 갱신)
     run([sys.executable, 'build_web.py', '--out', 'out', '--report', 'report', '--docs', 'docs'], '6c 웹판')
     if not newdata:
-        note = f'[대시보드 {today:%m/%d} {tag}] ' + ('새 자료 없음(휴장 다음 날 또는 이미 보냄)' if tag == '0831' else '오늘 날짜 자료 없음(휴장 또는 미공표)') + f'. 최신 코스피 {kl}'
+        note = f'[{today:%m/%d} {tag}] ' + ('새 자료 없음(휴장 다음 날 또는 이미 보냄)' if tag == '0831' else '오늘 자료 없음(휴장 또는 미공표)') + f' — 매수·매도 신호 판정 없음. 최신 코스피 {kl}'
         if errors: note += '\n오류: ' + ' | '.join(errors)[:120]
         if tag == '1840' or errors: open('report/kakao.txt', 'w', encoding='utf-8').write(note[:200] + '\n')
         else: open('report/kakao.txt', 'w', encoding='utf-8').write('')

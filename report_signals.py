@@ -110,6 +110,29 @@ def main():
     sig_line = '신호: ' + (' / '.join(sig_short) if sig_short else '새 신호 없음(1위 매수·매도 모두 꺼짐)')
     msg1 = '\n'.join([hdr, k_line + ' ' + v_line, reg, cr_line, lq_line, fo_line, sig_line])
     if len(msg1) > 200: msg1 = '\n'.join([hdr, k_line + ' ' + v_line, reg, cr_line, sig_line])[:200]
+    # ---- 카톡 ① 매수·매도 신호 발생/미발생
+    buys = [s['label'] for s in sig_new if s['label'].startswith('매수')] + [s['label'] + f"({md(s['date'])} 늦게 확인)" for s in late if s['label'].startswith('매수')]
+    sells = [s['label'] for s in sig_new if s['label'].startswith('매도')] + [s['label'] + f"({md(s['date'])} 늦게 확인)" for s in late if s['label'].startswith('매도')]
+    if re_today is not None and len(re_today):
+        act = str(re_today.iloc[-1]['action']); (buys if '매수' in act else sells).append('재진입 ' + act)
+    if qtrade: (buys if qtrade == 'enter' else sells).append('정밀검증 ' + ('진입' if qtrade == 'enter' else '청산'))
+    on_buy = [s['label'] for s in sig_on if s['label'].startswith('매수')]; on_sell = [s['label'] for s in sig_on if s['label'].startswith('매도')]
+    l1 = '매수 신호: ' + ('★발생 — ' + ', '.join(buys) if buys else '미발생' + (f"(지속: {', '.join(on_buy)})" if on_buy else ''))
+    l2 = '매도 신호: ' + ('★발생 — ' + ', '.join(sells) if sells else '미발생' + (f"(지속: {', '.join(on_sell)})" if on_sell else ''))
+    l3 = f"보류: VKOSPI 신호 6개 — 그날 VKOSPI 없음({md(vk_row['date'])}까지), 다음 날 08:31 확정" if vk_hold else ''
+    sig_msg = '\n'.join(x for x in [hdr, l1, l2, l3] if x)
+    if len(sig_msg) > 200: sig_msg = sig_msg[:197] + '…'
+    # ---- 카톡 ② 결론
+    cl = []
+    cl.append(f"코스피 {m['kospi']:,.0f}({m['kospi_chg_pct']:+.2f}%) VKOSPI {vk_row['vkospi']:.1f}" + (f"({md(vk_row['date'])})" if vk_lag else ''))
+    cl.append(f"{q['regime']} · 5일 급락 {q['p_risk']*100:.0f}%(기준 27%, {'위험' if q['p_risk'] >= 0.27 else '정상'}) · 10일↑ {q['p_up']*100:.0f}%")
+    cl.append(f"신용 {c['credit_jo']:.1f}조({md(c['date'])}) 반대매매 {l['liq_eok']:.0f}억·{l['ratio_pct']:.1f}%")
+    if fr is not None: cl.append(f"외인 {fr['foreign_jo']*10000:+,.0f}억" + (' 잠정' if '잠정' in str(fr.get('basis', '')) else ''))
+    if cons and cons.get('now'): cl.append(f"12개 해 합의 상승 {cons['now']['up']}/12" + (f"({pm(cons['now']['up'] - cons['p1']['up'])}줄)" if cons.get('p1') else ''))
+    if re_state is not None: cl.append(f"재진입 {re_state['state']}")
+    concl_msg = f"[{md(today)} 결론]\n" + '\n'.join(cl)
+    if len(concl_msg) > 200: concl_msg = concl_msg[:197] + '…'
+    kakao_msgs = [sig_msg, concl_msg]
     msgs = [msg1]
     if sig_new or sig_off or qtrade or len(re_today) or late or vk_hold:
         lines = [f"[{md(today)} 신호 상세]"]
@@ -133,6 +156,14 @@ def main():
         pc = (prev.get('combo') or {}) if prev else {}
         combo['prev_top'] = pc.get('top_combo') if (pc.get('top_combo') and pc.get('top_combo') != combo['top_combo']) else None
         combo['warn_new'] = bool(combo.get('warn')) and combo['warn'] != pc.get('warn')
+        # 조합 1위가 바뀌면 결론 맨 위에 안내(제목 바로 아래), 성적 저하 경고도 같은 자리
+        top_note = None
+        if combo['prev_top']: top_note = f"★조합 1위 교체 「{combo['top_combo']}」(이전 「{combo['prev_top']}」) 250일 {combo['win_ret_250']:+.0f}%·적중 {combo['win_hit']:.0f}%·지금 {combo['state']}"
+        elif combo.get('warn_new'): top_note = f"⚠조합 1위 성적 저하: {combo['top_combo']} — {str(combo['warn']).split(' — ')[0]}"
+        if top_note:
+            head, body = kakao_msgs[1].split('\n', 1); body_lines = body.split('\n')
+            while len(head) + 1 + len(top_note) + 1 + len('\n'.join(body_lines)) > 200 and len(body_lines) > 2: body_lines.pop()   # 200자 맞추려면 아래 줄부터 뺀다
+            kakao_msgs[1] = (head + '\n' + top_note + '\n' + '\n'.join(body_lines))[:200]
         if combo['prev_top']:
             msgs.append(f"[{md(today)} 조합 1위 교체]\n「{pc.get('top_combo')}」 ⇒ 「{combo['top_combo']}」\n지난 250일 {combo['win_ret_250']:+.1f}% · 거래 {combo['win_trades']}건 적중 {combo['win_hit']:.0f}%\n지금 {combo['state']} · 규칙: 매월 첫 거래일 재선정"[:200])
         elif combo.get('warn') and combo['warn'] != pc.get('warn'):
@@ -154,9 +185,10 @@ def main():
                         'regime': q['regime'], 'p_up': float(q['p_up']), 'p_risk': float(q['p_risk']), 'q_trade': qtrade, 'reentry_state': None if re_state is None else re_state['state']},
              'signals_new': [s['label'] for s in sig_new if not s.get('repeat')] + [s['label'] + '(늦게 확인)' for s in late], 'signals_late': late, 'vkospi_hold': vk_hold, 'signals_on': [s['label'] for s in sig_on], 'signals_off': [s['label'] for s in sig_off], 'top_buy_since': top_buy, 'top_sell_since': top_sell,
              'data_dates': {'kospi': today, 'kofia': c['date'], 'vkospi': vk_row['date'], 'night': None if NF is None or not len(NF) else NF.iloc[-1]['night_date']},
-             'update_summary': {k: v for k, v in summ.items() if k != 'changes'}, 'changes_n': len(summ.get('changes', [])), 'kakao': msgs, 'diffs_vs_1540': diffs, 'consensus': cons, 'combo': combo}
+             'update_summary': {k: v for k, v in summ.items() if k != 'changes'}, 'changes_n': len(summ.get('changes', [])), 'kakao': kakao_msgs, 'kakao_full': msgs, 'diffs_vs_1540': diffs, 'consensus': cons, 'combo': combo}
     json.dump(state, open(os.path.join(a.report, 'latest.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-    open(os.path.join(a.report, 'kakao.txt'), 'w', encoding='utf-8').write('\n=====\n'.join(msgs) + '\n')
+    open(os.path.join(a.report, 'kakao.txt'), 'w', encoding='utf-8').write('\n=====\n'.join(kakao_msgs) + '\n')   # 카톡: 신호 발생/미발생 + 결론만
+    open(os.path.join(a.report, 'kakao_full.txt'), 'w', encoding='utf-8').write('\n=====\n'.join(msgs) + '\n')   # 참고용 전체 요약
     # 사람용 md
     md_lines = [f"# 대시보드 자동 갱신 보고 — {today} {LABEL.get(a.tag[:4], a.tag)} · 실행 {now:%Y-%m-%d %H:%M} KST", '',
                 '| 항목 | 값 | 기준일 |', '|---|---|---|', f"| 코스피 | {m['kospi']:,.2f} ({m['kospi_chg_pct']:+.2f}%) | {today} |", f"| VKOSPI | {vk_row['vkospi']:.2f}{' (당일 미수집, 전일 값)' if vk_lag else ''} | {vk_row['date']} |",
@@ -190,6 +222,6 @@ def main():
     open(os.path.join(a.report, 'latest.md'), 'w', encoding='utf-8').write('\n'.join(md_lines) + '\n')
     hist = os.path.join(a.report, 'history'); os.makedirs(hist, exist_ok=True)
     open(os.path.join(hist, f"{today}_{a.tag or 'run'}.md"), 'w', encoding='utf-8').write('\n'.join(md_lines) + '\n')
-    print('\n=====\n'.join(msgs))
+    print('\n=====\n'.join(kakao_msgs))
 
 if __name__ == '__main__': main()
