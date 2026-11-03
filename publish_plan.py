@@ -1,3 +1,4 @@
+# 더 이상 사용하지 않음 — 게시 규칙은 Claude 예약 작업 프롬프트에 있음
 # -*- coding: utf-8 -*-
 """publish_plan.py — Claude 예약 작업이 대시보드(클로드 아티팩트)에 자료를 올릴 때 쓰는 보조 도구.
    plan : 저장소 out/manifest.json 과 아티팩트 state/pipeline 문서를 비교해 새로 올릴 파일 목록을 만든다.
