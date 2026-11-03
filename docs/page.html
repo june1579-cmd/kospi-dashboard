@@ -84,7 +84,7 @@
     <h1>2026 미수 반대매매·신용 대시보드</h1>
     <p class="rv-lede">10월 미수 반대매매는 10/14 <b><span class="rv-v dash-skeleton" data-source="liq" data-field="liq_eok" data-where="date=2026-10-14" data-fmt="1">—</span>억원</b>(미수금 대비 <span class="rv-v" data-source="liq" data-field="ratio_pct" data-where="date=2026-10-14" data-fmt="1">—</span>%)으로 정점이었지만 6/9 정점 <span class="rv-v" data-source="liq" data-field="liq_eok" data-where="date=2026-06-09" data-fmt="1">—</span>억원보다 작다. 10/15 급락분의 청산도 10/16 <span class="rv-v" data-source="liq" data-field="liq_eok" data-where="date=2026-10-16" data-fmt="0">—</span>억원, 10/19 <span class="rv-v" data-source="liq" data-field="liq_eok" data-where="date=2026-10-19" data-fmt="0">—</span>억원(비중 <span class="rv-v" data-source="liq" data-field="ratio_pct" data-where="date=2026-10-16" data-fmt="1">—</span>·<span class="rv-v" data-source="liq" data-field="ratio_pct" data-where="date=2026-10-19" data-fmt="1">—</span>%)으로 줄었고, 신용 일일 감소율도 10/19 <span class="rv-v" data-source="credit_change" data-field="chg_pct" data-where="event=2026년 10월 19일" data-fmt="1">—</span>%로 과거 항복 구간(<span class="rv-v" data-source="credit_change" data-field="chg_pct" data-where="event=2020년 3월" data-fmt="0">—</span>~<span class="rv-v" data-source="credit_change" data-field="chg_pct" data-where="event=2008년 9월" data-fmt="0">—</span>%)에 못 미친다. 청산 정점은 지났을 수 있지만 레버리지 정리는 끝나지 않았다.</p>
     <p class="rv-asof" id="asof-auto">기준: 자료를 읽는 중…</p>
-    <p class="rv-asof">자료는 평일 08:31(전 거래일 확정·VKOSPI 반영)·15:37(정규장 마감 뒤 잠정)·20:37(확정) 세 번 자동 수집해 반영한다(GitHub Actions → 대시보드·웹판). 시가·고가·저가처럼 받지 못한 칸은 추정으로 채우지 않고 비워 둔다. 수기 메모(10/27판): 코스피·투자자별·코스피200·레버리지 ETF 10/20~10/26은 KRX 정보데이터시스템 자동 수집(pykrx) 파일, 10/20~10/22는 먼저 받은 KRX 파일과 일치. VKOSPI 10/26은 KRX 종가를 공개 수집으로(시가·고가·저가 확인 불가). 원/달러 10/26부터는 국제 현물 환율(10/23까지의 중간값과 기준이 약간 다름). 레버리지 ETF 설정·환매는 상장좌수가 있는 날까지, 투자자별은 10/20까지. 야간선물 10/23 저녁장은 HTS 일자별(공개 사이트 종가 861.70 일치).</p>
+    <p class="rv-asof">자료는 평일 08:31(전 거래일 확정·VKOSPI 반영)·15:37(정규장만 집계한 잠정치)·20:37(KRX 하루 전체 확정치) 세 번 자동 수집해 반영한다(GitHub Actions → 대시보드·웹판). 투자자별 순매수는 KRX 통계 기준 — 15:45 무렵 정규장분, 20시 이후 시간외·KRX 애프터마켓(16~20시)까지 합친 최종치. 넥스트레이드(NXT) 체결분은 들어가지 않아 증권사 앱의 'KRX+NXT 통합' 숫자와 하루 수천억 차이가 날 수 있다. 시가·고가·저가처럼 받지 못한 칸은 추정으로 채우지 않고 비워 둔다. 수기 메모(10/27판): 코스피·투자자별·코스피200·레버리지 ETF 10/20~10/26은 KRX 정보데이터시스템 자동 수집(pykrx) 파일, 10/20~10/22는 먼저 받은 KRX 파일과 일치. VKOSPI 10/26은 KRX 종가를 공개 수집으로(시가·고가·저가 확인 불가). 원/달러 10/26부터는 국제 현물 환율(10/23까지의 중간값과 기준이 약간 다름). 레버리지 ETF 설정·환매는 상장좌수가 있는 날까지, 투자자별은 10/20까지. 야간선물 10/23 저녁장은 HTS 일자별(공개 사이트 종가 861.70 일치).</p>
     <p class="rv-asof">미수 반대매매 = 금투협 '위탁매매 미수금 대비 실제 반대매매'. 신용융자 담보부족 반대매매는 포함되지 않는다. 비중 = 당일 미수 반대매매 ÷ 전일 미수금. 참고: 금감원 발표 5월 일평균(주요 10개 증권사 기준) 신용+미수 반대매매 373.6억원, 이 중 미수 297.6억원(미수 비중 약 80%, 파이낸셜뉴스 6/24 보도). 집계 기준이 달라 이 대시보드 수치와 합산하지 않는다.</p>
   </header>
 
@@ -115,48 +115,48 @@
       <div class="rv-card" id="concl-auto">
         <h3>오늘 상태(자동 · 최신 자료 기준)</h3>
         <ul id="concl-auto-list"><li class="dash-skeleton">자료를 읽는 중…</li></ul>
-        <p class="rv-note">위 줄은 대시보드 자료(코스피·금투협·투자자별·정밀 검증·신호 표·야간선물)의 마지막 날짜 값을 그대로 읽어 쓴다. 평일 15:40 잠정치, 18:40 확정치로 바뀐다. 아래 네 카드는 10/30 장 마감(투자자별·VKOSPI 확정치)·금투협 10/29분 기준 수기 분석(11/1 09시 작성). 금투협 10/30분은 11/2 15시 무렵 공표.</p>
+        <p class="rv-note">위 줄은 대시보드 자료(코스피·금투협·투자자별·정밀 검증·신호 표·야간선물)의 마지막 날짜 값을 그대로 읽어 쓴다. 평일 15:37 잠정치(투자자별은 정규장만), 20:37 확정치(KRX 애프터마켓 포함)로 바뀐다. 아래 네 카드는 11/2 장 마감(투자자별 확정치 · VKOSPI는 10/30분까지, 11/2분 미수집)·금투협 10/30분 기준 수기 분석(11/3 09시 작성). 금투협 11/2분은 11/3 15시 무렵 공표.</p>
       </div>
       <div class="rv-card">
         <h3>국면 판단</h3>
-        <p class="rv-verdict">10/30 −3.48%로 5,731 — 10/26 저점 대비 +4.8%. 10/28 +9.9%까지 갔던 반등이 이틀 만에 절반으로 줄었다. '실제 큰 흐름'은 하락 구간 그대로(상승 확정선 6,016까지 +5.0%). 맨 위 그래프의 국면은 고변동 청산(신용 5일 −4.2%), 5일 내 급락·청산 확률은 39.8%로 다시 신호 기준(27%) 위.</p>
+        <p class="rv-verdict">11/2 +2.24%로 5,859 — 10/26 저점 대비 +7.1%, 10/30 급락분(−3.48%)의 3분의 2를 하루 만에 되찾았다. '실제 큰 흐름'은 하락 구간 그대로(상승 확정선 6,016까지 +2.7%). 맨 위 그래프의 국면은 고변동 청산(신용 5일 −3.6%, 종가 &lt; 20일선 5,991), 5일 내 급락·청산 확률은 15.9%로 신호 기준(27%) 아래로 내려왔다(10/30 34.6%). 단 11/2 VKOSPI는 미수집(10/30 값으로 계산)이고, 간밤 미국 반도체 급락에 코스피200 야간선물이 −3.85%(보도)라 11/3은 약세 출발 가능성이 크다.</p>
         <ul>
           <li><b>투매(10/13~15)</b>: 외국인 3일 −9.52조원, VKOSPI 10/15 <span class="rv-v" data-source="market" data-field="vkospi" data-where="date=2026-10-15" data-fmt="2">—</span>, 미수 반대매매 10/14 <span class="rv-v" data-source="liq" data-field="liq_eok" data-where="date=2026-10-14" data-fmt="1">—</span>억원(비중 <span class="rv-v" data-source="liq" data-field="ratio_pct" data-where="date=2026-10-14" data-fmt="1">—</span>%), 신용융자 10/12 34.29조원 정점.</li>
           <li><b>진정(10/16~26)</b>: 반대매매 비중 1% 안팎, 신용 −12%. 10/22·10/26 신저가(<span class="rv-v" data-source="market" data-field="kospi" data-where="date=2026-10-26" data-fmt="2">—</span>)는 VKOSPI·반대매매가 정점 아래인 '투매 없는 신저가'였다.</li>
-          <li><b>반등과 되밀림(10/27~30)</b>: +<span class="rv-v" data-source="market" data-field="kospi_chg_pct" data-where="date=2026-10-27" data-fmt="2">—</span>%·+<span class="rv-v" data-source="market" data-field="kospi_chg_pct" data-where="date=2026-10-28" data-fmt="2">—</span>% 뒤 <span class="rv-v" data-source="market" data-field="kospi_chg_pct" data-where="date=2026-10-29" data-fmt="2">—</span>%·<span class="rv-v" data-source="market" data-field="kospi_chg_pct" data-where="date=2026-10-30" data-fmt="2">—</span>%로 <span class="rv-v" data-source="market" data-field="kospi" data-where="date=2026-10-30" data-fmt="2">—</span>(10/30 매도 사이드카, 보도). 외국인은 10/27~29 사흘 +1.99조원(확정치 — 10/29는 18시 집계 +932억이 확정치 +6,660억으로 크게 바뀜, 차이의 원인은 확인 불가) 뒤 10/30 −1.61조원. 10/30 기관 +7,540억(연기금 +8,929억)·개인 +5,781억·기타법인 +2,828억. 코스피200 선물 외국인 +6,002계약(현물 매도·선물 매수).</li>
-          <li><b>큰 흐름</b>: 그해 일치 1위 12줄 중 상승 5개(16·19·20·23·25년판) — 큰 흐름 비교 맨 아래 「12개 해 합의」 42%(10/29 50%에서 −8%p, 21년판이 하락으로). '2026 1위' 줄도 10/30 하락으로 바뀌어 기존 5줄(빠른 전환·조합·67일선·3개 다수결·2026 1위)이 모두 하락.</li>
+          <li><b>반등·되밀림·재반등(10/27~11/2)</b>: +<span class="rv-v" data-source="market" data-field="kospi_chg_pct" data-where="date=2026-10-27" data-fmt="2">—</span>%·+<span class="rv-v" data-source="market" data-field="kospi_chg_pct" data-where="date=2026-10-28" data-fmt="2">—</span>% 뒤 <span class="rv-v" data-source="market" data-field="kospi_chg_pct" data-where="date=2026-10-29" data-fmt="2">—</span>%·<span class="rv-v" data-source="market" data-field="kospi_chg_pct" data-where="date=2026-10-30" data-fmt="2">—</span>%(10/30 매도 사이드카, 보도), 11/2 +<span class="rv-v" data-source="market" data-field="kospi_chg_pct" data-where="date=2026-11-02" data-fmt="2">—</span>%로 <span class="rv-v" data-source="market" data-field="kospi" data-where="date=2026-11-02" data-fmt="2">—</span>(장중 5,900선 위, 보도). 11/2 수급(KRX 확정치)은 기관 +<span class="rv-v" data-source="flows_daily" data-field="inst_jo" data-where="date=2026-11-02" data-fmt="2">—</span>조원이 올리고 개인 <span class="rv-v" data-source="flows_daily" data-field="indiv_jo" data-where="date=2026-11-02" data-fmt="2">—</span>조원·외국인 <span class="rv-v" data-source="flows_daily" data-field="foreign_jo" data-where="date=2026-11-02" data-fmt="2">—</span>조원 매도(장 마감 보도의 외국인 −7억은 잠정치, 확정치와 차이 큼), 기타법인 +4,738억. 외국인은 10/30 −1.61조 뒤 이틀 연속 순매도(20거래일 누적 −19.14조원). 코스피200 선물 외국인 +1,535계약(현물 매도·선물 소폭 매수).</li>
+          <li><b>큰 흐름</b>: 그해 일치 1위 12줄 중 상승 6개(16·19·20·21·23·25년판) — 큰 흐름 비교 맨 아래 「12개 해 합의」 50%(10/30 42%에서 +8%p, 21년판이 상승으로 복귀). '2026 1위' 줄(SMA60&gt;SMA150 · 8% 되돌림 전환 · 기타법인 20일 역추세, 11/3 다시 찾아도 같은 조합)은 하락 그대로.</li>
         </ul>
       </div>
       <div class="rv-card">
         <h3>1~2주 재확대 리스크</h3>
         <ul>
-          <li>VKOSPI 10/30 <span class="rv-v" data-source="market" data-field="vkospi" data-where="date=2026-10-30" data-fmt="2">—</span>(10/29 <span class="rv-v" data-source="market" data-field="vkospi" data-where="date=2026-10-29" data-fmt="2">—</span>) — 급등일에도 급락일에도 50대에서 움직이지 않는다. 고변동 상태가 3주째.</li>
-          <li>지수는 20일선 6,046·60일선 6,509·200일선 6,487·67일선 6,488 아래. 외국인 20거래일 누적 −18.6조원.</li>
-          <li>맨 위 그래프의 5일 내 급락·청산 확률 10/30 39.8%(10/29 23.8%) — 20일 이격도가 더 벌어져(+17.0%p) 신호 기준 27% 위로 다시 올라왔다(검증 AUC 0.72). 10일 상승 확률 79.4%는 AUC 0.53이라 참고만.</li>
-          <li>금투협 10/29: 미수 반대매매 <span class="rv-v" data-source="liq" data-field="liq_eok" data-where="date=2026-10-29" data-fmt="1">—</span>억원(비중 <span class="rv-v" data-source="liq" data-field="ratio_pct" data-where="date=2026-10-29" data-fmt="1">—</span>%), 신용융자 <span class="rv-v" data-source="credit" data-field="credit_jo" data-where="date=2026-10-29" data-fmt="2">—</span>조원(−0.82%, 10/12 정점 대비 −15.2%), 예탁금 <span class="rv-v" data-source="credit" data-field="deposit_jo" data-where="date=2026-10-29" data-fmt="2">—</span>조원(+0.42조), 신용/예탁금 <span class="rv-v" data-source="credit_ratio" data-field="ratio" data-where="date=2026-10-29" data-fmt="1">—</span>%. 10/30 급락분(반대매매·신용)은 11/2 15시 무렵 공표.</li>
-          <li>미국: 10/29 알파벳 −12.6%(실적) → 나스닥 −1.38%, VIX 17.20(FRED). 10/30 S&amp;P500 −1.8%·나스닥 −2.9%·러셀2000 −1.7%(AP 보도) — 아마존·인텔 실적 실망과 중간선거(11/3) 앞 경계. VIX 10/30 종가는 FRED 미공표로 확인 불가. 코스피200 야간선물(10/30 저녁장)은 02:07 속보 872.45(주간 종가 899.45 대비 −3%) — 06:00 마감값 확인 불가.</li>
-          <li>레버리지 ETF는 미수 반대매매 통계 밖이라 실제 강제 청산 규모는 더 클 수 있다(10/27~30 설정·환매는 KRX 자료가 없어 확인 불가).</li>
+          <li>VKOSPI 10/30 <span class="rv-v" data-source="market" data-field="vkospi" data-where="date=2026-10-30" data-fmt="2">—</span>(10/29 <span class="rv-v" data-source="market" data-field="vkospi" data-where="date=2026-10-29" data-fmt="2">—</span>) — 3주째 50대. 11/2 값은 KRX 공개 자료에 아직 없어 미반영(VKOSPI 신호 6개 판정 보류 지속), 11/3 08:31 실행에서도 확인 불가.</li>
+          <li>지수는 20일선 5,991·67일선 6,474·200일선 6,494·60일선 6,502 아래(11/2 종가 기준 계산). 외국인 20거래일 누적 −19.14조원.</li>
+          <li>맨 위 그래프의 5일 내 급락·청산 확률 11/2 15.9%(10/30 34.6%) — 20일 이격도 축소(−11.1%p)·거래대금/예탁금(−9.4%p)이 내렸다(검증 AUC 0.72). 단 VKOSPI 11/2 미수집이라 전날 값으로 계산한 수치. 10일 상승 확률 85.8%(10/30 78.2%)는 AUC 0.53이라 참고만.</li>
+          <li>금투협 10/30(−3.48% 급락일): 미수 반대매매 <span class="rv-v" data-source="liq" data-field="liq_eok" data-where="date=2026-10-30" data-fmt="1">—</span>억원(비중 <span class="rv-v" data-source="liq" data-field="ratio_pct" data-where="date=2026-10-30" data-fmt="1">—</span>%)으로 급락일인데도 10/14 정점(7.2%)과 거리가 멀다. 신용융자 <span class="rv-v" data-source="credit" data-field="credit_jo" data-where="date=2026-10-30" data-fmt="2">—</span>조원(−0.08%, 10/12 정점 대비 −15.2% — 감소세가 거의 멈춤), 예탁금 <span class="rv-v" data-source="credit" data-field="deposit_jo" data-where="date=2026-10-30" data-fmt="2">—</span>조원(+1.52조), 신용/예탁금 <span class="rv-v" data-source="credit_ratio" data-field="ratio" data-where="date=2026-10-30" data-fmt="1">—</span>%. 미수금 8,723억원. 11/2분은 11/3 15시 무렵 공표.</li>
+          <li>미국 11/2: S&amp;P500 −0.51%(7,541.40)·나스닥 −1.07%(25,164.32)·다우 +0.41%, 필라델피아 반도체 −3.37%(마이크론 −5.8%·AMD −7.5%·엔비디아 −1.3%, 보도). VIX 11/2 18.73(보도 — FRED는 10/30 19.42까지). 브렌트유 −7.6%(104.77달러, 미·이란 협상 기대, 보도). 11/3 미국 중간선거. 코스피200 야간선물 12월물 883.30(−3.85%, 보도; 04:21 속보 891.05, 코스피200 현물 920.63 대비) — 「야간선물 → 다음 날 시가」 표의 −2% 이하 구간(36번)은 갭 중앙 −2.74%, 하락 출발 97%(2025-06~2026-10).</li>
+          <li>KODEX 레버리지 11/2: 설정·환매 −2,315억원(상장좌수 −305만좌)·개인 −386억원 — 반등일에 레버리지 자금이 빠졌다. 레버리지 ETF는 미수 반대매매 통계 밖이라 실제 강제 청산 규모는 더 클 수 있다.</li>
         </ul>
       </div>
       <div class="rv-card">
-        <h3>체크 지표(11/2 종가 기준선)</h3>
+        <h3>체크 지표(11/3 종가 기준선)</h3>
         <ul>
-          <li><b>6,016 이상</b>: 10/26 저점 5,469 대비 +10% — '실제 큰 흐름'이 상승으로 확정(10/27부터 상승으로 기록). 10/30 종가에서 +5.0%. <b>5,469 아래</b>면 신저가 — 바닥 확인 실패(10/30 종가에서 −4.6%).</li>
-          <li>빠른 전환은 약 6,090, 67일선·3개 다수결은 약 6,490 이상에서 상승으로 바뀐다(10/29 기준 6,300·6,515에서 내려옴. 외국인 −1.6조~+5,000억원 가정에서 같은 값, 5포인트 단위 계산).</li>
-          <li><b>'2026 1위' 하락 → 상승</b>: 외국인이 하루 약 2,230억원 넘게 순매수하면 다시 상승으로 돌아간다(지수 5,500~6,000 어디서나 같은 선).</li>
-          <li>맨 위 그래프 국면: 11/2 종가 5,998 아래면 하락 추세, 7,181 넘으면 상승 추세, 그 사이 횡보 — 단 금투협 10/30분 신용이 29.25조원 이하(10/29 29.09조 대비 +0.55% 미만)면 고변동 청산이 먼저.</li>
-          <li>금투협 10/30분(11/2 15시 무렵 공표): −3.5% 급락일의 반대매매 비중이 5%를 넘는지(10/14 7.2%가 정점), 신용이 29조원 아래로 내려가는지.</li>
-          <li><b>12개 해 합의 7/12 이상</b>(큰 흐름 비교 맨 아래 줄, 10/30 5/12): 과반이 상승으로 넘어가는지. 올해판(26년)을 뺀 11줄은 10/28~29 6/11 과반 상승이었다가 10/30 5/11로 다시 과반 하락 — 2015~2026 이렇게 과반이 하락으로 바뀐 날(결과가 나온 75번)은 20거래일 뒤 상승 56%(평소 57%), 평균 +0.2%(평소 +1.0%)로 방향 정보가 거의 없었다. 과반이 상승으로 바뀐 날 76번은 상승 67%, 평균 +0.9%(둘 다 자기 해 뺀 11줄 기준).</li>
-          <li>5일 내 급락·청산 확률이 신호 기준 27% 아래로 다시 내려오는지(10/30 39.8%).</li>
+          <li><b>6,016 이상</b>: 10/26 저점 5,469 대비 +10% — '실제 큰 흐름'이 상승으로 확정(10/27부터 상승으로 기록). 11/2 종가에서 +2.7%(10/28 6,012는 4포인트 모자랐다). <b>5,469 아래</b>면 신저가 — 바닥 확인 실패(11/2 종가에서 −6.6%).</li>
+          <li>맨 위 그래프 국면: 11/3 종가 5,937.4 아래면 하락 추세, 7,213.9 넘으면 상승 추세, 그 사이 횡보(20일선 5,937.4, 20일 수익률 −3%·+3% 선 6,793.6·7,213.9) — 단 다음 공시 신용이 29.17조원 이하(10/30 29.07조 대비 +0.34% 미만)이거나 VKOSPI 64.16 이상이면 고변동 청산이 먼저. 야간선물대로 −3%대 출발이면 5,937 아래 = 하락 추세 판정 가능성.</li>
+          <li>빠른 전환·67일선·3개 다수결의 상승 전환선은 이번 작업에서 다시 계산하지 않아 확인 불가(11/1 계산은 약 6,090·약 6,490). '2026 1위' 하락 → 상승 전환 조건(기타법인·외국인 수급 기준)도 확인 불가.</li>
+          <li><b>12개 해 합의 7/12 이상</b>(큰 흐름 비교 맨 아래 줄, 11/2 6/12): 한 줄만 더 상승으로 바뀌면 과반. 10/30 5/12 → 11/2 6/12(21년판 복귀). 과반이 상승으로 바뀐 날(2015~2026, 11/1 계산 76번)은 20일 뒤 상승 67%·평균 +0.9%, 하락으로 바뀐 날 75번은 56%·+0.2%(자기 해 뺀 11줄 기준).</li>
+          <li>5일 내 급락·청산 확률이 신호 기준 27% 위로 다시 올라가는지(11/2 15.9%, 10/30 34.6%). 11/2 VKOSPI가 들어오면 수치가 바뀔 수 있다.</li>
+          <li>금투협 11/2분(11/3 15시 무렵 공표): 반등일 반대매매 비중이 1% 아래를 지키는지(10/30 0.4%, 5% 넘으면 투매 재개 신호, 10/14 7.2%가 정점), 신용이 29.17조원 위로 늘어나는지(위 국면 기준선)·29조원 아래로 더 줄어드는지, 예탁금 90조 유지.</li>
         </ul>
       </div>
       <div class="rv-card">
         <h3>신호 해석과 단기 수급</h3>
         <ul>
-          <li><b>10/16 매수 최적화 1위</b>(VKOSPI 5일 +33% 뒤 하루 −11.7%): 신호일 5,668 → 10/30 5,731(+1.1%), 그 사이 최고 +6.1%(10/28)·최저 −3.5%(10/26). 같은 두 조건이 켜진 2015~2026 33번(10/16 제외)은 20일 뒤 85% 상승(중앙 +3.1%, 평소 57%) — 20거래일째는 11/13. 대부분 규칙을 고른 2015~2024 구간이라 사후 성적이 섞여 있다.</li>
-          <li><b>'투매 없는 신저가'</b>(60일 신저가 · 고점 대비 −15% 이하 · 반대매매 비중이 최근 20일 정점의 절반 이하): 2006~2026 결과가 나온 5번은 20일 뒤 모두 상승(중앙 +5.3%). 이번(10/22·10/26)은 10/30 기준 +4.8%(10/28 +9.9%까지). 표본 5개라 방향 참고.</li>
-          <li><b>'2026 1위'</b>는 2026년 성적으로 고른 조합이라 올해 일치율은 사후 성적이다(2015~2025 상승 전환 120번의 20일 뒤 상승 49%). 그해 1위 12줄의 올해판(26년)은 10/30 다시 찾아도 같은 조합(SMA60>SMA150 · 8% 되돌림 전환 · 기타법인 20일 역추세)이고 하락.</li>
-          <li><b>KOSPI·KOSDAQ 10/30</b>: 코스피 −3.48%, 코스닥 <span class="rv-v" data-source="market" data-field="kosdaq" data-where="date=2026-10-30" data-fmt="2">—</span>(−3.83%) — 코스닥 외국인 +2억·개인 +1,253억·기관 −1,342억(확정치). 삼성전자 −3.0%·SK하이닉스 −7.1%(보도). 정밀 검증의 10일 상승 확률 79.4%는 검증 AUC 0.53이라 근거로 삼지 않는다.</li>
+          <li><b>11/2 매도 최적화 3위 시작</b>(3개 중 2개: 대주 20일 증가 · RP 누적 상위10% · 신용/예탁금&gt;35% — 신용/예탁금 32.2%는 꺼진 상태): 10/14 같은 신호 뒤 지수는 −9%(20일 최저) 구간을 지났다. 2015~24 +304%(현금 20일)였지만 2025~26에는 상승장 대부분 현금(전략 −21% vs 보유 +125%)이라 올해 성적은 나쁘다. 정밀 검증 전략은 10/30 진입 → 11/2 청산(+1.94%). 재진입 규칙은 현금(8/12 재매도 뒤). 늦게 확인된 신호 없음.</li>
+          <li><b>VKOSPI 판정 보류</b>: 매수 최적화 1~3위·매도 민감·중간·엄격형 6개 — 11/2 VKOSPI가 없어 켜짐·꺼짐 판정 못 함. 다음 08:31 실행에서 VKOSPI 들어오면 확정. 매수×매도 조합 1위는 민감형 → 중간형(8/3 선정, 지난 250거래일 +195.8%·3건 적중 100%, 선정 뒤 +6.5% vs 코스피 −11.2%), 지금 현금, 경고 없음, 다음 재선정 12월 첫 거래일.</li>
+          <li><b>10/16 매수 최적화 1위</b>(VKOSPI 5일 +33% 뒤 하루 −11.7%): 신호일 5,668 → 11/2 5,859(+3.4%), 그 사이 최고 +6.1%(10/28)·최저 −3.5%(10/26). 같은 두 조건이 켜진 2015~2026 33번(10/16 제외)은 20일 뒤 85% 상승(중앙 +3.1%, 평소 57%, 11/1 계산) — 20거래일째는 11/13(11거래일 경과). 대부분 규칙을 고른 2015~2024 구간이라 사후 성적이 섞여 있다.</li>
+          <li><b>'투매 없는 신저가'</b>(60일 신저가 · 고점 대비 −15% 이하 · 반대매매 비중이 최근 20일 정점의 절반 이하): 2006~2026 결과가 나온 5번은 20일 뒤 모두 상승(중앙 +5.3%, 11/1 계산). 이번(10/22·10/26)은 11/2 기준 +7.1%(10/28 +9.9%까지). 표본 5개라 방향 참고.</li>
+          <li><b>KOSPI·KOSDAQ 11/2</b>: 코스피 +2.24%, 코스닥 <span class="rv-v" data-source="market" data-field="kosdaq" data-where="date=2026-11-02" data-fmt="2">—</span>(+1.38%). 삼성전자·SK하이닉스 동반 상승(보도, 출처별 등락률 차이 있어 수치 확인 불가). 원/달러 1,343.8원(+9.5원, 보도). 간밤 미국 반도체 −3.37%·야간선물 −3.85%(보도)라 11/3은 전날 기관 매수(+1.22조)가 이어지는지, 외국인 현물 매도가 커지는지가 관건. 정밀 검증의 10일 상승 확률 85.8%는 검증 AUC 0.53이라 근거로 삼지 않는다.</li>
         </ul>
       </div>
     </div>
@@ -1650,7 +1650,7 @@
     const wd = s => ['일','월','화','수','목','금','토'][P(s).getUTCDay()];
     const parts = [];
     if (m) parts.push(`기준: ${md(m.date)}(${wd(m.date)}) 장 마감. 코스피·코스닥·매도/매수 신호는 ${md(m.date)}까지`);
-    if (f) parts.push(`투자자별 순매수는 ${md(f.date)}까지` + (/잠정/.test(f.basis || '') ? '(잠정치 — 다음 날 아침 확정치로 교체)' : ''));
+    if (f) parts.push(`투자자별 순매수는 ${md(f.date)}까지` + (/잠정/.test(f.basis || '') ? '(정규장 집계 잠정치 — 20시 뒤 애프터마켓 포함 확정치로 교체)' : '(KRX 하루 전체, NXT 제외)'));
     if (v) parts.push(`VKOSPI ${md(v.date)}까지` + (m && v.date !== m.date ? '(당일분은 다음 영업일 수집)' : ''));
     if (l) parts.push(`미수 반대매매·미수금·예탁금·신용융자는 금투협 ${md(l.date)}분까지(기준일 다음 영업일 아침 공시)`);
     if (fx) parts.push(`원/달러 ${md(fx.date)}까지`);
@@ -1668,7 +1668,7 @@
       if (ss.length) items.push('확률이 바뀐 이유(맨 위 그래프 아래 표): ' + ss.map(s0 => { const tf = qa.data.filter(r => r.kind === 'feat' && r.target === s0.target && +r.missing !== 1).sort((a, b) => Math.abs(+b.contrib_pp) - Math.abs(+a.contrib_pp)).slice(0, 2);
         return `${s0.target} ${f1(+s0.p_prev)}% → ${f1(+s0.p_now)}%(` + tf.map(r => r.name + ' ' + sgp(+r.contrib_pp) + '%p').join(' · ') + (Math.abs(+s0.missing_pp) >= 0.05 ? ' · 그날 자료 빈칸 ' + sgp(+s0.missing_pp) + '%p' : '') + ')'; }).join(', ')); } }
     if (l) items.push(`금투협 ${md(l.date)}: 미수 반대매매 ${f1(+l.liq_eok)}억원(미수금 대비 ${f1(+l.ratio_pct)}%)` + (c ? `, 신용융자 ${f2(+c.credit_jo)}조원(전일 대비 ${sgn(+c.chg_pct)}%), 예탁금 ${f1(+c.deposit_jo)}조원` : '') + (cr ? `, 신용/예탁금 ${f1(+cr.ratio)}%` : ''));
-    if (f) items.push(`투자자별 ${md(f.date)}: 외국인 ${sgn(+f.foreign_jo)}조, 기관 ${sgn(+f.inst_jo)}조, 개인 ${sgn(+f.indiv_jo)}조원` + (/잠정/.test(f.basis || '') ? ' (잠정치 — 다음 날 아침 확정)' : ''));
+    if (f) items.push(`투자자별 ${md(f.date)}: 외국인 ${sgn(+f.foreign_jo)}조, 기관 ${sgn(+f.inst_jo)}조, 개인 ${sgn(+f.indiv_jo)}조원` + (/잠정/.test(f.basis || '') ? ' (정규장 집계 잠정치 — 20시 뒤 확정)' : ' (KRX 애프터마켓 포함, NXT 제외)'));
     const sigs = [];
     const al = dash.data('alarms'); if (al.status === 'ok' && m) al.data.filter(r => r.date === m.date).forEach(r => sigs.push(`${r.side} ${r.type} 신호 시작`));
     const top = (name, lab) => { const d = dash.data(name); if (d.status !== 'ok' || !m) return; const rows = d.data.filter(r => String(r.rank) === '1'); const t = rows.filter(r => r.date === m.date); if (!t.length) return; const st = rows.filter(r => r.start === '시작' && r.date <= m.date); sigs.push(`${lab} 최적화 1위 ${t[0].start === '시작' ? '시작' : '지속(' + md(st[st.length - 1].date) + '~)'}`); };
