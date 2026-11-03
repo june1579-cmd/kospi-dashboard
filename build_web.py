@@ -49,7 +49,7 @@ def main():
     qd = Q[Q['trade'].notna()] if Q is not None else pd.DataFrame()
     data = {
         'built_at': dt.datetime.now(KST).strftime('%Y-%m-%d %H:%M'), 'latest': {k: LJ.get(k) for k in ('date', 'tag', 'run_at', 'prelim', 'values', 'data_dates', 'signals_new', 'signals_on', 'signals_off', 'signals_late', 'vkospi_hold', 'consensus', 'combo', 'kakao', 'update_summary')},
-        'alerts': AL.get('alerts', []), 'alerts_date': AL.get('date'), 'label': {'0831': '아침 확정', '1540': '잠정 15:37', '1840': '확정 20:37'}.get(str(LJ.get('tag', ''))[:4], LJ.get('tag', '')),
+        'alerts': AL.get('alerts', []), 'alerts_date': AL.get('date'), 'label': {'0831': '아침 확정', '1540': '잠정 15:37(투자자별 정규장만)', '1840': '확정 20:37(KRX 애프터마켓 포함)'}.get(str(LJ.get('tag', ''))[:4], LJ.get('tag', '')),
         'market': recs(M, ['date', 'kospi', 'kospi_chg_pct', 'vkospi', 'kosdaq'], N), 'q': recs(Q, ['date', 'regime', 'p_up', 'p_risk', 'trade'], N),
         'liq': recs(L, ['date', 'liq_eok', 'ratio_pct', 'misu_eok'], N), 'credit': recs(C, ['date', 'credit_jo', 'deposit_jo', 'chg_pct'], N), 'flows': recs(F, ['date', 'foreign_jo', 'inst_jo', 'indiv_jo', 'other_jo', 'basis'], N),
         'consensus': cons, 'champ_years': years, 'champ_rules': recs(rd(f'{o}/trend_champ_rules.csv'), ['year', 'rule', 'acc_year', 'acc_next', 'acc_all', 'acc_last_year', 'acc_r60', 'acc_r20', 'now']),

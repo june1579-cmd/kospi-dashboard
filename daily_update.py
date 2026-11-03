@@ -145,7 +145,7 @@ def main():
             old_lbl = str(df.at[hit[0], '출처 구분']) if len(hit) else ''
             was_prelim = '잠정' in old_lbl; was_pub = old_lbl.startswith('공개')
             srcname = str(r['원본']) if '원본' in inv.columns and isinstance(r['원본'], str) and r['원본'] else 'KRX 투자자별 거래실적'
-            label = '잠정치(KRX 장 마감 직후, 18시 확정 전; 다음 금융 경유)' if prelim else '사용자 첨부(KRX 확정치, pykrx 자동 수집)'
+            label = '잠정치(KRX 정규장만 집계, 20시 애프터마켓 포함 확정 전)' if prelim else 'KRX 확정치(정규장+시간외+KRX 애프터마켓, NXT 제외; pykrx 자동 수집)'
             df = upsert(df, new, '투자자별_코스피_일별', f'자동 수집 03 투자자별({srcname} {"잠정" if prelim else "확정"}치, {tag})', force=(was_prelim or was_pub))
             i = df.index[df['일자'] == r['날짜']][0]
             if not prelim and was_prelim: changes.append(('투자자별_코스피_일별', dstr(r['날짜']), '출처 구분', old_lbl, '잠정치', label, tag))

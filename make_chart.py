@@ -46,7 +46,7 @@ def alerts(o, sig_new=None, LJ=None):
         if c['chg_pct'] <= -2.5: A.append(f"신용융자 하루 {sg(c['chg_pct'], 2)}% ({md(c['date'])}, {c['credit_jo']:.2f}조) — 급감")
     if F is not None and len(F):
         f = F.iloc[-1]
-        if abs(f['foreign_jo']) >= 1: A.append(f"외국인 {sg(f['foreign_jo'], 2)}조원 ({'순매수' if f['foreign_jo'] > 0 else '순매도'})" + (' 잠정' if '잠정' in str(f.get('basis', '')) else ''))
+        if abs(f['foreign_jo']) >= 1: A.append(f"외국인 {sg(f['foreign_jo'], 2)}조원 ({'순매수' if f['foreign_jo'] > 0 else '순매도'})" + (' 정규장 집계' if '잠정' in str(f.get('basis', '')) else ''))
     if CB is not None and len(CB) > 1:
         a, b = CB.iloc[-2], CB.iloc[-1]; t = lambda x: '상승' if x == 1 else ('하락' if x == -1 else '—')
         if a['leg'] != b['leg'] and pd.notna(b['leg']): A.append(f"실제 큰 흐름 {t(a['leg'])} → {t(b['leg'])}")

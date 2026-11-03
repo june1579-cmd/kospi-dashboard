@@ -11,7 +11,7 @@ def rd(p): return pd.read_csv(p) if os.path.exists(p) else None
 def md(d): return f'{int(d[5:7])}/{int(d[8:10])}'
 def f1(v, n=2): return '—' if v is None or (isinstance(v, float) and pd.isna(v)) else f'{v:,.{n}f}'
 
-LABEL = {'0831': '아침 확정·VKOSPI 반영 08:31', '1540': '잠정 15:37', '1840': '확정 20:37'}
+LABEL = {'0831': '아침 확정·VKOSPI 반영 08:31', '1540': '잠정 15:37(투자자별 정규장만)', '1840': '확정 20:37(KRX 애프터마켓 포함)'}
 VK_SIGS = ['매수 최적화 1위', '매수 최적화 2위', '매수 최적화 3위', '매도 민감형', '매도 중간형', '매도 엄격형']
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument('--out', default='out'); ap.add_argument('--report', default='report'); ap.add_argument('--tag', default='')
@@ -96,7 +96,7 @@ def main():
     reg = f"{q['regime']} · 10일↑ {q['p_up']*100:.0f}% · 5일 급락 {q['p_risk']*100:.0f}%"
     cr_line = f"신용 {c['credit_jo']:.2f}조 예탁 {c['deposit_jo']:.1f}조" + (f" 비율 {cd_ratio:.0f}%" if cd_ratio else '') + f"({md(c['date'])})"
     lq_line = f"반대매매 {l['liq_eok']:.0f}억·{l['ratio_pct']:.1f}%({md(l['date'])})"
-    fo_line = (f"외인 {fr['foreign_jo']*10000:+,.0f}억 기관 {fr['inst_jo']*10000:+,.0f} 개인 {fr['indiv_jo']*10000:+,.0f}" + (' (잠정)' if '잠정' in str(fr.get('basis', '')) else '')) if fr is not None else '투자자별 오늘 줄 없음'
+    fo_line = (f"외인 {fr['foreign_jo']*10000:+,.0f}억 기관 {fr['inst_jo']*10000:+,.0f} 개인 {fr['indiv_jo']*10000:+,.0f}" + (' (정규장 집계)' if '잠정' in str(fr.get('basis', '')) else ' (KRX 전체, NXT 제외)')) if fr is not None else '투자자별 오늘 줄 없음'
     top_buy = since_of(B3, 1); top_sell = since_of(S3, 1)
     sig_short = []
     for s in late: sig_short.append(f"★늦게 확인 {s['label']}({md(s['date'])})")
@@ -127,7 +127,7 @@ def main():
     cl.append(f"코스피 {m['kospi']:,.0f}({m['kospi_chg_pct']:+.2f}%) VKOSPI {vk_row['vkospi']:.1f}" + (f"({md(vk_row['date'])})" if vk_lag else ''))
     cl.append(f"{q['regime']} · 5일 급락 {q['p_risk']*100:.0f}%(기준 27%, {'위험' if q['p_risk'] >= 0.27 else '정상'}) · 10일↑ {q['p_up']*100:.0f}%")
     cl.append(f"신용 {c['credit_jo']:.1f}조({md(c['date'])}) 반대매매 {l['liq_eok']:.0f}억·{l['ratio_pct']:.1f}%")
-    if fr is not None: cl.append(f"외인 {fr['foreign_jo']*10000:+,.0f}억" + (' 잠정' if '잠정' in str(fr.get('basis', '')) else ''))
+    if fr is not None: cl.append(f"외인 {fr['foreign_jo']*10000:+,.0f}억" + (' 정규장' if '잠정' in str(fr.get('basis', '')) else ' KRX전체'))
     if cons and cons.get('now'): cl.append(f"12개 해 합의 상승 {cons['now']['up']}/12" + (f"({pm(cons['now']['up'] - cons['p1']['up'])}줄)" if cons.get('p1') else ''))
     if re_state is not None: cl.append(f"재진입 {re_state['state']}")
     concl_msg = f"[{md(today)} 결론]\n" + '\n'.join(cl)
