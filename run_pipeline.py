@@ -3,7 +3,7 @@
    08:31(tag 0831, 전 거래일 확정 + VKOSPI 반영 — 공개 저장소가 08:10~08:15 에 VKOSPI 를 넣으므로 들어올 때까지 최대 30분 기다림)
    15:37(tag 1540, 그날 종가·투자자별 잠정) · 20:37(tag 1840, 애프터마켓 20:00 마감 뒤 투자자별)
    1 수집(dashboard_collect.py) → 2 공개 저장소 받기 → 3 통합 원자료 엑셀 갱신(daily_update.py) → 4 대시보드 자료 재계산(pkg/reproduce.py)
-   → 5 fx_daily·manifest → 6 보고문(report_signals.py) → 6b 그래프(make_chart.py) → 6c 웹판(build_web.py → docs/) → 7 카카오톡(kakao_send.py)
+   → 4b 애프터마켓(after_market.py) → 5 fx_daily·manifest → 6 보고문(report_signals.py) → 6b 그래프(make_chart.py) → 6c 웹판(build_web.py → docs/) → 7 카카오톡(kakao_send.py)
    어느 단계가 실패해도 다음 단계로 가고, 실패 내용은 report/latest.md 와 카카오톡에 적는다.
    사용: python run_pipeline.py --tag 0831|1540|1840 [--no-collect] [--no-kakao] [--no-wait]
 """
@@ -73,6 +73,9 @@ def main():
     # 4 재계산
     kl = summ.get('kospi_last') or str(pd.read_excel(WB, sheet_name='코스피_일별')['일자'].max())[:10]
     ok4 = run([sys.executable, 'pkg/reproduce.py', WB, 'out', '--trend-end', kl], '4 재계산', timeout=900)
+    # 4b 애프터마켓(NXT 저녁 가격·세션별 거래대금·투자자별 → out/am_*.csv, data/after_market/ 누적) — 실패해도 다른 단계는 진행
+    try: run([sys.executable, 'after_market.py', '--out', 'out', '--data', 'data/after_market', '--tag', tag], '4b 애프터마켓', timeout=1200)
+    except Exception as e: errors.append('4b 애프터마켓: ' + repr(e))
     # 5 fx_daily(참고_원달러 → 기준 파일 뒤 날짜 덧붙임) · manifest
     try:
         base = pd.read_csv('pkg/datasets/fx_daily.csv'); fx = pd.read_excel(WB, sheet_name='참고_원달러'); fx['일자'] = pd.to_datetime(fx['일자'])
