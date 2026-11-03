@@ -84,7 +84,7 @@
     <h1>2026 미수 반대매매·신용 대시보드</h1>
     <p class="rv-lede">10월 미수 반대매매는 10/14 <b><span class="rv-v dash-skeleton" data-source="liq" data-field="liq_eok" data-where="date=2026-10-14" data-fmt="1">—</span>억원</b>(미수금 대비 <span class="rv-v" data-source="liq" data-field="ratio_pct" data-where="date=2026-10-14" data-fmt="1">—</span>%)으로 정점이었지만 6/9 정점 <span class="rv-v" data-source="liq" data-field="liq_eok" data-where="date=2026-06-09" data-fmt="1">—</span>억원보다 작다. 10/15 급락분의 청산도 10/16 <span class="rv-v" data-source="liq" data-field="liq_eok" data-where="date=2026-10-16" data-fmt="0">—</span>억원, 10/19 <span class="rv-v" data-source="liq" data-field="liq_eok" data-where="date=2026-10-19" data-fmt="0">—</span>억원(비중 <span class="rv-v" data-source="liq" data-field="ratio_pct" data-where="date=2026-10-16" data-fmt="1">—</span>·<span class="rv-v" data-source="liq" data-field="ratio_pct" data-where="date=2026-10-19" data-fmt="1">—</span>%)으로 줄었고, 신용 일일 감소율도 10/19 <span class="rv-v" data-source="credit_change" data-field="chg_pct" data-where="event=2026년 10월 19일" data-fmt="1">—</span>%로 과거 항복 구간(<span class="rv-v" data-source="credit_change" data-field="chg_pct" data-where="event=2020년 3월" data-fmt="0">—</span>~<span class="rv-v" data-source="credit_change" data-field="chg_pct" data-where="event=2008년 9월" data-fmt="0">—</span>%)에 못 미친다. 청산 정점은 지났을 수 있지만 레버리지 정리는 끝나지 않았다.</p>
     <p class="rv-asof" id="asof-auto">기준: 자료를 읽는 중…</p>
-    <p class="rv-asof">자료는 평일 08:31(전 거래일 확정·VKOSPI 반영)·15:37(정규장만 집계한 잠정치)·20:37(KRX 하루 전체 확정치) 세 번 자동 수집해 반영한다(GitHub Actions → 대시보드·웹판). 투자자별 순매수는 KRX 통계 기준 — 15:45 무렵 정규장분, 20시 이후 시간외·KRX 애프터마켓(16~20시)까지 합친 최종치. 넥스트레이드(NXT) 체결분은 들어가지 않아 증권사 앱의 'KRX+NXT 통합' 숫자와 하루 수천억 차이가 날 수 있다. 시가·고가·저가처럼 받지 못한 칸은 추정으로 채우지 않고 비워 둔다. 수기 메모(10/27판): 코스피·투자자별·코스피200·레버리지 ETF 10/20~10/26은 KRX 정보데이터시스템 자동 수집(pykrx) 파일, 10/20~10/22는 먼저 받은 KRX 파일과 일치. VKOSPI 10/26은 KRX 종가를 공개 수집으로(시가·고가·저가 확인 불가). 원/달러 10/26부터는 국제 현물 환율(10/23까지의 중간값과 기준이 약간 다름). 레버리지 ETF 설정·환매는 상장좌수가 있는 날까지, 투자자별은 10/20까지. 야간선물 10/23 저녁장은 HTS 일자별(공개 사이트 종가 861.70 일치).</p>
+    <p class="rv-asof">자료는 평일 08:31(전 거래일 확정·VKOSPI 반영)·15:37(정규장만 집계한 잠정치)·20:37(KRX 하루 전체 확정치) 세 번 자동 수집해 반영한다(GitHub Actions → 대시보드·웹판). 투자자별 순매수는 KRX 통계 기준 — 15:45 무렵 정규장분, 20시 이후 시간외·KRX 애프터마켓(16~20시)까지 합친 최종치. 넥스트레이드(NXT) 체결분은 들어가지 않아 증권사 앱의 'KRX+NXT 통합' 숫자와 하루 수천억 차이가 날 수 있다 — NXT 투자자별과 합친 '통합' 값은 아래 「애프터마켓 → 다음 날」 카드에. 저녁(15:40~20:00) 종목별 가격은 넥스트레이드 20:05 스냅샷을 20:37 실행에서 받는다. 시가·고가·저가처럼 받지 못한 칸은 추정으로 채우지 않고 비워 둔다. 수기 메모(10/27판): 코스피·투자자별·코스피200·레버리지 ETF 10/20~10/26은 KRX 정보데이터시스템 자동 수집(pykrx) 파일, 10/20~10/22는 먼저 받은 KRX 파일과 일치. VKOSPI 10/26은 KRX 종가를 공개 수집으로(시가·고가·저가 확인 불가). 원/달러 10/26부터는 국제 현물 환율(10/23까지의 중간값과 기준이 약간 다름). 레버리지 ETF 설정·환매는 상장좌수가 있는 날까지, 투자자별은 10/20까지. 야간선물 10/23 저녁장은 HTS 일자별(공개 사이트 종가 861.70 일치).</p>
     <p class="rv-asof">미수 반대매매 = 금투협 '위탁매매 미수금 대비 실제 반대매매'. 신용융자 담보부족 반대매매는 포함되지 않는다. 비중 = 당일 미수 반대매매 ÷ 전일 미수금. 참고: 금감원 발표 5월 일평균(주요 10개 증권사 기준) 신용+미수 반대매매 373.6억원, 이 중 미수 297.6억원(미수 비중 약 80%, 파이낸셜뉴스 6/24 보도). 집계 기준이 달라 이 대시보드 수치와 합산하지 않는다.</p>
   </header>
 
@@ -193,6 +193,54 @@
             <tbody></tbody>
           </table>
         </div>
+      </details>
+    </div>
+  </section>
+
+  <section id="amnext">
+    <div class="rv-card">
+      <h3 id="am-title">애프터마켓(저녁 15:40~20:00) → 다음 날</h3>
+      <p class="rv-note" id="am-basis">애프터마켓 자료를 불러오는 중…</p>
+      <div class="rv-kpis dash-skeleton" id="am-kpis" data-source="am_now am_bucket am_stats" style="margin:var(--cds-gap-sm) 0"></div>
+      <p class="rv-verdict" id="am-read"></p>
+      <p class="rv-note" id="am-method"></p>
+      <div class="rv-legend" id="am-legend"></div>
+      <div class="rv-chart dash-skeleton" id="am-chart" data-source="am_daily" style="min-height:240px"></div>
+      <div class="rv-tbl-wrap">
+        <table class="rv-tbl dash-skeleton" id="am-bucket-tbl" data-source="am_bucket">
+          <thead><tr><th>저녁 등락(대형50)</th><th class="rv-num">날 수</th><th class="rv-num">시가 상승 비율</th><th class="rv-num">시가 갭 중앙값</th><th class="rv-num">10~90% 범위</th><th class="rv-num">종가 상승 비율</th><th class="rv-num">종가 중앙값</th><th class="rv-num">방향 일치</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <details class="rv-more" style="margin-top:var(--cds-gap-sm)">
+        <summary>저녁에 크게 움직인 종목(±1% 이상, 시장 움직임을 뺀 고유 등락 큰 순)</summary>
+        <p class="rv-note" id="am-stocks-note"></p>
+        <div class="rv-tbl-wrap">
+          <table class="rv-tbl" id="am-stocks-tbl" data-source="am_stocks">
+            <thead><tr><th>종목</th><th>시장</th><th class="rv-num">정규장 종가</th><th class="rv-num">저녁 가격(20:00)</th><th class="rv-num">저녁 등락</th><th class="rv-num">고유 등락</th><th class="rv-num">NXT 거래대금(억)</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </details>
+      <details class="rv-more" style="margin-top:var(--cds-gap-sm)">
+        <summary>투자자별 순매수 — KRX 확정 · NXT · 통합(최근 10거래일, 억원)</summary>
+        <p class="rv-note">통합 = KRX 확정치(정규장+시간외+KRX 애프터마켓) + NXT 하루 전체. 증권사 앱 'KRX+NXT 통합'과 거의 같다(11/2 대조: 개인 −18,272 vs 앱 −18,276억). NXT 순매수는 오늘 KRX 값을 감안해도 다음 날 KRX 외국인·개인 순매수와 같은 방향으로 이어지는 경향(검증 수치 표).</p>
+        <div class="rv-tbl-wrap">
+          <table class="rv-tbl" id="am-flows-tbl" data-source="am_daily">
+            <thead><tr><th>날짜</th><th class="rv-num">KRX 외국인</th><th class="rv-num">NXT 외국인</th><th class="rv-num">통합 외국인</th><th class="rv-num">KRX 개인</th><th class="rv-num">NXT 개인</th><th class="rv-num">통합 개인</th><th class="rv-num">KRX 기관</th><th class="rv-num">NXT 기관</th><th class="rv-num">통합 기관</th><th>KRX 기준</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </details>
+      <details class="rv-more" style="margin-top:var(--cds-gap-sm)">
+        <summary>검증 수치(자료가 들어올 때마다 다시 계산)</summary>
+        <div class="rv-tbl-wrap">
+          <table class="rv-tbl" id="am-stats-tbl" data-source="am_stats">
+            <thead><tr><th>항목</th><th class="rv-num">값</th><th>설명</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <p class="rv-note">2026-11-03 1회 조사(2025-03~2026-10, 406일)에서 찾은 것: 다음 날 시가는 야간선물이 거의 전부 설명하고 애프터마켓은 추가 설명력이 없었다(둘 다 넣은 회귀에서 애프터마켓 계수 0.05, p=0.67). 다음 날 종가·장중에는 애프터마켓 계수 0.4~0.5(p≈0.02)로 조금 남았지만 검증 표본 27일. 종목 수준에서는 저녁 ±1% 이상 움직인 종목이 다음 날 시가에서 같은 방향으로 출발한 비율이 약 70%, 장중 되돌림은 없었다. NXT 애프터마켓 거래대금이 20일 평균보다 많으면 다음 날 코스피 고저폭이 컸다. KRX 애프터마켓 구간(2026-09-14~)은 표본이 적어 몇 달 더 쌓은 뒤 다시 본다. 투자 권유가 아니다.</p>
       </details>
     </div>
   </section>
@@ -1606,6 +1654,85 @@
     });
   }
 
+  // 애프터마켓(저녁) → 다음 날: NXT 20:05 스냅샷 가격(=KRX 애프터마켓 종가) ÷ KRX 정규장 종가, 대형50 시총가중
+  function drawAM(){
+    const kp = document.getElementById('am-kpis'), basis = document.getElementById('am-basis'), read = document.getElementById('am-read'), meth = document.getElementById('am-method');
+    if (!kp) return;
+    const nowD = dash.data('am_now'), bkD = dash.data('am_bucket'), stD = dash.data('am_stats'), dyD = dash.data('am_daily'), skD = dash.data('am_stocks');
+    const sts = [nowD.status, bkD.status, stD.status];
+    if (!sts.every(s => s === 'ok')) { if (sts.some(s => BAD.includes(s))) { kp.classList.remove('dash-skeleton'); basis.textContent = '애프터마켓 자료가 아직 없습니다(저장소에 am_*.csv 가 올라오면 표시).'; } return; }
+    kp.classList.remove('dash-skeleton'); kp.replaceChildren();
+    const r = nowD.data[0] || {}; const st = {}; stD.data.forEach(x => { st[x.item] = x; });
+    const sv = (k, f) => (st[k] && st[k].value !== '' && st[k].value != null) ? (f || (v => v))(+st[k].value) : '—';
+    const sn = k => st[k] ? String(st[k].text) : '';
+    const pct = v => (v == null || v === '' || isNaN(+v)) ? '—' : ((+v > 0 ? '+' : +v < 0 ? '−' : '') + f2(Math.abs(+v)) + '%');
+    const eok = v => (v == null || v === '' || isNaN(+v)) ? '—' : ((+v > 0 ? '+' : +v < 0 ? '−' : '') + f0(Math.abs(+v)) + '억');
+    const wd = s => ['일','월','화','수','목','금','토'][P(s).getUTCDay()];
+    if (!r.date) { basis.textContent = '애프터마켓 자료가 없습니다.'; return; }
+    basis.textContent = `${md(r.date)}(${wd(r.date)}) 저녁 — 대형50 시총가중 저녁 등락 ${pct(r.am_cw_top50_pct)}(삼성전자 ${pct(r.am_samsung_pct)}, 코스피 종목 중 오른 종목 ${r.am_up_share_pct === '' ? '—' : f0(+r.am_up_share_pct) + '%'})` + (r.next_open_gap_pct !== '' && r.next_open_gap_pct != null ? ` → 실제 다음 날 시가 ${pct(r.next_open_gap_pct)}, 종가 ${pct(r.next_close_ret_pct)}` : ' → 다음 날 시가는 장이 열리면') + `. 구간 ${r.era || ''}.`;
+    const kpi = (l, v, u, n) => { const d = document.createElement('div'); d.className = 'rv-kpi';
+      const a = document.createElement('div'); a.className = 'rv-kpi-l'; a.textContent = l;
+      const w = document.createElement('div'); const s = document.createElement('span'); s.className = 'rv-kpi-v'; s.textContent = v; w.appendChild(s);
+      if (u) { const uu = document.createElement('span'); uu.className = 'rv-kpi-u'; uu.textContent = u; w.appendChild(uu); }
+      const c = document.createElement('div'); c.className = 'rv-kpi-n'; c.textContent = n; d.append(a, w, c); kp.appendChild(d); };
+    kpi('저녁 등락(대형50)', pct(r.am_cw_top50_pct), '', `구간 ${r.bucket || '—'} · 과거 ${r.bucket_n || 0}일`);
+    kpi('같은 구간 과거 시가 상승 비율', r.bucket_p_up_open === '' || r.bucket_p_up_open == null ? '—' : d3.format('.0%')(+r.bucket_p_up_open), '', `시가 갭 중앙값 ${pct(r.bucket_med_gap)} · 종가 상승 ${r.bucket_p_up_close === '' || r.bucket_p_up_close == null ? '—' : d3.format('.0%')(+r.bucket_p_up_close)}`);
+    kpi('야간선물과 방향', r.night_agree || '야간선물 없음', '', r.night_pct === '' || r.night_pct == null ? '야간선물 자료 없음(위 카드 참고)' : `야간선물 ${pct(r.night_pct)} — 엇갈리면 야간선물 쪽 ${sv('엇갈릴 때 야간선물이 맞은 비율', f0)}%`);
+    kpi('NXT 애프터마켓 거래대금', r.nxt_aft_trval_eok === '' || r.nxt_aft_trval_eok == null ? '—' : f0(+r.nxt_aft_trval_eok), '억', `20일 평균의 ${r.nxt_aft_rel20 === '' || r.nxt_aft_rel20 == null ? '—' : f2(+r.nxt_aft_rel20) + '배'}` + (r.range_hint_med !== '' && r.range_hint_med != null ? ` → 비슷한 날 ${r.range_hint_n}일의 다음 날 고저폭은 20일 평균의 ${f2(+r.range_hint_med)}배` : ''));
+    kpi('통합 외국인(KRX+NXT)', eok(r.total_foreign_eok), '', `KRX ${eok(r.krx_foreign_jo === '' || r.krx_foreign_jo == null ? null : +r.krx_foreign_jo * 10000)} · NXT ${eok(r.nxt_frgn_net_eok)}`);
+    kpi('통합 개인 · 기관', `${eok(r.total_indiv_eok)} · ${eok(r.total_inst_eok)}`, '', `NXT 개인 ${eok(r.nxt_ind_net_eok)} · NXT 기관 ${eok(r.nxt_inst_net_eok)}` + (r.krx_basis ? ` · KRX ${/잠정/.test(r.krx_basis) ? '잠정(정규장만)' : '확정'}` : ''));
+    const amv = +r.am_cw_top50_pct;
+    let t = '';
+    if (isNaN(amv)) t = '저녁 등락을 계산하지 못했습니다(정규장 종가 미수집).';
+    else if (Math.abs(amv) >= 1.5) t = `저녁에 ${amv > 0 ? '크게 올랐다' : '크게 내렸다'}(±1.5% 밖). 과거 이런 날 ${sv('저녁 ±1.5% 밖 날의 시가 같은 방향', f0)}%가 같은 방향으로 출발했지만 대부분 야간선물도 같은 방향이던 날이다 — 방향 판단은 위 야간선물 카드를 먼저 본다.`;
+    else if (Math.abs(amv) < 0.25) t = '저녁 움직임이 작아(±0.25% 안) 방향 정보가 거의 없다. 다음 날 시가는 야간선물 카드로.';
+    else t = `저녁 ${amv > 0 ? '상승' : '하락'}이지만 이 구간은 과거 시가 방향이 반반에 가깝다(위 표). 다음 날 시가는 야간선물 카드가 우선이고, 저녁 등락은 다음 날 종가·장중 쪽에 작은 추가 정보(검증 수치 표).`;
+    if (r.night_agree === '엇갈림') t += ` 오늘은 야간선물과 엇갈림 — 과거 엇갈린 날은 야간선물 쪽이 ${sv('엇갈릴 때 야간선물이 맞은 비율', f0)}% 맞았다.`;
+    if (r.nxt_aft_rel20 !== '' && r.nxt_aft_rel20 != null && +r.nxt_aft_rel20 >= 1.3) t += ` 애프터마켓 거래대금이 20일 평균의 ${f2(+r.nxt_aft_rel20)}배 — 다음 날 변동폭이 커지는 쪽.`;
+    read.textContent = t;
+    meth.textContent = `저녁 등락 = 넥스트레이드 20:05 스냅샷의 종목별 마지막 체결가(KRX 애프터마켓 종가와 일치 확인) ÷ KRX 정규장 종가 − 1, 코스피 시총 상위 50종목 시총가중. 2025-03-04부터(2026-09-11까지는 NXT 애프터마켓+KRX 시간외단일가, 9/14부터 KRX 애프터마켓+NXT). 같은 날 비교(${sn('야간선물→다음날 시가 부호 적중(같은 날)') || '—'}): 다음 날 시가 방향 적중 야간선물 ${sv('야간선물→다음날 시가 부호 적중(같은 날)', f1)}% vs 애프터마켓 ${sv('애프터마켓→다음날 시가 부호 적중(같은 날)', f1)}%, 둘이 같은 방향이면 ${sv('같은 방향일 때 시가 적중', f1)}%. 종목 수준(대형50): 저녁 ±1% 이상 → 그 종목 시가 같은 방향 ${sv('종목 저녁 ±1% 이상 → 시가 같은 방향', f1)}%(${sn('종목 저녁 ±1% 이상 → 시가 같은 방향')}). 투자 권유가 아니다.`;
+    // 그래프: 최근 120거래일 저녁 등락(막대) + 다음 날 시가 갭(선)
+    const box = document.getElementById('am-chart');
+    if (dyD.status === 'ok') {
+      const rows = dyD.data.filter(x => x.date && num(x.am_cw_top50) != null).slice(-120);
+      const dates = rows.map(x => String(x.date)); const m = new Map(rows.map(x => [String(x.date), x]));
+      const lg = document.getElementById('am-legend'); lg.replaceChildren();
+      legendItem(lg, C()[0], '저녁 등락(대형50, 막대)'); legendItem(lg, C()[1], '다음 날 코스피 시가 갭(선)', {shape: 'line'});
+      box.classList.remove('dash-skeleton'); box.querySelectorAll('svg,.rv-tip,.rv-fail').forEach(n => n.remove());
+      if (dates.length) combo(box, {dates, height: 240, xfmt: yd, xfull: ymd,
+        bar: {get: d => num(m.get(d).am_cw_top50) == null ? null : num(m.get(d).am_cw_top50) * 100, name: '저녁 등락', unit: '%', tick: v => f1(v) + '%', fmt: v => pct(v), color: d => (num(m.get(d).am_cw_top50) || 0) < 0 ? CRIT : C()[0], swatch: d => (num(m.get(d).am_cw_top50) || 0) < 0 ? CRIT : C()[0]},
+        line: {get: d => num(m.get(d).next_open_gap) == null ? null : num(m.get(d).next_open_gap) * 100, name: '다음 날 시가 갭', unit: '%', tick: v => f1(v) + '%', fmt: v => pct(v), color: C()[1]},
+        extra: [d => num(m.get(d).night_pct) == null ? null : [null, '야간선물 ', pct(num(m.get(d).night_pct))], d => num(m.get(d).next_close_ret) == null ? null : [null, '다음 날 종가 ', pct(num(m.get(d).next_close_ret) * 100)], d => num(m.get(d).nxt_aft_trval_eok) == null ? null : [null, 'NXT 애프터마켓 거래대금 ', f0(num(m.get(d).nxt_aft_trval_eok)) + '억']]});
+    }
+    // 구간표
+    const tbl = document.getElementById('am-bucket-tbl'); tbl.classList.remove('dash-skeleton'); const tb = tbl.tBodies[0]; tb.replaceChildren();
+    bkD.data.forEach(x => {
+      const tr = document.createElement('tr'); if (x.bucket === r.bucket) tr.style.fontWeight = '600'; if (x.bucket === '전체') tr.className = 'rv-ref';
+      const pc = v => (v == null || v === '' || isNaN(+v)) ? '—' : d3.format('.0%')(+v);
+      [x.bucket + (x.bucket === r.bucket ? ' ◀ 지금' : ''), x.n, pc(x.p_up_open), pct(x.med_gap), (x.q10 == null || x.q10 === '') ? '—' : `${pct(x.q10)} ~ ${pct(x.q90)}`, pc(x.p_up_close), pct(x.med_close), pc(x.hit_open)]
+        .forEach((v, i) => { const td = document.createElement('td'); td.textContent = v; if (i) td.className = 'rv-num'; tr.appendChild(td); });
+      tb.appendChild(tr);
+    });
+    // 종목
+    const stb = document.getElementById('am-stocks-tbl').tBodies[0]; stb.replaceChildren();
+    if (skD.status === 'ok') {
+      const sn2 = document.getElementById('am-stocks-note'); if (sn2) sn2.textContent = skD.data.length ? `${md(String(skD.data[0].date))} 저녁, ${r.n_movers || skD.data.length}종목 중 상위 ${Math.min(40, skD.data.length)}개(NXT 거래대금 1억 이상). 고유 등락 = 종목 저녁 등락 − 대형50 저녁 등락. 과거 고유 ±1% 이상은 다음 날 시가에서 같은 방향 ${sv('종목 고유 저녁 등락 ±1% 이상 → 고유 시가 갭 같은 방향', f1)}%(${sn('종목 고유 저녁 등락 ±1% 이상 → 고유 시가 갭 같은 방향')}).` : '±1% 이상 움직인 종목 없음.';
+      skD.data.forEach(x => { const tr = document.createElement('tr');
+        [x.name + ' (' + x.code + ')', x.market, f0(+x.krx_close), f0(+x.last_prc), pct(x.am_ret_pct), pct(x.idio_pct), f1(+x.value_eok)].forEach((v, i) => { const td = document.createElement('td'); td.textContent = v; if (i >= 2) td.className = 'rv-num'; tr.appendChild(td); });
+        stb.appendChild(tr); });
+    }
+    // 투자자별 10일
+    const ftb = document.getElementById('am-flows-tbl').tBodies[0]; ftb.replaceChildren();
+    if (dyD.status === 'ok') dyD.data.filter(x => num(x.nxt_frgn_net_eok) != null).slice(-10).reverse().forEach(x => { const tr = document.createElement('tr');
+      const kj = k => num(x[k]) == null ? null : num(x[k]) * 10000;
+      [md(String(x.date)), eok(kj('krx_foreign_jo')), eok(num(x.nxt_frgn_net_eok)), eok(num(x.total_foreign_eok)), eok(kj('krx_indiv_jo')), eok(num(x.nxt_ind_net_eok)), eok(num(x.total_indiv_eok)), eok(kj('krx_inst_jo')), eok(num(x.nxt_inst_net_eok)), eok(num(x.total_inst_eok)), x.krx_basis ? (/잠정/.test(String(x.krx_basis)) ? '잠정' : '확정') : '—']
+        .forEach((v, i) => { const td = document.createElement('td'); td.textContent = v; if (i >= 1 && i <= 9) td.className = 'rv-num'; tr.appendChild(td); });
+      ftb.appendChild(tr); });
+    // 검증 수치
+    const ttb = document.getElementById('am-stats-tbl').tBodies[0]; ttb.replaceChildren();
+    stD.data.forEach(x => { const tr = document.createElement('tr'); [x.item, x.value, x.text].forEach((v, i) => { const td = document.createElement('td'); td.textContent = (v === '' || v == null) ? '—' : v; if (i === 1) td.className = 'rv-num'; tr.appendChild(td); }); ttb.appendChild(tr); });
+  }
+
   function fillTable(id, tblId, cols, keyFn){
     const tbl = document.getElementById(tblId), tb = tbl.tBodies[0];
     tb.replaceChildren();
@@ -1723,7 +1850,7 @@
   dash.onData(() => {
     const mEnd = lastRow('market'); if (mEnd && mEnd.date) ['all', 'y26', 'h2', 'oct'].forEach(k => { RANGES[k][1] = mEnd.date; });   // 기간 끝 = 자료의 마지막 날짜
     fillMarks(); buildAutoConcl(); fillAttr(); fillCons();
-    drawGap();
+    drawGap(); drawAM();
     drawAll(); drawOct(); drawFor(); drawLag(); drawYear(); drawCredit(); drawRatio(); drawChg(); drawMonthly();
     fillTable('concentration', 'conc-tbl', [{k:'item'}, {k:'value', n:1, f: nf(f1)}, {k:'unit'}, {k:'period'}, {k:'note', fr: r => r.note || ''}]);
     fillTable('leverage', 'lev-tbl', [{k:'item'}, {k:'value_eok', n:1, f: nf(f0)}, {k:'period'}]);
