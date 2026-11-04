@@ -1,13 +1,11 @@
 {
- "run": "2026-11-04 03:39",
+ "run": "2026-11-04 11:34",
  "tag": "0831",
  "kospi_last": "2026-11-03",
  "kofia_last": "2026-11-02",
- "vkospi_last": "2026-11-02",
+ "vkospi_last": "2026-11-03",
  "night_last": "2026-10-28",
- "errors": [
-  "VKOSPI 2026-11-03 미반영(공개 저장소 2026-11-02까지, 30분 기다림) — VKOSPI 신호 판정 보류"
- ],
+ "errors": [],
  "files": {
   "alarms": {
    "sha256": "5f20ed234531d68e9f39fc4729dc0d4acfd8e5a3be9e44a9f63a4b65f98dad07",
@@ -20,17 +18,17 @@
    "last_date": "전체"
   },
   "am_daily": {
-   "sha256": "97138a0a75307de3b9e9e9a446b4b34222007431a19987dd6335b8cc3e6ce709",
-   "bytes": 229145,
+   "sha256": "fc240ece3ea2035dbd030d1be61260e077d1dec96d4aa5731c36936db758f3c9",
+   "bytes": 229132,
    "last_date": "2026-11-03"
   },
   "am_now": {
-   "sha256": "bdd1162114be646bbaf2aa4054a2795a8411c644ba770aa5443e964e7c4751f2",
-   "bytes": 642,
+   "sha256": "5fcee8c662306e124fca7475be640deeb0f202321a417257cdf623444df1ad5a",
+   "bytes": 629,
    "last_date": "2026-11-03"
   },
   "am_stats": {
-   "sha256": "350dcabb7926872495338a97811fdeaf2b0c7329dbefbf8cb492e8dc6ab7c81e",
+   "sha256": "262fbe59a16bf7a84147d9354f9915327c945b03f7df351b98aadc4af832366e",
    "bytes": 1263,
    "last_date": "기준일"
   },
@@ -80,8 +78,8 @@
    "last_date": "2026-11-03"
   },
   "flows_daily": {
-   "sha256": "2b234553eeb6a09fd0b17b435bb415a3d2d33ec0f9e71ecbb467f4ce1be4126a",
-   "bytes": 490387,
+   "sha256": "ca97dc6757932ad2049c5dffae2cd43f6a1097df4262b1d148891531c69b45bb",
+   "bytes": 490431,
    "last_date": "2026-11-03"
   },
   "fut_daily": {
@@ -90,9 +88,9 @@
    "last_date": "2026-11-03"
   },
   "fx_daily": {
-   "sha256": "11a4faf4eea24ef456823b60ed8eaa6a2af98c69ac7f584e69280c1ad693749a",
-   "bytes": 569385,
-   "last_date": "2026-11-02"
+   "sha256": "a66b1e9889ea642f92e91ee17e4b08aa9f97b897992d220e36aba3907d65bba2",
+   "bytes": 569586,
+   "last_date": "2026-11-03"
   },
   "gap_table": {
    "sha256": "3ce63f3a472da854ea5ac7d2c877945a9fcfb9785a6fda5f54b42e0c0e4b3284",
@@ -115,12 +113,12 @@
    "last_date": "2026-11-02"
   },
   "market_daily": {
-   "sha256": "f1ec5547e4da5d147f567f861f672ba0530184332c26f33cfd96fd37234655a4",
-   "bytes": 546192,
+   "sha256": "8cd6b2e176b9524ff423a7531a1e3fbcd9ab285620db2c6e975a8be663aadb4f",
+   "bytes": 546252,
    "last_date": "2026-11-03"
   },
   "monthly": {
-   "sha256": "7765f12f6d1811989e86faa9b50ba337d2abd1a6c63ed9b560ab6e0f3d000fb9",
+   "sha256": "ec073fb76388417bc62e2fd2aca3bc42762bb16fb1f9049b2be719dfa8351112",
    "bytes": 32203,
    "last_date": "2026-11"
   },
@@ -130,13 +128,13 @@
    "last_date": "2026-10-27"
   },
   "q_attr": {
-   "sha256": "460d808484f2c8ea1f4e3c73bc6a8adbae335c50ba3b55b8e5314f060f38f348",
-   "bytes": 3878,
+   "sha256": "d2932e794455884c36d0ad3715d5be3c67ee0d9cc4d58b2bd102961ba6293e4b",
+   "bytes": 3780,
    "last_date": "feat"
   },
   "q_daily": {
-   "sha256": "64ada24d6b1f1c3e147d1f8c24d97e5fc04429fbc6d02d47a8bb1d1cfd447d05",
-   "bytes": 161540,
+   "sha256": "02a730bae30e00c958f11a5437c0d6377516d0fe24fa0818538c9c05aff3339e",
+   "bytes": 161541,
    "last_date": "2026-11-03"
   },
   "q_ic": {
@@ -150,8 +148,8 @@
    "last_date": "5일 내 급락·청산"
   },
   "q_now": {
-   "sha256": "2c32e3592054859f26182702f07645a8f2b2bff258e44df843455457a0dceb99",
-   "bytes": 1905,
+   "sha256": "4919184099b17b248701293395681ad4667a7b3a4e976a0f9b74b8b9cf56dd92",
+   "bytes": 1795,
    "last_date": "다음 거래일 국면 기준선"
   },
   "q_sens": {
