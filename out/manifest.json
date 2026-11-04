@@ -1,6 +1,6 @@
 {
- "run": "2026-11-05 01:34",
- "tag": "1540",
+ "run": "2026-11-05 03:44",
+ "tag": "1840",
  "kospi_last": "2026-11-04",
  "kofia_last": "2026-11-03",
  "vkospi_last": "2026-11-03",
@@ -28,7 +28,7 @@
    "last_date": "2026-11-04"
   },
   "am_stats": {
-   "sha256": "8fb807ae4a986da1464ea197ffdc5389af6144c9b4b47b212008ba7ce2fccdf1",
+   "sha256": "641ed3ac7395f685955334c7eca2187d24daaeb4750ac074cae7ac5ee154a016",
    "bytes": 1263,
    "last_date": "기준일"
   },
