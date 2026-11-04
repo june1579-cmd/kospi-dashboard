@@ -1,9 +1,17 @@
 name: dashboard-update
 on:
   schedule:
-    - cron: '31 23 * * 0-4'   # 08:31 KST 월~금(UTC 일~목 23:31) 아침 확정 — 전 거래일 VKOSPI(공개 저장소 08:10~08:15)·투자자별 확정치·간밤 VIX
-    - cron: '37 6 * * 1-5'    # 15:37 KST 잠정 — 15:30 정규장 마감 종가·투자자별 잠정치·금투협 전 거래일분
-    - cron: '37 11 * * 1-5'   # 20:37 KST 확정 — 애프터마켓 20:00 마감 뒤 투자자별·ETF 투자자별
+    # 한국 시각 = UTC+9. 정시(:00)·UTC 자정(한국 09:00)은 GitHub 혼잡 시간이라 피하고, 구분마다 1시간 간격으로 3번 시도한다(늦거나 빠진 실행을 다음 시간에 보충).
+    # 재시도는 자료만 갱신하고 카톡은 그 구분에서 처음 자료가 들어온 한 번만 보낸다(run_pipeline.py --attempt).
+    - cron: '23 23 * * 0-4'   # 08:23 KST 아침 확정(1차) — VKOSPI(08:10~15)·전 거래일 확정치
+    - cron: '23 0 * * 1-5'    # 09:23 KST 아침 확정(2차)
+    - cron: '23 1 * * 1-5'    # 10:23 KST 아침 확정(3차)
+    - cron: '43 6 * * 1-5'    # 15:43 KST 잠정(1차) — 정규장 종가·투자자별 잠정(정규장만)
+    - cron: '43 7 * * 1-5'    # 16:43 KST 잠정(2차)
+    - cron: '43 8 * * 1-5'    # 17:43 KST 잠정(3차)
+    - cron: '23 11 * * 1-5'   # 20:23 KST 확정(1차) — 애프터마켓 20:00 마감·NXT 20:05 스냅샷·투자자별 확정
+    - cron: '23 12 * * 1-5'   # 21:23 KST 확정(2차)
+    - cron: '23 13 * * 1-5'   # 22:23 KST 확정(3차)
   workflow_dispatch:
     inputs:
       tag:
@@ -27,11 +35,17 @@ jobs:
       - run: pip install -r requirements.txt
       - name: 한글 글꼴(그래프용)
         run: sudo apt-get install -y -q fonts-nanum >/dev/null && fc-cache -f >/dev/null || echo "글꼴 설치 실패 — 그래프는 영문 표기"
-      - name: 실행 구분(08:31 → 0831, 15:37 → 1540, 20:37 → 1840)
+      - name: 실행 구분(어느 예약으로 시작했는지로 정함 — 늦게 돌아도 구분이 바뀌지 않음)
         id: tag
         run: |
-          if [ -n "${{ github.event.inputs.tag }}" ]; then T="${{ github.event.inputs.tag }}"; else H=$(TZ=Asia/Seoul date +%H%M); if [ "$H" -lt 1200 ]; then T=0831; elif [ "$H" -lt 1730 ]; then T=1540; else T=1840; fi; fi
-          echo "tag=$T" >> "$GITHUB_OUTPUT"; echo "실행 구분 $T ($(TZ=Asia/Seoul date))"
+          S="${{ github.event.schedule }}"; T="${{ github.event.inputs.tag }}"; A=1
+          case "$S" in
+            '23 23 * * 0-4') T=0831; A=1;;  '23 0 * * 1-5') T=0831; A=2;;  '23 1 * * 1-5') T=0831; A=3;;
+            '43 6 * * 1-5')  T=1540; A=1;;  '43 7 * * 1-5') T=1540; A=2;;  '43 8 * * 1-5') T=1540; A=3;;
+            '23 11 * * 1-5') T=1840; A=1;;  '23 12 * * 1-5') T=1840; A=2;;  '23 13 * * 1-5') T=1840; A=3;;
+          esac
+          if [ -z "$T" ]; then H=$(TZ=Asia/Seoul date +%H%M); if [ "$H" -lt 1200 ]; then T=0831; elif [ "$H" -lt 1930 ]; then T=1540; else T=1840; fi; A=3; fi
+          echo "tag=$T" >> "$GITHUB_OUTPUT"; echo "attempt=$A" >> "$GITHUB_OUTPUT"; echo "실행 구분 $T ${A}차 (예약 '$S', $(TZ=Asia/Seoul date))"
       - name: 수집 → 엑셀 갱신 → 재계산 → 보고 → 카카오톡
         env:
           KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
@@ -41,7 +55,7 @@ jobs:
           KAKAO_REFRESH_TOKEN: ${{ secrets.KAKAO_REFRESH_TOKEN }}
           KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
           DASH_LINK: https://june1579-cmd.github.io/kospi-dashboard/   # 카톡 [대시보드 열기] → 웹판(GitHub Pages)
-        run: python run_pipeline.py --tag "${{ steps.tag.outputs.tag }}" --no-kakao
+        run: python run_pipeline.py --tag "${{ steps.tag.outputs.tag }}" --attempt "${{ steps.tag.outputs.attempt }}" --no-kakao
       - name: 결과 저장(commit & push)
         run: |
           git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
@@ -49,7 +63,7 @@ jobs:
           git rm -r --cached --quiet data/public 2>/dev/null || true
           printf 'data/public/\ndata/collect/*.zip\n__pycache__/\n*.pyc\n' > .gitignore; git add .gitignore
           mkdir -p state out report docs; git add -A data out report state docs
-          git commit -m "자동 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M') ${{ steps.tag.outputs.tag }}" || echo "변경 없음"
+          git commit -m "자동 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M') ${{ steps.tag.outputs.tag }} ${{ steps.tag.outputs.attempt }}차" || echo "변경 없음"
           git pull --rebase -q || true
           git push
       - name: 카카오톡(매수·매도 신호 발생/미발생 + 결론, 글만)
