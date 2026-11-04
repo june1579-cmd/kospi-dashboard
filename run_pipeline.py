@@ -46,10 +46,10 @@ def wait_vkospi(limit_min=30, step_min=5):
         time.sleep(step_min * 60)
 
 def main():
-    ap = argparse.ArgumentParser(); ap.add_argument('--tag', default=''); ap.add_argument('--no-collect', action='store_true'); ap.add_argument('--no-kakao', action='store_true'); ap.add_argument('--days', type=int, default=12); ap.add_argument('--no-wait', action='store_true'); ap.add_argument('--collect-dir', default='', help='--no-collect 일 때 쓸 수집 폴더(없으면 수집 자료 없이 진행)')
+    ap = argparse.ArgumentParser(); ap.add_argument('--tag', default=''); ap.add_argument('--no-collect', action='store_true'); ap.add_argument('--no-kakao', action='store_true'); ap.add_argument('--days', type=int, default=12); ap.add_argument('--no-wait', action='store_true'); ap.add_argument('--collect-dir', default='', help='--no-collect 일 때 쓸 수집 폴더(없으면 수집 자료 없이 진행)'); ap.add_argument('--no-kakao-record', action='store_true', help='카톡 보낸 기록을 남기지 않음(시험용)'); ap.add_argument('--attempt', type=int, default=1, help='같은 구분의 몇 번째 실행인지(1=본 실행, 2·3=재시도). 재시도는 이미 보낸 카톡을 다시 보내지 않고, 자료 없음 안내는 마지막 재시도만 보낸다')
     a = ap.parse_args(); now = dt.datetime.now(KST); today = now.date()
     tag = a.tag or ('0831' if now.time() < dt.time(12, 0) else '1540' if now.time() < dt.time(17, 30) else '1840')
-    if tag == '0831' and not a.no_wait: wait_vkospi()
+    if tag == '0831' and not a.no_wait: wait_vkospi(limit_min=30 if a.attempt <= 1 else 10)
     os.makedirs('data/collect', exist_ok=True); os.makedirs('out', exist_ok=True); os.makedirs('report', exist_ok=True)
     # 1 수집
     cdir = f'data/collect/dashboard_{today:%Y%m%d}_{tag}'
@@ -103,11 +103,23 @@ def main():
     if newdata: run([sys.executable, 'make_chart.py', '--out', 'out', '--report', 'report', '--signals', 'report/latest.json', '--tag', tag], '6b 그래프')
     # 6c 웹판(GitHub Pages, docs/) 자료 — 매 실행(새 자료가 없어도 보고문·상태는 갱신)
     run([sys.executable, 'build_web.py', '--out', 'out', '--report', 'report', '--docs', 'docs'], '6c 웹판')
+    # 카톡은 구분(아침·잠정·확정)마다 그날 한 번만: state/kakao_sent.json 에 '코스피날짜_구분' 기록. 재시도 실행은 이미 보낸 것을 다시 보내지 않는다
+    os.makedirs('state', exist_ok=True); ks_fn = 'state/kakao_sent.json'
+    sent = json.load(open(ks_fn, encoding='utf-8')) if os.path.exists(ks_fn) else {}
+    key = f'{kl}_{tag}'
+    if newdata and tag != '0831' and sent.get(key):
+        newdata_msg = False; log(f'카톡 {key} 이미 보냄 — 이번 실행은 자료·웹판만 갱신')
+    else: newdata_msg = newdata
+    if newdata_msg and not a.no_kakao_record:
+        sent[key] = f'{now:%Y-%m-%d %H:%M}'; sent = dict(sorted(sent.items())[-60:]); json.dump(sent, open(ks_fn, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     if not newdata:
         note = f'[{today:%m/%d} {tag}] ' + ('새 자료 없음(휴장 다음 날 또는 이미 보냄)' if tag == '0831' else '오늘 자료 없음(휴장 또는 미공표)') + f' — 매수·매도 신호 판정 없음. 최신 코스피 {kl}'
         if errors: note += '\n오류: ' + ' | '.join(errors)[:120]
-        if tag == '1840' or errors: open('report/kakao.txt', 'w', encoding='utf-8').write(note[:200] + '\n')
+        last_try = a.attempt >= 3            # 자료 없음 안내는 그 구분의 마지막 재시도에서만(앞 실행은 다음 시간에 다시 받아 볼 수 있으므로)
+        if (tag == '1840' and last_try) or (errors and last_try): open('report/kakao.txt', 'w', encoding='utf-8').write(note[:200] + '\n')
         else: open('report/kakao.txt', 'w', encoding='utf-8').write('')
+    elif not newdata_msg:
+        open('report/kakao.txt', 'w', encoding='utf-8').write('')
     elif errors:
         msgs = open('report/kakao.txt', encoding='utf-8').read()
         open('report/kakao.txt', 'w', encoding='utf-8').write(msgs + '\n=====\n' + ('[오류] ' + ' | '.join(errors))[:200] + '\n')
