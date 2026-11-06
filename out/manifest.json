@@ -1,5 +1,5 @@
 {
- "run": "2026-11-06 23:38",
+ "run": "2026-11-07 00:24",
  "tag": "1540",
  "kospi_last": "2026-11-06",
  "kofia_last": "2026-11-05",
@@ -28,7 +28,7 @@
    "last_date": "2026-11-06"
   },
   "am_stats": {
-   "sha256": "d64b772c8d631f85c3df6f80eb97697afe8d029b3ebc957a0c24f32ff30b73ee",
+   "sha256": "38b6c98dccee92123d8667306fe1152ad76a0a872f46355ad06b010644c840cd",
    "bytes": 1263,
    "last_date": "기준일"
   },
@@ -183,7 +183,7 @@
    "last_date": "2026-11-06"
   },
   "trend_champ_rules": {
-   "sha256": "26fe88d6890b9674614c6566f588c8049aad3004d685c9bf1afee23a6c0aee63",
+   "sha256": "ff9e2be1521b9f6ed23c464af1d8fa5499cff990b302c258c03b7c5928961a2f",
    "bytes": 5037,
    "last_date": "2026"
   },
