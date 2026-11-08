@@ -1,0 +1,16 @@
+2026-11-08 반대매매 완화 조치 반영 — 이번 커밋으로 바뀐 파일
+
+저장소에 반영된 상태입니다. 웹판(june1579-cmd.github.io/kospi-dashboard)은 GitHub Pages 가 몇 분 안에 새 파일을 보여 줍니다.
+
+docs/page.html            대시보드 페이지 원본(아티팩트 files/index.html 과 같은 글, 11/6 결론 카드 + 11/8 추가분)
+docs/relief.js            새로 분리한 계산·카드 파일(아티팩트 files/relief.js 와 같은 글) — page.html 이 <script src="relief.js"> 로 부릅니다
+docs/index.html           웹판 껍데기: <script src> 파일을 읽어 실행하도록 한 줄 바꿈 + 자료 목록(FILES)에 relief 추가
+docs/data/relief.csv      담보비율 면제 기간 자료(2020·2022·2026)
+docs/data/events.csv      트리거 표에 11/5·11/6 급락, 11/6 발표·11/9 시행, 2027-01-31·02-09 원복 예정 추가
+pkg/datasets/relief.csv   위와 같은 파일(build_web.py 가 docs/data 로 복사하는 원본)
+pkg/datasets/events.csv   위와 같음
+build_web.py              DATASETS 목록에 "relief": "relief.csv" 추가(GitHub Actions 가 docs/data 를 다시 만들 때 빠지지 않게)
+
+주의
+- 아티팩트 files/index.html 은 약 238KB 로 저장소 한도(256KB)에 가깝습니다. 앞으로 페이지에 더하는 코드는 relief.js 처럼 별도 files/<이름>.js 로 두고 <script src> 로 부르는 편이 안전합니다.
+- 08:55 예약 작업이 GitHub 에 연결되어 docs/page.html 을 올리게 되면, files/relief.js 도 docs/relief.js 로 함께 올리도록 그 작업의 10단계에 한 줄을 더해야 합니다(지금은 GitHub 미연결이라 영향 없음).
