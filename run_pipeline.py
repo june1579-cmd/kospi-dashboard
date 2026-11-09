@@ -96,7 +96,8 @@ def main():
     newdata = (kl == today.isoformat())
     if tag == '0831':
         lm = 'state/last_morning.txt'; prev_kl = open(lm).read().strip() if os.path.exists(lm) else ''
-        newdata = bool(kl) and kl != prev_kl and (today - dt.date.fromisoformat(kl)).days <= 5
+        # 아침 확정은 '전 거래일' 자료를 다음 날 아침에 보내는 것 — kl 이 오늘이면(예약이 오후로 밀려 그날 잠정 자료를 본 경우) 새 자료로 치지 않는다(11/6 16:06 밀린 실행이 11/9 아침 메시지를 삼킨 문제)
+        newdata = bool(kl) and kl != prev_kl and 0 < (today - dt.date.fromisoformat(kl)).days <= 5
         if newdata: os.makedirs('state', exist_ok=True); open(lm, 'w').write(kl)
     # 6b 카카오톡용 그래프·중요 변동(새 자료가 있는 날 — 세 번 실행 모두)
     if os.path.exists('report/alerts.json'): os.remove('report/alerts.json')
