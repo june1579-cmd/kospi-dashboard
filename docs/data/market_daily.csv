@@ -2906,3 +2906,4 @@ date,kospi,kospi_chg_pct,kosdaq,vkospi,vkospi_high,vkospi_basis,basis,source
 2026-11-04,5683.8,0.62,714.95,56.04,57.83,종가(KRX),KRX 원자료(pykrx 자동 수집),"KRX 정보데이터시스템 코스피 일별 시세(pykrx 자동 수집, GitHub Actions 2026-11-04 20:25) · VKOSPI KRX(사용자 제공 파일) · 코스닥 다음 금융(원천 KRX)"
 2026-11-05,5383.8,-5.28,678.41,58.21,58.41,종가(KRX),KRX 원자료(pykrx 자동 수집),"KRX 정보데이터시스템 코스피 일별 시세(pykrx 자동 수집, GitHub Actions 2026-11-05 20:28) · VKOSPI KRX(사용자 제공 파일) · 코스닥 다음 금융(원천 KRX)"
 2026-11-06,5059.69,-6.02,644.27,65.17,67.12,종가(KRX),KRX 원자료(pykrx 자동 수집),"KRX 정보데이터시스템 코스피 일별 시세(pykrx 자동 수집, GitHub Actions 2026-11-06 20:27) · VKOSPI KRX(사용자 제공 파일) · 코스닥 다음 금융(원천 KRX)"
+2026-11-09,5012.84,-0.93,638.97,,,,KRX 원자료(pykrx 자동 수집),"KRX 정보데이터시스템 코스피 일별 시세(pykrx 자동 수집, GitHub Actions 2026-11-09 15:48) · 코스닥 다음 금융(원천 KRX)"
