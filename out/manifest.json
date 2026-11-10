@@ -1,5 +1,5 @@
 {
- "run": "2026-11-10 16:34",
+ "run": "2026-11-10 17:29",
  "tag": "0831",
  "kospi_last": "2026-11-10",
  "kofia_last": "2026-11-09",
@@ -30,7 +30,7 @@
    "last_date": "2026-11-09"
   },
   "am_stats": {
-   "sha256": "c74b24653b11fcf0cc176239257ca173e5c9a8cd9d5ff0f8392c58cec2cbc04e",
+   "sha256": "3598f6a46742b72fc03e7f9333f1e51f5c5f0055841de6c50bcc0cea24741103",
    "bytes": 1263,
    "last_date": "기준일"
   },
@@ -40,7 +40,7 @@
    "last_date": "2026-11-09"
   },
   "buy3": {
-   "sha256": "450435d906a790ef5901dc2a9fd08065a9d7f34d121a4be95b75e967ddb33746",
+   "sha256": "f38739c45b323411a53fa3022ef1a78dd84afaedd9609356d5d8ce114b6c2cec",
    "bytes": 147072,
    "last_date": "2026-10-16"
   },
@@ -175,7 +175,7 @@
    "last_date": "2026-11-05"
   },
   "sell3": {
-   "sha256": "1029cc118348a29b4f57ca386671567b59de1f57fdc4a91d9cfc643faae6c29f",
+   "sha256": "685cc350ae425de19a07cdf4137418ba4e2dbcb9f81dd34cf45bb60d0f004401",
    "bytes": 746095,
    "last_date": "2026-11-03"
   },
