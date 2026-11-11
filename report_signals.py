@@ -130,13 +130,13 @@ def main():
     special = []                                              # 특이 신호: 매수·매도 규칙 밖에서 평소와 다른 것
     try:
         qi = Q.index[Q['date'] == q['date']][-1]; pr_prev = float(Q.loc[qi - 1, 'p_risk']) if qi > 0 and pd.notna(Q.loc[qi - 1, 'p_risk']) else None
-        if qi > 0 and str(Q.loc[qi - 1, 'regime']) != str(q['regime']): special.append(f"국면 {Q.loc[qi - 1, 'regime']}→{q['regime']}")
+        if qi > 0 and str(Q.loc[qi - 1, 'regime']) != str(q['regime']): special.append(f"국면 {Q.loc[qi - 1, 'regime']}→{q['regime']}(시장 상태 판정이 바뀜)")
     except Exception: pass
-    if abs(float(m['kospi_chg_pct'])) >= 3: special.append(f"코스피 {eokp(m['kospi_chg_pct'])}")
-    if pd.notna(c.get('chg_pct')) and abs(float(c['chg_pct'])) >= 3: special.append(f"신용 {eokp(c['chg_pct'])}")
+    if abs(float(m['kospi_chg_pct'])) >= 3: special.append(f"코스피 {eokp(m['kospi_chg_pct'])}(하루 3% 넘는 {'급등' if m['kospi_chg_pct'] > 0 else '급락'})")
+    if pd.notna(c.get('chg_pct')) and abs(float(c['chg_pct'])) >= 3: special.append(f"신용 {eokp(c['chg_pct'])}(하루 3% 넘게 {'급증 — 빚투 확대' if c['chg_pct'] > 0 else '급감 — 상환·청산'})")
     if cons and cons.get('p1'):
         _sd = lambda e: (e['up'] > e['dn']) - (e['dn'] > e['up'])
-        if _sd(cons['now']) != _sd(cons['p1']) or abs(cons['now']['up'] - cons['p1']['up']) >= 2: special.append(f"상승 합의 {cons['p1']['up']}→{cons['now']['up']}/12")
+        if _sd(cons['now']) != _sd(cons['p1']) or abs(cons['now']['up'] - cons['p1']['up']) >= 2: special.append(f"상승 합의 {cons['p1']['up']}→{cons['now']['up']}/12(" + ('큰 흐름 다수 의견이 뒤집힘' if _sd(cons['now']) != _sd(cons['p1']) else '큰 흐름 판단이 하루 2줄 넘게 이동') + ')')
     credit_d = None
     if len(C) > 1 and pd.notna(C.iloc[-2]['credit_jo']): credit_d = float(c['credit_jo']) - float(C.iloc[-2]['credit_jo'])
     def build_kakao(extra_special=()):
@@ -144,12 +144,14 @@ def main():
         L1 = f"[{md(today)} {SHORT.get(a.tag[:4], a.tag)}] 코스피 {m['kospi']:,.0f} ({'+' if m['kospi_chg_pct'] >= 0 else '−'}{abs(m['kospi_chg_pct']):.2f}%)"
         L2 = '자료: @@DATA@@'
         L3 = '매수 ' + ('★' + ', '.join(buys) if buys else '없음') + ' · 매도 ' + ('★' + ', '.join(sells) if sells else '없음')
-        L4 = '특이: ' + (', '.join(sp_all) if sp_all else '없음')          # 특이 내용은 줄이지 않고 그대로 적는다
+        L4 = ('특이\n' + '\n'.join('· ' + x for x in sp_all)) if sp_all else '특이: 없음'   # 항목마다 한 줄: 값(왜 특이한지)
         L5 = (f"외인 {eok(fr['foreign_jo'])} 개인 {eok(fr['indiv_jo'])} 기관 {eok(fr['inst_jo'])}" + (' (잠정)' if '잠정' in str(fr.get('basis', '')) else '')) if fr is not None else '외인·개인·기관: 오늘 줄 없음'
         L6 = f"신용 {c['credit_jo']:.1f}조" + (f"({eok(credit_d)})" if credit_d is not None else '') + f" 반대매매 {l['liq_eok']:,.0f}억·{l['ratio_pct']:.1f}% ({md(c['date'])})"
         why = (['매수 신호'] if buys else []) + (['매도 신호'] if sells else []) + sp_all
         L7 = '▶대시보드 확인' if why else ''
-        return '\n'.join(x for x in [L1, L2, L3, L4, L5, L6, L7] if x)[:200], why
+        out = '\n'.join(x for x in [L1, L2, L3, L4, L5, L6, L7] if x)
+        if len(out) > 185: out = '\n'.join(x for x in [L1, L2, L3, L4, L5, L6] if x)      # 200자 한도('자료' 줄 자리 포함): 넘치면 맨 끝 안내 줄부터 뺀다
+        return out[:200], why
     kakao_one, check_why = build_kakao()
     kakao_msgs = [kakao_one]
     msgs = [msg1]
@@ -181,7 +183,7 @@ def main():
         if combo['prev_top']: top_note = f"★조합 1위 교체 「{combo['top_combo']}」(이전 「{combo['prev_top']}」) 250일 {combo['win_ret_250']:+.0f}%·적중 {combo['win_hit']:.0f}%·지금 {combo['state']}"
         elif combo.get('warn_new'): top_note = f"⚠조합 1위 성적 저하: {combo['top_combo']} — {str(combo['warn']).split(' — ')[0]}"
         if top_note:
-            kakao_one, check_why = build_kakao([('조합 1위 교체 → ' + str(combo['top_combo'])) if combo['prev_top'] else '조합 1위 성적 저하']); kakao_msgs[0] = kakao_one
+            kakao_one, check_why = build_kakao([('조합 1위 교체 → ' + str(combo['top_combo']) + '(기준 삼는 매수·매도 규칙이 바뀜)') if combo['prev_top'] else '조합 1위 성적 저하(기준 규칙이 최근 잘 안 맞음)']); kakao_msgs[0] = kakao_one
         if combo['prev_top']:
             msgs.append(f"[{md(today)} 조합 1위 교체]\n「{pc.get('top_combo')}」 ⇒ 「{combo['top_combo']}」\n지난 250일 {combo['win_ret_250']:+.1f}% · 거래 {combo['win_trades']}건 적중 {combo['win_hit']:.0f}%\n지금 {combo['state']} · 규칙: 매월 첫 거래일 재선정"[:200])
         elif combo.get('warn') and combo['warn'] != pc.get('warn'):
