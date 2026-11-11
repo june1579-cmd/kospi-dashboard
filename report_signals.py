@@ -130,13 +130,13 @@ def main():
     special = []                                              # 특이 신호: 매수·매도 규칙 밖에서 평소와 다른 것
     try:
         qi = Q.index[Q['date'] == q['date']][-1]; pr_prev = float(Q.loc[qi - 1, 'p_risk']) if qi > 0 and pd.notna(Q.loc[qi - 1, 'p_risk']) else None
-        if qi > 0 and str(Q.loc[qi - 1, 'regime']) != str(q['regime']): special.append(f"국면 {Q.loc[qi - 1, 'regime']}→{q['regime']}(시장 상태 판정이 바뀜)")
+        if qi > 0 and str(Q.loc[qi - 1, 'regime']) != str(q['regime']): special.append(f"국면 {Q.loc[qi - 1, 'regime']}→{q['regime']}(시장 상태 바뀜)")
     except Exception: pass
-    if abs(float(m['kospi_chg_pct'])) >= 3: special.append(f"코스피 {eokp(m['kospi_chg_pct'])}(하루 3% 넘는 {'급등' if m['kospi_chg_pct'] > 0 else '급락'})")
-    if pd.notna(c.get('chg_pct')) and abs(float(c['chg_pct'])) >= 3: special.append(f"신용 {eokp(c['chg_pct'])}(하루 3% 넘게 {'급증 — 빚투 확대' if c['chg_pct'] > 0 else '급감 — 상환·청산'})")
+    if abs(float(m['kospi_chg_pct'])) >= 3: special.append(f"코스피 {eokp(m['kospi_chg_pct'])}(하루 3%↑ {'급등' if m['kospi_chg_pct'] > 0 else '급락'})")
+    if pd.notna(c.get('chg_pct')) and abs(float(c['chg_pct'])) >= 3: special.append(f"신용 {eokp(c['chg_pct'])}(하루 3%↑ {'급증: 빚투 확대' if c['chg_pct'] > 0 else '급감: 상환·청산'})")
     if cons and cons.get('p1'):
         _sd = lambda e: (e['up'] > e['dn']) - (e['dn'] > e['up'])
-        if _sd(cons['now']) != _sd(cons['p1']) or abs(cons['now']['up'] - cons['p1']['up']) >= 2: special.append(f"상승 합의 {cons['p1']['up']}→{cons['now']['up']}/12(" + ('큰 흐름 다수 의견이 뒤집힘' if _sd(cons['now']) != _sd(cons['p1']) else '큰 흐름 판단이 하루 2줄 넘게 이동') + ')')
+        if _sd(cons['now']) != _sd(cons['p1']) or abs(cons['now']['up'] - cons['p1']['up']) >= 2: special.append(f"상승 합의 {cons['p1']['up']}→{cons['now']['up']}/12(" + ('큰 흐름 다수 의견 뒤집힘' if _sd(cons['now']) != _sd(cons['p1']) else '큰 흐름 판단 급변') + ')')
     credit_d = None
     if len(C) > 1 and pd.notna(C.iloc[-2]['credit_jo']): credit_d = float(c['credit_jo']) - float(C.iloc[-2]['credit_jo'])
     def build_kakao(extra_special=()):
@@ -151,6 +151,11 @@ def main():
         L7 = '▶대시보드 확인' if why else ''
         out = '\n'.join(x for x in [L1, L2, L3, L4, L5, L6, L7] if x)
         if len(out) > 185: out = '\n'.join(x for x in [L1, L2, L3, L4, L5, L6] if x)      # 200자 한도('자료' 줄 자리 포함): 넘치면 맨 끝 안내 줄부터 뺀다
+        if len(out) > 185:                                                                # 그래도 넘치면 특이 항목의 설명(괄호)을 뒤에서부터 뺀다
+            sp2 = list(sp_all)
+            for i in range(len(sp2) - 1, -1, -1):
+                sp2[i] = sp2[i].rsplit('(', 1)[0]; out = '\n'.join([L1, L2, L3, '특이\n' + '\n'.join('· ' + x for x in sp2), L5, L6])
+                if len(out) <= 185: break
         return out[:200], why
     kakao_one, check_why = build_kakao()
     kakao_msgs = [kakao_one]
@@ -183,7 +188,7 @@ def main():
         if combo['prev_top']: top_note = f"★조합 1위 교체 「{combo['top_combo']}」(이전 「{combo['prev_top']}」) 250일 {combo['win_ret_250']:+.0f}%·적중 {combo['win_hit']:.0f}%·지금 {combo['state']}"
         elif combo.get('warn_new'): top_note = f"⚠조합 1위 성적 저하: {combo['top_combo']} — {str(combo['warn']).split(' — ')[0]}"
         if top_note:
-            kakao_one, check_why = build_kakao([('조합 1위 교체 → ' + str(combo['top_combo']) + '(기준 삼는 매수·매도 규칙이 바뀜)') if combo['prev_top'] else '조합 1위 성적 저하(기준 규칙이 최근 잘 안 맞음)']); kakao_msgs[0] = kakao_one
+            kakao_one, check_why = build_kakao([('조합 1위 교체 → ' + str(combo['top_combo']) + '(기준 규칙 바뀜)') if combo['prev_top'] else '조합 1위 성적 저하(기준 규칙 최근 부진)']); kakao_msgs[0] = kakao_one
         if combo['prev_top']:
             msgs.append(f"[{md(today)} 조합 1위 교체]\n「{pc.get('top_combo')}」 ⇒ 「{combo['top_combo']}」\n지난 250일 {combo['win_ret_250']:+.1f}% · 거래 {combo['win_trades']}건 적중 {combo['win_hit']:.0f}%\n지금 {combo['state']} · 규칙: 매월 첫 거래일 재선정"[:200])
         elif combo.get('warn') and combo['warn'] != pc.get('warn'):
