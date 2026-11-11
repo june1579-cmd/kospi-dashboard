@@ -1,0 +1,36 @@
+name: ai-board-alert
+# AI 선행지표 경고판(claude.ai)에 변화가 생기면 Claude 예약 작업(매일 07:30)이 alerts/ai_board.txt 를 고쳐 push 한다.
+# 이 워크플로는 그 push 를 받아 같은 카카오톡 '나에게 보내기'로 글만 보낸다(메시지는 ===== 로 구분, 각 200자 이내).
+on:
+  push:
+    branches: [main]
+    paths: ['alerts/ai_board.txt']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: dashboard-update     # 대시보드 갱신과 같은 줄에 세워 카카오 토큰 연장이 겹치지 않게 한다
+  cancel-in-progress: false
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -q requests cryptography
+      - name: 카카오톡(AI 선행지표 경고판 변동)
+        env:
+          KAKAO_REST_KEY: ${{ secrets.KAKAO_REST_KEY }}
+          KAKAO_REFRESH_TOKEN: ${{ secrets.KAKAO_REFRESH_TOKEN }}
+          KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
+          DASH_LINK: https://claude.ai/artifact/MQ4f2Z2hsn8K9gMrKM2vbq
+        run: |
+          git pull -q --rebase || true     # 줄 서 있는 동안 토큰이 연장됐을 수 있다
+          if [ -s alerts/ai_board.txt ]; then
+            python kakao_send.py --file alerts/ai_board.txt
+            git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+            git add -A state && git commit -m "카카오 토큰 연장" -q && git pull -q --rebase && git push -q || true
+          fi
