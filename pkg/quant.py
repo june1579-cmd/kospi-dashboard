@@ -200,15 +200,17 @@ def simulate(c, buy, risk, idx_oos, exit_on_risk=False, hold=HOLD, cost=COST):
         if b[i] and not r[i]:
             e = i + 1; x = min(e + hold, n - 1)
             if e >= n - 1: break          # 마지막 날 신호: 다음 날 종가 진입이라 아직 거래가 없다(수익률 없음)
+            risk_exit = False
             if exit_on_risk:
                 for j in range(e + 1, x + 1):
-                    if r[j - 1]: x = j; break
+                    if r[j - 1]: x = j; risk_exit = True; break
             pos[e + 1:x + 1] = 1          # e일 종가 진입 → e+1일부터 x일까지의 종가 수익률을 먹는다
-            trades.append((idx_oos[e], idx_oos[x], float(cl.iloc[x] / cl.iloc[e] - 1 - cost)))
+            is_open = (not risk_exit) and (e + hold > n - 1)   # 아직 보유 기간이 안 끝난 거래: 마지막 날은 청산이 아니라 '보유 중'(11/11 수정 — 전엔 날마다 마지막 날에 청산 표시가 찍혀 카톡에 '정밀검증 청산'이 매일 나갔음)
+            trades.append((idx_oos[e], idx_oos[x], float(cl.iloc[x] / cl.iloc[e] - 1 - cost), is_open))
             i = x
         else: i += 1
     ret = cl.pct_change().fillna(0).values * pos
-    for (d0, d1, _) in trades: ret[idx_oos.get_loc(d0) + 1] -= cost       # 비용은 진입 다음 날에 한 번
+    for (d0, d1, *_) in trades: ret[idx_oos.get_loc(d0) + 1] -= cost       # 비용은 진입 다음 날에 한 번
     return pd.Series(ret, index=idx_oos), trades, pos
 
 def _stats(ret, trades, pos):
@@ -342,8 +344,10 @@ def run(D):
                             'p_up': P['up10']['부스팅'].round(3).values, 'p_risk': P['risk5']['부스팅'].round(3).values})
     q_daily['trade'] = ''; q_daily['trade_ret'] = np.nan
     pos_of = {d: i for i, d in enumerate(X.index)}
-    for d0, d1, r in bst_trades:
-        q_daily.loc[pos_of[d0], 'trade'] = 'enter'; q_daily.loc[pos_of[d1], 'trade'] = 'exit'; q_daily.loc[pos_of[d1], 'trade_ret'] = round(r * 100, 2)
+    for d0, d1, r, *rest in bst_trades:
+        q_daily.loc[pos_of[d0], 'trade'] = 'enter'
+        if rest and rest[0]: continue                        # 보유 중인 거래는 청산 표시를 찍지 않는다(청산일은 보유 기간이 끝나는 날 확정)
+        q_daily.loc[pos_of[d1], 'trade'] = 'exit'; q_daily.loc[pos_of[d1], 'trade_ret'] = round(r * 100, 2)
     q_daily['kospi_basis'] = 'KRX 원자료'
     q_daily['p_up'] = q_daily['p_up'].where(q_daily['p_up'].notna(), ''); q_daily['p_risk'] = q_daily['p_risk'].where(q_daily['p_risk'].notna(), '')
     q_daily['trade_ret'] = q_daily['trade_ret'].where(q_daily['trade_ret'].notna(), '')
