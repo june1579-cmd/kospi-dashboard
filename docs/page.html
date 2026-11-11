@@ -1381,8 +1381,8 @@
     const STRIPS = [['leg', '실제']].concat(SL.map(s => [s.k, s.lab]));
     const twFs = (s0, fs) => { const t = svg.append('text').attr('class', 'rv-tick').style('font-size', fs + 'px').text(s0); const w = t.node().getComputedTextLength(); t.remove(); return w; };
     const ml = Math.max(d3.max(panels, p => d3.max(p.tL, t => tw(svg, p.fL(t)))) + 10, d3.max(STRIPS, s => tw(svg, s[1])) + 12, KH ? Math.max(twFs('12개 해 합의', 11), twFs('초록 = 상승 비율', 9)) + 12 : 0);
-    const CE_LAB = [['l140', '140%'], ['l130', '130% 완화'], ['l120', '120% 유예']];   // 신용 청산 참고선 라벨(그래프 오른쪽 바깥에 표시)
-    const ceLabW = (() => { try { const c = dash.data('credit_entry'); if (c.status === 'ok' && c.data.length) return d3.max(CE_LAB, ([k, l]) => twFs('청산 ' + l + ' ' + f0(num(c.data[0][k])), 9)) + 12; } catch (e) {} return 0; })();
+    const CE_LAB = [['entry', '신용 평균'], ['l140', '청산 140%'], ['l130', '청산 130% 완화'], ['l120', '청산 120% 유예']];   // 신용 청산 참고선 라벨(그래프 오른쪽 바깥에 표시)
+    const ceLabW = (() => { try { const c = dash.data('credit_entry'); if (c.status === 'ok' && c.data.length) return d3.max(CE_LAB, ([k, l]) => twFs(l + ' ' + f0(num(c.data[0][k])), 9)) + 12; } catch (e) {} return 0; })();
     const mr = Math.max(28, d3.max(P1.tR, t => tw(svg, P1.fR(t))) + 10, KH ? Math.max(twFs('100%', 10), twFs('−25%p', 9)) + 8 : 0, ceLabW);
     const x = tradeX(allMk.filter(inR).filter(r => num(r.kospi) != null).map(r => r.date).concat(cr.map(r => r.date), lq.map(r => r.date), flAll.map(r => r.date)), [ml, W - mr]);
     const dayW = x.step();
@@ -1416,7 +1416,7 @@
         ceRows.sort((p, q) => p.y - q.y); for (let i = 1; i < ceRows.length; i++) if (ceRows[i].ty - ceRows[i - 1].ty < 11) ceRows[i].ty = ceRows[i - 1].ty + 11;   // 라벨이 겹치지 않게 아래로 밀기
         ceRows.forEach(r => {
           svg.append('line').attr('x1', ml).attr('x2', W - mr).attr('y1', r.y).attr('y2', r.y).style('stroke', C()[4]).attr('stroke-dasharray', '2 4').attr('opacity', 0.7);
-          svg.append('text').attr('class', 'rv-tick').attr('x', W - mr + 4).attr('y', r.ty).attr('dy', '0.32em').attr('text-anchor', 'start').style('font-size', '9px').style('fill', C()[4]).text('청산 ' + r.lab + ' ' + f0(r.v)); }); }   // 글자는 그래프 밖 오른쪽에
+          svg.append('text').attr('class', 'rv-tick').attr('x', W - mr + 4).attr('y', r.ty).attr('dy', '0.32em').attr('text-anchor', 'start').style('font-size', '9px').style('fill', C()[4]).text(r.lab + ' ' + f0(r.v)); }); }   // 글자는 그래프 밖 오른쪽에
     } catch (e) {}
     // big-trend strips: actual zigzag leg vs combo state
     const cb = dash.data('combo').data.filter(inR);

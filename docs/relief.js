@@ -97,11 +97,20 @@
         const w = L.reduce((a, l) => a + l[0], 0); return {e: w ? L.reduce((a, l) => a + l[0] * l[1], 0) / w : null, w, n: L.length}; };
       const r = v => v == null ? null : Math.round(v), rw = v => Math.round(v * 100) / 100, md = s => +s.slice(5, 7) + '/' + +s.slice(8, 10);
       const a = inflow(tr), b = inflow(lo250), c = lots(tr, false), d = lots(tr, true);
+      const s5 = Math.max(0, cr.length - 500); let lo500 = s5; for (let k = s5; k < cr.length; k++) if (cr[k].v <= cr[lo500].v) lo500 = k;
+      const b5 = inflow(lo500);   // 2년 저점부터(신용이 1년 최저까지 줄어 위 방법들이 비는 날의 예비)
       const row = (method, name, o, text) => { const e = o.e; return {method, name, entry: r(e), l140: e == null ? null : r(e * 1.4 * 0.6), l130: e == null ? null : r(e * 1.3 * 0.6), l120: e == null ? null : r(e * 1.2 * 0.6), l140_50: e == null ? null : r(e * 1.4 * 0.5), l130_50: e == null ? null : r(e * 1.3 * 0.5), weight_jo: rw(o.w), n: o.n, text, trough_date: cr[tr].d, trough_jo: cr[tr].v, peak_date: cr[pk].d, peak_jo: cr[pk].v, low250_date: cr[lo250].d, low250_jo: cr[lo250].v, last_jo_date: cr[cr.length - 1].d, last_jo: cr[cr.length - 1].v, last_date: lastD, last_kospi: lastK}; };
-      return [row('recent', '최근 유입: 정점 뒤 최저일부터 늘어난 날 가중', a, `코스피 신용 ${md(cr[pk].d)} 정점 ${cr[pk].v}조 → ${md(cr[tr].d)} 최저 ${cr[tr].v}조 이후 늘어난 날 ${a.n}일, 유입 합계 ${rw(a.w)}조원(그 뒤 상환·청산으로 순잔고는 ${rw(cr[cr.length - 1].v - cr[tr].v)}조만 늘어 최근 유입분 대부분이 이미 정리됐거나 더 낮은 가격에 재진입)`),
+      const OUT = [row('recent', '최근 유입: 정점 뒤 최저일부터 늘어난 날 가중', a, `코스피 신용 ${md(cr[pk].d)} 정점 ${cr[pk].v}조 → ${md(cr[tr].d)} 최저 ${cr[tr].v}조 이후 늘어난 날 ${a.n}일, 유입 합계 ${rw(a.w)}조원(그 뒤 상환·청산으로 순잔고는 ${rw(cr[cr.length - 1].v - cr[tr].v)}조만 늘어 최근 유입분 대부분이 이미 정리됐거나 더 낮은 가격에 재진입)`),
               row('low250', '1년 저점부터 늘어난 날 가중', b, `1년 저점 ${cr[lo250].d} ${cr[lo250].v}조 이후 늘어난 날 ${b.n}일, 유입 합계 ${rw(b.w)}조원 — 올해 상승기에 들어온 신용까지 포함`),
               row('fifo', '선입선출로 남은 잔고(최저일 이후)', c, `상환·청산을 먼저 산 신용부터 뺀 뒤 남은 ${rw(c.w)}조원의 평균 — 남은 신용이 뒤늦게 들어온 것이면 이쪽`),
-              row('lifo', '후입선출로 남은 잔고(최저일 이후)', d, `상환·청산을 나중에 산 신용부터 뺀 뒤 남은 ${rw(d.w)}조원의 평균 — 급락 때 최근 매수분이 먼저 청산됐다면 이쪽`)];
+              row('lifo', '후입선출로 남은 잔고(최저일 이후)', d, `상환·청산을 나중에 산 신용부터 뺀 뒤 남은 ${rw(d.w)}조원의 평균 — 급락 때 최근 매수분이 먼저 청산됐다면 이쪽`),
+              row('low500', '2년 저점부터 늘어난 날 가중', b5, `2년 저점 ${cr[lo500].d} ${cr[lo500].v}조 이후 늘어난 날 ${b5.n}일, 유입 합계 ${rw(b5.w)}조원 — 1년 저점 기준이 비는 날의 예비`)];
+      // 대표 줄(그래프 참고선·요약에 쓰는 줄)을 맨 앞으로: 최근 유입 → 1년 저점부터 → 2년 저점부터 순으로, 유입 합계 1조원 이상인 첫 방법. 신용이 정점 뒤 최저를 새로 쓰면 '최근 유입'이 비므로 다음 방법으로 넘어간다(11/12 수정 — 이때 그래프 참고선이 사라지던 문제)
+      const SHORT = {recent: '최근 유입', low250: '1년 저점부터', low500: '2년 저점부터'};
+      const pi = ['recent', 'low250', 'low500'].map(m => OUT.findIndex(r => r.method === m)).find(i => i >= 0 && OUT[i].entry != null && OUT[i].weight_jo >= 1);
+      if (pi != null && pi > 0) OUT.unshift(OUT.splice(pi, 1)[0]);
+      OUT.forEach((r, i) => { r.primary = i === 0 && r.entry != null; r.basis = SHORT[r.method] || r.name; r.credit_date = cr[cr.length - 1].d; });
+      return OUT;
     }
   });
 
@@ -158,7 +167,7 @@
               .forEach(([v, cls]) => { const td = document.createElement('td'); td.textContent = v; if (cls) td.className = cls; tr.appendChild(td); }); tb.appendChild(tr); });
           const r0 = cd.data[0];
           if (cs && r0 && r0.entry != null && r0.last_kospi != null) { const k = r0.last_kospi, pos = k > r0.l140 ? `140% 선(${f0(r0.l140)}) 위 — 최근 유입 계좌(자기자금 40%)는 아직 담보 부족 전` : k > r0.l130 ? `140% 선(${f0(r0.l140)})과 130% 선(${f0(r0.l130)}) 사이 — 완화된 130%가 지켜 주는 띠 안` : k > r0.l120 ? `130% 선(${f0(r0.l130)}) 아래·120% 선(${f0(r0.l120)}) 위 — 완화된 130%로도 보호되지 않고 신청 시 유예(120%)만 남은 구간` : `120% 선(${f0(r0.l120)})도 아래 — 유예 대상도 벗어난 구간`;
-            cs.textContent = `${md(r0.last_date)} 종가 ${f2(k)}는 최근 유입 기준 ${pos}. 자기자금 50%면 140% 선 ${f0(r0.l140_50)}·130% 선 ${f0(r0.l130_50)}로 내려간다. 네 방법의 평균 매수 지수 ${cd.data.map(r => f0(r.entry)).join(' · ')} — 차이가 큰 것은 남은 신용이 언제 들어온 것인지 자료로 알 수 없어서다.`; }
+            cs.textContent = `${md(r0.last_date)} 종가 ${f2(k)}는 ${r0.basis || '최근 유입'} 기준(평균 매수 지수 ${f0(r0.entry)}, 신용 ${md(r0.credit_date || r0.last_date)}분까지 반영) ${pos}. 자기자금 50%면 140% 선 ${f0(r0.l140_50)}·130% 선 ${f0(r0.l130_50)}로 내려간다. 방법별 평균 매수 지수 ${cd.data.map(r => r.entry == null ? '—' : f0(r.entry)).join(' · ')} — 차이가 큰 것은 남은 신용이 언제 들어온 것인지 자료로 알 수 없어서다.`; }
         } else { ct.classList.toggle('dash-skeleton', !BAD.includes(cd.status)); if (cs) cs.textContent = ''; } }
     } catch (e) { console.error(e); }
   }
