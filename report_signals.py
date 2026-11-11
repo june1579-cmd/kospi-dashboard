@@ -150,12 +150,12 @@ def main():
         why = (['매수 신호'] if buys else []) + (['매도 신호'] if sells else []) + sp_all
         L7 = '▶대시보드 확인' if why else ''
         out = '\n'.join(x for x in [L1, L2, L3, L4, L5, L6, L7] if x)
-        if len(out) > 185: out = '\n'.join(x for x in [L1, L2, L3, L4, L5, L6] if x)      # 200자 한도('자료' 줄 자리 포함): 넘치면 맨 끝 안내 줄부터 뺀다
-        if len(out) > 185:                                                                # 그래도 넘치면 특이 항목의 설명(괄호)을 뒤에서부터 뺀다
+        if len(out) > 192: out = '\n'.join(x for x in [L1, L2, L3, L4, L5, L6] if x)      # 200자 한도('자료' 줄 자리 포함): 넘치면 맨 끝 안내 줄부터 뺀다
+        if len(out) > 192:                                                                # 그래도 넘치면 특이 항목의 설명(괄호)을 뒤에서부터 뺀다
             sp2 = list(sp_all)
             for i in range(len(sp2) - 1, -1, -1):
                 sp2[i] = sp2[i].rsplit('(', 1)[0]; out = '\n'.join([L1, L2, L3, '특이\n' + '\n'.join('· ' + x for x in sp2), L5, L6])
-                if len(out) <= 185: break
+                if len(out) <= 192: break
         return out[:200], why
     kakao_one, check_why = build_kakao()
     kakao_msgs = [kakao_one]
