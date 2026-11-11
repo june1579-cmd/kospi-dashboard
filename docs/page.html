@@ -20,6 +20,7 @@
 .rv .rv-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,26rem),1fr));gap:var(--cds-gap-md)}
 .rv .rv-card{padding:var(--cds-pad-lg);min-width:0}
 @media (orientation:landscape) and (max-height:520px){.rv .rv-card{padding:8px 6px}}
+@media (orientation:portrait) and (max-width:700px){.rv #all-chart{width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw)}}   /* 세로보기: 한눈에 보기 그래프를 화면 끝에서 끝까지 */
 .rv .rv-card h3{font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0}
 .rv .rv-note{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin:var(--cds-gap-xs) 0 var(--cds-gap-sm);line-height:1.5}
 .rv .rv-chart{position:relative;min-height:260px}
