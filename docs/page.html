@@ -195,10 +195,9 @@
             <button type="button" data-r="all" aria-pressed="true" aria-label="2025~2026"><span class="rv-yy">20</span>25~26</button>
           </div>
           <div class="rv-seg" id="all-range" role="group" aria-label="2025~2026 안에서 좁혀 보기">
-            <button type="button" data-r="m3" aria-pressed="true">3개월</button>
-            <button type="button" data-r="y26" aria-pressed="false">2026</button>
-            <button type="button" data-r="h2" aria-pressed="false">6월~</button>
-            <button type="button" data-r="oct" aria-pressed="false">10월</button>
+            <button type="button" data-r="m1" aria-pressed="false">1달</button>
+            <button type="button" data-r="m3" aria-pressed="true">3달</button>
+            <button type="button" data-r="m6" aria-pressed="false">6달</button>
           </div>
           <div class="rv-seg rv-zoom" id="all-zoom" role="group" aria-label="확대·축소·이동">
             <button type="button" data-z="out" aria-label="축소(기간 넓게)" title="축소(기간 넓게)">−</button>
@@ -1044,7 +1043,7 @@
 
   // one chart: overlaid lines (peak = 100) on top, bar panels below, shared time axis
   let range = 'm3';   // 처음 화면 = 최근 3개월
-  const RANGES = {m3: ['2026-08-11', '2026-11-11'], all: ['2025-01-01', '2026-10-26'], y26: ['2026-01-01', '2026-10-26'], h2: ['2026-05-25', '2026-10-26'], oct: ['2026-09-25', '2026-10-26'],
+  const RANGES = {m1: ['2026-10-11', '2026-11-11'], m3: ['2026-08-11', '2026-11-11'], m6: ['2026-05-11', '2026-11-11'], all: ['2025-01-01', '2026-10-26'], y26: ['2026-01-01', '2026-10-26'], h2: ['2026-05-25', '2026-10-26'], oct: ['2026-09-25', '2026-10-26'],
     p15: ['2015-01-01', '2016-12-31'], p17: ['2017-01-01', '2018-12-31'], p19: ['2019-01-01', '2020-12-31'], p21: ['2021-01-01', '2022-12-31'], p23: ['2023-01-01', '2024-12-31']};
   const PERIODS = [['p15', 2015], ['p17', 2017], ['p19', 2019], ['p21', 2021], ['p23', 2023], ['all', 2025]];   // 2년 단위 기간(all = 2025~2026, 처음 화면)
   let qper = 'all';
@@ -1923,7 +1922,7 @@
       [drawGap, drawAM, drawAll, drawOct, drawFor, drawLag, drawYear, drawCredit, drawRatio, drawChg, drawMonthly].forEach(f => { try { f(); } catch (e) { console.error(e); } }); }, 200); };
     window.addEventListener('resize', rz); window.addEventListener('orientationchange', rz); }
   dash.onData(() => {
-    const mEnd = lastRow('market'); if (mEnd && mEnd.date) { ['all', 'y26', 'h2', 'oct', 'm3'].forEach(k => { RANGES[k][1] = mEnd.date; }); const d3m = new Date(mEnd.date + 'T00:00:00Z'); d3m.setUTCMonth(d3m.getUTCMonth() - 3); RANGES.m3[0] = d3m.toISOString().slice(0, 10); }   // 기간 끝 = 자료의 마지막 날짜
+    const mEnd = lastRow('market'); if (mEnd && mEnd.date) { ['all', 'y26', 'h2', 'oct', 'm1', 'm3', 'm6'].forEach(k => { RANGES[k][1] = mEnd.date; }); [['m1', 1], ['m3', 3], ['m6', 6]].forEach(([k, n]) => { const d = new Date(mEnd.date + 'T00:00:00Z'); d.setUTCMonth(d.getUTCMonth() - n); RANGES[k][0] = d.toISOString().slice(0, 10); }); }   // 기간 끝 = 자료의 마지막 날짜
     fillMarks(); buildAutoConcl(); fillAttr(); fillCons(); if (window.fillRelief) { try { window.fillRelief(); } catch (e) { console.error(e); } }   // relief.js(반대매매 완화 조치 카드)
     drawGap(); drawAM();
     drawAll(); drawOct(); drawFor(); drawLag(); drawYear(); drawCredit(); drawRatio(); drawChg(); drawMonthly();
