@@ -130,11 +130,9 @@ def main():
     special = []                                              # 특이 신호: 매수·매도 규칙 밖에서 평소와 다른 것
     try:
         qi = Q.index[Q['date'] == q['date']][-1]; pr_prev = float(Q.loc[qi - 1, 'p_risk']) if qi > 0 and pd.notna(Q.loc[qi - 1, 'p_risk']) else None
-        if pr_prev is not None and (float(q['p_risk']) >= 0.27) != (pr_prev >= 0.27): special.append(f"급락확률 {q['p_risk']*100:.0f}%({'기준 27%↑' if q['p_risk'] >= 0.27 else '기준 27%↓'})")
         if qi > 0 and str(Q.loc[qi - 1, 'regime']) != str(q['regime']): special.append(f"국면 {Q.loc[qi - 1, 'regime']}→{q['regime']}")
     except Exception: pass
     if abs(float(m['kospi_chg_pct'])) >= 3: special.append(f"코스피 {eokp(m['kospi_chg_pct'])}")
-    if float(l['ratio_pct']) >= 5: special.append('반대매매 비중 5%↑')
     if pd.notna(c.get('chg_pct')) and abs(float(c['chg_pct'])) >= 3: special.append(f"신용 {eokp(c['chg_pct'])}")
     if cons and cons.get('p1'):
         _sd = lambda e: (e['up'] > e['dn']) - (e['dn'] > e['up'])
@@ -145,18 +143,13 @@ def main():
         sp_all = special + list(extra_special)
         L1 = f"[{md(today)} {SHORT.get(a.tag[:4], a.tag)}] 코스피 {m['kospi']:,.0f} ({'+' if m['kospi_chg_pct'] >= 0 else '−'}{abs(m['kospi_chg_pct']):.2f}%)"
         L2 = '자료: @@DATA@@'
-        L3 = '매수 ' + ('★' + ', '.join(buys) if buys else '없음') + ' · 매도 ' + ('★' + ', '.join(sells) if sells else '없음') + ' · 특이 ' + (f'{len(sp_all)}건' if sp_all else '없음')
+        L3 = '매수 ' + ('★' + ', '.join(buys) if buys else '없음') + ' · 매도 ' + ('★' + ', '.join(sells) if sells else '없음')
+        L4 = '특이: ' + (', '.join(sp_all) if sp_all else '없음')          # 특이 내용은 줄이지 않고 그대로 적는다
         L5 = (f"외인 {eok(fr['foreign_jo'])} 개인 {eok(fr['indiv_jo'])} 기관 {eok(fr['inst_jo'])}" + (' (잠정)' if '잠정' in str(fr.get('basis', '')) else '')) if fr is not None else '외인·개인·기관: 오늘 줄 없음'
         L6 = f"신용 {c['credit_jo']:.1f}조" + (f"({eok(credit_d)})" if credit_d is not None else '') + f" 반대매매 {l['liq_eok']:,.0f}억·{l['ratio_pct']:.1f}% ({md(c['date'])})"
         why = (['매수 신호'] if buys else []) + (['매도 신호'] if sells else []) + sp_all
-        base = '\n'.join([L1, L2, L3, L5, L6]); L7 = ''
-        if why:                                                   # 대시보드를 봐야 하는 날만 마지막 줄에 사유(= 요약). '자료' 줄 글 자리(8+10자)를 남기고 넘치면 뒤 항목을 '외 n건'으로 줄인다
-            items = list(sp_all) if sp_all else why; room = 200 - 10 - len(base) - len('\n▶대시보드 확인: '); keep = []
-            for it in items:
-                if len(', '.join(keep + [it])) + 6 > room: break
-                keep.append(it)
-            L7 = '▶대시보드 확인: ' + ', '.join(keep) + (f' 외 {len(items) - len(keep)}건' if len(keep) < len(items) else '')
-        return (base + ('\n' + L7 if L7 else ''))[:200], why
+        L7 = '▶대시보드 확인' if why else ''
+        return '\n'.join(x for x in [L1, L2, L3, L4, L5, L6, L7] if x)[:200], why
     kakao_one, check_why = build_kakao()
     kakao_msgs = [kakao_one]
     msgs = [msg1]
