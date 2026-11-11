@@ -121,9 +121,16 @@ def main():
         else: open('report/kakao.txt', 'w', encoding='utf-8').write('')
     elif not newdata_msg:
         open('report/kakao.txt', 'w', encoding='utf-8').write('')
-    elif errors:
-        msgs = open('report/kakao.txt', encoding='utf-8').read()
-        open('report/kakao.txt', 'w', encoding='utf-8').write(msgs + '\n=====\n' + ('[오류] ' + ' | '.join(errors))[:200] + '\n')
+    else:
+        # 카톡 '자료:' 줄 채우기 — 정상 / 오류 내용. VKOSPI 가 아직 안 올라온 것은 오류가 아니라 '내일 아침 확정' 안내로 적는다
+        real = [e for e in errors if not (e.startswith('VKOSPI') and '미반영' in e)]; vk_wait = len(real) != len(errors)
+        if not ok6: real.append('보고문 생성 실패')
+        st = f'오류 {len(real)}건(아래 메시지)' if real else ('정상' + ('(VKOSPI 내일 확정)' if vk_wait else ''))
+        txt = open('report/kakao.txt', encoding='utf-8').read().rstrip('\n')
+        room = 200 - (len(txt) - len('@@DATA@@'))
+        txt = txt.replace('@@DATA@@', st[:max(room, 6)])
+        if real: txt += '\n=====\n' + (f'[{today:%m/%d} 자료 오류 {len(real)}건]\n' + '\n'.join('· ' + e[:90] for e in real))[:200]   # 오류가 있을 때만 둘째 통: 오류 내용
+        open('report/kakao.txt', 'w', encoding='utf-8').write(txt + '\n')
     if errors: open('report/latest.md', 'a', encoding='utf-8').write('\n## 오류\n\n' + '\n'.join(f'- {e}' for e in errors) + '\n')
     # 7 카카오톡
     if not a.no_kakao and os.path.getsize('report/kakao.txt') > 0: run([sys.executable, 'kakao_send.py', '--file', 'report/kakao.txt'], '7 카카오톡', timeout=120)

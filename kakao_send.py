@@ -2,7 +2,7 @@
 """kakao_send.py — report/kakao.txt 의 메시지(===== 로 구분, 각 200자 이내)를 카카오톡 '나에게 보내기'로 보낸다.
    환경변수: KAKAO_REST_KEY, KAKAO_REFRESH_TOKEN (GitHub Secrets), 선택 KAKAO_CLIENT_SECRET, DASH_LINK(버튼 링크)
    갱신 토큰 보관: 카카오가 새 refresh 토큰을 주면 state/kakao_token.json 에 REST 키로 만든 키로 암호화해 저장하고 다음 실행부터 그것을 쓴다(비밀값 수정 권한 없이도 연장).
-   글 두 통: ① 매수·매도 신호 발생/미발생 ② 결론. 그래프·버튼은 보내지 않는다.
+   글 한 통(코스피·자료 상태·신호·수급·신용, 필요하면 대시보드 확인 사유) + 오류가 있으면 오류 내용 한 통. 그래프·버튼은 보내지 않는다.
    사용: python kakao_send.py --file report/kakao.txt [--alerts report/alerts.json] [--link https://...]
 """
 import argparse, base64, hashlib, json, os, sys
