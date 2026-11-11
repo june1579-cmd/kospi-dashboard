@@ -93,7 +93,7 @@ def main():
     qhold = None
     try:
         tr = Q['trade'].fillna('').astype(str).tolist(); ie = max([i for i, t in enumerate(tr) if t == 'enter'], default=-1); ix = max([i for i, t in enumerate(tr) if t == 'exit'], default=-1)
-        if ie > ix: qhold = {'since': str(Q.iloc[ie]['date']), 'day': len(Q) - 1 - ie - 1, 'exit_plan': str(Q.iloc[ie + 10]['date']) if ie + 10 < len(Q) else None}
+        if ie > ix: qhold = {'since': str(Q.iloc[ie]['date']), 'day': len(Q) - 1 - ie - 1, 'left': max(0, 10 - (len(Q) - 1 - ie))}
     except Exception: qhold = None
     # ---- 상태 요약 문장
     hdr = f"[대시보드 {md(today)} {LABEL.get(a.tag[:4], a.tag)}]"
@@ -112,7 +112,7 @@ def main():
     if top_sell and not any('매도 최적화 1위' in s['label'] for s in sig_new): sig_short.append(f"매도1위 지속({md(top_sell)}~)")
     for s in sig_off: sig_short.append('끝 ' + s['label'])
     if qtrade: sig_short.append('정밀검증 ' + ('진입' if qtrade == 'enter' else '청산'))
-    elif qhold: sig_short.append(f"정밀검증 보유 중({md(qhold['since'])} 진입, 청산 예정 {md(qhold['exit_plan']) if qhold['exit_plan'] else '10거래일 뒤'})")
+    elif qhold: sig_short.append(f"정밀검증 보유({md(qhold['since'])} 진입, {qhold['left']}거래일 뒤 청산)")
     if re_state is not None: sig_short.append(f"재진입 {re_state['state']}" + (f"·오늘 {re_today.iloc[-1]['action']}" if len(re_today) else ''))
     sig_line = '신호: ' + (' / '.join(sig_short) if sig_short else '새 신호 없음(1위 매수·매도 모두 꺼짐)')
     msg1 = '\n'.join([hdr, k_line + ' ' + v_line, reg, cr_line, lq_line, fo_line, sig_line])
@@ -148,7 +148,7 @@ def main():
         for s in sig_new: lines.append(f"{'(이미 알림) ' if s.get('repeat') else '★ '}{s['label']} 시작: {s['rule'][:60]}")
         for s in sig_off: lines.append(f"끝 {s['label']} ({md(s['until'])}까지)")
         if qtrade: lines.append(f"정밀 검증 전략 {'진입(다음 종가 매수, 10일 보유)' if qtrade == 'enter' else '청산'}")
-        elif qhold: lines.append(f"정밀 검증 전략 보유 중({md(qhold['since'])} 진입 신호, 10거래일 보유 뒤 청산)")
+        elif qhold: lines.append(f"정밀 검증 전략 보유 중({md(qhold['since'])} 종가 진입, {qhold['left']}거래일 뒤 청산 예정)")
         for _, r in re_today.iterrows(): lines.append(f"재진입 규칙: {r['action']} — {r['reason']}")
         m2 = '\n'.join(lines)
         msgs.append(m2 if len(m2) <= 200 else m2[:197] + '…')
@@ -210,7 +210,7 @@ def main():
     if sig_on: md_lines += [f"- 지속: {s['label']}" + (f" ({md(top_buy)}~)" if '매수 최적화 1위' in s['label'] and top_buy else '') + (f" ({md(top_sell)}~)" if '매도 최적화 1위' in s['label'] and top_sell else '') for s in sig_on]
     if sig_off: md_lines += [f"- 끝: {s['label']} ({s['until']}까지)" for s in sig_off]
     if qtrade: md_lines.append(f"- 정밀 검증 전략: {'진입' if qtrade == 'enter' else '청산'}")
-    elif qhold: md_lines.append(f"- 정밀 검증 전략: 보유 중({md(qhold['since'])} 진입 신호, 10거래일 보유, 청산 예정 {md(qhold['exit_plan']) if qhold['exit_plan'] else '미정'})")
+    elif qhold: md_lines.append(f"- 정밀 검증 전략: 보유 중({md(qhold['since'])} 종가 진입, 10거래일 보유, {qhold['left']}거래일 뒤 청산 예정)")
     if re_state is not None: md_lines.append(f"- 재진입 규칙 상태: {re_state['state']} (마지막 {re_state['date']} {re_state['action']})")
     if not (sig_new or sig_on or sig_off or qtrade): md_lines.append('- 오늘 켜진 신호 없음')
     md_lines += ['', '## 정밀 검증 현재 값', '', '| 항목 | 값 | 설명 |', '|---|---|---|'] + [f"| {r['item']} | {'' if pd.isna(r['value']) else r['value']} | {r['text']} |" for _, r in QN.iterrows()] if QN is not None else []
