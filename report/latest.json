@@ -1,7 +1,7 @@
 {
  "date": "2026-11-12",
  "tag": "0831",
- "run_at": "2026-11-12 16:44",
+ "run_at": "2026-11-12 17:42",
  "prelim": false,
  "values": {
   "kospi": 5362.67,
@@ -37,7 +37,7 @@
   "night": "2026-10-28"
  },
  "update_summary": {
-  "run": "2026-11-12 16:44 0831",
+  "run": "2026-11-12 17:41 0831",
   "kospi_last": "2026-11-12",
   "kofia_last": "2026-11-11",
   "vkospi_last": "2026-11-11",
@@ -90,7 +90,7 @@
    ],
    [
     "VIX",
-    "미국 VIX 종가 Yahoo Finance ^VIX(새 날짜 0건)",
+    "미국 VIX 종가 Yahoo Finance ^VIX(새 날짜 1건)",
     "참고_VIX_유가"
    ]
   ]
