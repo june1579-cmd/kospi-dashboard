@@ -1,11 +1,13 @@
 {
- "run": "2026-11-12 15:43",
- "tag": "1540",
+ "run": "2026-11-12 16:28",
+ "tag": "0831",
  "kospi_last": "2026-11-12",
  "kofia_last": "2026-11-11",
  "vkospi_last": "2026-11-11",
  "night_last": "2026-10-28",
- "errors": [],
+ "errors": [
+  "VKOSPI 2026-11-12 미반영(공개 저장소 2026-11-11까지, 10분 기다림) — VKOSPI 신호 판정 보류"
+ ],
  "files": {
   "alarms": {
    "sha256": "7251cd10f28921407323b8a6546c6d45f7bcfb3198df1127a73a78159610e3fa",
@@ -28,7 +30,7 @@
    "last_date": "2026-11-11"
   },
   "am_stats": {
-   "sha256": "ff05168c405713c52cdb6f0185969dc4ec1e557417fcafcc8fc98d9d387350a4",
+   "sha256": "e231ffe7e9bbdb8f26aa21350fcef375b74fcd7db16d5e33c001a8198869a844",
    "bytes": 1263,
    "last_date": "기준일"
   },
