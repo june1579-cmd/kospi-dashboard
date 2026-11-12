@@ -1,6 +1,6 @@
 {
- "run": "2026-11-12 20:24",
- "tag": "1840",
+ "run": "2026-11-13 00:37",
+ "tag": "1540",
  "kospi_last": "2026-11-12",
  "kofia_last": "2026-11-11",
  "vkospi_last": "2026-11-11",
@@ -18,8 +18,8 @@
    "last_date": "전체"
   },
   "am_daily": {
-   "sha256": "3f5c5231335e4751d5ebe9f9cd219ea8f193d393f2562dfc79d7122d2b9c240d",
-   "bytes": 232975,
+   "sha256": "1a89dbae4989d65eb98e70c524eee461d343fd6556ed12b66923f5ba085b53f6",
+   "bytes": 232977,
    "last_date": "2026-11-12"
   },
   "am_now": {
@@ -28,7 +28,7 @@
    "last_date": "2026-11-12"
   },
   "am_stats": {
-   "sha256": "cc09a99a7b21b9ad2bdbd411318a791b41ba901b0ba9684a2c7eecaa44496e43",
+   "sha256": "9d2aec639f56dca1a7298a88f9d9881238e65d6cdad974d03eea47ed55e131ce",
    "bytes": 1263,
    "last_date": "기준일"
   },
@@ -183,7 +183,7 @@
    "last_date": "2026-11-12"
   },
   "trend_champ_rules": {
-   "sha256": "93f687230b7c8a56ae5ba2ff415c603c63dd40d81c33ca35fc6a6956c0db9363",
+   "sha256": "2727fd649e6b60d1b439fcda7d3d79e9393a6db7e0759f051f7cf7c795f2c09b",
    "bytes": 5037,
    "last_date": "2026"
   },
