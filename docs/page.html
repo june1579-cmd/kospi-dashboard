@@ -703,7 +703,7 @@
   const C = () => dash.colors;
   const CRIT = 'var(--cds-chart-status-critical)', MUTED = 'var(--cds-chart-muted)';
   const REB = '#0ea5c6', RES = '#c026d3';   // 재진입 조합: 재매수(청록)·재매도(자주)
-  const B3C = ['#eab308', '#f08a8a', '#78350f'];   // 2015~2024 최적화 매수 1·2·3위(금·연한 빨강·갈색)
+  const B3C = ['#eab308', '#b39ddb', '#78350f'];   // 2015~2024 최적화 매수 1·2·3위(금·연한 보라·갈색)
   // KOSPI closes taken from news (not yet replaced by the KRX file)
   const repDates = () => { const d = dash.data('market'); return new Set(d.status === 'ok' ? d.data.filter(r => /보도치/.test(r.basis || '')).map(r => r.date) : []); };
   const REP_TXT = '코스피 종가 보도치(KRX 파일 받으면 교체 예정)';
