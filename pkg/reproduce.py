@@ -698,6 +698,9 @@ if __name__ == '__main__':
     import combo_track; outs.update(combo_track.run(D, outs.get('q_daily')))   # 매수×매도 신호 49개 조합 성적표·걸어가며 검증·지금 1위(combo_table, combo_select, combo_wf, combo_now)
     nf = night_fut(D)
     if nf is not None: outs['night_fut'] = nf; outs['gap_table'] = gap_table(nf)
+    try:
+        import fpanic; outs.update(fpanic.run(D))   # 외국인 투매·개인 매수 신호(2026-11-15): fpanic, fpanic_eps, fpanic_now
+    except Exception as e: print('fpanic 실패:', repr(e)[:200])
     for k, v in outs.items(): v.to_csv(os.path.join(a.out, k + '.csv'), index=False)
     open(os.path.join(a.out, 'checks.txt'), 'w').write(backtest_report(D, al) + '\n' + repaint_check(D) + '\n')
     print('written:', ', '.join(sorted(outs)), '+ checks.txt ->', a.out)

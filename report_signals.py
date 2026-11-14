@@ -125,6 +125,10 @@ def main():
     if re_today is not None and len(re_today):
         act = str(re_today.iloc[-1]['action']); (buys if '매수' in act else sells).append('재진입 ' + act)
     if qtrade: (buys if qtrade == 'enter' else sells).append('정밀검증 ' + ('진입' if qtrade == 'enter' else '청산'))
+    try:                                                      # 외국인 투매·개인 매수 신호(pkg/fpanic.py): 꺼져 있다가 오늘 켜진 날만 알림
+        FP = pd.read_csv(os.path.join(a.out, 'fpanic.csv')); fp = FP[FP['date'] <= today]
+        if len(fp) >= 2 and str(fp.iloc[-1]['date']) == today and int(fp.iloc[-1]['on']) == 1 and int(fp.iloc[-2]['on']) == 0: buys.append(f"외국인 투매·개인 매수({int(fp.iloc[-1]['n10'])}/10)")
+    except Exception: pass
     def eok(v): return ('+' if v >= 0 else '−') + (f'{abs(v):.1f}조' if abs(v) >= 1 else f'{abs(v) * 10000:,.0f}억')
     def eokp(v): return ('+' if float(v) >= 0 else '−') + f'{abs(float(v)):.1f}%'
     special = []                                              # 특이 신호: 매수·매도 규칙 밖에서 평소와 다른 것

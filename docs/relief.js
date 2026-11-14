@@ -197,6 +197,7 @@
     const fl = D('flows_daily'), fr = fl[fl.length - 1]; if (fr && String(fr.date) === day && n(fr.foreign_jo) != null && Math.abs(n(fr.foreign_jo)) >= 2) items.push([`외국인 ${jo(n(fr.foreign_jo))}`, '하루 2조 원 넘는 ' + (n(fr.foreign_jo) > 0 ? '순매수' : '순매도'), '#all']);
     const ce = D('credit_entry')[0]; if (ce && ce.entry != null && prev) [['l140', '140%'], ['l130', '130%(완화)'], ['l120', '120%(유예)']].forEach(([k, lab]) => { const v = n(ce[k]), a = n(prev.kospi), b = n(last.kospi); if (v == null) return;
       if (a >= v && b < v) items.push([`코스피가 신용 청산 ${lab} 선 ${f0(v)} 아래로`, '담보 부족 계좌가 늘 수 있는 구간 진입', '#relief']); if (a < v && b >= v) items.push([`코스피가 신용 청산 ${lab} 선 ${f0(v)} 위로 회복`, '담보 부족 압력 완화', '#relief']); });
+    const fpd = D('fpanic'); if (fpd.length >= 2) { const f1 = fpd[fpd.length - 1], f0p = fpd[fpd.length - 2]; if (String(f1.date) === day && +f1.on === 1 && +f0p.on === 0) items.push([`외국인 투매·개인 매수 신호 켜짐(조합 10개 중 ${f1.n10}개)`, '켜진 뒤 10일 상승: 검증 81%(아무 날 54%), 표본 10번', '#fpanic']); }
     const cb = D('combo'); const cn = D('combo_now')[0] || (cb.length ? cb[cb.length - 1] : null); if (cn && cn.warn) items.push(['조합 1위 경고', String(cn.warn).slice(0, 60), '#all']);
     const box = placeTop(); if (!box) return;
     box.className = items.length ? '' : 'calm'; box.replaceChildren();
@@ -226,5 +227,26 @@
     return box;
   }
   try { placeTop(); } catch (e) { console.error(e); }
-  window.fillRelief = () => { try { fillRelief(); } finally { try { fillHot(); } catch (e) { console.error(e); } } };   // index.html 의 dash.onData 콜백이 부른다(스크립트끼리는 window 로만 공유)
+  // ---- 외국인 투매·개인 매수 신호 카드(11/15 추가): 자료 fpanic_now·fpanic_eps·fpanic(pkg/fpanic.py). 한눈에 보기 그래프 바로 아래에 놓는다
+  function fillPanic() {
+    const D = id => { try { const d = dash.data(id); return d.status === 'ok' ? d.data : null; } catch (e) { return null; } };
+    const now = D('fpanic_now'), eps = D('fpanic_eps'); if (!now || !now.length) return;
+    const all = document.getElementById('all'); if (!all) return;
+    let sec = document.getElementById('fpanic'); if (!sec) { sec = document.createElement('section'); sec.id = 'fpanic'; all.after(sec); }
+    const el = (t, cls, txt) => { const e = document.createElement(t); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+    const get = k => now.find(r => String(r.item) === k) || {}, on = +get('상태').value === 1;
+    const card = el('div', 'rv-card'); const h = el('h3', null, '외국인 투매·개인 매수 신호 '); const pill = el('span', on ? 'rv-hot' : null, on ? '● 켜짐' : '○ 꺼짐'); if (!on) pill.style.opacity = '.6'; h.appendChild(pill); card.appendChild(h);
+    card.appendChild(el('p', 'rv-note', String(get('상태').text || '') + ' · 크게 빠진 시장에서 외국인이 60일 내내 극단적으로 팔 때 켜지는 매수 쪽 신호(켜진 뒤 10~15거래일 안의 반등을 본다).'));
+    const ul = el('ul'); ul.style.margin = '4px 0 8px'; ul.style.paddingLeft = '18px';
+    now.filter(r => String(r.item).startsWith('핵심 조건')).forEach(r => { const li = el('li', null, String(r.text)); li.style.fontSize = '13.5px'; if (/— 아님$/.test(String(r.text))) li.style.opacity = '.65'; ul.appendChild(li); }); card.appendChild(ul);
+    const mkTbl = (heads, rows) => { const w = el('div', 'rv-tbl-wrap'), t = el('table', 'rv-tbl'), th = el('thead'), trh = el('tr'); heads.forEach(x => trh.appendChild(el('th', null, x))); th.appendChild(trh); t.appendChild(th);
+      const tb = el('tbody'); rows.forEach(r => { const tr = el('tr'); r.forEach(x => tr.appendChild(el('td', null, x))); tb.appendChild(tr); }); t.appendChild(tb); w.appendChild(t); return w; };
+    card.appendChild(mkTbl(['검증(해마다 그 전 자료로 고른 조합)', '성적'], now.filter(r => String(r.item).startsWith('검증')).map(r => [String(r.item).replace('검증 ', ''), String(r.text)])));
+    if (eps && eps.length) { const rows = eps.slice().reverse().map(e => [`${e.start} ~ ${String(e.end).slice(5)}`, e.days + '일', Math.round(+e.kospi).toLocaleString('en-US'), `${e.up10}` + (e.avg10 !== '' && e.avg10 != null ? ` · ${(+e.avg10 >= 0 ? '+' : '−') + Math.abs(+e.avg10).toFixed(1)}%` : ''), `${e.up20}` + (e.avg20 !== '' && e.avg20 != null ? ` · ${(+e.avg20 >= 0 ? '+' : '−') + Math.abs(+e.avg20).toFixed(1)}%` : ''), String(e.status)]);
+      const d = el('details', 'rv-more'); d.appendChild(el('summary', null, `켜졌던 ${eps.length}번의 기록 (펼치기)`)); d.appendChild(mkTbl(['기간', '일수', '첫날 코스피', '10일 뒤 상승·평균', '20일 뒤 상승·평균', '상태'], rows)); card.appendChild(d); }
+    const d2 = el('details', 'rv-more'); d2.appendChild(el('summary', null, '읽는 법 · 조합 조건 (펼치기)')); ['읽는 법', '조합'].forEach(k => { if (get(k).text) d2.appendChild(el('p', 'rv-note', String(get(k).text))); });
+    d2.appendChild(el('p', 'rv-note', '조건의 pNN은 최근 3년(750거래일) 안에서 오늘 값의 백분위. 해마다 그 전 자료만으로 3조건 조합 1억 3,148만 개를 채점해 고른 4조건 상위 10개 중 하나라도 켜지면 신호다. 투자 권유가 아니다.')); card.appendChild(d2);
+    sec.replaceChildren(card);
+  }
+  window.fillRelief = () => { try { fillRelief(); } finally { try { fillHot(); } catch (e) { console.error(e); } try { fillPanic(); } catch (e) { console.error(e); } } };   // index.html 의 dash.onData 콜백이 부른다(스크립트끼리는 window 로만 공유)
 })();
