@@ -124,7 +124,7 @@ def main():
     sells = [s['label'].replace('매도 ', '') for s in sig_new if s['label'].startswith('매도')] + [s['label'].replace('매도 ', '') + f"({md(s['date'])}분)" for s in late if s['label'].startswith('매도')]
     if re_today is not None and len(re_today):
         act = str(re_today.iloc[-1]['action']); (buys if '매수' in act else sells).append('재진입 ' + act)
-    if qtrade: (buys if qtrade == 'enter' else sells).append('정밀검증 ' + ('진입' if qtrade == 'enter' else '청산'))
+    # 정밀 검증 전략의 진입·청산은 알림에서 뺐다(2026-11-15: 2018~2026 걷기 검증 −15.6% vs 코스피 보유 +113%로 도움이 안 됨 — 대시보드 8번 칸에는 그대로 표시)
     try:                                                      # 외국인 투매·개인 매수 신호(pkg/fpanic.py): 꺼져 있다가 오늘 켜진 날만 알림
         FP = pd.read_csv(os.path.join(a.out, 'fpanic.csv')); fp = FP[FP['date'] <= today]
         if len(fp) >= 2 and str(fp.iloc[-1]['date']) == today and int(fp.iloc[-1]['on']) == 1 and int(fp.iloc[-2]['on']) == 0: buys.append(f"외국인 투매·개인 매수({int(fp.iloc[-1]['n10'])}/10)")

@@ -188,8 +188,7 @@
     const re = D('reentry'); if (re.length && String(re[re.length - 1].date) === day) items.push([`재진입 규칙: ${re[re.length - 1].action}`, String(re[re.length - 1].reason || ''), '#all']);
     const q = D('q_daily'), ql = q[q.length - 1], qp = q[q.length - 2];
     if (ql && String(ql.date) === day) {
-      if (ql.trade === 'enter') items.push(['정밀 검증 전략 진입', '다음 종가 매수, 10거래일 보유', '#qtop']);
-      if (ql.trade === 'exit') items.push([`정밀 검증 전략 청산${n(ql.trade_ret) != null ? '(' + sg(n(ql.trade_ret)) + '%)' : ''}`, '보유 기간 종료 또는 급락 위험 조건', '#qtop']);
+      // 정밀 검증 전략 진입·청산은 큰 변화에서 뺐다(11/15: 검증에서 도움이 안 됨)
       if (qp && String(qp.regime) !== String(ql.regime)) items.push([`국면 ${qp.regime} → ${ql.regime}`, '시장 상태 판정이 바뀜', '#qtop']); }
     const chg = n(last.kospi_chg_pct); if (chg != null && Math.abs(chg) >= 3) items.push([`코스피 ${sg(chg, 2)}%`, '하루 3% 넘는 ' + (chg > 0 ? '급등' : '급락'), '#all']);
     const cr = D('credit'), cl = cr[cr.length - 1]; if (cl && n(cl.chg_pct) != null && Math.abs(n(cl.chg_pct)) >= 3) items.push([`신용잔고 하루 ${sg(n(cl.chg_pct))}% (${md(cl.date)}분 ${n(cl.credit_jo).toFixed(1)}조)`, n(cl.chg_pct) > 0 ? '급증: 빚투 확대' : '급감: 상환·청산', '#all']);
