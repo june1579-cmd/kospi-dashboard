@@ -1,0 +1,1018 @@
+<meta name="dash-one-writer">
+<style>
+.lx { display: grid; gap: var(--cds-gap-xl); font-family: var(--font-anthropic-sans); color: var(--color-fg); }
+.lx-head { display: grid; gap: var(--cds-gap-xs); }
+.lx-title { margin: 0; font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); line-height: 1.15; text-wrap: balance; }
+.lx-take { margin: 0; max-width: 72ch; color: var(--color-fg-muted); font-size: var(--cds-font-size-body); line-height: 1.55; }
+.lx .lx-take b { color: var(--color-fg); font-weight: 600; font-variant-numeric: tabular-nums; }
+.lx-tiles { display: grid; gap: var(--cds-gap-md); grid-template-columns: repeat(auto-fit, minmax(min(100%, 11.5rem), 1fr)); }
+.lx-tile, .lx-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); min-width: 0; }
+.lx-tile { display: grid; gap: var(--cds-gap-xs); align-content: start; }
+.lx-label { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.lx-big { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); line-height: 1.1; font-variant-numeric: tabular-nums; }
+.lx-sub { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-variant-numeric: tabular-nums; }
+.lx-card { display: grid; gap: var(--cds-gap-sm); align-content: start; }
+.lx-card h2 { margin: 0; font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); text-wrap: balance; }
+.lx-note { margin: 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); line-height: 1.5; }
+.lx-grid { display: grid; gap: var(--cds-gap-md); grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); }
+.lx-scroll { overflow-x: auto; container-type: inline-size; min-width: 0; }
+.lx-table { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-caption); line-height: 1.45; }
+.lx-table th, .lx-table td { text-align: left; vertical-align: top; padding: var(--cds-pad-xs) var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); }
+.lx-table th { color: var(--color-fg-muted); font-weight: var(--cds-font-weight-medium); white-space: nowrap; }
+.lx-table td { font-variant-numeric: tabular-nums; }
+.lx-table tbody tr:last-child td { border-bottom: 0; }
+.lx-table a { color: inherit; text-decoration: underline; text-decoration-color: var(--color-border-line); text-underline-offset: 2px; }
+.lx-table a:hover { text-decoration-color: currentColor; }
+.lx-ind td:nth-child(1) { color: var(--color-fg-muted); }
+.lx-ind td:nth-child(2) { font-weight: 600; white-space: nowrap; }
+.lx-chip { display: inline-block; padding: 0 var(--cds-pad-sm); border-radius: 999px; font-weight: 600; white-space: nowrap; line-height: 1.6; }
+.lx-chip--ok { color: var(--color-ok); background: color-mix(in srgb, var(--color-ok) 14%, transparent); }
+.lx-chip--caution { color: var(--color-warn); background: color-mix(in srgb, var(--color-warn) 16%, transparent); }
+.lx-chip--warn { color: var(--color-bad); background: color-mix(in srgb, var(--color-bad) 16%, transparent); }
+.lx-chip--danger { color: var(--color-panel); background: var(--color-bad); }
+@container (max-width: 960px) { .lx-ind th:nth-child(5), .lx-ind td:nth-child(5), .lx-ind th:nth-child(10), .lx-ind td:nth-child(10) { display: none; } }
+@container (max-width: 640px) { .lx-ind th:nth-child(6), .lx-ind td:nth-child(6), .lx-ind th:nth-child(8), .lx-ind td:nth-child(8), .lx-ind th:nth-child(9), .lx-ind td:nth-child(9), .lx-ind th:nth-child(11), .lx-ind td:nth-child(11) { display: none; } }
+.lx-notes { margin: 0; padding-left: 1.2em; display: grid; gap: 2px; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); line-height: 1.45; }
+.lx-legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-xs) var(--cds-gap-md); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.lx-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.lx-legend i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; background: var(--cds-chart-muted); }
+.lx-pick { display: flex; flex-wrap: wrap; align-items: center; gap: var(--cds-gap-sm); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.lx-pick select { font: inherit; color: var(--color-fg); background: var(--color-bg); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-xs) var(--cds-pad-sm); max-width: 100%; min-width: 0; }
+.lx-pick select:focus-visible { outline: 2px solid var(--cds-chart-axis); outline-offset: 1px; }
+.lx-chart { position: relative; min-width: 0; }
+.lx-chart svg { display: block; }
+.lx-chart--scen { min-height: 116px; }
+.lx-chart--dd { min-height: 280px; }
+.lx-chart--ep { min-height: 302px; }
+.lx-chart--mg, .lx-chart--fc { min-height: 220px; }
+.lx-chart svg text { font-family: var(--font-anthropic-sans); }
+.lx-tick { fill: var(--color-fg-muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+.lx-svg-label { fill: var(--color-fg); font-size: 12px; }
+.lx-strong { font-weight: 600; }
+.lx-svg-in { fill: var(--color-panel); font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.lx-svg-end { font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.lx-val { fill: var(--color-fg); font-size: 11px; font-variant-numeric: tabular-nums; }
+.lx-grid-line { stroke: var(--cds-chart-grid); stroke-width: 1; }
+.lx-axis-line { stroke: var(--cds-chart-axis); stroke-width: 1; }
+.lx-ref-line { stroke: var(--cds-chart-reference); stroke-width: 1; stroke-dasharray: 4 3; }
+.lx-ref-label { fill: var(--color-fg-muted); font-size: 11px; }
+.lx-tip { position: absolute; z-index: 2; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); border-radius: var(--cds-radius); box-shadow: var(--cds-shadow-popover); padding: var(--cds-pad-xs) var(--cds-pad-sm); font-size: var(--cds-font-size-caption); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.lx-tip-h { color: var(--cds-text-secondary); }
+.lx-tip-r { display: flex; align-items: center; gap: 6px; }
+.lx-tip-r i { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
+.lx-fail { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: inherit; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+.lx-fail-dot { width: .375rem; height: .375rem; border-radius: 50%; background: var(--color-bad); }
+.lx-foot { margin: 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); line-height: 1.5; }
+.lx-foot a { color: inherit; text-underline-offset: 2px; }
+.lx [data-dash-source-state=empty] { color: transparent; }
+.lx [data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
+.lx-comp { margin: 0; font-size: var(--cds-font-size-body); color: var(--color-fg-muted); line-height: 1.5; }
+.lx .lx-comp b { color: var(--color-fg); font-weight: 600; font-variant-numeric: tabular-nums; }
+.lx-chart--sum { min-height: 300px; }
+.lx-chart--map { min-height: 900px; }
+.lx-band-0 { fill: var(--color-ok); fill-opacity: .2; }
+.lx-band-1 { fill: var(--color-warn); fill-opacity: .26; }
+.lx-band-2 { fill: var(--color-bad); fill-opacity: .24; }
+.lx-band-3 { fill: var(--color-bad); fill-opacity: .55; }
+.lx-legend i.lx-b0 { background: color-mix(in srgb, var(--color-ok) 30%, transparent); }
+.lx-legend i.lx-b1 { background: color-mix(in srgb, var(--color-warn) 36%, transparent); }
+.lx-legend i.lx-b2 { background: color-mix(in srgb, var(--color-bad) 34%, transparent); }
+.lx-legend i.lx-b3 { background: color-mix(in srgb, var(--color-bad) 65%, transparent); }
+.lx-legend i.lx-dot { border-radius: 50%; background: var(--color-fg); }
+.lx-legend i.lx-ring { border-radius: 50%; background: transparent; border: 1.5px solid var(--color-fg); box-sizing: border-box; }
+.lx-tip--wrap { white-space: normal; max-width: min(26rem, 85vw); }
+.lx-head .lx-runline { margin: 0; }
+.lx-hold { display: block; margin-top: 2px; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); white-space: normal; }
+.lx-sep { stroke: var(--color-border-line); stroke-width: 1; }
+.lx-runs td:nth-child(1) { white-space: nowrap; color: var(--color-fg-muted); }
+@container (max-width: 640px) { .lx-runs th:nth-child(5), .lx-runs td:nth-child(5), .lx-runs th:nth-child(6), .lx-runs td:nth-child(6) { display: none; } }
+.lx-news { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--cds-gap-md); min-width: 0; }
+.lx-news.dash-skeleton { min-height: 9rem; }
+.lx-news-item { display: grid; gap: 2px; min-width: 0; padding-left: var(--cds-pad-md); border-left: 3px solid var(--color-border-line); }
+.lx-news-item--risk { border-left-color: var(--color-bad); }
+.lx-news-item--ease { border-left-color: var(--color-ok); }
+.lx-news-item--watch { border-left-color: var(--color-warn); }
+.lx-news-top { display: flex; flex-wrap: wrap; align-items: center; gap: 2px var(--cds-gap-sm); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-variant-numeric: tabular-nums; }
+.lx-news-tone { font-weight: 600; }
+.lx-news-item--risk .lx-news-tone { color: var(--color-bad); }
+.lx-news-item--ease .lx-news-tone { color: var(--color-ok); }
+.lx-news-item--watch .lx-news-tone { color: var(--color-warn); }
+.lx-news-ind::before { content: "관련 지표 "; }
+.lx-news-title { margin: 0; font-size: var(--cds-font-size-body); font-weight: 600; line-height: 1.45; overflow-wrap: anywhere; }
+.lx-news-impact { margin: 0; font-size: var(--cds-font-size-body); line-height: 1.45; overflow-wrap: anywhere; }
+.lx-news-impact::before { content: "→ "; color: var(--color-fg-muted); }
+.lx-news-foot { margin: 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); line-height: 1.5; overflow-wrap: anywhere; }
+.lx-news-foot a { color: inherit; text-decoration: underline; text-decoration-color: var(--color-border-line); text-underline-offset: 2px; }
+.lx-news-foot a:hover { text-decoration-color: currentColor; }
+.lx-news-verify { font-weight: 600; color: var(--color-fg); }
+.lx-news-verify--weak { color: var(--color-warn); }
+</style>
+
+<div class="lx">
+  <header class="lx-head" id="top">
+    <h1 class="lx-title">AI 선행지표 경고판</h1>
+    <p class="lx-take">경고 <b class="dash-skeleton" data-draw="cnt" data-source="stage_counts" data-field="n" data-where="stage=경고">—</b>개 · 주의 <b class="dash-skeleton" data-draw="cnt" data-source="stage_counts" data-field="n" data-where="stage=주의">—</b>개 · 정상 <b class="dash-skeleton" data-draw="cnt" data-source="stage_counts" data-field="n" data-where="stage=정상">—</b>개. 돈의 흐름(2·3번)과 메모리(8번)가 함께 꺾이면 반도체 비중이 큰 한국 증시가 가장 크게 흔들릴 가능성이 큽니다.</p>
+    <p class="lx-sub lx-runline">마지막 자료 수집 <span class="dash-skeleton" data-draw="lr" data-source="last_run" data-field="at_label" data-row="0">—</span> · <span data-draw="lr" data-source="last_run" data-field="type" data-row="0">—</span> · 단계는 수치 기준으로 자동 계산</p>
+  </header>
+
+  <section class="lx-card" id="news">
+    <h2>최근 주목할 뉴스</h2>
+    <p class="lx-note">자료를 모을 때마다(하루 세 번) 선행지표에 영향을 줄 수 있는 뉴스를 골라 한 줄로 줄이고, 화살표(→) 줄에 미칠 수 있는 영향을 적었습니다. 영향은 가능성이며 확정된 사실이 아닙니다. 공시·기관 발표 원문을 직접 열어 확인했거나 서로 다른 매체 두 곳 이상이 같은 내용을 보도한 것만 올리고, 한 곳만 보도한 것은 그렇게 표시합니다. 최근 것부터 놓았고 일주일이 지나면 내립니다. 매체 이름을 누르면 출처가 열립니다.</p>
+    <ul class="lx-news dash-skeleton" data-draw="news-list" data-source="news"></ul>
+    <p class="lx-note lx-news-none" hidden>지금은 따로 주목할 뉴스가 없습니다.</p>
+  </section>
+
+  <div class="lx-tiles">
+    <div class="lx-tile" id="tile-kospi">
+      <span class="lx-label">코스피, 2026년 고점 대비</span>
+      <span class="lx-big"><span class="dash-skeleton" data-draw="mk" data-source="market_latest" data-field="dd_pct" data-where="index=KOSPI">—</span>%</span>
+      <span class="lx-sub"><span data-draw="mk" data-source="market_latest" data-field="close" data-where="index=KOSPI">—</span> · <span data-draw="mk" data-source="market_latest" data-field="date_label" data-where="index=KOSPI">—</span> 종가</span>
+    </div>
+    <div class="lx-tile" id="tile-sox">
+      <span class="lx-label">SOX, 2026년 고점 대비</span>
+      <span class="lx-big"><span class="dash-skeleton" data-draw="mk" data-source="market_latest" data-field="dd_pct" data-where="index=SOX">—</span>%</span>
+      <span class="lx-sub"><span data-draw="mk" data-source="market_latest" data-field="close" data-where="index=SOX">—</span> · <span data-draw="mk" data-source="market_latest" data-field="date_label" data-where="index=SOX">—</span> 종가</span>
+    </div>
+    <div class="lx-tile" id="tile-margin">
+      <span class="lx-label">신용융자 잔고</span>
+      <span class="lx-big"><span class="dash-skeleton" data-draw="mg" data-source="margin_latest" data-field="value" data-row="0">—</span>조 원</span>
+      <span class="lx-sub">최고 <span data-draw="mg" data-source="margin_latest" data-field="peak" data-row="0">—</span>조 원 · <span data-draw="mg" data-source="margin_latest" data-field="date_label" data-row="0">—</span> 기준</span>
+    </div>
+    <div class="lx-tile" id="tile-scenario">
+      <span class="lx-label">시나리오 A(정체·거품 조정)</span>
+      <span class="lx-big"><span class="dash-skeleton" data-draw="sc" data-source="scenarios" data-field="A" data-where="key=current">—</span>%</span>
+      <span class="lx-sub">B <span data-draw="sc" data-source="scenarios" data-field="B" data-where="key=current">—</span>% · C <span data-draw="sc" data-source="scenarios" data-field="C" data-where="key=current">—</span>% · D <span data-draw="sc" data-source="scenarios" data-field="D" data-where="key=current">—</span>%</span>
+    </div>
+  </div>
+
+  <section class="lx-card" id="stage-map">
+    <h2>통합 경고 지도</h2>
+    <p class="lx-note">지표 번호 순입니다. 지표마다 정상·주의·경고·위험의 경계를 숫자로 정하고 지금 값의 위치를 한 눈금에 놓았으며(한 단계가 한 칸), 대시보드의 단계는 모두 이 위치로 계산합니다. 지표의 위치는 주 지표 가운데 가장 높은 값입니다. 보조 지표는 주의까지만 올리고, 기간 조건이 붙은 경고와 전환 규칙으로 정하는 위험은 조건이 확인된 뒤에 올립니다. 점에 마우스를 올리면 근거 값이 보입니다.</p>
+    <p class="lx-comp">전체 지표의 평균 위치는 <b class="dash-skeleton" data-draw="comp" data-source="indicator_pos" data-field="pos" data-where="no=종합">—</b>, <b data-draw="comp" data-source="indicator_pos" data-field="stage_rule" data-where="no=종합">—</b> 칸입니다.</p>
+    <div class="lx-legend">
+      <span><i class="lx-b0"></i>정상</span>
+      <span><i class="lx-b1"></i>주의</span>
+      <span><i class="lx-b2"></i>경고</span>
+      <span><i class="lx-b3"></i>위험</span>
+    </div>
+    <div class="lx-chart lx-chart--sum dash-skeleton" data-draw="stage-sum" data-source="indicator_pos metric_pos indicators"></div>
+  </section>
+
+  <section class="lx-card" id="board">
+    <h2>지표별 경고 단계</h2>
+    <p class="lx-note">단계는 정상·주의·경고·위험 열의 수치 범위로 자동 계산했고, 단계가 높은 순입니다. 경고 이상은 주 지표로만 판정합니다(괄호 안 보조 지표는 주의까지). 위험은 다른 지표와 함께 켜져 전환 규칙이 발동하는 상태입니다. 단계 아래 작은 글씨는 측정값 하나만 보면 더 높은 단계이지만 조건을 기다리느라 낮춰 둔 이유입니다. 지표 이름을 누르면 출처가 열립니다.</p>
+    <div class="lx-scroll">
+      <table class="lx-table lx-ind" data-source="board" data-row-key="no">
+        <thead>
+          <tr>
+            <th data-field="no">번호</th>
+            <th data-field="name">지표</th>
+            <th data-field="stage">단계</th>
+            <th data-field="value">지금 값</th>
+            <th data-field="normal">정상</th>
+            <th data-field="caution">주의</th>
+            <th data-field="warn">경고</th>
+            <th data-field="danger">위험</th>
+            <th data-field="shift">넘으면 확률 이동</th>
+            <th data-field="assets">먼저 반응하는 자산</th>
+            <th data-field="next_check">다음 확인</th>
+          </tr>
+        </thead>
+        <tbody data-draw="ind-rows"></tbody>
+      </table>
+    </div>
+    <ul class="lx-notes" data-draw="ind-notes" data-source="indicators"></ul>
+  </section>
+
+  <section class="lx-card" id="threshold-map">
+    <h2>지표별 수치 기준과 지금 위치</h2>
+    <p class="lx-note">지표 번호 순입니다. 칸 아래 숫자가 단계 경계값입니다. 위험 칸의 바깥 끝은 그래프를 그리기 위한 값이며, 실제 위험 판정은 위 표의 위험 기준을 따릅니다. 점선 칸은 아직 값을 확인하지 못한 지표입니다. 줄에 마우스를 올리면 범위와 메모가 보입니다.</p>
+    <div class="lx-legend">
+      <span><i class="lx-b0"></i>정상</span>
+      <span><i class="lx-b1"></i>주의</span>
+      <span><i class="lx-b2"></i>경고</span>
+      <span><i class="lx-b3"></i>위험</span>
+      <span><i class="lx-dot"></i>주 지표</span>
+      <span><i class="lx-ring"></i>보조 지표</span>
+    </div>
+    <div class="lx-chart lx-chart--map dash-skeleton" data-draw="stage-map" data-source="metric_pos indicator_pos indicators"></div>
+  </section>
+
+  <section class="lx-card" id="scenarios">
+    <h2>시나리오 확률: 지금과 지표가 켜졌을 때</h2>
+    <p class="lx-note">늘어난 확률만큼 나머지 시나리오에서 크기에 비례해 빼므로 합계는 늘 100%입니다. 여러 지표가 함께 켜지면 전환 규칙의 분포를 씁니다.</p>
+    <label class="lx-pick" for="lx-scen">켜지는 경우 <select id="lx-scen" data-draw="scen-pick" data-source="scenarios"></select></label>
+    <div class="lx-legend"><span><i data-sc="A"></i>A 정체·거품 조정</span><span><i data-sc="B"></i>B 점진적 확산</span><span><i data-sc="C"></i>C 가속</span><span><i data-sc="D"></i>D 급변</span></div>
+    <div class="lx-chart lx-chart--scen dash-skeleton" data-draw="scen-chart" data-source="scenarios"></div>
+    <p class="lx-note">변화: <span data-draw="scen-delta" data-source="scenarios">—</span></p>
+  </section>
+
+  <div class="lx-grid">
+    <section class="lx-card" id="drawdown">
+      <h2>코스피·SOX 고점 대비 하락률</h2>
+      <p class="lx-note">2026년 최고 종가 대비이며, 주요 날짜의 종가만 찍었습니다(매일 값 아님). 점선은 약세장과 위험 기준입니다.</p>
+      <div class="lx-legend"><span><i data-ix="KOSPI"></i>코스피</span><span><i data-ix="SOX"></i>SOX</span></div>
+      <div class="lx-chart lx-chart--dd dash-skeleton" data-draw="dd-chart" data-source="market_dd"></div>
+    </section>
+    <section class="lx-card" id="history">
+      <h2>과거 약세장과 비교</h2>
+      <p class="lx-note">고점 대비 최대 하락률(종가). 2000년 코스피는 그해 안의 낙폭이고, 2026년은 지금까지의 최대입니다.</p>
+      <div class="lx-legend"><span><i data-ix="KOSPI"></i>코스피</span><span><i data-ix="SOX"></i>SOX</span></div>
+      <div class="lx-chart lx-chart--ep dash-skeleton" data-draw="ep-chart" data-source="episodes"></div>
+    </section>
+  </div>
+
+  <div class="lx-grid">
+    <section class="lx-card" id="margin">
+      <h2>신용융자 잔고</h2>
+      <p class="lx-note">조 원, 금융투자협회 집계를 보도한 기사 기준. 주요 날짜만 찍었습니다.</p>
+      <div class="lx-chart lx-chart--mg dash-skeleton" data-draw="margin-chart" data-source="margin"></div>
+    </section>
+    <section class="lx-card" id="forced">
+      <h2>하루 반대매매 금액</h2>
+      <p class="lx-note">억 원, 주요 급락일. 점선은 경고 기준이고, 넘은 날은 빨간 막대입니다.</p>
+      <div class="lx-chart lx-chart--fc dash-skeleton" data-draw="forced-chart" data-source="forced"></div>
+    </section>
+  </div>
+
+  <div class="lx-grid">
+    <section class="lx-card" id="macro">
+      <h2>거시 배경</h2>
+      <p class="lx-note">금리와 물가가 높을 땐 나쁜 고용 지표가 오히려 금리 기대를 낮춰 주가에 호재가 되기도 합니다.</p>
+      <div class="lx-scroll">
+        <table class="lx-table" data-source="macro" data-row-key="item">
+          <thead>
+            <tr>
+              <th data-field="item">항목</th>
+              <th data-field="value">값</th>
+              <th data-field="as_of">기준</th>
+              <th data-field="note">참고</th>
+            </tr>
+          </thead>
+          <tbody data-draw="macro-rows"></tbody>
+        </table>
+      </div>
+    </section>
+    <section class="lx-card" id="calendar">
+      <h2>다음 확인 일정</h2>
+      <p class="lx-note">관련 지표 번호는 위 경고판 번호입니다.</p>
+      <div class="lx-scroll">
+        <table class="lx-table" data-source="events" data-row-key="id">
+          <thead>
+            <tr>
+              <th data-field="date">날짜</th>
+              <th data-field="event">일정</th>
+              <th data-field="indicators">관련 지표</th>
+              <th data-field="status">상태</th>
+            </tr>
+          </thead>
+          <tbody data-draw="event-rows"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <section class="lx-card" id="auto">
+    <h2>자동 수집 기록</h2>
+    <p class="lx-note">하루 세 번(07:30·15:50·19:30) 예약 작업이 자료와 주목할 뉴스를 모아 값을 고치면 단계와 그래프가 수치 기준으로 다시 계산됩니다. 월요일엔 주간 자료를, 매달 초순과 중순엔 월간 자료를 더 모읍니다. 시나리오 확률과 경계값은 자동으로 바꾸지 않고 제안으로만 남깁니다.</p>
+    <p class="lx-sub">쌓인 이력 <span class="dash-skeleton" data-draw="hs" data-source="history_stats" data-field="rows" data-row="0">—</span>행 · 측정값 <span data-draw="hs" data-source="history_stats" data-field="keys" data-row="0">—</span>개 · <span data-draw="hs" data-source="history_stats" data-field="first" data-row="0">—</span>부터</p>
+    <div class="lx-scroll">
+      <table class="lx-table lx-runs" data-source="runs" data-row-key="at">
+        <thead>
+          <tr>
+            <th data-field="at">시각</th>
+            <th data-field="type">종류</th>
+            <th data-field="changed">바뀐 값</th>
+            <th data-field="stages">단계 변화</th>
+            <th data-field="unverified">확인 필요</th>
+            <th data-field="proposals">제안</th>
+          </tr>
+        </thead>
+        <tbody data-draw="run-rows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <p class="lx-foot">근거와 과거 사례는 <a href="https://claude.ai/artifact/MJrw7ZqRCCsL46zSiWZC9J" target="_blank" rel="noopener">AI 3년 영향 확률 분석</a> 문서의 선행지표 정밀 분석 탭에, 단계별 수치 기준과 자료 자동 수집 프롬프트는 같은 문서의 수치 기준과 자동 수집 탭에 있습니다. 판단을 돕는 사실 정리이며 투자 권유가 아닙니다.</p>
+</div>
+
+<script>
+window.lx = window.lx || {};
+lx.REF = {bear: -20, soxDanger: -40, kospiDangerLevel: 4500, forcedWarn: 800};
+lx.SC = ['A', 'B', 'C', 'D'];
+lx.scen = lx.scen || 'a7';
+lx.scColor = (k) => dash.colors[2 + lx.SC.indexOf(k)];
+lx.ixColor = (ix) => (ix === 'SOX' ? dash.colors[1] : dash.colors[0]);
+lx.ixName = (ix) => (ix === 'KOSPI' ? '코스피' : String(ix));
+lx.bad = (s) => s === 'error' || s === 'missing' || s === 'declined' || s === 'connect';
+lx.skel = (el, s) => { el.classList.toggle('dash-skeleton', !(s === 'ok' || lx.bad(s))); };
+lx.fail = (el) => {
+  el.replaceChildren();
+  const w = document.createElement('div'); w.className = 'lx-fail';
+  const dot = document.createElement('span'); dot.className = 'lx-fail-dot';
+  const t = document.createElement('span'); t.textContent = '불러오지 못했습니다';
+  w.append(dot, t); el.append(w);
+};
+lx.date = (s) => new Date(String(s).slice(0, 10) + 'T00:00:00Z');
+lx.md = (s) => `${Number(String(s).slice(5, 7))}.${Number(String(s).slice(8, 10))}`;
+lx.f1 = d3.format('.1f');
+lx.tip = (box) => { const t = document.createElement('div'); t.className = 'lx-tip'; t.hidden = true; box.append(t); return t; };
+lx.tipShow = (box, t, x, y, head, lines) => {
+  t.replaceChildren();
+  const h = document.createElement('div'); h.className = 'lx-tip-h'; h.textContent = head; t.append(h);
+  for (const [color, label] of lines) {
+    const row = document.createElement('div'); row.className = 'lx-tip-r';
+    if (color) { const sw = document.createElement('i'); sw.style.background = color; row.append(sw); }
+    const s = document.createElement('span'); s.textContent = label; row.append(s);
+    t.append(row);
+  }
+  t.hidden = false;
+  const bw = box.clientWidth, tw = t.offsetWidth, th = t.offsetHeight;
+  let left = x + 12; if (left + tw > bw) left = Math.max(0, x - tw - 12);
+  let top = y - th - 8; if (top < 0) top = y + 12;
+  t.style.left = `${left}px`; t.style.top = `${top}px`;
+};
+lx.measure = (svg, cls, texts) => {
+  const g = svg.append('g').attr('class', cls);
+  let w = 0;
+  for (const s of texts) { const t = g.append('text').text(s); w = Math.max(w, t.node().getComputedTextLength()); }
+  g.remove();
+  return w;
+};
+document.querySelectorAll('.lx-legend i[data-sc]').forEach((i) => { i.style.background = lx.scColor(i.dataset.sc); });
+document.querySelectorAll('.lx-legend i[data-ix]').forEach((i) => { i.style.background = lx.ixColor(i.dataset.ix); });
+</script>
+
+<script>
+dash.calc('market_dd', {
+  inputs: ['market'],
+  title: '고점 대비 하락률',
+  description: '지수마다 이 자료 안 최고 종가(2026년 고점) 대비 각 날짜 종가의 등락률(%)입니다.',
+  fn: (market) => {
+    const peak = {};
+    for (const r of market) peak[r.index] = Math.max(peak[r.index] || 0, Number(r.close));
+    return market.map((r) => ({date: String(r.date).slice(0, 10), index: r.index, close: Number(r.close), peak: peak[r.index], dd_pct: Math.round((Number(r.close) / peak[r.index] - 1) * 1000) / 10}));
+  },
+});
+dash.calc('market_latest', {
+  inputs: ['market_dd'],
+  title: '지수별 최근 값',
+  description: '지수마다 가장 최근 날짜의 종가와 고점 대비 등락률입니다.',
+  fn: (market_dd) => [...new Set(market_dd.map((r) => r.index))].map((ix) => {
+    const last = market_dd.filter((r) => r.index === ix).sort((a, b) => a.date.localeCompare(b.date)).pop();
+    return {index: ix, date: last.date, date_label: `${Number(last.date.slice(5, 7))}.${Number(last.date.slice(8, 10))}`, close: last.close, peak: last.peak, dd_pct: last.dd_pct};
+  }),
+});
+dash.calc('margin_latest', {
+  inputs: ['margin'],
+  title: '신용융자 최근 값',
+  description: '가장 최근 날짜의 신용융자 잔고와 이 자료 안 최고치(조 원)입니다.',
+  fn: (margin) => {
+    const rows = [...margin].sort((a, b) => String(a.date).localeCompare(String(b.date)));
+    const last = rows[rows.length - 1];
+    const d = String(last.date).slice(0, 10);
+    return [{date: d, date_label: `${Number(d.slice(5, 7))}.${Number(d.slice(8, 10))}`, value: Number(last.value), peak: Math.max(...rows.map((r) => Number(r.value)))}];
+  },
+});
+dash.calc('metric_pos', {
+  inputs: ['thresholds'],
+  title: '수치 기준 위 위치',
+  description: '측정값마다 경계값 사이의 위치(정상 칸 0~1, 주의 1~2, 경고 2~3, 위험 3~4)와 단계에 반영하는 위치입니다. 보조 지표는 주의 칸까지, 기간 조건을 아직 채우지 못한 경고는 주의 칸까지, 전환 규칙이 확인되지 않은 위험은 경고 칸까지만 반영합니다.',
+  fn: (thresholds) => thresholds.map((r) => {
+    const names = ['정상', '주의', '경고', '위험'];
+    const st = (p) => (p == null ? null : names[Math.min(3, Math.floor(p))]);
+    let pos = null;
+    if (r.kind === 'event') pos = {'정상': 0.5, '주의': 1.5, '경고': 2.5, '위험': 3.5}[r.band] ?? null;
+    else if (r.cur != null && r.cur !== '') {
+      const sign = r.dir === 'down' ? -1 : 1;
+      const xs = [r.s0, r.t1, r.t2, r.t3, r.s4].map((x) => sign * Number(x));
+      const v = Math.min(Math.max(sign * Number(r.cur), xs[0]), xs[4]);
+      let i = 0;
+      while (i < 3 && v > xs[i + 1]) i += 1;
+      pos = i + (v - xs[i]) / (xs[i + 1] - xs[i]);
+    }
+    let eff = pos, hold = '';
+    if (eff != null && r.role === '보조') {
+      if (eff >= 2) hold = '보조 지표라 주의까지 반영';
+      eff = Math.min(eff, 1.9);
+    } else if (eff != null) {
+      const need = Number(r.persist) || 0, got = Number(r.streak) || 0;
+      if (eff >= 2 && need > 1 && got < need) { eff = 1.99; hold = `경고 기간 조건 ${got}/${need}${r.period || ''}`; }
+      if (eff >= 3 && r.danger_rule && !r.danger_on) { eff = 2.99; hold = '위험은 전환 규칙 확인 뒤'; }
+    }
+    const r2 = (p) => (p == null ? null : Math.round(p * 100) / 100);
+    return {key: r.key, no: String(r.no), indicator: r.indicator, metric: r.metric, role: r.role, unit: r.unit ?? '', dir: r.dir, kind: r.kind, s0: r.s0, t1: r.t1, t2: r.t2, t3: r.t3, s4: r.s4, cur: r.cur, cur_text: r.cur_text, as_of: r.as_of, note: r.note, pos: r2(pos), eff: r2(eff), stage: st(pos), stage_eff: st(eff), hold};
+  }),
+});
+dash.calc('indicator_pos', {
+  inputs: ['metric_pos'],
+  title: '지표별 통합 위치',
+  description: '지표마다 측정값의 단계 반영 위치 가운데 가장 큰 값과 그 단계(수치 기준 단계)입니다. 종합은 지표들의 평균입니다.',
+  fn: (metric_pos) => {
+    const names = ['정상', '주의', '경고', '위험'];
+    const st = (p) => names[Math.min(3, Math.floor(p))];
+    const r1 = (p) => Math.min(Math.round(p * 10) / 10, Math.floor(p) + 0.9);
+    const lvl = (p) => Math.min(3, Math.floor(p));
+    const by = new Map();
+    for (const r of metric_pos) {
+      if (r.eff == null) continue;
+      const e = by.get(r.no) || {p: -1, ms: []};
+      e.p = Math.max(e.p, r.eff);
+      e.ms.push(r);
+      by.set(r.no, e);
+    }
+    const list = [...by].sort((a, b) => Number(a[0]) - Number(b[0]));
+    const rows = list.map(([no, e]) => ({no, pos: r1(e.p), stage_rule: st(e.p), hold: e.ms.filter((m) => m.hold && m.pos != null && lvl(m.pos) > lvl(e.p)).map((m) => `${m.metric}: ${m.hold}`).join(' · ')}));
+    const mean = list.length ? list.reduce((acc, item) => acc + item[1].p, 0) / list.length : null;
+    rows.push({no: '종합', pos: mean == null ? null : r1(mean), stage_rule: mean == null ? null : st(mean), hold: ''});
+    return rows;
+  },
+});
+dash.calc('board', {
+  inputs: ['indicators', 'indicator_pos'],
+  title: '지표별 단계(수치 기준)',
+  description: '선행지표 표에 수치 기준으로 계산한 단계·위치와, 측정값 하나만 보면 더 높지만 조건을 기다리느라 단계를 낮춰 둔 이유를 붙인 표입니다. 계산할 값이 하나도 없는 지표만 저장된 단계를 씁니다.',
+  fn: (indicators, indicator_pos) => {
+    const rank = {'정상': 0, '주의': 1, '경고': 2, '위험': 3};
+    const ip = new Map(indicator_pos.filter((r) => r.no !== '종합').map((r) => [String(r.no), r]));
+    return indicators.map((r) => {
+      const p = ip.get(String(r.no));
+      const stage = p && p.stage_rule ? p.stage_rule : r.stage;
+      return {...r, no: String(r.no), stage, stage_saved: r.stage, pos: p ? p.pos : null, hold: p ? p.hold : '저장된 단계(계산할 값 없음)', rank: rank[stage] ?? 0};
+    });
+  },
+});
+dash.calc('stage_counts', {
+  inputs: ['board'],
+  title: '단계별 지표 수',
+  description: '10개 지표를 수치 기준 단계별로 센 값입니다.',
+  fn: (board) => ['위험', '경고', '주의', '정상'].map((stage) => ({stage, n: board.filter((r) => r.stage === stage).length})),
+});
+dash.calc('last_run', {
+  inputs: ['runs'],
+  title: '마지막 자료 수집',
+  description: '자동 수집 기록에서 가장 최근 실행의 시각(한국 시간)과 종류입니다.',
+  fn: (runs) => {
+    const rows = [...runs].sort((a, b) => String(b.at).localeCompare(String(a.at)));
+    if (!rows.length) return [];
+    const at = String(rows[0].at);
+    return [{at, at_label: `${Number(at.slice(5, 7))}.${Number(at.slice(8, 10))} ${at.slice(11, 16)}`, type: rows[0].type}];
+  },
+});
+dash.calc('history_stats', {
+  inputs: ['history'],
+  title: '쌓인 이력',
+  description: '값 이력의 행 수, 측정값 수, 가장 이른 기준일입니다.',
+  fn: (history) => {
+    if (!history.length) return [{rows: 0, keys: 0, first: '—'}];
+    const dates = history.map((r) => String(r.date)).sort();
+    return [{rows: history.length, keys: new Set(history.map((r) => r.key)).size, first: dates[0]}];
+  },
+});
+</script>
+
+<script>
+dash.draw('cnt', (el) => {
+  const d = dash.data('stage_counts');
+  lx.skel(el, d.status);
+  if (d.status !== 'ok') { el.textContent = '—'; return; }
+  const want = new URLSearchParams(el.dataset.where || '').get('stage');
+  const row = d.data.find((r) => r.stage === want);
+  el.textContent = row ? String(row.n) : '—';
+});
+
+dash.draw('lr', (el) => {
+  const d = dash.data('last_run');
+  lx.skel(el, d.status);
+  if (d.status !== 'ok' || !d.data.length) { el.textContent = '—'; return; }
+  const v = d.data[0][el.dataset.field];
+  el.textContent = v == null ? '—' : String(v);
+});
+
+dash.draw('hs', (el) => {
+  const d = dash.data('history_stats');
+  lx.skel(el, d.status);
+  if (d.status !== 'ok' || !d.data.length) { el.textContent = '—'; return; }
+  const v = d.data[0][el.dataset.field];
+  el.textContent = v == null ? '—' : typeof v === 'number' ? d3.format(',')(v) : String(v);
+});
+
+dash.draw('mk', (el) => {
+  const d = dash.data('market_latest');
+  lx.skel(el, d.status);
+  if (d.status !== 'ok') { el.textContent = '—'; return; }
+  const ix = new URLSearchParams(el.dataset.where || '').get('index');
+  const row = d.data.find((r) => r.index === ix);
+  const f = el.dataset.field;
+  if (!row || row[f] == null) { el.textContent = '—'; return; }
+  el.textContent = f === 'dd_pct' ? lx.f1(row[f]) : f === 'close' ? d3.format(',.2f')(row[f]) : String(row[f]);
+});
+
+dash.draw('mg', (el) => {
+  const d = dash.data('margin_latest');
+  lx.skel(el, d.status);
+  if (d.status !== 'ok' || !d.data.length) { el.textContent = '—'; return; }
+  const f = el.dataset.field;
+  const v = d.data[0][f];
+  el.textContent = v == null ? '—' : f === 'date_label' ? String(v) : d3.format('.2f')(v);
+});
+
+dash.draw('sc', (el) => {
+  const d = dash.data('scenarios');
+  lx.skel(el, d.status);
+  if (d.status !== 'ok') { el.textContent = '—'; return; }
+  const key = new URLSearchParams(el.dataset.where || '').get('key');
+  const row = d.data.find((r) => r.key === key);
+  const v = row ? row[el.dataset.field] : null;
+  el.textContent = v == null ? '—' : String(Number(v));
+});
+
+lx.STAGE_CLASS = {'정상': 'ok', '주의': 'caution', '경고': 'warn', '위험': 'danger'};
+lx.MAPC = {'정상': 'var(--color-ok)', '주의': 'var(--color-warn)', '경고': 'var(--color-bad)', '위험': 'var(--color-bad)'};
+lx.fmtT = (v, unit, signed) => {
+  if (v == null || v === '') return '';
+  const n = Number(v), a = Math.round(Math.abs(n) * 10) / 10;
+  const s = a >= 1000 ? d3.format(',')(a) : String(a);
+  return `${n < 0 ? '−' : signed && n > 0 ? '+' : ''}${s}${unit || ''}`;
+};
+lx.signed = (r) => Number(r.s0) < 0 || Number(r.s4) < 0 || Number(r.t3) < 0;
+lx.ranges = (r) => {
+  if (r.kind === 'event') return '';
+  const sg = lx.signed(r), up = r.dir !== 'down';
+  const f = (v) => lx.fmtT(v, r.unit, sg), g = (v) => lx.fmtT(v, '', sg);
+  return [`정상 ${up ? '<' : '>'} ${f(r.t1)}`, `주의 ${g(r.t1)}~${f(r.t2)}`, `경고 ${g(r.t2)}~${f(r.t3)}`, `위험 ${up ? '≥' : '≤'} ${f(r.t3)}`].join(' · ');
+};
+lx.mapState = (el, list) => {
+  const st = list.map((id) => dash.data(id).status);
+  const ok = st.every((s) => s === 'ok'), bad = st.some((s) => lx.bad(s));
+  lx.skel(el, ok ? 'ok' : bad ? 'error' : 'loading');
+  return ok ? 'ok' : bad ? 'bad' : 'wait';
+};
+
+dash.draw('comp', (el) => {
+  const d = dash.data('indicator_pos');
+  lx.skel(el, d.status);
+  if (d.status !== 'ok') { el.textContent = '—'; return; }
+  const row = d.data.find((r) => r.no === '종합');
+  const v = row ? row[el.dataset.field] : null;
+  el.textContent = v == null ? '—' : el.dataset.field === 'pos' ? d3.format('.1f')(v) : String(v);
+});
+
+dash.draw('stage-sum', (el) => {
+  const state = lx.mapState(el, ['indicator_pos', 'metric_pos', 'indicators']);
+  el.replaceChildren();
+  if (state === 'bad') { lx.fail(el); return; }
+  if (state !== 'ok') return;
+  const ip = dash.data('indicator_pos').data, mp = dash.data('metric_pos').data, ind = dash.data('indicators').data;
+  const W = Math.max(280, el.clientWidth || 640);
+  const names = new Map(ind.map((r) => [String(r.no), r]));
+  const body = ip.filter((r) => r.pos != null && r.no !== '종합').sort((a, b) => Number(a.no) - Number(b.no));
+  const comp = ip.find((r) => r.no === '종합' && r.pos != null);
+  const rows = comp ? [...body, comp] : body;
+  const label = (r) => (r.no === '종합' ? `${body.length}개 지표 평균` : `${r.no}. ${names.has(r.no) ? names.get(r.no).name : ''}`);
+  const svg = d3.select(el).append('svg').attr('width', '100%').attr('role', 'img').attr('aria-label', '지표별 통합 위치, 지표 번호 순');
+  const stageW = lx.measure(svg, 'lx-svg-label lx-strong', ['정상', '주의', '경고', '위험']);
+  const valW = lx.measure(svg, 'lx-tick', rows.map((r) => d3.format('.1f')(r.pos)));
+  const lw = Math.min(W * 0.5, lx.measure(svg, 'lx-svg-label', rows.map(label)) + stageW + 18);
+  const bx0 = lw + 8, bx1 = W - valW - 10;
+  const x = (p) => bx0 + (Math.max(0, Math.min(4, p)) / 4) * (bx1 - bx0);
+  const RH = 26, top0 = 20, gapC = 12;
+  ['정상', '주의', '경고', '위험'].forEach((nm, i) => svg.append('text').attr('class', 'lx-tick').attr('x', (x(i) + x(i + 1)) / 2).attr('y', 12).attr('text-anchor', 'middle').text(nm));
+  const tip = lx.tip(el); tip.classList.add('lx-tip--wrap');
+  rows.forEach((r, i) => {
+    const isC = r.no === '종합';
+    const y = top0 + i * RH + (isC ? gapC : 0);
+    if (isC) svg.append('line').attr('class', 'lx-sep').attr('x1', 0).attr('x2', W).attr('y1', y - gapC / 2 + 2).attr('y2', y - gapC / 2 + 2);
+    const g = svg.append('g').attr('transform', `translate(0,${y})`);
+    const stage = r.stage_rule;
+    g.append('text').attr('class', `lx-svg-label${isC ? ' lx-strong' : ''}`).attr('x', 0).attr('y', 16).text(label(r));
+    g.append('text').attr('class', 'lx-svg-label lx-strong').attr('x', lw).attr('y', 16).attr('text-anchor', 'end').attr('fill', lx.MAPC[stage] || 'var(--color-fg)').text(String(stage || ''));
+    for (let k = 0; k < 4; k += 1) g.append('rect').attr('class', `lx-band lx-band-${k}`).attr('x', x(k)).attr('y', 7).attr('width', Math.max(0, x(k + 1) - x(k) - 1)).attr('height', 10);
+    g.append('circle').attr('cx', x(r.pos)).attr('cy', 12).attr('r', isC ? 6.5 : 5.5).attr('fill', 'var(--color-fg)').attr('stroke', 'var(--color-panel)').attr('stroke-width', 1.5);
+    g.append('text').attr('class', 'lx-tick').attr('x', W).attr('y', 16).attr('text-anchor', 'end').text(d3.format('.1f')(r.pos));
+    g.append('rect').attr('x', 0).attr('y', 0).attr('width', W).attr('height', RH).attr('fill', 'transparent')
+      .on('mousemove', (ev) => {
+        const [px, py] = d3.pointer(ev, el);
+        const lines = mp.filter((m) => isC || m.no === r.no).filter((m) => !isC || m.role === '주')
+          .map((m) => [null, `${isC ? `${m.no}. ` : ''}${m.role} ${m.metric}: ${m.cur_text || '—'}${m.stage ? ` → ${m.stage}` : ''}`]);
+        if (r.hold) lines.unshift([null, `낮춰 둔 이유: ${r.hold}`]);
+        lines.unshift([null, `위치 ${d3.format('.1f')(r.pos)} · 단계 ${r.stage_rule}`]);
+        lx.tipShow(el, tip, px, py, isC ? '지표 평균과 주 지표 지금 값' : label(r), lines);
+      })
+      .on('mouseleave', () => { tip.hidden = true; });
+  });
+  const H = top0 + rows.length * RH + (comp ? gapC : 0) + 12;
+  svg.attr('viewBox', `0 0 ${W} ${H}`).attr('height', H);
+});
+
+dash.draw('stage-map', (el) => {
+  const state = lx.mapState(el, ['metric_pos', 'indicator_pos', 'indicators']);
+  el.replaceChildren();
+  if (state === 'bad') { lx.fail(el); return; }
+  if (state !== 'ok') return;
+  const mp = dash.data('metric_pos').data, ip = dash.data('indicator_pos').data, ind = dash.data('indicators').data;
+  const W = Math.max(280, el.clientWidth || 640);
+  const names = new Map(ind.map((r) => [String(r.no), r]));
+  const ipos = new Map(ip.filter((r) => r.no !== '종합').map((r) => [r.no, r]));
+  const groups = d3.group(mp, (r) => r.no);
+  const order = [...groups.keys()].sort((a, b) => Number(a) - Number(b));
+  const rowLabel = (r) => (r.role === '보조' ? `${r.metric} · 보조` : r.metric);
+  const subText = (r) => `${r.cur_text || ''}${r.hold && r.stage !== r.stage_eff ? ` · ${r.hold}` : ''}`;
+  const svg = d3.select(el).append('svg').attr('width', '100%').attr('role', 'img').attr('aria-label', '지표별 수치 기준과 지금 위치');
+  const need = 16 + Math.max(lx.measure(svg, 'lx-svg-label', mp.map(rowLabel)), lx.measure(svg, 'lx-tick', mp.map(subText)));
+  const wide = W >= 600 && need <= W * 0.45;
+  const bx0 = wide ? need : 2, bx1 = W - 6;
+  const x = (p) => bx0 + (Math.max(0, Math.min(4, p)) / 4) * (bx1 - bx0);
+  const HH = 26, RH = wide ? 36 : 60;
+  const tip = lx.tip(el); tip.classList.add('lx-tip--wrap');
+  let y = 2;
+  for (const no of order) {
+    const info = names.get(no), ipr = ipos.get(no);
+    const t = svg.append('text').attr('class', 'lx-svg-label lx-strong').attr('x', 0).attr('y', y + 18);
+    t.append('tspan').text(`${no}. ${info ? info.name : ''}`);
+    const gst = ipr && ipr.stage_rule ? ipr.stage_rule : (info ? info.stage : '');
+    if (gst) t.append('tspan').attr('dx', 8).attr('fill', lx.MAPC[gst] || 'var(--color-fg)').text(String(gst));
+    y += HH;
+    const rows = [...groups.get(no)].sort((a, b) => (a.role === '주' ? 0 : 1) - (b.role === '주' ? 0 : 1));
+    for (const r of rows) {
+      const g = svg.append('g').attr('transform', `translate(0,${y})`);
+      const by = wide ? 8 : 33;
+      g.append('text').attr('class', 'lx-svg-label').attr('x', 0).attr('y', 13).attr('fill-opacity', r.role === '보조' ? 0.75 : 1).text(rowLabel(r));
+      g.append('text').attr('class', 'lx-tick').attr('x', 0).attr('y', 27).text(subText(r));
+      for (let k = 0; k < 4; k += 1) g.append('rect').attr('class', `lx-band lx-band-${k}`).attr('x', x(k)).attr('y', by).attr('width', Math.max(0, x(k + 1) - x(k) - 1)).attr('height', 10);
+      if (r.kind !== 'event') {
+        const sg = lx.signed(r);
+        let lastEnd = -Infinity;
+        for (const [k, v] of [[1, r.t1], [2, r.t2], [3, r.t3]]) {
+          const tx = g.append('text').attr('class', 'lx-tick').attr('x', x(k)).attr('y', by + 22).attr('text-anchor', 'middle').text(lx.fmtT(v, r.unit, sg));
+          const w = tx.node().getComputedTextLength();
+          if (x(k) - w / 2 < lastEnd + 4 || x(k) + w / 2 > W) tx.remove(); else lastEnd = x(k) + w / 2;
+        }
+      }
+      if (r.pos == null) {
+        g.append('rect').attr('x', bx0).attr('y', by - 2).attr('width', Math.max(0, bx1 - bx0)).attr('height', 14).attr('fill', 'none').attr('stroke', 'var(--cds-chart-reference)').attr('stroke-dasharray', '3 3');
+      } else {
+        g.append('circle').attr('cx', x(r.pos)).attr('cy', by + 5).attr('r', 5.5).attr('fill', r.role === '보조' ? 'var(--color-panel)' : 'var(--color-fg)').attr('stroke', 'var(--color-fg)').attr('stroke-width', 1.5);
+      }
+      g.append('rect').attr('x', 0).attr('y', 0).attr('width', W).attr('height', RH).attr('fill', 'transparent')
+        .on('mousemove', (ev) => {
+          const [px, py] = d3.pointer(ev, el);
+          const lines = [[null, `지금 ${r.cur_text || '—'}${r.as_of ? ` · ${r.as_of} 기준` : ''}${r.stage ? ` → ${r.stage}` : ''}`]];
+          if (r.hold && r.stage !== r.stage_eff) lines.push([null, `단계 반영 ${r.stage_eff}: ${r.hold}`]);
+          const rg = lx.ranges(r); if (rg) lines.push([null, rg]);
+          if (r.note) lines.push([null, String(r.note)]);
+          lx.tipShow(el, tip, px, py, `${no}. ${r.indicator} · ${r.metric}`, lines);
+        })
+        .on('mouseleave', () => { tip.hidden = true; });
+      y += RH;
+    }
+  }
+  svg.attr('viewBox', `0 0 ${W} ${y + 4}`).attr('height', y + 4);
+});
+dash.draw('ind-rows', (tb) => {
+  const d = dash.data('board');
+  tb.replaceChildren();
+  if (d.status !== 'ok') {
+    if (lx.bad(d.status)) { const tr = document.createElement('tr'); const td = document.createElement('td'); td.colSpan = 11; lx.fail(td); tr.append(td); tb.append(tr); }
+    return;
+  }
+  const rows = [...d.data].sort((a, b) => (Number(b.rank) - Number(a.rank)) || ((b.pos ?? -1) - (a.pos ?? -1)) || (Number(a.no) - Number(b.no)));
+  for (const r of rows) {
+    const tr = document.createElement('tr');
+    tr.dataset.key = String(r.no);
+    const cell = (txt) => { const c = document.createElement('td'); c.textContent = txt == null ? '' : String(txt); tr.append(c); return c; };
+    cell(r.no);
+    const nm = document.createElement('td');
+    if (/^https:\/\//.test(String(r.src || ''))) { const a = document.createElement('a'); a.href = r.src; a.target = '_blank'; a.rel = 'noopener'; a.textContent = String(r.name); nm.append(a); } else { nm.textContent = String(r.name); }
+    tr.append(nm);
+    const st = document.createElement('td');
+    const chip = document.createElement('span'); chip.className = `lx-chip lx-chip--${lx.STAGE_CLASS[r.stage] || 'ok'}`; chip.textContent = String(r.stage);
+    st.append(chip);
+    if (r.hold) { const h = document.createElement('span'); h.className = 'lx-hold'; h.textContent = String(r.hold); st.append(h); }
+    tr.append(st);
+    cell(r.value); cell(r.normal); cell(r.caution); cell(r.warn); cell(r.danger); cell(r.shift); cell(r.assets); cell(r.next_check);
+    tb.append(tr);
+  }
+});
+
+dash.draw('ind-notes', (ul) => {
+  const d = dash.data('indicators');
+  ul.replaceChildren();
+  if (d.status !== 'ok') return;
+  for (const r of [...d.data].sort((a, b) => Number(a.no) - Number(b.no))) {
+    if (!r.note) continue;
+    const li = document.createElement('li');
+    li.textContent = `${r.no}번 ${r.name}: ${r.note}`;
+    ul.append(li);
+  }
+});
+
+dash.draw('scen-pick', (sel) => {
+  const d = dash.data('scenarios');
+  sel.replaceChildren();
+  if (d.status !== 'ok') return;
+  const groups = new Map();
+  for (const r of d.data) { if (r.key === 'current') continue; if (!groups.has(r.kind)) groups.set(r.kind, []); groups.get(r.kind).push(r); }
+  for (const [kind, rows] of groups) {
+    const og = document.createElement('optgroup'); og.label = String(kind);
+    for (const r of rows) og.append(new Option(`${r.label}: ${r.trigger}`, r.key));
+    sel.append(og);
+  }
+  if (!d.data.some((r) => r.key === lx.scen)) lx.scen = (d.data.find((r) => r.key !== 'current') || {}).key;
+  sel.value = lx.scen;
+  sel.onchange = () => { lx.scen = sel.value; dash.draw('scen-chart'); dash.draw('scen-delta'); };
+});
+
+dash.draw('scen-chart', (el) => {
+  const d = dash.data('scenarios');
+  el.replaceChildren();
+  lx.skel(el, d.status);
+  if (d.status !== 'ok') { if (lx.bad(d.status)) lx.fail(el); return; }
+  const cur = d.data.find((r) => r.key === 'current');
+  const alt = d.data.find((r) => r.key === lx.scen);
+  if (!cur || !alt) return;
+  const W = Math.max(280, el.clientWidth || 600), barH = 34, gap = 20, mt = 4, mr = 4;
+  const H = mt + barH * 2 + gap + 8;
+  const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', '시나리오 확률, 지금과 선택한 경우');
+  const rows = [{name: '지금', r: cur, y: mt}, {name: String(alt.label), r: alt, y: mt + barH + gap}];
+  const ml = Math.ceil(lx.measure(svg, 'lx-svg-label', rows.map((x) => x.name))) + 12;
+  const x = d3.scaleLinear([0, 100], [ml, W - mr]);
+  const tip = lx.tip(el);
+  for (const row of rows) {
+    svg.append('text').attr('class', 'lx-svg-label lx-strong').attr('x', 0).attr('y', row.y + barH / 2 + 4).text(row.name);
+    let acc = 0;
+    for (const k of lx.SC) {
+      const v = Number(row.r[k]);
+      const x0 = x(acc), x1 = x(acc + v);
+      svg.append('rect').attr('x', x0).attr('y', row.y).attr('width', Math.max(0, x1 - x0 - 2)).attr('height', barH).attr('rx', 3).attr('fill', lx.scColor(k))
+        .on('pointermove', (ev) => { const [px, py] = d3.pointer(ev, el); lx.tipShow(el, tip, px, py, row.name, [[lx.scColor(k), `${k}: ${v}%`]]); })
+        .on('pointerleave', () => { tip.hidden = true; });
+      if (x1 - x0 > 44) svg.append('text').attr('class', 'lx-svg-in').attr('x', (x0 + x1) / 2 - 1).attr('y', row.y + barH / 2 + 4).attr('text-anchor', 'middle').attr('pointer-events', 'none').text(`${k} ${v}%`);
+      acc += v;
+    }
+  }
+});
+
+dash.draw('scen-delta', (el) => {
+  const d = dash.data('scenarios');
+  if (d.status !== 'ok') { el.textContent = '—'; return; }
+  const cur = d.data.find((r) => r.key === 'current');
+  const alt = d.data.find((r) => r.key === lx.scen);
+  if (!cur || !alt) { el.textContent = '—'; return; }
+  const parts = lx.SC.map((k) => { const v = Number(alt[k]) - Number(cur[k]); return `${k} ${v > 0 ? '+' : v < 0 ? '−' : '±'}${Math.abs(v)}%p`; });
+  el.textContent = `${parts.join(' · ')} (${alt.trigger})`;
+});
+
+dash.draw('dd-chart', (el) => {
+  const d = dash.data('market_dd');
+  el.replaceChildren();
+  lx.skel(el, d.status);
+  if (d.status !== 'ok') { if (lx.bad(d.status)) lx.fail(el); return; }
+  const rows = d.data.map((r) => ({date: r.date, index: r.index, close: Number(r.close), peak: Number(r.peak), dd: Number(r.dd_pct), t: lx.date(r.date)})).sort((a, b) => a.t - b.t);
+  if (!rows.length) return;
+  const W = Math.max(300, el.clientWidth || 640), H = 280, mt = 14, mb = 26;
+  const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', '코스피와 SOX의 2026년 고점 대비 하락률');
+  const ixs = [...new Set(rows.map((r) => r.index))];
+  const lastOf = (ix) => rows.filter((r) => r.index === ix).pop();
+  const endText = (ix) => `${lx.ixName(ix)} ${lx.f1(lastOf(ix).dd)}%`;
+  const mr = Math.ceil(lx.measure(svg, 'lx-svg-end', ixs.map(endText))) + 14;
+  const ml = 40;
+  const kospi = rows.find((r) => r.index === 'KOSPI');
+  const refs = [{v: lx.REF.bear, label: `약세장 ${lx.REF.bear}%`}, {v: lx.REF.soxDanger, label: `SOX 위험 ${lx.REF.soxDanger}%`}];
+  if (kospi && kospi.peak) { const v = (lx.REF.kospiDangerLevel / kospi.peak - 1) * 100; refs.push({v, label: `코스피 위험 ${d3.format(',')(lx.REF.kospiDangerLevel)}(${lx.f1(v)}%)`}); }
+  const lo = Math.min(-60, d3.min(rows, (r) => r.dd) - 5, d3.min(refs, (r) => r.v) - 5);
+  const x = d3.scaleUtc(d3.extent(rows, (r) => r.t), [ml, W - mr]);
+  const y = d3.scaleLinear([lo, 2], [H - mb, mt]);
+  const yt = y.ticks(6).filter((v) => v <= 0);
+  svg.append('g').selectAll('line').data(yt).join('line').attr('class', 'lx-grid-line').attr('x1', ml).attr('x2', W - mr).attr('y1', (v) => y(v)).attr('y2', (v) => y(v));
+  svg.append('g').selectAll('text').data(yt).join('text').attr('class', 'lx-tick').attr('x', ml - 6).attr('y', (v) => y(v) + 4).attr('text-anchor', 'end').text((v) => `${v}%`);
+  const xt = x.ticks(d3.utcMonth.every(1));
+  svg.append('g').selectAll('text').data(xt).join('text').attr('class', 'lx-tick').attr('x', (t) => x(t)).attr('y', H - 8).attr('text-anchor', 'middle').text((t) => `${t.getUTCMonth() + 1}월`);
+  svg.append('line').attr('class', 'lx-axis-line').attr('x1', ml).attr('x2', W - mr).attr('y1', y(0)).attr('y2', y(0));
+  for (const r of refs) {
+    svg.append('line').attr('class', 'lx-ref-line').attr('x1', ml).attr('x2', W - mr).attr('y1', y(r.v)).attr('y2', y(r.v));
+    svg.append('text').attr('class', 'lx-ref-label').attr('x', ml + 4).attr('y', y(r.v) - 4).text(r.label);
+  }
+  const line = d3.line().x((r) => x(r.t)).y((r) => y(r.dd));
+  for (const ix of ixs) {
+    const s = rows.filter((r) => r.index === ix);
+    svg.append('path').attr('d', line(s)).attr('fill', 'none').attr('stroke', lx.ixColor(ix)).attr('stroke-width', 2).attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round');
+    svg.append('g').selectAll('circle').data(s).join('circle').attr('cx', (r) => x(r.t)).attr('cy', (r) => y(r.dd)).attr('r', 3).attr('fill', lx.ixColor(ix));
+  }
+  const ends = ixs.map((ix) => { const r = lastOf(ix); return {ix, r, yy: y(r.dd)}; }).sort((a, b) => a.yy - b.yy);
+  for (let i = 1; i < ends.length; i += 1) if (ends[i].yy - ends[i - 1].yy < 15) ends[i].yy = ends[i - 1].yy + 15;
+  for (const e of ends) svg.append('text').attr('class', 'lx-svg-end').attr('x', x(e.r.t) + 8).attr('y', e.yy + 4).attr('fill', lx.ixColor(e.ix)).text(endText(e.ix));
+  const tip = lx.tip(el);
+  const focus = svg.append('circle').attr('r', 5).attr('fill', 'none').attr('stroke-width', 2).attr('visibility', 'hidden');
+  svg.append('rect').attr('x', ml).attr('y', mt).attr('width', Math.max(0, W - mr - ml)).attr('height', H - mt - mb).attr('fill', 'transparent')
+    .on('pointermove', (ev) => {
+      const [px, py] = d3.pointer(ev);
+      const best = d3.least(rows, (r) => Math.hypot(x(r.t) - px, y(r.dd) - py));
+      if (!best) return;
+      focus.attr('cx', x(best.t)).attr('cy', y(best.dd)).attr('stroke', lx.ixColor(best.index)).attr('visibility', 'visible');
+      const same = rows.filter((r) => r.date === best.date);
+      const [bx, by] = d3.pointer(ev, el);
+      lx.tipShow(el, tip, bx, by, best.date, same.map((r) => [lx.ixColor(r.index), `${lx.ixName(r.index)} ${d3.format(',.2f')(r.close)} (${lx.f1(r.dd)}%)`]));
+    })
+    .on('pointerleave', () => { tip.hidden = true; focus.attr('visibility', 'hidden'); });
+});
+
+dash.draw('ep-chart', (el) => {
+  const d = dash.data('episodes');
+  el.replaceChildren();
+  lx.skel(el, d.status);
+  if (d.status !== 'ok') { if (lx.bad(d.status)) lx.fail(el); return; }
+  const rows = d.data.map((r) => ({ep: String(r.ep), index: r.index, dd: Number(r.dd), span: String(r.span || '')}));
+  const eps = [...new Set(rows.map((r) => r.ep))];
+  const W = Math.max(300, el.clientWidth || 600), gh = 46, bh = 15, mt = 4;
+  const H = mt + eps.length * gh + 18;
+  const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', '과거 약세장의 코스피·SOX 고점 대비 최대 하락률');
+  const ml = Math.ceil(lx.measure(svg, 'lx-svg-label lx-strong', eps)) + 14;
+  const mr = Math.ceil(lx.measure(svg, 'lx-val', rows.map((r) => `${lx.f1(r.dd)}%`))) + 10;
+  const max = Math.max(60, d3.max(rows, (r) => Math.abs(r.dd)));
+  const x = d3.scaleLinear([0, max], [ml, W - mr]);
+  const xt = x.ticks(4);
+  svg.append('g').selectAll('line').data(xt).join('line').attr('class', 'lx-grid-line').attr('x1', (v) => x(v)).attr('x2', (v) => x(v)).attr('y1', mt).attr('y2', H - 18);
+  svg.append('g').selectAll('text').data(xt).join('text').attr('class', 'lx-tick').attr('x', (v) => x(v)).attr('y', H - 4).attr('text-anchor', 'middle').text((v) => (v === 0 ? '0' : `−${v}%`));
+  const tip = lx.tip(el);
+  eps.forEach((e, i) => {
+    const gy = mt + i * gh;
+    svg.append('text').attr('class', i === 0 ? 'lx-svg-label lx-strong' : 'lx-svg-label').attr('x', 0).attr('y', gy + bh + 5).text(e);
+    ['KOSPI', 'SOX'].forEach((ix, j) => {
+      const r = rows.find((q) => q.ep === e && q.index === ix);
+      if (!r) return;
+      const y0 = gy + j * (bh + 3);
+      svg.append('rect').attr('x', x(0)).attr('y', y0).attr('width', Math.max(0, x(Math.abs(r.dd)) - x(0))).attr('height', bh).attr('rx', 2).attr('fill', lx.ixColor(ix))
+        .on('pointermove', (ev) => { const [px, py] = d3.pointer(ev, el); lx.tipShow(el, tip, px, py, e, [[lx.ixColor(ix), `${lx.ixName(ix)} ${lx.f1(r.dd)}% · ${r.span}`]]); })
+        .on('pointerleave', () => { tip.hidden = true; });
+      svg.append('text').attr('class', 'lx-val').attr('x', x(Math.abs(r.dd)) + 4).attr('y', y0 + bh - 3).text(`${lx.f1(r.dd)}%`);
+    });
+  });
+});
+
+dash.draw('margin-chart', (el) => {
+  const d = dash.data('margin');
+  el.replaceChildren();
+  lx.skel(el, d.status);
+  if (d.status !== 'ok') { if (lx.bad(d.status)) lx.fail(el); return; }
+  const rows = d.data.map((r) => ({date: String(r.date).slice(0, 10), v: Number(r.value), t: lx.date(r.date)})).sort((a, b) => a.t - b.t);
+  if (!rows.length) return;
+  const W = Math.max(280, el.clientWidth || 520), H = 220, mt = 18, mb = 26, ml = 32;
+  const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', '신용융자 잔고 추이');
+  const last = rows[rows.length - 1];
+  const peakRow = rows.reduce((a, b) => (b.v > a.v ? b : a));
+  const endLabel = `${d3.format('.1f')(last.v)}조`;
+  const mr = Math.ceil(lx.measure(svg, 'lx-svg-end', [endLabel])) + 14;
+  const x = d3.scaleUtc(d3.extent(rows, (r) => r.t), [ml, W - mr]);
+  const y = d3.scaleLinear([Math.floor(d3.min(rows, (r) => r.v) - 2), Math.ceil(d3.max(rows, (r) => r.v) + 2)], [H - mb, mt]).nice();
+  const yt = y.ticks(4);
+  svg.append('g').selectAll('line').data(yt).join('line').attr('class', 'lx-grid-line').attr('x1', ml).attr('x2', W - mr).attr('y1', (v) => y(v)).attr('y2', (v) => y(v));
+  svg.append('g').selectAll('text').data(yt).join('text').attr('class', 'lx-tick').attr('x', ml - 6).attr('y', (v) => y(v) + 4).attr('text-anchor', 'end').text((v) => String(v));
+  const xt = x.ticks(d3.utcMonth.every(1));
+  svg.append('g').selectAll('text').data(xt).join('text').attr('class', 'lx-tick').attr('x', (t) => x(t)).attr('y', H - 8).attr('text-anchor', 'middle').text((t) => `${t.getUTCMonth() + 1}월`);
+  const color = dash.colors[0];
+  svg.append('path').attr('d', d3.line().x((r) => x(r.t)).y((r) => y(r.v))(rows)).attr('fill', 'none').attr('stroke', color).attr('stroke-width', 2).attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round');
+  svg.append('g').selectAll('circle').data(rows).join('circle').attr('cx', (r) => x(r.t)).attr('cy', (r) => y(r.v)).attr('r', 3).attr('fill', color);
+  svg.append('text').attr('class', 'lx-svg-end').attr('x', x(last.t) + 8).attr('y', y(last.v) + 4).attr('fill', color).text(endLabel);
+  if (peakRow !== last) svg.append('text').attr('class', 'lx-ref-label').attr('x', x(peakRow.t) + 6).attr('y', y(peakRow.v) - 6).text(`최고 ${d3.format('.1f')(peakRow.v)}조(${lx.md(peakRow.date)})`);
+  const tip = lx.tip(el);
+  svg.append('rect').attr('x', ml).attr('y', mt).attr('width', Math.max(0, W - mr - ml)).attr('height', H - mt - mb).attr('fill', 'transparent')
+    .on('pointermove', (ev) => { const [px] = d3.pointer(ev); const best = d3.least(rows, (r) => Math.abs(x(r.t) - px)); const [bx, by] = d3.pointer(ev, el); lx.tipShow(el, tip, bx, by, best.date, [[null, `${d3.format('.2f')(best.v)}조 원`]]); })
+    .on('pointerleave', () => { tip.hidden = true; });
+});
+
+dash.draw('forced-chart', (el) => {
+  const d = dash.data('forced');
+  el.replaceChildren();
+  lx.skel(el, d.status);
+  if (d.status !== 'ok') { if (lx.bad(d.status)) lx.fail(el); return; }
+  const rows = d.data.map((r) => ({date: String(r.date).slice(0, 10), v: Number(r.value)})).sort((a, b) => a.date.localeCompare(b.date));
+  if (!rows.length) return;
+  const W = Math.max(280, el.clientWidth || 520), H = 220, mt = 18, mb = 26, ml = 40, mr = 8;
+  const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', '주요 급락일의 하루 반대매매 금액');
+  const x = d3.scaleBand(rows.map((r) => r.date), [ml, W - mr]).padding(0.3);
+  const y = d3.scaleLinear([0, Math.max(d3.max(rows, (r) => r.v), lx.REF.forcedWarn) * 1.15], [H - mb, mt]).nice();
+  const yt = y.ticks(4);
+  svg.append('g').selectAll('line').data(yt).join('line').attr('class', 'lx-grid-line').attr('x1', ml).attr('x2', W - mr).attr('y1', (v) => y(v)).attr('y2', (v) => y(v));
+  svg.append('g').selectAll('text').data(yt).join('text').attr('class', 'lx-tick').attr('x', ml - 6).attr('y', (v) => y(v) + 4).attr('text-anchor', 'end').text((v) => d3.format(',')(v));
+  const bw = Math.min(32, x.bandwidth());
+  const tip = lx.tip(el);
+  for (const r of rows) {
+    const cx = x(r.date) + x.bandwidth() / 2;
+    const over = r.v >= lx.REF.forcedWarn;
+    svg.append('rect').attr('x', cx - bw / 2).attr('y', y(r.v)).attr('width', bw).attr('height', Math.max(0, y(0) - y(r.v))).attr('rx', 2)
+      .attr('fill', over ? 'var(--cds-chart-status-critical)' : 'var(--cds-chart-muted)')
+      .on('pointermove', (ev) => { const [px, py] = d3.pointer(ev, el); lx.tipShow(el, tip, px, py, r.date, [[null, `${d3.format(',')(r.v)}억 원`]]); })
+      .on('pointerleave', () => { tip.hidden = true; });
+    svg.append('text').attr('class', 'lx-val').attr('x', cx).attr('y', y(r.v) - 5).attr('text-anchor', 'middle').text(d3.format(',')(r.v));
+    svg.append('text').attr('class', 'lx-tick').attr('x', cx).attr('y', H - 8).attr('text-anchor', 'middle').text(lx.md(r.date));
+  }
+  svg.append('line').attr('class', 'lx-axis-line').attr('x1', ml).attr('x2', W - mr).attr('y1', y(0)).attr('y2', y(0));
+  svg.append('line').attr('class', 'lx-ref-line').attr('x1', ml).attr('x2', W - mr).attr('y1', y(lx.REF.forcedWarn)).attr('y2', y(lx.REF.forcedWarn));
+  svg.append('text').attr('class', 'lx-ref-label').attr('x', W - mr).attr('y', y(lx.REF.forcedWarn) - 4).attr('text-anchor', 'end').text(`경고 기준 ${d3.format(',')(lx.REF.forcedWarn)}억`);
+});
+
+dash.draw('macro-rows', (tb) => {
+  const d = dash.data('macro');
+  tb.replaceChildren();
+  if (d.status !== 'ok') {
+    if (lx.bad(d.status)) { const tr = document.createElement('tr'); const td = document.createElement('td'); td.colSpan = 4; lx.fail(td); tr.append(td); tb.append(tr); }
+    return;
+  }
+  for (const r of d.data) {
+    const tr = document.createElement('tr');
+    for (const f of ['item', 'value', 'as_of', 'note']) { const td = document.createElement('td'); td.textContent = r[f] == null ? '' : String(r[f]); tr.append(td); }
+    tb.append(tr);
+  }
+});
+
+dash.draw('run-rows', (tb) => {
+  const d = dash.data('runs');
+  tb.replaceChildren();
+  if (d.status !== 'ok') {
+    if (lx.bad(d.status)) { const tr = document.createElement('tr'); const td = document.createElement('td'); td.colSpan = 6; lx.fail(td); tr.append(td); tb.append(tr); }
+    return;
+  }
+  const rows = [...d.data].sort((a, b) => String(b.at).localeCompare(String(a.at))).slice(0, 14);
+  for (const r of rows) {
+    const tr = document.createElement('tr');
+    tr.dataset.key = String(r.at);
+    const at = String(r.at || '');
+    const vals = [at ? `${Number(at.slice(5, 7))}.${Number(at.slice(8, 10))} ${at.slice(11, 16)}` : '', r.type, r.changed, r.stages, r.unverified, r.proposals];
+    for (const v of vals) { const td = document.createElement('td'); td.textContent = v == null ? '' : String(v); tr.append(td); }
+    tb.append(tr);
+  }
+});
+
+dash.onData(() => {
+  const d = dash.data('news');
+  const none = d.status === 'ok' && !d.data.some((r) => r && r.title);
+  document.querySelectorAll('.lx-news-none').forEach((p) => { p.hidden = !none; });
+  document.querySelectorAll('.lx-news').forEach((u) => { u.hidden = none; });
+});
+
+dash.draw('news-list', (ul) => {
+  const d = dash.data('news');
+  lx.skel(ul, d.status);
+  ul.replaceChildren();
+  if (d.status !== 'ok') {
+    if (lx.bad(d.status)) { const li = document.createElement('li'); lx.fail(li); ul.append(li); }
+    return;
+  }
+  const TONE = {'위험 요인': 'risk', '완화 요인': 'ease', '지켜볼 것': 'watch'};
+  const key = (r) => (r.level === '중요' ? 1 : 0);
+  const rows = d.data.filter((r) => r && r.title)
+    .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')) || (key(b) - key(a)) || String(b.added || '').localeCompare(String(a.added || '')))
+    .slice(0, 8);
+  for (const r of rows) {
+    const id = String(r.id == null ? '' : r.id);
+    const where = `id=${encodeURIComponent(id)}`;
+    const mark = (el, f) => { el.dataset.source = 'news'; el.dataset.field = f; el.dataset.where = where; return el; };
+    const li = document.createElement('li');
+    li.className = `lx-news-item lx-news-item--${TONE[r.tone] || 'watch'}`;
+    const top = document.createElement('div'); top.className = 'lx-news-top';
+    const add = (cls, txt) => { const s = document.createElement('span'); s.className = cls; s.textContent = String(txt); top.append(s); return s; };
+    if (r.date) add('lx-news-date', lx.md(r.date));
+    if (r.level === '중요') add('lx-chip lx-chip--danger', r.level);
+    if (r.tone) add('lx-news-tone', r.tone);
+    if (r.indicators) add('lx-news-ind', r.indicators);
+    const t = mark(document.createElement('p'), 'title'); t.className = 'lx-news-title'; t.textContent = String(r.title);
+    li.append(top, t);
+    if (r.impact) { const im = mark(document.createElement('p'), 'impact'); im.className = 'lx-news-impact'; im.textContent = String(r.impact); li.append(im); }
+    const ft = document.createElement('p'); ft.className = 'lx-news-foot';
+    const sep = () => { if (ft.childNodes.length) ft.append(' · '); };
+    if (r.verify) {
+      const v = mark(document.createElement('span'), 'verify');
+      v.className = `lx-news-verify${/1곳|미확인/.test(String(r.verify)) ? ' lx-news-verify--weak' : ''}`;
+      v.textContent = String(r.verify);
+      ft.append(v);
+    }
+    for (const [u, nm] of [[r.src, r.src_name], [r.src2, r.src2_name]]) {
+      if (!/^https:\/\//.test(String(u || ''))) continue;
+      let host = '';
+      try { host = new URL(String(u)).hostname.replace(/^www\./, ''); } catch (e) { continue; }
+      sep();
+      const a = document.createElement('a'); a.href = String(u); a.target = '_blank'; a.rel = 'noopener'; a.textContent = String(nm || host);
+      ft.append(a);
+    }
+    if (r.verify_note) { sep(); const n = document.createElement('span'); n.textContent = String(r.verify_note); ft.append(n); }
+    if (ft.childNodes.length) li.append(ft);
+    ul.append(li);
+  }
+});
+
+dash.draw('event-rows', (tb) => {
+  const d = dash.data('events');
+  tb.replaceChildren();
+  if (d.status !== 'ok') {
+    if (lx.bad(d.status)) { const tr = document.createElement('tr'); const td = document.createElement('td'); td.colSpan = 4; lx.fail(td); tr.append(td); tb.append(tr); }
+    return;
+  }
+  for (const r of d.data) {
+    const tr = document.createElement('tr');
+    tr.dataset.key = String(r.id);
+    for (const f of ['date', 'event', 'indicators', 'status']) { const td = document.createElement('td'); td.textContent = r[f] == null ? '' : String(r[f]); tr.append(td); }
+    tb.append(tr);
+  }
+});
+</script>

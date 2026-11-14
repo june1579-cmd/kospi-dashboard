@@ -1,0 +1,242 @@
+[
+ {
+  "date": "2026-06-18",
+  "index": "KOSPI",
+  "close": 9063.84
+ },
+ {
+  "date": "2026-06-22",
+  "index": "KOSPI",
+  "close": 9114.55
+ },
+ {
+  "date": "2026-06-23",
+  "index": "KOSPI",
+  "close": 8203.84
+ },
+ {
+  "date": "2026-07-02",
+  "index": "KOSPI",
+  "close": 7648.09
+ },
+ {
+  "date": "2026-07-28",
+  "index": "KOSPI",
+  "close": 6023.66
+ },
+ {
+  "date": "2026-07-29",
+  "index": "KOSPI",
+  "close": 5663.24
+ },
+ {
+  "date": "2026-09-10",
+  "index": "KOSPI",
+  "close": 7033.92
+ },
+ {
+  "date": "2026-10-02",
+  "index": "KOSPI",
+  "close": 7003.74
+ },
+ {
+  "date": "2026-10-15",
+  "index": "KOSPI",
+  "close": 5554.22
+ },
+ {
+  "date": "2026-10-16",
+  "index": "KOSPI",
+  "close": 5668.05
+ },
+ {
+  "date": "2026-10-20",
+  "index": "KOSPI",
+  "close": 5552.74
+ },
+ {
+  "date": "2026-10-22",
+  "index": "KOSPI",
+  "close": 5533.77
+ },
+ {
+  "date": "2026-10-26",
+  "index": "KOSPI",
+  "close": 5469.47
+ },
+ {
+  "date": "2026-10-27",
+  "index": "KOSPI",
+  "close": 5638.34
+ },
+ {
+  "date": "2026-10-28",
+  "index": "KOSPI",
+  "close": 6012.44
+ },
+ {
+  "date": "2026-06-22",
+  "index": "SOX",
+  "close": 14634.72
+ },
+ {
+  "date": "2026-07-29",
+  "index": "SOX",
+  "close": 10447.49
+ },
+ {
+  "date": "2026-10-20",
+  "index": "SOX",
+  "close": 11283.8
+ },
+ {
+  "date": "2026-10-21",
+  "index": "SOX",
+  "close": 11505.6
+ },
+ {
+  "date": "2026-10-22",
+  "index": "SOX",
+  "close": 10731.98
+ },
+ {
+  "date": "2026-10-23",
+  "index": "SOX",
+  "close": 10779.5
+ },
+ {
+  "date": "2026-10-26",
+  "index": "SOX",
+  "close": 11083.5
+ },
+ {
+  "date": "2026-10-29",
+  "index": "KOSPI",
+  "close": 5937.66
+ },
+ {
+  "date": "2026-10-27",
+  "index": "SOX",
+  "close": 11482.5
+ },
+ {
+  "date": "2026-10-28",
+  "index": "SOX",
+  "close": 11684.0
+ },
+ {
+  "date": "2026-10-29",
+  "index": "SOX",
+  "close": 11518.2
+ },
+ {
+  "date": "2026-10-30",
+  "index": "KOSPI",
+  "close": 5730.74
+ },
+ {
+  "date": "2026-10-30",
+  "index": "SOX",
+  "close": 10688.8
+ },
+ {
+  "date": "2026-11-02",
+  "index": "KOSPI",
+  "close": 5859.08
+ },
+ {
+  "date": "2026-11-02",
+  "index": "SOX",
+  "close": 10328.33
+ },
+ {
+  "date": "2026-11-03",
+  "index": "KOSPI",
+  "close": 5648.79
+ },
+ {
+  "date": "2026-11-03",
+  "index": "SOX",
+  "close": 10600.4
+ },
+ {
+  "date": "2026-11-04",
+  "index": "KOSPI",
+  "close": 5683.8
+ },
+ {
+  "date": "2026-11-04",
+  "index": "SOX",
+  "close": 10268.65
+ },
+ {
+  "date": "2026-11-05",
+  "index": "KOSPI",
+  "close": 5383.8
+ },
+ {
+  "date": "2026-11-05",
+  "index": "SOX",
+  "close": 9011.14
+ },
+ {
+  "date": "2026-11-06",
+  "index": "KOSPI",
+  "close": 5059.69
+ },
+ {
+  "date": "2026-11-06",
+  "index": "SOX",
+  "close": 9390.25
+ },
+ {
+  "date": "2026-11-09",
+  "index": "KOSPI",
+  "close": 5018.85
+ },
+ {
+  "date": "2026-11-09",
+  "index": "SOX",
+  "close": 10033.93
+ },
+ {
+  "date": "2026-11-10",
+  "index": "KOSPI",
+  "close": 5239.13
+ },
+ {
+  "date": "2026-11-10",
+  "index": "SOX",
+  "close": 9998.33
+ },
+ {
+  "date": "2026-11-11",
+  "index": "KOSPI",
+  "close": 5375.36
+ },
+ {
+  "date": "2026-11-11",
+  "index": "SOX",
+  "close": 10564.11
+ },
+ {
+  "date": "2026-11-12",
+  "index": "KOSPI",
+  "close": 5342.73
+ },
+ {
+  "date": "2026-11-12",
+  "index": "SOX",
+  "close": 10506.67
+ },
+ {
+  "date": "2026-11-13",
+  "index": "KOSPI",
+  "close": 5290.53
+ },
+ {
+  "date": "2026-11-13",
+  "index": "SOX",
+  "close": 10146.32
+ }
+]

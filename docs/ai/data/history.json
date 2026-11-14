@@ -1,0 +1,4338 @@
+[
+ {
+  "date": "2026-05",
+  "key": "metr_level",
+  "value": 16,
+  "text": "16시간(2026.5 추정)",
+  "unit": "시간",
+  "src": "https://github.com/METR/eval-analysis-public"
+ },
+ {
+  "date": "2026-10",
+  "key": "metr_stall",
+  "value": 5,
+  "text": "5개월(마지막 기록 2026.5)",
+  "unit": "개월",
+  "src": "https://github.com/METR/eval-analysis-public"
+ },
+ {
+  "date": "2026-10-28",
+  "key": "capex_cuts",
+  "value": 1,
+  "text": "1곳(MS 소폭, 아마존 10.29 발표 전)",
+  "unit": "곳",
+  "src": "https://gvwire.com/2026/10/28/microsofts-profit-jumps-32-despite-big-increase-in-spending/"
+ },
+ {
+  "date": "2026-10",
+  "key": "capex_ocf",
+  "value": 92,
+  "text": "92%(2026년)",
+  "unit": "%",
+  "src": "https://aiweekly.co/alerts/amazon-microsoft-alphabet-meta-plan-725b-ai-capex-in-2026"
+ },
+ {
+  "date": "2026-10-16",
+  "key": "cds_coreweave",
+  "value": 1194.5,
+  "text": "1,194.5bp(10.16)",
+  "unit": "bp",
+  "src": "https://www.tokenpost.com/news/investing/33690"
+ },
+ {
+  "date": "2026-10-26",
+  "key": "hy_oas",
+  "value": 3.3,
+  "text": "3.30%(10.26)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/data/BAMLH0A0HYM2"
+ },
+ {
+  "date": "2026-10-18",
+  "key": "btos",
+  "value": 24.6,
+  "text": "24.6%(10.18까지 2주)",
+  "unit": "%",
+  "src": "https://ifeeltech.com/tools/business-ai-adoption-index"
+ },
+ {
+  "date": "2026-09",
+  "key": "ramp_q",
+  "value": 2.86,
+  "text": "+2.9%p(2·3분기 평균)",
+  "unit": "%p",
+  "src": "https://fred.stlouisfed.org/data/RAMPAIALL"
+ },
+ {
+  "date": "2026-08",
+  "key": "youth_gap",
+  "value": -19,
+  "text": "−19%(2026.8)",
+  "unit": "%",
+  "src": "https://www.brianheger.com/canaries-in-the-coal-mine-six-facts-about-the-recent-employment-effects-of-ai-august-2026-update-stanford-digital-economy-lab/"
+ },
+ {
+  "date": "2026-09",
+  "key": "us_unemp",
+  "value": 4.2,
+  "text": "4.2%(9월)",
+  "unit": "%",
+  "src": "https://www.bls.gov/web/empsit/cpseea10.pdf"
+ },
+ {
+  "date": "2026-09",
+  "key": "kr_youth",
+  "value": -1.1,
+  "text": "−1.1%p(9월, 44.0%)",
+  "unit": "%p",
+  "src": "https://www.korea.kr/briefing/policyBriefingView.do?newsId=156785404"
+ },
+ {
+  "date": "2026-09",
+  "key": "kr_ei",
+  "value": -5.5,
+  "text": "−5.5만 명(9월)",
+  "unit": "만 명",
+  "src": "https://www.korea.kr/briefing/policyBriefingView.do?newsId=156785124"
+ },
+ {
+  "date": "2026-10-28",
+  "key": "kospi_dd",
+  "value": -34.0,
+  "text": "−34.0%(10.28, 6,012.44)",
+  "unit": "%",
+  "src": "https://www.businesskorea.co.kr/news/articleView.html?idxno=279900"
+ },
+ {
+  "date": "2026-10-26",
+  "key": "sox_dd",
+  "value": -24.3,
+  "text": "−24.3%(10.26, 이후 이틀 상승)",
+  "unit": "%",
+  "src": "https://www.investing.com/indices/phlx-semiconductor-historical-data"
+ },
+ {
+  "date": "2026-10-27",
+  "key": "vkospi",
+  "value": 51.33,
+  "text": "51.3(10.27)",
+  "unit": "",
+  "src": "https://kr.investing.com/indices/kospi-volatility-historical-data"
+ },
+ {
+  "date": "2026-10-27",
+  "key": "forced_liq",
+  "value": 193.4,
+  "text": "193억 원(10.27)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-09-30",
+  "key": "dram_contract",
+  "value": 12.5,
+  "text": "+10~15%(4분기 전망)",
+  "unit": "%",
+  "src": "https://www.trendforce.com/presscenter/news/20260930-13258.html"
+ },
+ {
+  "date": "2026-10-19",
+  "key": "nand_spot",
+  "value": -6.5,
+  "text": "−6.5%(9.21→10.19)",
+  "unit": "%",
+  "src": "https://www.trendforce.com/news/?p=65594"
+ },
+ {
+  "date": "2026-10-15",
+  "key": "moratoria",
+  "value": 2,
+  "text": "2곳(뉴욕, 오리건 일부)",
+  "unit": "곳",
+  "src": "https://baxtel.com/news/virginia-senator-perry-proposes-three-year-statewide-data-center-moratorium"
+ },
+ {
+  "date": "2026-09",
+  "key": "elec_cpi",
+  "value": 4.4,
+  "text": "+4.4%(9월)",
+  "unit": "%",
+  "src": "https://www.dol.gov/newsroom/economicdata/cpi_10142026.pdf"
+ },
+ {
+  "date": "2026-09-30",
+  "key": "ai_incident",
+  "value": null,
+  "text": "주의: 7~9월 공개 8건, 피해 10억 달러 미만·인명 피해 없음",
+  "unit": "",
+  "src": "https://www.actionnewsjax.com/news/business/timeline/HLINEDHURI3Q3J3YMNRUVVUPPY/"
+ },
+ {
+  "date": "2026-10-29",
+  "key": "kospi_dd",
+  "value": -34.9,
+  "text": "−34.9%(10.29, 5,937.66)",
+  "unit": "%",
+  "src": "https://www.polinews.co.kr/news/articleView.html?idxno=747228"
+ },
+ {
+  "date": "2026-10-29",
+  "key": "sox_dd",
+  "value": -21.3,
+  "text": "−21.3%(10.29, 11,518.20)",
+  "unit": "%",
+  "src": "https://en.fnnews.com/news/202610300610245198"
+ },
+ {
+  "date": "2026-10-28",
+  "key": "vkospi",
+  "value": 51.85,
+  "text": "51.9(10.28)",
+  "unit": "",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-10-28",
+  "key": "forced_liq",
+  "value": 49.71,
+  "text": "50억 원(10.28)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-10-28",
+  "key": "hy_oas",
+  "value": 3.14,
+  "text": "3.14%(10.28)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/data/BAMLH0A0HYM2"
+ },
+ {
+  "date": "2026-10-29",
+  "key": "capex_cuts",
+  "value": 1,
+  "text": "1곳(MS 소폭, 아마존 2026년 약 2,200억 달러 유지)",
+  "unit": "곳",
+  "src": "https://s2.q4cdn.com/299287126/files/doc_earnings/2026/q3/earnings-result/AMZN-Q3-2026-Earnings-Release.pdf"
+ },
+ {
+  "date": "2026-09-30",
+  "key": "x_capex_amazon",
+  "value": 772.6,
+  "text": "3분기 772.6억 달러(최근 4개 분기 2,151.9억)",
+  "unit": "억 달러",
+  "src": "https://s2.q4cdn.com/299287126/files/doc_earnings/2026/q3/earnings-result/AMZN-Q3-2026-Earnings-Release.pdf"
+ },
+ {
+  "date": "2026-09-30",
+  "key": "x_ocf_amazon",
+  "value": 424.2,
+  "text": "3분기 424.2억 달러(최근 4개 분기 1,683.0억)",
+  "unit": "억 달러",
+  "src": "https://s2.q4cdn.com/299287126/files/doc_earnings/2026/q3/earnings-result/AMZN-Q3-2026-Earnings-Release.pdf"
+ },
+ {
+  "date": "2026-09-30",
+  "key": "x_capex_meta",
+  "value": 349.1,
+  "text": "3분기 349.1억 달러(금융리스 원금 포함)",
+  "unit": "억 달러",
+  "src": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-Third-Quarter-2026-Results/default.aspx"
+ },
+ {
+  "date": "2026-09-30",
+  "key": "x_ocf_meta",
+  "value": 327.9,
+  "text": "3분기 327.9억 달러",
+  "unit": "억 달러",
+  "src": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-Third-Quarter-2026-Results/default.aspx"
+ },
+ {
+  "date": "2026-10-30",
+  "key": "kospi_dd",
+  "value": -37.1,
+  "text": "−37.1%(10.30, 5,730.74)",
+  "unit": "%",
+  "src": "https://www.businesskorea.co.kr/news/articleView.html?idxno=280098"
+ },
+ {
+  "date": "2026-10-30",
+  "key": "sox_dd",
+  "value": -27.0,
+  "text": "−27.0%(10.30, 10,688.80)",
+  "unit": "%",
+  "src": "https://www.tradingkey.com/analysis/stocks/us-stocks/262262171-us-stock-market-today-nasdaq-drop-intel-amazon-chip-tradingkey"
+ },
+ {
+  "date": "2026-10-29",
+  "key": "hy_oas",
+  "value": 3.26,
+  "text": "3.26%(10.29)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/data/BAMLH0A0HYM2"
+ },
+ {
+  "date": "2026-11-02",
+  "key": "metr_stall",
+  "value": 5.9,
+  "text": "5.9개월(마지막 기록 2026-05-08)",
+  "unit": "개월",
+  "src": "https://ai-tldr.dev/releases/metr-claude-mythos-time-horizon/"
+ },
+ {
+  "date": "2026-10-26",
+  "key": "nand_spot",
+  "value": -13.0,
+  "text": "−13.0%(9.28→10.26, 512Gb TLC 19.396→16.883달러)",
+  "unit": "%",
+  "src": "https://www.trendforce.com/news/2026/10/28/insights-memory-spot-price-update-nand-spot-price-cuts-accelerate-amid-china-phone-discounts-512gb-tlc-sink-9-19/"
+ },
+ {
+  "date": "2026-10-21",
+  "key": "moratoria",
+  "value": 3,
+  "text": "3곳(뉴욕, 텍사스, 오리건 일부)",
+  "unit": "곳",
+  "src": "https://gov.texas.gov/news/post/governor-abbott-directs-tceq-to-halt-data-center-permits"
+ },
+ {
+  "date": "2026-10-29",
+  "key": "vkospi",
+  "value": 51.42,
+  "text": "51.4(10.29)",
+  "unit": "",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-10-30",
+  "key": "vkospi",
+  "value": 52.32,
+  "text": "52.3(10.30)",
+  "unit": "",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-10-29",
+  "key": "forced_liq",
+  "value": 36.62,
+  "text": "37억 원(10.29)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-02",
+  "key": "x_gpu_h100",
+  "value": 3.17,
+  "text": "H100 SXM 3.17달러/시간(1개월 +24.8%, 조회 시점 값·기준일 표시 없음)",
+  "unit": "달러/시간",
+  "src": "https://data.ornn.com/markets"
+ },
+ {
+  "date": "2026-11-02",
+  "key": "x_gpu_b200",
+  "value": 9.76,
+  "text": "B200 9.76달러/시간(1개월 +21.4%, 조회 시점 값·기준일 표시 없음)",
+  "unit": "달러/시간",
+  "src": "https://data.ornn.com/markets"
+ },
+ {
+  "date": "2026-10-22",
+  "key": "x_taiwan",
+  "value": null,
+  "text": "봉쇄·검역·대만 주변 대규모 훈련 없음, TSMC 출하 차질 보도 없음(10.14 남중국해 상륙함 실사격 훈련)",
+  "unit": "",
+  "src": "https://www.aei.org/commentary/china-taiwan-update-october-23-2026/"
+ },
+ {
+  "date": "2026-11-02",
+  "key": "kospi_dd",
+  "value": -35.7,
+  "text": "−35.7%(11.2, 5,859.08)",
+  "unit": "%",
+  "src": "https://www.newspim.com/news/view/20261102001377"
+ },
+ {
+  "date": "2026-11-02",
+  "key": "sox_dd",
+  "value": -29.4,
+  "text": "−29.4%(11.2, 10,328.33)",
+  "unit": "%",
+  "src": "https://www.hankyung.com/article/2026110315406"
+ },
+ {
+  "date": "2026-10-30",
+  "key": "hy_oas",
+  "value": 3.44,
+  "text": "3.44%(10.30)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/data/BAMLH0A0HYM2"
+ },
+ {
+  "date": "2026-10-30",
+  "key": "forced_liq",
+  "value": 32.92,
+  "text": "33억 원(10.30)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-03",
+  "key": "kospi_dd",
+  "value": -38.0,
+  "text": "−38.0%(11.3, 5,648.79)",
+  "unit": "%",
+  "src": "https://www.newspim.com/news/view/20261103001168"
+ },
+ {
+  "date": "2026-11-03",
+  "key": "sox_dd",
+  "value": -27.6,
+  "text": "−27.6%(11.3, 10,600.4)",
+  "unit": "%",
+  "src": "https://www.tradingkey.com/analysis/stocks/us-stocks/262269485-us-stocks-today-close-nasdaq-rises-midterm-elections-tradingkey"
+ },
+ {
+  "date": "2026-11-02",
+  "key": "hy_oas",
+  "value": 3.43,
+  "text": "3.43%(11.2)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/data/BAMLH0A0HYM2"
+ },
+ {
+  "date": "2026-11-02",
+  "key": "vkospi",
+  "value": 53.34,
+  "text": "53.3(11.2)",
+  "unit": "",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-02",
+  "key": "forced_liq",
+  "value": 111.83,
+  "text": "112억 원(11.2)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-04",
+  "key": "kospi_dd",
+  "value": -37.6,
+  "text": "−37.6%(11.4, 5,683.80)",
+  "unit": "%",
+  "src": "https://www.newspim.com/news/view/20261104001137"
+ },
+ {
+  "date": "2026-11-04",
+  "key": "sox_dd",
+  "value": -29.8,
+  "text": "−29.8%(11.4, 10,268.65)",
+  "unit": "%",
+  "src": "https://www.seoul.co.kr/news/economy/securities/2026/11/05/20261105500004"
+ },
+ {
+  "date": "2026-11-03",
+  "key": "vkospi",
+  "value": 54.08,
+  "text": "54.1(11.3)",
+  "unit": "",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-03",
+  "key": "forced_liq",
+  "value": 96.94,
+  "text": "97억 원(11.3)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-03",
+  "key": "hy_oas",
+  "value": 3.4,
+  "text": "3.40%(11.3)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/data/BAMLH0A0HYM2"
+ },
+ {
+  "date": "2026-11-05",
+  "key": "kospi_dd",
+  "value": -40.9,
+  "text": "−40.9%(11.5, 5,383.80)",
+  "unit": "%",
+  "src": "https://www.newspim.com/news/view/20261105001214"
+ },
+ {
+  "date": "2026-11-05",
+  "key": "sox_dd",
+  "value": -38.4,
+  "text": "−38.4%(11.5, 9,011.14)",
+  "unit": "%",
+  "src": "https://www.seoul.co.kr/news/economy/securities/2026/11/06/20261106500007"
+ },
+ {
+  "date": "2026-11-04",
+  "key": "vkospi",
+  "value": 56.04,
+  "text": "56.0(11.4)",
+  "unit": "",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-04",
+  "key": "forced_liq",
+  "value": 39.0,
+  "text": "39억 원(11.4)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-04",
+  "key": "hy_oas",
+  "value": 3.32,
+  "text": "3.32%(11.4)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/data/BAMLH0A0HYM2"
+ },
+ {
+  "date": "2026-11-06",
+  "key": "kospi_dd",
+  "value": -44.5,
+  "text": "−44.5%(11.6, 5,059.69)",
+  "unit": "%",
+  "src": "https://www.newspim.com/news/view/20261106000974"
+ },
+ {
+  "date": "2026-11-05",
+  "key": "vkospi",
+  "value": 58.21,
+  "text": "58.2(11.5)",
+  "unit": "",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-05",
+  "key": "forced_liq",
+  "value": 84.2,
+  "text": "84억 원(11.5)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-05",
+  "key": "hy_oas",
+  "value": 3.48,
+  "text": "3.48%(11.5)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/data/BAMLH0A0HYM2"
+ },
+ {
+  "date": "2026-10",
+  "key": "us_unemp",
+  "value": 4.1,
+  "text": "4.1%(10월)",
+  "unit": "%",
+  "src": "https://www.news1.kr/world/usa-canada/6346245"
+ },
+ {
+  "date": "2026-10",
+  "key": "x_us_u2024",
+  "value": 7.5,
+  "text": "7.5%(10월, 계절조정)",
+  "unit": "%",
+  "src": "https://www.bls.gov/web/empsit/cpseea10.pdf"
+ },
+ {
+  "date": "2026-10",
+  "key": "x_ai_layoffs",
+  "value": 1265,
+  "text": "1,265명(10월, 올해 최저), 1~10월 누적 121,401명, 10월 전체 감원 43,994명",
+  "unit": "명",
+  "src": "https://www.challengergray.com/blog/october-layoffs-at-three-year-low-seasonal-hiring-plans-up-26/"
+ },
+ {
+  "date": "2026-11-06",
+  "key": "x_foreign20",
+  "value": -22.63,
+  "text": "−22.63조 원(10.12~11.6 20거래일, 11.6은 KRX 잠정 −2.71조 원)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-01",
+  "key": "forced_liq",
+  "value": 55.8,
+  "text": "월평균 56억 원(15.1, 21거래일, 최대 84억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-02",
+  "key": "forced_liq",
+  "value": 58.8,
+  "text": "월평균 59억 원(15.2, 17거래일, 최대 81억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-03",
+  "key": "forced_liq",
+  "value": 60.3,
+  "text": "월평균 60억 원(15.3, 22거래일, 최대 102억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-04",
+  "key": "forced_liq",
+  "value": 76.3,
+  "text": "월평균 76억 원(15.4, 22거래일, 최대 146억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-05",
+  "key": "forced_liq",
+  "value": 80.1,
+  "text": "월평균 80억 원(15.5, 18거래일, 최대 126억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-06",
+  "key": "forced_liq",
+  "value": 70.3,
+  "text": "월평균 70억 원(15.6, 22거래일, 최대 119억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-07",
+  "key": "forced_liq",
+  "value": 72.5,
+  "text": "월평균 73억 원(15.7, 23거래일, 최대 128억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-08",
+  "key": "forced_liq",
+  "value": 74.0,
+  "text": "월평균 74억 원(15.8, 20거래일, 최대 164억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-09",
+  "key": "forced_liq",
+  "value": 46.9,
+  "text": "월평균 47억 원(15.9, 20거래일, 최대 85억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-10",
+  "key": "forced_liq",
+  "value": 53.1,
+  "text": "월평균 53억 원(15.10, 21거래일, 최대 78억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-11",
+  "key": "forced_liq",
+  "value": 48.7,
+  "text": "월평균 49억 원(15.11, 21거래일, 최대 103억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-12",
+  "key": "forced_liq",
+  "value": 43.6,
+  "text": "월평균 44억 원(15.12, 22거래일, 최대 71억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-01",
+  "key": "forced_liq",
+  "value": 53.0,
+  "text": "월평균 53억 원(16.1, 20거래일, 최대 95억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-02",
+  "key": "forced_liq",
+  "value": 46.5,
+  "text": "월평균 46억 원(16.2, 18거래일, 최대 98억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-03",
+  "key": "forced_liq",
+  "value": 39.9,
+  "text": "월평균 40억 원(16.3, 22거래일, 최대 64억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-04",
+  "key": "forced_liq",
+  "value": 44.5,
+  "text": "월평균 44억 원(16.4, 20거래일, 최대 67억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-05",
+  "key": "forced_liq",
+  "value": 52.0,
+  "text": "월평균 52억 원(16.5, 20거래일, 최대 82억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-06",
+  "key": "forced_liq",
+  "value": 45.3,
+  "text": "월평균 45억 원(16.6, 21거래일, 최대 63억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-07",
+  "key": "forced_liq",
+  "value": 39.3,
+  "text": "월평균 39억 원(16.7, 21거래일, 최대 50억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-08",
+  "key": "forced_liq",
+  "value": 45.3,
+  "text": "월평균 45억 원(16.8, 22거래일, 최대 66억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-09",
+  "key": "forced_liq",
+  "value": 42.5,
+  "text": "월평균 42억 원(16.9, 19거래일, 최대 76억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-10",
+  "key": "forced_liq",
+  "value": 46.8,
+  "text": "월평균 47억 원(16.10, 20거래일, 최대 85억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-11",
+  "key": "forced_liq",
+  "value": 42.3,
+  "text": "월평균 42억 원(16.11, 22거래일, 최대 68억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-12",
+  "key": "forced_liq",
+  "value": 36.8,
+  "text": "월평균 37억 원(16.12, 22거래일, 최대 77억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-01",
+  "key": "forced_liq",
+  "value": 32.6,
+  "text": "월평균 33억 원(17.1, 20거래일, 최대 57억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-02",
+  "key": "forced_liq",
+  "value": 40.4,
+  "text": "월평균 40억 원(17.2, 20거래일, 최대 94억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-03",
+  "key": "forced_liq",
+  "value": 40.6,
+  "text": "월평균 41억 원(17.3, 22거래일, 최대 66억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-04",
+  "key": "forced_liq",
+  "value": 37.9,
+  "text": "월평균 38억 원(17.4, 20거래일, 최대 47억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-05",
+  "key": "forced_liq",
+  "value": 41.5,
+  "text": "월평균 42억 원(17.5, 19거래일, 최대 63억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-06",
+  "key": "forced_liq",
+  "value": 45.5,
+  "text": "월평균 45억 원(17.6, 21거래일, 최대 81억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-07",
+  "key": "forced_liq",
+  "value": 47.6,
+  "text": "월평균 48억 원(17.7, 21거래일, 최대 95억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-08",
+  "key": "forced_liq",
+  "value": 45.3,
+  "text": "월평균 45억 원(17.8, 22거래일, 최대 68억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-09",
+  "key": "forced_liq",
+  "value": 45.9,
+  "text": "월평균 46억 원(17.9, 21거래일, 최대 83억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-10",
+  "key": "forced_liq",
+  "value": 57.9,
+  "text": "월평균 58억 원(17.10, 16거래일, 최대 82억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-11",
+  "key": "forced_liq",
+  "value": 57.9,
+  "text": "월평균 58억 원(17.11, 22거래일, 최대 121억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-12",
+  "key": "forced_liq",
+  "value": 59.6,
+  "text": "월평균 60억 원(17.12, 20거래일, 최대 97억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-01",
+  "key": "forced_liq",
+  "value": 58.5,
+  "text": "월평균 59억 원(18.1, 22거래일, 최대 99억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-02",
+  "key": "forced_liq",
+  "value": 82.9,
+  "text": "월평균 83억 원(18.2, 18거래일, 최대 137억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-03",
+  "key": "forced_liq",
+  "value": 75.2,
+  "text": "월평균 75억 원(18.3, 21거래일, 최대 116억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-04",
+  "key": "forced_liq",
+  "value": 67.4,
+  "text": "월평균 67억 원(18.4, 21거래일, 최대 107억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-05",
+  "key": "forced_liq",
+  "value": 79.8,
+  "text": "월평균 80억 원(18.5, 20거래일, 최대 119억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-06",
+  "key": "forced_liq",
+  "value": 92.5,
+  "text": "월평균 92억 원(18.6, 19거래일, 최대 173억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-07",
+  "key": "forced_liq",
+  "value": 62.1,
+  "text": "월평균 62억 원(18.7, 22거래일, 최대 103억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-08",
+  "key": "forced_liq",
+  "value": 53.8,
+  "text": "월평균 54억 원(18.8, 22거래일, 최대 96억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-09",
+  "key": "forced_liq",
+  "value": 59.8,
+  "text": "월평균 60억 원(18.9, 17거래일, 최대 88억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-10",
+  "key": "forced_liq",
+  "value": 102.8,
+  "text": "월평균 103억 원(18.10, 21거래일, 최대 152억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-11",
+  "key": "forced_liq",
+  "value": 62.0,
+  "text": "월평균 62억 원(18.11, 22거래일, 최대 92억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-12",
+  "key": "forced_liq",
+  "value": 92.3,
+  "text": "월평균 92억 원(18.12, 20거래일, 최대 131억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-01",
+  "key": "forced_liq",
+  "value": 80.9,
+  "text": "월평균 81억 원(19.1, 22거래일, 최대 129억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-02",
+  "key": "forced_liq",
+  "value": 88.0,
+  "text": "월평균 88억 원(19.2, 17거래일, 최대 103억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-03",
+  "key": "forced_liq",
+  "value": 76.0,
+  "text": "월평균 76억 원(19.3, 20거래일, 최대 119억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-04",
+  "key": "forced_liq",
+  "value": 71.4,
+  "text": "월평균 71억 원(19.4, 22거래일, 최대 91억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-05",
+  "key": "forced_liq",
+  "value": 77.0,
+  "text": "월평균 77억 원(19.5, 21거래일, 최대 111억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-06",
+  "key": "forced_liq",
+  "value": 68.0,
+  "text": "월평균 68억 원(19.6, 19거래일, 최대 88억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-07",
+  "key": "forced_liq",
+  "value": 81.4,
+  "text": "월평균 81억 원(19.7, 23거래일, 최대 114억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-08",
+  "key": "forced_liq",
+  "value": 94.4,
+  "text": "월평균 94억 원(19.8, 21거래일, 최대 163억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-09",
+  "key": "forced_liq",
+  "value": 80.9,
+  "text": "월평균 81억 원(19.9, 19거래일, 최대 140억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-10",
+  "key": "forced_liq",
+  "value": 101.8,
+  "text": "월평균 102억 원(19.10, 21거래일, 최대 158억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-11",
+  "key": "forced_liq",
+  "value": 104.1,
+  "text": "월평균 104억 원(19.11, 21거래일, 최대 134억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-12",
+  "key": "forced_liq",
+  "value": 93.9,
+  "text": "월평균 94억 원(19.12, 21거래일, 최대 126억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-01",
+  "key": "forced_liq",
+  "value": 107.3,
+  "text": "월평균 107억 원(20.1, 20거래일, 최대 141억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-02",
+  "key": "forced_liq",
+  "value": 117.3,
+  "text": "월평균 117억 원(20.2, 20거래일, 최대 165억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-03",
+  "key": "forced_liq",
+  "value": 162.6,
+  "text": "월평균 163억 원(20.3, 22거래일, 최대 261억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-04",
+  "key": "forced_liq",
+  "value": 138.9,
+  "text": "월평균 139억 원(20.4, 20거래일, 최대 182억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-05",
+  "key": "forced_liq",
+  "value": 153.8,
+  "text": "월평균 154억 원(20.5, 19거래일, 최대 190억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-06",
+  "key": "forced_liq",
+  "value": 173.0,
+  "text": "월평균 173억 원(20.6, 22거래일, 최대 263억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-07",
+  "key": "forced_liq",
+  "value": 146.4,
+  "text": "월평균 146억 원(20.7, 23거래일, 최대 189억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-08",
+  "key": "forced_liq",
+  "value": 172.9,
+  "text": "월평균 173억 원(20.8, 20거래일, 최대 251억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-09",
+  "key": "forced_liq",
+  "value": 195.6,
+  "text": "월평균 196억 원(20.9, 21거래일, 최대 303억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-10",
+  "key": "forced_liq",
+  "value": 180.4,
+  "text": "월평균 180억 원(20.10, 19거래일, 최대 243억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-11",
+  "key": "forced_liq",
+  "value": 165.0,
+  "text": "월평균 165억 원(20.11, 21거래일, 최대 256억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-12",
+  "key": "forced_liq",
+  "value": 173.3,
+  "text": "월평균 173억 원(20.12, 22거래일, 최대 259억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-01",
+  "key": "forced_liq",
+  "value": 229.4,
+  "text": "월평균 229억 원(21.1, 20거래일, 최대 387억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-02",
+  "key": "forced_liq",
+  "value": 225.8,
+  "text": "월평균 226억 원(21.2, 18거래일, 최대 322억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-03",
+  "key": "forced_liq",
+  "value": 195.8,
+  "text": "월평균 196억 원(21.3, 22거래일, 최대 351억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-04",
+  "key": "forced_liq",
+  "value": 185.9,
+  "text": "월평균 186억 원(21.4, 22거래일, 최대 279억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-05",
+  "key": "forced_liq",
+  "value": 244.0,
+  "text": "월평균 244억 원(21.5, 19거래일, 최대 360억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-06",
+  "key": "forced_liq",
+  "value": 191.9,
+  "text": "월평균 192억 원(21.6, 22거래일, 최대 283억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-07",
+  "key": "forced_liq",
+  "value": 190.8,
+  "text": "월평균 191억 원(21.7, 22거래일, 최대 254억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-08",
+  "key": "forced_liq",
+  "value": 229.7,
+  "text": "월평균 230억 원(21.8, 21거래일, 최대 422억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-09",
+  "key": "forced_liq",
+  "value": 171.5,
+  "text": "월평균 171억 원(21.9, 19거래일, 최대 316억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-10",
+  "key": "forced_liq",
+  "value": 191.7,
+  "text": "월평균 192억 원(21.10, 19거래일, 최대 394억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-11",
+  "key": "forced_liq",
+  "value": 170.5,
+  "text": "월평균 170억 원(21.11, 22거래일, 최대 223억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-12",
+  "key": "forced_liq",
+  "value": 148.1,
+  "text": "월평균 148억 원(21.12, 23거래일, 최대 266억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-01",
+  "key": "forced_liq",
+  "value": 206.2,
+  "text": "월평균 206억 원(22.1, 20거래일, 최대 314억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-02",
+  "key": "forced_liq",
+  "value": 154.5,
+  "text": "월평균 154억 원(22.2, 18거래일, 최대 270억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-03",
+  "key": "forced_liq",
+  "value": 147.8,
+  "text": "월평균 148억 원(22.3, 21거래일, 최대 256억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-04",
+  "key": "forced_liq",
+  "value": 155.9,
+  "text": "월평균 156억 원(22.4, 21거래일, 최대 207억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-05",
+  "key": "forced_liq",
+  "value": 164.8,
+  "text": "월평균 165억 원(22.5, 21거래일, 최대 238억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-06",
+  "key": "forced_liq",
+  "value": 208.7,
+  "text": "월평균 209억 원(22.6, 20거래일, 최대 316억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-07",
+  "key": "forced_liq",
+  "value": 133.5,
+  "text": "월평균 133억 원(22.7, 21거래일, 최대 222억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-08",
+  "key": "forced_liq",
+  "value": 123.3,
+  "text": "월평균 123억 원(22.8, 22거래일, 최대 155억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-09",
+  "key": "forced_liq",
+  "value": 195.8,
+  "text": "월평균 196억 원(22.9, 20거래일, 최대 383억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-10",
+  "key": "forced_liq",
+  "value": 151.3,
+  "text": "월평균 151억 원(22.10, 19거래일, 최대 259억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-11",
+  "key": "forced_liq",
+  "value": 116.2,
+  "text": "월평균 116억 원(22.11, 22거래일, 최대 158억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-12",
+  "key": "forced_liq",
+  "value": 133.4,
+  "text": "월평균 133억 원(22.12, 22거래일, 최대 188억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-01",
+  "key": "forced_liq",
+  "value": 126.8,
+  "text": "월평균 127억 원(23.1, 20거래일, 최대 250억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-02",
+  "key": "forced_liq",
+  "value": 120.1,
+  "text": "월평균 120억 원(23.2, 20거래일, 최대 189억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-03",
+  "key": "forced_liq",
+  "value": 234.4,
+  "text": "월평균 234억 원(23.3, 22거래일, 최대 308억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-04",
+  "key": "forced_liq",
+  "value": 176.5,
+  "text": "월평균 177억 원(23.4, 20거래일, 최대 390억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-05",
+  "key": "forced_liq",
+  "value": 489.5,
+  "text": "월평균 489억 원(23.5, 20거래일, 최대 597억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-06",
+  "key": "forced_liq",
+  "value": 467.2,
+  "text": "월평균 467억 원(23.6, 21거래일, 최대 517억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-07",
+  "key": "forced_liq",
+  "value": 569.7,
+  "text": "월평균 570억 원(23.7, 21거래일, 최대 977억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-08",
+  "key": "forced_liq",
+  "value": 514.2,
+  "text": "월평균 514억 원(23.8, 22거래일, 최대 580억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-09",
+  "key": "forced_liq",
+  "value": 510.2,
+  "text": "월평균 510억 원(23.9, 19거래일, 최대 582억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-10",
+  "key": "forced_liq",
+  "value": 1561.7,
+  "text": "월평균 1,562억 원(23.10, 19거래일, 최대 5,497억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-11",
+  "key": "forced_liq",
+  "value": 76.9,
+  "text": "월평균 77억 원(23.11, 22거래일, 최대 506억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-12",
+  "key": "forced_liq",
+  "value": 52.0,
+  "text": "월평균 52억 원(23.12, 19거래일, 최대 92억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-01",
+  "key": "forced_liq",
+  "value": 69.4,
+  "text": "월평균 69억 원(24.1, 22거래일, 최대 102억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-02",
+  "key": "forced_liq",
+  "value": 58.8,
+  "text": "월평균 59억 원(24.2, 19거래일, 최대 115억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-03",
+  "key": "forced_liq",
+  "value": 53.4,
+  "text": "월평균 53억 원(24.3, 20거래일, 최대 77억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-04",
+  "key": "forced_liq",
+  "value": 76.5,
+  "text": "월평균 76억 원(24.4, 21거래일, 최대 172억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-05",
+  "key": "forced_liq",
+  "value": 60.2,
+  "text": "월평균 60억 원(24.5, 20거래일, 최대 100억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-06",
+  "key": "forced_liq",
+  "value": 67.1,
+  "text": "월평균 67억 원(24.6, 19거래일, 최대 170억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-07",
+  "key": "forced_liq",
+  "value": 73.4,
+  "text": "월평균 73억 원(24.7, 23거래일, 최대 141억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-08",
+  "key": "forced_liq",
+  "value": 100.0,
+  "text": "월평균 100억 원(24.8, 21거래일, 최대 433억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-09",
+  "key": "forced_liq",
+  "value": 75.6,
+  "text": "월평균 76억 원(24.9, 18거래일, 최대 152억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-10",
+  "key": "forced_liq",
+  "value": 77.7,
+  "text": "월평균 78억 원(24.10, 20거래일, 최대 177억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-11",
+  "key": "forced_liq",
+  "value": 72.3,
+  "text": "월평균 72억 원(24.11, 21거래일, 최대 165억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-12",
+  "key": "forced_liq",
+  "value": 61.9,
+  "text": "월평균 62억 원(24.12, 20거래일, 최대 108억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-01",
+  "key": "forced_liq",
+  "value": 46.0,
+  "text": "월평균 46억 원(25.1, 18거래일, 최대 60억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-02",
+  "key": "forced_liq",
+  "value": 52.5,
+  "text": "월평균 52억 원(25.2, 20거래일, 최대 86억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-03",
+  "key": "forced_liq",
+  "value": 62.7,
+  "text": "월평균 63억 원(25.3, 20거래일, 최대 115억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-04",
+  "key": "forced_liq",
+  "value": 63.7,
+  "text": "월평균 64억 원(25.4, 22거래일, 최대 166억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-05",
+  "key": "forced_liq",
+  "value": 56.1,
+  "text": "월평균 56억 원(25.5, 19거래일, 최대 98억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-06",
+  "key": "forced_liq",
+  "value": 58.8,
+  "text": "월평균 59억 원(25.6, 19거래일, 최대 129억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-07",
+  "key": "forced_liq",
+  "value": 74.1,
+  "text": "월평균 74억 원(25.7, 23거래일, 최대 182억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-08",
+  "key": "forced_liq",
+  "value": 78.2,
+  "text": "월평균 78억 원(25.8, 20거래일, 최대 169억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-09",
+  "key": "forced_liq",
+  "value": 67.3,
+  "text": "월평균 67억 원(25.9, 22거래일, 최대 197억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-10",
+  "key": "forced_liq",
+  "value": 75.0,
+  "text": "월평균 75억 원(25.10, 18거래일, 최대 149억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-11",
+  "key": "forced_liq",
+  "value": 149.5,
+  "text": "월평균 149억 원(25.11, 20거래일, 최대 380억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-12",
+  "key": "forced_liq",
+  "value": 71.1,
+  "text": "월평균 71억 원(25.12, 22거래일, 최대 152억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-01",
+  "key": "forced_liq",
+  "value": 102.0,
+  "text": "월평균 102억 원(26.1, 21거래일, 최대 193억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-02",
+  "key": "forced_liq",
+  "value": 135.0,
+  "text": "월평균 135억 원(26.2, 17거래일, 최대 360억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-03",
+  "key": "forced_liq",
+  "value": 262.3,
+  "text": "월평균 262억 원(26.3, 21거래일, 최대 824억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-04",
+  "key": "forced_liq",
+  "value": 120.1,
+  "text": "월평균 120억 원(26.4, 22거래일, 최대 306억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-05",
+  "key": "forced_liq",
+  "value": 393.2,
+  "text": "월평균 393억 원(26.5, 18거래일, 최대 1,458억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-06",
+  "key": "forced_liq",
+  "value": 534.7,
+  "text": "월평균 535억 원(26.6, 21거래일, 최대 1,698억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-07",
+  "key": "forced_liq",
+  "value": 451.3,
+  "text": "월평균 451억 원(26.7, 22거래일, 최대 1,422억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-08",
+  "key": "forced_liq",
+  "value": 153.7,
+  "text": "월평균 154억 원(26.8, 20거래일, 최대 484억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-09",
+  "key": "forced_liq",
+  "value": 109.6,
+  "text": "월평균 110억 원(26.9, 20거래일, 최대 261억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-10",
+  "key": "forced_liq",
+  "value": 270.7,
+  "text": "월평균 271억 원(26.10, 20거래일, 최대 893억 원)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-05",
+  "key": "margin_dd",
+  "value": -25.5,
+  "text": "−25.5%(11.5, 28.77조 원 / 1년 정점 6.24 38.63조 원)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-06",
+  "key": "foreign20",
+  "value": -22.6,
+  "text": "−22.6조 원(10.12~11.6, 확정치)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-03-13",
+  "key": "policy_stage",
+  "value": null,
+  "text": "위험: 공매도 6개월 전면 금지(3.16~)·담보비율 유지의무 면제·증안펀드(3.24 10.7조 원)",
+  "unit": "",
+  "src": "https://www.fsc.go.kr"
+ },
+ {
+  "date": "2022-07-01",
+  "key": "policy_stage",
+  "value": null,
+  "text": "경고: 담보비율 유지의무 3개월 면제(7.4~9.30, 이후 연장) — 조치 뒤 9~10월까지 추가 하락",
+  "unit": "",
+  "src": "https://www.fsc.go.kr"
+ },
+ {
+  "date": "2023-01-02",
+  "key": "policy_stage",
+  "value": null,
+  "text": "정상: 2022년 면제 조치 종료·원복",
+  "unit": "",
+  "src": "https://www.fsc.go.kr"
+ },
+ {
+  "date": "2026-11-06",
+  "key": "policy_stage",
+  "value": null,
+  "text": "경고: 담보비율 유지의무 3개월 면제 발표(11.9~2027.2.9), 증권사 140→130%",
+  "unit": "",
+  "src": "https://www.fnnews.com/news/202611061230455846"
+ },
+ {
+  "date": "2015-01",
+  "key": "margin_dd",
+  "value": 0.0,
+  "text": "월말 0.0%(15.1, 잔고 5.50조 / 1년 정점 5.50조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-02",
+  "key": "margin_dd",
+  "value": 0.0,
+  "text": "월말 0.0%(15.2, 잔고 5.81조 / 1년 정점 5.81조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-03",
+  "key": "margin_dd",
+  "value": 0.0,
+  "text": "월말 0.0%(15.3, 잔고 6.48조 / 1년 정점 6.48조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-04",
+  "key": "margin_dd",
+  "value": -1.0,
+  "text": "월말 −1.0%(15.4, 잔고 7.46조 / 1년 정점 7.54조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-05",
+  "key": "margin_dd",
+  "value": -0.2,
+  "text": "월말 −0.2%(15.5, 잔고 7.67조 / 1년 정점 7.68조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-06",
+  "key": "margin_dd",
+  "value": -1.0,
+  "text": "월말 −1.0%(15.6, 잔고 7.61조 / 1년 정점 7.68조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-07",
+  "key": "margin_dd",
+  "value": -3.3,
+  "text": "월말 −3.3%(15.7, 잔고 7.81조 / 1년 정점 8.07조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-08",
+  "key": "margin_dd",
+  "value": -20.3,
+  "text": "월말 −20.3%(15.8, 잔고 6.44조 / 1년 정점 8.07조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-09",
+  "key": "margin_dd",
+  "value": -17.7,
+  "text": "월말 −17.7%(15.9, 잔고 6.64조 / 1년 정점 8.07조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-10",
+  "key": "margin_dd",
+  "value": -15.6,
+  "text": "월말 −15.6%(15.10, 잔고 6.82조 / 1년 정점 8.07조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-11",
+  "key": "margin_dd",
+  "value": -16.2,
+  "text": "월말 −16.2%(15.11, 잔고 6.76조 / 1년 정점 8.07조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-12",
+  "key": "margin_dd",
+  "value": -19.2,
+  "text": "월말 −19.2%(15.12, 잔고 6.52조 / 1년 정점 8.07조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-01",
+  "key": "margin_dd",
+  "value": -17.3,
+  "text": "월말 −17.3%(16.1, 잔고 6.68조 / 1년 정점 8.07조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-02",
+  "key": "margin_dd",
+  "value": -20.9,
+  "text": "월말 −20.9%(16.2, 잔고 6.38조 / 1년 정점 8.07조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-03",
+  "key": "margin_dd",
+  "value": -15.3,
+  "text": "월말 −15.3%(16.3, 잔고 6.84조 / 1년 정점 8.07조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-04",
+  "key": "margin_dd",
+  "value": -11.2,
+  "text": "월말 −11.2%(16.4, 잔고 7.17조 / 1년 정점 8.07조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-05",
+  "key": "margin_dd",
+  "value": -12.2,
+  "text": "월말 −12.2%(16.5, 잔고 7.09조 / 1년 정점 8.07조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-06",
+  "key": "margin_dd",
+  "value": -15.9,
+  "text": "월말 −15.9%(16.6, 잔고 6.79조 / 1년 정점 8.07조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-07",
+  "key": "margin_dd",
+  "value": -6.6,
+  "text": "월말 −6.6%(16.7, 잔고 7.54조 / 1년 정점 8.07조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-08",
+  "key": "margin_dd",
+  "value": -1.3,
+  "text": "월말 −1.3%(16.8, 잔고 7.69조 / 1년 정점 7.79조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-09",
+  "key": "margin_dd",
+  "value": -1.1,
+  "text": "월말 −1.1%(16.9, 잔고 7.71조 / 1년 정점 7.79조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-10",
+  "key": "margin_dd",
+  "value": -5.0,
+  "text": "월말 −5.0%(16.10, 잔고 7.40조 / 1년 정점 7.79조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-11",
+  "key": "margin_dd",
+  "value": -13.2,
+  "text": "월말 −13.2%(16.11, 잔고 6.76조 / 1년 정점 7.79조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-12",
+  "key": "margin_dd",
+  "value": -13.1,
+  "text": "월말 −13.1%(16.12, 잔고 6.77조 / 1년 정점 7.79조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-01",
+  "key": "margin_dd",
+  "value": -8.5,
+  "text": "월말 −8.5%(17.1, 잔고 7.13조 / 1년 정점 7.79조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-02",
+  "key": "margin_dd",
+  "value": -9.2,
+  "text": "월말 −9.2%(17.2, 잔고 7.08조 / 1년 정점 7.79조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-03",
+  "key": "margin_dd",
+  "value": -7.0,
+  "text": "월말 −7.0%(17.3, 잔고 7.25조 / 1년 정점 7.79조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-04",
+  "key": "margin_dd",
+  "value": -7.0,
+  "text": "월말 −7.0%(17.4, 잔고 7.25조 / 1년 정점 7.79조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-05",
+  "key": "margin_dd",
+  "value": 0.0,
+  "text": "월말 0.0%(17.5, 잔고 7.82조 / 1년 정점 7.82조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-06",
+  "key": "margin_dd",
+  "value": -0.1,
+  "text": "월말 −0.1%(17.6, 잔고 8.55조 / 1년 정점 8.55조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-07",
+  "key": "margin_dd",
+  "value": -0.7,
+  "text": "월말 −0.7%(17.7, 잔고 8.61조 / 1년 정점 8.67조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-08",
+  "key": "margin_dd",
+  "value": -4.1,
+  "text": "월말 −4.1%(17.8, 잔고 8.32조 / 1년 정점 8.67조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-09",
+  "key": "margin_dd",
+  "value": -4.5,
+  "text": "월말 −4.5%(17.9, 잔고 8.31조 / 1년 정점 8.70조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-10",
+  "key": "margin_dd",
+  "value": 0.0,
+  "text": "월말 0.0%(17.10, 잔고 8.78조 / 1년 정점 8.78조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-11",
+  "key": "margin_dd",
+  "value": -0.2,
+  "text": "월말 −0.2%(17.11, 잔고 10.03조 / 1년 정점 10.05조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-12",
+  "key": "margin_dd",
+  "value": -3.0,
+  "text": "월말 −3.0%(17.12, 잔고 9.86조 / 1년 정점 10.17조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-01",
+  "key": "margin_dd",
+  "value": 0.0,
+  "text": "월말 0.0%(18.1, 잔고 11.28조 / 1년 정점 11.28조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-02",
+  "key": "margin_dd",
+  "value": -1.6,
+  "text": "월말 −1.6%(18.2, 잔고 11.24조 / 1년 정점 11.43조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-03",
+  "key": "margin_dd",
+  "value": -2.9,
+  "text": "월말 −2.9%(18.3, 잔고 11.34조 / 1년 정점 11.68조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-04",
+  "key": "margin_dd",
+  "value": 0.0,
+  "text": "월말 0.0%(18.4, 잔고 12.22조 / 1년 정점 12.22조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-05",
+  "key": "margin_dd",
+  "value": -0.2,
+  "text": "월말 −0.2%(18.5, 잔고 12.50조 / 1년 정점 12.53조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-06",
+  "key": "margin_dd",
+  "value": -6.6,
+  "text": "월말 −6.6%(18.6, 잔고 11.82조 / 1년 정점 12.65조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-07",
+  "key": "margin_dd",
+  "value": -14.1,
+  "text": "월말 −14.1%(18.7, 잔고 10.87조 / 1년 정점 12.65조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-08",
+  "key": "margin_dd",
+  "value": -10.6,
+  "text": "월말 −10.6%(18.8, 잔고 11.31조 / 1년 정점 12.65조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-09",
+  "key": "margin_dd",
+  "value": -6.8,
+  "text": "월말 −6.8%(18.9, 잔고 11.78조 / 1년 정점 12.65조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-10",
+  "key": "margin_dd",
+  "value": -26.0,
+  "text": "월말 −26.0%(18.10, 잔고 9.37조 / 1년 정점 12.65조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-11",
+  "key": "margin_dd",
+  "value": -24.0,
+  "text": "월말 −24.0%(18.11, 잔고 9.61조 / 1년 정점 12.65조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-12",
+  "key": "margin_dd",
+  "value": -25.6,
+  "text": "월말 −25.6%(18.12, 잔고 9.41조 / 1년 정점 12.65조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-01",
+  "key": "margin_dd",
+  "value": -21.5,
+  "text": "월말 −21.5%(19.1, 잔고 9.93조 / 1년 정점 12.65조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-02",
+  "key": "margin_dd",
+  "value": -17.0,
+  "text": "월말 −17.0%(19.2, 잔고 10.49조 / 1년 정점 12.65조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-03",
+  "key": "margin_dd",
+  "value": -17.8,
+  "text": "월말 −17.8%(19.3, 잔고 10.39조 / 1년 정점 12.65조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-04",
+  "key": "margin_dd",
+  "value": -15.5,
+  "text": "월말 −15.5%(19.4, 잔고 10.68조 / 1년 정점 12.65조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-05",
+  "key": "margin_dd",
+  "value": -18.9,
+  "text": "월말 −18.9%(19.5, 잔고 10.25조 / 1년 정점 12.65조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-06",
+  "key": "margin_dd",
+  "value": -13.0,
+  "text": "월말 −13.0%(19.6, 잔고 10.47조 / 1년 정점 12.04조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-07",
+  "key": "margin_dd",
+  "value": -20.1,
+  "text": "월말 −20.1%(19.7, 잔고 9.48조 / 1년 정점 11.86조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-08",
+  "key": "margin_dd",
+  "value": -29.3,
+  "text": "월말 −29.3%(19.8, 잔고 8.39조 / 1년 정점 11.86조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-09",
+  "key": "margin_dd",
+  "value": -25.8,
+  "text": "월말 −25.8%(19.9, 잔고 8.80조 / 1년 정점 11.86조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-10",
+  "key": "margin_dd",
+  "value": -16.1,
+  "text": "월말 −16.1%(19.10, 잔고 9.04조 / 1년 정점 10.78조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-11",
+  "key": "margin_dd",
+  "value": -12.7,
+  "text": "월말 −12.7%(19.11, 잔고 9.42조 / 1년 정점 10.78조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-12",
+  "key": "margin_dd",
+  "value": -14.5,
+  "text": "월말 −14.5%(19.12, 잔고 9.21조 / 1년 정점 10.78조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-01",
+  "key": "margin_dd",
+  "value": -6.5,
+  "text": "월말 −6.5%(20.1, 잔고 10.08조 / 1년 정점 10.78조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-02",
+  "key": "margin_dd",
+  "value": -3.8,
+  "text": "월말 −3.8%(20.2, 잔고 10.37조 / 1년 정점 10.78조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-03",
+  "key": "margin_dd",
+  "value": -39.0,
+  "text": "월말 −39.0%(20.3, 잔고 6.58조 / 1년 정점 10.78조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-04",
+  "key": "margin_dd",
+  "value": -16.1,
+  "text": "월말 −16.1%(20.4, 잔고 9.04조 / 1년 정점 10.78조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-05",
+  "key": "margin_dd",
+  "value": 0.0,
+  "text": "월말 0.0%(20.5, 잔고 10.93조 / 1년 정점 10.93조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-06",
+  "key": "margin_dd",
+  "value": -0.0,
+  "text": "월말 −0.0%(20.6, 잔고 12.66조 / 1년 정점 12.66조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-07",
+  "key": "margin_dd",
+  "value": 0.0,
+  "text": "월말 0.0%(20.7, 잔고 14.33조 / 1년 정점 14.33조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-08",
+  "key": "margin_dd",
+  "value": 0.0,
+  "text": "월말 0.0%(20.8, 잔고 16.21조 / 1년 정점 16.21조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-09",
+  "key": "margin_dd",
+  "value": -8.7,
+  "text": "월말 −8.7%(20.9, 잔고 16.35조 / 1년 정점 17.90조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-10",
+  "key": "margin_dd",
+  "value": -8.2,
+  "text": "월말 −8.2%(20.10, 잔고 16.43조 / 1년 정점 17.90조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-11",
+  "key": "margin_dd",
+  "value": 0.0,
+  "text": "월말 0.0%(20.11, 잔고 17.94조 / 1년 정점 17.94조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-12",
+  "key": "margin_dd",
+  "value": -1.2,
+  "text": "월말 −1.2%(20.12, 잔고 19.22조 / 1년 정점 19.45조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-01",
+  "key": "margin_dd",
+  "value": -2.9,
+  "text": "월말 −2.9%(21.1, 잔고 21.01조 / 1년 정점 21.63조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-02",
+  "key": "margin_dd",
+  "value": -4.7,
+  "text": "월말 −4.7%(21.2, 잔고 21.18조 / 1년 정점 22.22조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-03",
+  "key": "margin_dd",
+  "value": -0.0,
+  "text": "월말 −0.0%(21.3, 잔고 22.23조 / 1년 정점 22.24조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-04",
+  "key": "margin_dd",
+  "value": -0.7,
+  "text": "월말 −0.7%(21.4, 잔고 23.38조 / 1년 정점 23.55조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-05",
+  "key": "margin_dd",
+  "value": -1.6,
+  "text": "월말 −1.6%(21.5, 잔고 23.18조 / 1년 정점 23.55조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-06",
+  "key": "margin_dd",
+  "value": -0.1,
+  "text": "월말 −0.1%(21.6, 잔고 23.83조 / 1년 정점 23.85조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-07",
+  "key": "margin_dd",
+  "value": -1.3,
+  "text": "월말 −1.3%(21.7, 잔고 24.45조 / 1년 정점 24.77조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-08",
+  "key": "margin_dd",
+  "value": -2.7,
+  "text": "월말 −2.7%(21.8, 잔고 24.92조 / 1년 정점 25.61조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-09",
+  "key": "margin_dd",
+  "value": -3.2,
+  "text": "월말 −3.2%(21.9, 잔고 24.84조 / 1년 정점 25.65조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-10",
+  "key": "margin_dd",
+  "value": -6.3,
+  "text": "월말 −6.3%(21.10, 잔고 24.03조 / 1년 정점 25.65조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-11",
+  "key": "margin_dd",
+  "value": -8.6,
+  "text": "월말 −8.6%(21.11, 잔고 23.45조 / 1년 정점 25.65조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-12",
+  "key": "margin_dd",
+  "value": -10.0,
+  "text": "월말 −10.0%(21.12, 잔고 23.09조 / 1년 정점 25.65조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-01",
+  "key": "margin_dd",
+  "value": -15.5,
+  "text": "월말 −15.5%(22.1, 잔고 21.67조 / 1년 정점 25.65조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-02",
+  "key": "margin_dd",
+  "value": -18.5,
+  "text": "월말 −18.5%(22.2, 잔고 20.90조 / 1년 정점 25.65조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-03",
+  "key": "margin_dd",
+  "value": -14.1,
+  "text": "월말 −14.1%(22.3, 잔고 22.04조 / 1년 정점 25.65조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-04",
+  "key": "margin_dd",
+  "value": -13.2,
+  "text": "월말 −13.2%(22.4, 잔고 22.26조 / 1년 정점 25.65조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-05",
+  "key": "margin_dd",
+  "value": -15.9,
+  "text": "월말 −15.9%(22.5, 잔고 21.57조 / 1년 정점 25.65조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-06",
+  "key": "margin_dd",
+  "value": -30.4,
+  "text": "월말 −30.4%(22.6, 잔고 17.87조 / 1년 정점 25.65조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-07",
+  "key": "margin_dd",
+  "value": -27.6,
+  "text": "월말 −27.6%(22.7, 잔고 18.56조 / 1년 정점 25.65조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-08",
+  "key": "margin_dd",
+  "value": -24.6,
+  "text": "월말 −24.6%(22.8, 잔고 19.35조 / 1년 정점 25.65조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-09",
+  "key": "margin_dd",
+  "value": -31.7,
+  "text": "월말 −31.7%(22.9, 잔고 17.16조 / 1년 정점 25.15조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-10",
+  "key": "margin_dd",
+  "value": -33.1,
+  "text": "월말 −33.1%(22.10, 잔고 16.08조 / 1년 정점 24.03조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-11",
+  "key": "margin_dd",
+  "value": -28.0,
+  "text": "월말 −28.0%(22.11, 잔고 17.13조 / 1년 정점 23.81조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-12",
+  "key": "margin_dd",
+  "value": -30.6,
+  "text": "월말 −30.6%(22.12, 잔고 16.52조 / 1년 정점 23.81조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-01",
+  "key": "margin_dd",
+  "value": -29.8,
+  "text": "월말 −29.8%(23.1, 잔고 16.09조 / 1년 정점 22.91조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-02",
+  "key": "margin_dd",
+  "value": -20.9,
+  "text": "월말 −20.9%(23.2, 잔고 17.76조 / 1년 정점 22.46조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-03",
+  "key": "margin_dd",
+  "value": -16.8,
+  "text": "월말 −16.8%(23.3, 잔고 18.69조 / 1년 정점 22.46조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-04",
+  "key": "margin_dd",
+  "value": -12.9,
+  "text": "월말 −12.9%(23.4, 잔고 19.46조 / 1년 정점 22.34조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-05",
+  "key": "margin_dd",
+  "value": -14.2,
+  "text": "월말 −14.2%(23.5, 잔고 18.63조 / 1년 정점 21.71조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-06",
+  "key": "margin_dd",
+  "value": -5.1,
+  "text": "월말 −5.1%(23.6, 잔고 19.40조 / 1년 정점 20.43조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-07",
+  "key": "margin_dd",
+  "value": -3.4,
+  "text": "월말 −3.4%(23.7, 잔고 19.74조 / 1년 정점 20.43조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-08",
+  "key": "margin_dd",
+  "value": -1.6,
+  "text": "월말 −1.6%(23.8, 잔고 20.23조 / 1년 정점 20.56조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-09",
+  "key": "margin_dd",
+  "value": -4.2,
+  "text": "월말 −4.2%(23.9, 잔고 19.70조 / 1년 정점 20.56조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-10",
+  "key": "margin_dd",
+  "value": -17.4,
+  "text": "월말 −17.4%(23.10, 잔고 16.97조 / 1년 정점 20.56조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-11",
+  "key": "margin_dd",
+  "value": -16.3,
+  "text": "월말 −16.3%(23.11, 잔고 17.21조 / 1년 정점 20.56조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-12",
+  "key": "margin_dd",
+  "value": -14.6,
+  "text": "월말 −14.6%(23.12, 잔고 17.56조 / 1년 정점 20.56조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-01",
+  "key": "margin_dd",
+  "value": -13.4,
+  "text": "월말 −13.4%(24.1, 잔고 17.81조 / 1년 정점 20.56조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-02",
+  "key": "margin_dd",
+  "value": -9.9,
+  "text": "월말 −9.9%(24.2, 잔고 18.53조 / 1년 정점 20.56조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-03",
+  "key": "margin_dd",
+  "value": -5.3,
+  "text": "월말 −5.3%(24.3, 잔고 19.48조 / 1년 정점 20.56조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-04",
+  "key": "margin_dd",
+  "value": -6.7,
+  "text": "월말 −6.7%(24.4, 잔고 19.17조 / 1년 정점 20.56조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-05",
+  "key": "margin_dd",
+  "value": -3.6,
+  "text": "월말 −3.6%(24.5, 잔고 19.82조 / 1년 정점 20.56조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-06",
+  "key": "margin_dd",
+  "value": -2.2,
+  "text": "월말 −2.2%(24.6, 잔고 20.11조 / 1년 정점 20.56조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-07",
+  "key": "margin_dd",
+  "value": -5.5,
+  "text": "월말 −5.5%(24.7, 잔고 19.43조 / 1년 정점 20.56조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-08",
+  "key": "margin_dd",
+  "value": -12.9,
+  "text": "월말 −12.9%(24.8, 잔고 17.86조 / 1년 정점 20.49조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-09",
+  "key": "margin_dd",
+  "value": -13.7,
+  "text": "월말 −13.7%(24.9, 잔고 17.46조 / 1년 정점 20.25조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-10",
+  "key": "margin_dd",
+  "value": -11.7,
+  "text": "월말 −11.7%(24.10, 잔고 17.89조 / 1년 정점 20.25조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-11",
+  "key": "margin_dd",
+  "value": -18.1,
+  "text": "월말 −18.1%(24.11, 잔고 16.59조 / 1년 정점 20.25조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-12",
+  "key": "margin_dd",
+  "value": -21.9,
+  "text": "월말 −21.9%(24.12, 잔고 15.82조 / 1년 정점 20.25조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-01",
+  "key": "margin_dd",
+  "value": -16.8,
+  "text": "월말 −16.8%(25.1, 잔고 16.84조 / 1년 정점 20.25조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-02",
+  "key": "margin_dd",
+  "value": -10.0,
+  "text": "월말 −10.0%(25.2, 잔고 18.23조 / 1년 정점 20.25조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-03",
+  "key": "margin_dd",
+  "value": -13.1,
+  "text": "월말 −13.1%(25.3, 잔고 17.59조 / 1년 정점 20.25조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-04",
+  "key": "margin_dd",
+  "value": -13.3,
+  "text": "월말 −13.3%(25.4, 잔고 17.56조 / 1년 정점 20.25조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-05",
+  "key": "margin_dd",
+  "value": -9.7,
+  "text": "월말 −9.7%(25.5, 잔고 18.27조 / 1년 정점 20.25조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-06",
+  "key": "margin_dd",
+  "value": 0.0,
+  "text": "월말 0.0%(25.6, 잔고 20.79조 / 1년 정점 20.79조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-07",
+  "key": "margin_dd",
+  "value": -0.3,
+  "text": "월말 −0.3%(25.7, 잔고 21.79조 / 1년 정점 21.86조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-08",
+  "key": "margin_dd",
+  "value": -0.6,
+  "text": "월말 −0.6%(25.8, 잔고 22.16조 / 1년 정점 22.29조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-09",
+  "key": "margin_dd",
+  "value": -0.2,
+  "text": "월말 −0.2%(25.9, 잔고 23.49조 / 1년 정점 23.54조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-10",
+  "key": "margin_dd",
+  "value": 0.0,
+  "text": "월말 0.0%(25.10, 잔고 25.53조 / 1년 정점 25.53조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-11",
+  "key": "margin_dd",
+  "value": -1.5,
+  "text": "월말 −1.5%(25.11, 잔고 26.45조 / 1년 정점 26.85조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-12",
+  "key": "margin_dd",
+  "value": -0.9,
+  "text": "월말 −0.9%(25.12, 잔고 27.29조 / 1년 정점 27.53조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-01",
+  "key": "margin_dd",
+  "value": 0.0,
+  "text": "월말 0.0%(26.1, 잔고 30.28조 / 1년 정점 30.28조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-02",
+  "key": "margin_dd",
+  "value": 0.0,
+  "text": "월말 0.0%(26.2, 잔고 32.67조 / 1년 정점 32.67조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-03",
+  "key": "margin_dd",
+  "value": -2.3,
+  "text": "월말 −2.3%(26.3, 잔고 32.92조 / 1년 정점 33.70조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-04",
+  "key": "margin_dd",
+  "value": -1.0,
+  "text": "월말 −1.0%(26.4, 잔고 35.71조 / 1년 정점 36.07조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-05",
+  "key": "margin_dd",
+  "value": 0.0,
+  "text": "월말 0.0%(26.5, 잔고 38.02조 / 1년 정점 38.02조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-06",
+  "key": "margin_dd",
+  "value": -3.4,
+  "text": "월말 −3.4%(26.6, 잔고 37.33조 / 1년 정점 38.63조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-07",
+  "key": "margin_dd",
+  "value": -25.1,
+  "text": "월말 −25.1%(26.7, 잔고 28.93조 / 1년 정점 38.63조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-08",
+  "key": "margin_dd",
+  "value": -13.9,
+  "text": "월말 −13.9%(26.8, 잔고 33.25조 / 1년 정점 38.63조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-09",
+  "key": "margin_dd",
+  "value": -13.6,
+  "text": "월말 −13.6%(26.9, 잔고 33.39조 / 1년 정점 38.63조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-10",
+  "key": "margin_dd",
+  "value": -24.8,
+  "text": "월말 −24.8%(26.10, 잔고 29.07조 / 1년 정점 38.63조)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-01",
+  "key": "foreign20",
+  "value": -1.07,
+  "text": "월말 20거래일 −1.07조 원(15.1)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-02",
+  "key": "foreign20",
+  "value": 0.92,
+  "text": "월말 20거래일 0.92조 원(15.2)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-03",
+  "key": "foreign20",
+  "value": 2.53,
+  "text": "월말 20거래일 2.53조 원(15.3)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-04",
+  "key": "foreign20",
+  "value": 4.71,
+  "text": "월말 20거래일 4.71조 원(15.4)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-05",
+  "key": "foreign20",
+  "value": 1.68,
+  "text": "월말 20거래일 1.68조 원(15.5)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-06",
+  "key": "foreign20",
+  "value": -1.1,
+  "text": "월말 20거래일 −1.10조 원(15.6)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-07",
+  "key": "foreign20",
+  "value": -1.91,
+  "text": "월말 20거래일 −1.91조 원(15.7)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-08",
+  "key": "foreign20",
+  "value": -4.11,
+  "text": "월말 20거래일 −4.11조 원(15.8)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-09",
+  "key": "foreign20",
+  "value": -1.77,
+  "text": "월말 20거래일 −1.77조 원(15.9)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-10",
+  "key": "foreign20",
+  "value": 0.01,
+  "text": "월말 20거래일 0.01조 원(15.10)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-11",
+  "key": "foreign20",
+  "value": -2.08,
+  "text": "월말 20거래일 −2.08조 원(15.11)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2015-12",
+  "key": "foreign20",
+  "value": -3.41,
+  "text": "월말 20거래일 −3.41조 원(15.12)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-01",
+  "key": "foreign20",
+  "value": -2.97,
+  "text": "월말 20거래일 −2.97조 원(16.1)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-02",
+  "key": "foreign20",
+  "value": 0.42,
+  "text": "월말 20거래일 0.42조 원(16.2)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-03",
+  "key": "foreign20",
+  "value": 2.55,
+  "text": "월말 20거래일 2.55조 원(16.3)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-04",
+  "key": "foreign20",
+  "value": 1.96,
+  "text": "월말 20거래일 1.96조 원(16.4)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-05",
+  "key": "foreign20",
+  "value": 0.18,
+  "text": "월말 20거래일 0.18조 원(16.5)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-06",
+  "key": "foreign20",
+  "value": 0.55,
+  "text": "월말 20거래일 0.55조 원(16.6)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-07",
+  "key": "foreign20",
+  "value": 3.73,
+  "text": "월말 20거래일 3.73조 원(16.7)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-08",
+  "key": "foreign20",
+  "value": 0.72,
+  "text": "월말 20거래일 0.72조 원(16.8)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-09",
+  "key": "foreign20",
+  "value": 1.1,
+  "text": "월말 20거래일 1.10조 원(16.9)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-10",
+  "key": "foreign20",
+  "value": 0.4,
+  "text": "월말 20거래일 0.40조 원(16.10)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-11",
+  "key": "foreign20",
+  "value": -0.35,
+  "text": "월말 20거래일 −0.35조 원(16.11)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2016-12",
+  "key": "foreign20",
+  "value": 0.98,
+  "text": "월말 20거래일 0.98조 원(16.12)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-01",
+  "key": "foreign20",
+  "value": 1.64,
+  "text": "월말 20거래일 1.64조 원(17.1)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-02",
+  "key": "foreign20",
+  "value": 0.31,
+  "text": "월말 20거래일 0.31조 원(17.2)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-03",
+  "key": "foreign20",
+  "value": 2.88,
+  "text": "월말 20거래일 2.88조 원(17.3)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-04",
+  "key": "foreign20",
+  "value": 0.76,
+  "text": "월말 20거래일 0.76조 원(17.4)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-05",
+  "key": "foreign20",
+  "value": 1.3,
+  "text": "월말 20거래일 1.30조 원(17.5)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-06",
+  "key": "foreign20",
+  "value": 1.68,
+  "text": "월말 20거래일 1.68조 원(17.6)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-07",
+  "key": "foreign20",
+  "value": -0.64,
+  "text": "월말 20거래일 −0.64조 원(17.7)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-08",
+  "key": "foreign20",
+  "value": -1.99,
+  "text": "월말 20거래일 −1.99조 원(17.8)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-09",
+  "key": "foreign20",
+  "value": -1.69,
+  "text": "월말 20거래일 −1.69조 원(17.9)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-10",
+  "key": "foreign20",
+  "value": 2.08,
+  "text": "월말 20거래일 2.08조 원(17.10)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-11",
+  "key": "foreign20",
+  "value": -0.27,
+  "text": "월말 20거래일 −0.27조 원(17.11)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2017-12",
+  "key": "foreign20",
+  "value": -2.35,
+  "text": "월말 20거래일 −2.35조 원(17.12)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-01",
+  "key": "foreign20",
+  "value": 1.3,
+  "text": "월말 20거래일 1.30조 원(18.1)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-02",
+  "key": "foreign20",
+  "value": -2.34,
+  "text": "월말 20거래일 −2.34조 원(18.2)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-03",
+  "key": "foreign20",
+  "value": -0.51,
+  "text": "월말 20거래일 −0.51조 원(18.3)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-04",
+  "key": "foreign20",
+  "value": -1.02,
+  "text": "월말 20거래일 −1.02조 원(18.4)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-05",
+  "key": "foreign20",
+  "value": -0.81,
+  "text": "월말 20거래일 −0.81조 원(18.5)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-06",
+  "key": "foreign20",
+  "value": -0.63,
+  "text": "월말 20거래일 −0.63조 원(18.6)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-07",
+  "key": "foreign20",
+  "value": 0.06,
+  "text": "월말 20거래일 0.06조 원(18.7)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-08",
+  "key": "foreign20",
+  "value": 1.52,
+  "text": "월말 20거래일 1.52조 원(18.8)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-09",
+  "key": "foreign20",
+  "value": 0.43,
+  "text": "월말 20거래일 0.43조 원(18.9)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-10",
+  "key": "foreign20",
+  "value": -3.93,
+  "text": "월말 20거래일 −3.93조 원(18.10)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-11",
+  "key": "foreign20",
+  "value": -0.38,
+  "text": "월말 20거래일 −0.38조 원(18.11)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2018-12",
+  "key": "foreign20",
+  "value": -0.1,
+  "text": "월말 20거래일 −0.10조 원(18.12)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-01",
+  "key": "foreign20",
+  "value": 3.96,
+  "text": "월말 20거래일 3.96조 원(19.1)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-02",
+  "key": "foreign20",
+  "value": 0.92,
+  "text": "월말 20거래일 0.92조 원(19.2)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-03",
+  "key": "foreign20",
+  "value": 0.3,
+  "text": "월말 20거래일 0.30조 원(19.3)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-04",
+  "key": "foreign20",
+  "value": 1.86,
+  "text": "월말 20거래일 1.86조 원(19.4)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-05",
+  "key": "foreign20",
+  "value": -2.54,
+  "text": "월말 20거래일 −2.54조 원(19.5)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-06",
+  "key": "foreign20",
+  "value": 0.91,
+  "text": "월말 20거래일 0.91조 원(19.6)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-07",
+  "key": "foreign20",
+  "value": 1.93,
+  "text": "월말 20거래일 1.93조 원(19.7)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-08",
+  "key": "foreign20",
+  "value": -2.29,
+  "text": "월말 20거래일 −2.29조 원(19.8)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-09",
+  "key": "foreign20",
+  "value": -0.63,
+  "text": "월말 20거래일 −0.63조 원(19.9)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-10",
+  "key": "foreign20",
+  "value": -0.42,
+  "text": "월말 20거래일 −0.42조 원(19.10)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-11",
+  "key": "foreign20",
+  "value": -3.31,
+  "text": "월말 20거래일 −3.31조 원(19.11)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2019-12",
+  "key": "foreign20",
+  "value": 0.6,
+  "text": "월말 20거래일 0.60조 원(19.12)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-01",
+  "key": "foreign20",
+  "value": 0.32,
+  "text": "월말 20거래일 0.32조 원(20.1)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-02",
+  "key": "foreign20",
+  "value": -3.31,
+  "text": "월말 20거래일 −3.31조 원(20.2)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-03",
+  "key": "foreign20",
+  "value": -11.42,
+  "text": "월말 20거래일 −11.42조 원(20.3)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-04",
+  "key": "foreign20",
+  "value": -4.1,
+  "text": "월말 20거래일 −4.10조 원(20.4)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-05",
+  "key": "foreign20",
+  "value": -3.65,
+  "text": "월말 20거래일 −3.65조 원(20.5)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-06",
+  "key": "foreign20",
+  "value": -1.26,
+  "text": "월말 20거래일 −1.26조 원(20.6)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-07",
+  "key": "foreign20",
+  "value": 1.21,
+  "text": "월말 20거래일 1.21조 원(20.7)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-08",
+  "key": "foreign20",
+  "value": -2.83,
+  "text": "월말 20거래일 −2.83조 원(20.8)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-09",
+  "key": "foreign20",
+  "value": -0.66,
+  "text": "월말 20거래일 −0.66조 원(20.9)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-10",
+  "key": "foreign20",
+  "value": -0.46,
+  "text": "월말 20거래일 −0.46조 원(20.10)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-11",
+  "key": "foreign20",
+  "value": 4.91,
+  "text": "월말 20거래일 4.91조 원(20.11)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2020-12",
+  "key": "foreign20",
+  "value": -1.84,
+  "text": "월말 20거래일 −1.84조 원(20.12)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-01",
+  "key": "foreign20",
+  "value": -5.22,
+  "text": "월말 20거래일 −5.22조 원(21.1)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-02",
+  "key": "foreign20",
+  "value": -4.99,
+  "text": "월말 20거래일 −4.99조 원(21.2)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-03",
+  "key": "foreign20",
+  "value": -1.41,
+  "text": "월말 20거래일 −1.41조 원(21.3)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-04",
+  "key": "foreign20",
+  "value": -0.75,
+  "text": "월말 20거래일 −0.75조 원(21.4)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-05",
+  "key": "foreign20",
+  "value": -9.05,
+  "text": "월말 20거래일 −9.05조 원(21.5)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-06",
+  "key": "foreign20",
+  "value": -0.68,
+  "text": "월말 20거래일 −0.68조 원(21.6)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-07",
+  "key": "foreign20",
+  "value": -4.55,
+  "text": "월말 20거래일 −4.55조 원(21.7)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-08",
+  "key": "foreign20",
+  "value": -6.09,
+  "text": "월말 20거래일 −6.09조 원(21.8)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-09",
+  "key": "foreign20",
+  "value": 2.22,
+  "text": "월말 20거래일 2.22조 원(21.9)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-10",
+  "key": "foreign20",
+  "value": -3.83,
+  "text": "월말 20거래일 −3.83조 원(21.10)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-11",
+  "key": "foreign20",
+  "value": 2.62,
+  "text": "월말 20거래일 2.62조 원(21.11)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2021-12",
+  "key": "foreign20",
+  "value": 1.52,
+  "text": "월말 20거래일 1.52조 원(21.12)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-01",
+  "key": "foreign20",
+  "value": -1.86,
+  "text": "월말 20거래일 −1.86조 원(22.1)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-02",
+  "key": "foreign20",
+  "value": -1.6,
+  "text": "월말 20거래일 −1.60조 원(22.2)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-03",
+  "key": "foreign20",
+  "value": -4.79,
+  "text": "월말 20거래일 −4.79조 원(22.3)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-04",
+  "key": "foreign20",
+  "value": -4.86,
+  "text": "월말 20거래일 −4.86조 원(22.4)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-05",
+  "key": "foreign20",
+  "value": 0.19,
+  "text": "월말 20거래일 0.19조 원(22.5)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-06",
+  "key": "foreign20",
+  "value": -5.56,
+  "text": "월말 20거래일 −5.56조 원(22.6)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-07",
+  "key": "foreign20",
+  "value": 2.66,
+  "text": "월말 20거래일 2.66조 원(22.7)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-08",
+  "key": "foreign20",
+  "value": 3.22,
+  "text": "월말 20거래일 3.22조 원(22.8)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-09",
+  "key": "foreign20",
+  "value": -2.11,
+  "text": "월말 20거래일 −2.11조 원(22.9)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-10",
+  "key": "foreign20",
+  "value": 3.45,
+  "text": "월말 20거래일 3.45조 원(22.10)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-11",
+  "key": "foreign20",
+  "value": 2.87,
+  "text": "월말 20거래일 2.87조 원(22.11)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2022-12",
+  "key": "foreign20",
+  "value": -1.74,
+  "text": "월말 20거래일 −1.74조 원(22.12)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-01",
+  "key": "foreign20",
+  "value": 6.34,
+  "text": "월말 20거래일 6.34조 원(23.1)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-02",
+  "key": "foreign20",
+  "value": 0.42,
+  "text": "월말 20거래일 0.42조 원(23.2)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-03",
+  "key": "foreign20",
+  "value": -0.17,
+  "text": "월말 20거래일 −0.17조 원(23.3)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-04",
+  "key": "foreign20",
+  "value": 1.95,
+  "text": "월말 20거래일 1.95조 원(23.4)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-05",
+  "key": "foreign20",
+  "value": 4.28,
+  "text": "월말 20거래일 4.28조 원(23.5)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-06",
+  "key": "foreign20",
+  "value": -1.05,
+  "text": "월말 20거래일 −1.05조 원(23.6)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-07",
+  "key": "foreign20",
+  "value": -1.98,
+  "text": "월말 20거래일 −1.98조 원(23.7)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-08",
+  "key": "foreign20",
+  "value": -1.06,
+  "text": "월말 20거래일 −1.06조 원(23.8)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-09",
+  "key": "foreign20",
+  "value": -1.27,
+  "text": "월말 20거래일 −1.27조 원(23.9)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-10",
+  "key": "foreign20",
+  "value": -2.95,
+  "text": "월말 20거래일 −2.95조 원(23.10)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-11",
+  "key": "foreign20",
+  "value": 2.92,
+  "text": "월말 20거래일 2.92조 원(23.11)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2023-12",
+  "key": "foreign20",
+  "value": 3.17,
+  "text": "월말 20거래일 3.17조 원(23.12)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-01",
+  "key": "foreign20",
+  "value": 3.37,
+  "text": "월말 20거래일 3.37조 원(24.1)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-02",
+  "key": "foreign20",
+  "value": 7.88,
+  "text": "월말 20거래일 7.88조 원(24.2)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-03",
+  "key": "foreign20",
+  "value": 4.42,
+  "text": "월말 20거래일 4.42조 원(24.3)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-04",
+  "key": "foreign20",
+  "value": 3.12,
+  "text": "월말 20거래일 3.12조 원(24.4)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-05",
+  "key": "foreign20",
+  "value": -1.34,
+  "text": "월말 20거래일 −1.34조 원(24.5)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-06",
+  "key": "foreign20",
+  "value": 3.27,
+  "text": "월말 20거래일 3.27조 원(24.6)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-07",
+  "key": "foreign20",
+  "value": 1.69,
+  "text": "월말 20거래일 1.69조 원(24.7)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-08",
+  "key": "foreign20",
+  "value": -3.25,
+  "text": "월말 20거래일 −3.25조 원(24.8)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-09",
+  "key": "foreign20",
+  "value": -8.71,
+  "text": "월말 20거래일 −8.71조 원(24.9)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-10",
+  "key": "foreign20",
+  "value": -4.7,
+  "text": "월말 20거래일 −4.70조 원(24.10)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-11",
+  "key": "foreign20",
+  "value": -4.26,
+  "text": "월말 20거래일 −4.26조 원(24.11)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2024-12",
+  "key": "foreign20",
+  "value": -3.04,
+  "text": "월말 20거래일 −3.04조 원(24.12)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-01",
+  "key": "foreign20",
+  "value": -1.23,
+  "text": "월말 20거래일 −1.23조 원(25.1)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-02",
+  "key": "foreign20",
+  "value": -3.71,
+  "text": "월말 20거래일 −3.71조 원(25.2)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-03",
+  "key": "foreign20",
+  "value": -1.66,
+  "text": "월말 20거래일 −1.66조 원(25.3)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-04",
+  "key": "foreign20",
+  "value": -8.22,
+  "text": "월말 20거래일 −8.22조 원(25.4)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-05",
+  "key": "foreign20",
+  "value": 0.97,
+  "text": "월말 20거래일 0.97조 원(25.5)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-06",
+  "key": "foreign20",
+  "value": 2.08,
+  "text": "월말 20거래일 2.08조 원(25.6)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-07",
+  "key": "foreign20",
+  "value": 5.77,
+  "text": "월말 20거래일 5.77조 원(25.7)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-08",
+  "key": "foreign20",
+  "value": -1.61,
+  "text": "월말 20거래일 −1.61조 원(25.8)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-09",
+  "key": "foreign20",
+  "value": 7.31,
+  "text": "월말 20거래일 7.31조 원(25.9)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-10",
+  "key": "foreign20",
+  "value": 5.81,
+  "text": "월말 20거래일 5.81조 원(25.10)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-11",
+  "key": "foreign20",
+  "value": -14.43,
+  "text": "월말 20거래일 −14.43조 원(25.11)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2025-12",
+  "key": "foreign20",
+  "value": 3.9,
+  "text": "월말 20거래일 3.90조 원(25.12)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-01",
+  "key": "foreign20",
+  "value": -0.48,
+  "text": "월말 20거래일 −0.48조 원(26.1)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-02",
+  "key": "foreign20",
+  "value": -24.12,
+  "text": "월말 20거래일 −24.12조 원(26.2)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-03",
+  "key": "foreign20",
+  "value": -30.6,
+  "text": "월말 20거래일 −30.60조 원(26.3)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-04",
+  "key": "foreign20",
+  "value": 2.01,
+  "text": "월말 20거래일 2.01조 원(26.4)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-05",
+  "key": "foreign20",
+  "value": -46.53,
+  "text": "월말 20거래일 −46.53조 원(26.5)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-06",
+  "key": "foreign20",
+  "value": -45.61,
+  "text": "월말 20거래일 −45.61조 원(26.6)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-07",
+  "key": "foreign20",
+  "value": -3.79,
+  "text": "월말 20거래일 −3.79조 원(26.7)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-08",
+  "key": "foreign20",
+  "value": -10.17,
+  "text": "월말 20거래일 −10.17조 원(26.8)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-09",
+  "key": "foreign20",
+  "value": -21.59,
+  "text": "월말 20거래일 −21.59조 원(26.9)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-10",
+  "key": "foreign20",
+  "value": -18.64,
+  "text": "월말 20거래일 −18.64조 원(26.10)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-09",
+  "key": "metr_stall",
+  "value": 6.1,
+  "text": "6.1개월(마지막 기록 2026-05-08)",
+  "unit": "개월",
+  "src": "https://metr.org/time-horizons/"
+ },
+ {
+  "date": "2026-11-02",
+  "key": "nand_spot",
+  "value": -14.2,
+  "text": "−14.2%(10.5→11.2, 512Gb TLC 18.833→16.152달러)",
+  "unit": "%",
+  "src": "https://www.trendforce.com/news/2026/11/04/insights-memory-spot-price-update-mainstream-ddr4-prices-dip-0-09-as-spot-premium-keeps-buyers-on-sidelines/"
+ },
+ {
+  "date": "2026-11-09",
+  "key": "x_gpu_h100",
+  "value": 3.1,
+  "text": "H100 SXM 3.10달러/시간(1개월 +11.5%, 조회 시점 값·기준일 표시 없음)",
+  "unit": "달러/시간",
+  "src": "https://data.ornn.com/markets"
+ },
+ {
+  "date": "2026-11-09",
+  "key": "x_gpu_b200",
+  "value": 9.88,
+  "text": "B200 9.88달러/시간(1개월 +31.6%, 조회 시점 값·기준일 표시 없음)",
+  "unit": "달러/시간",
+  "src": "https://data.ornn.com/markets"
+ },
+ {
+  "date": "2026-11-08",
+  "key": "x_poly_bestmodel_nov",
+  "value": 74,
+  "text": "11월 말 최고 AI 모델: 구글 74%·Anthropic 22%·OpenAI 2%(폴리마켓, PredScope 집계 11.8 11:55 UTC)",
+  "unit": "%",
+  "src": "https://predscope.com/event/which-company-has-the-best-ai-model-end-of-november"
+ },
+ {
+  "date": "2026-11-09",
+  "key": "kospi_dd",
+  "value": -44.9,
+  "text": "−44.9%(11.9, 5,018.85)",
+  "unit": "%",
+  "src": "https://www.news1.kr/finance/market-exr/6347932"
+ },
+ {
+  "date": "2026-11-06",
+  "key": "sox_dd",
+  "value": -35.84,
+  "text": "−35.8%(11.6, 9,390.25)",
+  "unit": "%",
+  "src": "https://fourweekmba.com/ai-stocks-close-friday-with-469b-of-thursdays-1-45t-back/"
+ },
+ {
+  "date": "2026-11-09",
+  "key": "sox_dd",
+  "value": -31.44,
+  "text": "−31.4%(11.9, 10,033.93)",
+  "unit": "%",
+  "src": "https://www.seoul.co.kr/news/economy/2026/11/10/20261110500004"
+ },
+ {
+  "date": "2026-11-06",
+  "key": "vkospi",
+  "value": 65.17,
+  "text": "65.2(11.6, 장중 67.12)",
+  "unit": "",
+  "src": "https://www.fnnews.com/news/202611061652460795"
+ },
+ {
+  "date": "2026-11-06",
+  "key": "forced_liq",
+  "value": 70.2,
+  "text": "70억 원(11.6)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-06",
+  "key": "margin_dd",
+  "value": -26.5,
+  "text": "−26.5%(11.6, 28.39조 원 / 6.24 정점 38.63조 원)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-09",
+  "key": "foreign20",
+  "value": -21.12,
+  "text": "−21.1조 원(10.13~11.9, 확정)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-10",
+  "key": "kospi_dd",
+  "value": -42.52,
+  "text": "−42.5%(11.10, 5,239.13)",
+  "unit": "%",
+  "src": "https://www.betanews.net/article/view/beta202611100142"
+ },
+ {
+  "date": "2026-11-10",
+  "key": "sox_dd",
+  "value": -31.68,
+  "text": "−31.7%(11.10, 9,998.33)",
+  "unit": "%",
+  "src": "https://www.seoul.co.kr/news/economy/2026/11/11/20261111500005"
+ },
+ {
+  "date": "2026-11-09",
+  "key": "vkospi",
+  "value": 63.93,
+  "text": "63.9(11.9, 장중 67.64)",
+  "unit": "",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-10",
+  "key": "vkospi",
+  "value": 58.19,
+  "text": "58.2(11.10, KRX 종가 58.19, 장중 60.47)",
+  "unit": "",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-09",
+  "key": "forced_liq",
+  "value": 379.15,
+  "text": "379억 원(11.9)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-09",
+  "key": "margin_dd",
+  "value": -27.34,
+  "text": "−27.3%(11.9, 28.07조 원 / 6.24 정점 38.63조 원)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-10",
+  "key": "foreign20",
+  "value": -16.1,
+  "text": "−16.1조 원(10.14~11.10, 확정)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-09",
+  "key": "hy_oas",
+  "value": 3.34,
+  "text": "3.34%(11.9)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/data/BAMLH0A0HYM2"
+ },
+ {
+  "date": "2026-11-11",
+  "key": "kospi_dd",
+  "value": -41.02,
+  "text": "−41.0%(11.11, 5,375.36)",
+  "unit": "%",
+  "src": "https://www.sentv.co.kr/article/view/sentv202611110148"
+ },
+ {
+  "date": "2026-11-11",
+  "key": "sox_dd",
+  "value": -27.81,
+  "text": "−27.8%(11.11, 10,564.11)",
+  "unit": "%",
+  "src": "https://www.seoul.co.kr/news/economy/2026/11/12/20261112500008"
+ },
+ {
+  "date": "2026-11-11",
+  "key": "vkospi",
+  "value": 52.76,
+  "text": "52.8(11.11)",
+  "unit": "",
+  "src": "https://www.polinews.co.kr/news/articleView.html?idxno=748264"
+ },
+ {
+  "date": "2026-11-10",
+  "key": "forced_liq",
+  "value": 630.41,
+  "text": "630억 원(11.10)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-10",
+  "key": "margin_dd",
+  "value": -31.28,
+  "text": "−31.3%(11.10, 26.55조 원 / 6.24 정점 38.63조 원)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-11",
+  "key": "foreign20",
+  "value": -14.25,
+  "text": "−14.2조 원(10.15~11.11, 확정)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-10",
+  "key": "kr_youth",
+  "value": -1.7,
+  "text": "−1.7%p(10월, 42.9%)",
+  "unit": "%p",
+  "src": "https://www.fnnews.com/news/202611111037248063"
+ },
+ {
+  "date": "2026-11-12",
+  "key": "kospi_dd",
+  "value": -41.38,
+  "text": "−41.4%(11.12, 5,342.73)",
+  "unit": "%",
+  "src": "https://view.asiae.co.kr/article/2026111215344297464"
+ },
+ {
+  "date": "2026-11-11",
+  "key": "forced_liq",
+  "value": 116.27,
+  "text": "116억 원(11.11)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-11",
+  "key": "margin_dd",
+  "value": -32.89,
+  "text": "−32.9%(11.11, 25.93조 원 / 6.24 정점 38.63조 원)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-12",
+  "key": "foreign20",
+  "value": -10.08,
+  "text": "−10.1조 원(10.16~11.12, 확정)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-12",
+  "key": "sox_dd",
+  "value": -28.21,
+  "text": "−28.2%(11.12, 10,506.67)",
+  "unit": "%",
+  "src": "https://www.seoul.co.kr/news/economy/2026/11/13/20261113500006"
+ },
+ {
+  "date": "2026-11-11",
+  "key": "hy_oas",
+  "value": 3.3,
+  "text": "3.30%(11.11)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/data/BAMLH0A0HYM2"
+ },
+ {
+  "date": "2026-11-13",
+  "key": "kospi_dd",
+  "value": -41.96,
+  "text": "−42.0%(11.13, 5,290.53)",
+  "unit": "%",
+  "src": "https://www.ajunews.com/view/20261113152425151"
+ },
+ {
+  "date": "2026-11-12",
+  "key": "vkospi",
+  "value": 51.32,
+  "text": "51.3(11.12)",
+  "unit": "",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-12",
+  "key": "forced_liq",
+  "value": 149.19,
+  "text": "149억 원(11.12)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-12",
+  "key": "margin_dd",
+  "value": -33.29,
+  "text": "−33.3%(11.12, 25.77조 원 / 6.24 정점 38.63조 원)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-13",
+  "key": "foreign20",
+  "value": -10.93,
+  "text": "−10.9조 원(10.19~11.13, 11.13 KRX 잠정 포함)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-13",
+  "key": "sox_dd",
+  "value": -30.67,
+  "text": "−30.7%(11.13, 10,146.32)",
+  "unit": "%",
+  "src": "https://www.seoul.co.kr/news/economy/2026/11/14/20261114500005"
+ },
+ {
+  "date": "2026-11-12",
+  "key": "hy_oas",
+  "value": 3.2,
+  "text": "3.20%(11.12)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/data/BAMLH0A0HYM2"
+ }
+]
