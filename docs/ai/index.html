@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI 선행지표 경고판 웹판</title>
+<meta name="description" content="AI 선행지표 경고판 웹판 — 저장소에 올라온 자료까지 보여준다">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<style>
+:root{--font-anthropic-sans:-apple-system,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",system-ui,sans-serif;--font-anthropic-serif:"Noto Serif KR","Apple SD Gothic Neo",Georgia,serif;
+--color-bg:#f6f7f9;--color-panel:#ffffff;--color-fg:#1b1f24;--color-fg-muted:#6b7280;--color-border-line:#e5e7eb;--color-ok:#2e7d32;--color-warn:#b26a00;--color-bad:#c62828;
+--cds-font-size-title:22px;--cds-font-size-heading:17px;--cds-font-size-body:15px;--cds-font-size-caption:12.5px;--cds-font-weight-medium:600;
+--cds-gap-xs:6px;--cds-gap-sm:10px;--cds-gap-md:14px;--cds-gap-xl:28px;--cds-pad-xs:6px;--cds-pad-sm:10px;--cds-pad-md:14px;--cds-pad-lg:20px;--cds-radius:12px;--cds-border:var(--color-border-line);
+--cds-chart-grid:#e5e7eb;--cds-chart-axis:#9aa3ad;--cds-chart-reference:#9aa3ad;--cds-chart-muted:#b0b7c0;--cds-chart-status-critical:#c62828;--cds-text-secondary:#6b7280;--cds-surface-popover:#ffffff;--cds-shadow-popover:0 4px 16px rgba(0,0,0,.15);--cds-dur-slow:.3s}
+@media (prefers-color-scheme:dark){:root{--color-bg:#0f1216;--color-panel:#171b21;--color-fg:#e6e8eb;--color-fg-muted:#9aa3ad;--color-border-line:#2a3038;--color-ok:#66bb6a;--color-warn:#ffb74d;--color-bad:#ef5350;--cds-chart-grid:#2a3038;--cds-chart-axis:#8a93a0;--cds-chart-reference:#8a93a0;--cds-chart-muted:#5c6570;--cds-chart-status-critical:#ef5350;--cds-text-secondary:#9aa3ad;--cds-surface-popover:#1e232b;--cds-shadow-popover:0 4px 16px rgba(0,0,0,.5)}}
+html,body{margin:0;background:var(--color-bg);color:var(--color-fg);font-family:var(--font-anthropic-sans);font-size:var(--cds-font-size-body);line-height:1.5;overflow-x:hidden}
+#dash-root{max-width:1180px;margin:0 auto;padding:12px 14px 40px}
+[hidden]{display:none !important}
+.web-bar{font-size:12.5px;color:var(--color-fg-muted);margin:0 0 10px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
+.web-bar a{color:inherit}
+.web-bar button{border:1px solid var(--color-border-line);background:var(--color-panel);color:var(--color-fg);border-radius:999px;padding:3px 12px;font-size:12.5px;cursor:pointer}
+.dash-skeleton{position:relative;min-height:1em;color:transparent}
+.dash-skeleton::after{content:"";position:absolute;inset:0;border-radius:6px;background:linear-gradient(90deg,rgba(128,128,128,.08),rgba(128,128,128,.18),rgba(128,128,128,.08));background-size:200% 100%;animation:sk 1.2s infinite}
+@keyframes sk{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.web-err{background:#fde8e8;color:#8a1c1c;padding:10px;border-radius:8px;margin:0 0 12px}
+</style>
+</head>
+<body>
+<div id="dash-root">
+<div class="web-bar" id="web-bar"><span>웹판 · 자료 읽는 중…</span> <button type="button" onclick="location.href=location.pathname+'?r='+Date.now()">갱신</button> <a href="https://claude.ai/artifact/MQ4f2Z2hsn8K9gMrKM2vbq" target="_blank" rel="noopener">Claude 대시보드</a> <a href="../" rel="noopener">코스피 웹판</a></div>
+<div id="page"></div>
+<p class="web-bar" style="justify-content:center;margin-top:20px">투자 권유 아님</p>
+</div>
+<script>
+// 웹판 = Claude 대시보드 페이지(page.html, 아티팩트 files/index.html 과 같은 글)를 그대로 읽어 붙이고,
+// 대시보드 실행기(dash) 대신 data/<id>.json 을 읽는 같은 API(data·calc·onData·draw·colors)를 제공한다.
+// 자료와 page.html 은 Claude 예약 작업(하루 세 번)이 저장소에 올린 것까지 보인다(열 때마다 새로 읽음).
+// 자료 목록은 meta.json 의 datasets 에서 읽는다 — 대시보드에 자료가 늘어도 이 파일은 고치지 않아도 된다.
+window.dash = (function(){
+  const FALLBACK = ['thresholds', 'indicators', 'market', 'margin', 'forced', 'macro', 'events', 'history', 'runs', 'news', 'scenarios', 'episodes'];
+  const store = {}, calcs = {}, draws = {}, cbs = []; let loaded = false;
+  const get = (id) => store[id] || {status: loaded ? 'missing' : 'loading', data: null};
+  function runCalcs(){
+    for (let pass = 0; pass < 8; pass++) { let changed = false;
+      for (const id in calcs) { const s = calcs[id]; const ins = (s.inputs || []).map(get); const before = (store[id] || {}).status; let next;
+        if (ins.every((x) => x.status === 'ok')) { if (before === 'ok') continue; try { next = {status: 'ok', data: s.fn(...ins.map((x) => x.data))}; } catch (e) { console.error('계산 실패', id, e); next = {status: 'error', data: null}; } }
+        else next = {status: ins.some((x) => x.status === 'error' || x.status === 'missing') ? 'missing' : 'loading', data: null};
+        if (next.status !== before) changed = true; store[id] = next; }
+      if (!changed) break; }
+  }
+  function runDraw(name){ const fn = draws[name]; if (!fn) return;
+    document.querySelectorAll('[data-draw="' + name + '"]').forEach((el) => { if (el.closest('[hidden]')) return; try { fn(el); } catch (e) { console.error('그리기 실패', name, e); } }); }
+  function render(){ runCalcs(); cbs.forEach((cb) => { try { cb(); } catch (e) { console.error(e); } }); for (const name in draws) runDraw(name); }
+  const api = {
+    colors: ['#4269d0', '#e8890c', '#8a94a3', '#3ca951', '#a463f2', '#ff725c', '#6cc5b0', '#ff8ab7'],
+    data: get,
+    calc(id, spec){ calcs[id] = spec; delete store[id]; },
+    onData(cb){ cbs.push(cb); },
+    draw(name, fn){ if (typeof fn === 'function') { draws[name] = fn; return; } runDraw(name); },
+    render,
+    async load(){
+      const v = Date.now(); let meta = null;
+      try { const r = await fetch('meta.json?v=' + v, {cache: 'no-store'}); if (r.ok) meta = await r.json(); } catch (e) {}
+      const ids = meta && meta.datasets ? Object.keys(meta.datasets) : FALLBACK;
+      await Promise.all(ids.map(async (id) => {
+        try { const r = await fetch('data/' + id + '.json?v=' + v, {cache: 'no-store'}); if (!r.ok) throw new Error('HTTP ' + r.status);
+          const rows = await r.json(); if (!Array.isArray(rows)) throw new Error('행 배열이 아님'); store[id] = {status: 'ok', data: rows}; }
+        catch (e) { store[id] = {status: 'missing', data: null}; console.error('자료 못 읽음', id, e); }
+      }));
+      for (const id in calcs) delete store[id];
+      loaded = true; render();
+      const miss = ids.filter((k) => store[k].status !== 'ok');
+      if (miss.length) { const d = document.createElement('div'); d.className = 'web-err'; d.textContent = '읽지 못한 자료: ' + miss.join(', '); document.getElementById('page').prepend(d); }
+      const label = (s) => String(s || '').slice(0, 16).replace('T', ' ');
+      if (meta) { const ds = Object.values(meta.datasets || {}).map((x) => String(x.updated_at || '')).sort().pop();
+        document.querySelector('#web-bar span').textContent = '웹판 · 자료 갱신 ' + label(ds) + ' · 저장소 반영 ' + label(meta.exported_at) + ' (한국 시각)'; }
+      else document.querySelector('#web-bar span').textContent = '웹판';
+    }
+  };
+  let lastW = window.innerWidth, timer = null;   // 화면 너비가 바뀌면 그래프를 다시 그린다
+  window.addEventListener('resize', () => { if (window.innerWidth === lastW || !loaded) return; lastW = window.innerWidth; clearTimeout(timer); timer = setTimeout(render, 200); });
+  return api;
+})();
+(async function(){
+  const host = document.getElementById('page');
+  try {
+    const r = await fetch('page.html?v=' + Date.now(), {cache: 'no-store'}); if (!r.ok) throw new Error('HTTP ' + r.status);
+    const doc = new DOMParser().parseFromString(await r.text(), 'text/html');
+    doc.querySelectorAll('style').forEach((s) => document.head.appendChild(s.cloneNode(true)));
+    const scripts = Array.from(doc.querySelectorAll('script')); scripts.forEach((s) => s.remove());
+    doc.querySelectorAll('style, meta').forEach((n) => n.remove());
+    Array.from(doc.body.childNodes).forEach((n) => host.appendChild(document.importNode(n, true)));
+    for (const s of scripts) { const e = document.createElement('script'); e.textContent = s.textContent; document.body.appendChild(e); }   // 페이지 코드 실행(대시보드와 같은 코드)
+    window.dash.render();          // 읽는 동안의 모습
+    await window.dash.load();
+  } catch (e) { host.innerHTML = '<div class="web-err">페이지(page.html)를 읽지 못했습니다: ' + String(e).replace(/</g, '&lt;') + '</div>'; }
+})();
+</script>
+</body>
+</html>
