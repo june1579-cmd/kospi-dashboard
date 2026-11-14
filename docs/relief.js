@@ -171,5 +171,39 @@
         } else { ct.classList.toggle('dash-skeleton', !BAD.includes(cd.status)); if (cs) cs.textContent = ''; } }
     } catch (e) { console.error(e); }
   }
-  window.fillRelief = fillRelief;   // index.html 의 dash.onData 콜백이 부른다(스크립트끼리는 window 로만 공유)
+  // ---- 이번 갱신의 큰 변화(빨간색 띠, 11/14 추가): 자료가 갱신될 때마다 마지막 날 자료로 다시 계산해 맨 위에 적는다. 기준은 카카오톡 알림의 신호·특이 항목과 같고, 대시보드에서만 보는 항목(반대매매 비중·외국인 큰 매매·청산 참고선 통과)을 더했다
+  function fillHot() {
+    const root = document.querySelector('.rv'); if (!root) return;
+    if (!document.getElementById('rv-hot-css')) { const st = document.createElement('style'); st.id = 'rv-hot-css';
+      st.textContent = '.rv .rv-hot{color:#e5484d;font-weight:600}.rv #hot-box{border:1px solid #e5484d;border-radius:10px;padding:10px 12px;margin:0 0 12px}.rv #hot-box.calm{border-color:var(--color-border-line,#ccc)}.rv #hot-box h3{margin:0 0 4px;font-size:14px}.rv #hot-box ul{margin:0;padding-left:18px}.rv #hot-box li{margin:2px 0;font-size:13.5px}.rv #hot-box a{color:inherit;text-decoration:underline}.rv #hot-box .hot-sub{font-size:12px;opacity:.75;font-weight:400;color:var(--color-fg,inherit)}';
+      document.head.appendChild(st); }
+    const D = id => { try { const d = dash.data(id); return d.status === 'ok' ? d.data : []; } catch (e) { return []; } };
+    const mk = D('market').filter(r => r.kospi !== '' && r.kospi != null); if (!mk.length) return;
+    const last = mk[mk.length - 1], prev = mk[mk.length - 2], day = String(last.date);
+    const n = v => v === '' || v == null || isNaN(+v) ? null : +v, md = s => +String(s).slice(5, 7) + '/' + +String(s).slice(8, 10);
+    const sg = (v, d = 1) => (v >= 0 ? '+' : '−') + Math.abs(v).toFixed(d), f0 = v => Math.round(v).toLocaleString('en-US');
+    const jo = v => (v >= 0 ? '+' : '−') + (Math.abs(v) >= 1 ? Math.abs(v).toFixed(1) + '조' : f0(Math.abs(v) * 10000) + '억');
+    const items = [];   // [글, 설명, 이동할 칸]
+    ['alarms', 'buy3', 'sell3'].forEach(id => D(id).forEach(r => { if (String(r.date) === day && String(r.start) === '시작') items.push([`${r.side} 신호 시작: ${r.type}`, String(r.rule || '').slice(0, 60), '#all']); }));
+    const re = D('reentry'); if (re.length && String(re[re.length - 1].date) === day) items.push([`재진입 규칙: ${re[re.length - 1].action}`, String(re[re.length - 1].reason || ''), '#all']);
+    const q = D('q_daily'), ql = q[q.length - 1], qp = q[q.length - 2];
+    if (ql && String(ql.date) === day) {
+      if (ql.trade === 'enter') items.push(['정밀 검증 전략 진입', '다음 종가 매수, 10거래일 보유', '#qtop']);
+      if (ql.trade === 'exit') items.push([`정밀 검증 전략 청산${n(ql.trade_ret) != null ? '(' + sg(n(ql.trade_ret)) + '%)' : ''}`, '보유 기간 종료 또는 급락 위험 조건', '#qtop']);
+      if (qp && String(qp.regime) !== String(ql.regime)) items.push([`국면 ${qp.regime} → ${ql.regime}`, '시장 상태 판정이 바뀜', '#qtop']); }
+    const chg = n(last.kospi_chg_pct); if (chg != null && Math.abs(chg) >= 3) items.push([`코스피 ${sg(chg, 2)}%`, '하루 3% 넘는 ' + (chg > 0 ? '급등' : '급락'), '#all']);
+    const cr = D('credit'), cl = cr[cr.length - 1]; if (cl && n(cl.chg_pct) != null && Math.abs(n(cl.chg_pct)) >= 3) items.push([`신용잔고 하루 ${sg(n(cl.chg_pct))}% (${md(cl.date)}분 ${n(cl.credit_jo).toFixed(1)}조)`, n(cl.chg_pct) > 0 ? '급증: 빚투 확대' : '급감: 상환·청산', '#all']);
+    const lq = D('liq'), ll = lq[lq.length - 1]; if (ll && n(ll.ratio_pct) != null && n(ll.ratio_pct) >= 5) items.push([`반대매매 비중 ${n(ll.ratio_pct).toFixed(1)}% (${md(ll.date)}분 ${f0(n(ll.liq_eok))}억)`, '미수금의 5% 넘게 강제 청산', '#all']);
+    const fl = D('flows_daily'), fr = fl[fl.length - 1]; if (fr && String(fr.date) === day && n(fr.foreign_jo) != null && Math.abs(n(fr.foreign_jo)) >= 2) items.push([`외국인 ${jo(n(fr.foreign_jo))}`, '하루 2조 원 넘는 ' + (n(fr.foreign_jo) > 0 ? '순매수' : '순매도'), '#all']);
+    const ce = D('credit_entry')[0]; if (ce && ce.entry != null && prev) [['l140', '140%'], ['l130', '130%(완화)'], ['l120', '120%(유예)']].forEach(([k, lab]) => { const v = n(ce[k]), a = n(prev.kospi), b = n(last.kospi); if (v == null) return;
+      if (a >= v && b < v) items.push([`코스피가 신용 청산 ${lab} 선 ${f0(v)} 아래로`, '담보 부족 계좌가 늘 수 있는 구간 진입', '#relief']); if (a < v && b >= v) items.push([`코스피가 신용 청산 ${lab} 선 ${f0(v)} 위로 회복`, '담보 부족 압력 완화', '#relief']); });
+    const cb = D('combo'); const cn = D('combo_now')[0] || (cb.length ? cb[cb.length - 1] : null); if (cn && cn.warn) items.push(['조합 1위 경고', String(cn.warn).slice(0, 60), '#all']);
+    let box = document.getElementById('hot-box'); if (!box) { box = document.createElement('div'); box.id = 'hot-box'; root.insertBefore(box, root.querySelector('section')); }
+    box.className = items.length ? '' : 'calm'; box.replaceChildren();
+    const h = document.createElement('h3'); h.textContent = `이번 갱신의 큰 변화 (${md(day)} 기준)`; if (items.length) h.className = 'rv-hot'; box.appendChild(h);
+    if (!items.length) { const p = document.createElement('div'); p.className = 'hot-sub'; p.textContent = '큰 변화 없음 — 새 매수·매도 신호, 코스피·신용 하루 3% 이상 변동, 반대매매 비중 5% 이상, 외국인 2조 원 이상 매매, 청산 참고선 통과, 국면 변경이 없었습니다.'; box.appendChild(p); return; }
+    const ul = document.createElement('ul'); items.forEach(([t, why, href]) => { const li = document.createElement('li'); li.className = 'rv-hot'; const a = document.createElement('a'); a.href = href; a.textContent = t; li.appendChild(a);
+      if (why) { const s = document.createElement('span'); s.className = 'hot-sub'; s.textContent = ' — ' + why; li.appendChild(s); } ul.appendChild(li); }); box.appendChild(ul);
+  }
+  window.fillRelief = () => { try { fillRelief(); } finally { try { fillHot(); } catch (e) { console.error(e); } } };   // index.html 의 dash.onData 콜백이 부른다(스크립트끼리는 window 로만 공유)
 })();
