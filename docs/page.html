@@ -1304,8 +1304,8 @@
     LINES.forEach(s => s.id === 'kospi' ? legendItem(lg, s.c, '코스피(기준축, 굵은 선)', {shape: 'thick'}) : legendItem(lg, s.c, (s.gaps ? `${s.n}(보도된 날만, ${s.count}일)` : (s.dash ? s.n + '(점선)' : s.n)) + since(s), {shape: s.gaps ? 'dot' : (s.dash ? 'dash' : 'line'), off: !s.on, toggle: () => { hidden.has(s.id) ? hidden.delete(s.id) : hidden.add(s.id); drawAll(); }}));
     SIGS.forEach(a => legendItem(lg, a.c, a.side + ' ' + a.type, {shape: a.side === '매도' ? 'tri' : 'triup', off: hidden.has(a.key), toggle: () => { hidden.has(a.key) ? hidden.delete(a.key) : hidden.add(a.key); drawAll(); }}));
     RE.forEach(a => legendItem(lg, a.c, a.act + '(재진입 조합)', {shape: a.side === '매도' ? 'tri' : 'triup', off: hidden.has(a.key), toggle: () => { hidden.has(a.key) ? hidden.delete(a.key) : hidden.add(a.key); drawAll(); }}));
-    BT.filter(a => a.rank === 1).forEach(a => legendItem(lg, a.c, '매수 ' + a.type + '(2015~24 최적화, 시작일만)', {shape: 'triup', off: hidden.has(a.key), toggle: () => { hidden.has(a.key) ? hidden.delete(a.key) : hidden.add(a.key); drawAll(); }}));
-    ST3.filter(a => a.rank === 1).forEach(a => legendItem(lg, a.c, '매도 ' + a.type + '(2015~24 최적화, 시작일만)', {shape: 'tri', off: hidden.has(a.key), toggle: () => { hidden.has(a.key) ? hidden.delete(a.key) : hidden.add(a.key); drawAll(); }}));
+    BT.filter(a => a.rank <= 2).forEach(a => legendItem(lg, a.c, '매수 ' + a.type + '(2015~24 최적화, 시작일만)', {shape: 'triup', off: hidden.has(a.key), toggle: () => { hidden.has(a.key) ? hidden.delete(a.key) : hidden.add(a.key); drawAll(); }}));
+    ST3.filter(a => a.rank <= 2).forEach(a => legendItem(lg, a.c, '매도 ' + a.type + '(2015~24 최적화, 시작일만)', {shape: 'tri', off: hidden.has(a.key), toggle: () => { hidden.has(a.key) ? hidden.delete(a.key) : hidden.add(a.key); drawAll(); }}));
     legendItem(lg, C()[0], '미수 반대매매(막대)');
     legendItem(lg, 'var(--color-ok)', '큰 흐름 상승');
     legendItem(lg, CRIT, '큰 흐름 하락 · 비중 5%↑ · 신용 -2.5%↓');
@@ -1351,8 +1351,8 @@
     const s3On = s3Data.filter(inR).filter(r => s3Of(r) && !hidden.has(s3Of(r).key));
     const MK = alOn.map(r => ({date: r.date, sell: r.side === '매도', c: sigOf(r).c, o: SIGS.indexOf(sigOf(r)) % 3, kospi: num(r.kospi)}))
       .concat(reOn.map(r => ({date: r.date, sell: r.action === '재매도', c: reOf(r).c, o: 3, kospi: num(r.kospi)})))
-      .concat(b3On.filter(r => +r.rank === 1 && r.start === '시작').map(r => ({date: r.date, sell: false, c: b3Of(r).c, o: 4, kospi: num(r.kospi)})))   // 최적화 매수 1위(시작일만): 재진입 다음 층. 2·3위는 아래 표에만
-      .concat(s3On.filter(r => +r.rank === 1 && r.start === '시작').map(r => ({date: r.date, sell: true, c: s3Of(r).c, o: 4, kospi: num(r.kospi)})));   // 최적화 매도 1위(시작일만). 2·3위는 아래 표에만
+      .concat(b3On.filter(r => +r.rank <= 2 && r.start === '시작').map(r => ({date: r.date, sell: false, c: b3Of(r).c, o: 3 + +r.rank, kospi: num(r.kospi)})))   // 최적화 매수 1위(시작일만): 재진입 다음 층. 2·3위는 아래 표에만
+      .concat(s3On.filter(r => +r.rank <= 2 && r.start === '시작').map(r => ({date: r.date, sell: true, c: s3Of(r).c, o: 3 + +r.rank, kospi: num(r.kospi)})));   // 최적화 매도 1위(시작일만). 2·3위는 아래 표에만
     let dS = 0, dB = 0;
     d3.group(MK, m => m.date + (m.sell ? 's' : 'b')).forEach(g => { g.sort((u, v) => u.o - v.o).forEach((m, k) => { m.k = k; }); if (g[0].sell) dS = Math.max(dS, g.length); else dB = Math.max(dB, g.length); });
     const LAYER = 11, MK0 = 11;                  // 선에서 첫 층까지, 층 사이 간격(px)
@@ -1547,11 +1547,11 @@
           lines.push([a.c, a.act + '(재진입 조합) ', r.reason]); lines.push([a.c, '', a.rule]);
           if (num(r.up20) != null) lines.push([null, '이후 20거래일 ', '최고 ' + d3.format('+.1f')(num(r.up20)) + '% · 최저 ' + d3.format('+.1f')(num(r.dn20)) + '%']);
           lines.push([null, '', r.result]); });
-        b3On.filter(r => r.date === d && +r.rank === 1).forEach(r => { const a = b3Of(r);
+        b3On.filter(r => r.date === d && +r.rank <= 2).forEach(r => { const a = b3Of(r);
           lines.push([a.c, '매수 ' + a.type + '(2015~24 최적화) ', (r.start === '시작' ? '켜짐(시작)' : '켜짐')]); lines.push([a.c, '', a.rule]);
           if (num(r.up20) != null) lines.push([null, '이후 20거래일 ', '최고 ' + d3.format('+.1f')(num(r.up20)) + '% · 최저 ' + d3.format('+.1f')(num(r.dn20)) + '%']);
           lines.push([null, '', r.result]); });
-        s3On.filter(r => r.date === d && +r.rank === 1).forEach(r => { const a = s3Of(r);
+        s3On.filter(r => r.date === d && +r.rank <= 2).forEach(r => { const a = s3Of(r);
           lines.push([a.c, '매도 ' + a.type + '(2015~24 최적화) ', (r.start === '시작' ? '켜짐(시작)' : '켜짐')]); lines.push([a.c, '', a.rule]);
           if (num(r.dn20) != null) lines.push([null, '이후 20거래일 ', '최저 ' + d3.format('+.1f')(num(r.dn20)) + '% · 최고 ' + d3.format('+.1f')(num(r.up20)) + '%']);
           lines.push([null, '', r.result]); });
