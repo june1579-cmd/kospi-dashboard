@@ -198,12 +198,24 @@
     const ce = D('credit_entry')[0]; if (ce && ce.entry != null && prev) [['l140', '140%'], ['l130', '130%(완화)'], ['l120', '120%(유예)']].forEach(([k, lab]) => { const v = n(ce[k]), a = n(prev.kospi), b = n(last.kospi); if (v == null) return;
       if (a >= v && b < v) items.push([`코스피가 신용 청산 ${lab} 선 ${f0(v)} 아래로`, '담보 부족 계좌가 늘 수 있는 구간 진입', '#relief']); if (a < v && b >= v) items.push([`코스피가 신용 청산 ${lab} 선 ${f0(v)} 위로 회복`, '담보 부족 압력 완화', '#relief']); });
     const cb = D('combo'); const cn = D('combo_now')[0] || (cb.length ? cb[cb.length - 1] : null); if (cn && cn.warn) items.push(['조합 1위 경고', String(cn.warn).slice(0, 60), '#all']);
-    let box = document.getElementById('hot-box'); if (!box) { box = document.createElement('div'); box.id = 'hot-box'; root.insertBefore(box, root.querySelector('section')); }
+    const box = placeTop(); if (!box) return;
     box.className = items.length ? '' : 'calm'; box.replaceChildren();
     const h = document.createElement('h3'); h.textContent = `이번 갱신의 큰 변화 (${md(day)} 기준)`; if (items.length) h.className = 'rv-hot'; box.appendChild(h);
     if (!items.length) { const p = document.createElement('div'); p.className = 'hot-sub'; p.textContent = '큰 변화 없음 — 새 매수·매도 신호, 코스피·신용 하루 3% 이상 변동, 반대매매 비중 5% 이상, 외국인 2조 원 이상 매매, 청산 참고선 통과, 국면 변경이 없었습니다.'; box.appendChild(p); return; }
     const ul = document.createElement('ul'); items.forEach(([t, why, href]) => { const li = document.createElement('li'); li.className = 'rv-hot'; const a = document.createElement('a'); a.href = href; a.textContent = t; li.appendChild(a);
       if (why) { const s = document.createElement('span'); s.className = 'hot-sub'; s.textContent = ' — ' + why; li.appendChild(s); } ul.appendChild(li); }); box.appendChild(ul);
   }
+  // 화면 순서(11/14): 제목 → 이번 갱신의 큰 변화 → 한눈에 보기 그래프 → 머리말 설명 → 나머지. index.html 은 그대로 두고 여기서 자리를 옮긴다(그래프·단추는 옮겨도 그대로 동작)
+  function placeTop() {
+    const root = document.querySelector('.rv'); if (!root) return null;
+    let box = document.getElementById('hot-box'); if (!box) { box = document.createElement('div'); box.id = 'hot-box'; box.className = 'calm'; }
+    const head = root.querySelector('header.rv-head'), all = document.getElementById('all');
+    if (head && !document.getElementById('top-notes')) { const notes = document.createElement('div'); notes.className = 'rv-head'; notes.id = 'top-notes';
+      Array.from(head.children).forEach(c => { if (c.tagName !== 'H1') notes.appendChild(c); }); head.after(notes); }
+    if (head) { if (box.previousElementSibling !== head) head.after(box); } else if (root.firstElementChild !== box) root.prepend(box);
+    if (all && box.nextElementSibling !== all) box.after(all);
+    return box;
+  }
+  try { placeTop(); } catch (e) { console.error(e); }
   window.fillRelief = () => { try { fillRelief(); } finally { try { fillHot(); } catch (e) { console.error(e); } } };   // index.html 의 dash.onData 콜백이 부른다(스크립트끼리는 window 로만 공유)
 })();
