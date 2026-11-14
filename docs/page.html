@@ -72,6 +72,7 @@
 .rv #lead-tbl{min-width:58rem}
 .rv #lead-tbl td:first-child{white-space:nowrap}
 .rv #lead-tbl td:nth-child(6){min-width:16rem}
+.rv #cmb-tbl td,.rv #cmb-tbl th{white-space:nowrap}
 .rv .rv-ovnote{font-size:var(--cds-font-size-caption);color:var(--color-fg);margin:0 0 var(--cds-gap-xs);font-weight:500}
 .rv [data-dash-source-state=empty]{color:transparent}
 .rv [data-dash-source-state=refreshing]{opacity:.5;transition:opacity var(--cds-dur-slow)}
@@ -406,23 +407,24 @@
       </div>
     </div>
     <div class="rv-card" id="cmb-card">
-      <h3 id="cmb-title">매수×매도 신호 조합 49개 — 적중률 감시와 1위 자동 선정</h3>
+      <h3 id="cmb-title">매수×매도 신호 조합 49개 — 상위 5개 묶음 자동 선정(750일 창)</h3>
       <p class="rv-note">위 그래프의 매수 신호 7개(경보 민감·중간·엄격형, 최적화 1~3위, 정밀 검증 진입)와 매도 신호 7개(경보 3개, 최적화 1~3위, 정밀 검증 청산)를 짝지은 49개 조합. 매수 신호가 시작된 다음 날 종가에 사고 매도 신호가 시작된 다음 날 종가에 팔며(그 사이 현금), 왕복 0.3% 비용을 뺐다. VKOSPI 가 들어가는 신호는 다음 날 아침에 확정되므로 '다음 날 체결'이 실제 지연과 같다. 성적은 자료가 들어올 때마다 다시 계산한다.</p>
-      <p class="rv-note"><b>선택 규칙(미리 고정).</b> 매월 첫 거래일에 지난 250거래일 수익률 1위 조합(닫힌 거래 2건 이상, 동점은 거래당 적중률)을 뽑아 그 달은 그 조합대로 매매한다. 2016년부터 달마다 이 규칙으로 뽑았을 때의 실제 성적이 아래 '선택 규칙' 열이다. 비교용 '고정 조합'은 2015~2024년 누적 1위를 그 뒤로 계속 쓴 것. 경보·최적화 신호 자체가 2015~2024년 자료로 만든 것이라 2016~2024년 성적은 사후 성적이 섞여 있고, <b>2025~26년이 실사용 성적</b>이다. 그해 1위가 다음 해에도 좋다는 보장은 없어서, 1위 조합이 뽑힌 뒤 적중률이 2015~25년보다 15%p 넘게 낮아지거나 수익이 코스피보다 10%p 넘게 뒤지면 경고를 띄우고 카카오톡으로 알린다.</p>
+      <p class="rv-note"><b>기준 규칙 = 묶음(2026-11-15부터).</b> 매월 첫 거래일에 지난 750거래일 수익률 상위 5개 조합(닫힌 거래 2건 이상, 동점은 거래당 적중률)을 뽑아 똑같이 나눠 든다 — 5개 중 3개가 보유 상태면 60% 보유, 나머지는 현금. 구성은 한 달 동안 그대로 두고, 그 안에서 각 조합의 매수·매도 신호대로 보유 비중이 움직인다(비중이 바뀐 만큼 비용 반영). 2016~17년은 자료가 2015년부터라 창이 750일보다 짧다. 바꾼 이유(11/15 신호 재검증): 창이 20~120일이면 다음 달 순위를 우연 수준으로밖에 못 맞혔고, 250일 1위 규칙의 우위는 2026년 한 해에서만 나왔다(2026년을 빼면 무작위로 고른 것과 비슷). 500~750일 창과 상위 3~5개 묶음은 낙폭이 작고 코스피를 이긴 해가 많았다. 다만 750일 창의 우위는 2020년 한 해의 몫이 크고, 창·묶음 크기를 같은 자료를 보고 골랐으니 아래 성적에는 사후 성적이 섞여 있다 — 한 칸에 기대지 않도록 크기별 성적을 아래에 함께 적는다.</p>
+      <p class="rv-note"><b>기존 규칙(비교용 · 250일 1위).</b> 매월 첫 거래일에 지난 250거래일 수익률 1위 조합(닫힌 거래 2건 이상, 동점은 거래당 적중률)을 뽑아 그 달은 그 조합대로 매매한다. 2016년부터 달마다 이 규칙으로 뽑았을 때의 실제 성적이 아래 '250일 1위' 열이다. 비교용 '고정 조합'은 2015~2024년 누적 1위를 그 뒤로 계속 쓴 것. 경보·최적화 신호 자체가 2015~2024년 자료로 만든 것이라 2016~2024년 성적은 사후 성적이 섞여 있고, <b>2025~26년이 실사용 성적</b>이다. 그해 1위가 다음 해에도 좋다는 보장은 없어서, 1위 조합이 뽑힌 뒤 적중률이 2015~25년보다 15%p 넘게 낮아지거나 수익이 코스피보다 10%p 넘게 뒤지면 경고를 띄우고 카카오톡으로 알린다(11/15 재검증에서 이 경고가 켜졌을 때 쉬는 것은 수익을 높이지 못했다 — 참고 표시).</p>
       <p class="rv-note" id="cmb-now"></p>
       <div class="rv-tbl-wrap">
         <table class="rv-tbl" id="cmb-wf-tbl" data-source="combo_wf" data-row-key="year">
-          <thead><tr><th>연도</th><th class="rv-num">선택 규칙 %</th><th class="rv-num">코스피 보유 %</th><th class="rv-num">고정 조합 %</th><th class="rv-num">교체 횟수</th><th>그해 가장 오래 뽑힌 조합</th></tr></thead>
+          <thead><tr><th>연도</th><th class="rv-num">묶음 규칙 %</th><th class="rv-num">묶음 평균 보유 비중 %</th><th class="rv-num">250일 1위(비교) %</th><th class="rv-num">코스피 보유 %</th><th class="rv-num">고정 조합 %</th><th class="rv-num">묶음 교체(자리)</th><th class="rv-num">1위 교체 횟수</th><th>그해 가장 오래 뽑힌 1위 조합</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
       <div class="rv-tbl-wrap">
         <table class="rv-tbl" id="cmb-tbl" data-source="combo_table" data-row-key="combo">
-          <thead><tr><th class="rv-num">순위(최근 250일)</th><th>매수 → 매도</th><th class="rv-num">최근 250일 %</th><th class="rv-num">거래 · 적중</th><th class="rv-num">최대 낙폭 %</th><th class="rv-num">최근 60일 %</th><th class="rv-num">2026 %</th><th class="rv-num">2025 %</th><th class="rv-num">2015~25 %</th><th class="rv-num">2015~25 적중 %</th><th>지금</th></tr></thead>
+          <thead><tr><th>묶음</th><th class="rv-num">순위(최근 750일)</th><th>매수 → 매도</th><th class="rv-num">최근 750일 %</th><th class="rv-num">750일 거래 · 적중</th><th class="rv-num">순위(최근 250일)</th><th class="rv-num">최근 250일 %</th><th class="rv-num">거래 · 적중</th><th class="rv-num">최대 낙폭 %</th><th class="rv-num">최근 60일 %</th><th class="rv-num">2026 %</th><th class="rv-num">2025 %</th><th class="rv-num">2015~25 %</th><th class="rv-num">2015~25 적중 %</th><th>지금</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
-      <p class="rv-note">순위가 '—'인 조합은 최근 250거래일에 닫힌 거래가 2건 미만이라 후보에서 뺀 것. 경보형 매수 3개는 올해 같은 날 켜져 성적이 같다. 거래가 한 해 2~3번뿐이라 적중률 하나하나는 우연의 영향이 크고, 믿을 것은 2016년부터 쌓인 선택 규칙의 긴 성적이다. 투자 권유가 아니다.</p>
+      <p class="rv-note">★ = 이번 달 첫 거래일에 뽑힌 묶음 5개(숫자는 선정 때 순서 — 월중에 순위가 바뀌어도 다음 달 첫 거래일에 다시 뽑는다). 표는 묶음에 든 조합을 먼저, 그다음 최근 750거래일 순위대로 놓았다. 순위가 '—'인 조합은 그 창에 닫힌 거래가 2건 미만이라 후보에서 뺀 것. 경보형 매수 3개는 같은 날 켜지는 일이 많아 성적이 같은 조합이 묶음에 함께 들 수 있다(그만큼 그 신호에 더 실린다). 거래가 한 해 2~3번뿐이라 적중률 하나하나는 우연의 영향이 크고, 믿을 것은 2016년부터 쌓인 규칙의 긴 성적이다. 투자 권유가 아니다.</p>
     </div>
   </section>
 
@@ -1949,9 +1951,17 @@
     const sg = v => d3.format('+,')(Number(v));
     fillTable('ret26', 'r26-tbl', [{k:'rank'}, {k:'signal'}, {k:'ret26', n:1, f: sg}, {k:'ret26_next', n:1, f: sg}, {k:'mdd26', n:1, f: sg}, {k:'trades26', n:1}, {k:'hold26', n:1}, {k:'prev', n:1, f: sg}, {k:'now'}], r => encodeURIComponent(r.rank));
     { const cn = dash.data('combo_now'); const el = document.getElementById('cmb-now');
-      if (el && cn.status === 'ok' && cn.data.length) { const r = cn.data[0]; el.innerHTML = `<b>지금 1위: ${r.top_combo}</b> (${md(r.chosen_since)} 선정 · 지난 250거래일 ${sg(r.win_ret_250)}%, 거래 ${r.win_trades}건 적중 ${r.win_hit}%) · 지금 <b>${r.state}</b>. 선정 뒤 ${sg(r.since_ret)}%(같은 기간 코스피 ${sg(r.since_kospi)}%), 닫힌 거래 ${r.since_trades}건 중 ${r.since_wins}건 적중(2015~25 적중률 ${r.hit_2015_25}%). 경고: ${r.warn || '없음'}. 다음 재선정 ${r.next_select}. 기준일 ${md(r.date)}.`; } }
-    fillTable('combo_wf', 'cmb-wf-tbl', [{k:'year'}, {k:'walkforward_ret', n:1, f: sg}, {k:'kospi_ret', n:1, f: sg}, {k:'fixed_ret', n:1, f: sg}, {k:'changes', n:1}, {k:'top_combo'}], r => encodeURIComponent(r.year));
-    fillTable('combo_table', 'cmb-tbl', [{k:'rank_250', n:1, f: v => (v === '' || v == null || isNaN(+v)) ? '—' : f0(+v)}, {k:'combo'}, {k:'ret_250', n:1, f: sg}, {k:'trades_250', fr: r => r.trades_250 + '건 · ' + ((r.hit_250 === '' || r.hit_250 == null) ? '—' : f0(+r.hit_250) + '%')}, {k:'mdd_250', n:1, f: sg}, {k:'ret_60', n:1, f: sg}, {k:'ret_2026', n:1, f: sg}, {k:'ret_2025', n:1, f: sg}, {k:'ret_2015_25', n:1, f: sg}, {k:'hit_2015_25', n:1, f: nf(f0)}, {k:'state', fr: r => r.state + (r.open_since ? ' (' + md(r.open_since) + '~ ' + sg(r.open_ret) + '%)' : '')}], r => encodeURIComponent(r.combo));
+      if (el && cn.status === 'ok' && cn.data.length) { const r = cn.data[0];
+        const esc = s => String(s == null ? '' : s).replace(/[&<>]/g, ch => ({'&': '&amp;', '<': '&lt;', '>': '&gt;'}[ch]));
+        let ens = '';   // 2026-11-15: 묶음 규칙(750일 상위 5개)이 기준. 자료에 묶음 칸이 없으면(옛 자료) 기존 줄만 보인다
+        if (r.ens_members) { const ms = String(r.ens_members).split(' | '), ss = String(r.ens_states || '').split(' | '), wr = String(r.ens_win_ret || '').split(' | ');
+          ens = `<b>지금 묶음: ${r.ens_n}개 중 ${r.ens_hold_n}개 보유 = 보유 비중 ${r.ens_hold_pct}%</b> (${md(r.ens_selected)} 선정` + (r.ens_since && r.ens_since !== r.ens_selected ? ` · 같은 구성 ${md(r.ens_since)}부터` : '') + '). 구성: '
+            + ms.map((m, i) => `${i + 1}) ${esc(m)} <b>${esc(ss[i] || '')}</b>` + (wr[i] ? `(선정 때 ${r.ens_win}일 ${esc(wr[i])})` : '')).join(' · ') + '.'
+            + ((r.ens_in || r.ens_out) ? ` 이번 선정에서 들어옴: ${esc(r.ens_in || '없음')} / 빠짐: ${esc(r.ens_out || '없음')}.` : '')
+            + ` 이 구성 뒤 묶음 ${sg(r.ens_since_ret)}%(같은 기간 코스피 ${sg(r.ens_since_kospi)}%).<br>2016년부터 누적: 묶음 ${sg(r.ens_total)}%(최대 낙폭 ${sg(r.ens_mdd)}%, 코스피를 이긴 해 ${r.ens_beat}/${r.ens_years}) · 250일 1위 ${sg(r.old_total)}%(낙폭 ${sg(r.old_mdd)}%, ${r.old_beat}/${r.ens_years}) · 코스피 보유 ${sg(r.kospi_total)}%.<br>창·묶음 크기별(누적 · 최대 낙폭 · 코스피를 이긴 해 수): ${esc(r.ens_grid)}.<br>`; }
+        el.innerHTML = ens + `<b>${ens ? '비교용 250일 1위' : '지금 1위'}: ${r.top_combo}</b> (${md(r.chosen_since)} 선정 · 지난 250거래일 ${sg(r.win_ret_250)}%, 거래 ${r.win_trades}건 적중 ${r.win_hit}%) · 지금 <b>${r.state}</b>. 선정 뒤 ${sg(r.since_ret)}%(같은 기간 코스피 ${sg(r.since_kospi)}%), 닫힌 거래 ${r.since_trades}건 중 ${r.since_wins}건 적중(2015~25 적중률 ${r.hit_2015_25}%). 경고: ${r.warn || '없음'}. 다음 재선정 ${r.next_select}. 기준일 ${md(r.date)}.`; } }
+    fillTable('combo_wf', 'cmb-wf-tbl', [{k:'year'}, {k:'ens_ret', n:1, f: sg}, {k:'ens_hold_avg', n:1}, {k:'walkforward_ret', n:1, f: sg}, {k:'kospi_ret', n:1, f: sg}, {k:'fixed_ret', n:1, f: sg}, {k:'ens_changes', n:1}, {k:'changes', n:1}, {k:'top_combo'}], r => encodeURIComponent(r.year));
+    fillTable('combo_table', 'cmb-tbl', [{k:'in_ens', fr: r => +r.in_ens === 1 ? '★ ' + f0(+r.ens_rank) : ''}, {k:'rank_long', n:1, f: v => (v === '' || v == null || isNaN(+v)) ? '—' : f0(+v)}, {k:'combo'}, {k:'ret_long', n:1, f: sg}, {k:'trades_long', fr: r => (r.trades_long === '' || r.trades_long == null) ? '—' : r.trades_long + '건 · ' + ((r.hit_long === '' || r.hit_long == null) ? '—' : f0(+r.hit_long) + '%')}, {k:'rank_250', n:1, f: v => (v === '' || v == null || isNaN(+v)) ? '—' : f0(+v)}, {k:'ret_250', n:1, f: sg}, {k:'trades_250', fr: r => r.trades_250 + '건 · ' + ((r.hit_250 === '' || r.hit_250 == null) ? '—' : f0(+r.hit_250) + '%')}, {k:'mdd_250', n:1, f: sg}, {k:'ret_60', n:1, f: sg}, {k:'ret_2026', n:1, f: sg}, {k:'ret_2025', n:1, f: sg}, {k:'ret_2015_25', n:1, f: sg}, {k:'hit_2015_25', n:1, f: nf(f0)}, {k:'state', fr: r => r.state + (r.open_since ? ' (' + md(r.open_since) + '~ ' + sg(r.open_ret) + '%)' : '')}], r => encodeURIComponent(r.combo));
     const lg_ = v => v === '' || v == null ? '—' : (+v > 0 ? '+' : (+v < 0 ? '−' : '')) + Math.abs(+v) + '일';
     const cell = (p) => r => lg_(r[p + '_lag']) + ' · ' + r[p + '_acc'] + '% · ' + r[p + '_flips'] + '회' + (+r[p + '_miss'] ? ' · 놓침 ' + r[p + '_miss'] + '번' : '');
     fillTable('lead_cmp', 'lead-tbl', [{k:'strip'}, {k:'rule'}, {k:'tr', fr: cell('tr')}, {k:'te', fr: cell('te')}, {k:'y26', fr: cell('y26')}, {k:'turns26', fr: r => r.turns26.replace(/-(\d)/g, '−$1')}, {k:'note'}], r => encodeURIComponent(r.strip));

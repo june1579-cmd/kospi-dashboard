@@ -183,16 +183,28 @@ def main():
         pc = (prev.get('combo') or {}) if prev else {}
         combo['prev_top'] = pc.get('top_combo') if (pc.get('top_combo') and pc.get('top_combo') != combo['top_combo']) else None
         combo['warn_new'] = bool(combo.get('warn')) and combo['warn'] != pc.get('warn')
-        # 조합 1위가 바뀌면 결론 맨 위에 안내(제목 바로 아래), 성적 저하 경고도 같은 자리
+        # 묶음 규칙(2026-11-15~ 기준 규칙: 750일 상위 5개를 똑같이 나눠 보유): 구성이 바뀌었거나 보유 비중이 바뀌면 알린다. 직전 실행에 묶음 칸이 없으면(첫 실행) 알리지 않는다
+        _em, _pm, _eh, _ph = combo.get('ens_members'), pc.get('ens_members'), combo.get('ens_hold_pct'), pc.get('ens_hold_pct')
+        combo['ens_prev'] = _pm if (_em and _pm and set(str(_pm).split(' | ')) != set(str(_em).split(' | '))) else None
+        combo['ens_hold_prev'] = _ph if (_eh is not None and _ph is not None and float(_ph) != float(_eh)) else None
+        ens_sp = []; _short = lambda x: str(x or '—').replace(' → ', '→').replace(' | ', ', ')
+        _hold = (f"보유 {float(_ph):.0f}→{float(_eh):.0f}%" if combo['ens_hold_prev'] is not None else (f"보유 {float(_eh):.0f}%" if _eh is not None else ''))
+        if combo['ens_prev']: ens_sp.append(f"조합 묶음 교체 +{_short(combo.get('ens_in'))} −{_short(combo.get('ens_out'))}, {_hold}(기준 규칙 구성 바뀜)")
+        elif combo['ens_hold_prev'] is not None: ens_sp.append(f"조합 묶음 {_hold}({combo.get('ens_hold_n')}/{combo.get('ens_n')}개 보유)")
+        # 조합 1위(비교용 250일 규칙)가 바뀌면 결론 맨 위에 안내(제목 바로 아래), 성적 저하 경고도 같은 자리
         top_note = None
         if combo['prev_top']: top_note = f"★조합 1위 교체 「{combo['top_combo']}」(이전 「{combo['prev_top']}」) 250일 {combo['win_ret_250']:+.0f}%·적중 {combo['win_hit']:.0f}%·지금 {combo['state']}"
         elif combo.get('warn_new'): top_note = f"⚠조합 1위 성적 저하: {combo['top_combo']} — {str(combo['warn']).split(' — ')[0]}"
-        if top_note:
-            kakao_one, check_why = build_kakao([('조합 1위 교체 → ' + str(combo['top_combo']) + '(기준 규칙 바뀜)') if combo['prev_top'] else '조합 1위 성적 저하(기준 규칙 최근 부진)']); kakao_msgs[0] = kakao_one
+        if top_note or ens_sp:
+            kakao_one, check_why = build_kakao(ens_sp + ([('250일 1위 교체 → ' + str(combo['top_combo']) + '(비교용 규칙)') if combo['prev_top'] else '250일 1위 성적 저하(비교용 규칙 최근 부진)'] if top_note else [])); kakao_msgs[0] = kakao_one
+        if combo['ens_prev']:
+            msgs.append(f"[{md(today)} 조합 묶음 교체]\n들어옴: {combo.get('ens_in') or '—'}\n빠짐: {combo.get('ens_out') or '—'}\n지금 {combo.get('ens_hold_n')}/{combo.get('ens_n')}개 보유({float(_eh):.0f}%) · 규칙: 매월 첫 거래일, {combo.get('ens_win')}일 상위 {combo.get('ens_k')}개"[:200])
+        elif combo['ens_hold_prev'] is not None:
+            msgs.append(f"[{md(today)} 조합 묶음 보유 비중]\n{float(_ph):.0f}% → {float(_eh):.0f}% ({combo.get('ens_hold_n')}/{combo.get('ens_n')}개 보유)\n{combo.get('ens_members')}\n{combo.get('ens_states')}"[:200])
         if combo['prev_top']:
-            msgs.append(f"[{md(today)} 조합 1위 교체]\n「{pc.get('top_combo')}」 ⇒ 「{combo['top_combo']}」\n지난 250일 {combo['win_ret_250']:+.1f}% · 거래 {combo['win_trades']}건 적중 {combo['win_hit']:.0f}%\n지금 {combo['state']} · 규칙: 매월 첫 거래일 재선정"[:200])
+            msgs.append(f"[{md(today)} 250일 1위 교체(비교용)]\n「{pc.get('top_combo')}」 ⇒ 「{combo['top_combo']}」\n지난 250일 {combo['win_ret_250']:+.1f}% · 거래 {combo['win_trades']}건 적중 {combo['win_hit']:.0f}%\n지금 {combo['state']} · 규칙: 매월 첫 거래일 재선정"[:200])
         elif combo.get('warn') and combo['warn'] != pc.get('warn'):
-            msgs.append(f"[{md(today)} 조합 1위 성적 저하]\n{combo['top_combo']} ({md(combo['chosen_since'])}~)\n{combo['warn']}\n다음 재선정 {combo['next_select']}"[:200])
+            msgs.append(f"[{md(today)} 250일 1위 성적 저하(비교용)]\n{combo['top_combo']} ({md(combo['chosen_since'])}~)\n{combo['warn']}\n다음 재선정 {combo['next_select']}"[:200])
     # 15:40 → 18:40 차이
     diffs = []
     if prev and prev.get('date') == today and prev.get('tag', '')[:4] != a.tag[:4]:
@@ -238,7 +250,13 @@ def main():
         md_lines += [f"| {i + 1} | {int(r['year'])} | {r['rule']} | {r['acc_r60']} | {r['acc_r20']} | {r['acc_last_year']} | {'' if pd.isna(r['acc_next']) else r['acc_next']} | {r['now']} |" for i, (_, r) in enumerate(tc.head(5).iterrows())]
         md_lines += [f"- 12줄의 지금 판단: " + (cons_txt(cons) if cons else f"상승 {(TC['now'] == '상승').sum()} · 하락 {(TC['now'] == '하락').sum()}") + ". 올해 1위는 자료가 들어올 때마다 다시 찾는다(실제 큰 흐름 마지막 구간은 10% 되돌림 확인 전까지 잠정)."]
     if combo:
-        md_lines += ['', '## 매수×매도 신호 조합 감시', '', f"- 지금 1위: **{combo['top_combo']}** ({md(combo['chosen_since'])} 선정, 지난 250거래일 {combo['win_ret_250']:+.1f}%, 거래 {combo['win_trades']}건 적중 {combo['win_hit']:.0f}%) · 지금 {combo['state']}",
+        md_lines += ['', '## 매수×매도 신호 조합 감시', '']
+        if combo.get('ens_members'):
+            md_lines += [f"- 기준 규칙(묶음): 지난 {combo.get('ens_win')}거래일 수익 상위 {combo.get('ens_k')}개를 똑같이 나눠 보유 — 지금 **{combo.get('ens_hold_n')}/{combo.get('ens_n')}개 보유({float(combo.get('ens_hold_pct')):.0f}%)**, {md(combo['ens_selected'])} 선정(이 구성은 {md(combo['ens_since'])}부터)",
+                         f"- 구성: {combo.get('ens_members')} (상태: {combo.get('ens_states')})" + (f" · 들어옴 {combo.get('ens_in')}" if combo.get('ens_in') else '') + (f" · 빠짐 {combo.get('ens_out')}" if combo.get('ens_out') else ''),
+                         f"- 이 구성으로 바뀐 뒤: 묶음 {float(combo.get('ens_since_ret')):+.1f}% (코스피 {float(combo.get('ens_since_kospi')):+.1f}%) · 2016~ 누적: 묶음 {float(combo.get('ens_total')):+,.1f}%(최대 낙폭 {float(combo.get('ens_mdd')):.1f}%, 코스피를 이긴 해 {combo.get('ens_beat')}/{combo.get('ens_years')}) vs 250일 1위 {float(combo.get('old_total')):+,.1f}%(낙폭 {float(combo.get('old_mdd')):.1f}%, {combo.get('old_beat')}/{combo.get('ens_years')}) vs 코스피 {float(combo.get('kospi_total')):+,.1f}%",
+                         f"- 창·묶음 크기별(누적·낙폭·코스피를 이긴 해): {combo.get('ens_grid')}"]
+        md_lines += [f"- 비교용 250일 1위: **{combo['top_combo']}** ({md(combo['chosen_since'])} 선정, 지난 250거래일 {combo['win_ret_250']:+.1f}%, 거래 {combo['win_trades']}건 적중 {combo['win_hit']:.0f}%) · 지금 {combo['state']}",
                      f"- 선정 뒤: 수익 {combo['since_ret']:+.1f}% (코스피 {combo['since_kospi']:+.1f}%), 닫힌 거래 {combo['since_trades']}건 중 {combo['since_wins']}건 적중 · 2015~25 적중률 {combo['hit_2015_25']}%",
                      f"- 경고: {combo['warn'] or '없음'} · 다음 재선정 {combo['next_select']} · 규칙: {combo['rule']}"]
     md_lines += ['', '## 자료 갱신', '', f"- 수집 실행: {summ.get('run', '—')} · 코스피 {summ.get('kospi_last', '—')} · 금투협 {summ.get('kofia_last', '—')} · VKOSPI {summ.get('vkospi_last', '—')} · 야간선물 {summ.get('night_last', '—')}",

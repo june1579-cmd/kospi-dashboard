@@ -48,23 +48,23 @@
    "last_date": "2026-11-13"
   },
   "combo_now": {
-   "sha256": "5ca7112493f2e6fe6bded9adc9ee2d8808144f338d5f7d92d691d7e012287325",
-   "bytes": 386,
+   "sha256": "081b8b18df1fc25b9b9939a43c65af50c72ba12524bedeeb961aaf345ed6a87c",
+   "bytes": 1384,
    "last_date": "2026-11-13"
   },
   "combo_select": {
-   "sha256": "09a5f1767d1a1cbd49cd87377b2f34e9a8ae4d4050f475d892e070dd89d80918",
-   "bytes": 11483,
+   "sha256": "4f02ddef4d7c1603e92a9df3d20eb011bba8a1aef8020270a24bcf96a8ff304f",
+   "bytes": 36431,
    "last_date": "2026-11"
   },
   "combo_table": {
-   "sha256": "8010bade2156f7fba1d75191c6fec9b6ebd72c819a480bffa4e629be5e852b3d",
-   "bytes": 9008,
-   "last_date": "최적화 3위"
+   "sha256": "512ea8a2a3a4a3fa0b2d0f16645dac238fb7d06a63a7ef119afc4148c0b8d62a",
+   "bytes": 10842,
+   "last_date": "엄격형"
   },
   "combo_wf": {
-   "sha256": "76839e54db5faefee8c711d757ff45b48d463ca9ac446f67016dc97845e9eaf0",
-   "bytes": 1257,
+   "sha256": "87835dddcb2eb3199c85894b9d6f263d3d2c66c61a281e9d1461918caea52923",
+   "bytes": 1422,
    "last_date": "2025~26 실사용"
   },
   "credit": {

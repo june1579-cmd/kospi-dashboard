@@ -60,8 +60,11 @@ def alerts(o, sig_new=None, LJ=None):
     for s in (sig_new or []): A.append('★ 새 신호: ' + s)
     # 매수×매도 조합 1위 교체·성적 저하(combo_now vs 직전 latest.json)
     cb = ((LJ or {}).get('combo') or {})
-    if cb.get('prev_top'): A.append(f"조합 1위 교체 「{cb['prev_top']}」 ⇒ 「{cb['top_combo']}」")
-    if cb.get('warn_new'): A.append(f"조합 1위 성적 저하: {str(cb.get('warn'))[:40]}")
+    # 묶음 규칙(2026-11-15~ 기준 규칙): 구성 교체·보유 비중 변화
+    if cb.get('ens_prev'): A.append(f"조합 묶음 교체: 들어옴 {cb.get('ens_in') or '—'} · 빠짐 {cb.get('ens_out') or '—'}")
+    if cb.get('ens_hold_prev') is not None: A.append(f"조합 묶음 보유 비중 {float(cb['ens_hold_prev']):.0f} → {float(cb['ens_hold_pct']):.0f}%({cb.get('ens_hold_n')}/{cb.get('ens_n')}개)")
+    if cb.get('prev_top'): A.append(f"250일 1위(비교용) 교체 「{cb['prev_top']}」 ⇒ 「{cb['top_combo']}」")
+    if cb.get('warn_new'): A.append(f"250일 1위(비교용) 성적 저하: {str(cb.get('warn'))[:40]}")
     return A
 
 
