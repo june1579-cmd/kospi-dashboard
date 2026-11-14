@@ -214,6 +214,15 @@
       Array.from(head.children).forEach(c => { if (c.tagName !== 'H1') notes.appendChild(c); }); head.after(notes); }
     if (head) { if (box.previousElementSibling !== head) head.after(box); } else if (root.firstElementChild !== box) root.prepend(box);
     if (all && box.nextElementSibling !== all) box.after(all);
+    // 매일 볼 필요가 없는 설명은 접어 둔다(11/14): 그래프 보는 법은 그래프 바로 아래, 머리말 설명은 기준일 줄 아래에 '펼치기'로
+    const foldInto = (id, label, nodes, place) => { let d = document.getElementById(id);
+      if (!d) { d = document.createElement('details'); d.className = 'rv-more'; d.id = id; const sm = document.createElement('summary'); sm.textContent = label; d.appendChild(sm); place(d); }
+      nodes.filter(Boolean).forEach(n => { if (n.parentNode !== d) d.appendChild(n); }); };
+    const ch = document.getElementById('all-chart');
+    if (all && ch) { const tb = document.getElementById('sig-tbl'), tw = tb && tb.closest('.rv-tbl-wrap'), nx = tw && tw.nextElementSibling, tnote = nx && nx.matches('p.rv-note:not([id])') ? nx : null;
+      foldInto('all-help', '그래프 보는 법 · 신호 표시 설명 (펼치기)', [all.querySelector('.rv-all-head p.rv-note'), document.getElementById('all-ovnote'), document.getElementById('all-alnote'), tnote], d => ch.after(d)); }
+    const notes = document.getElementById('top-notes');
+    if (notes) foldInto('top-help', '대시보드 설명 · 자료 기준 (펼치기)', Array.from(notes.children).filter(c => c.id !== 'asof-auto' && c.id !== 'top-help'), d => notes.appendChild(d));
     return box;
   }
   try { placeTop(); } catch (e) { console.error(e); }
