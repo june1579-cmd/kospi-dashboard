@@ -17,6 +17,9 @@ on:
       tag:
         description: '0831(아침 확정) · 1540(잠정) · 1840(확정)'
         default: '1840'
+      force:
+        description: '구분의 시간대가 아니어도 돌린다(수동 재실행용: true)'
+        default: ''
 permissions:
   contents: write
 concurrency:
@@ -55,7 +58,7 @@ jobs:
           KAKAO_REFRESH_TOKEN: ${{ secrets.KAKAO_REFRESH_TOKEN }}
           KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
           DASH_LINK: https://june1579-cmd.github.io/kospi-dashboard/   # 카톡 [대시보드 열기] → 웹판(GitHub Pages)
-        run: python run_pipeline.py --tag "${{ steps.tag.outputs.tag }}" --attempt "${{ steps.tag.outputs.attempt }}" --no-kakao
+        run: python run_pipeline.py --tag "${{ steps.tag.outputs.tag }}" --attempt "${{ steps.tag.outputs.attempt }}" --no-kakao ${{ github.event.inputs.force == 'true' && '--force' || '' }}
       - name: 결과 저장(commit & push)
         run: |
           git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"

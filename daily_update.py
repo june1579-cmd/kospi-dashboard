@@ -8,7 +8,29 @@ import argparse, glob, json, os, re, datetime as dt
 import numpy as np, pandas as pd
 
 KST = dt.timezone(dt.timedelta(hours=9))
-changes, files_in = [], []
+changes, files_in, warnings = [], [], []      # warnings: 출처 간 불일치·대조 탈락 등 — update_summary.json 에 적혀 자료 점검(health_check.py)·알림 「자료:」 줄로 간다
+HOLI = set()
+def load_holidays(public):
+    """KRX 휴장일(주말 제외). 공개 수집 저장소 파일이 있으면 그것, 없으면 pkg/holidays_kr.json(같은 파일의 사본)."""
+    global HOLI
+    for p_ in (os.path.join(public or '', 'data', 'holidays_kr.json'), os.path.join(os.path.dirname(os.path.abspath(__file__)), 'pkg', 'holidays_kr.json')):
+        try:
+            if os.path.exists(p_): HOLI = set(json.load(open(p_, encoding='utf-8')).get('holidays', [])); return
+        except Exception: pass
+def next_expiry_label(d):
+    """코스피200 선물 근월물 표기(예: 2026-12물). 만기 = 3·6·9·12월 둘째 목요일. 만기일 저녁장부터는 다음 분기물."""
+    d = pd.Timestamp(d)
+    for k in range(0, 5):
+        q = (d.month - 1) // 3 * 3 + 3 + 3 * k                       # 이번 분기 끝 달(3·6·9·12)에서 k 분기 뒤
+        y = d.year + (q - 1) // 12; m = (q - 1) % 12 + 1
+        first = pd.Timestamp(year=y, month=m, day=1); thu = first + pd.Timedelta(days=(3 - first.weekday()) % 7 + 7)
+        if d.normalize() < thu: return f'{y}-{m:02d}물'
+    return ''
+def is_trading(d): return d.weekday() < 5 and d.strftime('%Y-%m-%d') not in HOLI
+def next_trading(d):
+    d = pd.Timestamp(d) + pd.Timedelta(days=1)
+    while not is_trading(d): d += pd.Timedelta(days=1)
+    return d
 PUBSRC = '공개 수집 저장소 github.com/Jaey27/kr-flow-dashboard (다음 금융·금투협·KRX 원천)'
 
 def isna(v):
@@ -59,6 +81,7 @@ def main():
     ap.add_argument('--vix', default=''); ap.add_argument('--run-tag', default=''); ap.add_argument('--out', default=''); ap.add_argument('--now', default='')
     a = ap.parse_args(); now = pd.Timestamp(a.now).to_pydatetime().replace(tzinfo=KST) if a.now else dt.datetime.now(KST)
     global NOW; NOW = now
+    load_holidays(a.public)
     tag = f'{now:%Y-%m-%d %H:%M}' + (f' {a.run_tag}' if a.run_tag else '')
     X = pd.read_excel(a.workbook, sheet_name=None); order = list(X.keys())
     NODATE = ('최초_요청문', '원본파일_목록', '값_교체_기록', '안내')
@@ -94,8 +117,8 @@ def main():
             if (df['일자'] == d).any() or pd.isna(r['종가']): continue
             prev = df[df['일자'] < d].sort_values('일자'); pc = prev.iloc[-1]['종가(pt)'] if len(prev) else np.nan
             df = upsert(df, {'일자': d, '종가(pt)': r['종가'], '대비(pt)': round(r['종가'] - pc, 2) if pd.notna(pc) else np.nan, '등락률(%)': round((r['종가'] / pc - 1) * 100, 2) if pd.notna(pc) else np.nan},
-                        '코스피_일별', '공개 시세(다음 금융 종가, 원천 KRX) — 시가·고가·저가·거래량 확인 불가, KRX 파일 오면 교체')
-        files_in.append(('01b', '코스피 종가(다음 금융, KRX 파일에 오늘 줄 없을 때)', '코스피_일별'))
+                        '코스피_일별', (str(r['원본']) if '원본' in k1b.columns and isinstance(r.get('원본'), str) else '실시간 지수 종가(네이버·다음)') + ' — 시가·고가·저가·거래량 확인 불가, KRX 파일 오면 교체')
+        files_in.append(('01b', '코스피 종가(실시간 출처 대조 값, KRX 파일에 오늘 줄 없을 때)', '코스피_일별'))
     if 'daum_index' in led:   # KRX 파일에 없는 날짜만 종가(공개 수집)로. 시가·고가·저가·거래량은 확인 불가 → 빈칸
         fm = led.get('freesis_kospi_market', {})
         for ds, r in sorted(led['daum_index'].items()):
@@ -108,6 +131,16 @@ def main():
             df = upsert(df, new, '코스피_일별', '공개 수집(다음 금융 종가·금투협 증시동향 거래대금·시총, 원천 KRX) — 시가·고가·저가·거래량 확인 불가, KRX 파일 오면 교체')
     X['코스피_일별'] = df.sort_values('일자').reset_index(drop=True)
     last_k = X['코스피_일별']['일자'].max()
+    xr = rd(f('15_*.csv'))      # 실시간 출처(네이버·다음) 종가와 대조 — KRX 화면 값이 마감 전 값으로 들어오는 일(11/11~13)을 잡는다
+    if xr is not None:
+        kk = X['코스피_일별'].set_index('일자')['종가(pt)']; bad = []
+        for _, r in xr.tail(8).iterrows():
+            d = pd.Timestamp(r['date'])
+            if d not in kk.index or isna(kk[d]): continue
+            for c, nm in (('kospi_naver', '네이버'), ('kospi_daum', '다음')):
+                if c in xr.columns and not isna(r[c]) and abs(float(kk[d]) - float(r[c])) > 0.011: bad.append(f'{d:%m/%d} 저장 {float(kk[d]):,.2f} ≠ {nm} {float(r[c]):,.2f}')
+        if bad: warnings.append({'key': 'kospi_close', 'level': '오류', 'msg': '코스피 종가가 실시간 출처와 다름: ' + '; '.join(bad[:4])})
+        files_in.append(('15', '지수 종가 대조(네이버·다음)', '(대조만)'))
     # ---------------- 2. VKOSPI_일별
     df = X['VKOSPI_일별']; v10 = cut(rd(f('10_VKOSPI*.csv')), '일자')
     if v10 is not None:
@@ -119,8 +152,28 @@ def main():
             new = {'일자': d, '종가': r['종가'], '대비': round(r['종가'] - pc, 2) if pd.notna(pc) else np.nan, '등락률(%)': round((r['종가'] / pc - 1) * 100, 2) if pd.notna(pc) else np.nan,
                    '시가': r.get('시가', np.nan), '고가': r.get('고가', np.nan), '저가': r.get('저가', np.nan)}
             prevsrc = str(df.loc[df['일자'] == d, '원본 파일'].iloc[0]) if (df['일자'] == d).any() else ''
+            if '10b' in prevsrc:
+                ov = df.loc[df['일자'] == d, '종가'].iloc[0]
+                if not isna(ov) and abs(float(ov) - float(r['종가'])) > 0.011: warnings.append({'key': 'vkospi', 'level': '주의', 'msg': f'VKOSPI {d:%m/%d} 당일 값(KRX 화면) {float(ov):.2f} → 공식(Open API) {float(r["종가"]):.2f} 로 바뀜'})
             df = upsert(df, new, 'VKOSPI_일별', f'자동 수집 10 VKOSPI({vsrc}, {tag})', force=('확인 불가' in prevsrc))
         files_in.append(('10', f'VKOSPI 시가·고가·저가·종가({vsrc})', 'VKOSPI_일별'))
+    v10b = cut(rd(f('10b_VKOSPI*.csv')), '일자', after=dt.time(16, 10))   # KRX 화면(개별지수 시세 추이) — 당일 값은 16:10 이후 실행분만
+    if v10b is not None:
+        v10b['일자'] = pd.to_datetime(v10b['일자']); v10b = v10b[(pd.to_numeric(v10b['종가'], errors='coerce') > 5) & (pd.to_numeric(v10b['종가'], errors='coerce') < 150)]
+        nb = 0; bad = []
+        for _, r in v10b.sort_values('일자').iterrows():
+            d = r['일자']; hit = df.index[df['일자'] == d]
+            if len(hit):
+                old = df.at[hit[0], '종가']; osrc = str(df.at[hit[0], '원본 파일'])
+                if not isna(old) and abs(float(old) - float(r['종가'])) > 0.011:
+                    if 'Open API' in osrc or '사용자' in osrc: bad.append(f'{d:%m/%d} 저장 {float(old):.2f}({osrc[:24]}) ≠ KRX 화면 {float(r["종가"]):.2f}'); continue   # 공식 값(Open API·KRX 파일)은 그대로 두고 알린다
+                elif not isna(old) and not any(isna(df.at[hit[0], c]) and not isna(r.get(c)) for c in ('시가', '고가', '저가')): continue                                   # 같은 값이고 채울 칸도 없음
+            prev = df[df['일자'] < d].sort_values('일자'); pc = prev.iloc[-1]['종가'] if len(prev) else np.nan
+            new = {'일자': d, '종가': r['종가'], '대비': round(r['종가'] - pc, 2) if pd.notna(pc) else np.nan, '등락률(%)': round((r['종가'] / pc - 1) * 100, 2) if pd.notna(pc) else np.nan,
+                   '시가': r.get('시가', np.nan), '고가': r.get('고가', np.nan), '저가': r.get('저가', np.nan)}
+            df = upsert(df, new, 'VKOSPI_일별', f'자동 수집 10b VKOSPI(KRX 정보데이터시스템 개별지수 시세 추이, {tag})', force=not len(hit)); nb += 1
+        if bad: warnings.append({'key': 'vkospi', 'level': '주의', 'msg': 'VKOSPI 출처 간 불일치: ' + '; '.join(bad[:4])})
+        files_in.append(('10b', f'VKOSPI 당일 포함(KRX 화면, 반영 {nb}일)', 'VKOSPI_일별'))
     if 'krx_vkospi' in led:
         for ds, r in sorted(led['krx_vkospi'].items()):
             d = pd.Timestamp(ds)
@@ -171,6 +224,13 @@ def main():
             if len(hit):
                 old_lbl = str(df.at[hit[0], '출처 구분'])
                 if old_lbl.startswith('사용자 첨부'): continue                 # KRX 파일 값은 그대로(다음 실행의 pykrx 재수집이 고침)
+                if old_lbl.startswith('KRX 확정치'):
+                    # 2026-11-15 고침: 저녁 실행에서 pykrx 로 받은 KRX 확정치를 이 단계가 다음 금융 18시 잠정치로 다시 덮어 '확정' 알림에도 잠정치가 나갔다(11/13 외국인 −5,419억 → −5,367억).
+                    # KRX 확정치는 덮지 않는다. 다음 금융의 다음 날 아침 값(=확정)과 0.15(십억 원) 넘게 다르면 주의로만 남긴다.
+                    if final:
+                        i0 = hit[0]; dd = [(c, df.at[i0, c], v) for c, v in (('외국인 합계(십억원)', round(r['foreign'] / 10, 1)), ('개인(십억원)', round(r['indiv'] / 10, 1)), ('기관 합계(십억원)', round(r['inst'] / 10, 1))) if not isna(df.at[i0, c]) and abs(float(df.at[i0, c]) - float(v)) > 0.15]
+                        if dd and (last_k - d).days <= 12: warnings.append({'key': 'investor', 'level': '주의', 'msg': f'투자자별 {d:%m/%d} KRX 확정치와 다음 금융 확정 값이 다름: ' + ', '.join(f'{c.split("(")[0].strip()} {o} ≠ {v}' for c, o, v in dd)})
+                    continue
                 if '다음 날 아침' in old_lbl and '교체' not in old_lbl and not final: continue   # 확정된 값은 확정 전 값으로 덮지 않음
             new = {'일자': d, '기관 합계(십억원)': round(r['inst'] / 10, 1), '기타법인(십억원)': round(r['etc_corp'] / 10, 1) if r.get('etc_corp') is not None else np.nan, '개인(십억원)': round(r['indiv'] / 10, 1),
                    '외국인 합계(십억원)': round(r['foreign'] / 10, 1), '전체(십억원)': 0, '출처 구분': lbl}   # 다음 금융 foreign 은 기타외국인을 이미 포함한 합계(KRX 파일과 대조 확인)
@@ -240,16 +300,47 @@ def main():
             new = {'일자': r['날짜'], '기관합계(원)': r['기관합계'], '기타법인(원)': r['기타법인'], '개인(원)': r['개인'], '외국인 합계(원)': r['외국인합계'], '전체(원)': r['전체']}
             df = upsert(df, new, 'ETF_투자자별', f'자동 수집 06 ETF 투자자별(KRX, {tag})')
         X['ETF_투자자별'] = df.sort_values('일자').reset_index(drop=True); files_in.append(('06', 'KODEX 레버리지 투자자별 순매수', 'ETF_투자자별'))
-    # ---------------- 8. 야간선물_일별
+    # ---------------- 8. 야간선물_일별 — 09 = KRX 화면(시장구분 야간, 일자 = 야간거래 종료일 T+1 거래일) · 09b = 차트로그 이력(세션 시작일 기준, 대조·예비)
     if '야간선물_일별' in X:
-        df = X['야간선물_일별']; n9 = cut(rd(f('09_*.csv')), '일자', after=dt.time(6, 10))
+        df = X['야간선물_일별']; n9 = cut(rd(f('09_야간*.csv')), '일자', after=dt.time(6, 10)); got9 = 0
         if n9 is not None:
             n9['일자'] = pd.to_datetime(n9['일자'])
             for _, r in n9.sort_values('일자').iterrows():
                 new = {'일자': r['일자'], '월물': r['월물'], '시가': r['시가'], '고가': r['고가'], '저가': r['저가'], '종가': r['종가'], '대비': r['대비'], '거래량': r['거래량'], '미결제약정': r['미결제약정']}
-                src9 = str(r['원본']) if '원본' in n9.columns and isinstance(r['원본'], str) and r['원본'] else 'KRX 정보데이터시스템 전종목 시세 야간'
-                df = upsert(df, new, '야간선물_일별', f'자동 수집 09 야간선물({src9}, {tag})')
-            X['야간선물_일별'] = df.sort_values('일자').reset_index(drop=True); files_in.append(('09', '코스피200 선물 야간 일별(근월물)', '야간선물_일별'))
+                src9 = str(r['원본']) if '원본' in n9.columns and isinstance(r['원본'], str) and r['원본'] else 'KRX 정보데이터시스템 개별종목 시세 추이 야간'
+                was = str(df.loc[df['일자'] == r['일자'], '원본 파일'].iloc[0]) if (df['일자'] == r['일자']).any() else ''
+                df = upsert(df, new, '야간선물_일별', f'자동 수집 09 야간선물({src9}, {tag})', force=('공개 사이트' in was or '차트로그' in was)); got9 += 1
+            files_in.append(('09', f'코스피200 선물 야간 일별(근월물, KRX 화면 {got9}일)', '야간선물_일별'))
+        nb = rd(f('09b_*.csv'))
+        if nb is not None and '세션일' in nb.columns:
+            nb['세션일'] = pd.to_datetime(nb['세션일']); kd = sorted(pd.to_datetime(X['코스피_일별']['일자']).tolist()); nxt = {a_: b_ for a_, b_ in zip(kd[:-1], kd[1:])}
+            pb_ = X.get('참고_공개수집_2024.10~'); dayfut = {}
+            if pb_ is not None and '선물 가격(pt)' in pb_.columns: dayfut = {pd.Timestamp(a_): b_ for a_, b_ in zip(pd.to_datetime(pb_['일자']), pb_['선물 가격(pt)']) if not isna(b_)}
+            if xr is not None and 'fut_naver' in xr.columns:      # 주간 선물 종가(네이버)도 대조 기준에 더한다
+                for _, r in xr.iterrows():
+                    if not isna(r['fut_naver']): dayfut.setdefault(pd.Timestamp(r['date']), float(r['fut_naver']))
+            nb['t1'] = [nxt.get(d_) or next_trading(d_) for d_ in nb['세션일']]
+            # 믿을 만한 출처인지: 통합 원자료에 이미 있는(이번 실행 전부터 있던) 날과 종가가 얼마나 맞는지
+            base = df.set_index('일자')['종가']; ov = [(float(base[t]), float(c)) for t, c in zip(nb['t1'], nb['종가']) if t in base.index and not isna(base[t])]
+            agree = (sum(1 for a_, b_ in ov if abs(a_ - b_) <= 0.06) / len(ov)) if ov else None
+            diff = [f'{t:%m/%d} KRX {float(base[t]):.2f} ≠ 공개 {float(c):.2f}' for t, c in zip(nb['t1'], nb['종가']) if t in base.index and not isna(base[t]) and abs(float(base[t]) - float(c)) > 0.06 and (now.replace(tzinfo=None) - t).days <= 14]
+            if diff: warnings.append({'key': 'night', 'level': '주의', 'msg': '야간선물 KRX 값과 공개 출처 값이 다름: ' + '; '.join(diff[:4])})
+            added = 0
+            if agree is not None and agree < 0.95: warnings.append({'key': 'night', 'level': '주의', 'msg': f'야간선물 공개 출처(차트로그) 일치율 {agree * 100:.0f}%({len(ov)}일) — 95% 미만이라 예비로 쓰지 않음'})
+            else:
+                for _, r in nb.sort_values('세션일').iterrows():
+                    t1 = r['t1']
+                    if (df['일자'] == t1).any(): continue                                          # KRX 값이 있으면 그대로
+                    ended = pd.Timestamp(r['세션일']).normalize() + pd.Timedelta(days=1, hours=6, minutes=10)   # 세션은 다음 날 06:00 에 끝난다
+                    if now.replace(tzinfo=None) < ended or t1.date() > now.date(): continue           # 안 끝난 세션·미래 날짜(금요일 저녁장은 월요일 아침부터)는 넣지 않는다
+                    dc = dayfut.get(pd.Timestamp(r['세션일']))
+                    if dc is None or abs((float(r['종가']) - float(r['대비'])) - float(dc)) > 0.06:
+                        warnings.append({'key': 'night', 'level': '주의', 'msg': f"야간선물 공개 출처 {r['세션일']:%m/%d} 줄은 주간 선물 종가 대조 탈락(종가−대비 {float(r['종가']) - float(r['대비']):.2f} vs 주간 {dc}) — 넣지 않음"}); continue
+                    exp = next_expiry_label(r['세션일'])
+                    new = {'일자': t1, '월물': exp, '시가': r.get('시가', np.nan), '고가': r.get('고가', np.nan), '저가': r.get('저가', np.nan), '종가': float(r['종가']), '대비': float(r['대비']), '거래량': np.nan, '미결제약정': r.get('미결제약정', np.nan)}
+                    df = upsert(df, new, '야간선물_일별', f"자동 수집 09b 야간선물(차트로그 일별 이력 {r['세션일']:%m/%d} 저녁장 — 비공식, 주간 선물 종가 {float(dc):.2f} 대조 통과, KRX 값 오면 교체, {tag})"); added += 1
+            files_in.append(('09b', f'야간선물 공개 출처 대조(일치율 {"—" if agree is None else f"{agree * 100:.0f}%"}, 예비로 넣은 날 {added})', '야간선물_일별'))
+        X['야간선물_일별'] = df.sort_values('일자').reset_index(drop=True)
     # ---------------- 9. 참고 시트(공개 자료)
     if mac:
         dates, ser = mac['dates'], mac['series']
@@ -307,23 +398,52 @@ def main():
                         if big: pb.at[i, c] = v; changes.append(('참고_공개수집_2024.10~', dstr(d), c, o, '저장소 값 바뀜(잠정·18시 집계 → 다음 날 아침 확정 등)', v, PUBSRC))
             else: pb = upsert(pb, new, '참고_공개수집_2024.10~', PUBSRC, srccol='출처')
         X['참고_공개수집_2024.10~'] = pb.sort_values('일자').reset_index(drop=True); files_in.append(('공개', '공개 수집 저장소(지수·선물·투자자별·등락·외국인 보유·환율·미국 금리)', '참고_공개수집_2024.10~ 외'))
+    # ---------------- 10. 미국 VIX(참고_VIX_유가) — 2026-11-15 고침
+    #   옛 규칙: 이미 값이 있는 날짜는 FRED 출처일 때만 바꿨다 → 야후에서 처음 들어온 '장이 끝나기 전 값'이 종가로 굳었다(11/2~11/13 전부, 11/5 16.83 ↔ 실제 28.18).
+    #   새 규칙: 수집 파일(13_VIX)은 뉴욕 기준 끝난 날만 담는다. 저장값과 0.005 넘게 다르면, 새 출처의 등급이 저장 출처 이상일 때 교체하고 「값_교체_기록」에 남긴다.
+    #   등급: CBOE 공식 파일·FRED(CBOE 종가)·사용자 제공 CBOE 자료 3 > 야후·네이버 2 > 그 밖(보도 등) 1. 교체가 생기면 warnings 에 적어 알림·대시보드에 드러낸다(신호가 바뀔 수 있으므로).
+    def vix_grade(src_):
+        t = str(src_)
+        if 'CBOE' in t or 'FRED' in t: return 3
+        if 'Yahoo' in t or '야후' in t or '네이버' in t: return 2
+        return 1
     vx = rd(a.vix) if a.vix else rd(f('13_VIX*.csv'))
     if vx is not None:
         vcol = [c for c in vx.columns if c.upper() in ('VIXCLS', 'CLOSE', 'VIX')]; dcol = [c for c in vx.columns if c.upper() in ('DATE', 'OBSERVATION_DATE')]
         if vcol and dcol:
-            vv = X['참고_VIX_유가']; added = 0; src_last = ''
+            vv = X['참고_VIX_유가']; added = 0; fixed = []; src_last = ''
+            oilmark = lambda i_: (' · 유가: ' + str(vv.at[i_, '출처']).split('유가:')[-1].strip() if '유가:' in str(vv.at[i_, '출처']) else (' · 유가: EIA' if not isna(vv.at[i_, '브렌트유(달러/배럴)']) else ''))
             for _, r in vx.iterrows():
                 v = num(r[vcol[0]]); d = pd.Timestamp(r[dcol[0]])
                 if pd.isna(v) or pd.isna(d): continue
-                vs = str(r['source']) if 'source' in vx.columns and isinstance(r['source'], str) else 'FRED VIXCLS(CBOE)'; src_last = vs
+                vs = str(r['source']) if 'source' in vx.columns and isinstance(r['source'], str) else 'FRED VIXCLS(CBOE 종가)'; src_last = vs
                 if (vv['일자'] == d).any():
-                    i = vv.index[vv['일자'] == d][0]
-                    if isna(vv.at[i, 'VIX 종가']): vv.at[i, 'VIX 종가'] = v; vv.at[i, '출처'] = f'VIX: {vs}' + (' · 유가: EIA' if not isna(vv.at[i, '브렌트유(달러/배럴)']) else ''); added += 1
-                    elif 'FRED' in vs and 'FRED VIXCLS(CBOE 종가' not in str(vv.at[i, '출처']) and differs(vv.at[i, 'VIX 종가'], v):   # 보도·뉴스레터 값 → FRED(CBOE 공식 종가)로 교체, 값_교체_기록에 남김
-                        changes.append(('참고_VIX_유가', dstr(d), 'VIX 종가', vv.at[i, 'VIX 종가'], str(vv.at[i, '출처'])[:70], v, f'VIX: {vs}'))
-                        vv.at[i, 'VIX 종가'] = v; vv.at[i, '출처'] = f'VIX: {vs}' + (' · 유가: EIA' if not isna(vv.at[i, '브렌트유(달러/배럴)']) else ''); added += 1
+                    i = vv.index[vv['일자'] == d][0]; old = vv.at[i, 'VIX 종가']; osrc = str(vv.at[i, '출처'])
+                    if isna(old): vv.at[i, 'VIX 종가'] = v; vv.at[i, '출처'] = f'VIX: {vs}' + oilmark(i); added += 1
+                    elif abs(float(old) - float(v)) > 0.005 and vix_grade(vs) >= vix_grade(osrc.split('· 유가')[0]) and (now.replace(tzinfo=None) - d).days <= 120:
+                        changes.append(('참고_VIX_유가', dstr(d), 'VIX 종가', old, osrc[:70], v, f'VIX: {vs}')); fixed.append((d, float(old), float(v)))
+                        vv.at[i, 'VIX 종가'] = v; vv.at[i, '출처'] = f'VIX: {vs}' + oilmark(i); added += 1
                 else: vv = pd.concat([vv, pd.DataFrame([{'일자': d, 'VIX 종가': v, '출처': f'VIX: {vs}'}])], ignore_index=True); added += 1
-            X['참고_VIX_유가'] = vv.sort_values('일자').reset_index(drop=True); files_in.append(('VIX', f'미국 VIX 종가 {src_last}(새 날짜 {added}건)', '참고_VIX_유가'))
+            big = [x for x in fixed if abs(x[1] - x[2]) > 0.05]
+            if big: warnings.append({'key': 'vix_fix', 'level': '정정', 'msg': f'미국 VIX 과거 값 {len(big)}일 정정(' + ', '.join(f'{d_:%m/%d} {o_:.2f}→{n_:.2f}' for d_, o_, n_ in big[-6:]) + ') — VIX 조건을 쓰는 신호가 달라질 수 있음', 'dates': [dstr(x[0]) for x in big]})
+            X['참고_VIX_유가'] = vv.sort_values('일자').reset_index(drop=True); files_in.append(('VIX', f'미국 VIX 종가 {src_last}(새 값·교체 {added}건, 그중 정정 {len(fixed)}건)', '참고_VIX_유가'))
+    # ---------------- 11. 유가(참고 칸): 빈칸만 채운다(선물 근월물 종가 — 2026-10-14까지의 EIA 현물가와 기준이 다르므로 출처 칸에 적는다)
+    oil = rd(f('14_유가*.csv'))
+    if oil is not None and {'date', 'wti', 'brent'}.issubset(oil.columns):
+        vv = X['참고_VIX_유가']; n_oil = 0
+        for _, r in oil.iterrows():
+            d = pd.Timestamp(r['date'])
+            if isna(r['wti']) and isna(r['brent']): continue
+            if (vv['일자'] == d).any():
+                i = vv.index[vv['일자'] == d][0]; ch = False
+                for c, k_ in (('WTI(달러/배럴)', 'wti'), ('브렌트유(달러/배럴)', 'brent')):
+                    if isna(vv.at[i, c]) and not isna(r[k_]): vv.at[i, c] = float(r[k_]); ch = True
+                if ch:
+                    vv.at[i, '출처'] = str(vv.at[i, '출처']).split(' · 유가')[0] + ' · 유가: 선물 근월물 종가(야후 CL=F·BZ=F)'; n_oil += 1
+            else:
+                vv = pd.concat([vv, pd.DataFrame([{'일자': d, 'WTI(달러/배럴)': r['wti'], '브렌트유(달러/배럴)': r['brent'], '출처': '유가: 선물 근월물 종가(야후 CL=F·BZ=F)'}])], ignore_index=True); n_oil += 1
+        X['참고_VIX_유가'] = vv.sort_values('일자').reset_index(drop=True)
+        if n_oil: files_in.append(('유가', f'WTI·브렌트 선물 근월물 종가(야후, 채운 날 {n_oil})', '참고_VIX_유가'))
     # ---------------- 기록
     kl = X['코스피_일별']['일자'].max(); ll = X['증시자금추이_금투협']['일자'].max(); vl = X['VKOSPI_일별']['일자'].max(); nl = X['야간선물_일별']['일자'].max() if '야간선물_일별' in X else None
     g = X['안내']; c0 = g.columns[0]
@@ -342,9 +462,9 @@ def main():
     with pd.ExcelWriter(out, engine='openpyxl') as w:
         for name in order: X[name].to_excel(w, sheet_name=name, index=False)
     summary = {'run': tag, 'kospi_last': f'{kl:%Y-%m-%d}', 'kofia_last': f'{ll:%Y-%m-%d}', 'vkospi_last': f'{vl:%Y-%m-%d}', 'night_last': (f'{nl:%Y-%m-%d}' if nl is not None else None),
-               'files': files_in, 'changes': [[str(x) for x in ch] for ch in changes]}
+               'files': files_in, 'changes': [[str(x) for x in ch] for ch in changes], 'warnings': warnings}
     json.dump(summary, open(os.path.join(os.path.dirname(os.path.abspath(out)), 'update_summary.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-    print(json.dumps({k: v for k, v in summary.items() if k != 'changes'}, ensure_ascii=False)); print('changes', len(changes))
+    print(json.dumps({k: v for k, v in summary.items() if k != 'changes'}, ensure_ascii=False)); print('changes', len(changes), 'warnings', len(warnings))
     for ch in changes[:60]: print('  ', ch)
 
 if __name__ == '__main__': main()

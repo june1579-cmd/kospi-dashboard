@@ -184,6 +184,8 @@
     const sg = (v, d = 1) => (v >= 0 ? '+' : '−') + Math.abs(v).toFixed(d), f0 = v => Math.round(v).toLocaleString('en-US');
     const jo = v => (v >= 0 ? '+' : '−') + (Math.abs(v) >= 1 ? Math.abs(v).toFixed(1) + '조' : f0(Math.abs(v) * 10000) + '억');
     const items = [];   // [글, 설명, 이동할 칸]
+    D('health').forEach(r => { const st = String(r.status);   // 자료 점검(11/15 추가): 오류·정정은 맨 앞에 — 값이 틀리거나 멈춘 채 조용히 넘어가지 않게
+      if (st === '오류') items.push([`자료 오류: ${r.name}`, String(r.note || '').slice(0, 100), '#health']); else if (st === '정정') items.push([`정정: ${r.name}`, String(r.note || '').slice(0, 120), '#health']); });
     ['alarms', 'buy3', 'sell3'].forEach(id => D(id).forEach(r => { if (String(r.date) === day && String(r.start) === '시작') items.push([`${r.side} 신호 시작: ${r.type}`, String(r.rule || '').slice(0, 60), '#all']); }));
     const re = D('reentry'); if (re.length && String(re[re.length - 1].date) === day) items.push([`재진입 규칙: ${re[re.length - 1].action}`, String(re[re.length - 1].reason || ''), '#all']);
     const q = D('q_daily'), ql = q[q.length - 1], qp = q[q.length - 2];
@@ -222,7 +224,7 @@
     if (all && ch) { const tb = document.getElementById('sig-tbl'), tw = tb && tb.closest('.rv-tbl-wrap'), nx = tw && tw.nextElementSibling, tnote = nx && nx.matches('p.rv-note:not([id])') ? nx : null;
       foldInto('all-help', '그래프 보는 법 · 신호 표시 설명 (펼치기)', [all.querySelector('.rv-all-head p.rv-note'), document.getElementById('all-ovnote'), document.getElementById('all-alnote'), tnote], d => ch.after(d)); }
     const notes = document.getElementById('top-notes');
-    if (notes) foldInto('top-help', '대시보드 설명 · 자료 기준 (펼치기)', Array.from(notes.children).filter(c => c.id !== 'asof-auto' && c.id !== 'top-help'), d => notes.appendChild(d));
+    if (notes) foldInto('top-help', '대시보드 설명 · 자료 기준 (펼치기)', Array.from(notes.children).filter(c => c.id !== 'asof-auto' && c.id !== 'top-help' && c.id !== 'health'), d => notes.appendChild(d));
     return box;
   }
   try { placeTop(); } catch (e) { console.error(e); }
@@ -247,5 +249,30 @@
     d2.appendChild(el('p', 'rv-note', '조건의 pNN은 최근 3년(750거래일) 안에서 오늘 값의 백분위. 해마다 그 전 자료만으로 3조건 조합 1억 3,148만 개를 채점해 고른 4조건 상위 10개 중 하나라도 켜지면 신호다. 투자 권유가 아니다.')); card.appendChild(d2);
     sec.replaceChildren(card);
   }
-  window.fillRelief = () => { try { fillRelief(); } finally { try { fillHot(); } catch (e) { console.error(e); } try { fillPanic(); } catch (e) { console.error(e); } } };   // index.html 의 dash.onData 콜백이 부른다(스크립트끼리는 window 로만 공유)
+  // ---- 자료 상태 칸(11/15 추가): 자료 health(health_check.py 가 매 실행 끝에 씀). 기준일 줄 바로 아래 접힌 칸 — 오류·정정이 있으면 빨간 제목으로 펼쳐 둔다
+  //      11/15 전에는 VIX 가 2주 동안 틀린 값으로 굳고 야간선물이 18일 끊겨도 화면·알림 어디에도 드러나지 않았다
+  function fillHealth() {
+    let H = null; try { const d = dash.data('health'); H = d.status === 'ok' ? d.data : null; } catch (e) { H = null; }
+    if (!H || !H.length) return;
+    const root = document.querySelector('.rv'); if (!root) return; placeTop();
+    const notes = document.getElementById('top-notes');
+    let box = document.getElementById('health');
+    if (!box) { box = document.createElement('details'); box.className = 'rv-more'; box.id = 'health'; const help = document.getElementById('top-help');
+      if (notes) { if (help && help.parentNode === notes) notes.insertBefore(box, help); else notes.appendChild(box); } else root.appendChild(box); }
+    const el = (t, cls, txt) => { const e = document.createElement(t); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+    const cnt = k => H.filter(r => String(r.status) === k).length, bad = cnt('오류'), fix = cnt('정정'), warn = cnt('주의');
+    const md = v => { const t = String(v || ''); return /^\d{4}-\d\d-\d\d/.test(t) ? (+t.slice(5, 7)) + '/' + (+t.slice(8, 10)) : (t || '—'); };
+    const at = String(H[0].checked_at || '');
+    const head = '자료 상태: ' + [bad ? `오류 ${bad}건` : '', fix ? `정정 ${fix}건` : '', warn ? `주의 ${warn}건` : '', `정상 ${cnt('정상')}개`].filter(Boolean).join(' · ') + (at ? ` (점검 ${md(at)} ${at.slice(11, 16)})` : '') + ' — 펼치기';
+    const sm = el('summary', (bad || fix) ? 'rv-hot' : null, head);
+    const w = el('div', 'rv-tbl-wrap'), t = el('table', 'rv-tbl'), th = el('thead'), trh = el('tr'); ['자료', '마지막', '와 있어야 할 날', '상태', '설명'].forEach(x => trh.appendChild(el('th', null, x))); th.appendChild(trh); t.appendChild(th);
+    const tb = el('tbody'); H.forEach(r => { const tr = el('tr'), st = String(r.status);
+      tr.appendChild(el('td', null, String(r.name))); tr.appendChild(el('td', null, md(r.last))); tr.appendChild(el('td', null, md(r.expected)));
+      const c = el('td', (st === '오류' || st === '정정') ? 'rv-hot' : null, st); if (st === '주의') c.style.fontWeight = '600'; tr.appendChild(c);
+      const n = el('td', null, String(r.note || '')); n.style.whiteSpace = 'normal'; n.style.minWidth = '220px'; n.style.textAlign = 'left'; tr.appendChild(n); tb.appendChild(tr); });
+    t.appendChild(tb); w.appendChild(t);
+    const note = el('p', 'rv-note', '매 실행 끝에 자료마다 지금쯤 와 있어야 할 날짜까지 왔는지, 출처끼리 값이 맞는지(코스피 종가 ↔ 네이버·다음, VIX ↔ CBOE 공식 파일, 야간선물 ↔ 공개 출처, VKOSPI 화면 ↔ Open API), 수집 항목이 실패했는지 점검한다. 오류 = 멈춤·불일치, 정정 = 과거 값이 고쳐졌거나 이미 알린 신호가 취소됨, 주의 = 하루 늦음·예비 출처 사용. 알림의 「자료:」 줄이 이 결과다.');
+    box.replaceChildren(sm, w, note); if (bad || fix) box.open = true;
+  }
+  window.fillRelief = () => { try { fillRelief(); } finally { try { fillHot(); } catch (e) { console.error(e); } try { fillPanic(); } catch (e) { console.error(e); } try { fillHealth(); } catch (e) { console.error(e); } } };   // index.html 의 dash.onData 콜백이 부른다(스크립트끼리는 window 로만 공유)
 })();

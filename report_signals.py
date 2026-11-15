@@ -20,6 +20,8 @@ def main():
     a = ap.parse_args(); os.makedirs(a.report, exist_ok=True); now = dt.datetime.now(KST)
     prev = json.load(open(os.path.join(a.report, 'latest.json'), encoding='utf-8')) if os.path.exists(os.path.join(a.report, 'latest.json')) else {}
     summ = json.load(open(a.summary, encoding='utf-8')) if os.path.exists(a.summary) else {}
+    try: health = json.load(open(os.path.join(a.report, 'health.json'), encoding='utf-8'))
+    except Exception: health = {}
     M = rd(f'{a.out}/market_daily.csv'); L = rd(f'{a.out}/liq_daily.csv'); C = rd(f'{a.out}/credit.csv'); F = rd(f'{a.out}/flows_daily.csv')
     Q = rd(f'{a.out}/q_daily.csv'); QN = rd(f'{a.out}/q_now.csv'); AL = rd(f'{a.out}/alarms.csv'); B3 = rd(f'{a.out}/buy3.csv'); S3 = rd(f'{a.out}/sell3.csv'); RE = rd(f'{a.out}/reentry.csv'); NF = rd(f'{a.out}/night_fut.csv')
     m = M.iloc[-1]; today = m['date']; prelim = a.tag.startswith('1540')
@@ -76,6 +78,14 @@ def main():
         for _, r in df[(df['start'] == '시작') & (df['date'] >= (dt.date.fromisoformat(str(today)[:10]) - dt.timedelta(days=10)).isoformat())].iterrows():
             starts.append((r['date'], fn(r), str(r.get('rule', ''))))
     if first: sent = {(d, lab) for d, lab, _ in starts if d < today}
+    # 취소된 신호(2026-11-15 추가): 알림에 나갔던 신호가 자료 확정·정정 뒤 사라지면 health_check.py 가 report/retractions.json 에 적는다. 아직 알리지 않은 것(notified 없음)을 「특이」 줄에 싣는다.
+    cut10_ = (dt.date.fromisoformat(str(today)[:10]) - dt.timedelta(days=10)).isoformat(); cur_ = {(d, lab) for d, lab, _ in starts}
+    sent = {x for x in sent if x[0] < cut10_ or x in cur_}                    # 사라진 신호는 기록에서 뺀다(다시 켜지면 새 신호로 알린다)
+    retr = []
+    try:
+        rp = os.path.join(a.report, 'retractions.json')
+        if os.path.exists(rp): retr = [x for x in json.load(open(rp, encoding='utf-8')) if not x.get('notified')]
+    except Exception: retr = []
     late = [{'label': lab, 'date': d, 'rule': rule} for d, lab, rule in starts if d < today and (d, lab) not in sent]
     for s_ in sig_new: s_['repeat'] = (today, s_['label']) in sent
     sent |= {(d, lab) for d, lab, _ in starts}
@@ -132,6 +142,7 @@ def main():
     def eok(v): return ('+' if v >= 0 else '−') + (f'{abs(v):.1f}조' if abs(v) >= 1 else f'{abs(v) * 10000:,.0f}억')
     def eokp(v): return ('+' if float(v) >= 0 else '−') + f'{abs(float(v)):.1f}%'
     special = []                                              # 특이 신호: 매수·매도 규칙 밖에서 평소와 다른 것
+    for x in retr: special.append(f"{md(x['date'])} {x['label']} 취소({x['reason']})")      # 이미 알린 신호의 취소는 맨 앞에
     try:
         qi = Q.index[Q['date'] == q['date']][-1]; pr_prev = float(Q.loc[qi - 1, 'p_risk']) if qi > 0 and pd.notna(Q.loc[qi - 1, 'p_risk']) else None
         if qi > 0 and str(Q.loc[qi - 1, 'regime']) != str(q['regime']): special.append(f"국면 {Q.loc[qi - 1, 'regime']}→{q['regime']}(시장 상태 바뀜)")
@@ -143,6 +154,7 @@ def main():
         if _sd(cons['now']) != _sd(cons['p1']) or abs(cons['now']['up'] - cons['p1']['up']) >= 2: special.append(f"상승 합의 {cons['p1']['up']}→{cons['now']['up']}/12(" + ('큰 흐름 다수 의견 뒤집힘' if _sd(cons['now']) != _sd(cons['p1']) else '큰 흐름 판단 급변') + ')')
     credit_d = None
     if len(C) > 1 and pd.notna(C.iloc[-2]['credit_jo']): credit_d = float(c['credit_jo']) - float(C.iloc[-2]['credit_jo'])
+    dline = str(health.get('line') or '정상(VKOSPI 내일 확정)'); LIM = 200 - max(0, len(dline) - len('@@DATA@@'))      # '자료:' 줄이 채워진 뒤 200자를 넘지 않도록 한도를 잡는다
     def build_kakao(extra_special=()):
         sp_all = special + list(extra_special)
         L1 = f"[{md(today)} {SHORT.get(a.tag[:4], a.tag)}] 코스피 {m['kospi']:,.0f} ({'+' if m['kospi_chg_pct'] >= 0 else '−'}{abs(m['kospi_chg_pct']):.2f}%)"
@@ -154,13 +166,13 @@ def main():
         why = (['매수 신호'] if buys else []) + (['매도 신호'] if sells else []) + sp_all
         L7 = '▶대시보드 확인' if why else ''
         out = '\n'.join(x for x in [L1, L2, L3, L4, L5, L6, L7] if x)
-        if len(out) > 192: out = '\n'.join(x for x in [L1, L2, L3, L4, L5, L6] if x)      # 200자 한도('자료' 줄 자리 포함): 넘치면 맨 끝 안내 줄부터 뺀다
-        if len(out) > 192:                                                                # 그래도 넘치면 특이 항목의 설명(괄호)을 뒤에서부터 뺀다
+        if len(out) > LIM: out = '\n'.join(x for x in [L1, L2, L3, L4, L5, L6] if x)      # 200자 한도('자료' 줄 자리 포함): 넘치면 맨 끝 안내 줄부터 뺀다
+        if len(out) > LIM:                                                                # 그래도 넘치면 특이 항목의 설명(괄호)을 뒤에서부터 뺀다
             sp2 = list(sp_all)
             for i in range(len(sp2) - 1, -1, -1):
                 sp2[i] = sp2[i].rsplit('(', 1)[0]; out = '\n'.join([L1, L2, L3, '특이\n' + '\n'.join('· ' + x for x in sp2), L5, L6])
-                if len(out) <= 192: break
-        return out[:200], why
+                if len(out) <= LIM: break
+        return out[:LIM], why
     kakao_one, check_why = build_kakao()
     kakao_msgs = [kakao_one]
     msgs = [msg1]
@@ -226,6 +238,7 @@ def main():
                         'regime': q['regime'], 'p_up': float(q['p_up']), 'p_risk': float(q['p_risk']), 'q_trade': qtrade, 'reentry_state': None if re_state is None else re_state['state']},
              'signals_new': [s['label'] for s in sig_new if not s.get('repeat')] + [s['label'] + '(늦게 확인)' for s in late], 'signals_late': late, 'vkospi_hold': vk_hold, 'signals_on': [s['label'] for s in sig_on], 'signals_off': [s['label'] for s in sig_off], 'top_buy_since': top_buy, 'top_sell_since': top_sell,
              'data_dates': {'kospi': today, 'kofia': c['date'], 'vkospi': vk_row['date'], 'night': None if NF is None or not len(NF) else NF.iloc[-1]['night_date']},
+             'health': health, 'retractions': retr,
              'update_summary': {k: v for k, v in summ.items() if k != 'changes'}, 'changes_n': len(summ.get('changes', [])), 'kakao': kakao_msgs, 'kakao_check': check_why, 'kakao_full': msgs, 'diffs_vs_1540': diffs, 'consensus': cons, 'combo': combo}
     json.dump(state, open(os.path.join(a.report, 'latest.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     open(os.path.join(a.report, 'kakao.txt'), 'w', encoding='utf-8').write('\n=====\n'.join(kakao_msgs) + '\n')   # 카톡: 한 통(코스피·자료 상태·신호·수급·신용, 필요하면 대시보드 확인 사유)
@@ -265,6 +278,10 @@ def main():
                      f"- 경고: {combo['warn'] or '없음'} · 다음 재선정 {combo['next_select']} · 규칙: {combo['rule']}"]
     md_lines += ['', '## 자료 갱신', '', f"- 수집 실행: {summ.get('run', '—')} · 코스피 {summ.get('kospi_last', '—')} · 금투협 {summ.get('kofia_last', '—')} · VKOSPI {summ.get('vkospi_last', '—')} · 야간선물 {summ.get('night_last', '—')}",
                 f"- 들어온 자료: " + ', '.join(f"{x[0]} {x[1]}" for x in summ.get('files', [])), f"- 값 교체 {len(summ.get('changes', []))}건(엑셀 「값_교체_기록」)"]
+    if health:
+        md_lines += ['', '## 자료 점검', '', f"- 결과: **{health.get('line', '—')}** (점검 {health.get('checked_at', '—')}) · 기대일: 코스피 {health.get('expected', {}).get('kospi', '—')} · VKOSPI {health.get('expected', {}).get('vkospi', '—')} · 금투협 {health.get('expected', {}).get('kofia', '—')} · VIX {health.get('expected', {}).get('vix', '—')} · 야간선물 {health.get('expected', {}).get('night', '—')}"]
+        md_lines += [f"- {x['status']} · {x['name']}: {x['note']}" for x in health.get('issues', [])]
+    if retr: md_lines += ['', '## 취소된 신호', ''] + [f"- {x['date']} {x['label']} — {x['reason']}({x['found_at']} 확인)" for x in retr]
     if diffs: md_lines += ['', '## 직전 실행 대비 변경', ''] + [f'- {d}' for d in diffs]
     md_lines += ['', f"- 대시보드: {a.link}", '', '투자 권유 아님']
     open(os.path.join(a.report, 'latest.md'), 'w', encoding='utf-8').write('\n'.join(md_lines) + '\n')

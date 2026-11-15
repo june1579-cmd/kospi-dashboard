@@ -46,9 +46,24 @@ def wait_vkospi(limit_min=30, step_min=5):
         time.sleep(step_min * 60)
 
 def main():
-    ap = argparse.ArgumentParser(); ap.add_argument('--tag', default=''); ap.add_argument('--no-collect', action='store_true'); ap.add_argument('--no-kakao', action='store_true'); ap.add_argument('--days', type=int, default=12); ap.add_argument('--no-wait', action='store_true'); ap.add_argument('--collect-dir', default='', help='--no-collect 일 때 쓸 수집 폴더(없으면 수집 자료 없이 진행)'); ap.add_argument('--no-kakao-record', action='store_true', help='카톡 보낸 기록을 남기지 않음(시험용)'); ap.add_argument('--attempt', type=int, default=1, help='같은 구분의 몇 번째 실행인지(1=본 실행, 2·3=재시도). 재시도는 이미 보낸 카톡을 다시 보내지 않고, 자료 없음 안내는 마지막 재시도만 보낸다')
-    a = ap.parse_args(); now = dt.datetime.now(KST); today = now.date()
+    ap = argparse.ArgumentParser(); ap.add_argument('--tag', default=''); ap.add_argument('--no-collect', action='store_true'); ap.add_argument('--no-kakao', action='store_true'); ap.add_argument('--days', type=int, default=12); ap.add_argument('--no-wait', action='store_true'); ap.add_argument('--collect-dir', default='', help='--no-collect 일 때 쓸 수집 폴더(없으면 수집 자료 없이 진행)'); ap.add_argument('--no-kakao-record', action='store_true', help='카톡 보낸 기록을 남기지 않음(시험용)'); ap.add_argument('--force', action='store_true', help='늦게 도착한 옛 구분 실행도 건너뛰지 않고 돌린다(수동 재실행용)'); ap.add_argument('--attempt', type=int, default=1, help='같은 구분의 몇 번째 실행인지(1=본 실행, 2·3=재시도). 재시도는 이미 보낸 카톡을 다시 보내지 않고, 자료 없음 안내는 마지막 재시도만 보낸다')
+    a = ap.parse_args(); now = dt.datetime.now(KST); today = now.date(); T0 = __import__('time').time()
     tag = a.tag or ('0831' if now.time() < dt.time(12, 0) else '1540' if now.time() < dt.time(17, 30) else '1840')
+    # 늦게 도착한 옛 구분 실행은 건너뛴다(2026-11-15 추가): GitHub 예약이 몇 시간씩 밀려 '아침' 실행이 오후 16시에, '잠정' 실행이 밤 12시에 돌면서
+    #   더 새로운 실행이 만든 보고문·manifest 를 옛 구분 이름으로 덮어썼다(11/9~13 매일). 같은 날 더 늦은 구분의 결과가 이미 있거나, 그 구분의 시간대가 지났으면 아무것도 고치지 않고 끝낸다.
+    if not a.no_collect and not a.force:
+        order = {'0831': 0, '1540': 1, '1840': 2}; skip = ''; t = now.time()
+        # 구분마다 돌아도 되는 시간대: 아침 06:00~15:30 · 잠정 15:30~20:10 · 확정 20:10~다음 날 06:00
+        inwin = {'0831': dt.time(6, 0) <= t < dt.time(15, 30), '1540': dt.time(15, 30) <= t < dt.time(20, 10), '1840': t >= dt.time(20, 10) or t < dt.time(6, 0)}.get(tag, True)
+        if not inwin: skip = f'{tag} 구분의 시간대가 아님(지금 {t:%H:%M} — 예약이 밀려 늦게 시작한 실행)'
+        try:
+            pm = json.load(open('out/manifest.json', encoding='utf-8')); prun = str(pm.get('run', '')); ptag = str(pm.get('tag', ''))
+            if not skip and prun[:10] == today.isoformat() and order.get(ptag, -1) > order.get(tag, 9): skip = f'오늘 더 늦은 구분({ptag}, {prun[11:]}) 결과가 이미 있음'
+        except Exception: pass
+        if skip:
+            log(f'건너뜀 — {skip}. 자료·보고문·웹판을 고치지 않는다(억지로 돌리려면 --force)')
+            if os.path.isdir('report'): open('report/kakao.txt', 'w', encoding='utf-8').write('')
+            return 0
     if tag == '0831' and not a.no_wait: wait_vkospi(limit_min=30 if a.attempt <= 1 else 10)
     os.makedirs('data/collect', exist_ok=True); os.makedirs('out', exist_ok=True); os.makedirs('report', exist_ok=True)
     # 1 수집
@@ -86,7 +101,18 @@ def main():
         if rows: txt += pd.DataFrame(rows).to_csv(index=False, header=False)
         open('out/fx_daily.csv', 'w', encoding='utf-8').write(txt)      # 기준 파일은 글자 그대로 두고 새 날짜 줄만 덧붙임
     except Exception as e: errors.append('5 fx_daily: ' + repr(e))
-    man = {'run': f'{now:%Y-%m-%d %H:%M}', 'tag': tag, 'kospi_last': kl, 'kofia_last': summ.get('kofia_last'), 'vkospi_last': summ.get('vkospi_last'), 'night_last': summ.get('night_last'), 'errors': errors, 'files': {}}
+    # 5b 자료 점검(health_check.py): 수집 항목 실패·자료 멈춤·출처 간 불일치·과거 값 정정을 찾아 out/health.csv · report/health.json 에 적는다(알림 「자료:」 줄과 대시보드 「자료 상태」 칸)
+    health = {}
+    try:
+        json.dump(errors, open('report/pipeline_errors.json', 'w', encoding='utf-8'), ensure_ascii=False)
+        run([sys.executable, 'health_check.py', '--workbook', WB, '--out', 'out', '--report', 'report', '--collect', cdir if (cdir and os.path.isdir(cdir)) else '', '--summary', 'data/update_summary.json', '--tag', tag, '--public', PUB, '--pipeline-errors', 'report/pipeline_errors.json'], '5b 자료 점검', timeout=300)
+        health = json.load(open('report/health.json', encoding='utf-8')) if os.path.exists('report/health.json') else {}
+        if os.path.getmtime('report/health.json') < T0 - 5: health = {}          # 이번 실행이 쓴 파일이 아니면(점검 실패) 쓰지 않는다
+    except Exception as e: errors.append('5b 자료 점검: ' + repr(e))
+    if not health: errors.append('자료 점검 단계가 돌지 못함 — 자료 상태를 확인하지 못했음')
+    herr = [e for e in health.get('errors', []) if not e.startswith('실행 단계 오류')]      # 단계 오류는 errors 에 이미 있다
+    man = {'run': f'{now:%Y-%m-%d %H:%M}', 'tag': tag, 'kospi_last': kl, 'kofia_last': summ.get('kofia_last'), 'vkospi_last': summ.get('vkospi_last'), 'night_last': summ.get('night_last'), 'errors': errors + herr,
+           'data_line': health.get('line') or ('오류 ' + str(len(errors)) + '건(자료 점검 실패)' if errors else '정상'), 'health': health.get('counts', {}), 'files': {}}
     for f in sorted(glob.glob('out/*.csv')):
         b = open(f, 'rb').read(); man['files'][os.path.basename(f)[:-4]] = {'sha256': hashlib.sha256(b).hexdigest(), 'bytes': len(b), 'last_date': (str(pd.read_csv(f).iloc[-1, 0]) if len(b) else None)}
     json.dump(man, open('out/manifest.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
@@ -116,20 +142,34 @@ def main():
     if not newdata:
         note = f'[{today:%m/%d} {tag}] ' + ('새 자료 없음(휴장 다음 날 또는 이미 보냄)' if tag == '0831' else '오늘 자료 없음(휴장 또는 미공표)') + f' — 매수·매도 신호 판정 없음. 최신 코스피 {kl}'
         if errors: note += '\n오류: ' + ' | '.join(errors)[:120]
+        elif man.get('data_line') and man['data_line'] != '정상': note += '\n자료: ' + man['data_line'][:80]
         last_try = a.attempt >= 3            # 자료 없음 안내는 그 구분의 마지막 재시도에서만(앞 실행은 다음 시간에 다시 받아 볼 수 있으므로)
         if (tag == '1840' and last_try) or (errors and last_try): open('report/kakao.txt', 'w', encoding='utf-8').write(note[:200] + '\n')
         else: open('report/kakao.txt', 'w', encoding='utf-8').write('')
     elif not newdata_msg:
         open('report/kakao.txt', 'w', encoding='utf-8').write('')
     else:
-        # 카톡 '자료:' 줄 채우기 — 정상 / 오류 내용. VKOSPI 가 아직 안 올라온 것은 오류가 아니라 '내일 아침 확정' 안내로 적는다
-        real = [e for e in errors if not (e.startswith('VKOSPI') and '미반영' in e)]; vk_wait = len(real) != len(errors)
+        # 카톡 '자료:' 줄 채우기 — 자료 점검(5b) 결과: 정상 / 오류·정정·주의 건수와 짧은 이름. (2026-11-15 전에는 단계 오류만 봐서 수집 항목 실패·틀린 값이 「정상」으로 나갔다)
+        real = [e for e in errors if not (e.startswith('VKOSPI') and '미반영' in e)]
         if not ok6: real.append('보고문 생성 실패')
-        st = f'오류 {len(real)}건(아래 메시지)' if real else ('정상' + ('(VKOSPI 내일 확정)' if vk_wait else ''))
+        st = man['data_line'] if not (real and man['data_line'] == '정상') else f'오류 {len(real)}건(실행 단계)'
         txt = open('report/kakao.txt', encoding='utf-8').read().rstrip('\n')
         room = 200 - (len(txt) - len('@@DATA@@'))
         txt = txt.replace('@@DATA@@', st[:max(room, 6)])
-        if real: txt += '\n=====\n' + (f'[{today:%m/%d} 자료 오류 {len(real)}건]\n' + '\n'.join('· ' + e[:90] for e in real))[:200]   # 오류가 있을 때만 둘째 통: 오류 내용
+        # 둘째 통: 새로 생긴 문제(직전에 알린 것과 견줘)와 풀린 문제만 자세히. 계속되는 문제는 첫 통의 「자료:」 줄에 짧게만 나온다(매번 길게 되풀이하지 않음)
+        hs_fn = 'state/health_state.json'; newi = health.get('new', []); res = health.get('resolved', [])
+        det = [f"· {x['status']} {x['name']}: {x['note']}"[:96] for x in newi] + [f"· 해소 {x['name']}"[:60] for x in res] + ['· 오류 ' + e[:90] for e in real if not any(e[:20] in x.get('note', '') for x in newi)]
+        if det: txt += '\n=====\n' + (f'[{today:%m/%d} 자료 점검]\n' + '\n'.join(det))[:200]
+        if health and not a.no_kakao_record: json.dump({'at': f'{now:%Y-%m-%d %H:%M}', 'issues': health.get('issues', [])}, open(hs_fn, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+        # 정정 알림(취소된 신호)을 이번 메시지에 실었으면 '알림' 표시 — 보내지 않는 실행(주말 수동 실행 등)에서는 표시하지 않아 다음 메시지에 실린다
+        try:
+            rt_fn = 'report/retractions.json'
+            if os.path.exists(rt_fn) and not a.no_kakao_record:
+                rt = json.load(open(rt_fn, encoding='utf-8')); ch = False
+                for x in rt:
+                    if not x.get('notified'): x['notified'] = f'{now:%Y-%m-%d %H:%M}'; ch = True
+                if ch: json.dump(rt, open(rt_fn, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+        except Exception as e: log('정정 알림 표시 실패 ' + repr(e))
         open('report/kakao.txt', 'w', encoding='utf-8').write(txt + '\n')
     if errors: open('report/latest.md', 'a', encoding='utf-8').write('\n## 오류\n\n' + '\n'.join(f'- {e}' for e in errors) + '\n')
     # 7 카카오톡
