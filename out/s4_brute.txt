@@ -1,3 +1,0 @@
-12601 기본 → 5행 야간=False [{"TRD_DD": "2026/11/13 (주간)", "TDD_CLSPRC": "822.35", "FLUC_TP_CD": "2", "CMPPREVDD_PRC": "-5.15", "TDD_OPNPRC": "846.15", "TDD_HGPRC": "859.65", "TDD_LWPRC": 
-12701 기본 오류 JSONDecodeError('Expecting value: line 13 column 1 (char 25)')
-13001 기본 오류 JSONDecodeError('Expecting value: line 13 column 1 (char 25)')
