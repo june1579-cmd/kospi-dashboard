@@ -9,3 +9,10 @@
 - 코드·자료(out/*.csv)·페이지는 고치지 않음.
 
 확인만 한 것(문제 없음): out/manifest.json 의 sha256 = out/*.csv 실제 값 전부 일치, docs/data = out 일치, 아티팩트 state/pipeline v62 의 alarms sha = 저장소, 파이썬 파일 문법 오류 0.
+
+2026-11-15 15:55 추가(사용자 지시 "바꿔") — 08:55 예약 작업 지시문(저장소 밖, Claude 예약 작업)
+수정 전 → 수정 후
+- 9단계 결론 카드: "조합 1위(combo_now)가 있으면 신호 카드에 적는다" → 묶음 규칙(750일 상위 5개, 기준 규칙) 기준으로 적는다.
+  latest.json combo 의 ens_members·ens_states·ens_hold_n/ens_n·ens_hold_pct·ens_selected·ens_in·ens_out·ens_since_ret·ens_since_kospi 를 읽어 "묶음 규칙(750일 상위 5개) n/5개 보유" 꼴.
+  250일 1위(top_combo)는 "비교용 250일 1위"로만 한 구절. ens_ 칸이 없으면 "묶음 규칙 자료 없음".
+- 그 밖의 단계·코드·알림 형식은 그대로. 첫 적용은 11/16(월) 08:55.
