@@ -1,0 +1,33 @@
+name: probe
+# 자료 출처 시험용(수동 실행만). probe 가지의 probe.py 를 돌리고 결과(out/)를 같은 가지에 남긴다. main·웹판은 건드리지 않는다.
+on:
+  workflow_dispatch:
+    inputs:
+      args:
+        description: '돌릴 항목(빈칸이면 전부). 예: b1 c'
+        default: ''
+permissions:
+  contents: write
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: probe
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -q pykrx requests pandas openpyxl
+      - name: 시험
+        env:
+          KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
+          KRX_ID: ${{ secrets.KRX_ID }}
+          KRX_PW: ${{ secrets.KRX_PW }}
+        run: python probe.py ${{ github.event.inputs.args }} || true
+      - name: 결과 저장
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add -A out && git commit -q -m "probe 결과 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || echo "변경 없음"
+          git push -q
