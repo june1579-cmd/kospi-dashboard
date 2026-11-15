@@ -178,7 +178,9 @@ def main():
 
     # ------------------------------------------------------------------ 6 야간선물(일자 = 야간거래 종료일 T+1 거래일)
     N = X.get('야간선물_일별'); nl = last_date(N, valcol='종가')
-    nexp = today if (cal.is_trading(today) and now.time() >= dt.time(6, 30)) else cal.on_or_before(today - dt.timedelta(days=1))
+    # 기대 표기일 = 지금까지 끝난 야간장 가운데 가장 늦은 것. 표기일 D 의 세션은 직전 거래일 18:00~다음 날 06:00 — 금요일 저녁장(월요일 표기)은 토요일 06:00 에 끝나므로 주말에는 월요일 표기분까지 기대한다
+    nexp = cal.next(today - dt.timedelta(days=1)); nnow = now.replace(tzinfo=None)
+    while dt.datetime.combine(cal.prev(nexp) + dt.timedelta(days=1), dt.time(6, 30)) > nnow: nexp = cal.prev(nexp)
     lg = cal.lag(nl, nexp)
     nsrc = ''
     try: nsrc = str(N.sort_values('일자').iloc[-1]['원본 파일'])

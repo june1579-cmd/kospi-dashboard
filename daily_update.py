@@ -31,6 +31,14 @@ def next_trading(d):
     d = pd.Timestamp(d) + pd.Timedelta(days=1)
     while not is_trading(d): d += pd.Timedelta(days=1)
     return d
+def prev_trading(d):
+    d = pd.Timestamp(d) - pd.Timedelta(days=1)
+    while not is_trading(d): d -= pd.Timedelta(days=1)
+    return d
+def night_done(label, now):
+    """야간장 표기일(label = 야간거래가 끝난 뒤 첫 거래일)의 세션이 끝났는지. 세션은 직전 거래일 18:00 에 시작해 다음 날 06:00 에 끝난다
+       — 금요일 저녁장은 월요일 날짜로 표기되지만 토요일 06:00 에 끝나므로, 주말 실행에서도 넣는다(전에는 표기일이 미래라는 이유로 월요일 아침까지 뺐다)."""
+    return now.replace(tzinfo=None) >= prev_trading(label).normalize() + pd.Timedelta(days=1, hours=6, minutes=10)
 PUBSRC = '공개 수집 저장소 github.com/Jaey27/kr-flow-dashboard (다음 금융·금투협·KRX 원천)'
 
 def isna(v):
@@ -302,7 +310,10 @@ def main():
         X['ETF_투자자별'] = df.sort_values('일자').reset_index(drop=True); files_in.append(('06', 'KODEX 레버리지 투자자별 순매수', 'ETF_투자자별'))
     # ---------------- 8. 야간선물_일별 — 09 = KRX 화면(시장구분 야간, 일자 = 야간거래 종료일 T+1 거래일) · 09b = 차트로그 이력(세션 시작일 기준, 대조·예비)
     if '야간선물_일별' in X:
-        df = X['야간선물_일별']; n9 = cut(rd(f('09_야간*.csv')), '일자', after=dt.time(6, 10)); got9 = 0
+        df = X['야간선물_일별']; n9 = rd(f('09_야간*.csv')); got9 = 0
+        if n9 is not None:                                                                        # 끝난 세션만 넣는다(진행 중인 저녁장 줄은 뺀다). 표기일이 미래여도 세션이 끝났으면 넣는다
+            n9 = n9[[bool(night_done(d_, now)) for d_ in pd.to_datetime(n9['일자'])]]
+            if not len(n9): n9 = None
         if n9 is not None:
             n9['일자'] = pd.to_datetime(n9['일자'])
             for _, r in n9.sort_values('일자').iterrows():
@@ -332,7 +343,7 @@ def main():
                     t1 = r['t1']
                     if (df['일자'] == t1).any(): continue                                          # KRX 값이 있으면 그대로
                     ended = pd.Timestamp(r['세션일']).normalize() + pd.Timedelta(days=1, hours=6, minutes=10)   # 세션은 다음 날 06:00 에 끝난다
-                    if now.replace(tzinfo=None) < ended or t1.date() > now.date(): continue           # 안 끝난 세션·미래 날짜(금요일 저녁장은 월요일 아침부터)는 넣지 않는다
+                    if now.replace(tzinfo=None) < ended: continue                                      # 안 끝난 세션은 넣지 않는다(끝났으면 표기일이 미래여도 넣는다 — 금요일 저녁장은 토요일 06:00 에 끝남)
                     dc = dayfut.get(pd.Timestamp(r['세션일']))
                     if dc is None or abs((float(r['종가']) - float(r['대비'])) - float(dc)) > 0.06:
                         warnings.append({'key': 'night', 'level': '주의', 'msg': f"야간선물 공개 출처 {r['세션일']:%m/%d} 줄은 주간 선물 종가 대조 탈락(종가−대비 {float(r['종가']) - float(r['대비']):.2f} vs 주간 {dc}) — 넣지 않음"}); continue
