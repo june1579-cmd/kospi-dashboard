@@ -48,6 +48,22 @@
   "added": "2026-11-15T05:30:00+09:00"
  },
  {
+  "id": "n20261113d",
+  "date": "2026-11-13",
+  "title": "FBI, LLM 기반 자율 침투 도구 'ARTEX' 악용 경보(11.13) — 8월부터 금융·반도체 등 공격, 한국 금융사 약 6.7만 명 정보 유출",
+  "impact": "AI 자율 공격이 잦아지는 신호 — 피해액 미공개라 10번은 주의 유지, 10억 달러 이상이 확인되면 경고(D +5 조건)",
+  "indicators": "10",
+  "tone": "위험 요인",
+  "level": "참고",
+  "verify": "원문 확인",
+  "verify_note": "FLASH-20261113-001. 피해액·인명 피해 언급 없음, 정부 긴급 조치 없음(권고만). 커넥트와이즈 백업 고객 2,250곳 넘게 접근",
+  "src": "https://www.ic3.gov/CSA/2026/261113.pdf",
+  "src_name": "FBI(IC3) FLASH",
+  "src2": "https://gbhackers.com/fbi-warns-artex-ai-framework/",
+  "src2_name": "GBHackers",
+  "added": "2026-11-15T07:34:00+09:00"
+ },
+ {
   "id": "n20261112a",
   "date": "2026-11-12",
   "title": "엔비디아 젠슨 황 CEO 사임(11.12 발표, 사유 미공개) — CFO 크레스가 임시 CEO, 실적은 예정대로 11.17",
@@ -82,17 +98,17 @@
  {
   "id": "n20261110a",
   "date": "2026-11-10",
-  "title": "Anthropic, 주당 70~78달러·8.25억 주로 상장 설명회 시작(11.10) — 가격 결정 11.18·거래 11.19 예정",
-  "impact": "약 578억~644억 달러 공모의 가격·첫날 흐름이 AI 관련주 심리의 시험대가 될 수 있음 — 엔비디아 실적과 같은 주",
+  "title": "Anthropic 상장 공모(주당 70~78달러·최대 644억 달러)에 주문 약 6배(11.12, 관계자 인용) — 가격 결정 11.18·거래 11.19 예정",
+  "impact": "공모가·첫날 흐름이 AI 관련주 심리의 시험대가 될 수 있음 — 수요가 이어지면 3번 자금 조달 우려를 덜 수 있음(엔비디아 실적과 같은 주)",
   "indicators": "3",
   "tone": "지켜볼 것",
   "level": "참고",
   "verify": "확인(2곳)",
-  "verify_note": "일정은 회사 예비 일정표를 인용한 INDmoney 1곳 기준(변경 가능)",
-  "src": "https://www.rttnews.com/3712632/anthropic-sets-ipo-price-range-at-70-78-per-share-launches-roadshow.aspx?type=bn",
-  "src_name": "RTTNews",
-  "src2": "https://www.indmoney.com/blog/us-stocks/anthropic-ipo-price-band-valuation-listing-date",
-  "src2_name": "INDmoney",
+  "verify_note": "첫날(11.10) 2배 → 11.12 6배(블룸버그·로이터 각각 관계자 인용, 수요는 바뀔 수 있음). 가격 결정일은 '다음 주 수요일' 보도 기준",
+  "src": "https://www.investing.com/news/stock-market-news/exclusiveinvestors-flock-to-anthropic-ipo-but-question-durability-of-ai-lead-5026644",
+  "src_name": "로이터(인베스팅닷컴 게재)",
+  "src2": "https://www.investing.com/news/stock-market-news/anthropics-ipo-is-about-six-times-oversubscribed-bloomberg-news-reports-5023345",
+  "src2_name": "블룸버그 인용 로이터",
   "added": "2026-11-15T05:30:00+09:00"
  },
  {
