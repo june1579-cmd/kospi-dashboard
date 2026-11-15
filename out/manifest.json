@@ -1,15 +1,15 @@
 {
- "run": "2026-11-15 10:23",
+ "run": "2026-11-15 10:37",
  "tag": "1840",
  "kospi_last": "2026-11-13",
  "kofia_last": "2026-11-12",
  "vkospi_last": "2026-11-13",
  "night_last": "2026-11-13",
  "errors": [],
- "data_line": "정정 2건(VIX 정정, 신호 취소)",
+ "data_line": "정정 1건(신호 취소)",
  "health": {
   "오류": 0,
-  "정정": 2,
+  "정정": 1,
   "주의": 0,
   "참고": 0,
   "정상": 13
@@ -36,7 +36,7 @@
    "last_date": "2026-11-13"
   },
   "am_stats": {
-   "sha256": "6c45d7520c371a9e042c81906be3f7f9ed976ed856df18fc3e5f56d1cdfbb3cf",
+   "sha256": "6ea606d3a4c9d2b9456967f54b18c621221a900e3343e2a663d41c30329c13ef",
    "bytes": 1263,
    "last_date": "기준일"
   },
@@ -121,8 +121,8 @@
    "last_date": "전체"
   },
   "health": {
-   "sha256": "bfa521028b7ccb07206a0744d61dcd85a512c6b34c5eb4c998247bbacff94e16",
-   "bytes": 2333,
+   "sha256": "109d4a7a3e3b476755c47d8a10d0bc2fe3aadc8298b3b3be0afc5cb40e626cf9",
+   "bytes": 2055,
    "last_date": "am"
   },
   "lag": {
