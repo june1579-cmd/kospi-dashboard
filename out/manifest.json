@@ -1,18 +1,18 @@
 {
- "run": "2026-11-15 11:14",
+ "run": "2026-11-15 11:57",
  "tag": "1840",
  "kospi_last": "2026-11-13",
  "kofia_last": "2026-11-12",
  "vkospi_last": "2026-11-13",
  "night_last": "2026-11-16",
  "errors": [],
- "data_line": "정정 1건·주의 1건(신호 취소, 웹판 카드)",
+ "data_line": "정정 1건(신호 취소)",
  "health": {
   "오류": 0,
   "정정": 1,
-  "주의": 1,
+  "주의": 0,
   "참고": 0,
-  "정상": 13
+  "정상": 14
  },
  "files": {
   "alarms": {
@@ -36,7 +36,7 @@
    "last_date": "2026-11-13"
   },
   "am_stats": {
-   "sha256": "138da069d6e38f5d649297c16383d24f5f1e2e3a38f3d63e93ec9d05b15b24d7",
+   "sha256": "1b3e9dd0801186c099be3010cedc6413b61339c863345a482873e7464d3d2a1e",
    "bytes": 1263,
    "last_date": "기준일"
   },
@@ -121,9 +121,9 @@
    "last_date": "전체"
   },
   "health": {
-   "sha256": "e8064f0550a8dbae9b21670931b83bbc7f70e15ce54e86833cc857a3bf6fda68",
-   "bytes": 2320,
-   "last_date": "am"
+   "sha256": "09d45160ed545f9e2febf6a2a7b7f5afd4d1df87f69196f890aaeaa902b85120",
+   "bytes": 2244,
+   "last_date": "web_cards"
   },
   "lag": {
    "sha256": "e9dac1cbb125e9d4582279a1305659c225a3f83efe56707252266a6125704266",
