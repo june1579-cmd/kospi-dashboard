@@ -90,7 +90,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--workbook', required=True); ap.add_argument('--out', default='out'); ap.add_argument('--report', default='report'); ap.add_argument('--collect', default='')
     ap.add_argument('--summary', default='data/update_summary.json'); ap.add_argument('--tag', default=''); ap.add_argument('--public', default='data/public'); ap.add_argument('--now', default='')
-    ap.add_argument('--state', default='state/health_state.json'); ap.add_argument('--pipeline-errors', default='', help='run_pipeline.py 가 모은 단계 오류(JSON 목록 파일)')
+    ap.add_argument('--docs', default='docs', help='웹판 폴더(page.html 의 수기 결론 카드 기준일 확인)'); ap.add_argument('--state', default='state/health_state.json'); ap.add_argument('--pipeline-errors', default='', help='run_pipeline.py 가 모은 단계 오류(JSON 목록 파일)')
     a = ap.parse_args()
     now = pd.Timestamp(a.now).to_pydatetime().replace(tzinfo=KST) if a.now else dt.datetime.now(KST)
     today = now.date(); cal = Cal(load_holidays(a.public))
@@ -284,6 +284,24 @@ def main():
                 add(f"retract_{x['date']}_{x['label']}", '신호 취소', x['date'], None, '정정', f"{dd.month}/{dd.day} {x['label']} 신호 취소 — {x['reason']}으로 조건이 맞지 않게 됨(이미 알림에 나갔던 신호, {x['found_at'][5:10].replace('-', '/')} 확인)")
     except Exception as e: add('retract', '신호 취소 확인', None, None, '주의', '확인 실패: ' + repr(e)[:80])
 
+    # ------------------------------------------------------------------ 15 웹판 수기 결론 카드(docs/page.html): 아침 08:55 Claude 예약 작업이 쓴 카드가 웹판에 왔는지
+    #   (11/15 확인: 웹판에는 11/11 작성 카드가 사흘째 그대로였다 — 예약 작업의 웹판 반영 단계가 조용히 건너뛰어졌는데 어디에도 표시가 없었다)
+    #   카드는 다음 거래일 아침 09시에 쓰므로 카드 기준일이 마지막 종가보다 1거래일 이른 것은 정상, 2거래일부터 주의, 3거래일부터 오류
+    try:
+        pg = os.path.join(a.docs, 'page.html')
+        if os.path.exists(pg) and K is not None and kl is not None:
+            import re
+            m = re.search(r'아래 네 카드는\s*(\d{1,2})/(\d{1,2})\s*장 마감', open(pg, encoding='utf-8').read())
+            if not m: add('web_cards', '웹판 결론 카드(수기)', None, None, '주의', '기준일 문장(「아래 네 카드는 M/D 장 마감」)을 찾지 못함 — 카드 형식이 바뀌었는지 확인')
+            else:
+                base = dt.date(kl.year, int(m.group(1)), int(m.group(2)))
+                if base > kl: base = dt.date(kl.year - 1, int(m.group(1)), int(m.group(2)))
+                kd = sorted(set(d_ for d_ in pd.to_datetime(K['일자']).dt.date if d_ <= kl)); after = [d_ for d_ in kd if d_ > base]
+                wexp = kd[-2] if len(kd) >= 2 else None
+                if len(after) <= 1: add('web_cards', '웹판 결론 카드(수기)', base, wexp, '정상', f'{md(base)} 장 마감 기준 — 평일 08:55 예약 작업이 다음 거래일 아침에 다시 쓴다')
+                else: add('web_cards', '웹판 결론 카드(수기)', base, wexp, '주의' if len(after) == 2 else '오류', f'{md(base)} 장 마감 기준에서 멈춤 — 그 뒤 {len(after)}거래일({md(after[0])}~{md(after[-1])})이 지났는데 아침 카드가 웹판에 오지 않음(08:55 예약 작업의 웹판 반영 확인)')
+    except Exception as e: add('web_cards', '웹판 결론 카드(수기)', None, None, '주의', '확인 실패: ' + repr(e)[:80])
+
     # ------------------------------------------------------------------ 결과
     H = pd.DataFrame(rows); H['checked_at'] = f'{now:%Y-%m-%d %H:%M}'; H['tag'] = a.tag
     H['ord'] = H['status'].map(ORDER).fillna(9); H = H.sort_values(['ord']).drop(columns='ord').reset_index(drop=True)
@@ -291,7 +309,7 @@ def main():
     errs = H[H.status == '오류']; cauts = H[H.status == '주의']; fixes = H[H.status == '정정']
     SHORT = {'kospi': '코스피 종가', 'kospi_ohlc': '코스피 시고저', 'investor': '투자자별', 'vkospi': 'VKOSPI', 'kofia_funds': '금투협', 'kofia_credit': '금투협 신용', 'vix': 'VIX', 'vix_future': 'VIX 날짜', 'night': '야간선물',
              'fx': '환율', 'us_rates': '미국 금리', 'public_repo': '공개 저장소', 'fut': '선물', 'etf': 'ETF', 'am': '애프터마켓', 'x_vix_fix': 'VIX 정정', 'x_kospi_close': '종가 불일치', 'x_investor': '투자자별 대조',
-             'x_vkospi': 'VKOSPI 대조', 'x_night': '야간선물 대조', 'old_change': '과거 값 변경', 'step': '실행 단계', 'collect': '수집 기록'}
+             'x_vkospi': 'VKOSPI 대조', 'x_night': '야간선물 대조', 'old_change': '과거 값 변경', 'step': '실행 단계', 'collect': '수집 기록', 'web_cards': '웹판 카드'}
     def short(r):
         k = str(r['key'])
         if k.startswith('retract'): return '신호 취소'

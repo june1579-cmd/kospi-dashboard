@@ -264,7 +264,7 @@
     const md = v => { const t = String(v || ''); return /^\d{4}-\d\d-\d\d/.test(t) ? (+t.slice(5, 7)) + '/' + (+t.slice(8, 10)) : (t || '—'); };
     const at = String(H[0].checked_at || '');
     const head = '자료 상태: ' + [bad ? `오류 ${bad}건` : '', fix ? `정정 ${fix}건` : '', warn ? `주의 ${warn}건` : '', `정상 ${cnt('정상')}개`].filter(Boolean).join(' · ') + (at ? ` (점검 ${md(at)} ${at.slice(11, 16)})` : '') + ' — 펼치기';
-    const sm = el('summary', (bad || fix) ? 'rv-hot' : null, head);
+    const sm = el('summary', (bad || fix) ? 'rv-hot' : null, head); if (bad || fix) { sm.style.color = '#e5484d'; sm.style.fontWeight = '600'; }   // 접힌 칸 제목의 기본 색 규칙이 더 세므로 색을 직접 준다
     const w = el('div', 'rv-tbl-wrap'), t = el('table', 'rv-tbl'), th = el('thead'), trh = el('tr'); ['자료', '마지막', '와 있어야 할 날', '상태', '설명'].forEach(x => trh.appendChild(el('th', null, x))); th.appendChild(trh); t.appendChild(th);
     const tb = el('tbody'); H.forEach(r => { const tr = el('tr'), st = String(r.status);
       tr.appendChild(el('td', null, String(r.name))); tr.appendChild(el('td', null, md(r.last))); tr.appendChild(el('td', null, md(r.expected)));
@@ -274,5 +274,19 @@
     const note = el('p', 'rv-note', '매 실행 끝에 자료마다 지금쯤 와 있어야 할 날짜까지 왔는지, 출처끼리 값이 맞는지(코스피 종가 ↔ 네이버·다음, VIX ↔ CBOE 공식 파일, 야간선물 ↔ 공개 출처, VKOSPI 화면 ↔ Open API), 수집 항목이 실패했는지 점검한다. 오류 = 멈춤·불일치, 정정 = 과거 값이 고쳐졌거나 이미 알린 신호가 취소됨, 주의 = 하루 늦음·예비 출처 사용. 알림의 「자료:」 줄이 이 결과다.');
     box.replaceChildren(sm, w, note); if (bad || fix) box.open = true;
   }
-  window.fillRelief = () => { try { fillRelief(); } finally { try { fillHot(); } catch (e) { console.error(e); } try { fillPanic(); } catch (e) { console.error(e); } try { fillHealth(); } catch (e) { console.error(e); } } };   // index.html 의 dash.onData 콜백이 부른다(스크립트끼리는 window 로만 공유)
+  // ---- 수기 결론 카드가 멈춰 있으면 알린다(11/15 추가): 카드 기준일(「아래 네 카드는 M/D 장 마감 …」) 뒤로 종가가 2거래일 넘게 쌓였으면 아침 갱신이 이 화면에 오지 않은 것
+  //      11/12~13 웹판에는 11/10 기준 카드가 그대로 있었는데 화면 어디에도 표시가 없었다. 1거래일 차이는 정상(카드는 다음 거래일 아침 09시에 쓴다)
+  function fillStale() {
+    const sec = document.getElementById('concl'), note = document.querySelector('#concl-auto p.rv-note'); if (!sec || !note) return;
+    const m = /아래 네 카드는\s*(\d{1,2})\/(\d{1,2})\s*장 마감/.exec(note.textContent || ''); if (!m) return;
+    let mk = null; try { const d = dash.data('market'); mk = d.status === 'ok' ? d.data : null; } catch (e) { mk = null; } if (!mk) return;
+    const days = mk.filter(r => r.kospi !== '' && r.kospi != null).map(r => String(r.date).slice(0, 10)); if (!days.length) return;
+    const last = days[days.length - 1], p2 = v => String(+v).padStart(2, '0'), md = s => +s.slice(5, 7) + '/' + +s.slice(8, 10);
+    let base = last.slice(0, 4) + '-' + p2(m[1]) + '-' + p2(m[2]); if (base > last) base = (+last.slice(0, 4) - 1) + '-' + p2(m[1]) + '-' + p2(m[2]);   // 해가 바뀐 직후
+    const after = days.filter(d => d > base); let el = document.getElementById('concl-stale');
+    if (after.length < 2) { if (el) el.remove(); return; }
+    if (!el) { el = document.createElement('p'); el.id = 'concl-stale'; el.className = 'rv-note rv-hot'; el.style.color = '#e5484d'; el.style.fontWeight = '600'; const grid = sec.querySelector('.rv-concl'); if (grid) sec.insertBefore(el, grid); else sec.appendChild(el); }
+    el.textContent = `아래 수기 카드 네 장은 ${md(base)} 장 마감 기준에서 멈춰 있다 — 그 뒤 ${after.length}거래일(${md(after[0])}~${md(after[after.length - 1])}) 자료는 카드에 반영되지 않았다(아침 갱신이 이 화면에 오지 않음). 첫 카드(자동)와 맨 위 「이번 갱신의 큰 변화」는 최신 자료 기준이다.`;
+  }
+  window.fillRelief = () => { try { fillRelief(); } finally { try { fillHot(); } catch (e) { console.error(e); } try { fillPanic(); } catch (e) { console.error(e); } try { fillHealth(); } catch (e) { console.error(e); } try { fillStale(); } catch (e) { console.error(e); } } };   // index.html 의 dash.onData 콜백이 부른다(스크립트끼리는 window 로만 공유)
 })();
