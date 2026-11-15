@@ -43,7 +43,7 @@ def main():
             on = bool(len(d) and str(d.iloc[-1]['date']) == today); st = d[d['start'] == '시작'] if len(d) else d
             sig.append({'name': f'{side} {k}', 'side': side, 'on': on, 'last_start': (str(st.iloc[-1]['date']) if len(st) else None), 'rule': (str(d.iloc[-1][rule_col]) if len(d) and rule_col in d.columns else ''),
                         'vk': any(x in str(d.iloc[-1][rule_col]) for x in ('VKOSPI',)) if len(d) and rule_col in d.columns else False})
-    fam(AL_, '매수', ['민감형', '중간형', '엄격형'], None); fam(B3, '매수', ['최적화 1위', '최적화 2위', '최적화 3위'], None)
+    fam(AL_, '매수', ['4일선 이격', '민감형', '중간형', '엄격형'], None); fam(B3, '매수', ['최적화 1위', '최적화 2위', '최적화 3위'], None)
     fam(S3, '매도', ['최적화 1위', '최적화 2위', '최적화 3위'], None); fam(AL_, '매도', ['민감형', '중간형', '엄격형'], None)
     re_ = RE.iloc[-1] if RE is not None and len(RE) else None
     qd = Q[Q['trade'].notna()] if Q is not None else pd.DataFrame()

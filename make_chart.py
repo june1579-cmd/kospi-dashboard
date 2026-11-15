@@ -70,7 +70,7 @@ def alerts(o, sig_new=None, LJ=None):
 
 BUY_C, SELL_C, HOLD_C = '#d32f2f', '#1565c0', '#6a1b9a'
 # 신호별 고유 색(매수 = 따뜻한 색, 매도 = 차가운 색, 보유 구간 = 보라·초록)
-SIG_C = {'매수 민감형': '#ff8a65', '매수 중간형': '#f4511e', '매수 엄격형': '#b71c1c', '매수 최적화 1위': '#c2185b', '매수 최적화 2위': '#f06292', '매수 최적화 3위': '#8d6e63',
+SIG_C = {'매수 4일선 이격': '#f57c00', '매수 민감형': '#ff8a65', '매수 중간형': '#f4511e', '매수 엄격형': '#b71c1c', '매수 최적화 1위': '#c2185b', '매수 최적화 2위': '#f06292', '매수 최적화 3위': '#8d6e63',
          '정밀 검증 전략(보유)': '#7b1fa2', '재진입 규칙(보유)': '#2e7d32',
          '매도 최적화 1위': '#0d47a1', '매도 최적화 2위': '#42a5f5', '매도 최적화 3위': '#00838f', '매도 민감형': '#4dd0e1', '매도 중간형': '#5c6bc0', '매도 엄격형': '#37474f'}
 def sc(lab): return SIG_C.get(lab, '#777')
@@ -84,7 +84,7 @@ def signal_rows(o, days):
             d = df[(df['side'] == side) & (df['type'] == k)] if df is not None else pd.DataFrame(columns=['date', 'start'])
             st = ix(d[d['start'] == '시작']['date']); on = ix(d['date'])
             rows.append((label(k), side, on, st if side == '매수' else set(), st if side == '매도' else set()))
-    fam(AL, '매수', ['민감형', '중간형', '엄격형'], lambda k: f'매수 {k}')
+    fam(AL, '매수', ['4일선 이격', '민감형', '중간형', '엄격형'], lambda k: f'매수 {k}')   # 4일선 이격 = 저점 구간 표시(주황, 2026-11-15 추가)
     fam(B3, '매수', ['최적화 1위', '최적화 2위', '최적화 3위'], lambda k: f'매수 {k}')
     # 정밀 검증 전략: 진입(enter) ~ 청산(exit) 보유
     if Q is not None:

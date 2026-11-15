@@ -269,8 +269,22 @@ def classify(D, S, rules, extra=None):
             rows.append(row)
     return pd.DataFrame(rows).sort_values(['date', 'side', 'type']).reset_index(drop=True)
 
+# 저점 구간(4일선 이격) 신호(2026-11-15 추가): 종가가 4일 평균보다 크게 아래 = 4일선 이격이 최근 3년(750거래일, 자료 250일 이상) 하위 5% 이내.
+#   2008~2026: 켜진 263일 중 48%가 3거래일 안에 실제 단기 저점(5% 되돌림, 아무 날 8%), 저점 93개 중 71개 직전 3일 안에 켜짐, 다음 날 시가 진입 5일 뒤 상승 64%(아무 날 54%).
+#   켜진 날의 절반은 저점이 아니고 3일 뒤 성적은 아무 날과 같다 — 매수 신호가 아니라 저점 구간 표시. signal_series()에는 넣지 않는다(조합·재진입·백테스트에 영향 없음), alarms.csv에만 줄이 생긴다.
+GAP4 = ('매수', '4일선 이격')
+GAP4_RULE = '저점 구간 표시: 4일선 이격(종가÷4일 평균−1)이 최근 3년 하위 5% 이내'
+def gap4_series(D):
+    import quant
+    c = quant.load_history(D)['K'].close; g = c / c.rolling(4).mean() - 1
+    on = (g.rolling(750, min_periods=250).rank(pct=True) <= 0.05).fillna(False)
+    return on.reindex(D['K'].index).fillna(False).astype(bool)
+
 def alarms(D):
-    return classify(D, signal_series(D), RULES)
+    S = dict(signal_series(D)); R = dict(RULES)
+    try: S[GAP4] = gap4_series(D); R[GAP4] = GAP4_RULE
+    except Exception as e: print('4일선 이격 신호 실패:', repr(e)[:200])
+    return classify(D, S, R)
 
 # ----------------------------------------------------------------------------- 2b. 2015~2024 최적화 매수·매도 신호 1·2·3위 (2026-10-26 탐색)
 BUY3 = [
