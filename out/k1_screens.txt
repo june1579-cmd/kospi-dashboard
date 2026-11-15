@@ -1,0 +1,52 @@
+
+===== https://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?menuId=MDC0201050101 status=200 len=701130 제목=['통계 - KRX | KRX Data Marketplace'] h2=[]
+  name=: ['ELW', 'ETF', 'ETN', 'TEMPLET_FORM', 'author', 'description', 'keywords', 'language', 'robots', 'viewport']
+  bld: []
+  [sess] … (self.timeoutForLogout) { clearInterval(self.timeoutForLogout); } var date = new Date(); date.setMinutes(date.getMinutes() + SESSION_TIMEOUT); document.cookie = 'mdc.client_session=' + encodeURIComponent('true') + '; path=/; secure; expires=' + date.toUTCString() + ';'; var minute = SESSION_TIMEOUT; var second = 0; self.timeoutForLogout = setInterval(function () { second -= 1; if (second < 0) { minute -= 1; second = 59; } if (minute < 0…
+  [sess] … self.timeoutForLogout = setInterval(function () { second -= 1; if (second < 0) { minute -= 1; second = 59; } if (minute < 0 || api.util.getCookie('mdc.client_session') !== 'true') { minute = 0; second = 0; confirmForLogout(); clearInterval(self.timeoutForLogout); } $('#jsLogoutTime').text(makeDigitNumber(minute) + '분 ' + makeDigitNumber(second) + '초'); }, 1000); }; $('#jsExtendLoginBtn').on('click', function () { a…
+  내부 주소: ['/contents/MDC/COMS/client/MDCCOMS001.cmd', '/contents/MDC/COMS/client/MDCCOMS001D2.cmd', '/contents/MDC/COMS/client/MDCCOMS005_S1.cmd', '/contents/MDC/DATA/datasale/MDCDATA100.cmd', '/contents/MDC/EASY/visualController/MDCEASY001.cmd', '/contents/MDC/EASY/visualController/MDCEASY100.cmd', '/contents/MDC/EASY/visualController/MDCEASY200.cmd', '/contents/MDC/EASY/visualController/MDCEASY300.cmd', '/contents/MDC/EASY/visualController/MDCEASY600.cmd', '/contents/MDC/HARD/hardController/MDCHARD002.cmd', '/contents/MDC/HARD/hardController/MDCHARD003.cmd', '/contents/MDC/HARD/hardController/MDCHARD004.cmd', '/contents/MDC/HARD/hardController/MDCHARD007.cmd', '/contents/MDC/HARD/hardController/MDCHARD054.cmd', '/contents/MDC/INFO/informationController/MDCINFO001.cmd', '/contents/MDC/INFO/informationController/MDCINFO002.cmd', '/contents/MDC/INFO/informationController/MDCINFO003.cmd', '/contents/MDC/INFO/informationController/MDCINFO008.cmd', '/contents/MDC/MAIN/main/changeLanguage.cmd', '/contents/MDC/MAIN/main/extendSession.cmd', '/contents/MDC/MAIN/main/index.cmd', '/contents/MDC/MAIN/main/removeSession.cmd', '/contents/MMC/MAIN/main/index.cmd']
+
+===== https://data.krx.co.kr/contents/MDC/MDI/outerLoader/index.cmd?screenId=MDCSTAT125&locale=ko_KR status=200 len=2368 제목=['에러페이지 - 한국거래소 | 정보데이터시스템'] h2=[]
+  name=: ['author', 'description', 'keywords', 'robots', 'viewport']
+  bld: []
+  내부 주소: []
+
+===== https://data.krx.co.kr/contents/MDC/MDI/outerLoader/index.cmd?screenId=MDCSTAT12501&locale=ko_KR status=200 len=0 제목=[] h2=[]
+  name=: []
+  bld: []
+  내부 주소: []
+
+===== https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT12501.cmd status=200 len=2368 제목=['에러페이지 - 한국거래소 | 정보데이터시스템'] h2=[]
+  name=: ['author', 'description', 'keywords', 'robots', 'viewport']
+  bld: []
+  내부 주소: []
+
+===== https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT125.cmd status=200 len=2368 제목=['에러페이지 - 한국거래소 | 정보데이터시스템'] h2=[]
+  name=: ['author', 'description', 'keywords', 'robots', 'viewport']
+  bld: []
+  내부 주소: []
+
+===== https://data.krx.co.kr/contents/MDC/MDI/outerLoader/index.cmd?screenId=MDCSTAT126&locale=ko_KR status=200 len=2368 제목=['에러페이지 - 한국거래소 | 정보데이터시스템'] h2=[]
+  name=: ['author', 'description', 'keywords', 'robots', 'viewport']
+  bld: []
+  내부 주소: []
+
+===== https://data.krx.co.kr/contents/MDC/MDI/outerLoader/index.cmd?screenId=MDCSTAT127&locale=ko_KR status=200 len=2368 제목=['에러페이지 - 한국거래소 | 정보데이터시스템'] h2=[]
+  name=: ['author', 'description', 'keywords', 'robots', 'viewport']
+  bld: []
+  내부 주소: []
+
+===== https://data.krx.co.kr/contents/MDC/MDI/outerLoader/index.cmd?screenId=MDCSTAT129&locale=ko_KR status=200 len=2368 제목=['에러페이지 - 한국거래소 | 정보데이터시스템'] h2=[]
+  name=: ['author', 'description', 'keywords', 'robots', 'viewport']
+  bld: []
+  내부 주소: []
+
+===== https://data.krx.co.kr/contents/MDC/MDI/outerLoader/index.cmd?screenId=MDCSTAT130&locale=ko_KR status=200 len=2368 제목=['에러페이지 - 한국거래소 | 정보데이터시스템'] h2=[]
+  name=: ['author', 'description', 'keywords', 'robots', 'viewport']
+  bld: []
+  내부 주소: []
+
+===== https://data.krx.co.kr/contents/MDC/MDI/outerLoader/index.cmd?screenId=MDCSTAT131&locale=ko_KR status=200 len=2368 제목=['에러페이지 - 한국거래소 | 정보데이터시스템'] h2=[]
+  name=: ['author', 'description', 'keywords', 'robots', 'viewport']
+  bld: []
+  내부 주소: []
