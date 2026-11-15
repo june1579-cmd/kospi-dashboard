@@ -85,7 +85,7 @@
 <div class="rv">
   <header class="rv-head" id="top">
     <h1>2026 미수 반대매매·신용 대시보드</h1>
-    <p class="rv-lede">10월 미수 반대매매는 10/14 <b><span class="rv-v dash-skeleton" data-source="liq" data-field="liq_eok" data-where="date=2026-10-14" data-fmt="1">—</span>억원</b>(미수금 대비 <span class="rv-v" data-source="liq" data-field="ratio_pct" data-where="date=2026-10-14" data-fmt="1">—</span>%)으로 정점이었지만 6/9 정점 <span class="rv-v" data-source="liq" data-field="liq_eok" data-where="date=2026-06-09" data-fmt="1">—</span>억원보다 작다. 10/15 급락분의 청산도 10/16 <span class="rv-v" data-source="liq" data-field="liq_eok" data-where="date=2026-10-16" data-fmt="0">—</span>억원, 10/19 <span class="rv-v" data-source="liq" data-field="liq_eok" data-where="date=2026-10-19" data-fmt="0">—</span>억원(비중 <span class="rv-v" data-source="liq" data-field="ratio_pct" data-where="date=2026-10-16" data-fmt="1">—</span>·<span class="rv-v" data-source="liq" data-field="ratio_pct" data-where="date=2026-10-19" data-fmt="1">—</span>%)으로 줄었고, 신용 일일 감소율도 10/19 <span class="rv-v" data-source="credit_change" data-field="chg_pct" data-where="event=2026년 10월 19일" data-fmt="1">—</span>%로 과거 항복 구간(<span class="rv-v" data-source="credit_change" data-field="chg_pct" data-where="event=2020년 3월" data-fmt="0">—</span>~<span class="rv-v" data-source="credit_change" data-field="chg_pct" data-where="event=2008년 9월" data-fmt="0">—</span>%)에 못 미친다. 청산 정점은 지났을 수 있지만 레버리지 정리는 끝나지 않았다.</p>
+    <p class="rv-lede" id="lede-auto"><span class="dash-skeleton">최신 공시 기준 요약을 만드는 중…</span></p>
     <p class="rv-asof" id="asof-auto">기준: 자료를 읽는 중…</p>
     <p class="rv-asof">자료는 평일 08:31(전 거래일 확정·VKOSPI 반영)·15:37(정규장만 집계한 잠정치)·20:37(KRX 하루 전체 확정치) 세 번 자동 수집해 반영한다(GitHub Actions → 대시보드·웹판). 투자자별 순매수는 KRX 통계 기준 — 15:45 무렵 정규장분, 20시 이후 시간외·KRX 애프터마켓(16~20시)까지 합친 최종치. 넥스트레이드(NXT) 체결분은 들어가지 않아 증권사 앱의 'KRX+NXT 통합' 숫자와 하루 수천억 차이가 날 수 있다 — NXT 투자자별과 합친 '통합' 값은 아래 「애프터마켓 → 다음 날」 카드에. 저녁(15:40~20:00) 종목별 가격은 넥스트레이드 20:05 스냅샷을 20:37 실행에서 받는다. 시가·고가·저가처럼 받지 못한 칸은 추정으로 채우지 않고 비워 둔다. 수기 메모(10/27판): 코스피·투자자별·코스피200·레버리지 ETF 10/20~10/26은 KRX 정보데이터시스템 자동 수집(pykrx) 파일, 10/20~10/22는 먼저 받은 KRX 파일과 일치. VKOSPI 10/26은 KRX 종가를 공개 수집으로(시가·고가·저가 확인 불가). 원/달러 10/26부터는 국제 현물 환율(10/23까지의 중간값과 기준이 약간 다름). 레버리지 ETF 설정·환매는 상장좌수가 있는 날까지, 투자자별은 10/20까지. 야간선물 10/23 저녁장은 HTS 일자별(공개 사이트 종가 861.70 일치).</p>
     <p class="rv-asof">미수 반대매매 = 금투협 '위탁매매 미수금 대비 실제 반대매매'. 신용융자 담보부족 반대매매는 포함되지 않는다. 비중 = 당일 미수 반대매매 ÷ 전일 미수금. 참고: 금감원 발표 5월 일평균(주요 10개 증권사 기준) 신용+미수 반대매매 373.6억원, 이 중 미수 297.6억원(미수 비중 약 80%, 파이낸셜뉴스 6/24 보도). 집계 기준이 달라 이 대시보드 수치와 합산하지 않는다.</p>
@@ -1976,3 +1976,4 @@
 })();
 </script>
 <script src="relief.js"></script>
+<script src="lede.js"></script>

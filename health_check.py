@@ -302,6 +302,14 @@ def main():
                 if len(after) <= 1: add('web_cards', '웹판 결론 카드(수기)', base, wexp, '정상', f'{md(base)} 장 마감 기준 — 평일 08:55 예약 작업이 다음 거래일 아침에 다시 쓴다')
                 else: add('web_cards', '웹판 결론 카드(수기)', base, wexp, '주의', f'{md(base)} 장 마감 기준에서 멈춤 — 그 뒤 {len(after)}거래일({md(after[0])}~{md(after[-1])})이 지났는데 아침 카드가 웹판에 오지 않음(08:55 예약 작업의 웹판 반영 확인)')
     except Exception as e: add('web_cards', '웹판 결론 카드(수기)', None, None, '주의', '확인 실패: ' + repr(e)[:80])
+    # 웹판 페이지가 부르는 스크립트 파일(<script src="…">)이 docs/ 에 있는지 — 페이지만 옮겨 오고 파일이 빠지면 그 부분이 빈 채로 남는다(11/15: lede.js 가 없어 머리말 자동 요약이 웹판에 없었다)
+    try:
+        pg = os.path.join(a.docs, 'page.html')
+        if os.path.exists(pg):
+            import re
+            miss = [s_ for s_ in re.findall(r'<script[^>]*\ssrc="([^"]+)"', open(pg, encoding='utf-8').read()) if not s_.startswith(('http:', 'https:', '//')) and not os.path.exists(os.path.join(a.docs, s_))]
+            if miss: add('web_files', '웹판 화면 코드 파일', None, None, '오류', '웹판 페이지가 부르는 파일이 저장소 docs/ 에 없음: ' + ', '.join(miss[:4]) + ' — 그 부분이 화면에 나오지 않음')
+    except Exception as e: add('web_files', '웹판 화면 코드 파일', None, None, '주의', '확인 실패: ' + repr(e)[:80])
 
     # ------------------------------------------------------------------ 결과
     H = pd.DataFrame(rows); H['checked_at'] = f'{now:%Y-%m-%d %H:%M}'; H['tag'] = a.tag
@@ -310,7 +318,7 @@ def main():
     errs = H[H.status == '오류']; cauts = H[H.status == '주의']; fixes = H[H.status == '정정']
     SHORT = {'kospi': '코스피 종가', 'kospi_ohlc': '코스피 시고저', 'investor': '투자자별', 'vkospi': 'VKOSPI', 'kofia_funds': '금투협', 'kofia_credit': '금투협 신용', 'vix': 'VIX', 'vix_future': 'VIX 날짜', 'night': '야간선물',
              'fx': '환율', 'us_rates': '미국 금리', 'public_repo': '공개 저장소', 'fut': '선물', 'etf': 'ETF', 'am': '애프터마켓', 'x_vix_fix': 'VIX 정정', 'x_kospi_close': '종가 불일치', 'x_investor': '투자자별 대조',
-             'x_vkospi': 'VKOSPI 대조', 'x_night': '야간선물 대조', 'old_change': '과거 값 변경', 'step': '실행 단계', 'collect': '수집 기록', 'web_cards': '웹판 카드'}
+             'x_vkospi': 'VKOSPI 대조', 'x_night': '야간선물 대조', 'old_change': '과거 값 변경', 'step': '실행 단계', 'collect': '수집 기록', 'web_cards': '웹판 카드', 'web_files': '웹판 파일'}
     def short(r):
         k = str(r['key'])
         if k.startswith('retract'): return '신호 취소'
