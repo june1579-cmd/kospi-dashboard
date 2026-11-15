@@ -1,0 +1,46 @@
+
+== https://finance.daum.net/api/market_index/days {'market': 'KOSPI', 'page': 1, 'perPage': 5, 'pagination': 'true'}
+   status=200 len=1584
+   {"code":200,"message":"OK","data":[{"date":"2026-11-13 00:00:00","tradePrice":5290.530,"change":"FALL","changePrice":-52.200,"accTradeVolume":247829,"accTradePrice":16718835.000,"individualStraightPurchasePrice":14501504101.000,"foreignStraightPurchasePrice":-541917420124.000,"institutionStraightPurchasePrice":-5908598835.000},{"date":"2026-11-12 00:00:00","tradePrice":5342.730,"change":"FALL","changePrice":-32.630,"accTradeVolume":244834,"accTradePrice":21466704.000,"individualStraightPurchasePrice":-278505508294.000,"foreignStraightPurchasePrice":412128312629.000,"institutionStraightPurchasePrice":-652635724683.000},{"date":"2026-11-11 00:00:00","tradePrice":5375.360,"change":"RISE","changePrice":136.230,"accTradeVolume":234732,"accTradePrice":17596565.000,"individualStraightPurchasePrice":-714487061078.000,"foreignStraightPurchasePrice":672916853419.000,"institutionStraightPurchasePrice":-503408395691.000},{"date":"2026-11-10 00:00:00","tradePrice":5239.130,"change":"RISE","changePrice":220.280,"accTradeVolume":253917,"accTradePrice":16930311.000,"individualStraightPurchasePrice":-1394713750431.000,"foreignStraightPurchasePrice":443909075158.000,"institutionStraightPurchasePrice":464150443858.000},{"date":"2026-11-09 00:00:00","tradePrice":5018.850,"change":"FALL","changePrice":-40.840,"accTradeVolume":248140,"accTradePrice":18501946.000,"individualStraightPurchasePrice":-660878905531.000,"foreignStraightPurchasePrice":-526276160568.000,"institutionStraightPurchasePrice":7
+
+== https://finance.daum.net/api/future/KR4A016C0004/days {'page': 1, 'perPage': 5, 'pagination': 'true'}
+   status=200 len=1500
+   {"code":200,"message":"OK","data":[{"date":"2026-11-13 00:00:00","tradePrice":822.3500,"change":"FALL","changeRate":-0.006223565,"changePrice":-5.1500,"accTradeVolume":112089,"accTradePrice":23472621725000.0000,"foreignSettlement":2729,"institutionSettlement":-2483,"privateSettlement":2,"unsettledVolume":154085},{"date":"2026-11-12 00:00:00","tradePrice":827.5000,"change":"FALL","changeRate":-0.0108182416,"changePrice":-9.0500,"accTradeVolume":119875,"accTradePrice":25101873450000.0000,"foreignSettlement":468,"institutionSettlement":-647,"privateSettlement":42,"unsettledVolume":154035},{"date":"2026-11-11 00:00:00","tradePrice":836.5500,"change":"RISE","changeRate":0.0301071297,"changePrice":24.4500,"accTradeVolume":107710,"accTradePrice":22218325800000.0000,"foreignSettlement":-3805,"institutionSettlement":2992,"privateSettlement":634,"unsettledVolume":158324},{"date":"2026-11-10 00:00:00","tradePrice":812.1000,"change":"RISE","changeRate":0.046722949,"changePrice":36.2500,"accTradeVolume":119166,"accTradePrice":24237087412500.0000,"foreignSettlement":-145,"institutionSettlement":816,"privateSettlement":-610,"unsettledVolume":161673},{"date":"2026-11-09 00:00:00","tradePrice":775.8500,"change":"FALL","changeRate":-0.0090682675,"changePrice":-7.1000,"accTradeVolume":142268,"accTradePrice":27999008500000.0000,"foreignSettlement":4190,"institutionSettlement":-3695,"privateSettlement":-512,"unsettledVolume":163220}],"totalPages":117,"totalCount":584,"currentPage":1,"pageSize":5}
+
+== https://finance.daum.net/api/future/KR4A016C0004 {}
+   status=404 len=45
+   { "code" : 404, "message" : "Not Found" }
+
+== https://finance.daum.net/api/futures/masters {}
+   status=200 len=694
+   {"code":200,"message":"OK","data":[{"symbolCode":"KR4A016C0004","name":"F 202612","basePrice":827.5000,"baseDate":"2026-11-13","upperLimit":893.7000,"lowerLimit":761.3000,"prevClosingPrice":827.5000},{"symbolCode":"KR4A01730006","name":"F 202703","basePrice":819.1500,"baseDate":"2026-11-13","upperLimit":884.6500,"lowerLimit":753.6500,"prevClosingPrice":819.1500},{"symbolCode":"KR4A01760003","name":"F 202706","basePrice":825.0000,"baseDate":"2026-11-13","upperLimit":891.0000,"lowerLimit":759.0000,"prevClosingPrice":825.0000},{"symbolCode":"KR4A01790000","name":"F 202709","basePrice":841.2000,"baseDate":"2026-11-13","upperLimit":908.4500,"lowerLimit":773.9500,"prevClosingPrice":0.0000}]}
+
+== https://finance.daum.net/api/future/masters {}
+   status=404 len=45
+   { "code" : 404, "message" : "Not Found" }
+
+== https://finance.daum.net/api/domestic/futures {}
+   status=404 len=45
+   { "code" : 404, "message" : "Not Found" }
+
+== https://finance.daum.net/api/future/KR4A016C0004/night/days {'page': 1, 'perPage': 5}
+   status=404 len=45
+   { "message" : "Not Found", "code" : 404 }
+
+== https://finance.daum.net/api/night_future/days {'page': 1, 'perPage': 5}
+   status=404 len=45
+   { "message" : "Not Found", "code" : 404 }
+
+== https://finance.daum.net/api/market_index/days {'market': 'KOSPI200', 'page': 1, 'perPage': 3, 'pagination': 'true'}
+   status=500 len=57
+   { "code" : 500, "message" : "Internal Server Error" }
+
+== https://finance.daum.net/api/investor/KOSPI/days {'details': 'true', 'page': 1, 'perPage': 3, 'pagination': 'true'}
+   status=200 len=1810
+   {"code":200,"message":"OK","data":[{"date":"2026-11-13 00:00:00","individualStraightPurchasePrice":14501504101.000,"foreignStraightPurchasePrice":-541917420124.000,"institutionStraightPurchasePrice":-5908598835.000,"details":{"BANK":1237752655.000,"ETC":0,"ETC_CORPORATION":533324514858.000,"ETC_FINANCIAL_INSTITUTION":13419260770.000,"ETC_FOREIGN":-2451314995.000,"FINANCIAL_INVESTOR":-122391336218.000,"FOREIGN":-541917420124.000,"INDIVIDUAL":14501504101.000,"INSURANCE_COMPANIES":-12666331491.000,"MUTUAL_FUND":-63914825544.000,"PENSION_FUND":210912101356.000,"PRIVATE_EQUITY_FUND":-32505220363.000}},{"date":"2026-11-12 00:00:00","individualStraightPurchasePrice":-278505508294.000,"foreignStraightPurchasePrice":412128312629.000,"institutionStraightPurchasePrice":-652635724683.000,"details":{"BANK":-4696799650.000,"ETC":0,"ETC_CORPORATION":519012920348.000,"ETC_FINANCIAL_INSTITUTION":19633315945.000,"ETC_FOREIGN":-95002611.000,"FINANCIAL_INVESTOR":-936568042968.000,"FOREIGN":412128312629.000,"INDIVIDUAL":-278505508294.000,"INSURANCE_COMPANIES":-12867240241.000,"MUTUAL_FUND":72524384463.000,"PENSION_FUND":-2670054476.000,"PRIVATE_EQUITY_FUND":212008712244.000}},{"date":"2026-11-11 00:00:00","individualStraightPurchasePrice":-714487061078.000,"foreignStraightPurchasePrice":672916853419.000,"institutionStraightPurchasePrice":-503408395691.000,"details":{"BANK":-5152038913.000,"ETC":0,"ETC_CORPORATION":544978603350.000,"ETC_FINANCIAL_INSTITUTION":10321283690.000,"ETC_FOREIGN":-4695808
+
+== https://finance.daum.net/domestic/futures {}
+   status=200 len=12442
+    <!DOCTYPE html> <html lang="ko" class="os_mac"><head> <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <meta property="og:site_name" content="다음금융" /> <meta property="og:image" content="https://t1.daumcdn.net/media/finance/images/finance_og_260220.png" /> <link rel="shortcut icon" href="https://t1.daumcdn.net/top/favicon/20260220/daum.ico"> <title>선물 | 다음 금융</title> <link rel="stylesheet" type="text/css" href="https://t1.daumcdn.net/media/kraken/finance/resources/dist/261113161642/commonCSSBundle.merged.css" /> <script src="https://t1.daumcdn.net/media/kraken/finance/resources/dist/261113161642/pcFramework.merged.js"></script> <script> window.REQUEST_URI = '/domestic/futures'; window.CURRENT_URL = encodeURIComponent( "".concat( window.location.protocol, "//", window.location.host, window.location.pathname, window.location.search ) ); window.FINANCE = {}; window.FINANCE.API_URL = ''; window.FINANCE._PERIOD = ''; window.FINANCE.DAUM_NEWS_HOST = 'https://v.daum.net/v'; window.FINANCE.BOARD_HOST = 'https://board2.finance.daum.net'; window.FINANCE.WISE_FN_HOST = 'https://wisefn.finance.daum.net/v1'; window.FINANCE.DAUM_LOGIN_URL = 'https://logins.daum.net/accounts/loginform.do'; window.FINANCE.DAUM_MY_URL = 'https://member.daum.net/my'; window.FINANCE.FOOTER_SERVICE_POLICY_URL = 'https://policy.daum.net/policy/info'; window.FINANCE.FOOTER_SERVICE_PRIVACY_URL
+   api 주소들: []
+   js: ['https://t1.daumcdn.net/media/kraken/finance/resources/dist/261113161642/pcFramework.merged.js', 'https://t1.kakaocdn.net/tiara/js/v1/tiara-1.2.0.min.js', 'https://t1.daumcdn.net/media/kraken/finance/resources/dist/261113161642/miniDaum.merged.js', 'https://t1.daumcdn.net/media/kraken/finance/resources/dist/261113161642/searchBundle.merged.js', '/embed.js', 'https://t1.daumcdn.net/media/kraken/finance/resources/dist/261113161642/tiara.merged.js']

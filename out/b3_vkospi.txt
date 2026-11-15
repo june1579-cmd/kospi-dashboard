@@ -1,0 +1,103 @@
+MDCSTAT01001 {'trdDd': '20261113'} → 0행 keys=['output', 'CURRENT_DATETIME'] 변동성행=0
+MDCSTAT01001 {'trdDd': '20261113', 'clssCd': '0201'} → 31행 keys=['IDX_NM', 'CLSPRC_IDX', 'FLUC_TP_CD', 'CMPPREVDD_IDX', 'FLUC_RT', 'OPNPRC_IDX', 'HGPRC_IDX', 'LWPRC_IDX'] 변동성행=0
+   이름 예: ['10년국채선물지수', '5년 국채선물 추종 지수', 'KRX 2차전지 TOP 10 선물', 'KRX 300 선물지수', 'KRX SK하이닉스 선물 TWAP', 'KRX SK하이닉스 선물 지수', 'KRX 나스닥 100 ETF 선물', 'KRX 삼성전자 선물 TWAP 지', 'KRX 삼성전자 선물 지수', '국채 3-10년 선물지수', '국채선물지수', '미국달러선물 TR 지수']
+MDCSTAT01001 {'trdDd': '20261113', 'clssCd': '0202'} → 56행 keys=['IDX_NM', 'CLSPRC_IDX', 'FLUC_TP_CD', 'CMPPREVDD_IDX', 'FLUC_RT', 'OPNPRC_IDX', 'HGPRC_IDX', 'LWPRC_IDX'] 변동성행=3
+   변동성: [{"IDX_NM": "코스피 200 변동성지수", "CLSPRC_IDX": "50.15", "FLUC_TP_CD": "2", "CMPPREVDD_IDX": "-1.17", "FLUC_RT": "-2.28", "OPNPRC_IDX": "51.58", "HGPRC_IDX": "52.18", "LWPRC_IDX": "49.98"}, {"IDX_NM": "코스피 200 변동성매칭 양매도지수", "CLSPRC_IDX": "996.13", "FLUC_TP_CD": "1", "CMPPREVDD_IDX": "8.07", "FLUC_RT": "0.82", "OPNPRC_IDX": "987.19", "HGPRC_IDX": "996.46", "LWPRC_IDX": "979.97"}, {"IDX_NM": "코스피 200 변동성추세 추종 양매도지수", "CLSPRC_IDX": "795.17", "FLUC_TP_CD": "1", "CMPPREVDD_IDX": "6.44", "FLUC_RT": "0.82", "OPNPRC_IDX": "788.03", "HGPRC_IDX": "795.44", "LWPRC_IDX": "782.28"}]
+MDCSTAT01001 {'trdDd': '20261113', 'clssCd': '0300'} → 234행 keys=['IDX_NM', 'CLSPRC_IDX', 'FLUC_TP_CD', 'CMPPREVDD_IDX', 'FLUC_RT', 'OPNPRC_IDX', 'HGPRC_IDX', 'LWPRC_IDX'] 변동성행=3
+   변동성: [{"IDX_NM": "코스피 200 현선물 목표변동성 24% 지수", "CLSPRC_IDX": "3,300.80", "FLUC_TP_CD": "2", "CMPPREVDD_IDX": "-22.11", "FLUC_RT": "-0.67", "OPNPRC_IDX": "3,275.08", "HGPRC_IDX": "3,353.31", "LWPRC_IDX": "3,268.02"}, {"IDX_NM": "KRX 최소변동성지수", "CLSPRC_IDX": "10,498.41", "FLUC_TP_CD": "2", "CMPPREVDD_IDX": "-33.61", "FLUC_RT": "-0.32", "OPNPRC_IDX": "10,646.15", "HGPRC_IDX": "10,807.80", "LWPRC_IDX": "10,452.83"}, {"IDX_NM": "코스피 200 가치저변동성", "CLSPRC_IDX": "11,315.28", "FLUC_TP_CD": "1", "CMPPREVDD_IDX": "54.45", "FLUC_RT": "0.48", "OPNPRC_IDX": "11,388.50", "HGPRC_IDX": "11,565.08", "LWPRC_IDX": "11,272.27"}]
+MDCSTAT01001 {'trdDd': '20261113', 'clssCd': '1300'} → 0행 keys=['output', 'CURRENT_DATETIME'] 변동성행=0
+MDCSTAT01001 {'trdDd': '20261113', 'idxIndMidclssCd': '01'} → 0행 keys=['output', 'CURRENT_DATETIME'] 변동성행=0
+MDCSTAT01001 {'trdDd': '20261113', 'clssCd': '0101'} → 40행 keys=['IDX_NM', 'CLSPRC_IDX', 'FLUC_TP_CD', 'CMPPREVDD_IDX', 'FLUC_RT', 'OPNPRC_IDX', 'HGPRC_IDX', 'LWPRC_IDX'] 변동성행=0
+   이름 예: [' K-샤프지수(10년)', 'K-샤프지수(1년)', 'K-샤프지수(3년)', 'K-샤프지수(5년)', 'KRX 100', 'KRX 300', 'KRX 300 금융', 'KRX 300 산업재', 'KRX 300 소재', 'KRX 300 자유소비재', 'KRX 300 정보기술', 'KRX 300 커뮤니케이션서비스']
+MDCSTAT01001 {'trdDd': '20261113', 'clssCd': '0400'} → 6행 keys=['IDX_NM', 'CLSPRC_IDX', 'FLUC_TP_CD', 'CMPPREVDD_IDX', 'FLUC_RT', 'OPNPRC_IDX', 'HGPRC_IDX', 'LWPRC_IDX'] 변동성행=0
+   이름 예: ['KRX CSI 한·중 대표기업 5', 'KRX CSI 한·중 반도체지수', 'KRX CSI 한·중 전기차지수', 'S&P/KRX 상장거래소 지수', 'S&P/KRX 아시아 100 지수', '한국 대만 IT 프리미어 지수']
+MDCSTAT01001 {'trdDd': '20261113', 'clssCd': '0500'} → 0행 keys=['output', 'CURRENT_DATETIME'] 변동성행=0
+MDCSTAT01001 {'trdDd': '20261113', 'clssCd': '0600'} → 2행 keys=['IDX_NM', 'CLSPRC_IDX', 'FLUC_TP_CD', 'CMPPREVDD_IDX', 'FLUC_RT', 'OPNPRC_IDX', 'HGPRC_IDX', 'LWPRC_IDX'] 변동성행=0
+   이름 예: ['KRX 금현물지수', 'KRX 금현물지수 USD']
+MDCSTAT01101 {'trdDd': '20261113'} → 0행 keys=['OutBlock_1', 'CURRENT_DATETIME'] 변동성행=0
+MDCSTAT01101 {'trdDd': '20261113', 'clssCd': '0201'} → 31행 keys=['IDX_IND_NM', 'OPN_DD_INDX', 'END_DD_INDX', 'FLUC_TP', 'PRV_DD_CMPR', 'UPDN_RATE'] 변동성행=0
+   이름 예: ['10년국채선물지수', '5년 국채선물 추종 지수', 'KRX 2차전지 TOP 10 선물', 'KRX 300 선물지수', 'KRX SK하이닉스 선물 TWAP', 'KRX SK하이닉스 선물 지수', 'KRX 나스닥 100 ETF 선물', 'KRX 삼성전자 선물 TWAP 지', 'KRX 삼성전자 선물 지수', '국채 3-10년 선물지수', '국채선물지수', '미국달러선물 TR 지수']
+MDCSTAT01101 {'trdDd': '20261113', 'clssCd': '0202'} → 56행 keys=['IDX_IND_NM', 'OPN_DD_INDX', 'END_DD_INDX', 'FLUC_TP', 'PRV_DD_CMPR', 'UPDN_RATE'] 변동성행=3
+   변동성: [{"IDX_IND_NM": "코스피 200 변동성매칭 양매도지수", "OPN_DD_INDX": "-", "END_DD_INDX": "-", "FLUC_TP": "3", "PRV_DD_CMPR": "-", "UPDN_RATE": "-"}, {"IDX_IND_NM": "코스피 200 변동성추세 추종 양매도지수", "OPN_DD_INDX": "-", "END_DD_INDX": "-", "FLUC_TP": "3", "PRV_DD_CMPR": "-", "UPDN_RATE": "-"}, {"IDX_IND_NM": "코스피 200 변동성지수", "OPN_DD_INDX": "-", "END_DD_INDX": "-", "FLUC_TP": "3", "PRV_DD_CMPR": "-", "UPDN_RATE": "-"}]
+MDCSTAT01101 {'trdDd': '20261113', 'clssCd': '0300'} → 234행 keys=['IDX_IND_NM', 'OPN_DD_INDX', 'END_DD_INDX', 'FLUC_TP', 'PRV_DD_CMPR', 'UPDN_RATE'] 변동성행=3
+   변동성: [{"IDX_IND_NM": "코스피 200 현선물 목표변동성 24% 지수", "OPN_DD_INDX": "-", "END_DD_INDX": "-", "FLUC_TP": "3", "PRV_DD_CMPR": "-", "UPDN_RATE": "-"}, {"IDX_IND_NM": "KRX 최소변동성지수", "OPN_DD_INDX": "-", "END_DD_INDX": "-", "FLUC_TP": "3", "PRV_DD_CMPR": "-", "UPDN_RATE": "-"}, {"IDX_IND_NM": "코스피 200 가치저변동성", "OPN_DD_INDX": "-", "END_DD_INDX": "-", "FLUC_TP": "3", "PRV_DD_CMPR": "-", "UPDN_RATE": "-"}]
+MDCSTAT01101 {'trdDd': '20261113', 'clssCd': '1300'} → 0행 keys=['OutBlock_1', 'CURRENT_DATETIME'] 변동성행=0
+MDCSTAT01101 {'trdDd': '20261113', 'idxIndMidclssCd': '01'} → 0행 keys=['OutBlock_1', 'CURRENT_DATETIME'] 변동성행=0
+MDCSTAT01101 {'trdDd': '20261113', 'clssCd': '0101'} → 40행 keys=['IDX_IND_NM', 'OPN_DD_INDX', 'END_DD_INDX', 'FLUC_TP', 'PRV_DD_CMPR', 'UPDN_RATE'] 변동성행=0
+   이름 예: [' K-샤프지수(10년)', 'K-샤프지수(1년)', 'K-샤프지수(3년)', 'K-샤프지수(5년)', 'KRX 100', 'KRX 300', 'KRX 300 금융', 'KRX 300 산업재', 'KRX 300 소재', 'KRX 300 자유소비재', 'KRX 300 정보기술', 'KRX 300 커뮤니케이션서비스']
+MDCSTAT01101 {'trdDd': '20261113', 'clssCd': '0400'} → 6행 keys=['IDX_IND_NM', 'OPN_DD_INDX', 'END_DD_INDX', 'FLUC_TP', 'PRV_DD_CMPR', 'UPDN_RATE'] 변동성행=0
+   이름 예: ['KRX CSI 한·중 대표기업 5', 'KRX CSI 한·중 반도체지수', 'KRX CSI 한·중 전기차지수', 'S&P/KRX 상장거래소 지수', 'S&P/KRX 아시아 100 지수', '한국 대만 IT 프리미어 지수']
+MDCSTAT01101 {'trdDd': '20261113', 'clssCd': '0500'} → 0행 keys=['OutBlock_1', 'CURRENT_DATETIME'] 변동성행=0
+MDCSTAT01101 {'trdDd': '20261113', 'clssCd': '0600'} → 2행 keys=['IDX_IND_NM', 'OPN_DD_INDX', 'END_DD_INDX', 'FLUC_TP', 'PRV_DD_CMPR', 'UPDN_RATE'] 변동성행=0
+   이름 예: ['KRX 금현물지수', 'KRX 금현물지수 USD']
+MDCSTAT00901 {'trdDd': '20261113'} → 0행 keys=['output', 'CURRENT_DATETIME'] 변동성행=0
+MDCSTAT00901 {'trdDd': '20261113', 'clssCd': '0201'} → 0행 keys=['output', 'CURRENT_DATETIME'] 변동성행=0
+MDCSTAT00901 {'trdDd': '20261113', 'clssCd': '0202'} → 0행 keys=['output', 'CURRENT_DATETIME'] 변동성행=0
+MDCSTAT00901 {'trdDd': '20261113', 'clssCd': '0300'} → 0행 keys=['output', 'CURRENT_DATETIME'] 변동성행=0
+MDCSTAT00901 {'trdDd': '20261113', 'clssCd': '1300'} → 0행 keys=['output', 'CURRENT_DATETIME'] 변동성행=0
+MDCSTAT00901 {'trdDd': '20261113', 'idxIndMidclssCd': '01'} → 0행 keys=['output', 'CURRENT_DATETIME'] 변동성행=0
+MDCSTAT00901 {'trdDd': '20261113', 'clssCd': '0101'} → 0행 keys=['output', 'CURRENT_DATETIME'] 변동성행=0
+MDCSTAT00901 {'trdDd': '20261113', 'clssCd': '0400'} → 0행 keys=['output', 'CURRENT_DATETIME'] 변동성행=0
+MDCSTAT00901 {'trdDd': '20261113', 'clssCd': '0500'} → 0행 keys=['output', 'CURRENT_DATETIME'] 변동성행=0
+MDCSTAT00901 {'trdDd': '20261113', 'clssCd': '0600'} → 0행 keys=['output', 'CURRENT_DATETIME'] 변동성행=0
+MDCSTAT00801 {'trdDd': '20261113'} → 6행 keys=['BND_IDX_GRP_NM', 'TOT_EARNG_IDX', 'TOT_EARNG_IDX_FLUC_TP', 'TOT_EARNG_IDX_CMPPREVDD', 'NETPRC_IDX', 'NETPRC_IDX_FLUC_TP', 'NETPRC_IDX_CMPPREVDD', 'ZERO_REINVST_IDX', 'ZERO_REINVST_IDX_FLUC_TP', 'ZERO_REINVST_IDX_CMPPREVDD', 'CALL_REINVST_IDX', 'CALL_REINVST_IDX_FLUC_TP', 'CALL_REINVST_IDX_CMPPREVDD', 'MKT_PRC_IDX'] 변동성행=0
+   이름 예: ['']
+MDCSTAT00801 {'trdDd': '20261113', 'clssCd': '0201'} → 6행 keys=['BND_IDX_GRP_NM', 'TOT_EARNG_IDX', 'TOT_EARNG_IDX_FLUC_TP', 'TOT_EARNG_IDX_CMPPREVDD', 'NETPRC_IDX', 'NETPRC_IDX_FLUC_TP', 'NETPRC_IDX_CMPPREVDD', 'ZERO_REINVST_IDX', 'ZERO_REINVST_IDX_FLUC_TP', 'ZERO_REINVST_IDX_CMPPREVDD', 'CALL_REINVST_IDX', 'CALL_REINVST_IDX_FLUC_TP', 'CALL_REINVST_IDX_CMPPREVDD', 'MKT_PRC_IDX'] 변동성행=0
+   이름 예: ['']
+MDCSTAT00801 {'trdDd': '20261113', 'clssCd': '0202'} → 6행 keys=['BND_IDX_GRP_NM', 'TOT_EARNG_IDX', 'TOT_EARNG_IDX_FLUC_TP', 'TOT_EARNG_IDX_CMPPREVDD', 'NETPRC_IDX', 'NETPRC_IDX_FLUC_TP', 'NETPRC_IDX_CMPPREVDD', 'ZERO_REINVST_IDX', 'ZERO_REINVST_IDX_FLUC_TP', 'ZERO_REINVST_IDX_CMPPREVDD', 'CALL_REINVST_IDX', 'CALL_REINVST_IDX_FLUC_TP', 'CALL_REINVST_IDX_CMPPREVDD', 'MKT_PRC_IDX'] 변동성행=0
+   이름 예: ['']
+MDCSTAT00801 {'trdDd': '20261113', 'clssCd': '0300'} → 6행 keys=['BND_IDX_GRP_NM', 'TOT_EARNG_IDX', 'TOT_EARNG_IDX_FLUC_TP', 'TOT_EARNG_IDX_CMPPREVDD', 'NETPRC_IDX', 'NETPRC_IDX_FLUC_TP', 'NETPRC_IDX_CMPPREVDD', 'ZERO_REINVST_IDX', 'ZERO_REINVST_IDX_FLUC_TP', 'ZERO_REINVST_IDX_CMPPREVDD', 'CALL_REINVST_IDX', 'CALL_REINVST_IDX_FLUC_TP', 'CALL_REINVST_IDX_CMPPREVDD', 'MKT_PRC_IDX'] 변동성행=0
+   이름 예: ['']
+MDCSTAT00801 {'trdDd': '20261113', 'clssCd': '1300'} → 6행 keys=['BND_IDX_GRP_NM', 'TOT_EARNG_IDX', 'TOT_EARNG_IDX_FLUC_TP', 'TOT_EARNG_IDX_CMPPREVDD', 'NETPRC_IDX', 'NETPRC_IDX_FLUC_TP', 'NETPRC_IDX_CMPPREVDD', 'ZERO_REINVST_IDX', 'ZERO_REINVST_IDX_FLUC_TP', 'ZERO_REINVST_IDX_CMPPREVDD', 'CALL_REINVST_IDX', 'CALL_REINVST_IDX_FLUC_TP', 'CALL_REINVST_IDX_CMPPREVDD', 'MKT_PRC_IDX'] 변동성행=0
+   이름 예: ['']
+MDCSTAT00801 {'trdDd': '20261113', 'idxIndMidclssCd': '01'} → 6행 keys=['BND_IDX_GRP_NM', 'TOT_EARNG_IDX', 'TOT_EARNG_IDX_FLUC_TP', 'TOT_EARNG_IDX_CMPPREVDD', 'NETPRC_IDX', 'NETPRC_IDX_FLUC_TP', 'NETPRC_IDX_CMPPREVDD', 'ZERO_REINVST_IDX', 'ZERO_REINVST_IDX_FLUC_TP', 'ZERO_REINVST_IDX_CMPPREVDD', 'CALL_REINVST_IDX', 'CALL_REINVST_IDX_FLUC_TP', 'CALL_REINVST_IDX_CMPPREVDD', 'MKT_PRC_IDX'] 변동성행=0
+   이름 예: ['']
+MDCSTAT00801 {'trdDd': '20261113', 'clssCd': '0101'} → 6행 keys=['BND_IDX_GRP_NM', 'TOT_EARNG_IDX', 'TOT_EARNG_IDX_FLUC_TP', 'TOT_EARNG_IDX_CMPPREVDD', 'NETPRC_IDX', 'NETPRC_IDX_FLUC_TP', 'NETPRC_IDX_CMPPREVDD', 'ZERO_REINVST_IDX', 'ZERO_REINVST_IDX_FLUC_TP', 'ZERO_REINVST_IDX_CMPPREVDD', 'CALL_REINVST_IDX', 'CALL_REINVST_IDX_FLUC_TP', 'CALL_REINVST_IDX_CMPPREVDD', 'MKT_PRC_IDX'] 변동성행=0
+   이름 예: ['']
+MDCSTAT00801 {'trdDd': '20261113', 'clssCd': '0400'} → 6행 keys=['BND_IDX_GRP_NM', 'TOT_EARNG_IDX', 'TOT_EARNG_IDX_FLUC_TP', 'TOT_EARNG_IDX_CMPPREVDD', 'NETPRC_IDX', 'NETPRC_IDX_FLUC_TP', 'NETPRC_IDX_CMPPREVDD', 'ZERO_REINVST_IDX', 'ZERO_REINVST_IDX_FLUC_TP', 'ZERO_REINVST_IDX_CMPPREVDD', 'CALL_REINVST_IDX', 'CALL_REINVST_IDX_FLUC_TP', 'CALL_REINVST_IDX_CMPPREVDD', 'MKT_PRC_IDX'] 변동성행=0
+   이름 예: ['']
+MDCSTAT00801 {'trdDd': '20261113', 'clssCd': '0500'} → 6행 keys=['BND_IDX_GRP_NM', 'TOT_EARNG_IDX', 'TOT_EARNG_IDX_FLUC_TP', 'TOT_EARNG_IDX_CMPPREVDD', 'NETPRC_IDX', 'NETPRC_IDX_FLUC_TP', 'NETPRC_IDX_CMPPREVDD', 'ZERO_REINVST_IDX', 'ZERO_REINVST_IDX_FLUC_TP', 'ZERO_REINVST_IDX_CMPPREVDD', 'CALL_REINVST_IDX', 'CALL_REINVST_IDX_FLUC_TP', 'CALL_REINVST_IDX_CMPPREVDD', 'MKT_PRC_IDX'] 변동성행=0
+   이름 예: ['']
+MDCSTAT00801 {'trdDd': '20261113', 'clssCd': '0600'} → 6행 keys=['BND_IDX_GRP_NM', 'TOT_EARNG_IDX', 'TOT_EARNG_IDX_FLUC_TP', 'TOT_EARNG_IDX_CMPPREVDD', 'NETPRC_IDX', 'NETPRC_IDX_FLUC_TP', 'NETPRC_IDX_CMPPREVDD', 'ZERO_REINVST_IDX', 'ZERO_REINVST_IDX_FLUC_TP', 'ZERO_REINVST_IDX_CMPPREVDD', 'CALL_REINVST_IDX', 'CALL_REINVST_IDX_FLUC_TP', 'CALL_REINVST_IDX_CMPPREVDD', 'MKT_PRC_IDX'] 변동성행=0
+   이름 예: ['']
+MDCSTAT01301 {'trdDd': '20261113'} → 0행 keys=['OutBlock_1', 'CURRENT_DATETIME'] 변동성행=0
+MDCSTAT01301 {'trdDd': '20261113', 'clssCd': '0201'} → 0행 keys=['OutBlock_1', 'CURRENT_DATETIME'] 변동성행=0
+MDCSTAT01301 {'trdDd': '20261113', 'clssCd': '0202'} → 0행 keys=['OutBlock_1', 'CURRENT_DATETIME'] 변동성행=0
+MDCSTAT01301 {'trdDd': '20261113', 'clssCd': '0300'} → 0행 keys=['OutBlock_1', 'CURRENT_DATETIME'] 변동성행=0
+MDCSTAT01301 {'trdDd': '20261113', 'clssCd': '1300'} → 0행 keys=['OutBlock_1', 'CURRENT_DATETIME'] 변동성행=0
+MDCSTAT01301 {'trdDd': '20261113', 'idxIndMidclssCd': '01'} → 0행 keys=['OutBlock_1', 'CURRENT_DATETIME'] 변동성행=0
+MDCSTAT01301 {'trdDd': '20261113', 'clssCd': '0101'} → 0행 keys=['OutBlock_1', 'CURRENT_DATETIME'] 변동성행=0
+MDCSTAT01301 {'trdDd': '20261113', 'clssCd': '0400'} → 0행 keys=['OutBlock_1', 'CURRENT_DATETIME'] 변동성행=0
+MDCSTAT01301 {'trdDd': '20261113', 'clssCd': '0500'} → 0행 keys=['OutBlock_1', 'CURRENT_DATETIME'] 변동성행=0
+MDCSTAT01301 {'trdDd': '20261113', 'clssCd': '0600'} → 0행 keys=['OutBlock_1', 'CURRENT_DATETIME'] 변동성행=0
+MDCSTAT01401 {'trdDd': '20261113'} → 0행 keys=['CLSPRC_IDX', 'OPNPRC_IDX', 'HGPRC_IDX', 'LWPRC_IDX', 'FLUC_TP_CD', 'PRV_DD_CMPR'] 변동성행=0
+MDCSTAT01401 {'trdDd': '20261113', 'clssCd': '0201'} → 0행 keys=['CLSPRC_IDX', 'OPNPRC_IDX', 'HGPRC_IDX', 'LWPRC_IDX', 'FLUC_TP_CD', 'PRV_DD_CMPR'] 변동성행=0
+MDCSTAT01401 {'trdDd': '20261113', 'clssCd': '0202'} → 0행 keys=['CLSPRC_IDX', 'OPNPRC_IDX', 'HGPRC_IDX', 'LWPRC_IDX', 'FLUC_TP_CD', 'PRV_DD_CMPR'] 변동성행=0
+MDCSTAT01401 {'trdDd': '20261113', 'clssCd': '0300'} → 0행 keys=['CLSPRC_IDX', 'OPNPRC_IDX', 'HGPRC_IDX', 'LWPRC_IDX', 'FLUC_TP_CD', 'PRV_DD_CMPR'] 변동성행=0
+MDCSTAT01401 {'trdDd': '20261113', 'clssCd': '1300'} → 0행 keys=['CLSPRC_IDX', 'OPNPRC_IDX', 'HGPRC_IDX', 'LWPRC_IDX', 'FLUC_TP_CD', 'PRV_DD_CMPR'] 변동성행=0
+MDCSTAT01401 {'trdDd': '20261113', 'idxIndMidclssCd': '01'} → 0행 keys=['CLSPRC_IDX', 'OPNPRC_IDX', 'HGPRC_IDX', 'LWPRC_IDX', 'FLUC_TP_CD', 'PRV_DD_CMPR'] 변동성행=0
+MDCSTAT01401 {'trdDd': '20261113', 'clssCd': '0101'} → 0행 keys=['CLSPRC_IDX', 'OPNPRC_IDX', 'HGPRC_IDX', 'LWPRC_IDX', 'FLUC_TP_CD', 'PRV_DD_CMPR'] 변동성행=0
+MDCSTAT01401 {'trdDd': '20261113', 'clssCd': '0400'} → 0행 keys=['CLSPRC_IDX', 'OPNPRC_IDX', 'HGPRC_IDX', 'LWPRC_IDX', 'FLUC_TP_CD', 'PRV_DD_CMPR'] 변동성행=0
+MDCSTAT01401 {'trdDd': '20261113', 'clssCd': '0500'} → 0행 keys=['CLSPRC_IDX', 'OPNPRC_IDX', 'HGPRC_IDX', 'LWPRC_IDX', 'FLUC_TP_CD', 'PRV_DD_CMPR'] 변동성행=0
+MDCSTAT01401 {'trdDd': '20261113', 'clssCd': '0600'} → 0행 keys=['CLSPRC_IDX', 'OPNPRC_IDX', 'HGPRC_IDX', 'LWPRC_IDX', 'FLUC_TP_CD', 'PRV_DD_CMPR'] 변동성행=0
+MDCSTAT01201 {'indTpCd': '1', 'idxIndCd': '300', 'idxCd': '1', 'idxCd2': '300', 'strtDd': '20261105', 'endDd': '20261114'} → 7행 keys=['TRD_DD', 'CLSPRC_IDX', 'FLUC_TP_CD', 'PRV_DD_CMPR', 'UPDN_RATE', 'OPNPRC_IDX', 'HGPRC_IDX', 'LWPRC_IDX'] 변동성행=0
+   첫행: [{"TRD_DD": "2026/11/13", "CLSPRC_IDX": "50.15", "FLUC_TP_CD": "2", "PRV_DD_CMPR": "1.17", "UPDN_RATE": "-2.28", "OPNPRC_IDX": "51.58", "HGPRC_IDX": "52.18", "LWPRC_IDX": "49.98"}, {"TRD_DD": "2026/11/12", "CLSPRC_IDX": "51.32", "FLUC_TP_CD": "2", "PRV_DD_CMPR": "1.44", "UPDN_RATE": "-2.73", "OPNPRC_IDX": "51.35", "HGPRC_IDX": "51.55", "LWPRC_IDX": "51.05"}]
+MDCSTAT01201 {'indTpCd': '1', 'idxIndCd': '300', 'strtDd': '20261105', 'endDd': '20261114'} → 7행 keys=['TRD_DD', 'CLSPRC_IDX', 'FLUC_TP_CD', 'PRV_DD_CMPR', 'UPDN_RATE', 'OPNPRC_IDX', 'HGPRC_IDX', 'LWPRC_IDX'] 변동성행=0
+   첫행: [{"TRD_DD": "2026/11/13", "CLSPRC_IDX": "50.15", "FLUC_TP_CD": "2", "PRV_DD_CMPR": "1.17", "UPDN_RATE": "-2.28", "OPNPRC_IDX": "51.58", "HGPRC_IDX": "52.18", "LWPRC_IDX": "49.98"}, {"TRD_DD": "2026/11/12", "CLSPRC_IDX": "51.32", "FLUC_TP_CD": "2", "PRV_DD_CMPR": "1.44", "UPDN_RATE": "-2.73", "OPNPRC_IDX": "51.35", "HGPRC_IDX": "51.55", "LWPRC_IDX": "51.05"}]
+MDCSTAT01201 {'indTpCd': '5', 'idxIndCd': '300', 'idxCd': '5', 'idxCd2': '300', 'strtDd': '20261105', 'endDd': '20261114'} → 7행 keys=['TRD_DD', 'CLSPRC_IDX', 'FLUC_TP_CD', 'PRV_DD_CMPR', 'UPDN_RATE', 'OPNPRC_IDX', 'HGPRC_IDX', 'LWPRC_IDX'] 변동성행=0
+   첫행: [{"TRD_DD": "2026/11/13", "CLSPRC_IDX": "3,588.55", "FLUC_TP_CD": "2", "PRV_DD_CMPR": "36.47", "UPDN_RATE": "-1.01", "OPNPRC_IDX": "3,707.54", "HGPRC_IDX": "3,745.16", "LWPRC_IDX": "3,565.08"}, {"TRD_DD": "2026/11/12", "CLSPRC_IDX": "3,625.02", "FLUC_TP_CD": "2", "PRV_DD_CMPR": "22.45", "UPDN_RATE": "-0.62", "OPNPRC_IDX": "3,657.21", "HGPRC_IDX": "3,714.07", "LWPRC_IDX": "3,591.35"}]
+MDCSTAT01201 {'indTpCd': '1', 'idxIndCd': '004', 'strtDd': '20261105', 'endDd': '20261114'} → 7행 keys=['TRD_DD', 'CLSPRC_IDX', 'FLUC_TP_CD', 'PRV_DD_CMPR', 'UPDN_RATE', 'OPNPRC_IDX', 'HGPRC_IDX', 'LWPRC_IDX'] 변동성행=0
+   첫행: [{"TRD_DD": "2026/11/13", "CLSPRC_IDX": "2,179.65", "FLUC_TP_CD": "1", "PRV_DD_CMPR": "0.98", "UPDN_RATE": "0.04", "OPNPRC_IDX": "2,183.88", "HGPRC_IDX": "2,205.44", "LWPRC_IDX": "2,173.85"}, {"TRD_DD": "2026/11/12", "CLSPRC_IDX": "2,178.67", "FLUC_TP_CD": "2", "PRV_DD_CMPR": "21.95", "UPDN_RATE": "-1.00", "OPNPRC_IDX": "2,198.71", "HGPRC_IDX": "2,200.13", "LWPRC_IDX": "2,160.35"}]
+MDCSTAT01202 {'indTpCd': '1', 'idxIndCd': '300', 'idxCd': '1', 'idxCd2': '300', 'strtDd': '20261105', 'endDd': '20261114'} → 오류 JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+MDCSTAT01202 {'indTpCd': '1', 'idxIndCd': '300', 'strtDd': '20261105', 'endDd': '20261114'} → 오류 JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+MDCSTAT01202 {'indTpCd': '5', 'idxIndCd': '300', 'idxCd': '5', 'idxCd2': '300', 'strtDd': '20261105', 'endDd': '20261114'} → 오류 JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+MDCSTAT01202 {'indTpCd': '1', 'idxIndCd': '004', 'strtDd': '20261105', 'endDd': '20261114'} → 오류 JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+MDCSTAT00301 {'indTpCd': '1', 'idxIndCd': '300', 'idxCd': '1', 'idxCd2': '300', 'strtDd': '20261105', 'endDd': '20261114'} → 0행 keys=['output', 'CURRENT_DATETIME'] 변동성행=0
+MDCSTAT00301 {'indTpCd': '1', 'idxIndCd': '300', 'strtDd': '20261105', 'endDd': '20261114'} → 0행 keys=['output', 'CURRENT_DATETIME'] 변동성행=0
+MDCSTAT00301 {'indTpCd': '5', 'idxIndCd': '300', 'idxCd': '5', 'idxCd2': '300', 'strtDd': '20261105', 'endDd': '20261114'} → 0행 keys=['output', 'CURRENT_DATETIME'] 변동성행=0
+MDCSTAT00301 {'indTpCd': '1', 'idxIndCd': '004', 'strtDd': '20261105', 'endDd': '20261114'} → 0행 keys=['output', 'CURRENT_DATETIME'] 변동성행=0
+finder r/finder_drvetcidx {'mktsel': 'ALL', 'searchText': '변동성'} → 0행 []
+finder nder/finder_equidx {'mktsel': '1', 'searchText': '변동성'} → 0행 []
+finder r/finder_drvetcidx {'mktsel': '1'} → 0행 []
+finder /finder_drvprodisu {'mktsel': 'ALL', 'searchText': '야간'} → 0행 []
+finder /finder_drvprodisu {'mktsel': 'ALL', 'searchText': '코스피200'} → 4315행 [{"full_code": "KR4B016C1802", "short_code": "B016C180", "codeName": "코스피200 C 202612   180.0", "expMm": "2026/12"}, {"full_code": "KR4B016C1828", "short_code": "B016C182", "codeName": "코스피200 C 202612   182.5", "expMm": "2026/12"}, {"full_code": "KR4B016C1851", "short_code": "B016C185", "codeName": "코스피200 C 202612   185.0", "expMm": "2026/12"}, {"full_code": "KR4B016C1877", "short_code": "B016C187", "codeName": "코스피200 C 202612   187.5", "expMm": "2026/12"}, {"full_code": "KR4B016C1901", "short_code": "B016C190", "codeName": "코스피200 C 202612   190.0", "expMm": "2026/12"}, {"full_code": "KR4B016C1927", "short_code": "B016C192", "codeName": "코스피200 C 202612   192.5", "expMm": "2026/12"}, {"full_code": "KR4B016C1950", "short_code": "B016C195", "codeName": "코스피200 C 202612   195.0", "expMm": "2026/12"}, {"full_code": "KR4B016C1976", "short_code": "B016C197", "codeName": "코스피200 C 202612   197.5", "expMm": "2026/12"}, {"full_code": "KR4B016C2008", "short_code": "B016C200", "codeName": "코스피200 C 202612   200.0", "expMm": "2026/12"}, {"full_code": "KR4B016C2024", "short_code": "B016C202", "codeName": "코스피200 C 202612   202.5", "expMm": "2026/12"}, {"full_code": "KR4B016C2057", "short_code": "B016C205", "codeName": "코스피200 C 202612   205.0", "expMm": "2026/12"}, {"full_code": "KR4B016C2073", "short_code": "B016C207", "codeName": "코스피200 C 202612   207.5", "expMm": "2026/12"}, {"full_code": "KR4B016C2107", "short_code": "B016C210", "codeName": "코스피200 C 202612   210.0", "expMm": "2026/12"}, {"full_code": "KR4B016C2123", "short_code": "B016C212", "codeName": "코스피200 C 202612   212.5", "expMm": "2026/12"}, {"full_code": "KR4B016C2156", "short_code": "B016C215", "codeName": "코스피200 C 202612   215.0", "expMm": "2026/12"}, {"full_code": "KR4B016C2172", "short_code": "B016C217", "codeName": "코스피200 C 202612   217.5", "expMm": "2026/12"}, {"full_code": "KR4B016C2206", "short_code": "B016C220", "codeName": "코스피200 C 202612   220.0", "expMm": "2026/12"}, {"full_code": "KR4B016C2222", "short_code": "B016C222", "codeName": "코스피200 C 202612   222.5", "expMm": "2026/12"}, {"full_code": "KR4B016C2255", "short_code": "B016C225", "codeName": "코스피200 C 202612   225.0", "expMm": "2026/12"}, {"full_code": "KR4B016C2271", "short_code": "B016C227", "codeName": "코스피200 C 202612   227.5", "expMm": "2026/12"}, {"full_code": "KR4B016C2305", "short_code": "B016C230", "codeName": "코스피200 C 202612   230.0", "expMm": "2026/12"}, {"full_code": "KR4B016C2321", "short_code": "B016C232", "codeName": "코스피200 C 202612   232.5", "expMm": "2026/12"}, {"full_code": "KR4B016C2354", "short_code": "B0

@@ -1,0 +1,12 @@
+UTC 2026-11-15T00:52:09.950853+00:00 | KST 2026-11-15T09:52:09.950853+09:00 | NY 2026-11-14T19:52:09.950853-05:00
+[a] 0.0s
+pykrx krxio 속성: ['Get', 'KrxFutureIo', 'KrxWebIo', 'Post', 'abstractmethod', 'pd', 'time']
+[ks] 2.6s
+[b1] 38.1s
+[b2] 5.6s
+[b3] 53.8s
+[c] 10.4s
+[d] 28.0s
+[e] 7.0s
+[f] 241.9s
+[g] 5.3s

@@ -1,0 +1,75 @@
+
+===== https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT12501.cmd status=200 len=2368
+  제목: [('', '에러페이지 - 한국거래소 | 정보데이터시스템')]
+  name=: ['author', 'description', 'keywords', 'robots', 'viewport']
+  bld: []
+
+===== https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT12601.cmd status=200 len=2368
+  제목: [('', '에러페이지 - 한국거래소 | 정보데이터시스템')]
+  name=: ['author', 'description', 'keywords', 'robots', 'viewport']
+  bld: []
+
+===== https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT12502.cmd status=200 len=2368
+  제목: [('', '에러페이지 - 한국거래소 | 정보데이터시스템')]
+  name=: ['author', 'description', 'keywords', 'robots', 'viewport']
+  bld: []
+
+===== https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT01001.cmd status=200 len=2368
+  제목: [('', '에러페이지 - 한국거래소 | 정보데이터시스템')]
+  name=: ['author', 'description', 'keywords', 'robots', 'viewport']
+  bld: []
+
+===== https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT01101.cmd status=200 len=2368
+  제목: [('', '에러페이지 - 한국거래소 | 정보데이터시스템')]
+  name=: ['author', 'description', 'keywords', 'robots', 'viewport']
+  bld: []
+
+===== https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT01201.cmd status=200 len=2368
+  제목: [('', '에러페이지 - 한국거래소 | 정보데이터시스템')]
+  name=: ['author', 'description', 'keywords', 'robots', 'viewport']
+  bld: []
+
+===== https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT00901.cmd status=200 len=2368
+  제목: [('', '에러페이지 - 한국거래소 | 정보데이터시스템')]
+  name=: ['author', 'description', 'keywords', 'robots', 'viewport']
+  bld: []
+
+===== https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT00801.cmd status=200 len=2368
+  제목: [('', '에러페이지 - 한국거래소 | 정보데이터시스템')]
+  name=: ['author', 'description', 'keywords', 'robots', 'viewport']
+  bld: []
+
+===== https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT01301.cmd status=200 len=2368
+  제목: [('', '에러페이지 - 한국거래소 | 정보데이터시스템')]
+  name=: ['author', 'description', 'keywords', 'robots', 'viewport']
+  bld: []
+
+===== https://data.krx.co.kr/contents/MDC/MAIN/main/index.cmd status=200 len=535663
+  제목: [('', 'KRX | KRX Data Marketplace')]
+  name=: ['ELW', 'ETF', 'ETN', 'TEMPLET_FORM', 'aiContChk_popup', 'author', 'cloudChk_popup', 'contestChk_popup1', 'contestChk_popup2', 'contestChk_popup3', 'description', 'keywords', 'language', 'main_popup_01_chk_done', 'mbrTranChk_popup', 'robots', 'surbeyChk_popup', 'systemLongMsgChk_popup', 'viewport']
+  bld: ['dbms/MDC/MAIN/MDCMAIN00101', 'dbms/MDC/MAIN/MDCMAIN00102', 'dbms/MDC/MAIN/MDCMAIN00103', 'dbms/MDC/MAIN/MDCMAIN00104', 'dbms/MDC/MAIN/MDCMAIN00105', 'dbms/MDC/MAIN/MDCMAIN00106', 'dbms/MDC/MAIN/MDCMAIN00108']
+  [변동성] … <li><a href="javascript:void(0);" class="jsMovePage" data-menu-id="MDC0201050402" data-link-menu-id="">내재변동성 추이(옵션)</a></li> <li><a href="javascript:void(0);" class="jsMovePage" data-menu-id="MDC0201050403" data-link-men…
+  [변동성] … <a href="javascript:gotoMenu('/contents/MDC/MDI/mdiLoader/index.cmd?menuId=MDC0201050402','MDC0201050402');" class="nodepth"><span class="menu-name" data-menu-name="내재변동성 추이(옵션)" data-screen-no="15011">내재변동성 추이(옵션)</span></a> </li> …
+  [변동성] … <a href="javascript:gotoMenu('/contents/MDC/MDI/mdiLoader/index.cmd?menuId=MDC0201050402','MDC0201050402');" class="nodepth"><span class="menu-name" data-menu-name="내재변동성 추이(옵션)" data-screen-no="15011">내재변동성 추이(옵션)</span></a> </li> …
+  [변동성] … <li> <a href="javascript:void(0);"><span class="menu-name" data-menu-name="변동성완화장치 발동종목" data-screen-no="">변동성완화장치 발동종목</span></a> <ul style="display: none;"> <li> …
+  [변동성] … <li> <a href="javascript:void(0);"><span class="menu-name" data-menu-name="변동성완화장치 발동종목" data-screen-no="">변동성완화장치 발동종목</span></a> <ul style="display: none;"> <li> …
+  [변동성] … <a href="javascript:gotoMenu('/contents/MDC/MDI/mdiLoader/index.cmd?menuId=MDC02021501','MDC02021501');" class="nodepth"><span class="menu-name" data-menu-name="변동성완화장치 발동종목 현황" data-screen-no="20023">변동성완화장치 발동종목 현황</span></a> </li> </ul> </li> …
+  [indTpCd] …= rowData.IND_TP_CD; chartData[index].IDX_IND_CD = rowData.IDX_IND_CD; } api.util.submitAjax({ url: '/comm/bldAttendant/getJsonData.cmd?bld=dbms/MDC/MAIN/MDCMAIN00102', data: 'ddTp='+chartData[index].type+'&indTpCd='+chartData[index].IND_TP_CD+'&idxIndCd='+chartData[index].IDX_IND_CD, success: function (data) { var chartOption = webponent.chart.options.MDC_MAIN; var chartStyle = webponent.chart.styles.MDC_MAIN; var chartSeries = { main : { s1 : {series: 'line', form: 'updown_base', xaxis: 'TRD_DD', yaxis: 'CLSPRC_IDX', minaxis: 'CLSPRC_IDX…
+  menuId 수: 310
+  menu MDC0201010101 전체지수 시세
+  menu MDC0201010102 전체지수 등락률
+  menu MDC0201010103 개별지수 시세 추이
+  menu MDC0201010104 전체지수 기본정보
+  menu MDC0201010105 개별지수 종합정보
+  menu MDC0201010106 지수구성종목
+  menu MDC0201010201 전체지수 시세
+  menu MDC0201010202 개별지수 시세 추이
+  menu MDC0201010301 전체지수 시세
+  menu MDC0201010302 전체지수 등락률
+  menu MDC0201010303 개별지수 시세 추이
+  menu MDC0201010304 전체지수 기본정보
+  menu MDC0201010305 개별지수 종합정보
+  menu MDC0201050103 최근월물 시세 추이(선물)
+  menu MDC0201050304 기초자산별 거래실적(주식선물/옵션)
+  menu MDC0201050401 베이시스 추이(선물)
+  menu MDC0201050402 내재변동성 추이(옵션)
