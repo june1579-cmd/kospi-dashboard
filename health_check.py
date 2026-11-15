@@ -286,7 +286,8 @@ def main():
 
     # ------------------------------------------------------------------ 15 웹판 수기 결론 카드(docs/page.html): 아침 08:55 Claude 예약 작업이 쓴 카드가 웹판에 왔는지
     #   (11/15 확인: 웹판에는 11/11 작성 카드가 사흘째 그대로였다 — 예약 작업의 웹판 반영 단계가 조용히 건너뛰어졌는데 어디에도 표시가 없었다)
-    #   카드는 다음 거래일 아침 09시에 쓰므로 카드 기준일이 마지막 종가보다 1거래일 이른 것은 정상, 2거래일부터 주의, 3거래일부터 오류
+    #   카드는 다음 거래일 아침 09시에 쓰므로 카드 기준일이 마지막 종가보다 1거래일 이른 것은 정상, 2거래일부터 주의
+    #   (수기 해설이 늦은 것이지 신호에 쓰는 자료가 틀린 것은 아니므로 며칠이 지나도 '오류'로 올리지 않는다 — 자료 오류와 섞여 묻히지 않게)
     try:
         pg = os.path.join(a.docs, 'page.html')
         if os.path.exists(pg) and K is not None and kl is not None:
@@ -299,7 +300,7 @@ def main():
                 kd = sorted(set(d_ for d_ in pd.to_datetime(K['일자']).dt.date if d_ <= kl)); after = [d_ for d_ in kd if d_ > base]
                 wexp = kd[-2] if len(kd) >= 2 else None
                 if len(after) <= 1: add('web_cards', '웹판 결론 카드(수기)', base, wexp, '정상', f'{md(base)} 장 마감 기준 — 평일 08:55 예약 작업이 다음 거래일 아침에 다시 쓴다')
-                else: add('web_cards', '웹판 결론 카드(수기)', base, wexp, '주의' if len(after) == 2 else '오류', f'{md(base)} 장 마감 기준에서 멈춤 — 그 뒤 {len(after)}거래일({md(after[0])}~{md(after[-1])})이 지났는데 아침 카드가 웹판에 오지 않음(08:55 예약 작업의 웹판 반영 확인)')
+                else: add('web_cards', '웹판 결론 카드(수기)', base, wexp, '주의', f'{md(base)} 장 마감 기준에서 멈춤 — 그 뒤 {len(after)}거래일({md(after[0])}~{md(after[-1])})이 지났는데 아침 카드가 웹판에 오지 않음(08:55 예약 작업의 웹판 반영 확인)')
     except Exception as e: add('web_cards', '웹판 결론 카드(수기)', None, None, '주의', '확인 실패: ' + repr(e)[:80])
 
     # ------------------------------------------------------------------ 결과
