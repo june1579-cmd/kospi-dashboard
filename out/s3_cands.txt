@@ -1,0 +1,64 @@
+GET xr=True https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT125.cmd → 200 len=2368 ['에러페이지 - 한국거래소 | 정보데이터시스템'] 
+POST xr=True https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT125.cmd → 200 len=2368 ['에러페이지 - 한국거래소 | 정보데이터시스템'] 
+GET xr=False https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT125.cmd → 200 len=2368 ['에러페이지 - 한국거래소 | 정보데이터시스템'] 
+POST xr=False https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT125.cmd → 200 len=2368 ['에러페이지 - 한국거래소 | 정보데이터시스템'] 
+GET xr=True https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT125.jsp → 200 len=24638 [] ★
+POST xr=True https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT125.jsp → 200 len=24638 [] ★
+GET xr=False https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT125.jsp → 200 len=24638 [] ★
+POST xr=False https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT125.jsp → 200 len=24638 [] ★
+GET xr=True https://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?screenId=MDCSTAT125 → 200 len=11255 ['통계 - KRX | Data Marketplace'] ★
+POST xr=True https://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?screenId=MDCSTAT125 → 200 len=11255 ['통계 - KRX | Data Marketplace'] ★
+GET xr=False https://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?screenId=MDCSTAT125 → 200 len=11255 ['통계 - KRX | Data Marketplace'] ★
+POST xr=False https://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?screenId=MDCSTAT125 → 200 len=11255 ['통계 - KRX | Data Marketplace'] ★
+GET xr=True https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT125.cmd?menuId=MDC0201050101 → 200 len=2368 ['에러페이지 - 한국거래소 | 정보데이터시스템'] 
+POST xr=True https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT125.cmd?menuId=MDC0201050101 → 200 len=2368 ['에러페이지 - 한국거래소 | 정보데이터시스템'] 
+GET xr=False https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT125.cmd?menuId=MDC0201050101 → 200 len=2368 ['에러페이지 - 한국거래소 | 정보데이터시스템'] 
+POST xr=False https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT125.cmd?menuId=MDC0201050101 → 200 len=2368 ['에러페이지 - 한국거래소 | 정보데이터시스템'] 
+GET xr=True https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT126.cmd → 200 len=2368 ['에러페이지 - 한국거래소 | 정보데이터시스템'] 
+POST xr=True https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT126.cmd → 200 len=2368 ['에러페이지 - 한국거래소 | 정보데이터시스템'] 
+GET xr=False https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT126.cmd → 200 len=2368 ['에러페이지 - 한국거래소 | 정보데이터시스템'] 
+POST xr=False https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT126.cmd → 200 len=2368 ['에러페이지 - 한국거래소 | 정보데이터시스템'] 
+GET xr=True https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT126.jsp → 200 len=35915 [] ★
+POST xr=True https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT126.jsp → 200 len=35915 [] ★
+GET xr=False https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT126.jsp → 200 len=35915 [] ★
+POST xr=False https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT126.jsp → 200 len=35915 [] ★
+GET xr=True https://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?screenId=MDCSTAT126 → 200 len=11255 ['통계 - KRX | Data Marketplace'] ★
+POST xr=True https://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?screenId=MDCSTAT126 → 200 len=11255 ['통계 - KRX | Data Marketplace'] ★
+GET xr=False https://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?screenId=MDCSTAT126 → 200 len=11255 ['통계 - KRX | Data Marketplace'] ★
+POST xr=False https://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?screenId=MDCSTAT126 → 200 len=11255 ['통계 - KRX | Data Marketplace'] ★
+GET xr=True https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT126.cmd?menuId=MDC0201050101 → 200 len=2368 ['에러페이지 - 한국거래소 | 정보데이터시스템'] 
+POST xr=True https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT126.cmd?menuId=MDC0201050101 → 200 len=2368 ['에러페이지 - 한국거래소 | 정보데이터시스템'] 
+GET xr=False https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT126.cmd?menuId=MDC0201050101 → 200 len=2368 ['에러페이지 - 한국거래소 | 정보데이터시스템'] 
+POST xr=False https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT126.cmd?menuId=MDC0201050101 → 200 len=2368 ['에러페이지 - 한국거래소 | 정보데이터시스템'] 
+GET xr=True https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT127.cmd → 200 len=2368 ['에러페이지 - 한국거래소 | 정보데이터시스템'] 
+POST xr=True https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT127.cmd → 200 len=2368 ['에러페이지 - 한국거래소 | 정보데이터시스템'] 
+GET xr=False https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT127.cmd → 200 len=2368 ['에러페이지 - 한국거래소 | 정보데이터시스템'] 
+POST xr=False https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT127.cmd → 200 len=2368 ['에러페이지 - 한국거래소 | 정보데이터시스템'] 
+GET xr=True https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT127.jsp → 200 len=19630 [] ★
+POST xr=True https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT127.jsp → 200 len=19630 [] ★
+GET xr=False https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT127.jsp → 200 len=19630 [] ★
+POST xr=False https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT127.jsp → 200 len=19630 [] ★
+GET xr=True https://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?screenId=MDCSTAT127 → 200 len=11255 ['통계 - KRX | Data Marketplace'] ★
+POST xr=True https://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?screenId=MDCSTAT127 → 200 len=11255 ['통계 - KRX | Data Marketplace'] ★
+GET xr=False https://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?screenId=MDCSTAT127 → 200 len=11255 ['통계 - KRX | Data Marketplace'] ★
+POST xr=False https://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?screenId=MDCSTAT127 → 200 len=11255 ['통계 - KRX | Data Marketplace'] ★
+GET xr=True https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT127.cmd?menuId=MDC0201050101 → 200 len=2368 ['에러페이지 - 한국거래소 | 정보데이터시스템'] 
+POST xr=True https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT127.cmd?menuId=MDC0201050101 → 200 len=2368 ['에러페이지 - 한국거래소 | 정보데이터시스템'] 
+GET xr=False https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT127.cmd?menuId=MDC0201050101 → 200 len=2368 ['에러페이지 - 한국거래소 | 정보데이터시스템'] 
+POST xr=False https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT127.cmd?menuId=MDC0201050101 → 200 len=2368 ['에러페이지 - 한국거래소 | 정보데이터시스템'] 
+GET xr=True https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT130.cmd → 200 len=2368 ['에러페이지 - 한국거래소 | 정보데이터시스템'] 
+POST xr=True https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT130.cmd → 200 len=2368 ['에러페이지 - 한국거래소 | 정보데이터시스템'] 
+GET xr=False https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT130.cmd → 200 len=2368 ['에러페이지 - 한국거래소 | 정보데이터시스템'] 
+POST xr=False https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT130.cmd → 200 len=2368 ['에러페이지 - 한국거래소 | 정보데이터시스템'] 
+GET xr=True https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT130.jsp → 200 len=14483 [] ★
+POST xr=True https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT130.jsp → 200 len=14483 [] ★
+GET xr=False https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT130.jsp → 200 len=14483 [] ★
+POST xr=False https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT130.jsp → 200 len=14483 [] ★
+GET xr=True https://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?screenId=MDCSTAT130 → 200 len=11255 ['통계 - KRX | Data Marketplace'] ★
+POST xr=True https://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?screenId=MDCSTAT130 → 200 len=11255 ['통계 - KRX | Data Marketplace'] ★
+GET xr=False https://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?screenId=MDCSTAT130 → 200 len=11255 ['통계 - KRX | Data Marketplace'] ★
+POST xr=False https://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?screenId=MDCSTAT130 → 200 len=11255 ['통계 - KRX | Data Marketplace'] ★
+GET xr=True https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT130.cmd?menuId=MDC0201050101 → 200 len=2368 ['에러페이지 - 한국거래소 | 정보데이터시스템'] 
+POST xr=True https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT130.cmd?menuId=MDC0201050101 → 200 len=2368 ['에러페이지 - 한국거래소 | 정보데이터시스템'] 
+GET xr=False https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT130.cmd?menuId=MDC0201050101 → 200 len=2368 ['에러페이지 - 한국거래소 | 정보데이터시스템'] 
+POST xr=False https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT130.cmd?menuId=MDC0201050101 → 200 len=2368 ['에러페이지 - 한국거래소 | 정보데이터시스템'] 
