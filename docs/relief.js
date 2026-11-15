@@ -283,10 +283,14 @@
     const days = mk.filter(r => r.kospi !== '' && r.kospi != null).map(r => String(r.date).slice(0, 10)); if (!days.length) return;
     const last = days[days.length - 1], p2 = v => String(+v).padStart(2, '0'), md = s => +s.slice(5, 7) + '/' + +s.slice(8, 10);
     let base = last.slice(0, 4) + '-' + p2(m[1]) + '-' + p2(m[2]); if (base > last) base = (+last.slice(0, 4) - 1) + '-' + p2(m[1]) + '-' + p2(m[2]);   // 해가 바뀐 직후
-    const after = days.filter(d => d > base); let el = document.getElementById('concl-stale');
-    if (after.length < 2) { if (el) el.remove(); return; }
-    if (!el) { el = document.createElement('p'); el.id = 'concl-stale'; el.className = 'rv-note rv-hot'; el.style.color = '#e5484d'; el.style.fontWeight = '600'; const grid = sec.querySelector('.rv-concl'); if (grid) sec.insertBefore(el, grid); else sec.appendChild(el); }
-    el.textContent = `아래 수기 카드 네 장은 ${md(base)} 장 마감 기준에서 멈춰 있다 — 그 뒤 ${after.length}거래일(${md(after[0])}~${md(after[after.length - 1])}) 자료는 카드에 반영되지 않았다(아침 갱신이 이 화면에 오지 않음). 첫 카드(자동)와 맨 위 「이번 갱신의 큰 변화」는 최신 자료 기준이다.`;
+    const after = days.filter(d => d > base); let el = document.getElementById('concl-stale'), old = document.getElementById('concl-old');
+    const grid = sec.querySelector('.rv-concl'), cards = () => Array.from(sec.querySelectorAll('.rv-card')).filter(c => c.id !== 'concl-auto');
+    if (after.length < 2) { if (el) el.remove(); if (old && grid) { cards().forEach(c => grid.appendChild(c)); old.remove(); } return; }
+    if (!el) { el = document.createElement('p'); el.id = 'concl-stale'; el.className = 'rv-note rv-hot'; el.style.color = '#e5484d'; el.style.fontWeight = '600'; if (grid) sec.insertBefore(el, grid); else sec.appendChild(el); }
+    el.textContent = `수기 카드 네 장은 ${md(base)} 장 마감 기준에서 멈춰 있다 — 그 뒤 ${after.length}거래일(${md(after[0])}~${md(after[after.length - 1])}) 자료는 카드에 반영되지 않았다(아침 갱신이 이 화면에 오지 않음). 오래된 카드는 아래에 접어 두었다. 첫 카드(자동)와 맨 위 「이번 갱신의 큰 변화」는 최신 자료 기준이다.`;
+    // 오래된 수기 카드는 접어 둔다(지금 분석처럼 읽히지 않게). 새 카드가 오면 위에서 다시 펼쳐 놓는다
+    if (!old && grid) { old = document.createElement('details'); old.className = 'rv-more'; old.id = 'concl-old'; old.appendChild(document.createElement('summary')); const g2 = document.createElement('div'); g2.className = 'rv-concl'; old.appendChild(g2); cards().forEach(c => g2.appendChild(c)); grid.after(old); }
+    if (old) old.querySelector('summary').textContent = `${md(base)} 장 마감 기준 수기 카드 4장(오래됨 — 펼치기)`;
   }
   window.fillRelief = () => { try { fillRelief(); } finally { try { fillHot(); } catch (e) { console.error(e); } try { fillPanic(); } catch (e) { console.error(e); } try { fillHealth(); } catch (e) { console.error(e); } try { fillStale(); } catch (e) { console.error(e); } } };   // index.html 의 dash.onData 콜백이 부른다(스크립트끼리는 window 로만 공유)
 })();
