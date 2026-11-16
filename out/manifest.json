@@ -1,5 +1,5 @@
 {
- "run": "2026-11-16 08:23",
+ "run": "2026-11-16 11:49",
  "tag": "0831",
  "kospi_last": "2026-11-13",
  "kofia_last": "2026-11-12",
@@ -36,7 +36,7 @@
    "last_date": "2026-11-13"
   },
   "am_stats": {
-   "sha256": "09a51973ad7344e48559b44f37c82a11198ffc8c1695d18ddd8a8e03a502ff0f",
+   "sha256": "dad769bb41cf9c634a0939cf389d658b33e7a1f16ab3cb6318274cdab80f9441",
    "bytes": 1263,
    "last_date": "기준일"
   },
@@ -121,7 +121,7 @@
    "last_date": "전체"
   },
   "health": {
-   "sha256": "f63623679b23d36a8df281b213b26a720991afeed3e2d5172b10fac612b8391d",
+   "sha256": "bf917bc628f967dfd2b962cb8686f89bdbc17eb7eb7a91e9e141bfa33f0e3100",
    "bytes": 2244,
    "last_date": "web_cards"
   },
