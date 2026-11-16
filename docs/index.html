@@ -2,7 +2,14 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#1b1f24">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="반대매매">
 <title>미수 반대매매·신용 대시보드 웹판</title>
 <meta name="description" content="코스피 미수 반대매매·신용·매매 신호 대시보드 웹판 — 저장소에 올라온 자료까지 보여준다">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
@@ -17,6 +24,7 @@
 html,body{margin:0;background:var(--color-bg);color:var(--color-fg);font-family:var(--font-anthropic-sans);font-size:var(--cds-font-size-body);line-height:1.5}
 #dash-root{max-width:1180px;margin:0 auto;padding:12px 14px 40px}
 html,body{overflow-x:hidden}
+@supports (overflow:clip){html,body{overflow-x:clip}}  /* 2026-11-16: hidden 은 위에 붙는 구역 메뉴(sticky)를 막아서 clip 으로 */
 #dash-root .rv-card{background:var(--color-panel)}
 .web-bar{font-size:12.5px;color:var(--color-fg-muted);margin:0 0 10px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
 .web-bar a{color:inherit}
@@ -50,8 +58,11 @@ window.dash = (function(){
     onData(cb){ cbs.push(cb); if (loaded) cb(); },
     async load(){
       const v = Date.now();
+      // 2026-11-16: meta.json(작은 파일)만 매번 새로 받고, 자료 파일은 그 실행 시각을 주소에 붙여 받는다 — 새 실행이 없으면 휴대폰에 받아 둔 것을 다시 쓴다(약 600KB 절약)
+      let meta = null; try { const r0 = await fetch('meta.json?v=' + v, {cache: 'no-store'}); if (r0.ok) meta = await r0.json(); } catch (e) {}
+      const dv = meta && meta.built_at ? encodeURIComponent(String(meta.built_at) + '_' + String(meta.tag || '')) : v;
       await Promise.all(Object.keys(FILES).map(async id => {
-        try { const r = await fetch('data/' + FILES[id] + '?v=' + v, {cache: 'no-store'}); if (!r.ok) throw new Error('HTTP ' + r.status);
+        try { const r = await fetch('data/' + FILES[id] + '?v=' + dv); if (!r.ok) throw new Error('HTTP ' + r.status);
           store[id] = {status: 'ok', data: d3.csvParse(await r.text(), NUM)}; }
         catch (e) { store[id] = {status: 'missing', data: null, error: String(e)}; }
       }));
@@ -59,7 +70,7 @@ window.dash = (function(){
       loaded = true; cbs.forEach(cb => { try { cb(); } catch (e) { console.error(e); } });
       const miss = Object.keys(store).filter(k => store[k].status === 'missing' && !(k in calcs));
       if (miss.length) { const d = document.createElement('div'); d.className = 'web-err'; d.textContent = '읽지 못한 자료: ' + miss.join(', '); document.getElementById('page').prepend(d); }
-      try { const r = await fetch('meta.json?v=' + v, {cache: 'no-store'}); const m = await r.json();
+      try { const m = meta; if (!m) throw new Error('meta 없음');
         document.querySelector('#web-bar span').textContent = `웹판 · ${m.label} · 계산 ${m.run_at} KST · 코스피 ${m.kospi} · 금투협 ${m.kofia} · VKOSPI ${m.vkospi} 기준 · 자료 ${m.built_at}`; } catch (e) {}
     }
   };
