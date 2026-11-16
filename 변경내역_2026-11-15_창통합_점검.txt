@@ -22,7 +22,7 @@
   저장소를 붙이는 도구(add_repo)는 예약 작업 세션에 아예 없다(1회 진단 작업에서 확인). 이 창에서 만든 작업은 저장소가 처음부터 붙어 push 가 된다.
 수정 전 → 수정 후
 - 웹판 docs/page.html: 결론 카드 11/12 → 11/13(1회 작업, 커밋 8b379ca, 아티팩트 v197과 sha256 일치, 결론 절 밖은 그대로)
-- 08:55 예약 작업: 옛 작업(trig_01PAmZg2…) 일시 정지(기록 보존) → 새 작업 trig_01RGKsJ7VRurdrqbGwLaTzJx(같은 지시문, 같은 시각)
+- 08:55 예약 작업: 옛 작업(trig_01PAmZg2…)은 아직 켜져 있음(일시 정지가 권한 검사로 거부됨 — 사용자 확인 대기) + 새 작업 trig_01RGKsJ7VRurdrqbGwLaTzJx(같은 지시문, 같은 시각)
   · 2단계: add_repo 필수 → 있으면 쓰고 없어도 계속 / 10단계(1): add_repo 실패 시 건너뛰기 → 끝까지 하고 push 거부 때만 실패
   · 모델: claude-fable-5-1 → claude-opus-5-5(새 작업의 기본값)
 - state/web_sync v3: ok, 반영함, commit 8b379ca
