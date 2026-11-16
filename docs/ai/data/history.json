@@ -72,6 +72,1118 @@
   "src": "https://www.brianheger.com/canaries-in-the-coal-mine-six-facts-about-the-recent-employment-effects-of-ai-august-2026-update-stanford-digital-economy-lab/"
  },
  {
+  "date": "2015-01",
+  "key": "us_unemp",
+  "value": 5.7,
+  "text": "5.7%(15.1)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2015-02",
+  "key": "us_unemp",
+  "value": 5.5,
+  "text": "5.5%(15.2)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2015-03",
+  "key": "us_unemp",
+  "value": 5.4,
+  "text": "5.4%(15.3)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2015-04",
+  "key": "us_unemp",
+  "value": 5.4,
+  "text": "5.4%(15.4)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2015-05",
+  "key": "us_unemp",
+  "value": 5.6,
+  "text": "5.6%(15.5)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2015-06",
+  "key": "us_unemp",
+  "value": 5.3,
+  "text": "5.3%(15.6)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2015-07",
+  "key": "us_unemp",
+  "value": 5.2,
+  "text": "5.2%(15.7)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2015-08",
+  "key": "us_unemp",
+  "value": 5.1,
+  "text": "5.1%(15.8)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2015-09",
+  "key": "us_unemp",
+  "value": 5.0,
+  "text": "5.0%(15.9)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2015-10",
+  "key": "us_unemp",
+  "value": 5.0,
+  "text": "5.0%(15.10)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2015-11",
+  "key": "us_unemp",
+  "value": 5.1,
+  "text": "5.1%(15.11)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2015-12",
+  "key": "us_unemp",
+  "value": 5.0,
+  "text": "5.0%(15.12)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2016-01",
+  "key": "us_unemp",
+  "value": 4.8,
+  "text": "4.8%(16.1)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2016-02",
+  "key": "us_unemp",
+  "value": 4.9,
+  "text": "4.9%(16.2)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2016-03",
+  "key": "us_unemp",
+  "value": 5.0,
+  "text": "5.0%(16.3)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2016-04",
+  "key": "us_unemp",
+  "value": 5.1,
+  "text": "5.1%(16.4)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2016-05",
+  "key": "us_unemp",
+  "value": 4.8,
+  "text": "4.8%(16.5)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2016-06",
+  "key": "us_unemp",
+  "value": 4.9,
+  "text": "4.9%(16.6)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2016-07",
+  "key": "us_unemp",
+  "value": 4.8,
+  "text": "4.8%(16.7)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2016-08",
+  "key": "us_unemp",
+  "value": 4.9,
+  "text": "4.9%(16.8)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2016-09",
+  "key": "us_unemp",
+  "value": 5.0,
+  "text": "5.0%(16.9)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2016-10",
+  "key": "us_unemp",
+  "value": 4.9,
+  "text": "4.9%(16.10)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2016-11",
+  "key": "us_unemp",
+  "value": 4.7,
+  "text": "4.7%(16.11)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2016-12",
+  "key": "us_unemp",
+  "value": 4.7,
+  "text": "4.7%(16.12)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2017-01",
+  "key": "us_unemp",
+  "value": 4.7,
+  "text": "4.7%(17.1)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2017-02",
+  "key": "us_unemp",
+  "value": 4.6,
+  "text": "4.6%(17.2)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2017-03",
+  "key": "us_unemp",
+  "value": 4.4,
+  "text": "4.4%(17.3)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2017-04",
+  "key": "us_unemp",
+  "value": 4.4,
+  "text": "4.4%(17.4)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2017-05",
+  "key": "us_unemp",
+  "value": 4.4,
+  "text": "4.4%(17.5)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2017-06",
+  "key": "us_unemp",
+  "value": 4.3,
+  "text": "4.3%(17.6)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2017-07",
+  "key": "us_unemp",
+  "value": 4.3,
+  "text": "4.3%(17.7)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2017-08",
+  "key": "us_unemp",
+  "value": 4.4,
+  "text": "4.4%(17.8)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2017-09",
+  "key": "us_unemp",
+  "value": 4.3,
+  "text": "4.3%(17.9)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2017-10",
+  "key": "us_unemp",
+  "value": 4.2,
+  "text": "4.2%(17.10)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2017-11",
+  "key": "us_unemp",
+  "value": 4.2,
+  "text": "4.2%(17.11)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2017-12",
+  "key": "us_unemp",
+  "value": 4.1,
+  "text": "4.1%(17.12)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2018-01",
+  "key": "us_unemp",
+  "value": 4.0,
+  "text": "4.0%(18.1)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2018-02",
+  "key": "us_unemp",
+  "value": 4.1,
+  "text": "4.1%(18.2)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2018-03",
+  "key": "us_unemp",
+  "value": 4.0,
+  "text": "4.0%(18.3)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2018-04",
+  "key": "us_unemp",
+  "value": 4.0,
+  "text": "4.0%(18.4)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2018-05",
+  "key": "us_unemp",
+  "value": 3.8,
+  "text": "3.8%(18.5)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2018-06",
+  "key": "us_unemp",
+  "value": 4.0,
+  "text": "4.0%(18.6)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2018-07",
+  "key": "us_unemp",
+  "value": 3.8,
+  "text": "3.8%(18.7)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2018-08",
+  "key": "us_unemp",
+  "value": 3.8,
+  "text": "3.8%(18.8)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2018-09",
+  "key": "us_unemp",
+  "value": 3.7,
+  "text": "3.7%(18.9)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2018-10",
+  "key": "us_unemp",
+  "value": 3.8,
+  "text": "3.8%(18.10)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2018-11",
+  "key": "us_unemp",
+  "value": 3.8,
+  "text": "3.8%(18.11)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2018-12",
+  "key": "us_unemp",
+  "value": 3.9,
+  "text": "3.9%(18.12)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2019-01",
+  "key": "us_unemp",
+  "value": 4.0,
+  "text": "4.0%(19.1)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2019-02",
+  "key": "us_unemp",
+  "value": 3.8,
+  "text": "3.8%(19.2)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2019-03",
+  "key": "us_unemp",
+  "value": 3.8,
+  "text": "3.8%(19.3)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2019-04",
+  "key": "us_unemp",
+  "value": 3.7,
+  "text": "3.7%(19.4)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2019-05",
+  "key": "us_unemp",
+  "value": 3.6,
+  "text": "3.6%(19.5)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2019-06",
+  "key": "us_unemp",
+  "value": 3.6,
+  "text": "3.6%(19.6)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2019-07",
+  "key": "us_unemp",
+  "value": 3.7,
+  "text": "3.7%(19.7)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2019-08",
+  "key": "us_unemp",
+  "value": 3.6,
+  "text": "3.6%(19.8)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2019-09",
+  "key": "us_unemp",
+  "value": 3.5,
+  "text": "3.5%(19.9)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2019-10",
+  "key": "us_unemp",
+  "value": 3.6,
+  "text": "3.6%(19.10)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2019-11",
+  "key": "us_unemp",
+  "value": 3.6,
+  "text": "3.6%(19.11)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2019-12",
+  "key": "us_unemp",
+  "value": 3.6,
+  "text": "3.6%(19.12)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2020-01",
+  "key": "us_unemp",
+  "value": 3.6,
+  "text": "3.6%(20.1)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2020-02",
+  "key": "us_unemp",
+  "value": 3.5,
+  "text": "3.5%(20.2)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2020-03",
+  "key": "us_unemp",
+  "value": 4.4,
+  "text": "4.4%(20.3)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2020-04",
+  "key": "us_unemp",
+  "value": 14.8,
+  "text": "14.8%(20.4)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2020-05",
+  "key": "us_unemp",
+  "value": 13.2,
+  "text": "13.2%(20.5)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2020-06",
+  "key": "us_unemp",
+  "value": 11.0,
+  "text": "11.0%(20.6)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2020-07",
+  "key": "us_unemp",
+  "value": 10.2,
+  "text": "10.2%(20.7)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2020-08",
+  "key": "us_unemp",
+  "value": 8.4,
+  "text": "8.4%(20.8)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2020-09",
+  "key": "us_unemp",
+  "value": 7.8,
+  "text": "7.8%(20.9)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2020-10",
+  "key": "us_unemp",
+  "value": 6.9,
+  "text": "6.9%(20.10)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2020-11",
+  "key": "us_unemp",
+  "value": 6.7,
+  "text": "6.7%(20.11)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2020-12",
+  "key": "us_unemp",
+  "value": 6.7,
+  "text": "6.7%(20.12)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2021-01",
+  "key": "us_unemp",
+  "value": 6.4,
+  "text": "6.4%(21.1)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2021-02",
+  "key": "us_unemp",
+  "value": 6.2,
+  "text": "6.2%(21.2)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2021-03",
+  "key": "us_unemp",
+  "value": 6.1,
+  "text": "6.1%(21.3)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2021-04",
+  "key": "us_unemp",
+  "value": 6.1,
+  "text": "6.1%(21.4)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2021-05",
+  "key": "us_unemp",
+  "value": 5.8,
+  "text": "5.8%(21.5)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2021-06",
+  "key": "us_unemp",
+  "value": 5.9,
+  "text": "5.9%(21.6)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2021-07",
+  "key": "us_unemp",
+  "value": 5.4,
+  "text": "5.4%(21.7)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2021-08",
+  "key": "us_unemp",
+  "value": 5.1,
+  "text": "5.1%(21.8)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2021-09",
+  "key": "us_unemp",
+  "value": 4.7,
+  "text": "4.7%(21.9)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2021-10",
+  "key": "us_unemp",
+  "value": 4.5,
+  "text": "4.5%(21.10)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2021-11",
+  "key": "us_unemp",
+  "value": 4.1,
+  "text": "4.1%(21.11)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2021-12",
+  "key": "us_unemp",
+  "value": 3.9,
+  "text": "3.9%(21.12)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2022-01",
+  "key": "us_unemp",
+  "value": 4.0,
+  "text": "4.0%(22.1)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2022-02",
+  "key": "us_unemp",
+  "value": 3.9,
+  "text": "3.9%(22.2)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2022-03",
+  "key": "us_unemp",
+  "value": 3.7,
+  "text": "3.7%(22.3)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2022-04",
+  "key": "us_unemp",
+  "value": 3.7,
+  "text": "3.7%(22.4)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2022-05",
+  "key": "us_unemp",
+  "value": 3.6,
+  "text": "3.6%(22.5)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2022-06",
+  "key": "us_unemp",
+  "value": 3.6,
+  "text": "3.6%(22.6)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2022-07",
+  "key": "us_unemp",
+  "value": 3.5,
+  "text": "3.5%(22.7)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2022-08",
+  "key": "us_unemp",
+  "value": 3.6,
+  "text": "3.6%(22.8)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2022-09",
+  "key": "us_unemp",
+  "value": 3.5,
+  "text": "3.5%(22.9)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2022-10",
+  "key": "us_unemp",
+  "value": 3.6,
+  "text": "3.6%(22.10)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2022-11",
+  "key": "us_unemp",
+  "value": 3.6,
+  "text": "3.6%(22.11)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2022-12",
+  "key": "us_unemp",
+  "value": 3.5,
+  "text": "3.5%(22.12)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2023-01",
+  "key": "us_unemp",
+  "value": 3.5,
+  "text": "3.5%(23.1)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2023-02",
+  "key": "us_unemp",
+  "value": 3.6,
+  "text": "3.6%(23.2)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2023-03",
+  "key": "us_unemp",
+  "value": 3.5,
+  "text": "3.5%(23.3)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2023-04",
+  "key": "us_unemp",
+  "value": 3.4,
+  "text": "3.4%(23.4)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2023-05",
+  "key": "us_unemp",
+  "value": 3.6,
+  "text": "3.6%(23.5)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2023-06",
+  "key": "us_unemp",
+  "value": 3.6,
+  "text": "3.6%(23.6)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2023-07",
+  "key": "us_unemp",
+  "value": 3.5,
+  "text": "3.5%(23.7)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2023-08",
+  "key": "us_unemp",
+  "value": 3.7,
+  "text": "3.7%(23.8)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2023-09",
+  "key": "us_unemp",
+  "value": 3.7,
+  "text": "3.7%(23.9)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2023-10",
+  "key": "us_unemp",
+  "value": 3.9,
+  "text": "3.9%(23.10)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2023-11",
+  "key": "us_unemp",
+  "value": 3.7,
+  "text": "3.7%(23.11)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2023-12",
+  "key": "us_unemp",
+  "value": 3.8,
+  "text": "3.8%(23.12)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2024-01",
+  "key": "us_unemp",
+  "value": 3.7,
+  "text": "3.7%(24.1)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2024-02",
+  "key": "us_unemp",
+  "value": 3.9,
+  "text": "3.9%(24.2)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2024-03",
+  "key": "us_unemp",
+  "value": 3.9,
+  "text": "3.9%(24.3)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2024-04",
+  "key": "us_unemp",
+  "value": 3.9,
+  "text": "3.9%(24.4)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2024-05",
+  "key": "us_unemp",
+  "value": 3.9,
+  "text": "3.9%(24.5)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2024-06",
+  "key": "us_unemp",
+  "value": 4.1,
+  "text": "4.1%(24.6)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2024-07",
+  "key": "us_unemp",
+  "value": 4.2,
+  "text": "4.2%(24.7)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2024-08",
+  "key": "us_unemp",
+  "value": 4.2,
+  "text": "4.2%(24.8)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2024-09",
+  "key": "us_unemp",
+  "value": 4.1,
+  "text": "4.1%(24.9)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2024-10",
+  "key": "us_unemp",
+  "value": 4.1,
+  "text": "4.1%(24.10)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2024-11",
+  "key": "us_unemp",
+  "value": 4.2,
+  "text": "4.2%(24.11)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2024-12",
+  "key": "us_unemp",
+  "value": 4.1,
+  "text": "4.1%(24.12)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2025-01",
+  "key": "us_unemp",
+  "value": 4.0,
+  "text": "4.0%(25.1)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2025-02",
+  "key": "us_unemp",
+  "value": 4.2,
+  "text": "4.2%(25.2)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2025-03",
+  "key": "us_unemp",
+  "value": 4.2,
+  "text": "4.2%(25.3)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2025-04",
+  "key": "us_unemp",
+  "value": 4.2,
+  "text": "4.2%(25.4)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2025-05",
+  "key": "us_unemp",
+  "value": 4.3,
+  "text": "4.3%(25.5)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2025-06",
+  "key": "us_unemp",
+  "value": 4.1,
+  "text": "4.1%(25.6)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2025-07",
+  "key": "us_unemp",
+  "value": 4.3,
+  "text": "4.3%(25.7)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2025-08",
+  "key": "us_unemp",
+  "value": 4.3,
+  "text": "4.3%(25.8)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2025-09",
+  "key": "us_unemp",
+  "value": 4.4,
+  "text": "4.4%(25.9)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2025-11",
+  "key": "us_unemp",
+  "value": 4.5,
+  "text": "4.5%(25.11)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2025-12",
+  "key": "us_unemp",
+  "value": 4.4,
+  "text": "4.4%(25.12)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2026-01",
+  "key": "us_unemp",
+  "value": 4.3,
+  "text": "4.3%(26.1)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2026-02",
+  "key": "us_unemp",
+  "value": 4.4,
+  "text": "4.4%(26.2)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2026-03",
+  "key": "us_unemp",
+  "value": 4.3,
+  "text": "4.3%(26.3)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2026-04",
+  "key": "us_unemp",
+  "value": 4.3,
+  "text": "4.3%(26.4)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2026-05",
+  "key": "us_unemp",
+  "value": 4.3,
+  "text": "4.3%(26.5)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2026-06",
+  "key": "us_unemp",
+  "value": 4.2,
+  "text": "4.2%(26.6)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2026-07",
+  "key": "us_unemp",
+  "value": 4.1,
+  "text": "4.1%(26.7)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
+  "date": "2026-08",
+  "key": "us_unemp",
+  "value": 4.1,
+  "text": "4.1%(26.8)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/UNRATE"
+ },
+ {
   "date": "2026-09",
   "key": "us_unemp",
   "value": 4.2,
@@ -4314,8 +5426,8 @@
  {
   "date": "2026-11-13",
   "key": "foreign20",
-  "value": -10.93,
-  "text": "−10.9조 원(10.19~11.13, 11.13 KRX 잠정 포함)",
+  "value": -10.94,
+  "text": "−10.9조 원(10.19~11.13, 확정)",
   "unit": "조 원",
   "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
  },
@@ -4334,5 +5446,125 @@
   "text": "3.20%(11.12)",
   "unit": "%",
   "src": "https://fred.stlouisfed.org/data/BAMLH0A0HYM2"
+ },
+ {
+  "date": "2026-11-16",
+  "key": "metr_stall",
+  "value": 6.3,
+  "text": "6.3개월(마지막 기록 2026-05-08)",
+  "unit": "개월",
+  "src": "https://metr.org/time-horizons/"
+ },
+ {
+  "date": "2026-10",
+  "key": "kr_ei",
+  "value": -5.4,
+  "text": "−5.4만 명(10월)",
+  "unit": "만 명",
+  "src": "https://www.fnnews.com/news/202611091146247799"
+ },
+ {
+  "date": "2026-11-13",
+  "key": "vkospi",
+  "value": 50.15,
+  "text": "50.2(11.13)",
+  "unit": "",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-13",
+  "key": "ai_incident",
+  "value": null,
+  "text": "주의: FBI ARTEX 자율 침투 도구 경보(11.13), 피해액 미공개·인명 피해 없음·긴급 조치 없음",
+  "unit": "",
+  "src": "https://www.ic3.gov/CSA/2026/261113.pdf"
+ },
+ {
+  "date": "2026-11-16",
+  "key": "x_gpu_h100",
+  "value": 3.19,
+  "text": "H100 SXM 3.19달러/시간(1개월 +8.9%, 조회 시점 값·기준일 표시 없음)",
+  "unit": "달러/시간",
+  "src": "https://data.ornn.com/markets"
+ },
+ {
+  "date": "2026-11-16",
+  "key": "x_gpu_b200",
+  "value": 9.66,
+  "text": "B200 9.66달러/시간(1개월 +21.8%, 조회 시점 값·기준일 표시 없음)",
+  "unit": "달러/시간",
+  "src": "https://data.ornn.com/markets"
+ },
+ {
+  "date": "2026-10-28",
+  "key": "x_cds_oracle",
+  "value": 274.4,
+  "text": "오라클 5년 CDS 274.4bp(10.28, 전일 대비 −22.2bp — 블룸버그 인용 서울경제 영문판 1곳, 그 뒤 수치 미확인)",
+  "unit": "bp",
+  "src": "https://en.sedaily.com/international/2026/11/03/oracle-curbs-borrowing-as-credit-risk-eases-microsoft-bonds"
+ },
+ {
+  "date": "2026-11-12",
+  "key": "x_poly_bestmodel_nov",
+  "value": 79,
+  "text": "11월 말 최고 AI 모델: 구글 79%·Anthropic 20%·OpenAI 2%(폴리마켓, PredScope 집계 11.12 12:35 UTC)",
+  "unit": "%",
+  "src": "https://predscope.com/event/which-company-has-the-best-ai-model-end-of-november"
+ },
+ {
+  "date": "2026-11-13",
+  "key": "x_taiwan",
+  "value": null,
+  "text": "중국이 11월 초부터 대만 주변·남중국해·서태평양에 군함·해경선 100척 넘게 미발표 전개(11.13 제1도련선 안 약 70척, 랴오닝 항모 전단 '지역 거부' 훈련 — 대만 국방부장 11.10 확인). 봉쇄·검역 선언 없음, 해운·TSMC 출하 차질 보도 없음",
+  "unit": "",
+  "src": "https://www.yahoo.com/news/world/articles/china-quietly-mobilizes-over-100-151644269.html"
+ },
+ {
+  "date": "2026-10-31",
+  "key": "x_rev_anthropic",
+  "value": 810,
+  "text": "연환산 약 810억 달러(10.31, 9.30 약 710억 달러 — S-1/A 11.10 인용 정리 글 1곳)",
+  "unit": "억 달러",
+  "src": "https://roboforex.com/blog/anthropic-ipo/anthropic-revenue/"
+ },
+ {
+  "date": "2026-09-30",
+  "key": "x_capex_alphabet",
+  "value": 513.55,
+  "text": "3분기 513.55억 달러(최근 4개 분기 1,598.04억)",
+  "unit": "억 달러",
+  "src": "https://ppc.land/alphabets-free-cash-flow-drops-to-negative-9-1bn-despite-26-2bn-profit/"
+ },
+ {
+  "date": "2026-09-30",
+  "key": "x_ocf_alphabet",
+  "value": 422.9,
+  "text": "3분기 422.90억 달러(최근 4개 분기 1,795.51억)",
+  "unit": "억 달러",
+  "src": "https://ppc.land/alphabets-free-cash-flow-drops-to-negative-9-1bn-despite-26-2bn-profit/"
+ },
+ {
+  "date": "2026-11-06",
+  "key": "x_indeed_softdev",
+  "value": 81.4,
+  "text": "Indeed 소프트웨어 개발 구인 81.4(11.6, 2020.2.1=100, FRED IHLIDXUSTPSOFTDEVE; 10.20 80.1)",
+  "unit": "2020년 2월=100",
+  "src": "https://fred.stlouisfed.org/series/IHLIDXUSTPSOFTDEVE"
+ },
+ {
+  "date": "2026-11-16",
+  "key": "kospi_dd",
+  "value": -44.04,
+  "text": "−44.0%(11.16, 5,100.50)",
+  "unit": "%",
+  "src": "https://view.asiae.co.kr/article/2026111615454467528"
+ },
+ {
+  "date": "2026-11-16",
+  "key": "foreign20",
+  "value": -12.41,
+  "text": "−12.4조 원(10.20~11.16, 잠정 포함)",
+  "unit": "조 원",
+  "src": "https://view.asiae.co.kr/article/2026111615454467528"
  }
 ]
