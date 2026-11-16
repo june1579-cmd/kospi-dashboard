@@ -1,9 +1,9 @@
 {
- "run": "2026-11-16 15:43",
- "tag": "1540",
+ "run": "2026-11-16 20:23",
+ "tag": "1840",
  "kospi_last": "2026-11-16",
  "kofia_last": "2026-11-13",
- "vkospi_last": "2026-11-13",
+ "vkospi_last": "2026-11-16",
  "night_last": "2026-11-16",
  "errors": [],
  "data_line": "정정 1건(신호 취소)",
@@ -11,8 +11,8 @@
   "오류": 0,
   "정정": 1,
   "주의": 0,
-  "참고": 1,
-  "정상": 13
+  "참고": 0,
+  "정상": 14
  },
  "files": {
   "alarms": {
@@ -26,9 +26,9 @@
    "last_date": "전체"
   },
   "am_daily": {
-   "sha256": "4aa668a593df56670b924a7b98ab31100413e642eda2cdbc46cb5857bdcce1fb",
-   "bytes": 233586,
-   "last_date": "2026-11-13"
+   "sha256": "1620fb89d7afd582afc354c10de2fd6cffa1f89fb9d4c33c1f226f4ad6947998",
+   "bytes": 234843,
+   "last_date": "2026-11-16"
   },
   "am_now": {
    "sha256": "85102fd236b78d17215d44073f69bed04ea90ab20a16386944db7aaeecbd1b59",
@@ -36,7 +36,7 @@
    "last_date": "2026-11-13"
   },
   "am_stats": {
-   "sha256": "7989ced954c15c6e7e56b2d01ce0db760c1083a86f9ca2c793b366cc1e11f339",
+   "sha256": "3664b08ed1df2c7115dce73763c29d384ec3d12f9ed5cd70729ee09a82ca3f16",
    "bytes": 1263,
    "last_date": "기준일"
   },
@@ -86,12 +86,12 @@
    "last_date": "2026-11-16"
   },
   "flows_daily": {
-   "sha256": "be988da34bff95b4cd0accaa3e1f3077f1de03d17fce7097796f197f4bf49a49",
-   "bytes": 492173,
+   "sha256": "e7c4df3effdc1e4ad30fe06b33c2e96222d58ee9df0065cda46d913fbebd36b0",
+   "bytes": 492175,
    "last_date": "2026-11-16"
   },
   "fpanic": {
-   "sha256": "22a1d9629b845df82d567e347306baacb96d68778ac90de6d825688950595338",
+   "sha256": "1c823c4ec90956eb33270de7cea4c622bb314d57cfae3362eb746c90bda936c6",
    "bytes": 168838,
    "last_date": "2026-11-16"
   },
@@ -101,19 +101,19 @@
    "last_date": "2026-11-13"
   },
   "fpanic_now": {
-   "sha256": "17813f01f803b83785a743bbe042b7451067ceced9d3f79152cf4057c2e2f7bd",
+   "sha256": "18762763c0f9dcbd34340aa34c5f4dd94d0758d657a9ebc3945337f8953fd933",
    "bytes": 2233,
    "last_date": "조합"
   },
   "fut_daily": {
-   "sha256": "936a6ec69532dad4a79934c9c2fcf4be5386052421b55ef2b14db2a1bf332ce1",
-   "bytes": 154519,
+   "sha256": "469f4d1e01e6539433a18ee53429caf996e9baf75ec8e2f6f711191ff044bf9d",
+   "bytes": 154523,
    "last_date": "2026-11-16"
   },
   "fx_daily": {
-   "sha256": "32405c22a37149743a3b7d1f0bf3639e13821c135d58c4d0de31cc1583b2974d",
-   "bytes": 570791,
-   "last_date": "2026-11-12"
+   "sha256": "13b37309cd606fdbdf1739c1f45e163a30df50e9a6aff6a88dc106778f45775f",
+   "bytes": 570992,
+   "last_date": "2026-11-13"
   },
   "gap_table": {
    "sha256": "88191414d2b84450c21ceaf4abf96d61c14715e86078af4c0388bcb0bfdd8267",
@@ -121,8 +121,8 @@
    "last_date": "전체"
   },
   "health": {
-   "sha256": "c5df21abf94eec4875b5cc6c8dfb8b0f31c3c7295777eeca5b0cbf9e3707606a",
-   "bytes": 2334,
+   "sha256": "c5b33628a844bc7b2d55da231bee47aa8c6dc3a1cccb8be4da93391fc927bcd9",
+   "bytes": 2244,
    "last_date": "web_cards"
   },
   "lag": {
@@ -141,13 +141,13 @@
    "last_date": "2026-11-13"
   },
   "market_daily": {
-   "sha256": "26aa6113c96bf3360af1cdfb17824307d9ad92f4a2bf373e31c7294fb13f61cf",
-   "bytes": 548686,
+   "sha256": "ef76573e68ea18c2aa119878f3b93b4827817699611adc6ff09b7c65862f61f3",
+   "bytes": 548746,
    "last_date": "2026-11-16"
   },
   "monthly": {
-   "sha256": "6824c9315fd81f5c79af3ef602b369032a10c3fb560ce9f1ecbd0e9eff57ff41",
-   "bytes": 32211,
+   "sha256": "4c49f052d988d4322d85d46ae4d6fba3428667460d2e6e4319c97bd37b700458",
+   "bytes": 32154,
    "last_date": "2026-11"
   },
   "night_fut": {
@@ -156,12 +156,12 @@
    "last_date": "2026-11-13"
   },
   "q_attr": {
-   "sha256": "9468a3d9415ff53076cde64f742ab374e276797eecb9314dca7d5393565d99c8",
-   "bytes": 3890,
+   "sha256": "5e68c2cd9584a5dad0c87cfa1e6cb8064d6ec1a364ecb729acff33e3783dc16e",
+   "bytes": 3795,
    "last_date": "feat"
   },
   "q_daily": {
-   "sha256": "bd639f484355a4eeedc02b48c3130d17b2933976c5c59f6b1852e340e74b119a",
+   "sha256": "8f22cc94bdf93941776427a61fc160146690b031e20f3e412a4ebbf87d8e74b7",
    "bytes": 162101,
    "last_date": "2026-11-16"
   },
@@ -176,8 +176,8 @@
    "last_date": "5일 내 급락·청산"
   },
   "q_now": {
-   "sha256": "4bc27ab4f985897f1f3b867b9faa32dce273c2784c52a36ee12fc0b17a7f8b7d",
-   "bytes": 1903,
+   "sha256": "c8e42fda9358040d7e7c2411c0d60aa010ff3812d4e572c642bd166f77d8d02b",
+   "bytes": 1802,
    "last_date": "다음 거래일 국면 기준선"
   },
   "q_sens": {
