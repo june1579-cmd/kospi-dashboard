@@ -226,7 +226,7 @@
           </div>
           <span class="rv-win" id="all-win"></span>
       </div>
-      <p class="rv-note" id="all-touch">휴대폰·태블릿: 그래프를 두 손가락으로 벌리면 기간이 좁아지고(확대) 오므리면 넓어진다(축소). 한 손가락으로 좌우로 밀면 기간이 과거·최근으로 옮겨진다. 한 번 터치하면 그날 상세가 뜨고, 누른 채 좌우로 움직이면 상세 날짜가 앞뒤로 따라간다. 화면 아무 데나 다시 터치하면 닫힌다.</p>
+      <p class="rv-note" id="all-touch">휴대폰·태블릿: 그래프를 두 손가락으로 벌리면 기간이 좁아지고(확대) 오므리면 넓어진다(축소). 한 손가락으로 좌우로 밀면 기간이 과거·최근으로 옮겨지고, 세게 밀고 떼면 조금 더 미끄러지다 멈춘다(눈금은 제자리). 한 번 터치하면 그날 상세가 뜨고, 누른 채 좌우로 움직이면 상세 날짜가 앞뒤로 따라간다. 화면 아무 데나 다시 터치하면 닫힌다.</p>
       <div class="rv-chart dash-skeleton" id="all-chart" data-source="market credit liq events monthly flows_daily combo alarms fx_daily fut_daily etf_lev reentry buy3 sell3 trend_champ trend_champ_rules relief credit_entry fpanic fpanic_eps fpanic_now health" style="min-height:860px"></div>
       <div class="rv-tbl-wrap" style="margin-top:var(--cds-gap-sm)">
         <table class="rv-tbl" id="sig-tbl" data-source="alarms reentry buy3 sell3">
@@ -696,7 +696,8 @@
 
 <script>
 (function(){
-  const P = d3.utcParse('%Y-%m-%d');
+  const KF_ = d3.utcFormat('%Y-%m-%d'), KFM = new WeakMap(), KEYF = d => { let k = KFM.get(d); if (k === undefined) { k = KF_(d); KFM.set(d, k); } return k; };   // 날짜 → 글자도 한 번만(11/16)
+  const P_ = d3.utcParse('%Y-%m-%d'), PMEMO = new Map(), P = v => { let d = PMEMO.get(v); if (d === undefined) { d = P_(v); PMEMO.set(v, d); } return d; };   // 같은 날짜 글자를 매번 다시 읽지 않는다(그래프 다시 그리기 빠르게, 11/16)
   const md = s => { const d = P(s); return d ? (d.getUTCMonth()+1) + '/' + d.getUTCDate() : s; };
   const ymd = s => String(s).slice(0, 4) + '-' + md(s);                                   // 툴팁 날짜(연도 포함)
   const yd = s => String(s).slice(2, 4) + '.' + (+String(s).slice(5, 7)) + '.' + (+String(s).slice(8, 10));   // 두 해에 걸친 x축 날짜
@@ -736,7 +737,7 @@
   function tradeX(days, range){
     const ds = Array.from(new Set(days)).filter(Boolean).sort(); const n = ds.length;
     const lin = d3.scaleLinear([0, Math.max(1, n - 1)], range);
-    const key = d => typeof d === 'string' ? d.slice(0, 10) : d3.utcFormat('%Y-%m-%d')(d);
+    const key = d => typeof d === 'string' ? d.slice(0, 10) : KEYF(d);
     const pos = d => { const s = key(d); const i = d3.bisectLeft(ds, s); return (i < n && ds[i] === s) ? i : Math.max(-0.5, Math.min(n - 0.5, i - 0.5)); };
     const x = d => lin(pos(d));
     x.invert = px => P(ds[Math.max(0, Math.min(n - 1, Math.round(lin.invert(px))))]);
@@ -771,7 +772,16 @@
     } else box.classList.add('dash-skeleton');
     return false;
   }
-  function tw(svg, s){ const t = svg.append('text').attr('class','rv-tick').text(s); const w = t.node().getComputedTextLength(); t.remove(); return w; }
+  // 눈금 글자 폭(11/16): 처음 한 번만 실제 SVG 글자로 재서 글꼴·보정값을 잡고, 그다음은 캔버스로 잰다(SVG로 잴 때마다 화면 전체 배치를 다시 계산해서 느렸다)
+  const TWM = new Map(), TWC = document.createElement('canvas').getContext('2d'); let TWF = null; const twReset = () => { TWM.clear(); TWF = null; };
+  window.addEventListener('resize', twReset); if (document.fonts) document.fonts.addEventListener('loadingdone', twReset);
+  function tw(svg, s){
+    if (TWM.has(s)) return TWM.get(s);
+    if (!TWF || !TWC) { const t = svg.append('text').attr('class','rv-tick').text(s), nd = t.node(), w0 = nd.getComputedTextLength(), cs = getComputedStyle(nd); t.remove(); if (!(w0 > 0) || !TWC) return w0;
+      TWC.font = [cs.fontStyle, cs.fontWeight, cs.fontSize, cs.fontFamily].join(' '); const m = TWC.measureText(s).width; TWF = {r: m > 0 ? w0 / m : 1}; TWM.set(s, w0); return w0; }
+    const w = TWC.measureText(s).width * TWF.r; TWM.set(s, w); return w;
+  }
+  function tw0(svg, s){ const t = svg.append('text').attr('class','rv-tick').text(s); const w = t.node().getComputedTextLength(); t.remove(); return w; }
   function newSvg(box, W, H){ return d3.select(box).append('svg').attr('width','100%').attr('viewBox', `0 0 ${W} ${H}`).attr('height', H); }
   function tipBox(box){ const t = document.createElement('div'); t.className = 'rv-tip'; t.hidden = true; box.appendChild(t); return t; }
   function showTip(tip, box, x, y, title, lines){
@@ -1078,7 +1088,7 @@
     b.append(yy, document.createTextNode(String(y).slice(2) + '~' + String(y + 1).slice(2)));
     b.addEventListener('click', () => pickRange(k)); el.appendChild(b);
   }));
-  const zoomDays = () => Array.from(new Set(mkRows().map(r => String(r.date)).filter(d => d <= RANGES.all[1]))).sort();   // 2015-01-02부터 전 기간
+  let ZDK = null, ZDV = null; const zoomDays = () => { const k = mkRows(), e = RANGES.all[1]; if (ZDK !== k || ZDV.e !== e) { ZDK = k; ZDV = Array.from(new Set(k.map(r => String(r.date)).filter(d => d <= e))).sort(); ZDV.e = e; } return ZDV; };   // 2015-01-02부터 전 기간
   function zoomIdx(days){                       // 지금 보이는 기간의 처음·끝 거래일 위치
     const cur = view || RANGES[range]; let i0 = days.findIndex(d => d >= cur[0]); if (i0 < 0) i0 = 0;
     let i1 = days.length - 1; while (i1 > 0 && days[i1] > cur[1]) i1--;
@@ -1098,83 +1108,11 @@
   }
   document.querySelectorAll('#all-zoom button').forEach(b => b.addEventListener('click', () => zoomTo(b.dataset.z)));
   // 한눈에 보기 터치(2026-11-16 추가): 두 손가락 벌리기 = 기간 좁게(확대), 오므리기 = 넓게(축소) · 한 손가락 가로 밀기 = 기간 앞뒤로 이동 · 한 번 터치 = 그날 상세 · 누르고 좌우로 = 상세 날짜 앞뒤로 · 화면 아무 데나 다시 터치 = 닫기
-  function zoomBy(f, cx){                       // f < 1 = 기간 좁게. cx(그래프 안 px) 자리의 날짜를 붙잡고 늘이고 줄인다
-    const days = zoomDays(); if (!days.length) return;
-    const [i0, i1] = zoomIdx(days), n = i1 - i0 + 1, last = days.length - 1;
-    const len = Math.max(10, Math.min(days.length, Math.round(n * f)));
-    if (len === n) return;
-    const pl = (document.getElementById('all-chart') || {})._rvPlot || [0, 1];
-    const fr = Math.max(0, Math.min(1, (cx - pl[0]) / Math.max(1, pl[1] - pl[0])));
-    let s = i1 >= last && fr > 0.85 ? last - len + 1 : Math.round(i0 + fr * (n - 1) - fr * (len - 1));   // 최근 끝 근처에서 하면 최근 날짜를 붙잡는다
-    s = Math.max(0, Math.min(last - len + 1, s));
-    view = [days[s], days[s + len - 1]];
-    setPer(blockOf(view)); syncCtl(); drawAll();
-  }
-  function panBy(dx){                           // 한 손가락으로 밀기(2026-11-16): 오른쪽으로 밀면 과거, 왼쪽으로 밀면 최근 쪽으로 기간을 옮긴다(기간 길이는 그대로)
-    const days = zoomDays(); if (!days.length) return;
-    const [i0, i1] = zoomIdx(days), n = i1 - i0 + 1, last = days.length - 1;
-    const pl = (document.getElementById('all-chart') || {})._rvPlot || [0, 1];
-    const sh = Math.round(-dx / Math.max(1, pl[1] - pl[0]) * n);
-    const s = Math.max(0, Math.min(last - n + 1, i0 + sh)); if (s === i0) return;
-    view = [days[s], days[s + n - 1]];
-    setPer(blockOf(view)); syncCtl(); drawAll();
-  }
-  (function(){
-    const box = document.getElementById('all-chart'); if (!box) return;
-    box.style.touchAction = 'pan-y';             // 한 손가락 세로 이동은 화면 스크롤 그대로, 가로 밀기·두 손가락은 이 그래프가 받는다
-    box.style.webkitUserSelect = box.style.userSelect = 'none'; box.style.webkitTouchCallout = 'none';   // 길게 눌러도 글자 선택·메뉴가 뜨지 않게
-    let pin = null, one = null, open = false, closing = false;
-    const hide = () => { open = false; if (box._rvHide) box._rvHide(); };
-    const gapX = ts => Math.abs(ts[0].clientX - ts[1].clientX);
-    const show = c => { const r = box.getBoundingClientRect(); if (box._rvShow && box._rvShow(c.clientX - r.left, c.clientY - r.top)) open = true; };
-    const clearOne = () => { if (one) { clearTimeout(one.timer); if (one.sv) { one.sv.style.transform = ''; box.style.overflow = ''; } } one = null; };
-    document.addEventListener('touchstart', () => { closing = open; if (open) hide(); }, {capture: true, passive: true});   // 상세가 떠 있으면 어디를 터치해도 닫는다
-    box.addEventListener('gesturestart', e => e.preventDefault());
-    box.addEventListener('contextmenu', e => { if (one || pin) e.preventDefault(); });
-    box.addEventListener('touchstart', e => {
-      if (e.touches.length >= 2) {
-        e.preventDefault(); clearOne(); hide();
-        const r = box.getBoundingClientRect(), sv = box.querySelector('svg');
-        if (!pin) pin = {d0: Math.max(24, gapX(e.touches)), cx: (e.touches[0].clientX + e.touches[1].clientX) / 2 - r.left, k: 1, sv};
-      } else if (e.touches.length === 1 && !pin) {
-        const c = e.touches[0];
-        one = {x: c.clientX, y: c.clientY, t: Date.now(), closing, mode: null, dx: 0, sv: null};
-        one.timer = setTimeout(() => { if (one && !one.mode) { one.mode = 'scrub'; show({clientX: one.x, clientY: one.y}); } }, 350);   // 0.35초 누르고 있으면 상세가 손가락을 따라 날짜를 앞뒤로 옮긴다
-      }
-    }, {passive: false});
-    box.addEventListener('touchmove', e => {
-      if (pin) {
-        e.preventDefault();
-        if (e.touches.length >= 2) {
-          pin.k = Math.max(0.25, Math.min(6, gapX(e.touches) / pin.d0));   // 1보다 크면 벌림
-          if (pin.sv) { box.style.overflow = 'hidden'; pin.sv.style.transformOrigin = pin.cx + 'px 0'; pin.sv.style.transform = 'scaleX(' + pin.k + ')'; }   // 손을 뗄 때까지는 미리보기만
-        }
-        return;
-      }
-      if (!one || e.touches.length !== 1) return;
-      const c = e.touches[0], dx = c.clientX - one.x, dy = c.clientY - one.y;
-      if (one.mode === 'scrub') { e.preventDefault(); show(c); return; }
-      if (one.mode === 'pan') { e.preventDefault(); one.dx = dx; if (one.sv) one.sv.style.transform = 'translateX(' + dx + 'px)'; return; }
-      if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return;
-      clearTimeout(one.timer);
-      if (Math.abs(dx) > Math.abs(dy) * 1.2) {   // 가로로 밀기 = 기간 이동(손을 뗄 때까지는 미리보기만)
-        e.preventDefault(); one.mode = 'pan'; one.dx = dx; one.sv = box.querySelector('svg');
-        if (one.sv) { box.style.overflow = 'hidden'; one.sv.style.transform = 'translateX(' + dx + 'px)'; }
-      } else one = null;                         // 세로로 움직이면 화면 스크롤
-    }, {passive: false});
-    const endPin = () => { const p = pin; pin = null; box.style.overflow = ''; if (p && p.sv) p.sv.style.transform = ''; return p; };
-    box.addEventListener('touchend', e => {
-      if (pin) { e.preventDefault(); if (e.touches.length === 0) { const p = endPin(); if (Math.abs(p.k - 1) > 0.08) zoomBy(1 / p.k, p.cx); } return; }
-      if (!one || e.touches.length) return;
-      const o = one; clearOne();
-      if (o.mode === 'pan') { e.preventDefault(); panBy(o.dx); return; }
-      if (o.mode === 'scrub') { e.preventDefault(); return; }   // 손을 떼도 상세는 남고, 아무 데나 다시 터치하면 닫힌다
-      if (o.closing || Date.now() - o.t > 600) return;
-      e.preventDefault();                        // 뒤따르는 가짜 마우스 이벤트가 상세를 다시 띄우지 않게
-      show(e.changedTouches[0]);
-    }, {passive: false});
-    box.addEventListener('touchcancel', () => { endPin(); clearOne(); });
-  })();
+  // 터치 동작(두 손가락 확대·축소, 밀기, 관성, 누르고 좌우)은 gesture.js 에 있다(2026-11-16 분리). 여기서는 보이는 기간을 읽고 정하는 길만 연다. live = 손가락이 움직이는 중(세부 그래프는 손을 뗀 뒤에)
+  { const box = document.getElementById('all-chart'); if (box) box._rvApi = {days: zoomDays, idx: zoomIdx, draw: () => drawAll(), set(s, len, live){
+    const days = zoomDays(), last = days.length - 1; if (last < 0) return false; len = Math.max(10, Math.min(days.length, Math.round(len))); s = Math.max(0, Math.min(last - len + 1, Math.round(s)));
+    const nv = [days[s], days[s + len - 1]], cur = view || RANGES[range], same = nv[0] === cur[0] && nv[1] === cur[1];
+    if (!live) setPer(blockOf(nv)); if (same) return false; view = nv; syncCtl(); drawAll(); return true; }}; }
   const EVC = c => c === '신용 한도' ? C()[3] : c === '외부 변수' ? C()[4] : c === '시장' ? CRIT : c === '레버리지' ? C()[5] : MUTED;
 
   function legendItem(parent, color, label, opts){
@@ -1273,7 +1211,7 @@
     const box = document.getElementById('all-chart');
     if (!gate(box, ['market','credit','liq','events','monthly','flows_daily','combo','alarms','fx_daily','fut_daily','etf_lev','reentry','buy3','sell3'])) return;
     const [a, b] = (view || RANGES[range]).map(P);
-    const inR = r => { const d = P(r.date); return d && d >= a && d <= b; };
+    const [sa, sb] = view || RANGES[range], inR = r => { const v = r.date; if (typeof v === 'string' && v.length === 10) return v >= sa && v <= sb; const d = P(v); return d && d >= a && d <= b; };   // 날짜 글자끼리 바로 비교(11/16)
     const allMk = mkRows(), allCr = dash.data('credit').data;
     const mk = allMk.filter(inR), cr = allCr.filter(inR), lq = liqRows().filter(inR), ev = dash.data('events').data.filter(inR);
     { const ds = Array.from(new Set(mk.map(r => String(r.date)))).sort(), wl = document.getElementById('all-win');
@@ -1406,7 +1344,8 @@
 
     const W = Math.max(300, box.clientWidth);
     const TOP = 24, PT = 16, GAP = 12, BOT = 22;
-    const CMAP = champMap(), FITS = stripFits(CMAP), CONS = consRows();
+    const DK = ['combo', 'trend_champ', 'trend_champ_rules'].map(k => dash.data(k)); if (!drawAll.m || drawAll.m.k.some((o, i) => o !== DK[i])) drawAll.m = {k: DK, cm: champMap()};
+    const CMAP = drawAll.m.cm, FITS = drawAll.m.f || (drawAll.m.f = stripFits(CMAP)), CONS = drawAll.m.c || (drawAll.m.c = consRows());
     let SL = BASE_STRIPS.map(([k, lab], i) => ({k, lab, ord: i}));
     if (tChamp && CMAP) SL = SL.concat(champRules().map((r, i) => ({k: 'y' + r.year, lab: String(r.year).slice(2) + '년 일치1위', ord: 10 + i})));
     SL = sortStrips(SL, FITS);
@@ -1514,9 +1453,11 @@
     const SC = v => num(v) === 1 ? 'var(--color-ok)' : (num(v) === -1 ? CRIT : 'transparent');
     const SB = PC.bot - (KH ? KH + 6 : 0), hC = (SB - PC.top) / STRIPS.length;   // SB = 비교 줄 아래 끝(그 아래 12개 해 합의 줄)
     STRIPS.map(([k, lab], i) => [k, PC.top + i * hC + (i ? 1 : 0), PC.top + (i + 1) * hC - (i < STRIPS.length - 1 ? 1 : 0), lab]).forEach(([k, y0, y1, lab]) => {
-      svg.append('g').attr('clip-path', 'url(#' + sClip + ')').selectAll('rect').data(cb).join('rect')   // 다음 거래일까지 채움(금투협만 있는 휴장일 칸에 틈이 생기지 않게)
-        .attr('x', r => x(P(r.date)) - dayW / 2).attr('width', (r, i) => (i + 1 < cb.length ? x(P(cb[i + 1].date)) - x(P(r.date)) : dayW) + 0.5).attr('y', y0).attr('height', Math.max(1, y1 - y0))
-        .style('fill', r => SC(k === 'leg' ? r[k] : stripVal(r, k, CMAP))).attr('opacity', 0.75);
+      const runs = []; cb.forEach((r, i) => { const f = SC(k === 'leg' ? r[k] : stripVal(r, k, CMAP)), u = runs[runs.length - 1]; if (u && u.f === f) u.j = i; else runs.push({f, i, j: i}); });   // 같은 색이 이어지는 날은 한 칸으로 묶는다(11/16, 다시 그리기 빠르게)
+      const xd = i => x(P(cb[i].date));
+      svg.append('g').attr('clip-path', 'url(#' + sClip + ')').selectAll('rect').data(runs.filter(u => u.f !== 'transparent')).join('rect')   // 다음 거래일까지 채움(금투협만 있는 휴장일 칸에 틈이 생기지 않게)
+        .attr('x', u => xd(u.i) - dayW / 2).attr('width', u => (u.j + 1 < cb.length ? xd(u.j + 1) : xd(u.j) + dayW) - xd(u.i) + 0.5).attr('y', y0).attr('height', Math.max(1, y1 - y0))
+        .style('fill', u => u.f).attr('opacity', 0.75);
       if (k !== 'leg' && tSort !== 'base' && FITS[k] && FITS[k][SORTKEY[tSort]] != null)
         svg.append('text').attr('class', 'rv-tick').attr('x', W - mr + 4).attr('y', (y0 + y1) / 2).attr('dy', '0.32em').style('font-size', Math.max(8, Math.min(10, hC - 2)) + 'px').text(f0(FITS[k][SORTKEY[tSort]]) + '%');
       svg.append('text').attr('class', 'rv-tick').attr('x', ml - 6).attr('y', (y0 + y1) / 2).attr('dy', '0.32em').attr('text-anchor', 'end').style('font-size', Math.max(8, Math.min(11, hC - 2)) + 'px').text(lab);
@@ -2062,3 +2003,4 @@
 <script src="relief.js"></script>
 <script src="lede.js"></script>
 <script src="mobile.js"></script>
+<script src="gesture.js"></script>
