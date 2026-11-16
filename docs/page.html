@@ -226,7 +226,7 @@
           </div>
           <span class="rv-win" id="all-win"></span>
       </div>
-      <p class="rv-note" id="all-touch">휴대폰·태블릿: 그래프를 두 손가락으로 벌리면 기간이 좁아지고(확대) 오므리면 넓어진다(축소). 한 번 터치하면 그날 상세가 뜨고, 화면 아무 데나 다시 터치하면 닫힌다.</p>
+      <p class="rv-note" id="all-touch">휴대폰·태블릿: 그래프를 두 손가락으로 벌리면 기간이 좁아지고(확대) 오므리면 넓어진다(축소). 한 손가락으로 좌우로 밀면 기간이 과거·최근으로 옮겨진다. 한 번 터치하면 그날 상세가 뜨고, 누른 채 좌우로 움직이면 상세 날짜가 앞뒤로 따라간다. 화면 아무 데나 다시 터치하면 닫힌다.</p>
       <div class="rv-chart dash-skeleton" id="all-chart" data-source="market credit liq events monthly flows_daily combo alarms fx_daily fut_daily etf_lev reentry buy3 sell3 trend_champ trend_champ_rules relief credit_entry fpanic fpanic_eps fpanic_now health" style="min-height:860px"></div>
       <div class="rv-tbl-wrap" style="margin-top:var(--cds-gap-sm)">
         <table class="rv-tbl" id="sig-tbl" data-source="alarms reentry buy3 sell3">
@@ -1097,7 +1097,7 @@
     setPer(blockOf(view)); syncCtl(); drawAll();
   }
   document.querySelectorAll('#all-zoom button').forEach(b => b.addEventListener('click', () => zoomTo(b.dataset.z)));
-  // 한눈에 보기 터치(2026-11-16 추가): 두 손가락 벌리기 = 기간 좁게(확대), 오므리기 = 넓게(축소) · 한 번 터치 = 그날 상세 · 화면 아무 데나 다시 터치 = 닫기
+  // 한눈에 보기 터치(2026-11-16 추가): 두 손가락 벌리기 = 기간 좁게(확대), 오므리기 = 넓게(축소) · 한 손가락 가로 밀기 = 기간 앞뒤로 이동 · 한 번 터치 = 그날 상세 · 누르고 좌우로 = 상세 날짜 앞뒤로 · 화면 아무 데나 다시 터치 = 닫기
   function zoomBy(f, cx){                       // f < 1 = 기간 좁게. cx(그래프 안 px) 자리의 날짜를 붙잡고 늘이고 줄인다
     const days = zoomDays(); if (!days.length) return;
     const [i0, i1] = zoomIdx(days), n = i1 - i0 + 1, last = days.length - 1;
@@ -1110,21 +1110,36 @@
     view = [days[s], days[s + len - 1]];
     setPer(blockOf(view)); syncCtl(); drawAll();
   }
+  function panBy(dx){                           // 한 손가락으로 밀기(2026-11-16): 오른쪽으로 밀면 과거, 왼쪽으로 밀면 최근 쪽으로 기간을 옮긴다(기간 길이는 그대로)
+    const days = zoomDays(); if (!days.length) return;
+    const [i0, i1] = zoomIdx(days), n = i1 - i0 + 1, last = days.length - 1;
+    const pl = (document.getElementById('all-chart') || {})._rvPlot || [0, 1];
+    const sh = Math.round(-dx / Math.max(1, pl[1] - pl[0]) * n);
+    const s = Math.max(0, Math.min(last - n + 1, i0 + sh)); if (s === i0) return;
+    view = [days[s], days[s + n - 1]];
+    setPer(blockOf(view)); syncCtl(); drawAll();
+  }
   (function(){
     const box = document.getElementById('all-chart'); if (!box) return;
-    box.style.touchAction = 'pan-y';             // 한 손가락 세로 이동은 화면 스크롤 그대로, 두 손가락은 이 그래프가 받는다
-    let pin = null, tap = null, open = false, closing = false;
+    box.style.touchAction = 'pan-y';             // 한 손가락 세로 이동은 화면 스크롤 그대로, 가로 밀기·두 손가락은 이 그래프가 받는다
+    box.style.webkitUserSelect = box.style.userSelect = 'none'; box.style.webkitTouchCallout = 'none';   // 길게 눌러도 글자 선택·메뉴가 뜨지 않게
+    let pin = null, one = null, open = false, closing = false;
     const hide = () => { open = false; if (box._rvHide) box._rvHide(); };
     const gapX = ts => Math.abs(ts[0].clientX - ts[1].clientX);
+    const show = c => { const r = box.getBoundingClientRect(); if (box._rvShow && box._rvShow(c.clientX - r.left, c.clientY - r.top)) open = true; };
+    const clearOne = () => { if (one) { clearTimeout(one.timer); if (one.sv) { one.sv.style.transform = ''; box.style.overflow = ''; } } one = null; };
     document.addEventListener('touchstart', () => { closing = open; if (open) hide(); }, {capture: true, passive: true});   // 상세가 떠 있으면 어디를 터치해도 닫는다
     box.addEventListener('gesturestart', e => e.preventDefault());
+    box.addEventListener('contextmenu', e => { if (one || pin) e.preventDefault(); });
     box.addEventListener('touchstart', e => {
       if (e.touches.length >= 2) {
-        e.preventDefault(); tap = null; hide();
+        e.preventDefault(); clearOne(); hide();
         const r = box.getBoundingClientRect(), sv = box.querySelector('svg');
         if (!pin) pin = {d0: Math.max(24, gapX(e.touches)), cx: (e.touches[0].clientX + e.touches[1].clientX) / 2 - r.left, k: 1, sv};
       } else if (e.touches.length === 1 && !pin) {
-        tap = {x: e.touches[0].clientX, y: e.touches[0].clientY, t: Date.now(), closing};
+        const c = e.touches[0];
+        one = {x: c.clientX, y: c.clientY, t: Date.now(), closing, mode: null, dx: 0, sv: null};
+        one.timer = setTimeout(() => { if (one && !one.mode) { one.mode = 'scrub'; show({clientX: one.x, clientY: one.y}); } }, 350);   // 0.35초 누르고 있으면 상세가 손가락을 따라 날짜를 앞뒤로 옮긴다
       }
     }, {passive: false});
     box.addEventListener('touchmove', e => {
@@ -1134,22 +1149,31 @@
           pin.k = Math.max(0.25, Math.min(6, gapX(e.touches) / pin.d0));   // 1보다 크면 벌림
           if (pin.sv) { box.style.overflow = 'hidden'; pin.sv.style.transformOrigin = pin.cx + 'px 0'; pin.sv.style.transform = 'scaleX(' + pin.k + ')'; }   // 손을 뗄 때까지는 미리보기만
         }
-      } else if (tap && e.touches.length === 1) {
-        const c = e.touches[0]; if (Math.abs(c.clientX - tap.x) > 10 || Math.abs(c.clientY - tap.y) > 10) tap = null;
+        return;
       }
+      if (!one || e.touches.length !== 1) return;
+      const c = e.touches[0], dx = c.clientX - one.x, dy = c.clientY - one.y;
+      if (one.mode === 'scrub') { e.preventDefault(); show(c); return; }
+      if (one.mode === 'pan') { e.preventDefault(); one.dx = dx; if (one.sv) one.sv.style.transform = 'translateX(' + dx + 'px)'; return; }
+      if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return;
+      clearTimeout(one.timer);
+      if (Math.abs(dx) > Math.abs(dy) * 1.2) {   // 가로로 밀기 = 기간 이동(손을 뗄 때까지는 미리보기만)
+        e.preventDefault(); one.mode = 'pan'; one.dx = dx; one.sv = box.querySelector('svg');
+        if (one.sv) { box.style.overflow = 'hidden'; one.sv.style.transform = 'translateX(' + dx + 'px)'; }
+      } else one = null;                         // 세로로 움직이면 화면 스크롤
     }, {passive: false});
     const endPin = () => { const p = pin; pin = null; box.style.overflow = ''; if (p && p.sv) p.sv.style.transform = ''; return p; };
     box.addEventListener('touchend', e => {
       if (pin) { e.preventDefault(); if (e.touches.length === 0) { const p = endPin(); if (Math.abs(p.k - 1) > 0.08) zoomBy(1 / p.k, p.cx); } return; }
-      if (tap && e.touches.length === 0) {
-        const t0 = tap; tap = null;
-        if (t0.closing || Date.now() - t0.t > 600) return;
-        const c = e.changedTouches[0], r = box.getBoundingClientRect();
-        e.preventDefault();                      // 뒤따르는 가짜 마우스 이벤트가 상세를 다시 띄우지 않게
-        if (box._rvShow && box._rvShow(c.clientX - r.left, c.clientY - r.top)) open = true;
-      }
+      if (!one || e.touches.length) return;
+      const o = one; clearOne();
+      if (o.mode === 'pan') { e.preventDefault(); panBy(o.dx); return; }
+      if (o.mode === 'scrub') { e.preventDefault(); return; }   // 손을 떼도 상세는 남고, 아무 데나 다시 터치하면 닫힌다
+      if (o.closing || Date.now() - o.t > 600) return;
+      e.preventDefault();                        // 뒤따르는 가짜 마우스 이벤트가 상세를 다시 띄우지 않게
+      show(e.changedTouches[0]);
     }, {passive: false});
-    box.addEventListener('touchcancel', () => { endPin(); tap = null; });
+    box.addEventListener('touchcancel', () => { endPin(); clearOne(); });
   })();
   const EVC = c => c === '신용 한도' ? C()[3] : c === '외부 변수' ? C()[4] : c === '시장' ? CRIT : c === '레버리지' ? C()[5] : MUTED;
 
