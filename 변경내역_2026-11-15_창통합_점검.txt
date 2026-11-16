@@ -16,3 +16,13 @@
   latest.json combo 의 ens_members·ens_states·ens_hold_n/ens_n·ens_hold_pct·ens_selected·ens_in·ens_out·ens_since_ret·ens_since_kospi 를 읽어 "묶음 규칙(750일 상위 5개) n/5개 보유" 꼴.
   250일 1위(top_combo)는 "비교용 250일 1위"로만 한 구절. ens_ 칸이 없으면 "묶음 규칙 자료 없음".
 - 그 밖의 단계·코드·알림 형식은 그대로. 첫 적용은 11/16(월) 08:55.
+
+2026-11-16 10:00 웹판 반영 실패 해결(사용자 지시 "실패 해결해")
+원인: 08:55 예약 작업(trig_01PAmZg2JhTs4mLvhdHR8FtU, 11/1 생성 — 저장소 연결 11/8 전)의 세션에는 저장소 쓰기 권한이 붙지 않아 git push 403.
+  저장소를 붙이는 도구(add_repo)는 예약 작업 세션에 아예 없다(1회 진단 작업에서 확인). 이 창에서 만든 작업은 저장소가 처음부터 붙어 push 가 된다.
+수정 전 → 수정 후
+- 웹판 docs/page.html: 결론 카드 11/12 → 11/13(1회 작업, 커밋 8b379ca, 아티팩트 v197과 sha256 일치, 결론 절 밖은 그대로)
+- 08:55 예약 작업: 옛 작업(trig_01PAmZg2…) 일시 정지(기록 보존) → 새 작업 trig_01RGKsJ7VRurdrqbGwLaTzJx(같은 지시문, 같은 시각)
+  · 2단계: add_repo 필수 → 있으면 쓰고 없어도 계속 / 10단계(1): add_repo 실패 시 건너뛰기 → 끝까지 하고 push 거부 때만 실패
+  · 모델: claude-fable-5-1 → claude-opus-5-5(새 작업의 기본값)
+- state/web_sync v3: ok, 반영함, commit 8b379ca
