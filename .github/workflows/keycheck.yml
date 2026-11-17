@@ -28,11 +28,23 @@ jobs:
           DKEY__DART: ${{ secrets.DART }}
           DKEY__DART_TOKEN: ${{ secrets.DART_TOKEN }}
           DKEY__OPENDART_TOKEN: ${{ secrets.OPENDART_TOKEN }}
+          DKEY__VARS_DART_API_KEY: ${{ vars.DART_API_KEY }}
+          DKEY__VARS_OPENDART_API_KEY: ${{ vars.OPENDART_API_KEY }}
+          DKEY__VARS_OPEN_DART_API_KEY: ${{ vars.OPEN_DART_API_KEY }}
+          DKEY__VARS_DART_KEY: ${{ vars.DART_KEY }}
+          DKEY__VARS_OPENDART_KEY: ${{ vars.OPENDART_KEY }}
+          DKEY__VARS_OPEN_DART_KEY: ${{ vars.OPEN_DART_KEY }}
+          DKEY__VARS_DART_CRTFC_KEY: ${{ vars.DART_CRTFC_KEY }}
+          DKEY__VARS_CRTFC_KEY: ${{ vars.CRTFC_KEY }}
+          DKEY__VARS_OPENDART: ${{ vars.OPENDART }}
+          DKEY__VARS_DART: ${{ vars.DART }}
+          DKEY__VARS_DART_TOKEN: ${{ vars.DART_TOKEN }}
+          DKEY__VARS_OPENDART_TOKEN: ${{ vars.OPENDART_TOKEN }}
         run: |
           python3 - <<'PY'
           import os, json, urllib.request, urllib.parse
           found = [k[6:] for k, v in sorted(os.environ.items()) if k.startswith('DKEY__') and v.strip()]
-          lines = ['값이 들어 있는 OpenDART 후보 비밀값 이름: ' + (', '.join(found) if found else '없음')]
+          lines = ['값이 들어 있는 OpenDART 후보 이름(VARS_ 는 Secrets 가 아닌 Variables 칸): ' + (', '.join(found) if found else '없음')]
           for name in found:
               key = os.environ['DKEY__' + name].strip()
               try:
