@@ -5562,9 +5562,73 @@
  {
   "date": "2026-11-16",
   "key": "foreign20",
-  "value": -12.41,
-  "text": "−12.4조 원(10.20~11.16, 잠정 포함)",
+  "value": -12.36,
+  "text": "−12.4조 원(10.20~11.16, 확정)",
   "unit": "조 원",
-  "src": "https://view.asiae.co.kr/article/2026111615454467528"
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-13",
+  "key": "forced_liq",
+  "value": 56.14,
+  "text": "56억 원(11.13)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-13",
+  "key": "margin_dd",
+  "value": -32.7,
+  "text": "−32.7%(11.13, 26.00조 원 / 6.24 정점 38.63조 원)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-16",
+  "key": "sox_dd",
+  "value": -34.33,
+  "text": "−34.3%(11.16, 9,610.65)",
+  "unit": "%",
+  "src": "https://www.seoul.co.kr/news/economy/securities/2026/11/17/20261117500006"
+ },
+ {
+  "date": "2026-11-16",
+  "key": "vkospi",
+  "value": 52.64,
+  "text": "52.6(11.16)",
+  "unit": "",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-17",
+  "key": "kospi_dd",
+  "value": -45.49,
+  "text": "−45.5%(11.17, 4,968.48)",
+  "unit": "%",
+  "src": "https://www.fnnews.com/news/202611171542143994"
+ },
+ {
+  "date": "2026-11-16",
+  "key": "forced_liq",
+  "value": 32.08,
+  "text": "32억 원(11.16)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-16",
+  "key": "margin_dd",
+  "value": -32.03,
+  "text": "−32.0%(11.16, 26.26조 원 / 6.24 정점 38.63조 원)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-17",
+  "key": "foreign20",
+  "value": -13.29,
+  "text": "−13.3조 원(10.21~11.17, 잠정 포함)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
  }
 ]
