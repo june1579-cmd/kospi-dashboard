@@ -1,1 +1,1 @@
-값이 들어 있는 OpenDART 후보 비밀값 이름: 없음
+값이 들어 있는 OpenDART 후보 이름(VARS_ 는 Secrets 가 아닌 Variables 칸): 없음
