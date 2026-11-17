@@ -1,0 +1,55 @@
+name: validation-collect
+# 방어종목 1번 결과물 검증용 과거 자료 수집. validation 가지에만 있고, 이 가지에 수집 코드가 push 될 때만 돈다.
+# main·웹판·카카오톡과 무관. 받은 자료는 research/validation/raw 에 같은 가지로 저장한다(다시 돌리면 받은 것은 건너뜀).
+on:
+  push:
+    branches: [validation]
+    paths:
+      - 'research/validation/collect.py'
+      - 'research/validation/run.txt'
+      - '.github/workflows/validation.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: validation-collect
+  cancel-in-progress: false
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 345
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: validation
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -q pykrx==1.2.9 requests pandas
+      - name: 수집
+        env:
+          KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
+          KRX_ID: ${{ secrets.KRX_ID }}
+          KRX_PW: ${{ secrets.KRX_PW }}
+          DKEY__DART_API_KEY: ${{ secrets.DART_API_KEY }}
+          DKEY__OPENDART_API_KEY: ${{ secrets.OPENDART_API_KEY }}
+          DKEY__OPEN_DART_API_KEY: ${{ secrets.OPEN_DART_API_KEY }}
+          DKEY__DART_KEY: ${{ secrets.DART_KEY }}
+          DKEY__OPENDART_KEY: ${{ secrets.OPENDART_KEY }}
+          DKEY__OPEN_DART_KEY: ${{ secrets.OPEN_DART_KEY }}
+          DKEY__DART_CRTFC_KEY: ${{ secrets.DART_CRTFC_KEY }}
+          DKEY__CRTFC_KEY: ${{ secrets.CRTFC_KEY }}
+          DKEY__OPENDART: ${{ secrets.OPENDART }}
+          DKEY__DART: ${{ secrets.DART }}
+          DKEY__DART_TOKEN: ${{ secrets.DART_TOKEN }}
+          DKEY__OPENDART_TOKEN: ${{ secrets.OPENDART_TOKEN }}
+          BUDGET_MIN: '320'
+        run: python research/validation/collect.py || true
+      - name: 결과 저장
+        if: always()
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add -A research/validation
+          git commit -q -m "검증 자료 수집 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || echo "변경 없음"
+          git pull --rebase -q origin validation || true
+          git push -q origin HEAD:validation
