@@ -1,10 +1,10 @@
 {
- "run": "2026-11-18 04:56",
- "tag": "1840",
+ "run": "2026-11-18 08:27",
+ "tag": "0831",
  "kospi_last": "2026-11-17",
  "kofia_last": "2026-11-16",
  "vkospi_last": "2026-11-17",
- "night_last": "2026-11-17",
+ "night_last": "2026-11-18",
  "errors": [],
  "data_line": "정정 1건(신호 취소)",
  "health": {
@@ -26,17 +26,17 @@
    "last_date": "전체"
   },
   "am_daily": {
-   "sha256": "99aa17c120075290909fe81c1264ffed4ddb8451779ead847ebeb245627722db",
-   "bytes": 234673,
+   "sha256": "0a72b1236401857c06d4faad3003ea4bef839b655b271b322b6fab8ce46a518a",
+   "bytes": 234676,
    "last_date": "2026-11-17"
   },
   "am_now": {
-   "sha256": "944ab119adce7e4ec0a49dd0e0bf57fbbd9fbd9f0517954ca43168df1a8141af",
-   "bytes": 633,
+   "sha256": "33e2108fb74cd13e9a27c29737962ef81cce4096e46354907c9cb8a10e34358f",
+   "bytes": 645,
    "last_date": "2026-11-17"
   },
   "am_stats": {
-   "sha256": "49baa7061f3ee5b10fba2832cd72e3c163e71b01fb57e237bca309e4251820d2",
+   "sha256": "5fc6686ae2a217cad2158572a6cce3c6801746a13dc87080dae4593210442163",
    "bytes": 1263,
    "last_date": "기준일"
   },
@@ -46,7 +46,7 @@
    "last_date": "2026-11-17"
   },
   "buy3": {
-   "sha256": "1af4838b24d0e8ed25cbc75ea33d588194c08f26936da99e0e4e6030f6dd41bd",
+   "sha256": "9b67409a32f69a6c6e4eccb14ca0246833c91167bc8360391f09ff49aa10bbee",
    "bytes": 147071,
    "last_date": "2026-10-16"
   },
@@ -111,9 +111,9 @@
    "last_date": "2026-11-17"
   },
   "fx_daily": {
-   "sha256": "c9fbd5e9b204816033e28243128f260657faf96b9803b431d0efd73e6a4e2d0e",
-   "bytes": 571193,
-   "last_date": "2026-11-16"
+   "sha256": "675d2a5351d5455c78ac912e73856c5145a815fb1ef080688872ffb4bdba298d",
+   "bytes": 571394,
+   "last_date": "2026-11-17"
   },
   "gap_table": {
    "sha256": "5b87e5155ff66ed5623c67cfbe343745144a46603ccef2c7b4270a6200a9c043",
@@ -121,7 +121,7 @@
    "last_date": "전체"
   },
   "health": {
-   "sha256": "89d14c6a90a417e7b725fdc5d750bfca7b1f109f49f5f055e7da6715abfde4a5",
+   "sha256": "4f7329f4c6f57a77e7eb95b83223c652c3a64d2a781f69cf4fd61d1958964850",
    "bytes": 2244,
    "last_date": "web_cards"
   },
@@ -151,9 +151,9 @@
    "last_date": "2026-11"
   },
   "night_fut": {
-   "sha256": "fae56c4d51129a48d7d45d83940cbf2786a1a957b7072fb60f01fb5d4c74edfd",
-   "bytes": 49128,
-   "last_date": "2026-11-16"
+   "sha256": "23754e858f76ef0a3ea6928318b1561197124f9a26ce7f5d79e4ea1a6c169e61",
+   "bytes": 49347,
+   "last_date": "2026-11-17"
   },
   "q_attr": {
    "sha256": "93f0c106723f16ec034a0648017f7ca73ad92961c6c820fbb9a35f107362afbf",
@@ -201,7 +201,7 @@
    "last_date": "2026-11-05"
   },
   "sell3": {
-   "sha256": "0260ddc6a1d5f705bb1a27cd79400659bd870302f61a2c8596ff30f71cec3a9c",
+   "sha256": "e88a85c53e490affb539e1fd2b9c2e7322cb5623e6270756d82c5d7ea3c6bc29",
    "bytes": 746750,
    "last_date": "2026-11-17"
   },
