@@ -1,16 +1,16 @@
 {
- "run": "2026-11-17 20:23",
+ "run": "2026-11-18 04:56",
  "tag": "1840",
  "kospi_last": "2026-11-17",
  "kofia_last": "2026-11-16",
  "vkospi_last": "2026-11-17",
  "night_last": "2026-11-17",
  "errors": [],
- "data_line": "정정 1건·주의 1건(신호 취소, 야간선물_공개 수집)",
+ "data_line": "정정 1건(신호 취소)",
  "health": {
   "오류": 0,
   "정정": 1,
-  "주의": 1,
+  "주의": 0,
   "참고": 0,
   "정상": 14
  },
@@ -26,8 +26,8 @@
    "last_date": "전체"
   },
   "am_daily": {
-   "sha256": "3690339b921fb6c887b8eab56b33d5ae0d71d9d85e6da9fb844edb2fc64403f0",
-   "bytes": 234672,
+   "sha256": "99aa17c120075290909fe81c1264ffed4ddb8451779ead847ebeb245627722db",
+   "bytes": 234673,
    "last_date": "2026-11-17"
   },
   "am_now": {
@@ -36,7 +36,7 @@
    "last_date": "2026-11-17"
   },
   "am_stats": {
-   "sha256": "d4c6e6107aed30b1655458cb2430866f5ac6b66fb6292ec753619b385b5fd698",
+   "sha256": "49baa7061f3ee5b10fba2832cd72e3c163e71b01fb57e237bca309e4251820d2",
    "bytes": 1263,
    "last_date": "기준일"
   },
@@ -121,8 +121,8 @@
    "last_date": "전체"
   },
   "health": {
-   "sha256": "899365acbd1031a69dbb1f626c52bdff3be712a4b6da2444c5d1131d3e156697",
-   "bytes": 2462,
+   "sha256": "89d14c6a90a417e7b725fdc5d750bfca7b1f109f49f5f055e7da6715abfde4a5",
+   "bytes": 2244,
    "last_date": "web_cards"
   },
   "lag": {
@@ -211,7 +211,7 @@
    "last_date": "2026-11-17"
   },
   "trend_champ_rules": {
-   "sha256": "359091da896931ee001baf5a6ee570ecede2c47b295e5a860e96f19f5b86e8b0",
+   "sha256": "8846d99db89a3ed3a4dec8298be1d9bee5147f4897c763490130663185110267",
    "bytes": 5037,
    "last_date": "2026"
   },
