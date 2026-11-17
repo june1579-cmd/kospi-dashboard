@@ -1,0 +1,52 @@
+name: dart-keycheck
+# OpenDART 비밀값 이름만 확인(수집 없음). keycheck 가지에 push 될 때만 돈다. 값은 출력하지 않는다.
+on:
+  push:
+    branches: [keycheck]
+    paths: ['.github/workflows/keycheck.yml']
+permissions:
+  contents: write
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: keycheck
+      - name: 이름 확인과 시험 호출 1번
+        env:
+          DKEY__DART_API_KEY: ${{ secrets.DART_API_KEY }}
+          DKEY__OPENDART_API_KEY: ${{ secrets.OPENDART_API_KEY }}
+          DKEY__OPEN_DART_API_KEY: ${{ secrets.OPEN_DART_API_KEY }}
+          DKEY__DART_KEY: ${{ secrets.DART_KEY }}
+          DKEY__OPENDART_KEY: ${{ secrets.OPENDART_KEY }}
+          DKEY__OPEN_DART_KEY: ${{ secrets.OPEN_DART_KEY }}
+          DKEY__DART_CRTFC_KEY: ${{ secrets.DART_CRTFC_KEY }}
+          DKEY__CRTFC_KEY: ${{ secrets.CRTFC_KEY }}
+          DKEY__OPENDART: ${{ secrets.OPENDART }}
+          DKEY__DART: ${{ secrets.DART }}
+          DKEY__DART_TOKEN: ${{ secrets.DART_TOKEN }}
+          DKEY__OPENDART_TOKEN: ${{ secrets.OPENDART_TOKEN }}
+        run: |
+          python3 - <<'PY'
+          import os, json, urllib.request, urllib.parse
+          found = [k[6:] for k, v in sorted(os.environ.items()) if k.startswith('DKEY__') and v.strip()]
+          lines = ['값이 들어 있는 OpenDART 후보 비밀값 이름: ' + (', '.join(found) if found else '없음')]
+          for name in found:
+              key = os.environ['DKEY__' + name].strip()
+              try:
+                  url = 'https://opendart.fss.or.kr/api/company.json?' + urllib.parse.urlencode({'crtfc_key': key, 'corp_code': '00126380'})
+                  js = json.load(urllib.request.urlopen(url, timeout=30))
+                  msg = f"{name}: 시험 호출 status={js.get('status')} {js.get('message','')} ({js.get('corp_name','')})"
+              except Exception as e:
+                  msg = f'{name}: 시험 호출 실패 {type(e).__name__}'
+              lines.append(msg.replace(key, '***'))
+          open('research/keycheck/result.txt', 'w', encoding='utf-8').write('\n'.join(lines) + '\n')
+          print('\n'.join(lines))
+          PY
+      - name: 결과 저장
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add research/keycheck/result.txt && git commit -q -m "DART 비밀값 이름 확인 결과" || echo "변경 없음"
+          git push -q origin HEAD:keycheck
