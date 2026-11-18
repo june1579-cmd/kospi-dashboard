@@ -1,0 +1,32 @@
+[00:51:34] 시작 full ['inv2', 'front2'] — 로그인 계정 설정 있음
+[00:51:34] == inv2
+[00:56:07] inv2 FUKQI ALL: 2694행
+[00:56:07] 저장 inv2_daily.csv 2694행
+[00:56:52] inv2 OPKQI C: 2122행
+[00:56:52] 저장 inv2_daily.csv 4816행
+[00:57:37] inv2 OPKQI P: 2122행
+[00:57:37] 저장 inv2_daily.csv 6938행
+[01:03:01] inv2 FUBM3 ALL: 3991행
+[01:03:01] 저장 inv2_daily.csv 10929행
+[01:08:22] inv2 FUBMA ALL: 3953행
+[01:08:22] 저장 inv2_daily.csv 14882행
+[01:13:55] inv2 FUUSD ALL: 4655행
+[01:13:55] 저장 inv2_daily.csv 19537행
+[01:20:18] inv2 FUEQU ALL: 4572행
+[01:20:18] 저장 inv2_daily.csv.gz 24109행
+[01:21:44] inv2 OPEQU C: 3719행
+[01:21:45] 저장 inv2_daily.csv.gz 27828행
+[01:23:10] inv2 OPEQU P: 3389행
+[01:23:11] 저장 inv2_daily.csv.gz 31217행
+[01:27:57] inv2 FUXAT ALL: 2946행
+[01:27:58] 저장 inv2_daily.csv.gz 34163행
+[01:32:47] inv2 FUVKI ALL: 2946행
+[01:32:47] 저장 inv2_daily.csv.gz 37109행
+[01:36:36] inv2 FUXI3 ALL: 1996행
+[01:36:37] 저장 inv2_daily.csv.gz 39105행
+[01:36:39] == front2
+[01:38:02] front2 FUKQI: 2694행
+[01:39:21] front2 FUUSD: 6059행
+[01:40:31] front2 FUBMA: 3952행
+[01:41:38] front2 FUBM3: 3952행
+[01:41:38] 저장 fut_front2_daily.csv 16657행
