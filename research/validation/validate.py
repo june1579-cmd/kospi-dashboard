@@ -105,7 +105,9 @@ dart = rd('dart_op.csv.gz', idx=False)
 profit_years = None
 if dart is not None and not dart.empty:
     dart['stock_code'] = dart['stock_code'].astype(str).str.zfill(6)
-    dart = dart[dart['fs_div'] == 'CFS'] if (dart['fs_div'] == 'CFS').any() else dart
+    # 회사·보고서 연도마다 연결(CFS)이 있으면 연결, 없으면 별도(OFS)
+    dart['_p'] = (dart['fs_div'] != 'CFS').astype(int)
+    dart = dart.sort_values('_p').drop_duplicates(['stock_code', 'bsns_year'])
     def amt(x):
         try:
             return float(str(x).replace(',', ''))
@@ -138,6 +140,7 @@ def four_year_profit(codes, peak):
 
 # ---------------- 검증 본체
 results = []
+ALLCODES = set()
 prior_lifts = []      # 이전 급락들에서 얻은 업종 lift (고점일 시점엔 그 이전 것만 사용)
 prior_crash = {}      # (m) -> {code: [excess list]} 이전 급락 초과수익 기록
 ep = ep.sort_values('peak').reset_index(drop=True)
@@ -230,6 +233,7 @@ for i, e in ep.iterrows():
     U = U[~U['name'].astype(str).str.contains('스팩|SPAC|우$|우B$|리츠|ETN|ETF|KODEX|TIGER', regex=True, na=False)]
     if len(U) < 30:
         continue
+    ALLCODES.update(U.index)
     # 4년 흑자
     py = four_year_profit(U.index, T)
     U['profit_years'] = py if py is not None else np.nan
@@ -344,4 +348,5 @@ for i, e in ep.iterrows():
     print(T, TR, f"dd {e['dd']*100:.1f}% n={n}", 'top30 crash excess', summ['top30'].get('crash'), 'rho', summ['spearman'].get('crash'))
 
 json.dump(results, open(os.path.join(OUT, 'summary.json'), 'w'), ensure_ascii=False, indent=1)
+open(os.path.join(ROOT, 'dart_codes.txt'), 'w').write('\n'.join(sorted(ALLCODES)))
 print('구간', len(results))

@@ -201,54 +201,68 @@ def main():
 
 # ---------------------------------------------------------------- OpenDART 영업이익
 def dart():
+    """OpenDART 사업보고서 영업이익. 검증에서 점수를 매긴 종목(dart_codes.txt)만, 20개씩, 연도별 파일로 저장(다시 돌리면 받은 연도는 건너뜀)."""
     key = DART_KEY.strip()
     log('DART 비밀값', ('이름 ' + DART_NAME) if key else '찾지 못함')
-    full = os.path.join(RAW, 'dart_op.csv.gz')
     if not key:
         log('DART 키 없음 — 영업이익 건너뜀(비밀값 이름 확인 필요)'); return
-    if os.path.exists(full):
-        log('DART 이미 있음'); return
     import requests
-    r = requests.get('https://opendart.fss.or.kr/api/corpCode.xml', params={'crtfc_key': key}, timeout=60)
-    try:
-        z = zipfile.ZipFile(io.BytesIO(r.content))
-    except Exception:
-        log('DART corpCode 실패:', r.text[:200]); return
-    import xml.etree.ElementTree as ET
-    root = ET.fromstring(z.read(z.namelist()[0]))
-    corps = [(e.findtext('corp_code'), (e.findtext('stock_code') or '').strip(), e.findtext('corp_name')) for e in root.iter('list')]
-    corps = [c for c in corps if c[1]]
-    log('DART 상장(이력) 회사', len(corps))
-    pd.DataFrame(corps, columns=['corp_code', 'stock_code', 'corp_name']).to_csv(os.path.join(RAW, 'dart_corps.csv.gz'), index=False, compression='gzip')
-    rows, codes = [], [c[0] for c in corps]
+    corps_f = os.path.join(RAW, 'dart_corps.csv.gz')
+    if not os.path.exists(corps_f):
+        r = requests.get('https://opendart.fss.or.kr/api/corpCode.xml', params={'crtfc_key': key}, timeout=60)
+        try:
+            z = zipfile.ZipFile(io.BytesIO(r.content))
+        except Exception:
+            log('DART corpCode 실패:', r.text[:200]); return
+        import xml.etree.ElementTree as ET
+        root = ET.fromstring(z.read(z.namelist()[0]))
+        corps = [(e.findtext('corp_code'), (e.findtext('stock_code') or '').strip(), e.findtext('corp_name')) for e in root.iter('list')]
+        pd.DataFrame([c for c in corps if c[1]], columns=['corp_code', 'stock_code', 'corp_name']).to_csv(corps_f, index=False, compression='gzip')
+    cp = pd.read_csv(corps_f, dtype=str)
+    want = set(open(os.path.join(ROOT, 'dart_codes.txt')).read().split()) if os.path.exists(os.path.join(ROOT, 'dart_codes.txt')) else set(cp['stock_code'])
+    codes = cp.loc[cp['stock_code'].isin(want), 'corp_code'].tolist()
+    log('DART 대상 회사', len(codes))
+    t0 = time.time(); CAP = 45 * 60; BATCH = 20
     for y in (2016, 2019, 2022, 2025):
-        for i in range(0, len(codes), 100):
-            batch = ','.join(codes[i:i + 100])
-            for k in range(3):
+        yf = os.path.join(RAW, f'dart_op_{y}.csv.gz')
+        if os.path.exists(yf):
+            log('  DART', y, '이미 있음'); continue
+        rows, bad, slow = [], 0, []
+        for i in range(0, len(codes), BATCH):
+            if time.time() - t0 > CAP:
+                log('  DART 시간 한도 — 이 연도는 저장 안 함(다음 실행에서 이어 받음)'); return
+            batch = ','.join(codes[i:i + BATCH]); js = None
+            for k in range(2):
+                t1 = time.time()
                 try:
-                    js = requests.get('https://opendart.fss.or.kr/api/fnlttMultiAcnt.json', params={'crtfc_key': key, 'corp_code': batch, 'bsns_year': str(y), 'reprt_code': '11011'}, timeout=60).json()
-                    break
+                    js = requests.get('https://opendart.fss.or.kr/api/fnlttMultiAcnt.json', params={'crtfc_key': key, 'corp_code': batch, 'bsns_year': str(y), 'reprt_code': '11011'}, timeout=25).json()
+                    slow.append(time.time() - t1); break
                 except Exception as e:
-                    js = {'status': 'ERR', 'message': repr(e)}; time.sleep(3)
+                    js = {'status': 'ERR', 'message': type(e).__name__}; time.sleep(2)
             st = js.get('status')
+            if i == 0:
+                log('  DART 첫 호출', y, st, js.get('message', '')[:60], f'{slow[-1] if slow else -1:.1f}초')
             if st == '000':
                 for it in js.get('list', []):
                     if it.get('account_nm', '').replace(' ', '') in ('영업이익', '영업이익(손실)'):
                         rows.append({k2: it.get(k2) for k2 in ('corp_code', 'stock_code', 'bsns_year', 'fs_div', 'thstrm_amount', 'frmtrm_amount', 'bfefrmtrm_amount')})
-            elif st not in ('013',):
-                log('  DART', y, i, st, js.get('message', '')[:80])
+            elif st != '013':
+                bad += 1
                 if st in ('020', '010', '011', '012', '901'):
-                    log('  DART 중단(키·한도 문제)'); break
-            time.sleep(0.3)
-        log('  DART', y, '누적', len(rows))
-    pd.DataFrame(rows).to_csv(full, index=False, compression='gzip')
-    log('DART 끝', len(rows))
+                    log('  DART 중단(키·한도 문제)', st, js.get('message', '')[:80]); return
+            time.sleep(0.2)
+        pd.DataFrame(rows).to_csv(yf, index=False, compression='gzip')
+        log('  DART', y, '행', len(rows), '실패 묶음', bad, f'호출 평균 {sum(slow) / max(1, len(slow)):.1f}초', f'누적 {(time.time() - t0) / 60:.0f}분')
+    fs = [os.path.join(RAW, f'dart_op_{y}.csv.gz') for y in (2016, 2019, 2022, 2025)]
+    if all(os.path.exists(f) for f in fs):
+        pd.concat([pd.read_csv(f, dtype=str) for f in fs]).to_csv(os.path.join(RAW, 'dart_op.csv.gz'), index=False, compression='gzip')
+        log('DART 끝')
 
 
 if __name__ == '__main__':
     try:
         if 'krx' not in sys.argv[1:]:
-            dart()      # 몇 분이면 끝나므로 먼저(키를 찾았는지 바로 알 수 있게)
+            dart()
             save_log()
         if 'dart' not in sys.argv[1:]:
             main()
