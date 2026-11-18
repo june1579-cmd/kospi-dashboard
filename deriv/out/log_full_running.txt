@@ -1,16 +1,4 @@
-[19:06:43] 시작 full ['basis', 'iv', 'pcr', 'front', 'inv', 'program', 'chain'] — 로그인 계정 설정 있음
-[19:06:43] == basis
-[19:07:45] 저장 basis_daily.csv.gz 27608행
-[19:07:47] == iv
-[19:08:06] 저장 iv_daily.csv 4655행
-[19:08:07] == pcr
-[19:10:41] 저장 pcr_daily.csv 4655행
-[19:10:43] == front
-[19:12:16] 저장 fut_front_daily.csv 7334행
-[19:12:18] == inv
-[19:15:49]   조각 실패 MDCSTAT13102 20171229~20191228: ReadTimeout(ReadTimeoutError("HTTPSConnectionPool(host='data.krx.co.kr', port=443): Read timed out. (read timeout=40)"))
-[19:18:14]   조각 실패 MDCSTAT13102 20191229~20211227: ReadTimeout(ReadTimeoutError("HTTPSConnectionPool(host='data.krx.co.kr', port=443): Read timed out. (read timeout=40)"))
-[19:20:39]   조각 실패 MDCSTAT13102 20211228~20231227: ReadTimeout(ReadTimeoutError("HTTPSConnectionPool(host='data.krx.co.kr', port=443): Read timed out. (read timeout=40)"))
-[19:23:04]   조각 실패 MDCSTAT13102 20231228~20251226: ReadTimeout(ReadTimeoutError("HTTPSConnectionPool(host='data.krx.co.kr', port=443): Read timed out. (read timeout=40)"))
-[19:23:55] inv FUK2I ALL AMT: 2694행
-[19:23:55] 저장 inv_daily.csv 2694행
+[19:25:03] 시작 full ['inv', 'program', 'chain'] — 로그인 계정 설정 있음
+[19:25:03] == inv
+[19:26:37] inv OPK2I C : 4655행
+[19:26:37] 저장 inv_daily.csv 7349행
