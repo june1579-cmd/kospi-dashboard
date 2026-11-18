@@ -1,6 +1,4 @@
 ﻿일자,지수명,시가,고가,저가,종가,원본
-2026-10-26,코스피 200 변동성지수,54.01,54.09,52.38,52.46,KRX Open API idx/drvprod_dd_trd
-2026-10-27,코스피 200 변동성지수,53.91,53.91,51.32,51.33,KRX Open API idx/drvprod_dd_trd
 2026-10-28,코스피 200 변동성지수,51.75,52.11,51.26,51.85,KRX Open API idx/drvprod_dd_trd
 2026-10-29,코스피 200 변동성지수,51.75,51.77,51.25,51.42,KRX Open API idx/drvprod_dd_trd
 2026-10-30,코스피 200 변동성지수,51.79,53.3,51.76,52.32,KRX Open API idx/drvprod_dd_trd
@@ -15,3 +13,4 @@
 2026-11-12,코스피 200 변동성지수,51.35,51.55,51.05,51.32,KRX Open API idx/drvprod_dd_trd
 2026-11-13,코스피 200 변동성지수,51.58,52.18,49.98,50.15,KRX Open API idx/drvprod_dd_trd
 2026-11-16,코스피 200 변동성지수,51.06,53.35,50.3,52.64,KRX Open API idx/drvprod_dd_trd
+2026-11-17,코스피 200 변동성지수,53.66,54.36,53.44,53.64,KRX Open API idx/drvprod_dd_trd

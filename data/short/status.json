@@ -3,22 +3,26 @@
   "trade": {},
   "balance": {}
  },
- "updated": "2026-11-18 22:29",
+ "updated": "2026-11-19 04:28",
  "mode": "daily",
  "calls": 8,
  "saved": [
-  "trade 2026-11-18",
-  "trade 2026-11-17",
-  "trade 2026-11-16",
-  "balance 2026-11-16",
-  "trade 2026-11-13",
-  "balance 2026-11-13",
-  "trade 2026-11-12"
+  "balance 2026-11-12",
+  "trade 2026-11-11",
+  "balance 2026-11-11",
+  "trade 2026-11-10",
+  "balance 2026-11-10",
+  "trade 2026-11-09",
+  "balance 2026-11-09"
  ],
  "error": null,
- "left": 12,
+ "left": 5,
  "last_trade": "20261118",
  "last_balance": "20261116",
- "n_trade": 9,
- "n_balance": 2
+ "n_trade": 12,
+ "n_balance": 6,
+ "n_saved": 7,
+ "skipped": null,
+ "first_trade": "20260327",
+ "first_balance": "20261109"
 }
