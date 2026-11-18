@@ -20,3 +20,5 @@
 [01:23:11] 저장 inv2_daily.csv.gz 31217행
 [01:27:57] inv2 FUXAT ALL: 2946행
 [01:27:58] 저장 inv2_daily.csv.gz 34163행
+[01:32:47] inv2 FUVKI ALL: 2946행
+[01:32:47] 저장 inv2_daily.csv.gz 37109행
