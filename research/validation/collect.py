@@ -164,6 +164,13 @@ def main():
                 if n % 50 == 0:
                     log(f'  주간 {n}개 받음 ({b})', f'{(time.time() - T0) / 60:.0f}분')
     log('주간 끝')
+    for m in ('KOSPI', 'KOSDAQ'):   # 관찰 종목용 최신 단면
+        fetch(f'snap/CAP_{m}_{END}.csv.gz', lambda m=m: stock.get_market_cap_by_ticker(END, m))
+        fetch(f'snap/FUND_{m}_{END}.csv.gz', lambda m=m: stock.get_market_fundamental_by_ticker(END, m))
+        fetch(f'snap/SECT_{m}_{END}.csv.gz', lambda m=m: stock.get_market_sector_classifications(END, m))
+        fetch(f'snap/SHORT_{m}_{END}.csv.gz', lambda m=m: stock.get_shorting_balance_by_ticker(END, m))
+        fetch(f'snap/FR_{m}_{END}.csv.gz', lambda m=m: stock.get_exhaustion_rates_of_foreign_investment_by_ticker(END, m))
+    log('최신 단면', END)
 
     # 2) 급락 구간(고점 다음날~저점)과 고점 이후 3·6·12개월 수익률, 고점일 단면 자료
     for _, r in ep.iterrows():
