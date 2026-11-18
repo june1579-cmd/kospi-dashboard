@@ -24,3 +24,9 @@
 [01:32:47] 저장 inv2_daily.csv.gz 37109행
 [01:36:36] inv2 FUXI3 ALL: 1996행
 [01:36:37] 저장 inv2_daily.csv.gz 39105행
+[01:36:39] == front2
+[01:38:02] front2 FUKQI: 2694행
+[01:39:21] front2 FUUSD: 6059행
+[01:40:31] front2 FUBMA: 3952행
+[01:41:38] front2 FUBM3: 3952행
+[01:41:38] 저장 fut_front2_daily.csv 16657행
