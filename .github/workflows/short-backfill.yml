@@ -1,14 +1,19 @@
 name: short-backfill
 # 공매도 과거 자료 받기(2026-11-18 추가, 같은 날 03:17·05:17 두 번으로 바꾸고 10년치 이어받기 추가)
-# 매일 03:17·05:17 KST(GitHub 예약) + 03:47·05:47 예비(예약이 빠질 때 대비 — 90분 안에 이미 돌았으면 겹침 확인에서 건너뜀) — 대시보드 갱신(08:23~22:23)·경고판 알림(07:30)·밤 연구 작업과 겹치지 않는 시간. 한 번에 최대 210번 조회(조회 사이 4~6초, 약 20분).
+# 매일 11:17·13:47·03:17·05:17 KST 네 번(+ 각 30분 뒤 예비) — 대시보드 갱신(08:23~10:23, 15:43~17:43, 20:23~22:23)·경고판 알림(07:30)과 겹치지 않는 시간. 한 번에 최대 210번 조회(조회 사이 4~6초, 약 20분).
 #  1) 2026-01-02 이후 빈 날짜(main 가지 data/short)
 #  2) 1)이 다 채워졌고 문제(접속 제한·오류)가 없었으면 남은 조회 수로 2016~2025 10년치(short-history 가지 data/short, 최신 날짜부터)
 #     — 10년치는 파일이 많아(약 130MB) 대시보드가 매번 받는 main 이 무거워지지 않게 따로 둔다.
 # 막히면 바로 멈추고 24시간 쉬며(그동안 실행돼도 KRX 에 로그인하지 않음) 카카오톡으로 알린다. 다 받으면 조회 없이 끝난다.
 on:
   schedule:
+    # 하루 네 번(주간 2 + 새벽 2). 각 시각 30분 뒤는 예비 — 앞 것이 빠졌을 때만 돎(돌았으면 겹침 확인에서 건너뜀)
+    - cron: '17 2 * * *'    # 11:17 KST
+    - cron: '47 2 * * *'    # 11:47 KST 예비
+    - cron: '47 4 * * *'    # 13:47 KST
+    - cron: '17 5 * * *'    # 14:17 KST 예비
     - cron: '17 18 * * *'   # 03:17 KST
-    - cron: '47 18 * * *'   # 03:47 KST 예비 — 03:17 이 빠졌을 때만 돎(돌았으면 겹침 확인에서 건너뜀)
+    - cron: '47 18 * * *'   # 03:47 KST 예비
     - cron: '17 20 * * *'   # 05:17 KST
     - cron: '47 20 * * *'   # 05:47 KST 예비
   workflow_dispatch:
@@ -57,9 +62,9 @@ jobs:
           except Exception: pass
           now = dt.datetime.now(dt.timezone.utc)
           skip = t is not None and (now - t).total_seconds() < 90 * 60 and os.environ.get('FORCE') != 'true' and os.environ['MODE'] == 'auto'
-          # GitHub 예약이 몇 시간씩 늦게 도는 일이 있어(11/18 밤 대시보드 예약이 3~8시간 늦음) 예약 실행은 02~07시 KST 안에서만 한다
+          # GitHub 예약이 몇 시간씩 늦게 도는 일이 있어(11/18 밤 대시보드 예약이 3~8시간 늦음) 예약 실행은 02~07시·11~15시 KST 안에서만 한다
           h = (now + dt.timedelta(hours=9)).hour
-          if os.environ.get('EVENT') == 'schedule' and not (2 <= h < 7): skip = True
+          if os.environ.get('EVENT') == 'schedule' and not (2 <= h < 7 or 11 <= h < 15): skip = True
           print('skip=' + ('true' if skip else 'false'))
           if skip: print(f'건너뜀 — 직전 실행 {t} · 지금 KST {h}시 · {os.environ.get("EVENT")}', file=open('/dev/stderr', 'w'))
           EOF
