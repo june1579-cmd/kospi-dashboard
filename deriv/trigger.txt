@@ -1,2 +1,1 @@
-full
-inv2 front2
+analyze
