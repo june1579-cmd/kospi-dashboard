@@ -16,7 +16,7 @@ import pandas as pd
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 RAW = os.path.join(ROOT, 'raw')
-for d in ('weekly', 'period', 'snap', 'flow'):
+for d in ('weekly', 'year', 'period', 'snap', 'flow'):
     os.makedirs(os.path.join(RAW, d), exist_ok=True)
 LOG = []
 SECRETS = [v for k, v in os.environ.items() if (k in ('KRX_API_KEY', 'KRX_ID', 'KRX_PW') or k.startswith('DKEY__')) and v]
@@ -171,6 +171,13 @@ def main():
         fetch(f'snap/SHORT_{m}_{END}.csv.gz', lambda m=m: stock.get_shorting_balance_by_ticker(END, m))
         fetch(f'snap/FR_{m}_{END}.csv.gz', lambda m=m: stock.get_exhaustion_rates_of_foreign_investment_by_ticker(END, m))
     log('최신 단면', END)
+    for y in range(2022, int(END[:4]) + 1):   # 연도별 수익률(첫 거래일~마지막 거래일, 수정 등락률)
+        dy = days[(days >= f'{y}0101') & (days <= min(f'{y}1231', END))]
+        if len(dy) == 0:
+            continue
+        for m in ('KOSPI', 'KOSDAQ'):
+            fetch(f'year/Y_{m}_{y}.csv.gz', lambda a=dy[0], b=dy[-1], m=m: pc(a, b, m))
+        log('  연도 수익률', y, dy[0], dy[-1])
 
     # 2) 급락 구간(고점 다음날~저점)과 고점 이후 3·6·12개월 수익률, 고점일 단면 자료
     for _, r in ep.iterrows():
