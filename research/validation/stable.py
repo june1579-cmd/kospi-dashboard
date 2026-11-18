@@ -148,6 +148,7 @@ for i, e in ep.iterrows():
         U['ret3m'] = (1 + w[c13].fillna(0)).prod(axis=1) - 1
         g52 = (1 + w[c52].fillna(0)).cumprod(axis=1)
         U['off_high'] = g52.iloc[:, -1] / g52.max(axis=1) - 1
+        U['zero13'] = (w[c13] == 0).sum(axis=1)
         U['up_week'] = (w[c52] > 0).sum(axis=1) / w[c52].notna().sum(axis=1)
         U['max_week'] = w[c52].max(axis=1)
         U['turnover'] = V[m].loc[U.index, c52].sum(axis=1) / U['mcap']
@@ -174,7 +175,7 @@ for i, e in ep.iterrows():
         U['prior_worst'] = [np.min([x for _, x, _ in hist[c]]) if hist.get(c) else np.nan for c in U.index]
         # 결과
         U['ret'] = ret.reindex(U.index)
-        U = U[U['ret'].notna()]
+        U = U[U['ret'].notna() & (U['ret'] != 0) & (U['zero13'] < 4)]
         med = U['ret'].median()
         U['x'] = U['ret'] - med; U['beat'] = (U['x'] > 0).astype(int)
         for lab, h in (('f63', 63), ('f126', 126), ('f252', 252)):
