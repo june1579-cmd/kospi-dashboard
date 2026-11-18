@@ -16,3 +16,5 @@
 [19:35:37] 저장 inv_daily.csv 19240행
 [19:36:43] inv OPMKI C : 2780행
 [19:36:43] 저장 inv_daily.csv.gz 22020행
+[19:37:45] inv OPMKI P : 2780행
+[19:37:45] 저장 inv_daily.csv.gz 24800행
