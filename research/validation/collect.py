@@ -327,6 +327,31 @@ def dart_fill():
     log('DART 채우기 끝', len(want), '회사', len(rows), '행', '배당', len(alot), '행')
 
 
+def d1_inputs():
+    """방어1 세부 점수 재계산용: 통합 명단 250종목의 일별 수정 종가(2024-10-01~END), 순매수(기관·외국인), 외국인 보유율 시점들, 7개 급락 구간 등락률."""
+    lst = os.path.join(ROOT, 'd1_codes.txt')
+    if not os.path.exists(lst):
+        return
+    os.makedirs(os.path.join(RAW, 'daily'), exist_ok=True); os.makedirs(os.path.join(RAW, 'd1'), exist_ok=True)
+    codes = open(lst).read().split()
+    n = 0
+    for c in codes:
+        r = fetch(f'daily/D_{c}.csv.gz', lambda c=c: stock.get_market_ohlcv('20241001', END, c, adjusted=True), sleep=0.6)
+        n += r != 'fail'
+        if out_of_time():
+            log('  일별 시간 한도'); break
+    log('  일별 종가', n, '/', len(codes))
+    for m in ('KOSPI', 'KOSDAQ'):
+        for who, a in (('기관합계', '20250102'), ('외국인', '20250102'), ('기관합계', '20260623'), ('기관합계', '20251117'), ('외국인', '20251117')):
+            fetch(f'd1/NB_{m}_{who}_{a}_{END}.csv.gz', lambda m=m, who=who, a=a: stock.get_market_net_purchases_of_equities_by_ticker(a, END, m, who))
+        for d in ('20241115', '20250102', '20251117', '20260515'):
+            fetch(f'd1/FR_{m}_{d}.csv.gz', lambda m=m, d=d: stock.get_exhaustion_rates_of_foreign_investment_by_ticker(d, m))
+        fetch(f'd1/CAP_{m}_20241115.csv.gz', lambda m=m: stock.get_market_cap_by_ticker('20241115', m))
+        for a, b in (('20241030', '20241209'), ('20250220', '20250409'), ('20251104', '20251124'), ('20260227', '20260331'), ('20260515', '20260520'), ('20260603', '20260608'), ('20260623', END), ('20241118', END)):
+            fetch(f'd1/P_{m}_{a}_{b}.csv.gz', lambda a=a, b=b, m=m: pc(a, b, m))
+    log('방어1 입력 자료 끝')
+
+
 if __name__ == '__main__':
     try:
         if 'krx' not in sys.argv[1:]:
@@ -334,6 +359,8 @@ if __name__ == '__main__':
             dart_fill()
             save_log()
         if 'dart' not in sys.argv[1:]:
+            d1_inputs()
+            save_log()
             main()
     except Exception:
         log(traceback.format_exc())
