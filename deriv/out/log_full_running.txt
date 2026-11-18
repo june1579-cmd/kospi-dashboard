@@ -5,3 +5,5 @@
 [19:08:06] 저장 iv_daily.csv 4655행
 [19:08:07] == pcr
 [19:10:41] 저장 pcr_daily.csv 4655행
+[19:10:43] == front
+[19:12:16] 저장 fut_front_daily.csv 7334행
