@@ -1,0 +1,21 @@
+{
+ "empty_tries": {
+  "trade": {},
+  "balance": {}
+ },
+ "updated": "2026-11-18 22:07",
+ "mode": "backfill",
+ "calls": 4,
+ "saved": [
+  "trade 2026-03-27",
+  "trade 2026-03-30",
+  "trade 2026-03-31",
+  "trade 2026-04-01"
+ ],
+ "error": null,
+ "left": 426,
+ "last_trade": "20260401",
+ "last_balance": null,
+ "n_trade": 4,
+ "n_balance": 0
+}
