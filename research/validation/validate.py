@@ -330,11 +330,16 @@ for i, e in ep.iterrows():
         v = U[['total', 'x_' + lab]].dropna()
         summ['spearman'][lab] = round(float(v['total'].rank().corr(v['x_' + lab].rank())), 3) if len(v) > 10 else None
         # 부문별 상관
-        for part in ('s_def', 'ated_dummy', 's_hold', 's_grow', 's_flow', 's_com'):
+        U['f_beta_low'] = -U['beta']; U['f_div'] = U['div']; U['f_pbr_low'] = -U['pbr']; U['f_profit'] = U['profit_years']
+        U['f_ret2y'] = U['ret2y']; U['f_mdd'] = U['mdd']; U['f_frgn'] = U['frgn_ratio']; U['f_short_low'] = -U['short']
+        for part in ('s_def', 's_hold', 's_grow', 's_flow', 's_com', 'f_beta_low', 'f_div', 'f_pbr_low', 'f_profit', 'f_ret2y', 'f_mdd', 'f_frgn', 'f_short_low'):
             if part not in U:
                 continue
             vv = U[[part, 'x_' + lab]].dropna()
             summ['spearman'][f'{part}_{lab}'] = round(float(vv[part].rank().corr(vv['x_' + lab].rank())), 3) if len(vv) > 10 else None
+    if py is not None and 'crash' in rets:
+        p4 = U['profit_years'] == 4; pk = U['profit_years'].notna()
+        summ['profit4'] = {lab: {'yes': round(float(U.loc[p4, 'x_' + lab].median()) * 100, 2), 'no': round(float(U.loc[pk & ~p4, 'x_' + lab].median()) * 100, 2), 'n_yes': int(p4.sum()), 'n_no': int((pk & ~p4).sum())} for lab in rets}
     # 5분위
     U['q5'] = pd.qcut(U['rank'], 5, labels=[1, 2, 3, 4, 5])
     summ['quintile'] = {}
