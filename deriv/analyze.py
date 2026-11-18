@@ -28,7 +28,7 @@ TRAIN, TEST = 750, 250
 
 
 def rd(name):
-    for ext in ('.csv', '.csv.gz'):
+    for ext in ('.csv.gz', '.csv'):   # 커지면 .gz 로 바뀌므로 .gz 우선
         p = os.path.join(DATA, name + ext)
         if os.path.exists(p): return pd.read_csv(p, low_memory=False)
     return None
@@ -41,6 +41,16 @@ def num(s):
 def ddate(s):
     s = s.astype(str).str.slice(0, 10).str.replace('/', '-')
     return pd.to_datetime(s, errors='coerce')
+
+
+def collect_latest(fname):
+    cdir = os.path.join(REPO, 'data', 'collect')
+    if not os.path.isdir(cdir): return None
+    parts = []
+    for d in sorted(os.listdir(cdir)):
+        p = os.path.join(cdir, d, fname)
+        if os.path.exists(p): parts.append(pd.read_csv(p))
+    return pd.concat(parts, ignore_index=True) if parts else None
 
 
 # ------------------------------------------------------------------ 가격·대상
@@ -125,8 +135,13 @@ def build_indicators(px):
                 I[f'F_{who}_1d'] = s; I[f'F_{who}_5d'] = s.rolling(5).sum(); I[f'F_{who}_20d'] = s.rolling(20).sum(); I[f'F_{who}_z'] = z250(s.rolling(5).sum())
         # F2 현·선물 동시 방향
         cash = pd.read_csv(os.path.join(REPO, 'pkg', 'history', '01_코스피_투자자별_순매수_거래대금.csv')).rename(columns={'날짜': 'date'})
-        cash['date'] = ddate(cash['date']); cash = cash.set_index('date')
-        cf = num(cash['외국인합계']) / 1e12
+        cash['date'] = ddate(cash['date']); cf = num(cash.set_index('date')['외국인합계'])
+        cl = collect_latest('03_코스피_투자자별_순매수_거래대금.csv')
+        if cl is not None:
+            cl['date'] = ddate(cl['날짜']); f2 = cl.set_index('date')
+            add = num(f2['외국인']) + num(f2.get('기타외국인', pd.Series(0, index=f2.index))).fillna(0)
+            cf = pd.concat([cf, add[~add.index.isin(cf.index)]])
+        cf = cf[~cf.index.duplicated(keep='last')].sort_index() / 1e12
         if '외국인' in fut:
             j = pd.concat([cf.rename('c'), (fut['외국인'] / 1e12).rename('f')], axis=1).dropna()
             I['F2_현선동시'] = np.sign(j['c']) + np.sign(j['f'])
@@ -179,6 +194,10 @@ def build_indicators(px):
         if cl is not None and pu is not None: I['V2_풋-콜IV'] = pu - cl
     md = pd.read_csv(os.path.join(REPO, 'pkg', 'datasets', 'market_daily.csv')); md['date'] = ddate(md['date']); md = md.set_index('date')
     vk = num(md['vkospi'])
+    vl = collect_latest('10_VKOSPI_일별.csv')
+    if vl is not None:
+        vl['date'] = ddate(vl['일자']); v2 = num(vl.drop_duplicates('date', keep='last').set_index('date')['종가'])
+        vk = pd.concat([vk, v2[~v2.index.isin(vk.index)]]).sort_index()
     I['V1_VKOSPI'] = vk; I['V1_VKOSPI_5d변화'] = vk.diff(5); I['V1_VKOSPI_z'] = z250(vk)
     # R1 풋콜비율
     pc = rd('pcr_daily')
@@ -190,7 +209,11 @@ def build_indicators(px):
     # M1 미결제약정 4분면
     fr = rd('fut_front_daily')
     if fr is not None and len(fr):
+        fr = fr[~fr['TRD_DD'].astype(str).str.contains('야간')]
         fr['date'] = ddate(fr['TRD_DD']); fr = fr.drop_duplicates('date', keep='last').set_index('date').sort_index()
+        tv = num(fr['ACC_TRDVAL'])
+        cashv = px['value'].reindex(fr.index)
+        I['T1_선물/현물거래대금'] = (tv / cashv).rolling(5).mean()
         oi, pr = num(fr.get('ACC_OPNINT_QTY')), num(fr.get('TDD_CLSPRC'))
         if oi is not None and pr is not None:
             doi, dpr = oi.diff(), pr.diff()
@@ -202,7 +225,16 @@ def build_indicators(px):
         for c in ch.columns: I[c] = ch[c]
     # N1 야간 선물(다음 날 시가 갭에만)
     nf = pd.read_csv(os.path.join(REPO, 'pkg', 'datasets', 'night_fut.csv')); nf['date'] = ddate(nf['date']); nf = nf.set_index('date')
-    I['N1_야간등락'] = num(nf['night_pct'])
+    n1 = num(nf['night_pct'])
+    nl = collect_latest('09_야간선물_일별.csv')   # 일자 = 야간 종료일(다음 거래일) → 하루 앞 날짜(주간 날짜)에 붙인다
+    if nl is not None:
+        nl['end'] = ddate(nl['일자']); nl = nl.drop_duplicates('end', keep='last').set_index('end').sort_index()
+        pct = num(nl['대비']) / (num(nl['종가']) - num(nl['대비'])) * 100
+        idx = px.index
+        for e, v in pct.items():
+            prev = idx[idx < e]
+            if len(prev) and prev[-1] not in n1.index: n1.loc[prev[-1]] = v
+    I['N1_야간등락'] = n1.sort_index()
     # 기준선
     c = px['close']; I['BASE_오늘등락'] = c.pct_change() * 100; I['BASE_5일등락'] = c.pct_change(5) * 100
     q = pd.read_csv(os.path.join(REPO, 'pkg', 'datasets', 'q_daily.csv')); q['date'] = ddate(q['date']); q = q.set_index('date')

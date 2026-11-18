@@ -123,6 +123,8 @@ def frame(rows, **extra):
 
 def save(df, name):
     p = os.path.join(DATA, name + ('.csv.gz' if len(df) > 20000 else '.csv'))
+    other = os.path.join(DATA, name + ('.csv' if p.endswith('.gz') else '.csv.gz'))
+    if os.path.exists(other): os.remove(other)   # 같은 자료가 두 이름으로 남지 않게
     df.to_csv(p, index=False, encoding='utf-8-sig' if not p.endswith('.gz') else 'utf-8')
     log(f'저장 {os.path.basename(p)} {len(df)}행'); return p
 
@@ -187,8 +189,8 @@ def inv(pre='KR___'):   # probe(2026-11-18): 투자자별 화면은 'KR___' 접�
     jobs = [('FUK2I', 'ALL', False), ('OPK2I', 'C', False), ('OPK2I', 'P', False), ('OPWKI', 'C', False), ('OPWKI', 'P', False),
             ('OPWKM', 'C', False), ('OPWKM', 'P', False), ('FUMKI', 'ALL', False), ('OPMKI', 'C', False), ('OPMKI', 'P', False),
             ('FUK2I', 'ALL', True), ('OPK2I', 'C', True), ('OPK2I', 'P', True)]
-    p0 = os.path.join(DATA, 'inv_daily.csv')
-    out = [pd.read_csv(p0)] if os.path.exists(p0) else []
+    p0 = next((os.path.join(DATA, 'inv_daily' + x) for x in ('.csv.gz', '.csv') if os.path.exists(os.path.join(DATA, 'inv_daily' + x))), None)
+    out = [pd.read_csv(p0)] if p0 else []
     done = set()
     if out:
         o = out[0]; o['상세'] = o.get('상세', pd.Series('', index=o.index)).fillna('')
