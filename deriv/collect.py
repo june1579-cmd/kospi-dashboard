@@ -33,6 +33,9 @@ os.makedirs(DATA, exist_ok=True); os.makedirs(os.path.join(OUT, 'probe'), exist_
 LOG = []
 STAMP = dt.datetime.now(KST).strftime('%Y-%m-%d %H:%M KST')
 TODAY = dt.datetime.now(KST).date()
+_now = dt.datetime.now(KST)
+END = TODAY if _now.time() >= dt.time(18, 30) else TODAY - dt.timedelta(days=1)   # 18:30 전이면 오늘 줄(잠정)을 받지 않는다
+FAILED = []
 
 
 def log(m):
@@ -103,7 +106,8 @@ def call(bld, tries=3, chunk=729, **p):
                 try:
                     rows, keys = post_once(bld, q); out += rows; break
                 except Exception as ex:
-                    if k == tries - 1: log(f'  조각 실패 {bld} {q["strtDd"]}~{q["endDd"]}: {ex!r}'[:200])
+                    if k == tries - 1:
+                        log(f'  조각 실패 {bld} {q["strtDd"]}~{q["endDd"]}: {ex!r}'[:200]); FAILED.append({'bld': bld, '시작': q['strtDd'], '끝': q['endDd'], '조건': json.dumps({k2: v for k2, v in q.items() if k2 not in ('strtDd', 'endDd')}, ensure_ascii=False), '오류': repr(ex)[:150]})
                     time.sleep(3 + 5 * k)
             s = t + pd.Timedelta(days=1); time.sleep(0.4); wait_clear()
         return out, keys
@@ -121,7 +125,12 @@ def frame(rows, **extra):
     return df
 
 
+KEYS = {'inv_daily': ['TRD_DD', '상품', '권리', '단위', '장구분', '상세']}
+
+
 def save(df, name):
+    if name in KEYS and all(k in df for k in KEYS[name]):
+        df = df.assign(**{k: df[k].fillna('') for k in KEYS[name]}).drop_duplicates(KEYS[name], keep='last')
     p = os.path.join(DATA, name + ('.csv.gz' if len(df) > 20000 else '.csv'))
     other = os.path.join(DATA, name + ('.csv' if p.endswith('.gz') else '.csv.gz'))
     if os.path.exists(other): os.remove(other)   # 같은 자료가 두 이름으로 남지 않게
@@ -191,23 +200,27 @@ def inv(pre='KR___'):   # probe(2026-11-18): 투자자별 화면은 'KR___' 접�
             ('FUK2I', 'ALL', True), ('OPK2I', 'C', True), ('OPK2I', 'P', True)]
     p0 = next((os.path.join(DATA, 'inv_daily' + x) for x in ('.csv.gz', '.csv') if os.path.exists(os.path.join(DATA, 'inv_daily' + x))), None)
     out = [pd.read_csv(p0)] if p0 else []
-    done = set()
+    done = set(); last = {}
     if out:
         o = out[0]; o['상세'] = o.get('상세', pd.Series('', index=o.index)).fillna('')
         o['_d'] = pd.to_datetime(o['TRD_DD'].astype(str).str[:10], errors='coerce')
         for key, g in o.groupby(['상품', '권리', '상세', '장구분']):
             prod = key[0]; n_exp = len(pd.bdate_range(start[prod], TODAY)) * 0.93   # 휴장일 감안
-            if len(g) >= n_exp: done.add((key[0], key[1], key[2] == 'Y', key[3]))
+            if len(g) >= n_exp: done.add((key[0], key[1], key[2] == 'Y', key[3])); last[(key[0], key[1], key[2] == 'Y')] = g['_d'].max()
             else: log(f'inv {key} 불완전({len(g)}행 < {int(n_exp)}) — 다시 받음')
-        keep = o.apply(lambda r: (r['상품'], r['권리'], r['상세'] == 'Y', r['장구분']) in done or r['장구분'] != '정규', axis=1)
+        keep = o.apply(lambda r: (r['상품'], r['권리'], r['상세'] == 'Y', r['장구분']) in done, axis=1)   # 야간 행은 아래에서 새로 받음(중복 방지)
         out = [o[keep].drop(columns=['_d'])]
     for prod, opt, det in jobs:
-        if (prod, opt, det, '정규') in done: continue
+        st = start[prod]
+        if (prod, opt, det, '정규') in done:
+            lt = last.get((prod, opt, det))
+            if lt is None or lt.date() >= END: continue
+            st = (lt + pd.Timedelta(days=1)).strftime('%Y%m%d')        # 이어받기: 마지막 날짜 다음부터
         wait_clear()
         try:
             extra = dict(detailView='1') if det else {}
             rows, _ = call('MDCSTAT13103' if det else 'MDCSTAT13102', chunk=120, inqTpCd='2', prtType='AMT', prtCheck='SUN', isuCd=pre + prod,
-                           isuCd2='', isuOpt=opt, aggBasTpCd='0', strtDd=start[prod], endDd=d8(TODAY), share='1', money='1', **extra)
+                           isuCd2='', isuOpt=opt, aggBasTpCd='0', strtDd=st, endDd=d8(END), share='1', money='1', **extra)
             df = frame(rows, 상품=prod, 상품명=PROD[prod], 권리=opt, 단위='AMT', 장구분='정규', 상세='Y' if det else '')
             out.append(df); log(f'inv {prod} {opt} {"상세" if det else ""}: {len(df)}행')
             save(pd.concat(out, ignore_index=True), 'inv_daily'); git_save(f'inv {prod} {opt}{" 상세" if det else ""}')
@@ -215,7 +228,7 @@ def inv(pre='KR___'):   # probe(2026-11-18): 투자자별 화면은 'KR___' 접�
     wait_clear()
     try:
         rows, _ = call('MDCSTAT13102', chunk=120, inqTpCd='2', prtType='AMT', prtCheck='SUN', isuCd=pre + 'FUK2I', isuCd2='', isuOpt='ALL',
-                       aggBasTpCd='2', strtDd='20250601', endDd=d8(TODAY), share='1', money='1')
+                       aggBasTpCd='2', strtDd='20250601', endDd=d8(END), share='1', money='1')
         out.append(frame(rows, 상품='FUK2I', 상품명=PROD['FUK2I'], 권리='ALL', 단위='AMT', 장구분='야간', 상세=''))
         save(pd.concat(out, ignore_index=True), 'inv_daily')
     except Exception as e: log(f'inv 야간 실패: {e!r}'[:300])
@@ -224,7 +237,7 @@ def inv(pre='KR___'):   # probe(2026-11-18): 투자자별 화면은 'KR___' 접�
 def ranged(name, bld, **p):
     wait_clear()
     try:
-        rows, _ = call(bld, strtDd=START_LONG, endDd=d8(TODAY), share='1', money='1', **p)
+        rows, _ = call(bld, strtDd=START_LONG, endDd=d8(END), share='1', money='1', **p)
         save(frame(rows), name)
     except Exception as e: log(f'{name} 실패: {e!r}'[:300])
 
@@ -300,7 +313,7 @@ def index_long():
     for code, nm in (('1001', 'kospi_long'), ('1028', 'k200_long')):
         wait_clear()
         try:
-            df = stock.get_index_ohlcv('19960101', d8(TODAY), code).reset_index(); df['수집시각'] = STAMP; df['원본'] = 'KRX 정보데이터시스템(pykrx)'
+            df = stock.get_index_ohlcv('19960101', d8(END), code).reset_index(); df['수집시각'] = STAMP; df['원본'] = 'KRX 정보데이터시스템(pykrx)'
             save(df, nm)
         except Exception as e: log(f'{nm} 실패: {e!r}'[:300])
 
@@ -334,6 +347,7 @@ def main():
                 except Exception: log(traceback.format_exc()[-800:])
                 git_save(t)
     finally:
+        if FAILED: pd.DataFrame(FAILED).to_csv(os.path.join(OUT, f'failed_chunks_{dt.datetime.now(KST):%Y%m%d_%H%M}.csv'), index=False, encoding='utf-8-sig')
         with open(os.path.join(OUT, f'log_{mode}_{dt.datetime.now(KST):%Y%m%d_%H%M}.txt'), 'w', encoding='utf-8') as f: f.write('\n'.join(LOG))
 
 

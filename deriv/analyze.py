@@ -48,6 +48,7 @@ def collect_latest(fname):
     if not os.path.isdir(cdir): return None
     parts = []
     for d in sorted(os.listdir(cdir)):
+        if d.endswith('_1540'): continue          # 15:40 스냅숏은 잠정치(검수 A10 지적) — 쓰지 않음
         p = os.path.join(cdir, d, fname)
         if os.path.exists(p): parts.append(pd.read_csv(p))
     return pd.concat(parts, ignore_index=True) if parts else None
@@ -62,13 +63,15 @@ def load_price():
     h = pd.read_csv(os.path.join(REPO, 'pkg', 'history', '01_코스피_일별시세.csv'))
     h = h.rename(columns={'날짜': 'date'}); h['date'] = ddate(h['date']); parts.append(h)
     cdir = os.path.join(REPO, 'data', 'collect')
-    for d in sorted(os.listdir(cdir)) if os.path.isdir(cdir) else []:
+    for d in sorted(os.listdir(cdir), reverse=True) if os.path.isdir(cdir) else []:   # 최신 스냅숏 먼저
+        if d.endswith('_1540'): continue
         p = os.path.join(cdir, d, '01_코스피_일별시세.csv')
         if os.path.exists(p):
             c = pd.read_csv(p).rename(columns={'날짜': 'date'}); c['date'] = ddate(c['date']); parts.append(c)
+    parts = parts[:1] + parts[2:] + parts[1:2] if len(parts) > 2 else parts   # 우선순위: pykrx 확정 > 대시보드 확정 스냅숏 > history
     px = pd.concat(parts, ignore_index=True)
     for c in ('시가', '고가', '저가', '종가', '거래대금'): px[c] = num(px[c])
-    px = px.dropna(subset=['date', '종가']).drop_duplicates('date', keep='last').sort_values('date').set_index('date')
+    px = px.dropna(subset=['date', '종가']).drop_duplicates('date', keep='first').sort_values('date').set_index('date')
     px = px[px['시가'] > 0]
     return px[['시가', '고가', '저가', '종가', '거래대금']].rename(columns={'시가': 'open', '고가': 'high', '저가': 'low', '종가': 'close', '거래대금': 'value'})
 
@@ -86,11 +89,13 @@ def targets(px):
     # 저점 신호(앞만 보는 정의): 20거래일 뒤 +5% 이상이고, 그 사이 10거래일 안에 오늘 종가보다 2% 넘게 내려가지 않음
     fwd_low10 = pd.concat([c.shift(-k) for k in range(1, 11)], axis=1).min(axis=1)
     T['bottom'] = ((c.shift(-20) / c - 1 >= 0.05) & (fwd_low10 >= c * 0.98)).astype(float).where(c.shift(-20).notna())
-    T['ret1'] = c.shift(-1) / c - 1                       # 전략 수익 계산용(대상 아님)
+    T['oc'] = c.shift(-1) / o.shift(-1) - 1               # 다음 날 시가→종가(현물로 실제 체결 가능한 첫 구간)
+    T['ret1'] = T['oc']                                   # 전략 수익: t일 18시에 신호 → t+1 시가 진입·종가 청산(검수 A10 ②)
     return T
 
 
-TARGETS = ['gap', 'dir', 'wk', 'crash', 'bottom']
+TARGETS = ['gap', 'dir', 'oc', 'wk', 'crash', 'bottom']
+HORIZON = {'gap': 1, 'dir': 1, 'oc': 1, 'wk': 5, 'crash': 5, 'bottom': 20}
 
 
 # ------------------------------------------------------------------ 지표(A7)
@@ -111,7 +116,7 @@ def investor_frame(inv, prod, opt, unit='AMT', detail=False):
     d['date'] = ddate(d['TRD_DD'])
     m13102 = {'A07': '기관', 'A08': '기타법인', 'A09': '개인', 'A12': '외국인', 'AMT_OR_QTY': '전체'}
     m13103 = {'A01': '금융투자', 'A02': '보험', 'A03': '투신', 'A04': '은행', 'A05': '기타금융', 'A06': '연기금',
-              'A08': '기타법인', 'A09': '개인', 'A10': '외국인(등록)', 'A11': '외국인', 'AMT_OR_QTY': '전체'}
+              'A08': '기타법인', 'A09': '개인', 'A10': '외국인_A10', 'A11': '외국인', 'AMT_OR_QTY': '전체'}
     m = m13103 if detail else m13102
     keep = {k: v for k, v in m.items() if k in d.columns}
     out = d[['date'] + list(keep)].rename(columns=keep)
@@ -145,9 +150,10 @@ def build_indicators(px):
         cl = collect_latest('03_코스피_투자자별_순매수_거래대금.csv')
         if cl is not None:
             cl['date'] = ddate(cl['날짜']); f2 = cl.set_index('date')
-            add = num(f2['외국인']) + num(f2.get('기타외국인', pd.Series(0, index=f2.index))).fillna(0)
-            cf = pd.concat([cf, add[~add.index.isin(cf.index)]])
-        cf = cf[~cf.index.duplicated(keep='last')].sort_index() / 1e12
+            f2 = f2[~f2.index.duplicated(keep='last')]
+            add = num(f2['외국인']) + num(f2['기타외국인']) if '기타외국인' in f2 else num(f2['외국인'])
+            cf = pd.concat([add, cf[~cf.index.isin(add.index)]])   # 같은 날짜는 확정 수집본이 history(마지막 줄 잠정)보다 우선
+        cf = cf.sort_index() / 1e12
         if '외국인' in fut:
             j = pd.concat([cf.rename('c'), (fut['외국인'] / 1e12).rename('f')], axis=1).dropna()
             I['F2_현선동시'] = np.sign(j['c']) + np.sign(j['f'])
@@ -166,8 +172,8 @@ def build_indicators(px):
     for wk in ('OPWKI', 'OPWKM'):
         c2, p2 = investor_frame(inv, wk, 'C'), investor_frame(inv, wk, 'P')
         if c2 is not None and p2 is not None and '외국인' in c2:
-            I[f'O3_{wk}_외국인콜-풋_5d'] = ((c2['외국인'] - p2['외국인']) / 1e9).rolling(5, min_periods=1).sum()
-            if '개인' in c2: I[f'O3_{wk}_개인콜-풋_5d'] = ((c2['개인'] - p2['개인']) / 1e9).rolling(5, min_periods=1).sum()
+            I[f'O3_{wk}_외국인콜-풋_5d'] = ((c2['외국인'] - p2['외국인']) / 1e9).rolling(5).sum()
+            if '개인' in c2: I[f'O3_{wk}_개인콜-풋_5d'] = ((c2['개인'] - p2['개인']) / 1e9).rolling(5).sum()
     # B1 베이시스
     b = rd('basis_daily')
     if b is not None and len(b):
@@ -176,7 +182,8 @@ def build_indicators(px):
         b['fp'] = num(b['TDD_CLSPRC'])
         b = b[(b['fp'] > 0) & b['ym'].notna()].sort_values(['date', 'ym']).drop_duplicates('date', keep='first').set_index('date')
         mb, dr, sp = num(b['MKT_BASIS']), num(b['DIFF_RT']), num(b['SPOT_PRC'])
-        I['B1_시장베이시스율'] = mb / sp * 100; I['B1_베이시스율_5d변화'] = (mb / sp * 100).diff(5)
+        rolled = (b['ym'] != b['ym'].shift(1)).rolling(5, min_periods=1).max().astype(bool)   # 월물 교체가 낀 5일은 차분 지표 빈칸
+        I['B1_시장베이시스율'] = mb / sp * 100; I['B1_베이시스율_5d변화'] = ((mb / sp * 100).diff(5)).where(~rolled)
         I['B1_괴리율'] = dr; I['B1_괴리율_z'] = z250(dr)
     # P1 프로그램매매
     pg = rd('program_daily')
@@ -221,10 +228,13 @@ def build_indicators(px):
         cashv = px['value'].reindex(fr.index)
         I['T1_선물/현물거래대금'] = (tv / cashv).rolling(5).mean()
         oi, pr = num(fr.get('ACC_OPNINT_QTY')), num(fr.get('TDD_CLSPRC'))
+        roll = (fr['ISU_NM'] != fr['ISU_NM'].shift(1))
+        roll5 = roll.rolling(6, min_periods=1).max().astype(bool)
+        I['T1_선물/현물거래대금'] = I['T1_선물/현물거래대금'].where(~roll5)   # 최근월물만 쓰므로 교체 무렵 값은 빈칸
         if oi is not None and pr is not None:
-            doi, dpr = oi.diff(), pr.diff()
-            I['M1_4분면'] = np.sign(dpr) * np.sign(doi)          # +1 신규매수 or 청산(가격↓ 미결제↓), −1 신규매도 or 숏커버
-            I['M1_미결제_5d변화율'] = oi.pct_change(5) * np.sign(pr.diff(5))
+            doi, dpr = oi.diff().where(~roll), pr.diff().where(~roll)
+            I['M1_4분면'] = np.sign(dpr) * np.sign(doi)          # 같은 월물 안에서만: 가격·미결제 같은 방향 +1(신규매수·청산), 반대 −1
+            I['M1_미결제_5d변화율'] = (oi.pct_change(5) * np.sign(pr.diff(5))).where(~roll5)
     # E1·G1 옵션 행사가별
     ch = chain_metrics()
     if ch is not None:
@@ -243,6 +253,7 @@ def build_indicators(px):
     I['N1_야간등락'] = n1.sort_index()
     # 기준선
     c = px['close']; I['BASE_오늘등락'] = c.pct_change() * 100; I['BASE_5일등락'] = c.pct_change(5) * 100
+    I['BASE_HV20'] = c.pct_change().rolling(20).std() * np.sqrt(250) * 100   # 변동성 수준 기준선(검수 A10 ③)
     q = pd.read_csv(os.path.join(REPO, 'pkg', 'datasets', 'q_daily.csv')); q['date'] = ddate(q['date']); q = q.set_index('date')
     I['DASH_p_up'] = num(q['p_up'])
     X = pd.DataFrame(I).sort_index()
@@ -335,9 +346,9 @@ def days_to_expiry(d, ym):
 
 
 # ------------------------------------------------------------------ 연관 분석(A8)
-def lead_lag(X, T):
+def lead_lag(X, T, px):
     rows = []
-    r0 = T['ret1'].shift(1)   # 당일 수익률(t-1→t)
+    r0 = px['close'].pct_change()   # 당일 수익률(t-1 종가→t 종가)
     for c in X.columns:
         s = X[c]
         for lag in range(-5, 6):
@@ -353,7 +364,7 @@ def lead_lag(X, T):
 def windows(idx):
     w = []; s = 0
     while s + TRAIN + 20 < len(idx):
-        w.append((idx[s], idx[s + TRAIN - 1], idx[s + TRAIN], idx[min(s + TRAIN + TEST, len(idx)) - 1])); s += TEST
+        w.append((s, s + TRAIN, min(s + TRAIN + TEST, len(idx)))); s += TEST   # 위치 번호: 학습 [s, s+TRAIN) · 시험 [s+TRAIN, 끝)
     return w
 
 
@@ -363,139 +374,154 @@ def load_regimes():
     return r
 
 
-def regime_tag(idx):
-    """백테스트 구간 나누기 — 승수(2012·2017) · 공매도 금지 · 위클리 이후."""
-    t = pd.Series('보통', index=idx)
-    t[idx < '2012-06-15'] = '승수10만(~2012.6)'
-    t[(idx >= '2012-06-15') & (idx < '2017-03-27')] = '승수50만(2012.6~2017.3)'
-    t[(idx >= '2017-03-27') & (idx < '2019-09-23')] = '승수25만(2017.3~2019.9)'
-    t[idx >= '2019-09-23'] = '위클리 이후(2019.9~)'
+def regime_segments(idx):
+    """제도 구간 — regimes.csv 의 행마다(끝이 비면 지금까지) + 옵션 승수 시대. 겹쳐도 각각 따로 본다(검수 A10 ⑧)."""
+    seg = {'옵션승수10만(~2012.6)': idx < '2012-06-15', '옵션승수50만(2012.6~2017.3)': (idx >= '2012-06-15') & (idx < '2017-03-27'),
+           '승수25만·위클리 전(2017.3~2019.9)': (idx >= '2017-03-27') & (idx < '2019-09-23'), '위클리 이후(2019.9~)': idx >= '2019-09-23'}
     for _, r in load_regimes().iterrows():
-        if str(r['regime']).startswith('short_ban'):
-            e = r['end'] if pd.notna(r['end']) else pd.Timestamp('2100-01-01')
-            t[(idx >= r['start']) & (idx <= e)] = '공매도금지'
-    return t
+        e = r['end'] if pd.notna(r['end']) else pd.Timestamp('2100-01-01')
+        seg[str(r['regime'])] = (idx >= r['start']) & (idx <= e)
+    return seg
 
 
-def eval_pair(x, y, w):
-    """한 지표 × 한 대상의 워크포워드. 방향은 학습 구간 순위상관 부호."""
-    recs = []; tdays = []
-    for a, b, c, d in w:
-        tr = pd.concat([x[a:b], y[a:b]], axis=1).dropna(); te = pd.concat([x[c:d], y[c:d]], axis=1).dropna()
+BASELINES = ['BASE_5일등락', 'BASE_HV20']
+
+
+def resid(ytr, Btr, Bte, yte):
+    """학습 구간에서 대상 ~ 기준선(5일 등락·20일 변동성) 선형 적합 → 시험 구간 잔차."""
+    A = np.column_stack([np.ones(len(Btr)), Btr]); coef = np.linalg.lstsq(A, ytr, rcond=None)[0]
+    return yte - np.column_stack([np.ones(len(Bte)), Bte]) @ coef
+
+
+def eval_pair(x, y, w, h, B):
+    """한 지표 × 한 대상의 워크포워드. 학습 끝 h일은 비움(대상이 시험 구간 가격을 보므로). 방향은 학습 구간 순위상관 부호."""
+    recs = []; tdays = []; skipped = 0
+    for s0, s1, s2 in w:
+        tr = pd.concat([x.iloc[s0:s1 - h], y.iloc[s0:s1 - h], B.iloc[s0:s1 - h]], axis=1).dropna()
+        te = pd.concat([x.iloc[s1:s2], y.iloc[s1:s2], B.iloc[s1:s2]], axis=1).dropna()
         if len(tr) < 250 or len(te) < 60 or tr.iloc[:, 0].nunique() < 3: continue
         rho_tr = stats.spearmanr(tr.iloc[:, 0], tr.iloc[:, 1])[0]
         if not np.isfinite(rho_tr) or rho_tr == 0: continue
-        s = np.sign(rho_tr)
+        sg = np.sign(rho_tr)
         lo, hi = tr.iloc[:, 0].quantile(0.2), tr.iloc[:, 0].quantile(0.8)
-        rho_te = stats.spearmanr(te.iloc[:, 0], te.iloc[:, 1])[0]
         top = te[te.iloc[:, 0] >= hi].iloc[:, 1]; bot = te[te.iloc[:, 0] <= lo].iloc[:, 1]
-        if s < 0: top, bot = bot, top
-        recs.append({'start': c, 'ic': s * rho_te if np.isfinite(rho_te) else np.nan, 'n_top': len(top), 'n_bot': len(bot),
-                     'spread': (top.mean() - bot.mean()) if len(top) >= 5 and len(bot) >= 5 else np.nan,
-                     'top_mean': top.mean(), 'bot_mean': bot.mean(), 'base': te.iloc[:, 1].mean()})
+        if sg < 0: top, bot = bot, top
+        if len(top) < 5 or len(bot) < 5:
+            skipped += 1; continue                       # 한쪽 그룹이 비는 창은 합산에서도 뺀다(검수 A10 ⑥)
+        rho_te = stats.spearmanr(te.iloc[:, 0], te.iloc[:, 1])[0]
+        rs = resid(tr.iloc[:, 1].values, tr.iloc[:, 2:].values, te.iloc[:, 2:].values, te.iloc[:, 1].values)
+        rho_inc = stats.spearmanr(te.iloc[:, 0], rs)[0]
+        recs.append({'start': x.index[s1], 'ic': sg * rho_te if np.isfinite(rho_te) else np.nan, 'ic_inc': sg * rho_inc if np.isfinite(rho_inc) else np.nan,
+                     'sign': sg, 'spread': top.mean() - bot.mean(), 'n_top': len(top), 'n_bot': len(bot), 'base': te.iloc[:, 1].mean()})
         tdays.append(pd.DataFrame({'y': pd.concat([top, bot]), 'grp': [1] * len(top) + [0] * len(bot)}))
-    if not recs: return None, None
-    R = pd.DataFrame(recs); D = pd.concat(tdays)
-    return R, D
+    if not recs: return None, None, skipped
+    return pd.DataFrame(recs), pd.concat(tdays), skipped
+
+
+def tp(v):
+    v = pd.Series(v).dropna()
+    return stats.ttest_1samp(v, 0)[1] if len(v) >= 5 and v.std() > 0 else np.nan
 
 
 def run_backtest(X, T):
     idx = T.dropna(subset=['dir']).index
     idx = idx[idx >= '2008-01-01']
-    w = windows(idx)
-    reg = regime_tag(idx)
+    w = windows(idx); seg = regime_segments(idx)
+    B = X[BASELINES].reindex(idx)
     rows = []
     for tgt in TARGETS:
-        y = T[tgt]
+        y = T[tgt].reindex(idx); h = HORIZON[tgt]
         for c in X.columns:
             if c == 'N1_야간등락' and tgt != 'gap': continue
             x = X[c].reindex(idx)
-            if x.notna().sum() < TRAIN + 100: continue
-            R, D = eval_pair(x, y.reindex(idx), w)
-            if R is None: continue
+            base = c.startswith(('BASE_', 'DASH_'))
+            row = {'대상': tgt, '지표': c, '구분': '기준선' if base else ('동시성(거래 불가)' if c.startswith('B1_') and tgt in ('gap', 'dir') else '후보')}
+            if x.notna().sum() < TRAIN + 100:
+                row.update({'p': np.nan, '사유': '자료 짧음(워크포워드 불가)'}); rows.append(row); continue
+            R, D, skipped = eval_pair(x, y, w, h, B)
+            if R is None or len(R) < 5:
+                row.update({'p': np.nan, '사유': f'쓸 수 있는 시험창 부족(건너뛴 창 {skipped})'}); rows.append(row); continue
             g1, g0 = D[D.grp == 1]['y'], D[D.grp == 0]['y']
-            if len(g1) < 30 or len(g0) < 30: continue
-            # 주 검정: 시험창마다 (상위−하위) 차이를 하나의 표본으로 보고 0과 비교 — 겹치는 기간(1주·20일 대상)의 자기상관에 덜 속는다
-            sp = R['spread'].dropna()
-            p = stats.ttest_1samp(sp, 0)[1] if len(sp) >= 5 and sp.std() > 0 else np.nan
-            # 참고 검정: 날짜 단위(겹침 때문에 과대평가될 수 있음)
-            if tgt in ('dir', 'crash', 'bottom'):
-                tab = [[g1.sum(), len(g1) - g1.sum()], [g0.sum(), len(g0) - g0.sum()]]
-                p_day = stats.fisher_exact(tab)[1]
-            else:
-                p_day = stats.ttest_ind(g1, g0, equal_var=False)[1]
-            # 제도 구간별 부호 일관성
-            regs = {}
-            for rg in reg.unique():
-                ii = reg[reg == rg].index
-                j = pd.concat([x.reindex(ii), y.reindex(ii)], axis=1).dropna()
-                if len(j) >= 120: regs[rg] = stats.spearmanr(j.iloc[:, 0], j.iloc[:, 1])[0]
-            sgn = np.sign(R['ic'].mean())
-            overall_sign = np.sign(stats.spearmanr(*pd.concat([x, y.reindex(idx)], axis=1).dropna().T.values)[0])
-            consist = np.mean([np.sign(v) == overall_sign for v in regs.values()]) if regs else np.nan
-            rows.append({'대상': tgt, '지표': c, '시험창': len(R), '시험일수': int(R['n_top'].sum() + R['n_bot'].sum()),
-                         '평균IC(방향맞춤)': R['ic'].mean(), 'IC양수창비율': (R['ic'] > 0).mean(),
-                         '상위평균': g1.mean(), '하위평균': g0.mean(), '차이': g1.mean() - g0.mean(), '기본값': R['base'].mean(),
-                         '차이양수창비율': (R['spread'].dropna() > 0).mean(), 'p': p, 'p_날짜단위(참고)': p_day, '구간일관성': consist, '전체부호': overall_sign,
-                         '구간별상관': json.dumps({k: round(v, 3) for k, v in regs.items()}, ensure_ascii=False), '시작': str(x.dropna().index.min().date())})
+            p = tp(R['spread']); p_inc = tp(R['ic_inc'])
+            # 제도 구간 일관성: 걷기 검증 다수 방향과 같은지, |ρ|<0.02 는 판정 불가
+            wf_sign = np.sign(R['sign'].sum()) or 1.0
+            cons = {}
+            for nm, m in seg.items():
+                j = pd.concat([x[m], y[m]], axis=1).dropna()
+                if len(j) >= 120:
+                    rho = stats.spearmanr(j.iloc[:, 0], j.iloc[:, 1])[0]
+                    if np.isfinite(rho): cons[nm] = round(float(rho), 3)
+            judged = {k: v for k, v in cons.items() if abs(v) >= 0.02}
+            consist = np.mean([np.sign(v) == wf_sign for v in judged.values()]) if judged else np.nan
+            row.update({'시험창': len(R), '건너뛴창': skipped, '시험일수': int(len(D)), '방향': '+' if wf_sign > 0 else '−',
+                        '평균IC(방향맞춤)': R['ic'].mean(), 'IC양수창비율': (R['ic'].dropna() > 0).mean(),
+                        '기준선제외IC': R['ic_inc'].mean(), 'p_기준선제외': p_inc,
+                        '상위평균': g1.mean(), '하위평균': g0.mean(), '차이': g1.mean() - g0.mean(), '기본값': R['base'].mean(),
+                        '차이양수창비율': (R['spread'] > 0).mean(), 'p': p, '구간일관성': consist, '구간별상관': json.dumps(cons, ensure_ascii=False),
+                        '시작': str(x.dropna().index.min().date())})
+            rows.append(row)
     S = pd.DataFrame(rows)
-    if not len(S): return S
-    S = S.sort_values('p')
-    m = S['p'].notna(); pv = S.loc[m, 'p'].values; n = len(pv)
+    # 다중 검정: 후보 전체(빠진 것·p 없는 것 포함, p=1 로)를 한 가족으로(검수 A10 ④). 기준선은 가족에서 뺀다.
+    fam = S['구분'] != '기준선'
+    pv = S.loc[fam, 'p'].fillna(1.0).values; n = len(pv)
     order = np.argsort(pv); q = np.empty(n); prev = 1.0
     for rank, i in enumerate(order[::-1]):
         k = n - rank; prev = min(prev, pv[i] * n / k); q[i] = prev
-    S.loc[m, 'q_BH'] = q
+    S.loc[fam, 'q_BH'] = q; S.attrs['family'] = n
     def grade(r):
+        if r['구분'] == '기준선': return '기준선'
+        if pd.isna(r.get('p')): return '판정 불가'
+        if r['구분'].startswith('동시성'): return '동시성'
         ok = r['평균IC(방향맞춤)'] > 0 and r['차이'] > 0
-        if ok and pd.notna(r['q_BH']) and r['q_BH'] <= 0.10 and r['차이양수창비율'] >= 0.7 and (r['구간일관성'] == 1 or pd.isna(r['구간일관성'])): return 'A'
-        if ok and pd.notna(r['q_BH']) and r['q_BH'] <= 0.10 and r['차이양수창비율'] >= 0.6: return 'B'
-        if ok and pd.notna(r['p']) and r['p'] <= 0.05: return 'C'
+        inc = r['기준선제외IC'] > 0 and pd.notna(r['p_기준선제외']) and r['p_기준선제외'] <= 0.10
+        if ok and inc and r['q_BH'] <= 0.10 and r['차이양수창비율'] >= 0.7 and r['구간일관성'] >= 0.8: return 'A'
+        if ok and inc and r['q_BH'] <= 0.10 and r['차이양수창비율'] >= 0.6: return 'B'
+        if ok and r['p'] <= 0.05: return 'C'
         return '탈락'
     S['등급'] = S.apply(grade, axis=1)
-    return S
+    return S.sort_values(['등급', 'p'])
 
 
-def permutation_check(X, T, S, n=300, seed=7):
-    """상위 후보만: 지표 날짜를 섞어 같은 계산을 n번 — 무작위보다 나은지."""
+def permutation_check(X, T, S, n=500, seed=7):
+    """A·B 후보: 지표를 원형으로 밀어(자기상관 유지, 최소 250일 이동) 같은 계산 n번 — 우연보다 나은지(검수 A10 ⑤)."""
     rng = np.random.default_rng(seed); rows = []
-    idx = T.dropna(subset=['dir']).index; idx = idx[idx >= '2008-01-01']; w = windows(idx)
-    for _, r in S[S['등급'].isin(['A', 'B'])].head(12).iterrows():
-        x = X[r['지표']].reindex(idx); y = T[r['대상']].reindex(idx); obs = r['평균IC(방향맞춤)']; cnt = 0; k = 0
+    idx = T.dropna(subset=['dir']).index; idx = idx[idx >= '2008-01-01']; w = windows(idx); B = X[BASELINES].reindex(idx)
+    for _, r in S[S['등급'].isin(['A', 'B'])].iterrows():
+        x = X[r['지표']].reindex(idx); y = T[r['대상']].reindex(idx); h = HORIZON[r['대상']]; obs = r['평균IC(방향맞춤)']; cnt = 0; k = 0
         for _ in range(n):
-            xs = pd.Series(rng.permutation(x.values), index=idx)
-            R, _ = eval_pair(xs, y, w)
+            sh = int(rng.integers(250, len(idx) - 250))
+            xs = pd.Series(np.roll(x.values, sh), index=idx)
+            R, _, _ = eval_pair(xs, y, w, h, B)
             if R is None: continue
             k += 1; cnt += R['ic'].mean() >= obs
-        rows.append({'대상': r['대상'], '지표': r['지표'], '관측IC': obs, '무작위초과확률': (cnt + 1) / (k + 1), '반복': k})
+        rows.append({'대상': r['대상'], '지표': r['지표'], '관측IC': obs, '원형이동_초과확률': (cnt + 1) / (k + 1), '반복': k})
     return pd.DataFrame(rows)
 
 
 def ensemble(X, T, S):
-    """대상마다: 학습 750일 성적 상위 5개 지표 → 방향 맞춘 표준점수 평균 → 시험 250일 평가."""
+    """대상마다: 학습 750일(끝 h일 비움) 성적 상위 5개 → 방향 맞춘 표준점수 평균 → 시험 250일. 기준선·동시성(B1) 제외."""
     idx = T.dropna(subset=['dir']).index; idx = idx[idx >= '2008-01-01']; w = windows(idx); out = []; days = []
-    cand = [c for c in X.columns if not c.startswith(('BASE_', 'DASH_'))]
+    cand = [c for c in X.columns if not c.startswith(('BASE_', 'DASH_', 'B1_'))]
+    Xi = X.reindex(idx)
     for tgt in TARGETS:
-        y = T[tgt].reindex(idx)
-        for a, b, c, d in w:
+        y = T[tgt].reindex(idx); h = HORIZON[tgt]
+        for s0, s1, s2 in w:
             sc = []
             for col in cand:
                 if col == 'N1_야간등락' and tgt != 'gap': continue
-                tr = pd.concat([X[col].reindex(idx)[a:b], y[a:b]], axis=1).dropna()
+                tr = pd.concat([Xi[col].iloc[s0:s1 - h], y.iloc[s0:s1 - h]], axis=1).dropna()
                 if len(tr) < 250 or tr.iloc[:, 0].nunique() < 3: continue
                 rho = stats.spearmanr(tr.iloc[:, 0], tr.iloc[:, 1])[0]
                 if np.isfinite(rho): sc.append((abs(rho), col, np.sign(rho), tr.iloc[:, 0].mean(), tr.iloc[:, 0].std()))
-            top5 = sorted(sc, reverse=True)[:5]
+            top5 = [t for t in sorted(sc, reverse=True)[:5] if t[4] > 0]
             if len(top5) < 3: continue
-            zs = [s * (X[col].reindex(idx)[c:d] - mu) / (sd or 1) for _, col, s, mu, sd in top5]
-            score = pd.concat(zs, axis=1).mean(axis=1, skipna=True)
-            # 학습 구간 점수 분위
-            ztr = pd.concat([s * (X[col].reindex(idx)[a:b] - mu) / (sd or 1) for _, col, s, mu, sd in top5], axis=1).mean(axis=1)
+            score = pd.concat([sg * (Xi[col].iloc[s1:s2] - mu) / sd for _, col, sg, mu, sd in top5], axis=1).mean(axis=1, skipna=True)
+            ztr = pd.concat([sg * (Xi[col].iloc[s0:s1 - h] - mu) / sd for _, col, sg, mu, sd in top5], axis=1).mean(axis=1)
             hi, lo = ztr.quantile(0.8), ztr.quantile(0.2)
-            te = pd.concat([score.rename('s'), y[c:d].rename('y'), T['ret1'].reindex(idx)[c:d].rename('r')], axis=1).dropna()
+            te = pd.concat([score.rename('s'), y.iloc[s1:s2].rename('y'), T['ret1'].reindex(idx).iloc[s1:s2].rename('r')], axis=1).dropna()
             if len(te) < 40: continue
             rho = stats.spearmanr(te['s'], te['y'])[0]
-            out.append({'대상': tgt, '시험시작': str(c.date()), '고른지표': ' | '.join(col for _, col, *_ in top5), 'IC': rho,
+            out.append({'대상': tgt, '시험시작': str(idx[s1].date()), '고른지표': ' | '.join(col for _, col, *_ in top5), 'IC': rho,
                         '상위평균': te[te['s'] >= hi]['y'].mean(), '하위평균': te[te['s'] <= lo]['y'].mean(), '기본값': te['y'].mean(), 'n': len(te)})
             te['tgt'] = tgt; te['hi'] = te['s'] >= hi; te['lo'] = te['s'] <= lo; days.append(te)
     E = pd.DataFrame(out); D = pd.concat(days) if days else pd.DataFrame()
@@ -503,18 +529,18 @@ def ensemble(X, T, S):
 
 
 def strategy(D):
-    """종가 방향(dir) 묶음 점수 상위 20%일 때만 다음 날 보유(비용 0.1%/왕복). 매수 후 보유와 비교."""
+    """'다음 날 시가→종가(oc)' 묶음 점수 상위 20%인 날만 t+1 시가에 사서 종가에 판다(왕복 비용 0.1%). 같은 날짜 매일 보유와 비교."""
     if not len(D): return {}
-    d = D[D['tgt'] == 'dir'].copy()
+    d = D[D['tgt'] == 'oc'].copy()
     if not len(d): return {}
-    pos = d['hi'].astype(float); trades = pos.diff().abs().fillna(pos.iloc[0]); r = pos * d['r'] - trades * 0.0005
-    eq = (1 + r).cumprod(); bh = (1 + d['r']).cumprod()
+    pos = d['hi'].astype(float); r = pos * (d['r'] - 0.001)
+    eq = (1 + r).cumprod(); bh = (1 + d['r'] - 0.001).cumprod()
     mdd = lambda e: float((e / e.cummax() - 1).min())
     yrs = len(d) / 250
     return {'기간': f"{d.index.min().date()}~{d.index.max().date()}", '보유일비율': float(pos.mean()),
             '전략_연수익': float(eq.iloc[-1] ** (1 / yrs) - 1), '전략_최대손실': mdd(eq),
-            '보유_연수익': float(bh.iloc[-1] ** (1 / yrs) - 1), '보유_최대손실': mdd(bh),
-            '보유일_적중률': float((d.loc[d['hi'], 'y'] == 1).mean()), '전체_상승일비율': float(d['y'].mean())}
+            '매일시가매수종가매도_연수익': float(bh.iloc[-1] ** (1 / yrs) - 1), '매일_최대손실': mdd(bh),
+            '보유일_평균시가종가%': float(d.loc[d['hi'], 'r'].mean() * 100), '전체_평균시가종가%': float(d['r'].mean() * 100)}
 
 
 def event_study(X, T, px):
@@ -574,8 +600,9 @@ def main():
                         '값개수': [int(X[c].notna().sum()) for c in X.columns]})
     cov.to_csv(os.path.join(OUT, 'coverage.csv'), index=False, encoding='utf-8-sig')
     X.to_csv(os.path.join(OUT, 'indicators_daily.csv.gz'), encoding='utf-8')
-    LL = lead_lag(X, T); LL.to_csv(os.path.join(OUT, 'lead_lag.csv'), index=False, encoding='utf-8-sig')
+    LL = lead_lag(X, T, px); LL.to_csv(os.path.join(OUT, 'lead_lag.csv'), index=False, encoding='utf-8-sig')
     S = run_backtest(X, T); S.to_csv(os.path.join(OUT, 'backtest_summary.csv'), index=False, encoding='utf-8-sig')
+    note['다중검정_가족크기'] = S.attrs.get('family')
     P = permutation_check(X, T, S) if len(S) else pd.DataFrame(); P.to_csv(os.path.join(OUT, 'backtest_permutation.csv'), index=False, encoding='utf-8-sig')
     E, D = ensemble(X, T, S); E.to_csv(os.path.join(OUT, 'backtest_ensemble.csv'), index=False, encoding='utf-8-sig')
     ST = strategy(D)
