@@ -38,18 +38,23 @@
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
-html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 15px; line-height: 1.5; }
-.wrap { max-width: 1400px; margin: 0 auto; padding: 16px 16px 40px; display: grid; gap: 14px; }
-h1 { margin: 0; font-size: 1.45rem; font-weight: 700; letter-spacing: -0.01em; text-wrap: balance; }
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 15px; line-height: 1.5; }
+.wrap { height: 100vh; height: 100dvh; padding: 10px 16px 8px; display: flex; flex-direction: column; gap: 8px; }
+.wrap > * { flex: 0 0 auto; }
+.top { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; }
+.top h1 { margin-right: 4px; }
+h1 { margin: 0; font-size: 1.15rem; font-weight: 700; letter-spacing: -0.01em; text-wrap: balance; }
 .sub { margin: 4px 0 0; color: var(--muted); font-size: 0.86rem; max-width: 72ch; }
 .sub a { color: var(--accent); }
-.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; }
-.tile { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; display: grid; gap: 2px; text-align: left; font: inherit; color: inherit; cursor: pointer; }
+.tiles { display: flex; flex-wrap: wrap; gap: 6px; }
+.tile { background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: 3px 11px; display: inline-flex; align-items: baseline; gap: 5px; font: inherit; color: inherit; cursor: pointer; }
 .tile:focus-visible, .chip:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible, th:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.tile b { font-size: 1.35rem; font-variant-numeric: tabular-nums; font-weight: 600; }
+.tile b { font-size: 0.95rem; font-variant-numeric: tabular-nums; font-weight: 600; }
 .tile span { color: var(--muted); font-size: 0.8rem; }
 .tile.on { border-color: var(--accent); background: var(--hl); }
-.controls { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px; display: grid; gap: 10px; }
+.controls { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; display: grid; gap: 8px; }
+.controls[hidden] { display: none; }
+.bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; justify-content: space-between; }
 .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .row > label { display: grid; gap: 2px; font-size: 0.78rem; color: var(--muted); }
 input[type=search], select { font: inherit; font-size: 0.9rem; padding: 7px 9px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--ink); min-width: 0; }
@@ -63,9 +68,9 @@ input[type=search] { width: 180px; }
 .lab { font-size: 0.78rem; color: var(--muted); }
 .count { font-size: 0.86rem; color: var(--muted); }
 .count b { color: var(--ink); font-variant-numeric: tabular-nums; }
-.tw { overflow-x: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; max-height: 72vh; overflow-y: auto; }
+.tw { flex: 1 1 auto; min-height: 0; overflow: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
 table { border-collapse: separate; border-spacing: 0; font-size: 0.84rem; font-variant-numeric: tabular-nums; width: max-content; min-width: 100%; }
-th, td { padding: 7px 9px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
+th, td { padding: 5px 8px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
 thead th { position: sticky; top: 0; background: var(--panel); z-index: 2; color: var(--muted); font-weight: 500; font-size: 0.78rem; cursor: pointer; user-select: none; vertical-align: bottom; line-height: 1.3; }
 thead th.grp { cursor: default; text-align: center; font-size: 0.72rem; border-bottom: none; padding-bottom: 0; }
 thead tr:first-child th { height: 24px; }
@@ -87,13 +92,16 @@ tbody tr:hover td { background: var(--hl); }
 .up { color: var(--up); } .down { color: var(--down); }
 .na { color: var(--muted); }
 .gsep { border-left: 1px solid var(--line); }
-details { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; font-size: 0.86rem; }
-details summary { cursor: pointer; font-weight: 600; }
-details li { margin: 4px 0; max-width: 90ch; }
-.foot { font-size: 0.8rem; color: var(--muted); }
+#help { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 8px 14px; font-size: 0.84rem; max-height: 40vh; overflow: auto; }
+#help[hidden] { display: none; }
+#help ul { margin: 0; padding-left: 18px; }
+#help li { margin: 4px 0; max-width: 90ch; }
+.foot { font-size: 0.74rem; color: var(--muted); margin: 0; }
 @media (max-width: 520px) {
   html, body { font-size: 14px; }
   input[type=search] { width: 100%; }
+  .wrap { padding: 8px 10px 6px; gap: 6px; }
+  .sub { display: none; }
   .row > label { flex: 1 1 45%; }
   .row > label select { width: 100%; }
 }
@@ -102,20 +110,25 @@ details li { margin: 4px 0; max-width: 90ch; }
 </head>
 <body>
 <div class="wrap">
-  <header>
+  <div class="top">
     <h1>방어·안정 종목 통합 명단</h1>
-    <p class="sub">안정 관찰 종목 1~100위, 현재 점수 순위 1~100위, 방어종목 1번 결과물 1~100위를 합친 <b id="nAll">—</b>종목입니다. 공통 지표는 모두 2026년 11월 16일 KRX 종가 기준으로 같은 방식으로 계산했습니다. 칸 제목을 누르면 그 조건으로 정렬되고, 종목 이름을 누르면 다음 금융 종목 화면(차트·투자자별 매매·실적·공시)이 열립니다.</p>
-  </header>
-
-  <section class="tiles" aria-label="명단별 종목 수">
-    <button class="tile" type="button" data-preset="all"><b id="t-all">—</b><span>합친 종목 전체</span></button>
-    <button class="tile" type="button" data-preset="st"><b id="t-st">—</b><span>안정 관찰 종목</span></button>
-    <button class="tile" type="button" data-preset="sc"><b id="t-sc">—</b><span>현재 점수 순위</span></button>
-    <button class="tile" type="button" data-preset="d1"><b id="t-d1">—</b><span>방어종목 1번 결과물</span></button>
-    <button class="tile" type="button" data-preset="multi"><b id="t-multi">—</b><span>두 명단 이상 겹침</span></button>
-  </section>
-
-  <section class="controls" aria-label="조건">
+    <div class="tiles" role="group" aria-label="명단 바로 보기">
+      <button class="tile" type="button" data-preset="all"><b id="t-all">—</b><span>전체</span></button>
+      <button class="tile" type="button" data-preset="st"><b id="t-st">—</b><span>안정 관찰</span></button>
+      <button class="tile" type="button" data-preset="sc"><b id="t-sc">—</b><span>점수 순위</span></button>
+      <button class="tile" type="button" data-preset="d1"><b id="t-d1">—</b><span>방어 1번</span></button>
+      <button class="tile" type="button" data-preset="multi"><b id="t-multi">—</b><span>겹침</span></button>
+    </div>
+  </div>
+  <div class="bar">
+    <div class="count" id="count" aria-live="polite">—</div>
+    <div class="row">
+      <button type="button" class="btn" id="tg-ctl" aria-expanded="true" aria-controls="ctl">조건 접기</button>
+      <button type="button" class="btn" id="tg-help" aria-expanded="false" aria-controls="help">설명</button>
+    </div>
+  </div>
+  <p class="sub" id="nAllP">세 명단을 합친 <b id="nAll">—</b>종목, 11/16 KRX 종가 기준. 칸 제목을 누르면 정렬, 종목 이름을 누르면 다음 금융 종목 화면이 열립니다.</p>
+  <section class="controls" id="ctl" aria-label="조건">
     <div class="row">
       <span class="lab">명단</span>
       <button type="button" class="chip c-st" id="f-st" aria-pressed="true">안정 관찰</button>
@@ -139,18 +152,9 @@ details li { margin: 4px 0; max-width: 90ch; }
       <button type="button" class="chip" data-grp="ret" aria-pressed="true">수익률</button>
       <button type="button" class="chip" data-grp="own" aria-pressed="true">보유·공매도·규모</button>
     </div>
-    <div class="count" id="count" aria-live="polite">—</div>
   </section>
 
-  <div class="tw" id="tw">
-    <table id="tbl">
-      <thead id="thead"></thead>
-      <tbody id="tbody"></tbody>
-    </table>
-  </div>
-
-  <details>
-    <summary>칸과 명단 설명</summary>
+  <div id="help" hidden>
     <ul>
       <li><b>안정 관찰</b>: 시총 1,000억 원 이상·거래가 너무 적지 않은 848종목을 1년 변동성 낮음, 2년 베타 낮음, 2018년 이후 코스피 급락 22번에서 같은 시장 보통 종목보다 덜 빠진 비율로 각각 백분위를 매겨 같은 비중으로 평균한 순위입니다.</li>
       <li><b>점수 순위</b>: 11/16 수급 가중 점수(0~100)와 위험·가치 체크리스트(베타 0.6 미만·배당 2% 이상·4년 흑자·PBR 1.2 미만, 개당 25점)를 반씩 섞은 종합 점수 순위입니다(대시보드 '현재 점수 순위' 기본값).</li>
@@ -160,8 +164,15 @@ details li { margin: 4px 0; max-width: 90ch; }
       <li><b>6/22~7/30·9/23~11/9</b>: 2026년 두 급락 구간 수익률. 안정 관찰 순위를 매길 때 쓴 기록에 들어 있는 값입니다.</li>
       <li>'좋은 쪽부터' 정렬은 순위는 작은 값, 점수·덜 빠짐·배당·수익률은 큰 값, 변동성·베타·PBR·공매도는 작은 값부터 놓습니다. 빈 값(—)은 항상 맨 아래로 갑니다.</li>
     </ul>
-  </details>
-  <p class="foot">자료: KRX 정보데이터시스템(pykrx), OpenDART. 종목 화면은 다음 금융. 관찰을 위한 명단이며 사실 정리이고, 투자 권유가 아닙니다.</p>
+  </div>
+  <div class="tw" id="tw">
+    <table id="tbl">
+      <thead id="thead"></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <p class="foot">자료: KRX 정보데이터시스템(pykrx), OpenDART · 종목 화면: 다음 금융 · 관찰용 명단, 투자 권유 아님</p>
 </div>
 
 <script>
@@ -333,6 +344,12 @@ details li { margin: 4px 0; max-width: 90ch; }
     $('sec').addEventListener('change', (e) => { S.sec = e.target.value; render(); });
     $('sort').addEventListener('change', (e) => { S.sort = e.target.value; S.dir = 'good'; render(); });
     $('dir').addEventListener('change', (e) => { S.dir = e.target.value; render(); });
+    const setCtl = (open) => { $('ctl').hidden = !open; $('tg-ctl').setAttribute('aria-expanded', String(open)); $('tg-ctl').textContent = open ? '조건 접기' : '조건 펼치기'; };
+    let ctlOpen = window.matchMedia ? window.matchMedia('(min-width: 700px)').matches : (window.innerWidth >= 700);
+    try { const v = localStorage.getItem('stocks-ctl'); if (v !== null) ctlOpen = v === '1'; } catch (e) {}
+    setCtl(ctlOpen);
+    $('tg-ctl').addEventListener('click', () => { ctlOpen = !ctlOpen; setCtl(ctlOpen); try { localStorage.setItem('stocks-ctl', ctlOpen ? '1' : '0'); } catch (e) {} });
+    $('tg-help').addEventListener('click', () => { const h = $('help'); h.hidden = !h.hidden; $('tg-help').setAttribute('aria-expanded', String(!h.hidden)); });
     $('reset').addEventListener('click', () => { S = JSON.parse(JSON.stringify(DEF)); render(); });
     document.querySelectorAll('[data-grp]').forEach((b) => b.addEventListener('click', () => { S.groups[b.dataset.grp] = !S.groups[b.dataset.grp]; render(); }));
     document.querySelectorAll('.tile').forEach((t) => t.addEventListener('click', () => {
