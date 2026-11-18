@@ -1,0 +1,42 @@
+name: short-backfill
+# 공매도 과거 자료 나눠 받기(2026-11-18 추가) — 2026-01-02 이후 빈 날짜의 전종목 공매도 거래·잔고를 밤마다 조금씩 받는다.
+# 대시보드 갱신(08:23~22:23)이 끝난 밤 23:47·03:17 KST 에 한 번에 최대 60번만 조회하고(조회 사이 4~6초), 막히면 바로 멈춘다.
+# 다 받으면 조회할 것이 없어 KRX 에 로그인하지도 않고 끝난다(그 뒤로는 매일 20:23 확정 실행의 4c 단계가 새 날짜를 받는다).
+on:
+  schedule:
+    - cron: '47 14 * * *'   # 23:47 KST
+    - cron: '17 18 * * *'   # 03:17 KST
+  workflow_dispatch:
+    inputs:
+      max_calls:
+        description: '이번에 조회할 최대 횟수(날짜 하나 = 1번)'
+        default: '60'
+permissions:
+  contents: write
+concurrency:
+  group: dashboard-update      # 대시보드 갱신과 같은 줄 — 동시에 KRX 에 로그인하거나 저장이 겹치지 않게 한다
+  cancel-in-progress: false
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: 공매도 과거 자료 받기
+        env:
+          KRX_ID: ${{ secrets.KRX_ID }}
+          KRX_PW: ${{ secrets.KRX_PW }}
+        run: python short_collect.py --mode backfill --max-calls "${{ github.event.inputs.max_calls || '60' }}"
+      - name: 결과 저장(commit & push)
+        if: always()
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add -A data/short
+          git commit -m "공매도 과거 자료 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || echo "변경 없음"
+          git pull --rebase -q || true
+          git push

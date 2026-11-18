@@ -105,6 +105,11 @@ def main():
     # 4b 애프터마켓(NXT 저녁 가격·세션별 거래대금·투자자별 → out/am_*.csv, data/after_market/ 누적) — 실패해도 다른 단계는 진행
     try: run([sys.executable, 'after_market.py', '--out', 'out', '--data', 'data/after_market', '--tag', tag], '4b 애프터마켓', timeout=1200)
     except Exception as e: errors.append('4b 애프터마켓: ' + repr(e))
+    # 4c 공매도(2026-11-18 추가) — 확정 실행에서만: 최근 10거래일 중 아직 없는 전종목 공매도 거래·잔고를 날짜당 한 번씩, 최대 8번 조회(data/short/)
+    #     재시도 실행(21:23·22:23)은 이미 받은 날짜를 건너뛰어 조회가 거의 없다. 접속이 막히면 2번째 오류에서 멈추고 '4c 공매도 실패'로 알림 「자료:」 줄에 나온다
+    if tag == '1840':
+        try: run([sys.executable, 'short_collect.py', '--mode', 'daily'], '4c 공매도', timeout=600)
+        except Exception as e: errors.append('4c 공매도: ' + repr(e))
     # 5 fx_daily(참고_원달러 → 기준 파일 뒤 날짜 덧붙임) · manifest
     try:
         base = pd.read_csv('pkg/datasets/fx_daily.csv'); fx = pd.read_excel(WB, sheet_name='참고_원달러'); fx['일자'] = pd.to_datetime(fx['일자'])
