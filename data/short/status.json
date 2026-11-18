@@ -1,0 +1,31 @@
+{
+ "empty_tries": {
+  "trade": {},
+  "balance": {}
+ },
+ "updated": "2026-11-18 22:41",
+ "mode": "history",
+ "calls": 10,
+ "saved": [
+  "trade 2025-12-30",
+  "balance 2025-12-30",
+  "trade 2025-12-29",
+  "balance 2025-12-29",
+  "trade 2025-12-26",
+  "balance 2025-12-26",
+  "trade 2025-12-24",
+  "balance 2025-12-24",
+  "trade 2025-12-23",
+  "balance 2025-12-23"
+ ],
+ "n_saved": 10,
+ "error": null,
+ "left": 4774,
+ "skipped": null,
+ "first_trade": "20251223",
+ "last_trade": "20251230",
+ "first_balance": "20251223",
+ "last_balance": "20251230",
+ "n_trade": 5,
+ "n_balance": 5
+}
