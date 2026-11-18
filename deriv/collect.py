@@ -41,7 +41,9 @@ def log(m):
 
 
 # 대시보드 수집(같은 KRX 계정 로그인)과 겹치지 않게 기다린다.
-BUSY = [((8, 15), (10, 50)), ((15, 35), (18, 5)), ((20, 15), (22, 50))]
+# 대시보드 실행 기록(2026-11-15~18): 08:23·15:43·20:23 수동 실행이 2~11분, 나머지 예약 재시도는 1~3분.
+BUSY = [((8, 15), (8, 45)), ((9, 18), (9, 35)), ((10, 18), (10, 35)), ((15, 35), (16, 5)), ((16, 38), (16, 55)),
+        ((17, 38), (17, 55)), ((20, 15), (20, 45)), ((21, 18), (21, 35)), ((22, 18), (22, 35))]
 def wait_clear():
     while True:
         now = dt.datetime.now(KST)
@@ -65,7 +67,7 @@ LOGOUTS = [0]
 def relogin():
     """같은 계정의 다른 세션이 로그인하면 이 세션은 LOGOUT 을 받는다 → 한 번 다시 로그인. 5번 넘게 반복되면 멈춘다."""
     LOGOUTS[0] += 1
-    if LOGOUTS[0] > 5: raise SystemExit('KRX 로그인이 계속 끊김(다른 곳에서 같은 계정 사용 중일 수 있음) — 중단')
+    if LOGOUTS[0] > 20: raise SystemExit('KRX 로그인이 계속 끊김(다른 곳에서 같은 계정 사용 중일 수 있음) — 중단')
     krxs = get_session()
     if krxs is not None:
         ok = krxs.refresh(os.environ.get('KRX_ID', ''), os.environ.get('KRX_PW', ''))
@@ -91,19 +93,19 @@ def post_once(bld, p, timeout=40):
     return (js.get(key) or []) if key else [], list(js.keys())
 
 
-def call(bld, tries=3, **p):
+def call(bld, tries=3, chunk=729, **p):
     """화면 호출. 기간(strtDd~endDd)이 2년보다 길면 2년씩 나눠 부르고, 조각마다 따로 재시도한다(실패 조각은 기록하고 넘어감)."""
     if 'strtDd' in p and 'endDd' in p:
         s, e = pd.Timestamp(p['strtDd']), pd.Timestamp(p['endDd']); out = []; keys = []
         while s <= e:
-            t = min(s + pd.Timedelta(days=729), e); q = dict(p, strtDd=s.strftime('%Y%m%d'), endDd=t.strftime('%Y%m%d'))
+            t = min(s + pd.Timedelta(days=chunk), e); q = dict(p, strtDd=s.strftime('%Y%m%d'), endDd=t.strftime('%Y%m%d'))
             for k in range(tries):
                 try:
                     rows, keys = post_once(bld, q); out += rows; break
                 except Exception as ex:
                     if k == tries - 1: log(f'  조각 실패 {bld} {q["strtDd"]}~{q["endDd"]}: {ex!r}'[:200])
                     time.sleep(3 + 5 * k)
-            s = t + pd.Timedelta(days=1); time.sleep(0.6)
+            s = t + pd.Timedelta(days=1); time.sleep(0.4); wait_clear()
         return out, keys
     last = None
     for k in range(tries):
@@ -179,40 +181,36 @@ START_DAYLOOP = '20100101'  # 프로그램매매(날짜마다 1번) — 2010년�
 START_CHAIN = '20150101'    # 옵션 전종목(날짜마다 1번, 응답이 큼) — VKOSPI 자료와 맞춰 2015년부터
 
 
-def inv(pre='KR___'):   # probe(2026-11-18): 투자자별 화면은 'KR___' 접두만 응답
-    """투자자별 거래실적 일별추이(정규장) — 상품 × 권리 × 거래대금/거래량."""
-    jobs = [('FUK2I', 'ALL'), ('FUMKI', 'ALL'), ('OPK2I', 'C'), ('OPK2I', 'P'), ('OPMKI', 'C'), ('OPMKI', 'P'),
-            ('OPWKI', 'C'), ('OPWKI', 'P'), ('OPWKM', 'C'), ('OPWKM', 'P')]
-    out = []
-    for prod, opt in jobs:
-        for pt in ('AMT', 'QTY'):
-            wait_clear()
-            try:
-                rows, _ = call('MDCSTAT13102', inqTpCd='2', prtType=pt, prtCheck='SUN', isuCd=pre + prod, isuCd2='', isuOpt=opt,
-                               aggBasTpCd='0', strtDd=START_LONG, endDd=d8(TODAY), share='1', money='1')
-                df = frame(rows, 상품=prod, 상품명=PROD[prod], 권리=opt, 단위=pt, 장구분='정규')
-                out.append(df); log(f'inv {prod} {opt} {pt}: {len(df)}행')
-                save(pd.concat(out, ignore_index=True), 'inv_daily'); git_save(f'inv {prod} {opt} {pt}')
-            except Exception as e: log(f'inv {prod} {opt} {pt} 실패: {e!r}'[:300])
-            time.sleep(1)
-    # 상세 투자자(금융투자·보험·투신·은행·기타금융·연기금·기타법인·개인·외국인·기타외국인) — 코스피200 선물·옵션
-    for prod, opt in (('FUK2I', 'ALL'), ('OPK2I', 'C'), ('OPK2I', 'P')):
+def inv(pre='KR___'):   # probe(2026-11-18): 투자자별 화면은 'KR___' 접두만 응답. 긴 기간은 매우 느려 120일 조각으로.
+    """투자자별 거래실적 일별추이(정규장, 순매수 금액) — 상품 × 권리. 상품마다 상장 무렵부터."""
+    start = {'FUK2I': START_LONG, 'OPK2I': START_LONG, 'FUMKI': '20150701', 'OPMKI': '20150701', 'OPWKI': '20190901', 'OPWKM': '20230701'}
+    jobs = [('FUK2I', 'ALL', False), ('OPK2I', 'C', False), ('OPK2I', 'P', False), ('OPWKI', 'C', False), ('OPWKI', 'P', False),
+            ('OPWKM', 'C', False), ('OPWKM', 'P', False), ('FUMKI', 'ALL', False), ('OPMKI', 'C', False), ('OPMKI', 'P', False),
+            ('FUK2I', 'ALL', True), ('OPK2I', 'C', True), ('OPK2I', 'P', True)]
+    p0 = os.path.join(DATA, 'inv_daily.csv')
+    out = [pd.read_csv(p0)] if os.path.exists(p0) else []
+    done = set()
+    if out:
+        o = out[0]; o['상세'] = o.get('상세', pd.Series('', index=o.index)).fillna('')
+        done = set(zip(o['상품'], o['권리'], o['상세'] == 'Y', o['장구분']))
+    for prod, opt, det in jobs:
+        if (prod, opt, det, '정규') in done: continue
         wait_clear()
         try:
-            rows, _ = call('MDCSTAT13103', inqTpCd='2', prtType='AMT', prtCheck='SUN', isuCd=pre + prod, isuCd2='', isuOpt=opt,
-                           aggBasTpCd='0', strtDd=START_LONG, endDd=d8(TODAY), share='1', money='1', detailView='1')
-            df = frame(rows, 상품=prod, 상품명=PROD[prod], 권리=opt, 단위='AMT', 장구분='정규', 상세='Y')
-            out.append(df); log(f'inv 상세 {prod} {opt}: {len(df)}행')
-        except Exception as e: log(f'inv 상세 {prod} {opt} 실패: {e!r}'[:300])
-        time.sleep(1)
-    # 야간(KRX 자체 야간) — 코스피200 선물
+            extra = dict(detailView='1') if det else {}
+            rows, _ = call('MDCSTAT13103' if det else 'MDCSTAT13102', chunk=120, inqTpCd='2', prtType='AMT', prtCheck='SUN', isuCd=pre + prod,
+                           isuCd2='', isuOpt=opt, aggBasTpCd='0', strtDd=start[prod], endDd=d8(TODAY), share='1', money='1', **extra)
+            df = frame(rows, 상품=prod, 상품명=PROD[prod], 권리=opt, 단위='AMT', 장구분='정규', 상세='Y' if det else '')
+            out.append(df); log(f'inv {prod} {opt} {"상세" if det else ""}: {len(df)}행')
+            save(pd.concat(out, ignore_index=True), 'inv_daily'); git_save(f'inv {prod} {opt}{" 상세" if det else ""}')
+        except Exception as e: log(f'inv {prod} {opt} 실패: {e!r}'[:300])
     wait_clear()
     try:
-        rows, _ = call('MDCSTAT13102', inqTpCd='2', prtType='AMT', prtCheck='SUN', isuCd=pre + 'FUK2I', isuCd2='', isuOpt='ALL',
-                       aggBasTpCd='2', strtDd='20250101', endDd=d8(TODAY), share='1', money='1')
-        out.append(frame(rows, 상품='FUK2I', 상품명=PROD['FUK2I'], 권리='ALL', 단위='AMT', 장구분='야간'))
+        rows, _ = call('MDCSTAT13102', chunk=120, inqTpCd='2', prtType='AMT', prtCheck='SUN', isuCd=pre + 'FUK2I', isuCd2='', isuOpt='ALL',
+                       aggBasTpCd='2', strtDd='20250601', endDd=d8(TODAY), share='1', money='1')
+        out.append(frame(rows, 상품='FUK2I', 상품명=PROD['FUK2I'], 권리='ALL', 단위='AMT', 장구분='야간', 상세=''))
+        save(pd.concat(out, ignore_index=True), 'inv_daily')
     except Exception as e: log(f'inv 야간 실패: {e!r}'[:300])
-    if out: save(pd.concat(out, ignore_index=True), 'inv_daily')
 
 
 def ranged(name, bld, **p):
