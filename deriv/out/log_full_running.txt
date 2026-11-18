@@ -22,3 +22,5 @@
 [01:27:58] 저장 inv2_daily.csv.gz 34163행
 [01:32:47] inv2 FUVKI ALL: 2946행
 [01:32:47] 저장 inv2_daily.csv.gz 37109행
+[01:36:36] inv2 FUXI3 ALL: 1996행
+[01:36:37] 저장 inv2_daily.csv.gz 39105행
