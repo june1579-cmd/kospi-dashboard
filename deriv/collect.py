@@ -141,10 +141,11 @@ def probe():
 
 # ------------------------------------------------------------------ full
 START_LONG = '20040101'   # 일별 추이 화면(기간 조회) — KRX 가 주는 데까지(앞쪽은 빈 응답이면 그대로 둔다)
-START_DAYLOOP = '20100101'  # 날짜마다 1번씩 부르는 화면(프로그램매매·옵션 전종목) — 호출 수 때문에 2010년부터
+START_DAYLOOP = '20100101'  # 프로그램매매(날짜마다 1번) — 2010년부터
+START_CHAIN = '20150101'    # 옵션 전종목(날짜마다 1번, 응답이 큼) — VKOSPI 자료와 맞춰 2015년부터
 
 
-def inv(pre='KRDRV'):
+def inv(pre='KR___'):   # probe(2026-11-18): 투자자별 화면은 'KR___' 접두만 응답
     """투자자별 거래실적 일별추이(정규장) — 상품 × 권리 × 거래대금/거래량."""
     jobs = [('FUK2I', 'ALL'), ('FUMKI', 'ALL'), ('OPK2I', 'C'), ('OPK2I', 'P'), ('OPMKI', 'C'), ('OPMKI', 'P'),
             ('OPWKI', 'C'), ('OPWKI', 'P'), ('OPWKM', 'C'), ('OPWKM', 'P')]
@@ -202,7 +203,7 @@ def trading_days(start):
     return days, known
 
 
-def dayloop(name, bld, start, maker, every_save=250):
+def dayloop(name, bld, start, maker, every_save=250, post=None):
     """날짜마다 한 번 부르는 화면. 이어받기: 이미 받은 날짜는 건너뛴다."""
     p = os.path.join(DATA, name + '.csv.gz')
     have = pd.read_csv(p) if os.path.exists(p) else pd.DataFrame()
@@ -218,17 +219,38 @@ def dayloop(name, bld, start, maker, every_save=250):
         except Exception as e:
             log(f'{name} {ds} 실패: {e!r}'[:200]); rows = []
         if rows:
-            df = pd.DataFrame(rows); df.insert(0, '날짜', ds); buf.append(df)
-        n += 1; time.sleep(0.35)
+            df = pd.DataFrame(rows); df.insert(0, '날짜', ds)
+            if post is not None:
+                try: df = post(df)
+                except Exception as e: log(f'{name} {ds} 정리 실패: {e!r}'[:200])
+            buf.append(df)
+        n += 1; time.sleep(0.25)
         if n % every_save == 0 and buf:
             have = pd.concat([have] + buf, ignore_index=True); buf = []; have.to_csv(p, index=False); log(f'{name} 중간 저장 {ds} ({len(have)}행)')
+            git_save(f'{name} 중간 {ds}')
     if buf: have = pd.concat([have] + buf, ignore_index=True)
     if len(have):
         have['수집시각'] = have.get('수집시각', STAMP); have.to_csv(p, index=False); log(f'저장 {name}.csv.gz {len(have)}행')
 
 
 def program(): dayloop('program_daily', 'MDCSTAT02601', START_DAYLOOP, lambda s8: dict(mktId='STK', strtDd=s8, endDd=s8, share='1', money='1'))
-def chain(): dayloop('opt_chain_daily', 'MDCSTAT12501', START_DAYLOOP, lambda s8: dict(trdDd=s8, prodId='KRDRVOPK2I', mktTpCd='T', rghtTpCd='T', aggBasTpCd='0', share='1', money='1'))
+
+
+def compact_chain(df):
+    """옵션 전종목 응답을 줄여 저장: 가까운 두 결제월, 기초자산 ±20% 행사가, 필요한 열만."""
+    nm = df['ISU_NM'].astype(str)
+    m = nm.str.extract(r'\s([CP])\s+(\d{6})\s+([\d.]+)')
+    df = df.assign(cp=m[0], ym=m[1], K=pd.to_numeric(m[2], errors='coerce'))
+    df = df[df['cp'].notna()]
+    n = lambda c: pd.to_numeric(df[c].astype(str).str.replace(',', '').replace({'-': None}), errors='coerce')
+    df = df.assign(settle=n('SETL_PRC'), close=n('TDD_CLSPRC'), vol=n('ACC_TRDVOL'), oi=n('ACC_OPNINT_QTY'), spot=n('SPOT_PRC'))
+    yms = sorted(df['ym'].dropna().unique())[:2]
+    S = df['spot'].median()
+    df = df[df['ym'].isin(yms) & (df['K'] >= S * 0.8) & (df['K'] <= S * 1.2)]
+    return df[['날짜', 'cp', 'ym', 'K', 'settle', 'close', 'vol', 'oi', 'spot']]
+
+
+def chain(): dayloop('opt_chain_daily', 'MDCSTAT12501', START_CHAIN, lambda s8: dict(trdDd=s8, prodId='KRDRVOPK2I', mktTpCd='T', rghtTpCd='T', aggBasTpCd='0', share='1', money='1'), post=compact_chain)
 
 
 def index_long():
@@ -240,6 +262,19 @@ def index_long():
             df = stock.get_index_ohlcv('19960101', d8(TODAY), code).reset_index(); df['수집시각'] = STAMP; df['원본'] = 'KRX 정보데이터시스템(pykrx)'
             save(df, nm)
         except Exception as e: log(f'{nm} 실패: {e!r}'[:300])
+
+
+def git_save(msg):
+    """Actions 안에서만: 할 일 하나가 끝날 때마다 커밋·push(작업 시간 초과로 결과를 잃지 않게)."""
+    if not os.environ.get('GITHUB_ACTIONS'): return
+    import subprocess
+    with open(os.path.join(OUT, 'log_full_running.txt'), 'w', encoding='utf-8') as f: f.write('\n'.join(LOG))
+    cmds = ['git config user.name dashboard-bot', 'git config user.email dashboard-bot@users.noreply.github.com',
+            'git add -A deriv/data deriv/out', f'git commit -q -m "deriv-research 수집 {msg}"',
+            'git pull -q --rebase origin deriv-research', 'git push -q origin HEAD:deriv-research']
+    for c in cmds:
+        r = subprocess.run(c, shell=True, capture_output=True, text=True, cwd=os.path.dirname(ROOT))
+        if r.returncode and 'commit' not in c: log(f'git 실패: {c} {r.stderr[:200]}')
 
 
 TASKS = {'index': index_long, 'inv': inv, 'basis': basis, 'iv': iv, 'pcr': pcr, 'front': front, 'program': program, 'chain': chain}
@@ -256,6 +291,7 @@ def main():
                 log(f'== {t}')
                 try: TASKS[t]()
                 except Exception: log(traceback.format_exc()[-800:])
+                git_save(t)
     finally:
         with open(os.path.join(OUT, f'log_{mode}_{dt.datetime.now(KST):%Y%m%d_%H%M}.txt'), 'w', encoding='utf-8') as f: f.write('\n'.join(LOG))
 
