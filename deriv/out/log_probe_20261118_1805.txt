@@ -1,0 +1,26 @@
+[16:43:14] 대시보드 수집 시간대 — 18:05 KST 까지 대기
+[18:05:08] 시작 probe [] — 로그인 계정 설정 있음
+[18:05:09] probe inv13102_KRDRV_FUK2I_AMT: 0
+[18:05:13] probe inv13102_KR____FUK2I_AMT: 12
+[18:05:15] probe inv13102_FUK2I_QTY_all: 0
+[18:05:16] probe inv13103_FUK2I_AMT: 0
+[18:05:17] probe inv13102_OPK2I_C_AMT: 0
+[18:05:18] probe inv13102_OPWKM_P_AMT: 0
+[18:05:20] probe inv13101_FUK2I_period: 11
+[18:05:21] probe inv13102_FUK2I_2008: 0
+[18:05:22] probe inv13102_FUK2I_2001: 0
+[18:05:23] probe basis13401: 84
+[18:05:25] probe basis13401_2008: 88
+[18:05:26] probe iv13501: 12
+[18:05:27] probe iv13501_2008: 22
+[18:05:28] probe pcr13601: 12
+[18:05:30] probe pcr13601_2008: 22
+[18:05:31] probe front12701: 12
+[18:05:32] probe front12701_2008: 22
+[18:05:34] probe prog02601_range: 3
+[18:05:34] probe prog02601_day: 3
+[18:05:35] probe prog02601_2008day: 3
+[18:05:39] probe chain12501_OPK2I: 4320
+[18:05:41] probe chain12502_OPK2I: 0
+[18:05:45] probe chain12501_OPK2I_2010: 152
+[18:05:47] probe chain12501_FUK2I: 13

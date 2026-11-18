@@ -1,0 +1,1659 @@
+{
+ "inv13102_KRDRV_FUK2I_AMT": {
+  "bld": "MDCSTAT13102",
+  "params": {
+   "inqTpCd": "2",
+   "prtType": "AMT",
+   "prtCheck": "SUN",
+   "isuCd": "KRDRVFUK2I",
+   "isuCd2": "",
+   "isuOpt": "ALL",
+   "aggBasTpCd": "0",
+   "strtDd": "20261101",
+   "endDd": "20261117",
+   "share": "1",
+   "money": "1"
+  },
+  "n": 0,
+  "keys": [
+   "output",
+   "CURRENT_DATETIME"
+  ],
+  "cols": [],
+  "head": [],
+  "tail": []
+ },
+ "inv13102_KR____FUK2I_AMT": {
+  "bld": "MDCSTAT13102",
+  "params": {
+   "inqTpCd": "2",
+   "prtType": "AMT",
+   "prtCheck": "SUN",
+   "isuCd": "KR___FUK2I",
+   "isuCd2": "",
+   "isuOpt": "ALL",
+   "aggBasTpCd": "0",
+   "strtDd": "20261101",
+   "endDd": "20261117",
+   "share": "1",
+   "money": "1"
+  },
+  "n": 12,
+  "keys": [
+   "output",
+   "CURRENT_DATETIME"
+  ],
+  "cols": [
+   "TRD_DD",
+   "A07",
+   "A08",
+   "A09",
+   "A12",
+   "AMT_OR_QTY"
+  ],
+  "head": [
+   {
+    "TRD_DD": "2026/11/17",
+    "A07": "-637,456,962,500",
+    "A08": "11,007,162,500",
+    "A09": "231,202,637,500",
+    "A12": "395,247,162,500",
+    "AMT_OR_QTY": "0"
+   },
+   {
+    "TRD_DD": "2026/11/16",
+    "A07": "-453,334,775,000",
+    "A08": "-4,389,637,500",
+    "A09": "71,774,062,500",
+    "A12": "385,950,350,000",
+    "AMT_OR_QTY": "0"
+   },
+   {
+    "TRD_DD": "2026/11/13",
+    "A07": "-294,754,675,000",
+    "A08": "-38,985,237,500",
+    "A09": "-20,999,437,500",
+    "A12": "354,739,350,000",
+    "AMT_OR_QTY": "0"
+   }
+  ],
+  "tail": [
+   {
+    "TRD_DD": "2026/11/03",
+    "A07": "241,252,565,000",
+    "A08": "17,175,287,500",
+    "A09": "-98,635,937,500",
+    "A12": "-159,791,915,000",
+    "AMT_OR_QTY": "0"
+   },
+   {
+    "TRD_DD": "2026/11/02",
+    "A07": "-136,844,900,000",
+    "A08": "-23,049,875,000",
+    "A09": "-286,650,700,000",
+    "A12": "446,545,475,000",
+    "AMT_OR_QTY": "0"
+   }
+  ]
+ },
+ "inv13102_FUK2I_QTY_all": {
+  "bld": "MDCSTAT13102",
+  "params": {
+   "inqTpCd": "2",
+   "prtType": "QTY",
+   "prtCheck": "SUN",
+   "isuCd": "KRDRVFUK2I",
+   "isuCd2": "",
+   "isuOpt": "ALL",
+   "aggBasTpCd": "",
+   "strtDd": "20261101",
+   "endDd": "20261117",
+   "share": "1",
+   "money": "1"
+  },
+  "n": 0,
+  "keys": [
+   "output",
+   "CURRENT_DATETIME"
+  ],
+  "cols": [],
+  "head": [],
+  "tail": []
+ },
+ "inv13103_FUK2I_AMT": {
+  "bld": "MDCSTAT13103",
+  "params": {
+   "inqTpCd": "2",
+   "prtType": "AMT",
+   "prtCheck": "SUN",
+   "isuCd": "KRDRVFUK2I",
+   "isuCd2": "",
+   "isuOpt": "ALL",
+   "aggBasTpCd": "0",
+   "strtDd": "20261101",
+   "endDd": "20261117",
+   "share": "1",
+   "money": "1",
+   "detailView": "1"
+  },
+  "n": 0,
+  "keys": [
+   "output",
+   "CURRENT_DATETIME"
+  ],
+  "cols": [],
+  "head": [],
+  "tail": []
+ },
+ "inv13102_OPK2I_C_AMT": {
+  "bld": "MDCSTAT13102",
+  "params": {
+   "inqTpCd": "2",
+   "prtType": "AMT",
+   "prtCheck": "SUN",
+   "isuCd": "KRDRVOPK2I",
+   "isuCd2": "",
+   "isuOpt": "C",
+   "aggBasTpCd": "0",
+   "strtDd": "20261101",
+   "endDd": "20261117",
+   "share": "1",
+   "money": "1"
+  },
+  "n": 0,
+  "keys": [
+   "output",
+   "CURRENT_DATETIME"
+  ],
+  "cols": [],
+  "head": [],
+  "tail": []
+ },
+ "inv13102_OPWKM_P_AMT": {
+  "bld": "MDCSTAT13102",
+  "params": {
+   "inqTpCd": "2",
+   "prtType": "AMT",
+   "prtCheck": "SUN",
+   "isuCd": "KRDRVOPWKM",
+   "isuCd2": "",
+   "isuOpt": "P",
+   "aggBasTpCd": "0",
+   "strtDd": "20261101",
+   "endDd": "20261117",
+   "share": "1",
+   "money": "1"
+  },
+  "n": 0,
+  "keys": [
+   "output",
+   "CURRENT_DATETIME"
+  ],
+  "cols": [],
+  "head": [],
+  "tail": []
+ },
+ "inv13101_FUK2I_period": {
+  "bld": "MDCSTAT13101",
+  "params": {
+   "inqTpCd": "1",
+   "isuCd": "KRDRVFUK2I",
+   "isuCd2": "",
+   "isuOpt": "ALL",
+   "aggBasTpCd": "0",
+   "strtDd": "20261101",
+   "endDd": "20261117",
+   "share": "1",
+   "money": "1"
+  },
+  "n": 11,
+  "keys": [
+   "output",
+   "CURRENT_DATETIME"
+  ],
+  "cols": [
+   "CONV_OBJ_TP_CD",
+   "INVST_TP_NM",
+   "ACC_ASK_TRDVOL",
+   "ACC_BID_TRDVOL",
+   "NETBID_TRDVOL",
+   "ACC_ASK_TRDVAL",
+   "ACC_BID_TRDVAL",
+   "NETBID_TRDVAL"
+  ],
+  "head": [
+   {
+    "CONV_OBJ_TP_CD": "1000",
+    "INVST_TP_NM": "금융투자",
+    "ACC_ASK_TRDVOL": "0",
+    "ACC_BID_TRDVOL": "0",
+    "NETBID_TRDVOL": "0",
+    "ACC_ASK_TRDVAL": "0",
+    "ACC_BID_TRDVAL": "0",
+    "NETBID_TRDVAL": "0"
+   },
+   {
+    "CONV_OBJ_TP_CD": "2000",
+    "INVST_TP_NM": "보험",
+    "ACC_ASK_TRDVOL": "0",
+    "ACC_BID_TRDVOL": "0",
+    "NETBID_TRDVOL": "0",
+    "ACC_ASK_TRDVAL": "0",
+    "ACC_BID_TRDVAL": "0",
+    "NETBID_TRDVAL": "0"
+   },
+   {
+    "CONV_OBJ_TP_CD": "3000",
+    "INVST_TP_NM": "투신",
+    "ACC_ASK_TRDVOL": "0",
+    "ACC_BID_TRDVOL": "0",
+    "NETBID_TRDVOL": "0",
+    "ACC_ASK_TRDVAL": "0",
+    "ACC_BID_TRDVAL": "0",
+    "NETBID_TRDVAL": "0"
+   }
+  ],
+  "tail": [
+   {
+    "CONV_OBJ_TP_CD": "9000",
+    "INVST_TP_NM": "외국인",
+    "ACC_ASK_TRDVOL": "0",
+    "ACC_BID_TRDVOL": "0",
+    "NETBID_TRDVOL": "0",
+    "ACC_ASK_TRDVAL": "0",
+    "ACC_BID_TRDVAL": "0",
+    "NETBID_TRDVAL": "0"
+   },
+   {
+    "CONV_OBJ_TP_CD": "TS",
+    "INVST_TP_NM": "합계",
+    "ACC_ASK_TRDVOL": "0",
+    "ACC_BID_TRDVOL": "0",
+    "NETBID_TRDVOL": "0",
+    "ACC_ASK_TRDVAL": "0",
+    "ACC_BID_TRDVAL": "0",
+    "NETBID_TRDVAL": "0"
+   }
+  ]
+ },
+ "inv13102_FUK2I_2008": {
+  "bld": "MDCSTAT13102",
+  "params": {
+   "inqTpCd": "2",
+   "prtType": "AMT",
+   "prtCheck": "SUN",
+   "isuCd": "KRDRVFUK2I",
+   "isuCd2": "",
+   "isuOpt": "ALL",
+   "aggBasTpCd": "0",
+   "strtDd": "20081001",
+   "endDd": "20081031",
+   "share": "1",
+   "money": "1"
+  },
+  "n": 0,
+  "keys": [
+   "output",
+   "CURRENT_DATETIME"
+  ],
+  "cols": [],
+  "head": [],
+  "tail": []
+ },
+ "inv13102_FUK2I_2001": {
+  "bld": "MDCSTAT13102",
+  "params": {
+   "inqTpCd": "2",
+   "prtType": "AMT",
+   "prtCheck": "SUN",
+   "isuCd": "KRDRVFUK2I",
+   "isuCd2": "",
+   "isuOpt": "ALL",
+   "aggBasTpCd": "0",
+   "strtDd": "20010901",
+   "endDd": "20010930",
+   "share": "1",
+   "money": "1"
+  },
+  "n": 0,
+  "keys": [
+   "output",
+   "CURRENT_DATETIME"
+  ],
+  "cols": [],
+  "head": [],
+  "tail": []
+ },
+ "basis13401": {
+  "bld": "MDCSTAT13401",
+  "params": {
+   "secugrpId": "1",
+   "prodId": "KRDRVFUK2I",
+   "subProdId": "",
+   "aggBasTpCd": "0",
+   "strtDd": "20261101",
+   "endDd": "20261117",
+   "share": "1",
+   "money": "1"
+  },
+  "n": 84,
+  "keys": [
+   "output",
+   "CURRENT_DATETIME"
+  ],
+  "cols": [
+   "TRD_DD",
+   "ISU_SRT_CD",
+   "ISU_NM",
+   "TDD_CLSPRC",
+   "SPOT_PRC",
+   "THEO_PRC",
+   "MKT_BASIS",
+   "THRY_BASIS",
+   "DIFF_RT"
+  ],
+  "head": [
+   {
+    "TRD_DD": "2026/11/17",
+    "ISU_SRT_CD": "A016C000",
+    "ISU_NM": "코스피200 F 202612",
+    "TDD_CLSPRC": "767.20",
+    "SPOT_PRC": "770.74",
+    "THEO_PRC": "772.28",
+    "MKT_BASIS": "-3.54",
+    "THRY_BASIS": "1.54",
+    "DIFF_RT": "-0.66"
+   },
+   {
+    "TRD_DD": "2026/11/17",
+    "ISU_SRT_CD": "A0173000",
+    "ISU_NM": "코스피200 F 202703",
+    "TDD_CLSPRC": "760.00",
+    "SPOT_PRC": "770.74",
+    "THEO_PRC": "775.14",
+    "MKT_BASIS": "-10.74",
+    "THRY_BASIS": "4.40",
+    "DIFF_RT": "-1.95"
+   },
+   {
+    "TRD_DD": "2026/11/17",
+    "ISU_SRT_CD": "A0176000",
+    "ISU_NM": "코스피200 F 202706",
+    "TDD_CLSPRC": "777.95",
+    "SPOT_PRC": "770.74",
+    "THEO_PRC": "778.79",
+    "MKT_BASIS": "7.21",
+    "THRY_BASIS": "8.05",
+    "DIFF_RT": "-0.11"
+   }
+  ],
+  "tail": [
+   {
+    "TRD_DD": "2026/11/02",
+    "ISU_SRT_CD": "A0186000",
+    "ISU_NM": "코스피200 F 202806",
+    "TDD_CLSPRC": "0.00",
+    "SPOT_PRC": "920.63",
+    "THEO_PRC": "951.41",
+    "MKT_BASIS": "-",
+    "THRY_BASIS": "30.78",
+    "DIFF_RT": "-"
+   },
+   {
+    "TRD_DD": "2026/11/02",
+    "ISU_SRT_CD": "A018C000",
+    "ISU_NM": "코스피200 F 202812",
+    "TDD_CLSPRC": "0.00",
+    "SPOT_PRC": "920.63",
+    "THEO_PRC": "960.68",
+    "MKT_BASIS": "-",
+    "THRY_BASIS": "40.05",
+    "DIFF_RT": "-"
+   }
+  ]
+ },
+ "basis13401_2008": {
+  "bld": "MDCSTAT13401",
+  "params": {
+   "secugrpId": "1",
+   "prodId": "KRDRVFUK2I",
+   "subProdId": "",
+   "aggBasTpCd": "0",
+   "strtDd": "20081001",
+   "endDd": "20081031",
+   "share": "1",
+   "money": "1"
+  },
+  "n": 88,
+  "keys": [
+   "output",
+   "CURRENT_DATETIME"
+  ],
+  "cols": [
+   "TRD_DD",
+   "ISU_SRT_CD",
+   "ISU_NM",
+   "TDD_CLSPRC",
+   "SPOT_PRC",
+   "THEO_PRC",
+   "MKT_BASIS",
+   "THRY_BASIS",
+   "DIFF_RT"
+  ],
+  "head": [
+   {
+    "TRD_DD": "2008/10/31",
+    "ISU_SRT_CD": "101CC000",
+    "ISU_NM": "코스피200 F 200812",
+    "TDD_CLSPRC": "147.00",
+    "SPOT_PRC": "147.50",
+    "THEO_PRC": "148.49",
+    "MKT_BASIS": "-0.50",
+    "THRY_BASIS": "0.99",
+    "DIFF_RT": "-1.00"
+   },
+   {
+    "TRD_DD": "2008/10/31",
+    "ISU_SRT_CD": "101D3000",
+    "ISU_NM": "코스피200 F 200903",
+    "TDD_CLSPRC": "148.10",
+    "SPOT_PRC": "147.50",
+    "THEO_PRC": "147.30",
+    "MKT_BASIS": "0.60",
+    "THRY_BASIS": "-0.20",
+    "DIFF_RT": "0.54"
+   },
+   {
+    "TRD_DD": "2008/10/31",
+    "ISU_SRT_CD": "101D6000",
+    "ISU_NM": "코스피200 F 200906",
+    "TDD_CLSPRC": "154.00",
+    "SPOT_PRC": "147.50",
+    "THEO_PRC": "149.40",
+    "MKT_BASIS": "6.50",
+    "THRY_BASIS": "1.90",
+    "DIFF_RT": "3.08"
+   }
+  ],
+  "tail": [
+   {
+    "TRD_DD": "2008/10/01",
+    "ISU_SRT_CD": "101D6000",
+    "ISU_NM": "코스피200 F 200906",
+    "TDD_CLSPRC": "189.05",
+    "SPOT_PRC": "185.52",
+    "THEO_PRC": "189.55",
+    "MKT_BASIS": "3.53",
+    "THRY_BASIS": "4.03",
+    "DIFF_RT": "-0.26"
+   },
+   {
+    "TRD_DD": "2008/10/01",
+    "ISU_SRT_CD": "101D9000",
+    "ISU_NM": "코스피200 F 200909",
+    "TDD_CLSPRC": "0.00",
+    "SPOT_PRC": "185.52",
+    "THEO_PRC": "192.01",
+    "MKT_BASIS": "-",
+    "THRY_BASIS": "6.49",
+    "DIFF_RT": "-"
+   }
+  ]
+ },
+ "iv13501": {
+  "bld": "MDCSTAT13501",
+  "params": {
+   "prodId": "KRDRVOPK2I",
+   "strtDd": "20261101",
+   "endDd": "20261117",
+   "share": "1",
+   "money": "1"
+  },
+  "n": 12,
+  "keys": [
+   "output",
+   "CURRENT_DATETIME"
+  ],
+  "cols": [
+   "BAS_DD",
+   "REP_IMP_VOLT",
+   "CALL_AVG_IMP_VOLT",
+   "PUT_AVG_IMP_VOLT",
+   "HIST_VOLT1",
+   "HIST_VOLT2",
+   "HIST_VOLT3",
+   "HIST_VOLT4",
+   "HIST_VOLT5",
+   "HIST_VOLT6",
+   "HIST_VOLT7",
+   "HIST_VOLT8"
+  ],
+  "head": [
+   {
+    "BAS_DD": "2026/11/17",
+    "REP_IMP_VOLT": "53.10",
+    "CALL_AVG_IMP_VOLT": "49.90",
+    "PUT_AVG_IMP_VOLT": "54.90",
+    "HIST_VOLT1": "56.30",
+    "HIST_VOLT2": "57.80",
+    "HIST_VOLT3": "56.90",
+    "HIST_VOLT4": "49.20",
+    "HIST_VOLT5": "67.00",
+    "HIST_VOLT6": "69.20",
+    "HIST_VOLT7": "66.60",
+    "HIST_VOLT8": "68.20"
+   },
+   {
+    "BAS_DD": "2026/11/16",
+    "REP_IMP_VOLT": "50.60",
+    "CALL_AVG_IMP_VOLT": "48.20",
+    "PUT_AVG_IMP_VOLT": "53.00",
+    "HIST_VOLT1": "57.30",
+    "HIST_VOLT2": "58.50",
+    "HIST_VOLT3": "56.90",
+    "HIST_VOLT4": "50.50",
+    "HIST_VOLT5": "66.90",
+    "HIST_VOLT6": "70.20",
+    "HIST_VOLT7": "66.60",
+    "HIST_VOLT8": "68.10"
+   },
+   {
+    "BAS_DD": "2026/11/13",
+    "REP_IMP_VOLT": "46.50",
+    "CALL_AVG_IMP_VOLT": "44.00",
+    "PUT_AVG_IMP_VOLT": "48.30",
+    "HIST_VOLT1": "58.20",
+    "HIST_VOLT2": "57.40",
+    "HIST_VOLT3": "56.90",
+    "HIST_VOLT4": "50.00",
+    "HIST_VOLT5": "67.60",
+    "HIST_VOLT6": "70.00",
+    "HIST_VOLT7": "66.40",
+    "HIST_VOLT8": "68.00"
+   }
+  ],
+  "tail": [
+   {
+    "BAS_DD": "2026/11/03",
+    "REP_IMP_VOLT": "55.60",
+    "CALL_AVG_IMP_VOLT": "56.20",
+    "PUT_AVG_IMP_VOLT": "55.10",
+    "HIST_VOLT1": "59.20",
+    "HIST_VOLT2": "58.60",
+    "HIST_VOLT3": "51.30",
+    "HIST_VOLT4": "49.40",
+    "HIST_VOLT5": "71.10",
+    "HIST_VOLT6": "69.90",
+    "HIST_VOLT7": "67.00",
+    "HIST_VOLT8": "67.50"
+   },
+   {
+    "BAS_DD": "2026/11/02",
+    "REP_IMP_VOLT": "51.10",
+    "CALL_AVG_IMP_VOLT": "50.10",
+    "PUT_AVG_IMP_VOLT": "52.60",
+    "HIST_VOLT1": "58.90",
+    "HIST_VOLT2": "57.90",
+    "HIST_VOLT3": "50.70",
+    "HIST_VOLT4": "48.90",
+    "HIST_VOLT5": "70.90",
+    "HIST_VOLT6": "69.80",
+    "HIST_VOLT7": "66.90",
+    "HIST_VOLT8": "67.40"
+   }
+  ]
+ },
+ "iv13501_2008": {
+  "bld": "MDCSTAT13501",
+  "params": {
+   "prodId": "KRDRVOPK2I",
+   "strtDd": "20081001",
+   "endDd": "20081031",
+   "share": "1",
+   "money": "1"
+  },
+  "n": 22,
+  "keys": [
+   "output",
+   "CURRENT_DATETIME"
+  ],
+  "cols": [
+   "BAS_DD",
+   "REP_IMP_VOLT",
+   "CALL_AVG_IMP_VOLT",
+   "PUT_AVG_IMP_VOLT",
+   "HIST_VOLT1",
+   "HIST_VOLT2",
+   "HIST_VOLT3",
+   "HIST_VOLT4",
+   "HIST_VOLT5",
+   "HIST_VOLT6",
+   "HIST_VOLT7",
+   "HIST_VOLT8"
+  ],
+  "head": [
+   {
+    "BAS_DD": "2008/10/31",
+    "REP_IMP_VOLT": "85.00",
+    "CALL_AVG_IMP_VOLT": "81.40",
+    "PUT_AVG_IMP_VOLT": "91.00",
+    "HIST_VOLT1": "102.20",
+    "HIST_VOLT2": "87.30",
+    "HIST_VOLT3": "73.30",
+    "HIST_VOLT4": "56.20",
+    "HIST_VOLT5": "48.00",
+    "HIST_VOLT6": "42.70",
+    "HIST_VOLT7": "39.00",
+    "HIST_VOLT8": "37.00"
+   },
+   {
+    "BAS_DD": "2008/10/30",
+    "REP_IMP_VOLT": "83.30",
+    "CALL_AVG_IMP_VOLT": "83.90",
+    "PUT_AVG_IMP_VOLT": "78.90",
+    "HIST_VOLT1": "101.90",
+    "HIST_VOLT2": "86.50",
+    "HIST_VOLT3": "73.00",
+    "HIST_VOLT4": "55.90",
+    "HIST_VOLT5": "47.80",
+    "HIST_VOLT6": "42.60",
+    "HIST_VOLT7": "39.00",
+    "HIST_VOLT8": "36.90"
+   },
+   {
+    "BAS_DD": "2008/10/29",
+    "REP_IMP_VOLT": "97.80",
+    "CALL_AVG_IMP_VOLT": "69.40",
+    "PUT_AVG_IMP_VOLT": "102.50",
+    "HIST_VOLT1": "84.90",
+    "HIST_VOLT2": "72.70",
+    "HIST_VOLT3": "64.10",
+    "HIST_VOLT4": "50.20",
+    "HIST_VOLT5": "43.40",
+    "HIST_VOLT6": "38.90",
+    "HIST_VOLT7": "35.90",
+    "HIST_VOLT8": "34.50"
+   }
+  ],
+  "tail": [
+   {
+    "BAS_DD": "2008/10/02",
+    "REP_IMP_VOLT": "36.80",
+    "CALL_AVG_IMP_VOLT": "32.30",
+    "PUT_AVG_IMP_VOLT": "38.30",
+    "HIST_VOLT1": "30.70",
+    "HIST_VOLT2": "39.90",
+    "HIST_VOLT3": "34.80",
+    "HIST_VOLT4": "29.90",
+    "HIST_VOLT5": "27.30",
+    "HIST_VOLT6": "25.10",
+    "HIST_VOLT7": "24.50",
+    "HIST_VOLT8": "26.10"
+   },
+   {
+    "BAS_DD": "2008/10/01",
+    "REP_IMP_VOLT": "31.90",
+    "CALL_AVG_IMP_VOLT": "31.90",
+    "PUT_AVG_IMP_VOLT": "31.80",
+    "HIST_VOLT1": "32.20",
+    "HIST_VOLT2": "39.60",
+    "HIST_VOLT3": "34.60",
+    "HIST_VOLT4": "30.30",
+    "HIST_VOLT5": "27.30",
+    "HIST_VOLT6": "25.00",
+    "HIST_VOLT7": "24.40",
+    "HIST_VOLT8": "26.00"
+   }
+  ]
+ },
+ "pcr13601": {
+  "bld": "MDCSTAT13601",
+  "params": {
+   "prodId": "KRDRVOPK2I",
+   "aggBasTpCd": "0",
+   "strtDd": "20261101",
+   "endDd": "20261117",
+   "share": "1",
+   "money": "1"
+  },
+  "n": 12,
+  "keys": [
+   "output",
+   "CURRENT_DATETIME"
+  ],
+  "cols": [
+   "TRD_DD",
+   "PVOL",
+   "CVOL",
+   "PCRATIO"
+  ],
+  "head": [
+   {
+    "TRD_DD": "2026/11/17",
+    "PVOL": "59,047",
+    "CVOL": "55,594",
+    "PCRATIO": "1.06"
+   },
+   {
+    "TRD_DD": "2026/11/16",
+    "PVOL": "56,921",
+    "CVOL": "58,229",
+    "PCRATIO": "0.98"
+   },
+   {
+    "TRD_DD": "2026/11/13",
+    "PVOL": "48,867",
+    "CVOL": "50,541",
+    "PCRATIO": "0.97"
+   }
+  ],
+  "tail": [
+   {
+    "TRD_DD": "2026/11/03",
+    "PVOL": "31,969",
+    "CVOL": "72,906",
+    "PCRATIO": "0.44"
+   },
+   {
+    "TRD_DD": "2026/11/02",
+    "PVOL": "32,789",
+    "CVOL": "59,685",
+    "PCRATIO": "0.55"
+   }
+  ]
+ },
+ "pcr13601_2008": {
+  "bld": "MDCSTAT13601",
+  "params": {
+   "prodId": "KRDRVOPK2I",
+   "aggBasTpCd": "0",
+   "strtDd": "20081001",
+   "endDd": "20081031",
+   "share": "1",
+   "money": "1"
+  },
+  "n": 22,
+  "keys": [
+   "output",
+   "CURRENT_DATETIME"
+  ],
+  "cols": [
+   "TRD_DD",
+   "PVOL",
+   "CVOL",
+   "PCRATIO"
+  ],
+  "head": [
+   {
+    "TRD_DD": "2008/10/31",
+    "PVOL": "5,634,244",
+    "CVOL": "9,138,334",
+    "PCRATIO": "0.62"
+   },
+   {
+    "TRD_DD": "2008/10/30",
+    "PVOL": "2,652,046",
+    "CVOL": "8,211,098",
+    "PCRATIO": "0.32"
+   },
+   {
+    "TRD_DD": "2008/10/29",
+    "PVOL": "5,549,509",
+    "CVOL": "8,832,651",
+    "PCRATIO": "0.63"
+   }
+  ],
+  "tail": [
+   {
+    "TRD_DD": "2008/10/02",
+    "PVOL": "7,572,293",
+    "CVOL": "8,673,104",
+    "PCRATIO": "0.87"
+   },
+   {
+    "TRD_DD": "2008/10/01",
+    "PVOL": "5,961,469",
+    "CVOL": "9,506,980",
+    "PCRATIO": "0.63"
+   }
+  ]
+ },
+ "front12701": {
+  "bld": "MDCSTAT12701",
+  "params": {
+   "prodId": "KRDRVFUK2I",
+   "strtDd": "20261101",
+   "endDd": "20261117",
+   "share": "1",
+   "money": "1"
+  },
+  "n": 12,
+  "keys": [
+   "output",
+   "CURRENT_DATETIME"
+  ],
+  "cols": [
+   "TRD_DD",
+   "ISU_CD",
+   "ISU_SRT_CD",
+   "ISU_NM",
+   "TDD_CLSPRC",
+   "FLUC_TP_CD",
+   "CMPPREVDD_PRC",
+   "TDD_OPNPRC",
+   "TDD_HGPRC",
+   "TDD_LWPRC",
+   "SETL_PRC",
+   "ACC_TRDVOL",
+   "ACC_TRDVAL",
+   "ACC_OPNINT_QTY"
+  ],
+  "head": [
+   {
+    "TRD_DD": "2026/11/17 (주간)",
+    "ISU_CD": "KR4A016C0004",
+    "ISU_SRT_CD": "A016C000",
+    "ISU_NM": "코스피200 F 202612",
+    "TDD_CLSPRC": "767.20",
+    "FLUC_TP_CD": "2",
+    "CMPPREVDD_PRC": "-22.15",
+    "TDD_OPNPRC": "774.90",
+    "TDD_HGPRC": "789.00",
+    "TDD_LWPRC": "767.20",
+    "SETL_PRC": "767.20",
+    "ACC_TRDVOL": "136,825",
+    "ACC_TRDVAL": "26,592,800,710,000",
+    "ACC_OPNINT_QTY": "164,810"
+   },
+   {
+    "TRD_DD": "2026/11/16 (주간)",
+    "ISU_CD": "KR4A016C0004",
+    "ISU_SRT_CD": "A016C000",
+    "ISU_NM": "코스피200 F 202612",
+    "TDD_CLSPRC": "789.35",
+    "FLUC_TP_CD": "2",
+    "CMPPREVDD_PRC": "-33.00",
+    "TDD_OPNPRC": "826.50",
+    "TDD_HGPRC": "830.80",
+    "TDD_LWPRC": "785.00",
+    "SETL_PRC": "789.35",
+    "ACC_TRDVOL": "129,483",
+    "ACC_TRDVAL": "25,951,353,787,500",
+    "ACC_OPNINT_QTY": "157,656"
+   },
+   {
+    "TRD_DD": "2026/11/13 (주간)",
+    "ISU_CD": "KR4A016C0004",
+    "ISU_SRT_CD": "A016C000",
+    "ISU_NM": "코스피200 F 202612",
+    "TDD_CLSPRC": "822.35",
+    "FLUC_TP_CD": "2",
+    "CMPPREVDD_PRC": "-5.15",
+    "TDD_OPNPRC": "846.15",
+    "TDD_HGPRC": "859.65",
+    "TDD_LWPRC": "818.10",
+    "SETL_PRC": "822.35",
+    "ACC_TRDVOL": "114,342",
+    "ACC_TRDVAL": "23,947,274,100,000",
+    "ACC_OPNINT_QTY": "154,085"
+   }
+  ],
+  "tail": [
+   {
+    "TRD_DD": "2026/11/03 (주간)",
+    "ISU_CD": "KR4A016C0004",
+    "ISU_SRT_CD": "A016C000",
+    "ISU_NM": "코스피200 F 202612",
+    "TDD_CLSPRC": "885.15",
+    "FLUC_TP_CD": "2",
+    "CMPPREVDD_PRC": "-33.50",
+    "TDD_OPNPRC": "897.00",
+    "TDD_HGPRC": "899.20",
+    "TDD_LWPRC": "879.35",
+    "SETL_PRC": "885.15",
+    "ACC_TRDVOL": "110,672",
+    "ACC_TRDVAL": "24,573,436,865,000",
+    "ACC_OPNINT_QTY": "149,218"
+   },
+   {
+    "TRD_DD": "2026/11/02 (주간)",
+    "ISU_CD": "KR4A016C0004",
+    "ISU_SRT_CD": "A016C000",
+    "ISU_NM": "코스피200 F 202612",
+    "TDD_CLSPRC": "918.65",
+    "FLUC_TP_CD": "1",
+    "CMPPREVDD_PRC": "19.20",
+    "TDD_OPNPRC": "880.80",
+    "TDD_HGPRC": "930.00",
+    "TDD_LWPRC": "879.85",
+    "SETL_PRC": "918.65",
+    "ACC_TRDVOL": "130,724",
+    "ACC_TRDVAL": "29,757,127,150,000",
+    "ACC_OPNINT_QTY": "152,155"
+   }
+  ]
+ },
+ "front12701_2008": {
+  "bld": "MDCSTAT12701",
+  "params": {
+   "prodId": "KRDRVFUK2I",
+   "strtDd": "20081001",
+   "endDd": "20081031",
+   "share": "1",
+   "money": "1"
+  },
+  "n": 22,
+  "keys": [
+   "output",
+   "CURRENT_DATETIME"
+  ],
+  "cols": [
+   "TRD_DD",
+   "ISU_CD",
+   "ISU_SRT_CD",
+   "ISU_NM",
+   "TDD_CLSPRC",
+   "FLUC_TP_CD",
+   "CMPPREVDD_PRC",
+   "TDD_OPNPRC",
+   "TDD_HGPRC",
+   "TDD_LWPRC",
+   "SETL_PRC",
+   "ACC_TRDVOL",
+   "ACC_TRDVAL",
+   "ACC_OPNINT_QTY"
+  ],
+  "head": [
+   {
+    "TRD_DD": "2008/10/31 (주간)",
+    "ISU_CD": "KR4101CC0007",
+    "ISU_SRT_CD": "101CC000",
+    "ISU_NM": "코스피200 F 200812",
+    "TDD_CLSPRC": "147.00",
+    "FLUC_TP_CD": "1",
+    "CMPPREVDD_PRC": "7.30",
+    "TDD_OPNPRC": "144.60",
+    "TDD_HGPRC": "153.65",
+    "TDD_LWPRC": "140.65",
+    "SETL_PRC": "147.00",
+    "ACC_TRDVOL": "469,331",
+    "ACC_TRDVAL": "34,515,601,375,000",
+    "ACC_OPNINT_QTY": "108,770"
+   },
+   {
+    "TRD_DD": "2008/10/30 (주간)",
+    "ISU_CD": "KR4101CC0007",
+    "ISU_SRT_CD": "101CC000",
+    "ISU_NM": "코스피200 F 200812",
+    "TDD_CLSPRC": "139.70",
+    "FLUC_TP_CD": "1",
+    "CMPPREVDD_PRC": "12.70",
+    "TDD_OPNPRC": "138.35",
+    "TDD_HGPRC": "139.70",
+    "TDD_LWPRC": "132.30",
+    "SETL_PRC": "139.70",
+    "ACC_TRDVOL": "203,097",
+    "ACC_TRDVAL": "13,890,662,650,000",
+    "ACC_OPNINT_QTY": "118,476"
+   },
+   {
+    "TRD_DD": "2008/10/29 (주간)",
+    "ISU_CD": "KR4101CC0007",
+    "ISU_SRT_CD": "101CC000",
+    "ISU_NM": "코스피200 F 200812",
+    "TDD_CLSPRC": "127.00",
+    "FLUC_TP_CD": "2",
+    "CMPPREVDD_PRC": "-6.50",
+    "TDD_OPNPRC": "140.00",
+    "TDD_HGPRC": "143.80",
+    "TDD_LWPRC": "120.15",
+    "SETL_PRC": "127.00",
+    "ACC_TRDVOL": "487,702",
+    "ACC_TRDVAL": "32,804,329,925,000",
+    "ACC_OPNINT_QTY": "122,429"
+   }
+  ],
+  "tail": [
+   {
+    "TRD_DD": "2008/10/02 (주간)",
+    "ISU_CD": "KR4101CC0007",
+    "ISU_SRT_CD": "101CC000",
+    "ISU_NM": "코스피200 F 200812",
+    "TDD_CLSPRC": "184.40",
+    "FLUC_TP_CD": "2",
+    "CMPPREVDD_PRC": "-3.75",
+    "TDD_OPNPRC": "189.15",
+    "TDD_HGPRC": "190.25",
+    "TDD_LWPRC": "183.50",
+    "SETL_PRC": "184.40",
+    "ACC_TRDVOL": "331,938",
+    "ACC_TRDVAL": "30,939,704,650,000",
+    "ACC_OPNINT_QTY": "105,376"
+   },
+   {
+    "TRD_DD": "2008/10/01 (주간)",
+    "ISU_CD": "KR4101CC0007",
+    "ISU_SRT_CD": "101CC000",
+    "ISU_NM": "코스피200 F 200812",
+    "TDD_CLSPRC": "188.15",
+    "FLUC_TP_CD": "1",
+    "CMPPREVDD_PRC": "2.20",
+    "TDD_OPNPRC": "187.75",
+    "TDD_HGPRC": "188.55",
+    "TDD_LWPRC": "184.95",
+    "SETL_PRC": "188.15",
+    "ACC_TRDVOL": "297,710",
+    "ACC_TRDVAL": "27,789,173,600,000",
+    "ACC_OPNINT_QTY": "102,077"
+   }
+  ]
+ },
+ "prog02601_range": {
+  "bld": "MDCSTAT02601",
+  "params": {
+   "mktId": "STK",
+   "strtDd": "20261101",
+   "endDd": "20261117",
+   "share": "1",
+   "money": "1"
+  },
+  "n": 3,
+  "keys": [
+   "output",
+   "CURRENT_DATETIME"
+  ],
+  "cols": [
+   "ITM_TP_NM",
+   "ASK_TRDVOL",
+   "BID_TRDVOL",
+   "NETBID_TRDVOL",
+   "ASK_TRDVAL",
+   "BID_TRDVAL",
+   "NETBID_TRDVAL"
+  ],
+  "head": [
+   {
+    "ITM_TP_NM": "차익",
+    "ASK_TRDVOL": "22,688,724",
+    "BID_TRDVOL": "26,386,338",
+    "NETBID_TRDVOL": "3,697,614",
+    "ASK_TRDVAL": "3,266,131,740,045",
+    "BID_TRDVAL": "3,688,127,580,230",
+    "NETBID_TRDVAL": "421,995,840,185"
+   },
+   {
+    "ITM_TP_NM": "비차익",
+    "ASK_TRDVOL": "960,149,886",
+    "BID_TRDVOL": "950,492,878",
+    "NETBID_TRDVOL": "-9,657,008",
+    "ASK_TRDVAL": "79,567,834,670,970",
+    "BID_TRDVAL": "73,459,605,078,909",
+    "NETBID_TRDVAL": "-6,108,229,592,061"
+   },
+   {
+    "ITM_TP_NM": "전체",
+    "ASK_TRDVOL": "982,838,610",
+    "BID_TRDVOL": "976,879,216",
+    "NETBID_TRDVOL": "-5,959,394",
+    "ASK_TRDVAL": "82,833,966,411,015",
+    "BID_TRDVAL": "77,147,732,659,139",
+    "NETBID_TRDVAL": "-5,686,233,751,876"
+   }
+  ],
+  "tail": [
+   {
+    "ITM_TP_NM": "비차익",
+    "ASK_TRDVOL": "960,149,886",
+    "BID_TRDVOL": "950,492,878",
+    "NETBID_TRDVOL": "-9,657,008",
+    "ASK_TRDVAL": "79,567,834,670,970",
+    "BID_TRDVAL": "73,459,605,078,909",
+    "NETBID_TRDVAL": "-6,108,229,592,061"
+   },
+   {
+    "ITM_TP_NM": "전체",
+    "ASK_TRDVOL": "982,838,610",
+    "BID_TRDVOL": "976,879,216",
+    "NETBID_TRDVOL": "-5,959,394",
+    "ASK_TRDVAL": "82,833,966,411,015",
+    "BID_TRDVAL": "77,147,732,659,139",
+    "NETBID_TRDVAL": "-5,686,233,751,876"
+   }
+  ]
+ },
+ "prog02601_day": {
+  "bld": "MDCSTAT02601",
+  "params": {
+   "mktId": "STK",
+   "strtDd": "20261117",
+   "endDd": "20261117",
+   "share": "1",
+   "money": "1"
+  },
+  "n": 3,
+  "keys": [
+   "output",
+   "CURRENT_DATETIME"
+  ],
+  "cols": [
+   "ITM_TP_NM",
+   "ASK_TRDVOL",
+   "BID_TRDVOL",
+   "NETBID_TRDVOL",
+   "ASK_TRDVAL",
+   "BID_TRDVAL",
+   "NETBID_TRDVAL"
+  ],
+  "head": [
+   {
+    "ITM_TP_NM": "차익",
+    "ASK_TRDVOL": "1,735,325",
+    "BID_TRDVOL": "2,008,549",
+    "NETBID_TRDVOL": "273,224",
+    "ASK_TRDVAL": "228,285,813,947",
+    "BID_TRDVAL": "268,737,024,679",
+    "NETBID_TRDVAL": "40,451,210,732"
+   },
+   {
+    "ITM_TP_NM": "비차익",
+    "ASK_TRDVOL": "68,944,932",
+    "BID_TRDVOL": "59,755,557",
+    "NETBID_TRDVOL": "-9,189,375",
+    "ASK_TRDVAL": "5,261,090,657,312",
+    "BID_TRDVAL": "4,516,432,224,165",
+    "NETBID_TRDVAL": "-744,658,433,147"
+   },
+   {
+    "ITM_TP_NM": "전체",
+    "ASK_TRDVOL": "70,680,257",
+    "BID_TRDVOL": "61,764,106",
+    "NETBID_TRDVOL": "-8,916,151",
+    "ASK_TRDVAL": "5,489,376,471,259",
+    "BID_TRDVAL": "4,785,169,248,844",
+    "NETBID_TRDVAL": "-704,207,222,415"
+   }
+  ],
+  "tail": [
+   {
+    "ITM_TP_NM": "비차익",
+    "ASK_TRDVOL": "68,944,932",
+    "BID_TRDVOL": "59,755,557",
+    "NETBID_TRDVOL": "-9,189,375",
+    "ASK_TRDVAL": "5,261,090,657,312",
+    "BID_TRDVAL": "4,516,432,224,165",
+    "NETBID_TRDVAL": "-744,658,433,147"
+   },
+   {
+    "ITM_TP_NM": "전체",
+    "ASK_TRDVOL": "70,680,257",
+    "BID_TRDVOL": "61,764,106",
+    "NETBID_TRDVOL": "-8,916,151",
+    "ASK_TRDVAL": "5,489,376,471,259",
+    "BID_TRDVAL": "4,785,169,248,844",
+    "NETBID_TRDVAL": "-704,207,222,415"
+   }
+  ]
+ },
+ "prog02601_2008day": {
+  "bld": "MDCSTAT02601",
+  "params": {
+   "mktId": "STK",
+   "strtDd": "20081024",
+   "endDd": "20081024",
+   "share": "1",
+   "money": "1"
+  },
+  "n": 3,
+  "keys": [
+   "output",
+   "CURRENT_DATETIME"
+  ],
+  "cols": [
+   "ITM_TP_NM",
+   "ASK_TRDVOL",
+   "BID_TRDVOL",
+   "NETBID_TRDVOL",
+   "ASK_TRDVAL",
+   "BID_TRDVAL",
+   "NETBID_TRDVAL"
+  ],
+  "head": [
+   {
+    "ITM_TP_NM": "차익",
+    "ASK_TRDVOL": "7,075,838",
+    "BID_TRDVOL": "6,771,545",
+    "NETBID_TRDVOL": "-304,293",
+    "ASK_TRDVAL": "247,414,451,350",
+    "BID_TRDVAL": "233,342,917,950",
+    "NETBID_TRDVAL": "-14,071,533,400"
+   },
+   {
+    "ITM_TP_NM": "비차익",
+    "ASK_TRDVOL": "17,458,394",
+    "BID_TRDVOL": "24,777,033",
+    "NETBID_TRDVOL": "7,318,639",
+    "ASK_TRDVAL": "419,046,016,175",
+    "BID_TRDVAL": "582,919,238,790",
+    "NETBID_TRDVAL": "163,873,222,615"
+   },
+   {
+    "ITM_TP_NM": "전체",
+    "ASK_TRDVOL": "24,534,232",
+    "BID_TRDVOL": "31,548,578",
+    "NETBID_TRDVOL": "7,014,346",
+    "ASK_TRDVAL": "666,460,467,525",
+    "BID_TRDVAL": "816,262,156,740",
+    "NETBID_TRDVAL": "149,801,689,215"
+   }
+  ],
+  "tail": [
+   {
+    "ITM_TP_NM": "비차익",
+    "ASK_TRDVOL": "17,458,394",
+    "BID_TRDVOL": "24,777,033",
+    "NETBID_TRDVOL": "7,318,639",
+    "ASK_TRDVAL": "419,046,016,175",
+    "BID_TRDVAL": "582,919,238,790",
+    "NETBID_TRDVAL": "163,873,222,615"
+   },
+   {
+    "ITM_TP_NM": "전체",
+    "ASK_TRDVOL": "24,534,232",
+    "BID_TRDVOL": "31,548,578",
+    "NETBID_TRDVOL": "7,014,346",
+    "ASK_TRDVAL": "666,460,467,525",
+    "BID_TRDVAL": "816,262,156,740",
+    "NETBID_TRDVAL": "149,801,689,215"
+   }
+  ]
+ },
+ "chain12501_OPK2I": {
+  "bld": "MDCSTAT12501",
+  "params": {
+   "trdDd": "20261117",
+   "prodId": "KRDRVOPK2I",
+   "mktTpCd": "T",
+   "rghtTpCd": "T",
+   "aggBasTpCd": "0",
+   "share": "1",
+   "money": "1"
+  },
+  "n": 4320,
+  "keys": [
+   "output",
+   "CURRENT_DATETIME"
+  ],
+  "cols": [
+   "ISU_CD",
+   "ISU_SRT_CD",
+   "ISU_NM",
+   "TDD_CLSPRC",
+   "FLUC_TP_CD",
+   "CMPPREVDD_PRC",
+   "TDD_OPNPRC",
+   "TDD_HGPRC",
+   "TDD_LWPRC",
+   "SPOT_PRC",
+   "SETL_PRC",
+   "ACC_TRDVOL",
+   "ACC_TRDVAL",
+   "ACC_OPNINT_QTY",
+   "SECUGRP_ID"
+  ],
+  "head": [
+   {
+    "ISU_CD": "KR4B016C1802",
+    "ISU_SRT_CD": "B016C180",
+    "ISU_NM": "코스피200 C 202612   180.0 (주간)",
+    "TDD_CLSPRC": "-",
+    "FLUC_TP_CD": "0",
+    "CMPPREVDD_PRC": "-",
+    "TDD_OPNPRC": "-",
+    "TDD_HGPRC": "-",
+    "TDD_LWPRC": "-",
+    "SPOT_PRC": "770.74",
+    "SETL_PRC": "591.10",
+    "ACC_TRDVOL": "283",
+    "ACC_TRDVAL": "42,534,900,000",
+    "ACC_OPNINT_QTY": "320",
+    "SECUGRP_ID": "OP"
+   },
+   {
+    "ISU_CD": "KR4B016C1828",
+    "ISU_SRT_CD": "B016C182",
+    "ISU_NM": "코스피200 C 202612   182.5 (주간)",
+    "TDD_CLSPRC": "-",
+    "FLUC_TP_CD": "0",
+    "CMPPREVDD_PRC": "-",
+    "TDD_OPNPRC": "-",
+    "TDD_HGPRC": "-",
+    "TDD_LWPRC": "-",
+    "SPOT_PRC": "770.74",
+    "SETL_PRC": "588.60",
+    "ACC_TRDVOL": "0",
+    "ACC_TRDVAL": "0",
+    "ACC_OPNINT_QTY": "0",
+    "SECUGRP_ID": "OP"
+   },
+   {
+    "ISU_CD": "KR4B016C1851",
+    "ISU_SRT_CD": "B016C185",
+    "ISU_NM": "코스피200 C 202612   185.0 (주간)",
+    "TDD_CLSPRC": "-",
+    "FLUC_TP_CD": "0",
+    "CMPPREVDD_PRC": "-",
+    "TDD_OPNPRC": "-",
+    "TDD_HGPRC": "-",
+    "TDD_LWPRC": "-",
+    "SPOT_PRC": "770.74",
+    "SETL_PRC": "586.10",
+    "ACC_TRDVOL": "0",
+    "ACC_TRDVAL": "0",
+    "ACC_OPNINT_QTY": "3",
+    "SECUGRP_ID": "OP"
+   }
+  ],
+  "tail": [
+   {
+    "ISU_CD": "KR4C018CC393",
+    "ISU_SRT_CD": "C018CC39",
+    "ISU_NM": "코스피200 P 202812 1,590.0 (주간)",
+    "TDD_CLSPRC": "-",
+    "FLUC_TP_CD": "0",
+    "CMPPREVDD_PRC": "-",
+    "TDD_OPNPRC": "-",
+    "TDD_HGPRC": "-",
+    "TDD_LWPRC": "-",
+    "SPOT_PRC": "770.74",
+    "SETL_PRC": "758.70",
+    "ACC_TRDVOL": "0",
+    "ACC_TRDVAL": "0",
+    "ACC_OPNINT_QTY": "0",
+    "SECUGRP_ID": "OP"
+   },
+   {
+    "ISU_CD": "KR4C018CC435",
+    "ISU_SRT_CD": "C018CC43",
+    "ISU_NM": "코스피200 P 202812 1,600.0 (주간)",
+    "TDD_CLSPRC": "-",
+    "FLUC_TP_CD": "0",
+    "CMPPREVDD_PRC": "-",
+    "TDD_OPNPRC": "-",
+    "TDD_HGPRC": "-",
+    "TDD_LWPRC": "-",
+    "SPOT_PRC": "770.74",
+    "SETL_PRC": "767.45",
+    "ACC_TRDVOL": "0",
+    "ACC_TRDVAL": "0",
+    "ACC_OPNINT_QTY": "0",
+    "SECUGRP_ID": "OP"
+   }
+  ]
+ },
+ "chain12502_OPK2I": {
+  "bld": "MDCSTAT12502",
+  "params": {
+   "trdDd": "20261117",
+   "prodId": "KRDRVOPK2I",
+   "mktTpCd": "T",
+   "rghtTpCd": "T",
+   "aggBasTpCd": "0",
+   "share": "1",
+   "money": "1"
+  },
+  "n": 0,
+  "keys": [
+   "output",
+   "CURRENT_DATETIME"
+  ],
+  "cols": [],
+  "head": [],
+  "tail": []
+ },
+ "chain12501_OPK2I_2010": {
+  "bld": "MDCSTAT12501",
+  "params": {
+   "trdDd": "20100105",
+   "prodId": "KRDRVOPK2I",
+   "mktTpCd": "T",
+   "rghtTpCd": "T",
+   "aggBasTpCd": "0",
+   "share": "1",
+   "money": "1"
+  },
+  "n": 152,
+  "keys": [
+   "output",
+   "CURRENT_DATETIME"
+  ],
+  "cols": [
+   "ISU_CD",
+   "ISU_SRT_CD",
+   "ISU_NM",
+   "TDD_CLSPRC",
+   "FLUC_TP_CD",
+   "CMPPREVDD_PRC",
+   "TDD_OPNPRC",
+   "TDD_HGPRC",
+   "TDD_LWPRC",
+   "SPOT_PRC",
+   "SETL_PRC",
+   "ACC_TRDVOL",
+   "ACC_TRDVAL",
+   "ACC_OPNINT_QTY",
+   "SECUGRP_ID"
+  ],
+  "head": [
+   {
+    "ISU_CD": "KR4201E11850",
+    "ISU_SRT_CD": "201E1185",
+    "ISU_NM": "코스피200 C 201001 185.0 (주간)",
+    "TDD_CLSPRC": "37.30",
+    "FLUC_TP_CD": "2",
+    "CMPPREVDD_PRC": "-0.30",
+    "TDD_OPNPRC": "39.00",
+    "TDD_HGPRC": "39.00",
+    "TDD_LWPRC": "37.30",
+    "SPOT_PRC": "222.84",
+    "SETL_PRC": "37.30",
+    "ACC_TRDVOL": "4",
+    "ACC_TRDVAL": "15,320,000",
+    "ACC_OPNINT_QTY": "4,053",
+    "SECUGRP_ID": "OP"
+   },
+   {
+    "ISU_CD": "KR4201E11876",
+    "ISU_SRT_CD": "201E1187",
+    "ISU_NM": "코스피200 C 201001 187.5 (주간)",
+    "TDD_CLSPRC": "36.35",
+    "FLUC_TP_CD": "1",
+    "CMPPREVDD_PRC": "1.45",
+    "TDD_OPNPRC": "36.35",
+    "TDD_HGPRC": "36.35",
+    "TDD_LWPRC": "36.35",
+    "SPOT_PRC": "222.84",
+    "SETL_PRC": "36.35",
+    "ACC_TRDVOL": "1",
+    "ACC_TRDVAL": "3,635,000",
+    "ACC_OPNINT_QTY": "299",
+    "SECUGRP_ID": "OP"
+   },
+   {
+    "ISU_CD": "KR4201E11900",
+    "ISU_SRT_CD": "201E1190",
+    "ISU_NM": "코스피200 C 201001 190.0 (주간)",
+    "TDD_CLSPRC": "32.85",
+    "FLUC_TP_CD": "1",
+    "CMPPREVDD_PRC": "0.45",
+    "TDD_OPNPRC": "33.40",
+    "TDD_HGPRC": "33.40",
+    "TDD_LWPRC": "32.40",
+    "SPOT_PRC": "222.84",
+    "SETL_PRC": "32.85",
+    "ACC_TRDVOL": "39",
+    "ACC_TRDVAL": "129,310,000",
+    "ACC_OPNINT_QTY": "962",
+    "SECUGRP_ID": "OP"
+   }
+  ],
+  "tail": [
+   {
+    "ISU_CD": "KR4301E62356",
+    "ISU_SRT_CD": "301E6235",
+    "ISU_NM": "코스피200 P 201006 235.0 (주간)",
+    "TDD_CLSPRC": "18.50",
+    "FLUC_TP_CD": "1",
+    "CMPPREVDD_PRC": "0.05",
+    "TDD_OPNPRC": "18.50",
+    "TDD_HGPRC": "18.50",
+    "TDD_LWPRC": "18.50",
+    "SPOT_PRC": "222.84",
+    "SETL_PRC": "18.50",
+    "ACC_TRDVOL": "1",
+    "ACC_TRDVAL": "1,850,000",
+    "ACC_OPNINT_QTY": "418",
+    "SECUGRP_ID": "OP"
+   },
+   {
+    "ISU_CD": "KR4301E62406",
+    "ISU_SRT_CD": "301E6240",
+    "ISU_NM": "코스피200 P 201006 240.0 (주간)",
+    "TDD_CLSPRC": "22.15",
+    "FLUC_TP_CD": "1",
+    "CMPPREVDD_PRC": "1.00",
+    "TDD_OPNPRC": "21.75",
+    "TDD_HGPRC": "22.25",
+    "TDD_LWPRC": "21.55",
+    "SPOT_PRC": "222.84",
+    "SETL_PRC": "22.15",
+    "ACC_TRDVOL": "241",
+    "ACC_TRDVAL": "530,425,000",
+    "ACC_OPNINT_QTY": "231",
+    "SECUGRP_ID": "OP"
+   }
+  ]
+ },
+ "chain12501_FUK2I": {
+  "bld": "MDCSTAT12501",
+  "params": {
+   "trdDd": "20261117",
+   "prodId": "KRDRVFUK2I",
+   "mktTpCd": "T",
+   "rghtTpCd": "T",
+   "aggBasTpCd": "0",
+   "share": "1",
+   "money": "1"
+  },
+  "n": 13,
+  "keys": [
+   "output",
+   "CURRENT_DATETIME"
+  ],
+  "cols": [
+   "ISU_CD",
+   "ISU_SRT_CD",
+   "ISU_NM",
+   "TDD_CLSPRC",
+   "FLUC_TP_CD",
+   "CMPPREVDD_PRC",
+   "TDD_OPNPRC",
+   "TDD_HGPRC",
+   "TDD_LWPRC",
+   "SPOT_PRC",
+   "SETL_PRC",
+   "ACC_TRDVOL",
+   "ACC_TRDVAL",
+   "ACC_OPNINT_QTY",
+   "SECUGRP_ID"
+  ],
+  "head": [
+   {
+    "ISU_CD": "KR4A016C0004",
+    "ISU_SRT_CD": "A016C000",
+    "ISU_NM": "코스피200 F 202612 (주간)",
+    "TDD_CLSPRC": "767.20",
+    "FLUC_TP_CD": "2",
+    "CMPPREVDD_PRC": "-22.15",
+    "TDD_OPNPRC": "774.90",
+    "TDD_HGPRC": "789.00",
+    "TDD_LWPRC": "767.20",
+    "SPOT_PRC": "770.74",
+    "SETL_PRC": "767.20",
+    "ACC_TRDVOL": "136,825",
+    "ACC_TRDVAL": "26,592,800,710,000",
+    "ACC_OPNINT_QTY": "164,810",
+    "SECUGRP_ID": "FU"
+   },
+   {
+    "ISU_CD": "KR4A01730006",
+    "ISU_SRT_CD": "A0173000",
+    "ISU_NM": "코스피200 F 202703 (주간)",
+    "TDD_CLSPRC": "760.00",
+    "FLUC_TP_CD": "2",
+    "CMPPREVDD_PRC": "-19.90",
+    "TDD_OPNPRC": "767.00",
+    "TDD_HGPRC": "779.00",
+    "TDD_LWPRC": "760.00",
+    "SPOT_PRC": "770.74",
+    "SETL_PRC": "760.00",
+    "ACC_TRDVOL": "579",
+    "ACC_TRDVAL": "111,487,487,500",
+    "ACC_OPNINT_QTY": "7,283",
+    "SECUGRP_ID": "FU"
+   },
+   {
+    "ISU_CD": "KR4A01760003",
+    "ISU_SRT_CD": "A0176000",
+    "ISU_NM": "코스피200 F 202706 (주간)",
+    "TDD_CLSPRC": "777.95",
+    "FLUC_TP_CD": "2",
+    "CMPPREVDD_PRC": "-1.05",
+    "TDD_OPNPRC": "777.95",
+    "TDD_HGPRC": "777.95",
+    "TDD_LWPRC": "777.95",
+    "SPOT_PRC": "770.74",
+    "SETL_PRC": "777.95",
+    "ACC_TRDVOL": "601",
+    "ACC_TRDVAL": "116,106,987,500",
+    "ACC_OPNINT_QTY": "2,503",
+    "SECUGRP_ID": "FU"
+   }
+  ],
+  "tail": [
+   {
+    "ISU_CD": "KR4D016C86S3",
+    "ISU_SRT_CD": "D016C86S",
+    "ISU_NM": "코스피200 SP 2612-2806 (주간)",
+    "TDD_CLSPRC": "-",
+    "FLUC_TP_CD": "0",
+    "CMPPREVDD_PRC": "-",
+    "TDD_OPNPRC": "-",
+    "TDD_HGPRC": "-",
+    "TDD_LWPRC": "-",
+    "SPOT_PRC": "770.74",
+    "SETL_PRC": "0.00",
+    "ACC_TRDVOL": "0",
+    "ACC_TRDVAL": "0",
+    "ACC_OPNINT_QTY": "-",
+    "SECUGRP_ID": "FU"
+   },
+   {
+    "ISU_CD": "KR4D016C8CS7",
+    "ISU_SRT_CD": "D016C8CS",
+    "ISU_NM": "코스피200 SP 2612-2812 (주간)",
+    "TDD_CLSPRC": "-",
+    "FLUC_TP_CD": "0",
+    "CMPPREVDD_PRC": "-",
+    "TDD_OPNPRC": "-",
+    "TDD_HGPRC": "-",
+    "TDD_LWPRC": "-",
+    "SPOT_PRC": "770.74",
+    "SETL_PRC": "0.00",
+    "ACC_TRDVOL": "0",
+    "ACC_TRDVAL": "0",
+    "ACC_OPNINT_QTY": "-",
+    "SECUGRP_ID": "FU"
+   }
+  ]
+ }
+}
