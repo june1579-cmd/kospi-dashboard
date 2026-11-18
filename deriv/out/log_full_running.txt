@@ -2,3 +2,5 @@
 [00:51:34] == inv2
 [00:56:07] inv2 FUKQI ALL: 2694행
 [00:56:07] 저장 inv2_daily.csv 2694행
+[00:56:52] inv2 OPKQI C: 2122행
+[00:56:52] 저장 inv2_daily.csv 4816행
