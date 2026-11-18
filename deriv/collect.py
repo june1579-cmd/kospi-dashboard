@@ -192,7 +192,13 @@ def inv(pre='KR___'):   # probe(2026-11-18): 투자자별 화면은 'KR___' 접�
     done = set()
     if out:
         o = out[0]; o['상세'] = o.get('상세', pd.Series('', index=o.index)).fillna('')
-        done = set(zip(o['상품'], o['권리'], o['상세'] == 'Y', o['장구분']))
+        o['_d'] = pd.to_datetime(o['TRD_DD'].astype(str).str[:10], errors='coerce')
+        for key, g in o.groupby(['상품', '권리', '상세', '장구분']):
+            prod = key[0]; n_exp = len(pd.bdate_range(start[prod], TODAY)) * 0.93   # 휴장일 감안
+            if len(g) >= n_exp: done.add((key[0], key[1], key[2] == 'Y', key[3]))
+            else: log(f'inv {key} 불완전({len(g)}행 < {int(n_exp)}) — 다시 받음')
+        keep = o.apply(lambda r: (r['상품'], r['권리'], r['상세'] == 'Y', r['장구분']) in done or r['장구분'] != '정규', axis=1)
+        out = [o[keep].drop(columns=['_d'])]
     for prod, opt, det in jobs:
         if (prod, opt, det, '정규') in done: continue
         wait_clear()
