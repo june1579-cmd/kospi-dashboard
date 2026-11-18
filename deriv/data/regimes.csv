@@ -1,0 +1,14 @@
+start,end,regime,detail,source
+2008-10-01,2009-05-31,short_ban_2008,공매도 전면 금지(2009-06-01 비금융주 재개),https://www.smallake.kr/wp-content/uploads/2020/12/공매도금지가파생시장에미친영향.pdf
+2010-08-01,2025-06-04,eurex_link_night,Eurex 연계 야간시장(코스피200 옵션 2010년 8월부터; 선물 연계 야간 시작일은 확인 필요),https://www.eurex.com/ex-en/find/kr/2022-1-12-35-.-2933664
+2011-08-10,2011-11-09,short_ban_2011,공매도 전면 금지 3개월,https://news.bizwatch.co.kr/article/market/2023/11/08/0006
+2012-03-01,2012-06-15,mult_up_2012,코스피200 옵션 승수 10만→50만(3월 신규 월물부터 순차 적용 6/15 전 월물),https://smallake.kr/wp-content/uploads/2014/04/%c6%c4%bb%fd%bb%f3%c7%b0.pdf
+2014-12-01,2019-09-30,retail_entry_tight,개인 파생 진입규제 강화(기본예탁금 상향·사전교육·모의거래; 2019년 4분기 완화 발표),https://smallake.kr/wp-content/uploads/2018/11/%ed%8c%8c%ec%83%9d%ec%83%81%ed%92%88%ec%8b%9c%ec%9e%a5-%ea%b8%b0%eb%b3%b8%ec%98%88%ed%83%81%ea%b8%88%ec%a0%9c%eb%8f%84%ec%9d%98-%ec%9e%ac%ea%b2%80%ed%86%a0-%ed%95%84%ec%9a%94%ec%84%b1.pdf
+2015-07-20,,mini_listed,미니 코스피200 선물·옵션 상장(계약 크기 약 1/5),https://newspim.com/news/view/20150714000257
+2017-03-27,,mult_down_2017,코스피200 선물·옵션 승수 50만→25만·미니 10만→5만,https://fsc.go.kr/no010101/72738
+2019-09-23,,weekly_thu,코스피200 위클리옵션(목요일 만기) 상장,https://m.dailian.co.kr/news/view/827346
+2020-03-16,2021-05-02,short_ban_2020,공매도 전면 금지(2021-05-03 코스피200·코스닥150만 재개),https://www.kcmi.re.kr/report/report_view?report_no=1521
+2023-07-31,,early_open_weekly_mon,파생시장 08:45 조기 개장·위클리옵션(월요일 만기) 상장,https://news.bizwatch.co.kr/article/market/2023/07/06/0031
+2023-11-06,2025-03-30,short_ban_2023,공매도 전면 금지(2025-03-31 전 종목 재개),https://www.khan.co.kr/article/202505041219001
+2025-06-09,,krx_night,KRX 자체 야간거래(평일 18:00~익일 06:00; Eurex 연계는 2025-06-04 종료),https://www.fnnews.com/news/202506080801401186
+2026-11-09,2027-02-09,credit_relief_2026,신용융자 담보비율 유지의무 면제(대시보드 relief.csv와 같은 기준),pkg/datasets/relief.csv
