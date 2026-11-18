@@ -111,7 +111,7 @@ def investor_frame(inv, prod, opt, unit='AMT', detail=False):
     d['date'] = ddate(d['TRD_DD'])
     m13102 = {'A07': '기관', 'A08': '기타법인', 'A09': '개인', 'A12': '외국인', 'AMT_OR_QTY': '전체'}
     m13103 = {'A01': '금융투자', 'A02': '보험', 'A03': '투신', 'A04': '은행', 'A05': '기타금융', 'A06': '연기금',
-              'A08': '기타법인', 'A09': '개인', 'A10': '외국인', 'A11': '기타외국인', 'AMT_OR_QTY': '전체'}
+              'A08': '기타법인', 'A09': '개인', 'A10': '외국인(등록)', 'A11': '외국인', 'AMT_OR_QTY': '전체'}
     m = m13103 if detail else m13102
     keep = {k: v for k, v in m.items() if k in d.columns}
     out = d[['date'] + list(keep)].rename(columns=keep)
@@ -128,6 +128,12 @@ def build_indicators(px):
             if c not in inv: inv[c] = ''
         inv['상세'] = inv['상세'].fillna('')
     fut = investor_frame(inv, 'FUK2I', 'ALL')
+    fd = investor_frame(inv, 'FUK2I', 'ALL', detail=True)
+    if fd is not None and (fut is None or len(fd) > len(fut)):
+        # 기본 화면 계열에 빈 날이 있어(2,694일) 상세 화면(4,655일)에서 다시 합산: 기관 = 금융투자~연기금, 외국인 = A11(외국인 합계)
+        inst = fd[[c for c in ('금융투자', '보험', '투신', '은행', '기타금융', '연기금') if c in fd]].sum(axis=1, min_count=1)
+        fut = pd.DataFrame({'기관': inst, '개인': fd.get('개인'), '외국인': fd.get('외국인')})
+        note['futures_investor'] = 'MDCSTAT13103 상세에서 합산'
     if fut is not None:
         for who in ('외국인', '기관', '개인'):
             if who in fut:
