@@ -72,7 +72,8 @@ table { border-collapse: separate; border-spacing: 0; font-size: 13px; font-vari
 th, td { padding: 0.45em 0.4em; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
 thead th { position: sticky; top: 0; background: var(--panel); z-index: 2; color: var(--muted); font-weight: 500; font-size: 0.92em; cursor: pointer; user-select: none; vertical-align: bottom; line-height: 1.25; }
 thead th { white-space: normal; word-break: keep-all; overflow-wrap: normal; }
-td.wrap { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 6.5em; }
+td.sect { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 6.5em; }
+tbody td { vertical-align: middle; }
 thead th.sorted { color: var(--ink); font-weight: 700; }
 thead th .arr { font-size: 0.7rem; margin-left: 2px; }
 th.l, td.l { text-align: left; }
@@ -358,7 +359,7 @@ tbody tr:hover td { background: var(--hl); }
           const bw = document.createElement('span'); bw.className = 'badges';
           bw.append(badge(r.in_st, 'st', '안', fmt.int(r.st_rank || 0), '안정 관찰'), badge(r.in_sc, 'sc', '점', fmt.int(r.sc_rank || 0), '점수 순위'), badge(r.in_d1, 'd1', '방', fmt.int(r.d1_rank || 0), '방어 1번'));
           td.append(bw);
-        } else if (c.text) { td.className = 'l wrap'; td.textContent = r[c.k] || '—'; if (r[c.k]) td.title = r[c.k]; }
+        } else if (c.text) { td.className = 'l sect'; td.textContent = r[c.k] || '—'; if (r[c.k]) td.title = r[c.k]; }
         else {
           const v = num(r[c.k]);
           if (v === null) { td.textContent = '—'; td.classList.add('na'); }
