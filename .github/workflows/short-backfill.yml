@@ -1,6 +1,6 @@
 name: short-backfill
 # 공매도 과거 자료 받기(2026-11-18 추가, 같은 날 03:17·05:17 두 번으로 바꾸고 10년치 이어받기 추가)
-# 매일 03:17·05:17 KST — 대시보드 갱신(08:23~22:23)·경고판 알림(07:30)·밤 연구 작업과 겹치지 않는 시간. 한 번에 최대 210번 조회(조회 사이 4~6초, 약 20분).
+# 매일 03:17·05:17 KST(GitHub 예약) + 03:20·05:20 KST(Claude 예약 작업이 이 작업을 부름 — 예약이 빠질 때 대비, 겹치면 뒤의 것은 건너뜀) — 대시보드 갱신(08:23~22:23)·경고판 알림(07:30)·밤 연구 작업과 겹치지 않는 시간. 한 번에 최대 210번 조회(조회 사이 4~6초, 약 20분).
 #  1) 2026-01-02 이후 빈 날짜(main 가지 data/short)
 #  2) 1)이 다 채워졌고 문제(접속 제한·오류)가 없었으면 남은 조회 수로 2016~2025 10년치(short-history 가지 data/short, 최신 날짜부터)
 #     — 10년치는 파일이 많아(약 130MB) 대시보드가 매번 받는 main 이 무거워지지 않게 따로 둔다.
@@ -14,6 +14,9 @@ on:
       max_calls:
         description: '이번에 조회할 최대 횟수(날짜 하나 = 1번)'
         default: '210'
+      force:
+        description: 'true 면 90분 안에 돈 기록이 있어도 실행'
+        default: 'false'
       mode:
         description: 'auto(2026 빈 날짜 → 10년치) · daily(최근 10거래일, 4c 단계와 같음) · history(10년치만, 시험용)'
         default: 'auto'
@@ -40,13 +43,36 @@ jobs:
       - run: pip install -r requirements.txt
       - name: git 사용자
         run: git config --global user.name "dashboard-bot"; git config --global user.email "dashboard-bot@users.noreply.github.com"
+      - name: 겹침 확인(90분 안에 이미 돌았으면 건너뜀)
+        id: guard
+        run: |
+          # GitHub 예약이 빠지는 일이 있어(11/19 새벽 두 번 모두 안 돎) Claude 예약 작업이 03:20·05:20 에 이 작업을 한 번 더 부른다.
+          # 둘 다 돌면 같은 줄에서 차례로 실행되므로, 뒤에 온 것은 data/short/night.json 의 시각을 보고 건너뛴다.
+          python - <<'EOF' >> "$GITHUB_OUTPUT"
+          import json, os, datetime as dt
+          t = None
+          try: t = dt.datetime.fromisoformat(json.load(open('data/short/night.json'))['at'])
+          except Exception: pass
+          now = dt.datetime.now(dt.timezone.utc)
+          skip = t is not None and (now - t).total_seconds() < 90 * 60 and os.environ.get('FORCE') != 'true' and os.environ['MODE'] == 'auto'
+          # GitHub 예약이 몇 시간씩 늦게 도는 일이 있어(11/18 밤 대시보드 예약이 3~8시간 늦음) 예약 실행은 02~07시 KST 안에서만 한다
+          h = (now + dt.timedelta(hours=9)).hour
+          if os.environ.get('EVENT') == 'schedule' and not (2 <= h < 7): skip = True
+          print('skip=' + ('true' if skip else 'false'))
+          if skip: print(f'건너뜀 — 직전 실행 {t} · 지금 KST {h}시 · {os.environ.get("EVENT")}', file=open('/dev/stderr', 'w'))
+          EOF
+        env:
+          FORCE: ${{ github.event.inputs.force || 'false' }}
+          EVENT: ${{ github.event_name }}
       - name: 1) 2026 빈 날짜
         id: y2026
+        if: steps.guard.outputs.skip != 'true'
         run: |
           if [ "$MODE" = history ]; then echo "rem=$BUDGET" >> "$GITHUB_OUTPUT"; echo "10년치만 실행"; exit 0; fi
           M=backfill; [ "$MODE" = daily ] && M=daily
           set +e; python short_collect.py --mode $M --max-calls "$BUDGET"; rc=$?; set -e
           echo "rc=$rc" >> "$GITHUB_OUTPUT"
+          [ "$MODE" = auto ] && python -c "import json,datetime as d;json.dump({'at':d.datetime.now(d.timezone.utc).isoformat(timespec='seconds')},open('data/short/night.json','w'))"
           git add -A data/short
           git commit -q -m "공매도 2026 자료 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || echo "변경 없음"
           git pull --rebase -q || true
@@ -60,7 +86,7 @@ jobs:
           EOF
       - name: 2) 2016~2025 10년치(short-history 가지)
         id: hist
-        if: steps.y2026.outputs.rem != '' && fromJSON(steps.y2026.outputs.rem) >= 10
+        if: steps.guard.outputs.skip != 'true' && steps.y2026.outputs.rem != '' && fromJSON(steps.y2026.outputs.rem) >= 10
         run: |
           if git fetch -q --depth 1 origin short-history 2>/dev/null; then
             git worktree add -q -B short-history hist FETCH_HEAD
@@ -74,7 +100,7 @@ jobs:
           git -C hist commit -q -m "공매도 10년치 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || echo "변경 없음"
           git -C hist push -q origin HEAD:short-history || true
       - name: 문제가 있으면 카카오톡
-        if: steps.y2026.outputs.rc == '2' || steps.hist.outputs.rc == '2'
+        if: steps.guard.outputs.skip != 'true' && (steps.y2026.outputs.rc == '2' || steps.hist.outputs.rc == '2')
         env:
           KAKAO_REST_KEY: ${{ secrets.KAKAO_REST_KEY }}
           KAKAO_REFRESH_TOKEN: ${{ secrets.KAKAO_REFRESH_TOKEN }}
