@@ -5626,8 +5626,64 @@
  {
   "date": "2026-11-17",
   "key": "foreign20",
-  "value": -13.29,
-  "text": "−13.3조 원(10.21~11.17, 잠정 포함)",
+  "value": -13.26,
+  "text": "−13.3조 원(10.21~11.17)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-17",
+  "key": "sox_dd",
+  "value": -34.11,
+  "text": "−34.1%(11.17, 9,642.88)",
+  "unit": "%",
+  "src": "https://www.seoul.co.kr/news/economy/2026/11/18/20261118500008"
+ },
+ {
+  "date": "2026-11-17",
+  "key": "vkospi",
+  "value": 53.64,
+  "text": "53.6(11.17)",
+  "unit": "",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-13",
+  "key": "hy_oas",
+  "value": 3.23,
+  "text": "3.23%(11.13)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/data/BAMLH0A0HYM2"
+ },
+ {
+  "date": "2026-11-18",
+  "key": "kospi_dd",
+  "value": -44.4,
+  "text": "−44.4%(11.18, 5,067.44)",
+  "unit": "%",
+  "src": "https://www.ebn.co.kr/news/articleView.html?idxno=1732157"
+ },
+ {
+  "date": "2026-11-17",
+  "key": "forced_liq",
+  "value": 173.74,
+  "text": "174억 원(11.17)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-17",
+  "key": "margin_dd",
+  "value": -31.84,
+  "text": "−31.8%(11.17, 26.33조 원 / 6.24 정점 38.63조 원)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-18",
+  "key": "foreign20",
+  "value": -14.24,
+  "text": "−14.2조 원(10.22~11.18, 잠정 포함)",
   "unit": "조 원",
   "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
  }
