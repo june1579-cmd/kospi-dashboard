@@ -219,12 +219,15 @@ def dart():
         corps = [(e.findtext('corp_code'), (e.findtext('stock_code') or '').strip(), e.findtext('corp_name')) for e in root.iter('list')]
         pd.DataFrame([c for c in corps if c[1]], columns=['corp_code', 'stock_code', 'corp_name']).to_csv(corps_f, index=False, compression='gzip')
     cp = pd.read_csv(corps_f, dtype=str)
-    want = set(open(os.path.join(ROOT, 'dart_codes.txt')).read().split()) if os.path.exists(os.path.join(ROOT, 'dart_codes.txt')) else set(cp['stock_code'])
+    EXTRA = os.path.exists(os.path.join(ROOT, 'dart_codes_extra.txt'))
+    sfx = '_x' if EXTRA else ''
+    src = 'dart_codes_extra.txt' if EXTRA else 'dart_codes.txt'
+    want = set(open(os.path.join(ROOT, src)).read().split()) if os.path.exists(os.path.join(ROOT, src)) else set(cp['stock_code'])
     codes = cp.loc[cp['stock_code'].isin(want), 'corp_code'].tolist()
     log('DART 대상 회사', len(codes))
     t0 = time.time(); CAP = 100 * 60; BATCH = 20
     for y in (2016, 2019, 2022, 2025):
-        yf = os.path.join(RAW, f'dart_op_{y}.csv.gz')
+        yf = os.path.join(RAW, f'dart_op_{y}{sfx}.csv.gz')
         if os.path.exists(yf):
             log('  DART', y, '이미 있음'); continue
         rows, bad, slow = [], 0, []
@@ -253,8 +256,8 @@ def dart():
             time.sleep(0.2)
         pd.DataFrame(rows).to_csv(yf, index=False, compression='gzip')
         log('  DART', y, '행', len(rows), '실패 묶음', bad, f'호출 평균 {sum(slow) / max(1, len(slow)):.1f}초', f'누적 {(time.time() - t0) / 60:.0f}분')
-    fs = [os.path.join(RAW, f'dart_op_{y}.csv.gz') for y in (2016, 2019, 2022, 2025)]
-    if all(os.path.exists(f) for f in fs):
+    fs = [os.path.join(RAW, f'dart_op_{y}{s2}.csv.gz') for y in (2016, 2019, 2022, 2025) for s2 in ('', '_x') if os.path.exists(os.path.join(RAW, f'dart_op_{y}{s2}.csv.gz'))]
+    if all(os.path.exists(os.path.join(RAW, f'dart_op_{y}{sfx}.csv.gz')) for y in (2016, 2019, 2022, 2025)):
         pd.concat([pd.read_csv(f, dtype=str) for f in fs]).to_csv(os.path.join(RAW, 'dart_op.csv.gz'), index=False, compression='gzip')
         log('DART 끝')
 
