@@ -52,6 +52,18 @@ for m in ('KOSPI', 'KOSDAQ'):
                          short=float(SH['비중'].get(c)) if SH is not None and c in SH.index and '비중' in SH else np.nan))
 F = pd.DataFrame(rows)
 M = M.merge(F, on='code', how='left').merge(rec, left_on='code', right_index=True, how='left').merge(last2, left_on='code', right_index=True, how='left')
+# 연도별 수익률(KRX 수정 등락률, 각 해 첫 거래일~마지막 거래일; 2026은 11/16까지)
+for y in range(2022, 2027):
+    parts = []
+    for m in ('KOSPI', 'KOSDAQ'):
+        d = rd(f'year/Y_{m}_{y}.csv.gz')
+        if d is not None and not d.empty:
+            parts.append(d['등락률'].astype(float))
+    if parts:
+        yr = pd.concat(parts); yr = yr[~yr.index.duplicated()]
+        M['ret_' + str(y)] = M.code.map(yr)
+if 'ret_2026' in M:
+    M['ret_ytd'] = M['ret_2026']; M = M.drop(columns='ret_2026')
 M['rec_rate'] = M.rec_rate * 100; M['ret_0622'] = M.ret_0622 * 100; M['ret_0923'] = M.ret_0923 * 100
 # 4년 흑자(2022~2025 영업이익)
 dt = pd.read_csv(os.path.join(RAW, 'dart_op.csv.gz'), dtype=str); dt['_p'] = (dt.fs_div != 'CFS').astype(int); dt = dt.sort_values('_p').drop_duplicates(['stock_code', 'bsns_year'])
