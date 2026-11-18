@@ -72,7 +72,12 @@ def plan(mode, days, st):
         return True
     if mode == 'daily':
         win = days[-10:]
-        return [('trade', d) for d in reversed(win) if want('trade', d)] + [('balance', d) for d in reversed(win[:-1]) if want('balance', d)]
+        # 최신 날짜부터 거래·잔고를 번갈아(상한에 걸려도 둘 다 최신 것부터 채워지게)
+        res = []
+        for d in reversed(win):
+            if want('trade', d): res.append(('trade', d))
+            if d != last and want('balance', d): res.append(('balance', d))
+        return res
     # backfill: ① 비어 있던 4월 이후 거래 ② 월말 잔고 ③ 나머지 날짜 잔고 ④ 1~3월 거래 — 각 묶음 안에서는 옛 날짜부터
     gap = dt.date(2026, 3, 27)
     month_end = sorted({max(x for x in days if (x.year, x.month) == (d.year, d.month)) for d in days} - {last})
