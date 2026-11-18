@@ -1,3 +1,5 @@
 [19:06:43] 시작 full ['basis', 'iv', 'pcr', 'front', 'inv', 'program', 'chain'] — 로그인 계정 설정 있음
 [19:06:43] == basis
 [19:07:45] 저장 basis_daily.csv.gz 27608행
+[19:07:47] == iv
+[19:08:06] 저장 iv_daily.csv 4655행
