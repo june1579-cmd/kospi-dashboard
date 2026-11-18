@@ -53,28 +53,49 @@ def wait_clear():
 
 
 wait_clear()  # pykrx 를 import 하는 순간 KRX 에 로그인하므로 그 전에 대시보드 시간대를 피한다
-from pykrx.website.krx.krxio import KrxWebIo  # noqa: E402  (import 할 때 KRX_ID/PW 로 로그인)
+from pykrx.website.krx.krxio import KrxWebIo  # noqa: E402,F401  (import 할 때 KRX_ID/PW 로 로그인)
 
 
-class Bld(KrxWebIo):
-    def __init__(self, bld):
-        super().__init__(); self._b = bld
-    @property
-    def bld(self): return 'dbms/MDC/STAT/standard/' + self._b
-    def fetch(self, **p): return self.read(**p)
+from pykrx.website.comm.webio import get_session  # noqa: E402
+URL = 'https://data.krx.co.kr/comm/bldAttendant/getJsonData.cmd'
+HDR = {'User-Agent': 'Mozilla/5.0', 'Referer': 'https://data.krx.co.kr/contents/MDC/MDI/outerLoader/index.cmd', 'X-Requested-With': 'XMLHttpRequest'}
+
+
+def post_once(bld, p, timeout=40):
+    """KRX 한 번 호출(시간 제한 있음 — pykrx 기본 호출은 시간 제한이 없어 멈춘 연결에서 영원히 기다렸다)."""
+    krxs = get_session()
+    data = dict(p, bld='dbms/MDC/STAT/standard/' + bld)
+    if krxs is None:
+        import requests
+        r = requests.post(URL, headers=HDR, data=data, timeout=timeout)
+    else:
+        h = krxs.get_headers(); h.update(HDR)
+        r = krxs.session.post(URL, headers=h, data=data, timeout=timeout)
+    t = r.text.strip()
+    if t.startswith('LOGOUT') or not t.startswith('{'): raise ValueError(f'응답 이상: {t[:80]}')
+    js = r.json()
+    key = 'output' if 'output' in js else next((x for x in js if isinstance(js[x], list)), None)
+    return (js.get(key) or []) if key else [], list(js.keys())
 
 
 def call(bld, tries=3, **p):
-    """화면 하나 호출 → (행 목록, 응답 키). 실패하면 예외."""
+    """화면 호출. 기간(strtDd~endDd)이 2년보다 길면 2년씩 나눠 부르고, 조각마다 따로 재시도한다(실패 조각은 기록하고 넘어감)."""
+    if 'strtDd' in p and 'endDd' in p:
+        s, e = pd.Timestamp(p['strtDd']), pd.Timestamp(p['endDd']); out = []; keys = []
+        while s <= e:
+            t = min(s + pd.Timedelta(days=729), e); q = dict(p, strtDd=s.strftime('%Y%m%d'), endDd=t.strftime('%Y%m%d'))
+            for k in range(tries):
+                try:
+                    rows, keys = post_once(bld, q); out += rows; break
+                except Exception as ex:
+                    if k == tries - 1: log(f'  조각 실패 {bld} {q["strtDd"]}~{q["endDd"]}: {ex!r}'[:200])
+                    time.sleep(3 + 5 * k)
+            s = t + pd.Timedelta(days=1); time.sleep(0.6)
+        return out, keys
     last = None
     for k in range(tries):
-        try:
-            js = Bld(bld).read(**p)
-            if not isinstance(js, dict): raise ValueError(f'응답이 dict 아님: {str(js)[:120]}')
-            key = 'output' if 'output' in js else next((x for x in js if isinstance(js[x], list)), None)
-            return (js.get(key) or []) if key else [], list(js.keys())
-        except Exception as e:
-            last = e; time.sleep(2 + 3 * k)
+        try: return post_once(bld, p)
+        except Exception as ex: last = ex; time.sleep(3 + 5 * k)
     raise last
 
 

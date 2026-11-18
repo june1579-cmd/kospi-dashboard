@@ -10,7 +10,7 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: deriv-research
+  group: deriv-research-v2
   cancel-in-progress: false
 jobs:
   run:

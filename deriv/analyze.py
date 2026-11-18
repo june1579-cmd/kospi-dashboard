@@ -150,12 +150,13 @@ def build_indicators(px):
     # B1 베이시스
     b = rd('basis_daily')
     if b is not None and len(b):
-        b['date'] = ddate(b['TRD_DD']); b = b.drop_duplicates('date', keep='last').set_index('date').sort_index()
-        mb, dr = num(b.get('MKT_BASIS')), num(b.get('DIFF_RT'))
-        sp = num(b.get('SPOT_PRC'))
-        if mb is not None and sp is not None:
-            I['B1_시장베이시스율'] = mb / sp * 100; I['B1_베이시스율_5d변화'] = (mb / sp * 100).diff(5)
-        if dr is not None: I['B1_괴리율'] = dr
+        # 화면이 날짜마다 상장 월물 전부를 주므로, 거래된(종가>0) 가장 가까운 월물만 남긴다
+        b['date'] = ddate(b['TRD_DD']); b['ym'] = b['ISU_NM'].astype(str).str.extract(r'F\s+(\d{6})')[0]
+        b['fp'] = num(b['TDD_CLSPRC'])
+        b = b[(b['fp'] > 0) & b['ym'].notna()].sort_values(['date', 'ym']).drop_duplicates('date', keep='first').set_index('date')
+        mb, dr, sp = num(b['MKT_BASIS']), num(b['DIFF_RT']), num(b['SPOT_PRC'])
+        I['B1_시장베이시스율'] = mb / sp * 100; I['B1_베이시스율_5d변화'] = (mb / sp * 100).diff(5)
+        I['B1_괴리율'] = dr; I['B1_괴리율_z'] = z250(dr)
     # P1 프로그램매매
     pg = rd('program_daily')
     if pg is not None and len(pg):
@@ -211,51 +212,64 @@ def build_indicators(px):
     return X, note
 
 
+def bs_price(cp, S, K, T, sig, r=0.0):
+    d1 = (np.log(S / K) + (r + 0.5 * sig ** 2) * T) / (sig * np.sqrt(T)); d2 = d1 - sig * np.sqrt(T)
+    call = S * stats.norm.cdf(d1) - K * np.exp(-r * T) * stats.norm.cdf(d2)
+    return np.where(cp == 'C', call, call - S + K * np.exp(-r * T))
+
+
+def implied_vol(cp, S, K, T, price):
+    lo, hi = np.full(len(K), 0.01), np.full(len(K), 3.0)
+    for _ in range(60):
+        mid = (lo + hi) / 2; pm = bs_price(cp, S, K, T, mid)
+        up = pm > price; hi = np.where(up, mid, hi); lo = np.where(up, lo, mid)
+    iv = (lo + hi) / 2
+    intrinsic = np.where(cp == 'C', np.maximum(S - K, 0), np.maximum(K - S, 0))
+    return np.where((price > intrinsic + 0.005) & (iv > 0.011) & (iv < 2.99), iv, np.nan)
+
+
 def chain_metrics():
-    """옵션 전종목(월물) → 날짜별 풋콜 미결제비, 최대 미결제 행사가 거리, 최대 고통 거리, 감마 노출 추정."""
+    """옵션 전종목(압축본) → 날짜별 풋콜 미결제비, 콜·풋 최대 미결제 행사가 거리, 최대 고통 거리, 감마 노출 추정.
+    내재변동성은 화면에 없어서 정산가로 역산(블랙숄즈, 금리 0 가정). 감마 노출은 '딜러가 콜 롱·풋 숏' 가정의 추정치."""
     ch = rd('opt_chain_daily')
     if ch is None or not len(ch): return None
-    ch['date'] = ddate(ch['날짜'])
-    nm = ch['ISU_NM'].astype(str)
-    ch['cp'] = np.where(nm.str.contains(' C '), 'C', np.where(nm.str.contains(' P '), 'P', ''))
-    ch['ym'] = nm.str.extract(r'[CP]\s+(\d{6})')[0]
-    ch['K'] = num(nm.str.extract(r'(\d+(?:\.\d+)?)\s*$')[0])
-    ch['oi'] = num(ch['ACC_OPNINT_QTY']); ch['iv'] = num(ch['IMP_VOLT']) if 'IMP_VOLT' in ch else np.nan
-    ch['px'] = num(ch['TDD_CLSPRC'])
-    ch = ch[(ch['cp'] != '') & ch['K'].notna() & ch['oi'].notna()]
-    k2 = load_k200()
+    ch['date'] = pd.to_datetime(ch['날짜']); ch['ym'] = ch['ym'].astype(str).str.slice(0, 6)
+    ch = ch.dropna(subset=['K', 'oi', 'spot'])
     rows = []
     for d, g in ch.groupby('date'):
-        S = k2.get(d, np.nan)
-        if not np.isfinite(S) or g.empty: continue
-        front = sorted(g['ym'].dropna().unique())
-        if not front: continue
-        f = g[g['ym'] == front[0]]
-        if f['oi'].sum() < 1000 and len(front) > 1: f = g[g['ym'] == front[1]]
-        c, p = f[f['cp'] == 'C'], f[f['cp'] == 'P']
-        r = {'date': d}
-        tot_c, tot_p = c['oi'].sum(), p['oi'].sum()
-        r['E1_풋콜미결제비'] = tot_p / tot_c if tot_c else np.nan
-        if len(c) and len(p):
-            kc, kp = c.loc[c['oi'].idxmax(), 'K'], p.loc[p['oi'].idxmax(), 'K']
-            r['E1_콜벽거리%'] = (kc / S - 1) * 100; r['E1_풋벽거리%'] = (kp / S - 1) * 100
+        yms = sorted(g['ym'].unique())
+        f = g[g['ym'] == yms[0]]
+        dte = days_to_expiry(d, yms[0])
+        if (not np.isfinite(dte) or dte < 2) and len(yms) > 1: f = g[g['ym'] == yms[1]]; dte = days_to_expiry(d, yms[1])
+        S = float(f['spot'].median()); c, p = f[f['cp'] == 'C'], f[f['cp'] == 'P']
+        r = {'date': d, 'E1_만기까지일수': dte}
+        if c['oi'].sum() and p['oi'].sum():
+            r['E1_풋콜미결제비'] = p['oi'].sum() / c['oi'].sum()
+            r['E1_콜벽거리%'] = (c.loc[c['oi'].idxmax(), 'K'] / S - 1) * 100
+            r['E1_풋벽거리%'] = (p.loc[p['oi'].idxmax(), 'K'] / S - 1) * 100
             Ks = np.sort(f['K'].unique())
             pain = [((np.maximum(0, x - c['K']) * c['oi']).sum() + (np.maximum(0, p['K'] - x) * p['oi']).sum()) for x in Ks]
             r['E1_최대고통거리%'] = (Ks[int(np.argmin(pain))] / S - 1) * 100
-            # 감마 노출 추정(딜러: 콜 롱·풋 숏 가정 — 무료 자료로는 실제 포지션을 알 수 없음)
-            ivs = f['iv'] / 100
-            T = max(days_to_expiry(d, front[0]), 1) / 365
-            if ivs.notna().sum() > 5:
-                sig = ivs.fillna(ivs.median()).clip(0.05, 2)
-                d1 = (np.log(S / f['K']) + 0.5 * sig ** 2 * T) / (sig * np.sqrt(T))
-                gam = stats.norm.pdf(d1) / (S * sig * np.sqrt(T))
+            T = max(dte, 1) / 250
+            px_ = f['settle'].where(f['settle'] > 0, f['close'])
+            iv = implied_vol(f['cp'].values, S, f['K'].values, T, px_.values)
+            ok = np.isfinite(iv)
+            if ok.sum() >= 6:
+                ivs = pd.Series(iv, index=f.index).fillna(np.nanmedian(iv))
+                d1 = (np.log(S / f['K']) + 0.5 * ivs ** 2 * T) / (ivs * np.sqrt(T))
+                gam = stats.norm.pdf(d1) / (S * ivs * np.sqrt(T))
                 sign = np.where(f['cp'] == 'C', 1, -1)
-                r['G1_감마노출추정'] = float((sign * gam * f['oi'] * S * S * 0.01).sum() / 1e6)
-        r['E1_만기까지일수'] = days_to_expiry(d, front[0])
+                r['G1_감마노출추정'] = float((sign * gam * f['oi'] * S * S * 0.01).sum())
+                atm = (f['K'] - S).abs()
+                pc = f[ok & (f['cp'] == 'P')]; cc = f[ok & (f['cp'] == 'C')]
+                if len(pc) and len(cc):
+                    ivp = pd.Series(iv, index=f.index)
+                    p95 = pc.iloc[(pc['K'] - S * 0.95).abs().argsort()[:1]].index; c105 = cc.iloc[(cc['K'] - S * 1.05).abs().argsort()[:1]].index
+                    r['V2_스큐_풋95-콜105'] = float(ivp[p95].iloc[0] - ivp[c105].iloc[0]) * 100
         rows.append(r)
     if not rows: return None
     M = pd.DataFrame(rows).set_index('date').sort_index()
-    if 'G1_감마노출추정' in M: M['G1_감마노출_z'] = z250(M['G1_감마노출추정'])
+    if 'G1_감마노출추정' in M: M['G1_감마노출_z'] = z250(M['G1_감마노출추정']); M['G1_감마부호'] = np.sign(M['G1_감마노출추정'])
     return M
 
 
