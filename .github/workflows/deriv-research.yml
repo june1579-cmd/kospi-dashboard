@@ -9,8 +9,9 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+  actions: write
 concurrency:
-  group: deriv-research-v2
+  group: deriv-research-v3
   cancel-in-progress: false
 jobs:
   run:
@@ -20,6 +21,17 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: deriv-research
+      - name: 앞선 실행 취소(같은 KRX 계정이 동시에 로그인하면 서로 끊긴다)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for id in $(gh run list -R "$GITHUB_REPOSITORY" -w deriv-research --status in_progress --json databaseId -q '.[].databaseId'); do
+            if [ "$id" != "$GITHUB_RUN_ID" ]; then gh run cancel "$id" -R "$GITHUB_REPOSITORY" && echo "취소 $id" || true; fi
+          done
+          for id in $(gh run list -R "$GITHUB_REPOSITORY" -w deriv-research --status queued --json databaseId -q '.[].databaseId'); do
+            if [ "$id" != "$GITHUB_RUN_ID" ]; then gh run cancel "$id" -R "$GITHUB_REPOSITORY" || true; fi
+          done
+          sleep 20
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'

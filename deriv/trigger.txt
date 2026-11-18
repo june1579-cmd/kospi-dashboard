@@ -1,2 +1,2 @@
 full
-inv basis iv pcr front program chain
+basis iv pcr front inv program chain

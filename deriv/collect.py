@@ -61,6 +61,17 @@ URL = 'https://data.krx.co.kr/comm/bldAttendant/getJsonData.cmd'
 HDR = {'User-Agent': 'Mozilla/5.0', 'Referer': 'https://data.krx.co.kr/contents/MDC/MDI/outerLoader/index.cmd', 'X-Requested-With': 'XMLHttpRequest'}
 
 
+LOGOUTS = [0]
+def relogin():
+    """같은 계정의 다른 세션이 로그인하면 이 세션은 LOGOUT 을 받는다 → 한 번 다시 로그인. 5번 넘게 반복되면 멈춘다."""
+    LOGOUTS[0] += 1
+    if LOGOUTS[0] > 5: raise SystemExit('KRX 로그인이 계속 끊김(다른 곳에서 같은 계정 사용 중일 수 있음) — 중단')
+    krxs = get_session()
+    if krxs is not None:
+        ok = krxs.refresh(os.environ.get('KRX_ID', ''), os.environ.get('KRX_PW', ''))
+        log(f'  재로그인 {"성공" if ok else "실패"} ({LOGOUTS[0]}회째)')
+
+
 def post_once(bld, p, timeout=40):
     """KRX 한 번 호출(시간 제한 있음 — pykrx 기본 호출은 시간 제한이 없어 멈춘 연결에서 영원히 기다렸다)."""
     krxs = get_session()
@@ -72,7 +83,9 @@ def post_once(bld, p, timeout=40):
         h = krxs.get_headers(); h.update(HDR)
         r = krxs.session.post(URL, headers=h, data=data, timeout=timeout)
     t = r.text.strip()
-    if t.startswith('LOGOUT') or not t.startswith('{'): raise ValueError(f'응답 이상: {t[:80]}')
+    if t.startswith('LOGOUT'):
+        relogin(); raise ValueError('LOGOUT(재로그인함)')
+    if not t.startswith('{'): raise ValueError(f'응답 이상: {t[:80]}')
     js = r.json()
     key = 'output' if 'output' in js else next((x for x in js if isinstance(js[x], list)), None)
     return (js.get(key) or []) if key else [], list(js.keys())
@@ -161,7 +174,7 @@ def probe():
 
 
 # ------------------------------------------------------------------ full
-START_LONG = '20040101'   # 일별 추이 화면(기간 조회) — KRX 가 주는 데까지(앞쪽은 빈 응답이면 그대로 둔다)
+START_LONG = '20080101'   # 일별 추이 화면(기간 조회) — KRX 가 주는 데까지(앞쪽은 빈 응답이면 그대로 둔다)
 START_DAYLOOP = '20100101'  # 프로그램매매(날짜마다 1번) — 2010년부터
 START_CHAIN = '20150101'    # 옵션 전종목(날짜마다 1번, 응답이 큼) — VKOSPI 자료와 맞춰 2015년부터
 
@@ -179,6 +192,7 @@ def inv(pre='KR___'):   # probe(2026-11-18): 투자자별 화면은 'KR___' 접�
                                aggBasTpCd='0', strtDd=START_LONG, endDd=d8(TODAY), share='1', money='1')
                 df = frame(rows, 상품=prod, 상품명=PROD[prod], 권리=opt, 단위=pt, 장구분='정규')
                 out.append(df); log(f'inv {prod} {opt} {pt}: {len(df)}행')
+                save(pd.concat(out, ignore_index=True), 'inv_daily'); git_save(f'inv {prod} {opt} {pt}')
             except Exception as e: log(f'inv {prod} {opt} {pt} 실패: {e!r}'[:300])
             time.sleep(1)
     # 상세 투자자(금융투자·보험·투신·은행·기타금융·연기금·기타법인·개인·외국인·기타외국인) — 코스피200 선물·옵션
