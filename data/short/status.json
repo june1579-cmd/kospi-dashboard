@@ -3,19 +3,22 @@
   "trade": {},
   "balance": {}
  },
- "updated": "2026-11-18 22:07",
- "mode": "backfill",
- "calls": 4,
+ "updated": "2026-11-18 22:29",
+ "mode": "daily",
+ "calls": 8,
  "saved": [
-  "trade 2026-03-27",
-  "trade 2026-03-30",
-  "trade 2026-03-31",
-  "trade 2026-04-01"
+  "trade 2026-11-18",
+  "trade 2026-11-17",
+  "trade 2026-11-16",
+  "balance 2026-11-16",
+  "trade 2026-11-13",
+  "balance 2026-11-13",
+  "trade 2026-11-12"
  ],
  "error": null,
- "left": 426,
- "last_trade": "20260401",
- "last_balance": null,
- "n_trade": 4,
- "n_balance": 0
+ "left": 12,
+ "last_trade": "20261118",
+ "last_balance": "20261116",
+ "n_trade": 9,
+ "n_balance": 2
 }
