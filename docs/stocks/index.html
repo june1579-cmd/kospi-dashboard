@@ -71,6 +71,8 @@ input[type=search] { width: 180px; }
 table { border-collapse: separate; border-spacing: 0; font-size: 13px; font-variant-numeric: tabular-nums; width: 100%; }
 th, td { padding: 0.45em 0.4em; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
 thead th { position: sticky; top: 0; background: var(--panel); z-index: 2; color: var(--muted); font-weight: 500; font-size: 0.92em; cursor: pointer; user-select: none; vertical-align: bottom; line-height: 1.25; }
+thead th { white-space: normal; word-break: keep-all; overflow-wrap: normal; }
+td.wrap { white-space: normal; word-break: keep-all; min-width: 3.5em; line-height: 1.2; }
 thead th.sorted { color: var(--ink); font-weight: 700; }
 thead th .arr { font-size: 0.7rem; margin-left: 2px; }
 th.l, td.l { text-align: left; }
@@ -189,7 +191,7 @@ tbody tr:hover td { background: var(--hl); }
     { k: 'sc_mix', t: '점수\n종합', g: 'lists', f: 'f1', good: 1 },
     { k: 'sc_flow', t: '수급\n점수', g: 'lists', f: 'f1', good: 1 },
     { k: 'sc_chk', t: '체크\n(4개)', g: 'lists', f: 'int', good: 1 },
-    { k: 'sc_big7', t: '하락장 중\n큰손 순매수(%)', g: 'lists', f: 's2', good: 1 },
+    { k: 'sc_big7', t: '하락장 중 큰손 순매수(%)', g: 'lists', f: 's2', good: 1 },
     { k: 'd1_rank', t: '방어1\n순위', g: 'lists', f: 'int', good: -1 },
     { k: 'd1_total', t: '방어1\n종합', g: 'lists', f: 'f1', good: 1 },
     { k: 'd1_def', t: '방어\n(30)', g: 'lists', f: 'f1', good: 1 },
@@ -197,25 +199,25 @@ tbody tr:hover td { background: var(--hl); }
     { k: 'd1_grow', t: '성장\n(20)', g: 'lists', f: 'f1', good: 1 },
     { k: 'd1_flow', t: '수급\n(15)', g: 'lists', f: 'f1', good: 1 },
     { k: 'd1_com', t: '공통점\n(15)', g: 'lists', f: 'f1', good: 1 },
-    { k: 'vol1y', t: '변동성\n1년(%)', g: 'risk', f: 'f1', good: -1, grpStart: 'risk' },
+    { k: 'vol1y', t: '변동성\n1년(%)', g: 'risk', f: 'f0', good: -1, grpStart: 'risk' },
     { k: 'beta2y', t: '베타\n2년', g: 'risk', f: 'f2', good: -1 },
     { k: 'rec_rate', t: '과거 급락\n덜 빠짐(%)', g: 'risk', f: 'int', good: 1 },
     { k: 'n_rec', t: '겪은\n급락', g: 'risk', f: 'int', good: 1 },
-    { k: 'mdd2y', t: '최대 낙폭\n2년(%)', g: 'risk', f: 's1', good: 1, color: true },
+    { k: 'mdd2y', t: '최대 낙폭\n2년(%)', g: 'risk', f: 's0', good: 1, color: true },
     { k: 'pbr', t: 'PBR', g: 'value', f: 'f2', good: -1, grpStart: 'value' },
     { k: 'per', t: 'PER', g: 'value', f: 'f1', good: -1, posOnly: true },
     { k: 'div', t: '배당\n(%)', g: 'value', f: 'f2', good: 1 },
     { k: 'profit_years', t: '흑자 연수\n(4년)', g: 'value', f: 'int', good: 1 },
-    { k: 'op2025', t: '2025 영업이익\n(억 원)', g: 'value', f: 'int', good: 1 },
-    { k: 'ret_ytd', t: '2026년\n(%)', g: 'ret', f: 's1', good: 1, color: true, grpStart: 'ret' },
-    { k: 'ret1y', t: '1년\n(%)', g: 'ret', f: 's1', good: 1, color: true },
-    { k: 'ret2y', t: '2년\n(%)', g: 'ret', f: 's1', good: 1, color: true },
-    { k: 'ret_0622', t: '6/22~7/30\n급락(%)', g: 'ret', f: 's1', good: 1, color: true },
-    { k: 'ret_0923', t: '9/23~11/9\n급락(%)', g: 'ret', f: 's1', good: 1, color: true },
+    { k: 'op2025', t: '2025 영업 이익(억)', g: 'value', f: 'int', good: 1 },
+    { k: 'ret_ytd', t: '2026년\n(%)', g: 'ret', f: 's0', good: 1, color: true, grpStart: 'ret' },
+    { k: 'ret1y', t: '1년\n(%)', g: 'ret', f: 's0', good: 1, color: true },
+    { k: 'ret2y', t: '2년\n(%)', g: 'ret', f: 's0', good: 1, color: true },
+    { k: 'ret_0622', t: '6/22~ 7/30 급락(%)', g: 'ret', f: 's0', good: 1, color: true },
+    { k: 'ret_0923', t: '9/23~ 11/9 급락(%)', g: 'ret', f: 's0', good: 1, color: true },
     { k: 'frgn', t: '외국인\n보유율(%)', g: 'own', f: 'f1', good: 1, grpStart: 'own' },
     { k: 'short', t: '공매도\n잔고(%)', g: 'own', f: 'f2', good: -1 },
-    { k: 'close', t: '종가\n(원)', g: 'own', f: 'int', good: 1 },
-    { k: 'mcap', t: '시총\n(억 원)', g: 'own', f: 'int', good: 1 },
+    { k: 'close', t: '종가 (원)', g: 'own', f: 'int', good: 1 },
+    { k: 'mcap', t: '시총 (억 원)', g: 'own', f: 'int', good: 1 },
   ];
   const PAGE = 20;
   const DEF = { lists: { st: true, sc: true, d1: true }, multi: false, q: '', mkt: '', sec: '', sort: 'n_lists', dir: 'good', hide: [], page: 1 };
@@ -227,6 +229,7 @@ tbody tr:hover td { background: var(--hl); }
   const fmt = {
     int: (v) => Math.round(v).toLocaleString('ko-KR'),
     text: (v) => String(v), f1: (v) => v.toFixed(1), f2: (v) => v.toFixed(2),
+    s0: (v) => (v > 0 ? '+' : '') + Math.round(v).toLocaleString('ko-KR'), f0: (v) => Math.round(v).toLocaleString('ko-KR'),
     s1: (v) => (v > 0 ? '+' : '') + v.toFixed(1), s2: (v) => (v > 0 ? '+' : '') + v.toFixed(2),
   };
   const save = () => { try { localStorage.setItem('stocks-view', JSON.stringify(S)); } catch (e) {} };
@@ -268,7 +271,7 @@ tbody tr:hover td { background: var(--hl); }
     vc.forEach((c) => {
       const th = document.createElement('th');
       if (c.f === 'badge' || c.text) th.classList.add('l');
-      c.t.split('\n').forEach((ln, i) => { if (i) th.append(document.createElement('br')); th.append(ln); });
+      th.append(c.t.replace(/\n/g, ' '));
       if (!c.nosort) {
         th.dataset.k = c.k; th.tabIndex = 0; th.setAttribute('role', 'button');
         if (S.sort === c.k) {
@@ -353,7 +356,7 @@ tbody tr:hover td { background: var(--hl); }
           const bw = document.createElement('span'); bw.className = 'badges';
           bw.append(badge(r.in_st, 'st', '안', fmt.int(r.st_rank || 0), '안정 관찰'), badge(r.in_sc, 'sc', '점', fmt.int(r.sc_rank || 0), '점수 순위'), badge(r.in_d1, 'd1', '방', fmt.int(r.d1_rank || 0), '방어 1번'));
           td.append(bw);
-        } else if (c.text) { td.className = 'l'; td.textContent = r[c.k] || '—'; }
+        } else if (c.text) { td.className = 'l wrap'; td.textContent = r[c.k] || '—'; }
         else {
           const v = num(r[c.k]);
           if (v === null) { td.textContent = '—'; td.classList.add('na'); }
