@@ -11,6 +11,9 @@ on:
       max_calls:
         description: '이번에 조회할 최대 횟수(날짜 하나 = 1번)'
         default: '60'
+      mode:
+        description: 'backfill(과거 빈 날짜) · daily(최근 10거래일 — 4c 단계와 같음)'
+        default: 'backfill'
 permissions:
   contents: write
 concurrency:
@@ -31,7 +34,7 @@ jobs:
         env:
           KRX_ID: ${{ secrets.KRX_ID }}
           KRX_PW: ${{ secrets.KRX_PW }}
-        run: python short_collect.py --mode backfill --max-calls "${{ github.event.inputs.max_calls || '60' }}"
+        run: python short_collect.py --mode "${{ github.event.inputs.mode || 'backfill' }}" --max-calls "${{ github.event.inputs.max_calls || '60' }}"
       - name: 결과 저장(commit & push)
         if: always()
         run: |
