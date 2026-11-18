@@ -25,3 +25,5 @@
 [19:47:12] inv OPK2I P 상세: 4655행
 [19:47:13] 저장 inv_daily.csv.gz 38765행
 [19:47:26] 저장 inv_daily.csv.gz 39119행
+[19:47:28] == program
+[19:52:02] program_daily 중간 저장 2010-12-16 (723행)
