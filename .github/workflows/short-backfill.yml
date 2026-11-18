@@ -1,19 +1,22 @@
 name: short-backfill
-# 공매도 과거 자료 나눠 받기(2026-11-18 추가) — 2026-01-02 이후 빈 날짜의 전종목 공매도 거래·잔고를 밤마다 조금씩 받는다.
-# 대시보드 갱신(08:23~22:23)이 끝난 밤 23:47·03:17 KST 에 한 번에 최대 60번만 조회하고(조회 사이 4~6초), 막히면 바로 멈춘다.
-# 다 받으면 조회할 것이 없어 KRX 에 로그인하지도 않고 끝난다(그 뒤로는 매일 20:23 확정 실행의 4c 단계가 새 날짜를 받는다).
+# 공매도 과거 자료 받기(2026-11-18 추가, 같은 날 03:17·05:17 두 번으로 바꾸고 10년치 이어받기 추가)
+# 매일 03:17·05:17 KST — 대시보드 갱신(08:23~22:23)·경고판 알림(07:30)·밤 연구 작업과 겹치지 않는 시간. 한 번에 최대 210번 조회(조회 사이 4~6초, 약 20분).
+#  1) 2026-01-02 이후 빈 날짜(main 가지 data/short)
+#  2) 1)이 다 채워졌고 문제(접속 제한·오류)가 없었으면 남은 조회 수로 2016~2025 10년치(short-history 가지 data/short, 최신 날짜부터)
+#     — 10년치는 파일이 많아(약 130MB) 대시보드가 매번 받는 main 이 무거워지지 않게 따로 둔다.
+# 막히면 바로 멈추고 24시간 쉬며(그동안 실행돼도 KRX 에 로그인하지 않음) 카카오톡으로 알린다. 다 받으면 조회 없이 끝난다.
 on:
   schedule:
-    - cron: '47 14 * * *'   # 23:47 KST
     - cron: '17 18 * * *'   # 03:17 KST
+    - cron: '17 20 * * *'   # 05:17 KST
   workflow_dispatch:
     inputs:
       max_calls:
         description: '이번에 조회할 최대 횟수(날짜 하나 = 1번)'
-        default: '60'
+        default: '210'
       mode:
-        description: 'backfill(과거 빈 날짜) · daily(최근 10거래일 — 4c 단계와 같음)'
-        default: 'backfill'
+        description: 'auto(2026 빈 날짜 → 10년치) · daily(최근 10거래일, 4c 단계와 같음) · history(10년치만, 시험용)'
+        default: 'auto'
 permissions:
   contents: write
 concurrency:
@@ -22,7 +25,12 @@ concurrency:
 jobs:
   backfill:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 45
+    env:
+      BUDGET: ${{ github.event.inputs.max_calls || '210' }}
+      MODE: ${{ github.event.inputs.mode || 'auto' }}
+      KRX_ID: ${{ secrets.KRX_ID }}
+      KRX_PW: ${{ secrets.KRX_PW }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -30,16 +38,62 @@ jobs:
           python-version: '3.12'
           cache: pip
       - run: pip install -r requirements.txt
-      - name: 공매도 과거 자료 받기
+      - name: git 사용자
+        run: git config --global user.name "dashboard-bot"; git config --global user.email "dashboard-bot@users.noreply.github.com"
+      - name: 1) 2026 빈 날짜
+        id: y2026
+        run: |
+          if [ "$MODE" = history ]; then echo "rem=$BUDGET" >> "$GITHUB_OUTPUT"; echo "10년치만 실행"; exit 0; fi
+          M=backfill; [ "$MODE" = daily ] && M=daily
+          set +e; python short_collect.py --mode $M --max-calls "$BUDGET"; rc=$?; set -e
+          echo "rc=$rc" >> "$GITHUB_OUTPUT"
+          git add -A data/short
+          git commit -q -m "공매도 2026 자료 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || echo "변경 없음"
+          git pull --rebase -q || true
+          git push -q || true
+          # 다음 단계로 넘길 남은 조회 수 — 2026 이 다 채워졌고(left 0) 오류·쉬는 중이 아닐 때만
+          python - <<'EOF' >> "$GITHUB_OUTPUT"
+          import json, os
+          s = json.load(open('data/short/status.json', encoding='utf-8'))
+          ok = os.environ['MODE'] == 'auto' and s.get('left') == 0 and not s.get('error') and not s.get('blocked_at') and not s.get('skipped')
+          print('rem=' + str(max(0, int(os.environ['BUDGET']) - int(s.get('calls') or 0)) if ok else 0))
+          EOF
+      - name: 2) 2016~2025 10년치(short-history 가지)
+        id: hist
+        if: steps.y2026.outputs.rem != '' && fromJSON(steps.y2026.outputs.rem) >= 10
+        run: |
+          if git fetch -q --depth 1 origin short-history 2>/dev/null; then
+            git worktree add -q -B short-history hist FETCH_HEAD
+          else
+            git worktree add -q --detach hist && git -C hist checkout -q --orphan short-history && git -C hist rm -rfq . && \
+            printf '# 공매도 10년치(2016~2025) — short_collect.py --mode history 가 밤마다 채운다. 2026 이후는 main 의 data/short.\n' > hist/README.md
+          fi
+          set +e; python short_collect.py --mode history --root hist/data/short --max-calls "${{ steps.y2026.outputs.rem }}"; rc=$?; set -e
+          echo "rc=$rc" >> "$GITHUB_OUTPUT"
+          git -C hist add -A .
+          git -C hist commit -q -m "공매도 10년치 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || echo "변경 없음"
+          git -C hist push -q origin HEAD:short-history || true
+      - name: 문제가 있으면 카카오톡
+        if: steps.y2026.outputs.rc == '2' || steps.hist.outputs.rc == '2'
         env:
-          KRX_ID: ${{ secrets.KRX_ID }}
-          KRX_PW: ${{ secrets.KRX_PW }}
-        run: python short_collect.py --mode "${{ github.event.inputs.mode || 'backfill' }}" --max-calls "${{ github.event.inputs.max_calls || '60' }}"
-      - name: 결과 저장(commit & push)
+          KAKAO_REST_KEY: ${{ secrets.KAKAO_REST_KEY }}
+          KAKAO_REFRESH_TOKEN: ${{ secrets.KAKAO_REFRESH_TOKEN }}
+          KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
+        run: |
+          mkdir -p report
+          python - <<'EOF'
+          import json, os
+          msgs = []
+          for name, fn in [('2026', 'data/short/status.json'), ('10년치', 'hist/data/short/status.json')]:
+              if os.path.exists(fn):
+                  s = json.load(open(fn, encoding='utf-8'))
+                  if s.get('error'): msgs.append(f"{name}: {s['error'][:60]} · 남은 {s.get('left')}건")
+          txt = '[공매도 과거 자료] 수집 멈춤 — 24시간 쉬고 다시 시도\n' + '\n'.join(msgs)
+          open('report/short_alert.txt', 'w', encoding='utf-8').write(txt[:200] + '\n')
+          EOF
+          python kakao_send.py --file report/short_alert.txt || echo "카카오톡 발송 실패"
+          git add -A state && git commit -q -m "카카오 토큰 연장" && git pull --rebase -q && git push -q || true
+      - name: 요약
         if: always()
         run: |
-          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
-          git add -A data/short
-          git commit -m "공매도 과거 자료 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || echo "변경 없음"
-          git pull --rebase -q || true
-          git push
+          for f in data/short/status.json hist/data/short/status.json; do [ -f $f ] && python -c "import json;s=json.load(open('$f'));print('$f', {k:s.get(k) for k in ['updated','mode','calls','n_saved','left','error','blocked_at','first_trade','last_trade','first_balance','last_balance']})"; done; true
