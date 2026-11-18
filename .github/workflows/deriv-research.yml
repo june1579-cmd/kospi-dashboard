@@ -1,6 +1,6 @@
 name: deriv-research
-# 선물·옵션 수급 지표 연구(1차 단계) — deriv-research 가지 전용. main·대시보드·웹판·카톡은 건드리지 않는다.
-# deriv/trigger.txt 를 바꿔 push 하면 돈다(첫 줄 = 모드: probe | full | analyze, 나머지는 인자).
+# 선물·옵션 수급 지표 연구(1·2·3차) — deriv-research 가지 전용. main·대시보드·웹판·카톡은 건드리지 않는다.
+# deriv/trigger.txt 를 바꿔 push 하면 돈다(첫 줄 = 모드: probe | full | analyze, 둘째 줄 = 인자. 예: full / inv2 front2).
 # 대시보드 수집 시간대(08:15~10:50 · 15:35~18:05 · 20:15~22:50 KST)에는 KRX 로그인이 겹치지 않도록 collect.py 가 스스로 기다린다.
 on:
   push:
@@ -45,7 +45,7 @@ jobs:
         run: |
           MODE=$(head -1 deriv/trigger.txt | tr -d '\r'); ARGS=$(sed -n 2p deriv/trigger.txt | tr -d '\r')
           echo "모드 $MODE 인자 $ARGS"
-          if [ "$MODE" = "analyze" ]; then python deriv/analyze.py $ARGS; else python deriv/collect.py "$MODE" $ARGS; fi
+          if [ "$MODE" = "analyze" ]; then pip install -q yfinance && (python deriv/overseas.py || echo "해외 자료 실패 — 기존 파일로 분석"); python deriv/analyze.py $ARGS; else python deriv/collect.py "$MODE" $ARGS; fi
       - name: 결과 저장
         if: always()
         run: |

@@ -251,6 +251,50 @@ def build_indicators(px):
             prev = idx[idx < e]
             if len(prev) and prev[-1] not in n1.index: n1.loc[prev[-1]] = v
     I['N1_야간등락'] = n1.sort_index()
+    # K2_ 2차 국내 확장(코스닥150·국채·달러·주식선물옵션·섹터·VKOSPI 선물·KRX300): 외국인·기관 순매수(상세 13103)
+    inv2 = rd('inv2_daily')
+    if inv2 is not None:
+        inv2['상세'] = 'Y'; inv2['단위'] = inv2.get('단위', 'AMT'); inv2['장구분'] = inv2.get('장구분', '정규')
+        for prod, nm in (('FUKQI', '코스닥150선물'), ('FUBM3', '3년국채선물'), ('FUBMA', '10년국채선물'), ('FUUSD', '달러선물'),
+                         ('FUEQU', '주식선물'), ('FUXAT', '섹터선물'), ('FUVKI', 'VKOSPI선물'), ('FUXI3', 'KRX300선물')):
+            f = investor_frame(inv2, prod, 'ALL', detail=True)
+            if f is None: continue
+            inst = f[[c for c in ('금융투자', '보험', '투신', '은행', '기타금융', '연기금') if c in f]].sum(axis=1, min_count=1)
+            for who, ser in (('외국인', f.get('외국인')), ('기관', inst)):
+                if ser is None: continue
+                x = ser / 1e9   # 십억원
+                I[f'K2_{nm}_{who}_1d'] = x; I[f'K2_{nm}_{who}_5d'] = x.rolling(5).sum()
+        for prod, nm in (('OPKQI', '코스닥150옵션'), ('OPEQU', '주식옵션')):
+            c2, p2 = investor_frame(inv2, prod, 'C', detail=True), investor_frame(inv2, prod, 'P', detail=True)
+            if c2 is not None and p2 is not None and '외국인' in c2 and '외국인' in p2:
+                I[f'K2_{nm}_외국인콜-풋_5d'] = ((c2['외국인'] - p2['외국인']) / 1e9).rolling(5).sum()
+    fr2 = rd('fut_front2_daily')
+    if fr2 is not None and 'TRD_DD' in fr2:
+        fr2['date'] = ddate(fr2['TRD_DD'])
+        for prod, nm in (('FUUSD', '달러선물'), ('FUBMA', '10년국채선물'), ('FUBM3', '3년국채선물'), ('FUKQI', '코스닥150선물')):
+            g = fr2[fr2['상품'] == prod].drop_duplicates('date', keep='last').set_index('date').sort_index()
+            if not len(g) or 'TDD_CLSPRC' not in g: continue
+            pr = num(g['TDD_CLSPRC']); roll = g['ISU_NM'] != g['ISU_NM'].shift(1) if 'ISU_NM' in g else pd.Series(False, index=g.index)
+            I[f'K2_{nm}_등락'] = (pr.pct_change(fill_method=None) * 100).where(~roll)   # 월물 교체일은 빈칸
+            if 'ACC_OPNINT_QTY' in g:
+                oi = num(g['ACC_OPNINT_QTY'])
+                I[f'K2_{nm}_미결제5d'] = oi.pct_change(5, fill_method=None).where(~roll.rolling(6, min_periods=1).max().astype(bool)) * 100
+    # W_ 3차 해외(Yahoo): 한국 t일 값 = 그 시장 현지 날짜 ≤ t 의 마지막 종가 기준. 미국 t일 종가는 한국 t+1일 시가 전에 나온다.
+    ovp = os.path.join(DATA, 'overseas_daily.csv')
+    if os.path.exists(ovp):
+        ov = pd.read_csv(ovp, parse_dates=['date']).set_index('date').sort_index()
+        allidx = ov.index.union(px.index)
+        A = ov.reindex(allidx).ffill(limit=5).reindex(px.index)   # 한국 거래일에 맞춘 마지막 종가(5일 넘게 비면 빈칸)
+        name = {'ES=F': 'S&P선물', 'NQ=F': '나스닥선물', '^SOX': '반도체', '^N225': '닛케이', '^HSI': '항셍', '000001.SS': '상하이',
+                '^TWII': '대만', 'EWY': 'EWY', 'KRW=X': '원달러', 'DX-Y.NYB': '달러인덱스', 'CL=F': 'WTI', 'GC=F': '금', 'HG=F': '구리'}
+        for t, nm in name.items():
+            if t in A: I[f'W_{nm}_등락'] = A[t].pct_change(fill_method=None) * 100
+        if '^VIX' in A:
+            I['W_VIX_수준z'] = z250(A['^VIX']); I['W_VIX_변화'] = A['^VIX'].diff()
+        if '^TNX' in A: I['W_미국10년_변화bp'] = A['^TNX'].diff() * 10   # ^TNX 는 금리×10
+        if 'EWY' in A and 'KRW=X' in A:
+            ewy_krw = (A['EWY'].pct_change(fill_method=None) + A['KRW=X'].pct_change(fill_method=None)) * 100
+            I['W_EWY괴리'] = ewy_krw - px['close'].pct_change() * 100   # 미국장 EWY(원화 환산) − 같은 날 코스피: 밤사이 한국 주식 재평가 몫
     # 기준선
     c = px['close']; I['BASE_오늘등락'] = c.pct_change() * 100; I['BASE_5일등락'] = c.pct_change(5) * 100
     I['BASE_HV20'] = c.pct_change().rolling(20).std() * np.sqrt(250) * 100   # 변동성 수준 기준선(검수 A10 ③)

@@ -125,7 +125,7 @@ def frame(rows, **extra):
     return df
 
 
-KEYS = {'inv_daily': ['TRD_DD', '상품', '권리', '단위', '장구분', '상세']}
+KEYS = {'inv_daily': ['TRD_DD', '상품', '권리', '단위', '장구분', '상세'], 'inv2_daily': ['TRD_DD', '상품', '권리']}
 
 
 def save(df, name):
@@ -234,6 +234,51 @@ def inv(pre='KR___'):   # probe(2026-11-18): 투자자별 화면은 'KR___' 접�
     except Exception as e: log(f'inv 야간 실패: {e!r}'[:300])
 
 
+# 2차(국내 확장) — 상품 목록은 KRX 화면 콤보(B173.bld, 2026-11-18 확인). 상세(13103) 순매수 금액, 정규장.
+INV2 = [  # (상품, 권리, 시작, 시장구분 가능)
+    ('FUKQI', 'ALL', '20151123', True), ('OPKQI', 'C', '20180326', True), ('OPKQI', 'P', '20180326', True),
+    ('FUBM3', 'ALL', START_LONG, True), ('FUBMA', 'ALL', START_LONG, True), ('FUUSD', 'ALL', START_LONG, True),
+    ('FUEQU', 'ALL', START_LONG, False), ('OPEQU', 'C', START_LONG, False), ('OPEQU', 'P', START_LONG, False),
+    ('FUXAT', 'ALL', '20141117', False), ('FUVKI', 'ALL', '20141117', False), ('FUXI3', 'ALL', '20181001', False),
+]
+PROD2 = {'FUKQI': '코스닥150 선물', 'OPKQI': '코스닥150 옵션', 'FUBM3': '3년국채 선물', 'FUBMA': '10년국채 선물', 'FUUSD': '미국달러 선물',
+         'FUEQU': '주식 선물', 'OPEQU': '주식 옵션', 'FUXAT': '섹터지수 선물', 'FUVKI': '변동성지수 선물', 'FUXI3': 'KRX300 선물'}
+
+
+def inv2(pre='KR___'):
+    p0 = next((os.path.join(DATA, 'inv2_daily' + x) for x in ('.csv.gz', '.csv') if os.path.exists(os.path.join(DATA, 'inv2_daily' + x))), None)
+    out = [pd.read_csv(p0)] if p0 else []
+    last = {}
+    if out:
+        o = out[0]; o['_d'] = pd.to_datetime(o['TRD_DD'].astype(str).str[:10], errors='coerce')
+        last = o.groupby(['상품', '권리'])['_d'].max().to_dict(); out = [o.drop(columns=['_d'])]
+    for prod, opt, st, mkt in INV2:
+        lt = last.get((prod, opt))
+        if lt is not None and not pd.isna(lt):
+            if lt.date() >= END: continue
+            st = (lt + pd.Timedelta(days=1)).strftime('%Y%m%d')
+        wait_clear()
+        try:
+            rows, _ = call('MDCSTAT13103', chunk=120, inqTpCd='2', prtType='AMT', prtCheck='SUN', isuCd=pre + prod, isuCd2='', isuOpt=opt,
+                           aggBasTpCd='0' if mkt else '', strtDd=st, endDd=d8(END), share='1', money='1', detailView='1')
+            df = frame(rows, 상품=prod, 상품명=PROD2[prod], 권리=opt, 단위='AMT', 장구분='정규', 상세='Y')
+            out.append(df); log(f'inv2 {prod} {opt}: {len(df)}행')
+            save(pd.concat(out, ignore_index=True), 'inv2_daily'); git_save(f'inv2 {prod} {opt}')
+        except Exception as e: log(f'inv2 {prod} {opt} 실패: {e!r}'[:300])
+
+
+def front2():
+    """2차 최근월물 일별(가격·미결제): 코스닥150·달러·10년국채·3년국채 선물."""
+    parts = []
+    for prod in ('FUKQI', 'FUUSD', 'FUBMA', 'FUBM3'):
+        wait_clear()
+        try:
+            rows, _ = call('MDCSTAT12701', prodId='KRDRV' + prod, strtDd=START_LONG, endDd=d8(END), share='1', money='1')
+            parts.append(frame(rows, 상품=prod)); log(f'front2 {prod}: {len(rows)}행')
+        except Exception as e: log(f'front2 {prod} 실패: {e!r}'[:300])
+    if parts: save(pd.concat(parts, ignore_index=True), 'fut_front2_daily')
+
+
 def ranged(name, bld, **p):
     wait_clear()
     try:
@@ -331,7 +376,7 @@ def git_save(msg):
         if r.returncode and 'commit' not in c: log(f'git 실패: {c} {r.stderr[:200]}')
 
 
-TASKS = {'index': index_long, 'inv': inv, 'basis': basis, 'iv': iv, 'pcr': pcr, 'front': front, 'program': program, 'chain': chain}
+TASKS = {'inv2': inv2, 'front2': front2, 'index': index_long, 'inv': inv, 'basis': basis, 'iv': iv, 'pcr': pcr, 'front': front, 'program': program, 'chain': chain}
 
 
 def main():
