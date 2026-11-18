@@ -276,10 +276,62 @@ def dart():
         log('DART 끝')
 
 
+def dart_fill():
+    """비어 있는 칸 채우기: 회사별 전체 재무제표(fnlttSinglAcntAll)로 영업이익·지배주주 자본, 배당(alotMatter). 대상은 dart_fill_codes.txt."""
+    key = DART_KEY.strip(); out = os.path.join(RAW, 'dart_fill.csv.gz'); out2 = os.path.join(RAW, 'dart_alot.csv.gz')
+    lst = os.path.join(ROOT, 'dart_fill_codes.txt')
+    if not key or not os.path.exists(lst) or (os.path.exists(out) and os.path.exists(out2)):
+        return
+    import requests
+    cp = pd.read_csv(os.path.join(RAW, 'dart_corps.csv.gz'), dtype=str)
+    want = [l.split(',') for l in open(lst).read().split()]
+    rows, alot = [], []
+    OPID = ('dart_OperatingIncomeLoss', 'ifrs-full_ProfitLossFromOperatingActivities')
+    for code, need in want:
+        m = cp[cp.stock_code == code]
+        if m.empty:
+            log('  DART 채우기: 회사 코드 없음', code); continue
+        corp = m.corp_code.iloc[0]
+        for y in (2025, 2024, 2023, 2022):
+            got = False
+            for fs in ('CFS', 'OFS'):
+                try:
+                    js = requests.get('https://opendart.fss.or.kr/api/fnlttSinglAcntAll.json', params={'crtfc_key': key, 'corp_code': corp, 'bsns_year': str(y), 'reprt_code': '11011', 'fs_div': fs}, timeout=25).json()
+                except Exception as e:
+                    js = {'status': 'ERR', 'message': type(e).__name__}
+                time.sleep(0.25)
+                if js.get('status') != '000':
+                    continue
+                for it in js.get('list', []):
+                    aid, anm = it.get('account_id', ''), (it.get('account_nm') or '').replace(' ', '')
+                    isop = it.get('sj_div') in ('IS', 'CIS') and (aid in OPID or (anm.startswith('영업이익') and '률' not in anm))
+                    iseq = it.get('sj_div') == 'BS' and (aid == 'ifrs-full_EquityAttributableToOwnersOfParent' or anm in ('지배기업의소유주에게귀속되는자본', '지배기업소유주지분', '지배기업소유주에게귀속되는자본'))
+                    if isop or iseq:
+                        rows.append(dict(stock_code=code, corp_code=corp, bsns_year=y, fs_div=fs, kind='op' if isop else 'eq', account_id=aid, account_nm=it.get('account_nm'), thstrm_amount=it.get('thstrm_amount'), frmtrm_amount=it.get('frmtrm_amount')))
+                got = True
+                break
+            if not got:
+                log('  DART 채우기: 자료 없음', code, y)
+        if 'alot' in need:
+            try:
+                js = requests.get('https://opendart.fss.or.kr/api/alotMatter.json', params={'crtfc_key': key, 'corp_code': corp, 'bsns_year': '2025', 'reprt_code': '11011'}, timeout=25).json()
+                for it in js.get('list', []) if js.get('status') == '000' else []:
+                    alot.append(dict(stock_code=code, se=it.get('se'), stock_knd=it.get('stock_knd'), thstrm=it.get('thstrm'), frmtrm=it.get('frmtrm')))
+                if js.get('status') != '000':
+                    log('  DART 배당: ', code, js.get('status'), js.get('message', '')[:40])
+            except Exception as e:
+                log('  DART 배당 실패', code, type(e).__name__)
+            time.sleep(0.25)
+    pd.DataFrame(rows).to_csv(out, index=False, compression='gzip')
+    pd.DataFrame(alot).to_csv(out2, index=False, compression='gzip')
+    log('DART 채우기 끝', len(want), '회사', len(rows), '행', '배당', len(alot), '행')
+
+
 if __name__ == '__main__':
     try:
         if 'krx' not in sys.argv[1:]:
             dart()
+            dart_fill()
             save_log()
         if 'dart' not in sys.argv[1:]:
             main()
