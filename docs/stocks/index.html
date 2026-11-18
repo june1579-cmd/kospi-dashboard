@@ -38,9 +38,8 @@
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
-html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 15px; line-height: 1.5; }
-.wrap { height: 100vh; height: 100dvh; padding: 10px 16px 8px; display: flex; flex-direction: column; gap: 8px; }
-.wrap > * { flex: 0 0 auto; }
+html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 15px; line-height: 1.5; }
+.wrap { max-width: 1600px; margin: 0 auto; padding: 12px 16px 32px; display: grid; gap: 10px; }
 .top { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; }
 .top h1 { margin-right: 4px; }
 h1 { margin: 0; font-size: 1.15rem; font-weight: 700; letter-spacing: -0.01em; text-wrap: balance; }
@@ -68,13 +67,10 @@ input[type=search] { width: 180px; }
 .lab { font-size: 0.78rem; color: var(--muted); }
 .count { font-size: 0.86rem; color: var(--muted); }
 .count b { color: var(--ink); font-variant-numeric: tabular-nums; }
-.tw { flex: 1 1 auto; min-height: 0; overflow: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+.tw { overflow-x: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
 table { border-collapse: separate; border-spacing: 0; font-size: 0.84rem; font-variant-numeric: tabular-nums; width: max-content; min-width: 100%; }
-th, td { padding: 5px 8px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
+th, td { padding: 7px 8px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
 thead th { position: sticky; top: 0; background: var(--panel); z-index: 2; color: var(--muted); font-weight: 500; font-size: 0.78rem; cursor: pointer; user-select: none; vertical-align: bottom; line-height: 1.3; }
-thead th.grp { cursor: default; text-align: center; font-size: 0.72rem; border-bottom: none; padding-bottom: 0; }
-thead tr:first-child th { height: 24px; }
-thead tr:nth-child(2) th { top: 24px; }
 thead th.sorted { color: var(--ink); font-weight: 700; }
 thead th .arr { font-size: 0.7rem; margin-left: 2px; }
 th.l, td.l { text-align: left; }
@@ -91,7 +87,13 @@ tbody tr:hover td { background: var(--hl); }
 .b.off { opacity: 0.18; }
 .up { color: var(--up); } .down { color: var(--down); }
 .na { color: var(--muted); }
-.gsep { border-left: 1px solid var(--line); }
+.cols { display: flex; flex-wrap: wrap; gap: 5px; }
+.cols .chip { font-size: 0.78rem; padding: 3px 9px; }
+.pager { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; justify-content: center; }
+.pager button { font: inherit; font-size: 0.84rem; min-width: 34px; padding: 5px 8px; border-radius: 6px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); cursor: pointer; font-variant-numeric: tabular-nums; }
+.pager button[aria-current="page"] { background: var(--accent); border-color: var(--accent); color: var(--panel); font-weight: 600; }
+.pager button:disabled { opacity: 0.35; cursor: default; }
+.pager .info { font-size: 0.8rem; color: var(--muted); margin: 0 6px; }
 #help { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 8px 14px; font-size: 0.84rem; max-height: 40vh; overflow: auto; }
 #help[hidden] { display: none; }
 #help ul { margin: 0; padding-left: 18px; }
@@ -100,7 +102,7 @@ tbody tr:hover td { background: var(--hl); }
 @media (max-width: 520px) {
   html, body { font-size: 14px; }
   input[type=search] { width: 100%; }
-  .wrap { padding: 8px 10px 6px; gap: 6px; }
+  .wrap { padding: 10px 10px 24px; gap: 8px; }
   .sub { display: none; }
   .row > label { flex: 1 1 45%; }
   .row > label select { width: 100%; }
@@ -120,6 +122,7 @@ tbody tr:hover td { background: var(--hl); }
       <button class="tile" type="button" data-preset="multi"><b id="t-multi">—</b><span>겹침</span></button>
     </div>
   </div>
+  <p class="sub">세 명단을 합친 <b id="nAll">—</b>종목, 11/16 KRX 종가 기준. 칸 제목을 누르면 정렬, 종목 이름을 누르면 다음 금융 종목 화면이 열립니다.</p>
   <div class="bar">
     <div class="count" id="count" aria-live="polite">—</div>
     <div class="row">
@@ -127,7 +130,6 @@ tbody tr:hover td { background: var(--hl); }
       <button type="button" class="btn" id="tg-help" aria-expanded="false" aria-controls="help">설명</button>
     </div>
   </div>
-  <p class="sub" id="nAllP">세 명단을 합친 <b id="nAll">—</b>종목, 11/16 KRX 종가 기준. 칸 제목을 누르면 정렬, 종목 이름을 누르면 다음 금융 종목 화면이 열립니다.</p>
   <section class="controls" id="ctl" aria-label="조건">
     <div class="row">
       <span class="lab">명단</span>
@@ -144,14 +146,12 @@ tbody tr:hover td { background: var(--hl); }
       <label for="dir">순서<select id="dir"><option value="good">좋은 쪽부터</option><option value="desc">큰 값부터</option><option value="asc">작은 값부터</option></select></label>
       <button type="button" class="btn" id="reset">처음 상태로</button>
     </div>
-    <div class="row" role="group" aria-label="보이는 칸">
-      <span class="lab">보이는 칸</span>
-      <button type="button" class="chip" data-grp="lists" aria-pressed="true">명단 순위·점수</button>
-      <button type="button" class="chip" data-grp="risk" aria-pressed="true">안정 지표</button>
-      <button type="button" class="chip" data-grp="value" aria-pressed="true">가치·실적</button>
-      <button type="button" class="chip" data-grp="ret" aria-pressed="true">수익률</button>
-      <button type="button" class="chip" data-grp="own" aria-pressed="true">보유·공매도·규모</button>
+    <div class="row">
+      <span class="lab">보이는 칸(눌러서 켜고 끄기)</span>
+      <button type="button" class="btn" id="cols-all">모두 켜기</button>
+      <button type="button" class="btn" id="cols-none">모두 끄기</button>
     </div>
+    <div class="cols" id="cols" role="group" aria-label="보이는 칸"></div>
   </section>
 
   <div id="help" hidden>
@@ -165,12 +165,14 @@ tbody tr:hover td { background: var(--hl); }
       <li>'좋은 쪽부터' 정렬은 순위는 작은 값, 점수·덜 빠짐·배당·수익률은 큰 값, 변동성·베타·PBR·공매도는 작은 값부터 놓습니다. 빈 값(—)은 항상 맨 아래로 갑니다.</li>
     </ul>
   </div>
+  <nav class="pager" id="pager-top" aria-label="쪽 이동"></nav>
   <div class="tw" id="tw">
     <table id="tbl">
       <thead id="thead"></thead>
       <tbody id="tbody"></tbody>
     </table>
   </div>
+  <nav class="pager" id="pager-bot" aria-label="쪽 이동"></nav>
 
   <p class="foot">자료: KRX 정보데이터시스템(pykrx), OpenDART · 종목 화면: 다음 금융 · 관찰용 명단, 투자 권유 아님</p>
 </div>
@@ -179,6 +181,8 @@ tbody tr:hover td { background: var(--hl); }
 (() => {
   // 칸 정의: key, 제목, 묶음, 형식, 좋은 방향(1=클수록, -1=작을수록)
   const COLS = [
+    { k: 'lists_badge', t: '명단', f: 'badge', nosort: true },
+    { k: 'sector', t: '업종', f: 'text', good: -1, text: true },
     { k: 'n_lists', t: '겹침', g: 'base', f: 'int', good: 1 },
     { k: 'st_rank', t: '안정\n순위', g: 'lists', f: 'int', good: -1, grpStart: 'lists' },
     { k: 'st_score', t: '안정\n점수', g: 'lists', f: 'f1', good: 1 },
@@ -214,22 +218,23 @@ tbody tr:hover td { background: var(--hl); }
     { k: 'close', t: '종가\n(원)', g: 'own', f: 'int', good: 1 },
     { k: 'mcap', t: '시총\n(억 원)', g: 'own', f: 'int', good: 1 },
   ];
-  const GRP = { lists: '명단 순위·점수', risk: '안정 지표', value: '가치·실적', ret: '수익률', own: '보유·공매도·규모' };
-  const DEF = { lists: { st: true, sc: true, d1: true }, multi: false, q: '', mkt: '', sec: '', sort: 'n_lists', dir: 'good', groups: { lists: true, risk: true, value: true, ret: true, own: true } };
+  const PAGE = 20;
+  const DEF = { lists: { st: true, sc: true, d1: true }, multi: false, q: '', mkt: '', sec: '', sort: 'n_lists', dir: 'good', hide: [], page: 1 };
   let S = JSON.parse(JSON.stringify(DEF));
-  try { const s = JSON.parse(localStorage.getItem('stocks-view') || 'null'); if (s && s.lists) S = Object.assign(S, s); } catch (e) {}
+  try { const s = JSON.parse(localStorage.getItem('stocks-view') || 'null'); if (s && s.lists) { S = Object.assign(S, s); if (!Array.isArray(S.hide)) S.hide = []; delete S.groups; S.page = 1; } } catch (e) {}
   let DATA = [];
   const $ = (id) => document.getElementById(id);
   const num = (v) => (v === null || v === undefined || v === '' || Number.isNaN(Number(v))) ? null : Number(v);
   const fmt = {
     int: (v) => Math.round(v).toLocaleString('ko-KR'),
-    f1: (v) => v.toFixed(1), f2: (v) => v.toFixed(2),
+    text: (v) => String(v), f1: (v) => v.toFixed(1), f2: (v) => v.toFixed(2),
     s1: (v) => (v > 0 ? '+' : '') + v.toFixed(1), s2: (v) => (v > 0 ? '+' : '') + v.toFixed(2),
   };
   const save = () => { try { localStorage.setItem('stocks-view', JSON.stringify(S)); } catch (e) {} };
   const colOf = (k) => COLS.find((c) => c.k === k);
 
   function sortValue(r, c) {
+    if (c.text) return r[c.k] ? r[c.k] : null;
     let v = num(r[c.k]);
     if (v === null) return null;
     if (c.posOnly && v <= 0) return null;
@@ -248,73 +253,98 @@ tbody tr:hover td { background: var(--hl); }
       const va = sortValue(a, c), vb = sortValue(b, c);
       if (va === null && vb === null) return (num(a.st_rank) ?? 999) - (num(b.st_rank) ?? 999);
       if (va === null) return 1; if (vb === null) return -1;
-      if (va !== vb) return (va - vb) * sign;
+      if (va !== vb) return (typeof va === 'string' ? va.localeCompare(vb, 'ko') : (va - vb)) * sign;
       // 같으면 겹침 많은 순, 안정 순위 순
       return (b.n_lists - a.n_lists) || ((num(a.st_rank) ?? 999) - (num(b.st_rank) ?? 999));
     });
     return out;
   }
-  const visible = () => COLS.filter((c) => c.g === 'base' || S.groups[c.g]);
+  const visible = () => COLS.filter((c) => !S.hide.includes(c.k));
 
   function renderHead() {
     const vc = visible();
-    const tr1 = document.createElement('tr'), tr2 = document.createElement('tr');
-    const fixed = [['#', 'l'], ['종목', 'l stick'], ['명단', 'l'], ['업종', 'l']];
-    fixed.forEach(([t, cl]) => { const th = document.createElement('th'); th.className = 'grp ' + cl; tr1.append(th); });
-    let cur = null, span = null;
-    vc.forEach((c) => {
-      const key = c.g === 'base' ? 'base' : c.g;
-      if (key !== cur) { span = document.createElement('th'); span.className = 'grp' + (key !== 'base' ? ' gsep' : ''); span.colSpan = 1; span.textContent = GRP[key] || ''; tr1.append(span); cur = key; }
-      else span.colSpan += 1;
-    });
-    fixed.forEach(([t, cl], i) => {
-      const th = document.createElement('th'); th.className = cl; th.textContent = t;
-      if (i === 1) { th.tabIndex = 0; th.dataset.k = 'name'; }
-      tr2.append(th);
-    });
+    const tr = document.createElement('tr');
+    const th0 = document.createElement('th'); th0.className = 'l'; th0.textContent = '#'; tr.append(th0);
+    const thn = document.createElement('th'); thn.className = 'l stick'; thn.textContent = '종목'; tr.append(thn);
     vc.forEach((c) => {
       const th = document.createElement('th');
-      th.dataset.k = c.k; th.tabIndex = 0; th.setAttribute('role', 'button');
-      if (c.grpStart && S.groups[c.g]) th.classList.add('gsep');
+      if (c.f === 'badge' || c.text) th.classList.add('l');
       c.t.split('\n').forEach((ln, i) => { if (i) th.append(document.createElement('br')); th.append(ln); });
-      if (S.sort === c.k) {
-        th.classList.add('sorted'); th.setAttribute('aria-sort', S.dir === 'asc' || (S.dir === 'good' && c.good < 0) ? 'ascending' : 'descending');
-        const a = document.createElement('span'); a.className = 'arr'; a.textContent = (S.dir === 'asc' || (S.dir === 'good' && c.good < 0)) ? '▲' : '▼'; th.append(a);
-      }
-      tr2.append(th);
+      if (!c.nosort) {
+        th.dataset.k = c.k; th.tabIndex = 0; th.setAttribute('role', 'button');
+        if (S.sort === c.k) {
+          const asc = S.dir === 'asc' || (S.dir === 'good' && c.good < 0);
+          th.classList.add('sorted'); th.setAttribute('aria-sort', asc ? 'ascending' : 'descending');
+          const a = document.createElement('span'); a.className = 'arr'; a.textContent = asc ? '▲' : '▼'; th.append(a);
+        }
+      } else th.style.cursor = 'default';
+      tr.append(th);
     });
-    $('thead').replaceChildren(tr1, tr2);
+    $('thead').replaceChildren(tr);
   }
-
+  function renderCols() {
+    const box = $('cols'); box.replaceChildren();
+    COLS.forEach((c) => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'chip';
+      b.textContent = c.t.replace(/\n/g, ' '); b.setAttribute('aria-pressed', String(!S.hide.includes(c.k)));
+      b.addEventListener('click', () => { S.hide = S.hide.includes(c.k) ? S.hide.filter((k) => k !== c.k) : S.hide.concat(c.k); render(); });
+      box.append(b);
+    });
+  }
+  function renderPager(total) {
+    const pages = Math.max(1, Math.ceil(total / PAGE));
+    if (S.page > pages) S.page = pages;
+    [$('pager-top'), $('pager-bot')].forEach((nav, idx) => {
+      nav.replaceChildren();
+      const mk = (label, p, opts = {}) => {
+        const b = document.createElement('button'); b.type = 'button'; b.textContent = label;
+        if (opts.aria) b.setAttribute('aria-label', opts.aria);
+        if (p === S.page && opts.num) b.setAttribute('aria-current', 'page');
+        if (opts.dis) b.disabled = true;
+        b.addEventListener('click', () => { S.page = p; renderBody(); save(); if (idx === 1) $('pager-top').scrollIntoView({ block: 'start' }); });
+        return b;
+      };
+      nav.append(mk('‹ 이전', S.page - 1, { dis: S.page <= 1, aria: '이전 20종목' }));
+      let lo = Math.max(1, S.page - 3), hi = Math.min(pages, lo + 6); lo = Math.max(1, hi - 6);
+      if (lo > 1) { nav.append(mk('1', 1, { num: true })); if (lo > 2) { const sp = document.createElement('span'); sp.className = 'info'; sp.textContent = '…'; nav.append(sp); } }
+      for (let p = lo; p <= hi; p++) nav.append(mk(String(p), p, { num: true, aria: p + '쪽' }));
+      if (hi < pages) { if (hi < pages - 1) { const sp = document.createElement('span'); sp.className = 'info'; sp.textContent = '…'; nav.append(sp); } nav.append(mk(String(pages), pages, { num: true })); }
+      nav.append(mk('다음 ›', S.page + 1, { dis: S.page >= pages, aria: '다음 20종목' }));
+      const info = document.createElement('span'); info.className = 'info';
+      info.textContent = total ? ((S.page - 1) * PAGE + 1) + '~' + Math.min(total, S.page * PAGE) + ' / ' + total : '0종목';
+      nav.append(info);
+    });
+  }
   function badge(on, cls, t, rank) {
     const s = document.createElement('span'); s.className = 'b ' + cls + (on ? '' : ' off');
     s.textContent = t; s.title = on ? t + ' ' + rank + '위' : t + ' 명단 밖';
     return s;
   }
   function renderBody() {
-    const list = rows(), vc = visible();
+    const all = rows(), vc = visible();
+    renderPager(all.length);
+    const off = (S.page - 1) * PAGE, list = all.slice(off, off + PAGE);
     const frag = document.createDocumentFragment();
     list.forEach((r, i) => {
       const tr = document.createElement('tr');
-      const td0 = document.createElement('td'); td0.className = 'l na'; td0.textContent = i + 1; tr.append(td0);
+      const td0 = document.createElement('td'); td0.className = 'l na'; td0.textContent = off + i + 1; tr.append(td0);
       const tdn = document.createElement('td'); tdn.className = 'l name stick';
       const a = document.createElement('a'); a.href = 'https://finance.daum.net/domestic/stocks/' + r.code; a.target = '_blank'; a.rel = 'noopener'; a.textContent = r.name;
       a.title = r.name + ' 다음 금융 종목 화면 열기';
       const sm = document.createElement('small'); sm.textContent = r.code + ' · ' + r.market;
       tdn.append(a, sm); tr.append(tdn);
-      const tdb = document.createElement('td'); tdb.className = 'l';
-      const bw = document.createElement('span'); bw.className = 'badges';
-      bw.append(badge(r.in_st, 'st', '안정', fmt.int(r.st_rank || 0)), badge(r.in_sc, 'sc', '점수', fmt.int(r.sc_rank || 0)), badge(r.in_d1, 'd1', '방어1', fmt.int(r.d1_rank || 0)));
-      tdb.append(bw); tr.append(tdb);
-      const tds = document.createElement('td'); tds.className = 'l'; tds.textContent = r.sector || '—'; tr.append(tds);
       vc.forEach((c) => {
         const td = document.createElement('td');
-        if (c.grpStart) td.classList.add('gsep');
-        const v = num(r[c.k]);
-        if (v === null) { td.textContent = '—'; td.classList.add('na'); }
+        if (c.f === 'badge') {
+          td.className = 'l';
+          const bw = document.createElement('span'); bw.className = 'badges';
+          bw.append(badge(r.in_st, 'st', '안정', fmt.int(r.st_rank || 0)), badge(r.in_sc, 'sc', '점수', fmt.int(r.sc_rank || 0)), badge(r.in_d1, 'd1', '방어1', fmt.int(r.d1_rank || 0)));
+          td.append(bw);
+        } else if (c.text) { td.className = 'l'; td.textContent = r[c.k] || '—'; }
         else {
-          td.textContent = fmt[c.f](v);
-          if (c.color) td.classList.add(v > 0 ? 'up' : v < 0 ? 'down' : 'na');
+          const v = num(r[c.k]);
+          if (v === null) { td.textContent = '—'; td.classList.add('na'); }
+          else { td.textContent = fmt[c.f](v); if (c.color) td.classList.add(v > 0 ? 'up' : v < 0 ? 'down' : 'na'); }
         }
         tr.append(td);
       });
@@ -322,28 +352,28 @@ tbody tr:hover td { background: var(--hl); }
     });
     $('tbody').replaceChildren(frag);
     const c = colOf(S.sort);
-    $('count').innerHTML = '';
-    const b = document.createElement('b'); b.textContent = list.length;
-    $('count').append(b, '종목 · 정렬: ' + (c ? c.t.replace('\n', ' ') : '') + ' (' + ({ good: '좋은 쪽부터', desc: '큰 값부터', asc: '작은 값부터' })[S.dir] + ')');
+    $('count').replaceChildren();
+    const b = document.createElement('b'); b.textContent = all.length;
+    $('count').append(b, '종목 · 정렬: ' + (c ? c.t.replace(/\n/g, ' ') : '') + ' (' + ({ good: '좋은 쪽부터', desc: '큰 값부터', asc: '작은 값부터' })[S.dir] + ') · 한 쪽에 20종목');
   }
   function syncControls() {
     ['st', 'sc', 'd1'].forEach((k) => $('f-' + k).setAttribute('aria-pressed', String(!!S.lists[k])));
     $('f-multi').setAttribute('aria-pressed', String(!!S.multi));
     $('q').value = S.q; $('mkt').value = S.mkt; $('sec').value = S.sec; $('sort').value = S.sort; $('dir').value = S.dir;
-    document.querySelectorAll('[data-grp]').forEach((b) => b.setAttribute('aria-pressed', String(!!S.groups[b.dataset.grp])));
     const preset = S.multi && S.lists.st && S.lists.sc && S.lists.d1 ? 'multi' : (S.lists.st && S.lists.sc && S.lists.d1 && !S.multi) ? 'all' : (!S.multi && ['st', 'sc', 'd1'].filter((k) => S.lists[k]).length === 1) ? ['st', 'sc', 'd1'].find((k) => S.lists[k]) : '';
     document.querySelectorAll('.tile').forEach((t) => t.classList.toggle('on', t.dataset.preset === preset));
   }
-  function render() { syncControls(); renderHead(); renderBody(); save(); }
+  function render() { syncControls(); renderCols(); renderHead(); renderBody(); save(); }
+  const refilter = () => { S.page = 1; render(); };
 
   function wire() {
-    ['st', 'sc', 'd1'].forEach((k) => $('f-' + k).addEventListener('click', () => { S.lists[k] = !S.lists[k]; if (!S.lists.st && !S.lists.sc && !S.lists.d1) S.lists[k] = true; render(); }));
-    $('f-multi').addEventListener('click', () => { S.multi = !S.multi; render(); });
-    $('q').addEventListener('input', (e) => { S.q = e.target.value; renderBody(); save(); });
-    $('mkt').addEventListener('change', (e) => { S.mkt = e.target.value; render(); });
-    $('sec').addEventListener('change', (e) => { S.sec = e.target.value; render(); });
-    $('sort').addEventListener('change', (e) => { S.sort = e.target.value; S.dir = 'good'; render(); });
-    $('dir').addEventListener('change', (e) => { S.dir = e.target.value; render(); });
+    ['st', 'sc', 'd1'].forEach((k) => $('f-' + k).addEventListener('click', () => { S.lists[k] = !S.lists[k]; if (!S.lists.st && !S.lists.sc && !S.lists.d1) S.lists[k] = true; refilter(); }));
+    $('f-multi').addEventListener('click', () => { S.multi = !S.multi; refilter(); });
+    $('q').addEventListener('input', (e) => { S.q = e.target.value; S.page = 1; renderBody(); save(); });
+    $('mkt').addEventListener('change', (e) => { S.mkt = e.target.value; refilter(); });
+    $('sec').addEventListener('change', (e) => { S.sec = e.target.value; refilter(); });
+    $('sort').addEventListener('change', (e) => { S.sort = e.target.value; S.dir = 'good'; refilter(); });
+    $('dir').addEventListener('change', (e) => { S.dir = e.target.value; refilter(); });
     const setCtl = (open) => { $('ctl').hidden = !open; $('tg-ctl').setAttribute('aria-expanded', String(open)); $('tg-ctl').textContent = open ? '조건 접기' : '조건 펼치기'; };
     let ctlOpen = window.matchMedia ? window.matchMedia('(min-width: 700px)').matches : (window.innerWidth >= 700);
     try { const v = localStorage.getItem('stocks-ctl'); if (v !== null) ctlOpen = v === '1'; } catch (e) {}
@@ -351,20 +381,21 @@ tbody tr:hover td { background: var(--hl); }
     $('tg-ctl').addEventListener('click', () => { ctlOpen = !ctlOpen; setCtl(ctlOpen); try { localStorage.setItem('stocks-ctl', ctlOpen ? '1' : '0'); } catch (e) {} });
     $('tg-help').addEventListener('click', () => { const h = $('help'); h.hidden = !h.hidden; $('tg-help').setAttribute('aria-expanded', String(!h.hidden)); });
     $('reset').addEventListener('click', () => { S = JSON.parse(JSON.stringify(DEF)); render(); });
-    document.querySelectorAll('[data-grp]').forEach((b) => b.addEventListener('click', () => { S.groups[b.dataset.grp] = !S.groups[b.dataset.grp]; render(); }));
+    $('cols-all').addEventListener('click', () => { S.hide = []; render(); });
+    $('cols-none').addEventListener('click', () => { S.hide = COLS.map((c) => c.k); render(); });
     document.querySelectorAll('.tile').forEach((t) => t.addEventListener('click', () => {
       const p = t.dataset.preset;
       if (p === 'all') { S.lists = { st: true, sc: true, d1: true }; S.multi = false; S.sort = 'n_lists'; }
       else if (p === 'multi') { S.lists = { st: true, sc: true, d1: true }; S.multi = true; S.sort = 'n_lists'; }
       else { S.lists = { st: p === 'st', sc: p === 'sc', d1: p === 'd1' }; S.multi = false; S.sort = p + '_rank'; }
-      S.dir = 'good'; render();
+      S.dir = 'good'; refilter();
     }));
     const headSort = (e) => {
       const th = e.target.closest('th[data-k]'); if (!th || th.dataset.k === 'name') return;
       const k = th.dataset.k;
       if (S.sort === k) { const c = colOf(k); const curAsc = S.dir === 'asc' || (S.dir === 'good' && c.good < 0); S.dir = curAsc ? 'desc' : 'asc'; }
       else { S.sort = k; S.dir = 'good'; }
-      render();
+      refilter();
     };
     $('thead').addEventListener('click', headSort);
     $('thead').addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); headSort(e); } });
@@ -380,7 +411,7 @@ tbody tr:hover td { background: var(--hl); }
     $('t-multi').textContent = d.filter((r) => r.n_lists >= 2).length;
     const secs = [...new Set(d.map((r) => r.sector).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'ko'));
     secs.forEach((s) => { const o = document.createElement('option'); o.value = s; o.textContent = s; $('sec').append(o); });
-    COLS.forEach((c) => { const o = document.createElement('option'); o.value = c.k; o.textContent = c.t.replace('\n', ' '); $('sort').append(o); });
+    COLS.filter((c) => !c.nosort).forEach((c) => { const o = document.createElement('option'); o.value = c.k; o.textContent = c.t.replace(/\n/g, ' '); $('sort').append(o); });
     if (!colOf(S.sort)) S.sort = DEF.sort;
     wire(); render();
   }
