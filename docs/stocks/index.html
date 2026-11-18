@@ -67,7 +67,7 @@ input[type=search] { width: 180px; }
 .lab { font-size: 0.78rem; color: var(--muted); }
 .count { font-size: 0.86rem; color: var(--muted); }
 .count b { color: var(--ink); font-variant-numeric: tabular-nums; }
-.tw { overflow-x: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+.tw { overflow: auto; overscroll-behavior: contain; max-height: 75vh; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
 table { border-collapse: separate; border-spacing: 0; font-size: 0.84rem; font-variant-numeric: tabular-nums; width: max-content; min-width: 100%; }
 th, td { padding: 7px 8px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
 thead th { position: sticky; top: 0; background: var(--panel); z-index: 2; color: var(--muted); font-weight: 500; font-size: 0.78rem; cursor: pointer; user-select: none; vertical-align: bottom; line-height: 1.3; }
@@ -165,14 +165,12 @@ tbody tr:hover td { background: var(--hl); }
       <li>'좋은 쪽부터' 정렬은 순위는 작은 값, 점수·덜 빠짐·배당·수익률은 큰 값, 변동성·베타·PBR·공매도는 작은 값부터 놓습니다. 빈 값(—)은 항상 맨 아래로 갑니다.</li>
     </ul>
   </div>
-  <nav class="pager" id="pager-top" aria-label="쪽 이동"></nav>
   <div class="tw" id="tw">
     <table id="tbl">
       <thead id="thead"></thead>
       <tbody id="tbody"></tbody>
     </table>
   </div>
-  <nav class="pager" id="pager-bot" aria-label="쪽 이동"></nav>
 
   <p class="foot">자료: KRX 정보데이터시스템(pykrx), OpenDART · 종목 화면: 다음 금융 · 관찰용 명단, 투자 권유 아님</p>
 </div>
@@ -291,6 +289,14 @@ tbody tr:hover td { background: var(--hl); }
       box.append(b);
     });
   }
+  // 표 상자 높이: 제목 줄 + 종목 20줄이 보이게(표 안 스크롤), 페이지도 따로 스크롤
+  function fitBox() {
+    const tw = $('tw'), head = $('thead'), r = $('tbody').querySelector('tr');
+    if (!r) { tw.style.maxHeight = ''; return; }
+    const h = head.getBoundingClientRect().height + r.getBoundingClientRect().height * 20 + 2;
+    if (h > 40) tw.style.maxHeight = Math.min(h, window.innerHeight * 0.92) + 'px';
+  }
+  window.addEventListener('resize', () => fitBox());
   function renderPager(total) {
     const pages = Math.max(1, Math.ceil(total / PAGE));
     if (S.page > pages) S.page = pages;
@@ -322,8 +328,7 @@ tbody tr:hover td { background: var(--hl); }
   }
   function renderBody() {
     const all = rows(), vc = visible();
-    renderPager(all.length);
-    const off = (S.page - 1) * PAGE, list = all.slice(off, off + PAGE);
+    const off = 0, list = all;
     const frag = document.createDocumentFragment();
     list.forEach((r, i) => {
       const tr = document.createElement('tr');
@@ -351,10 +356,12 @@ tbody tr:hover td { background: var(--hl); }
       frag.append(tr);
     });
     $('tbody').replaceChildren(frag);
+    $('tw').scrollTop = 0;
     const c = colOf(S.sort);
     $('count').replaceChildren();
     const b = document.createElement('b'); b.textContent = all.length;
-    $('count').append(b, '종목 · 정렬: ' + (c ? c.t.replace(/\n/g, ' ') : '') + ' (' + ({ good: '좋은 쪽부터', desc: '큰 값부터', asc: '작은 값부터' })[S.dir] + ') · 한 쪽에 20종목');
+    $('count').append(b, '종목 · 정렬: ' + (c ? c.t.replace(/\n/g, ' ') : '') + ' (' + ({ good: '좋은 쪽부터', desc: '큰 값부터', asc: '작은 값부터' })[S.dir] + ') · 표 안에서 위아래로 스크롤');
+    fitBox();
   }
   function syncControls() {
     ['st', 'sc', 'd1'].forEach((k) => $('f-' + k).setAttribute('aria-pressed', String(!!S.lists[k])));
