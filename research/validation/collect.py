@@ -222,7 +222,7 @@ def dart():
     want = set(open(os.path.join(ROOT, 'dart_codes.txt')).read().split()) if os.path.exists(os.path.join(ROOT, 'dart_codes.txt')) else set(cp['stock_code'])
     codes = cp.loc[cp['stock_code'].isin(want), 'corp_code'].tolist()
     log('DART 대상 회사', len(codes))
-    t0 = time.time(); CAP = 45 * 60; BATCH = 20
+    t0 = time.time(); CAP = 100 * 60; BATCH = 20
     for y in (2016, 2019, 2022, 2025):
         yf = os.path.join(RAW, f'dart_op_{y}.csv.gz')
         if os.path.exists(yf):
