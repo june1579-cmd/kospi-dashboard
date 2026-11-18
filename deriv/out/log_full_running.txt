@@ -12,3 +12,5 @@
 [01:08:22] 저장 inv2_daily.csv 14882행
 [01:13:55] inv2 FUUSD ALL: 4655행
 [01:13:55] 저장 inv2_daily.csv 19537행
+[01:20:18] inv2 FUEQU ALL: 4572행
+[01:20:18] 저장 inv2_daily.csv.gz 24109행
