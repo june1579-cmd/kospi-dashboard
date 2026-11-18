@@ -68,21 +68,21 @@ input[type=search] { width: 180px; }
 .count { font-size: 0.86rem; color: var(--muted); }
 .count b { color: var(--ink); font-variant-numeric: tabular-nums; }
 .tw { overflow: auto; overscroll-behavior: contain; max-height: 75vh; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
-table { border-collapse: separate; border-spacing: 0; font-size: 0.84rem; font-variant-numeric: tabular-nums; width: max-content; min-width: 100%; }
-th, td { padding: 7px 8px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
-thead th { position: sticky; top: 0; background: var(--panel); z-index: 2; color: var(--muted); font-weight: 500; font-size: 0.78rem; cursor: pointer; user-select: none; vertical-align: bottom; line-height: 1.3; }
+table { border-collapse: separate; border-spacing: 0; font-size: 13px; font-variant-numeric: tabular-nums; width: 100%; }
+th, td { padding: 0.45em 0.4em; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
+thead th { position: sticky; top: 0; background: var(--panel); z-index: 2; color: var(--muted); font-weight: 500; font-size: 0.92em; cursor: pointer; user-select: none; vertical-align: bottom; line-height: 1.25; }
 thead th.sorted { color: var(--ink); font-weight: 700; }
 thead th .arr { font-size: 0.7rem; margin-left: 2px; }
 th.l, td.l { text-align: left; }
 .stick { position: sticky; left: 0; background: var(--panel); z-index: 1; }
 thead .stick { z-index: 3; }
-td.name { min-width: 128px; max-width: 168px; white-space: normal; }
+td.name { min-width: 7em; max-width: 9.5em; white-space: normal; line-height: 1.25; }
 td.name a { color: var(--ink); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--line); }
 td.name a:hover { color: var(--accent); border-bottom-color: var(--accent); }
-td.name small { display: block; color: var(--muted); font-weight: 400; font-size: 0.72rem; }
+td.name small { display: block; color: var(--muted); font-weight: 400; font-size: 0.82em; }
 tbody tr:hover td { background: var(--hl); }
-.badges { display: inline-flex; gap: 3px; }
-.b { display: inline-block; font-size: 0.68rem; font-weight: 600; padding: 1px 6px; border-radius: 4px; border: 1px solid currentColor; }
+.badges { display: inline-flex; gap: 2px; }
+.b { display: inline-block; font-size: 0.82em; font-weight: 600; padding: 0 0.3em; border-radius: 4px; border: 1px solid currentColor; }
 .b.st { color: var(--st); } .b.sc { color: var(--sc); } .b.d1 { color: var(--d1); }
 .b.off { opacity: 0.18; }
 .up { color: var(--up); } .down { color: var(--down); }
@@ -156,6 +156,7 @@ tbody tr:hover td { background: var(--hl); }
 
   <div id="help" hidden>
     <ul>
+      <li>명단 칸의 <b>안</b>=안정 관찰, <b>점</b>=점수 순위, <b>방</b>=방어 1번(흐린 글자는 그 명단 밖). 글자 위에 올리면 순위가 보입니다.</li>
       <li><b>안정 관찰</b>: 시총 1,000억 원 이상·거래가 너무 적지 않은 848종목을 1년 변동성 낮음, 2년 베타 낮음, 2018년 이후 코스피 급락 22번에서 같은 시장 보통 종목보다 덜 빠진 비율로 각각 백분위를 매겨 같은 비중으로 평균한 순위입니다.</li>
       <li><b>점수 순위</b>: 11/16 수급 가중 점수(0~100)와 위험·가치 체크리스트(베타 0.6 미만·배당 2% 이상·4년 흑자·PBR 1.2 미만, 개당 25점)를 반씩 섞은 종합 점수 순위입니다(대시보드 '현재 점수 순위' 기본값).</li>
       <li><b>방어 1번</b>: 11월 17일에 고정한 '방어종목 1번 결과물'(성장 종목 250개 중 방어 30·버틴 실적 20·성장 20·수급 15·공통점 15 비중의 종합 평가 1~100위)입니다.</li>
@@ -296,7 +297,14 @@ tbody tr:hover td { background: var(--hl); }
     const h = head.getBoundingClientRect().height + r.getBoundingClientRect().height * 20 + 2;
     if (h > 40) tw.style.maxHeight = Math.min(h, window.innerHeight * 0.92) + 'px';
   }
-  window.addEventListener('resize', () => fitBox());
+  // 글자 크기를 줄여 표 좌우가 한 화면에 들어오게(최소 8.5px, 그래도 넘치면 가로 스크롤)
+  function fitWidth() {
+    const tw = $('tw'), t = $('tbl');
+    let fs = 13; t.style.fontSize = fs + 'px';
+    if (!tw.clientWidth || !t.scrollWidth) return;
+    while (t.scrollWidth > tw.clientWidth + 1 && fs > 8.5) { fs -= 0.5; t.style.fontSize = fs + 'px'; }
+  }
+  let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { fitWidth(); fitBox(); }, 120); });
   function renderPager(total) {
     const pages = Math.max(1, Math.ceil(total / PAGE));
     if (S.page > pages) S.page = pages;
@@ -321,9 +329,9 @@ tbody tr:hover td { background: var(--hl); }
       nav.append(info);
     });
   }
-  function badge(on, cls, t, rank) {
+  function badge(on, cls, t, rank, full) {
     const s = document.createElement('span'); s.className = 'b ' + cls + (on ? '' : ' off');
-    s.textContent = t; s.title = on ? t + ' ' + rank + '위' : t + ' 명단 밖';
+    s.textContent = t; s.title = on ? full + ' ' + rank + '위' : full + ' 명단 밖';
     return s;
   }
   function renderBody() {
@@ -343,7 +351,7 @@ tbody tr:hover td { background: var(--hl); }
         if (c.f === 'badge') {
           td.className = 'l';
           const bw = document.createElement('span'); bw.className = 'badges';
-          bw.append(badge(r.in_st, 'st', '안정', fmt.int(r.st_rank || 0)), badge(r.in_sc, 'sc', '점수', fmt.int(r.sc_rank || 0)), badge(r.in_d1, 'd1', '방어1', fmt.int(r.d1_rank || 0)));
+          bw.append(badge(r.in_st, 'st', '안', fmt.int(r.st_rank || 0), '안정 관찰'), badge(r.in_sc, 'sc', '점', fmt.int(r.sc_rank || 0), '점수 순위'), badge(r.in_d1, 'd1', '방', fmt.int(r.d1_rank || 0), '방어 1번'));
           td.append(bw);
         } else if (c.text) { td.className = 'l'; td.textContent = r[c.k] || '—'; }
         else {
@@ -361,7 +369,7 @@ tbody tr:hover td { background: var(--hl); }
     $('count').replaceChildren();
     const b = document.createElement('b'); b.textContent = all.length;
     $('count').append(b, '종목 · 정렬: ' + (c ? c.t.replace(/\n/g, ' ') : '') + ' (' + ({ good: '좋은 쪽부터', desc: '큰 값부터', asc: '작은 값부터' })[S.dir] + ') · 표 안에서 위아래로 스크롤');
-    fitBox();
+    fitWidth(); fitBox();
   }
   function syncControls() {
     ['st', 'sc', 'd1'].forEach((k) => $('f-' + k).setAttribute('aria-pressed', String(!!S.lists[k])));
@@ -421,6 +429,7 @@ tbody tr:hover td { background: var(--hl); }
     COLS.filter((c) => !c.nosort).forEach((c) => { const o = document.createElement('option'); o.value = c.k; o.textContent = c.t.replace(/\n/g, ' '); $('sort').append(o); });
     if (!colOf(S.sort)) S.sort = DEF.sort;
     wire(); render();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { fitWidth(); fitBox(); });
   }
   fetch('stocks.json').then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(init).catch(() => {
     $('count').textContent = '자료 파일(stocks.json)을 불러오지 못했습니다. 페이지를 새로 고쳐 보세요.';
