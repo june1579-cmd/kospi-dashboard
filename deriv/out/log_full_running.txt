@@ -16,3 +16,5 @@
 [01:20:18] 저장 inv2_daily.csv.gz 24109행
 [01:21:44] inv2 OPEQU C: 3719행
 [01:21:45] 저장 inv2_daily.csv.gz 27828행
+[01:23:10] inv2 OPEQU P: 3389행
+[01:23:11] 저장 inv2_daily.csv.gz 31217행
