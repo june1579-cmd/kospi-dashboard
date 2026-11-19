@@ -12,6 +12,7 @@
   국면: 추세(60일선 위·아래)·외국인 20일 선물 누적(매수·매도 쪽)·변동성(3분위).
 후보(전체 기간 날짜, 판정은 A8): 우위 시작일 매수, 돌파 실패 매도, 닿고 밀림 매도, 돌파 뒤 외국인 이틀 연속 매도 확인 매도.
 라운드 4: 벽 이동(위로 물러남·아래로 내려옴)과 콜 무게중심 돌파를 신호로(양방향 사전 등록) — cause_wallmig_dev.csv.
+라운드 5: 대상 바꾸기 — 다음 큰 변동(±1·1.5σ, 20일 안) 방향, 콜 우위 압도 상태·오래된 벽·벽 이동·시작일 — cause_barrier_dev.csv.
 """
 import json
 import os
@@ -371,11 +372,14 @@ def main():
         nmtag = {'F0': '근월물', 'F1': '차월물', 'Q': '분기물', 'ANY': '근월·차월·분기물 중 하나'}[tag]
         for nm, ms_, lab in ((f'newnear_{tag}_{x}', msk, f'{nmtag} 새 콜벽이 고가 바로 위({x}% 안)에 생김'),
                              (f'newnear_fsell_{tag}_{x}', msk & (fs < 0), f'{nmtag} 새 콜벽이 고가 바로 위({x}%) + 외국인 선물 순매도')):
-            dts = td[ms_.values]
-            for m in (5, 10):
-                if tag == 'F0' and x == 1.5:
-                    add(f'A3c_{nm}_m{m}', f'{lab} → {m}일 하락', -1, 'newwall', dts, m)
-                add(f'A3c_{nm}_up_m{m}', f'{lab} → {m}일 상승', 1, 'newwall_up', dts, m)
+            # 라운드 5: 이 신호 가족은 라운드 3 잠금 구간에서 탈락 — 고정 규칙(같은 신호·변형 재시험 금지)과 잠금 열람 낭비를 막으려고
+            #          후보로는 더 만들지 않고 아래 서술 표만 남긴다.
+            if cfg.get('newwall_candidates', False):
+                dts = td[ms_.values]
+                for m in (5, 10):
+                    if tag == 'F0' and x == 1.5:
+                        add(f'A3c_{nm}_m{m}', f'{lab} → {m}일 하락', -1, 'newwall', dts, m)
+                    add(f'A3c_{nm}_up_m{m}', f'{lab} → {m}일 상승', 1, 'newwall_up', dts, m)
             idx = np.where(ms_.values & dev)[0]; idx = idx[idx + 10 <= last_dev]
             v10 = fwd[10][idx]; v5 = fwd[5][idx]; fl = post5_for[idx]
             OLD.append({'벽': '오늘 새로 생긴 벽', '사건': lab, '날수(개발)': int(len(idx)), '5일 하락%': pct(v5[np.isfinite(v5)] < 0), '10일 하락%': pct(v10[np.isfinite(v10)] < 0),
@@ -423,6 +427,65 @@ def main():
                         '같은 20일 상승 뒤 10일 상승%': round(float(np.mean([up20[b] for b, rr in zip(b20[idx], r20[idx]) if np.isfinite(rr) and b in up20])) * 100, 1) if len(idx) else np.nan,
                         '뒤 5일 외국인 순매도%': pct(fl[np.isfinite(fl)] < 0), '10일 평균 수익%': round(float(np.nanmean(v10)), 2) if len(idx) else np.nan})
     MIG = pd.DataFrame(MIG); MIG.to_csv(os.path.join(od, 'cause_wallmig_dev.csv'), index=False, encoding='utf-8')
+    # 5e) 라운드 5 — 대상 바꾸기: 고정 h일 수익 대신 '다음 큰 변동의 방향'(급등·급락 먼저 오는 쪽).
+    #     진입(다음 날 시가) 뒤 20거래일 안에 종가가 ±kσ(신호일 20일 변동성 × √10, k = 1.0·1.5)를 처음 넘는 날 청산, 못 넘으면 20일째 청산.
+    #     사건: 콜 우위 압도 상태 시작일(집중·1위/2위·콜/풋 상위25% + 벽 1σ 안), 오래된 벽 돌파·닿고 밀림, 벽 이동, 우위 시작일.
+    #     방향은 양쪽 다 미리 등록. 기준선 = 개발 구간 아무 날의 '위로 먼저 넘음' 비율.
+    BAR = []
+    sd = sig / np.sqrt(250)
+
+    def barrier_exit(i, k, H=20):
+        """신호일 i → (청산일 위치, +1 위로 먼저 / −1 아래로 먼저 / 0 못 넘음)."""
+        e0 = i + 1
+        if e0 >= n_td or not np.isfinite(sd[i]) or sd[i] <= 0: return None, None
+        band = k * sd[i] * np.sqrt(10); lo_ = np.log(o[e0])
+        for j in range(e0, min(n_td, e0 + H)):
+            x = lc[j] - lo_
+            if x >= band: return j, 1
+            if x <= -band: return j, -1
+        j = e0 + H - 1
+        return (j, 0) if j < n_td else (None, None)
+    base_bar = {}
+    for k in (1.0, 1.5):
+        rr = [barrier_exit(i, k)[1] for i in np.where(dev)[0] if i + 21 <= last_dev]
+        rr = np.array([x for x in rr if x is not None])
+        base_bar[k] = (float(np.mean(rr == 1)), float(np.mean(rr == -1)))
+
+    def first_of_run(m):
+        m = m.fillna(False).astype(bool); return m & ~m.shift(1, fill_value=False)
+    W0 = {t: W[W['tag'] == t].drop_duplicates('date').set_index('date').reindex(td) for t in ('F0', 'Q')}
+    bev = {}
+    for t in ('F0', 'Q'):
+        x = W0[t]; q = qd[t]; near1 = (x['dist_sig'] > 0) & (x['dist_sig'] <= 1)
+        nm = {'F0': '근월물', 'Q': '분기물'}[t]
+        bev[f'dom_share_{t}'] = (f'{nm} 콜 집중 상위25% + 벽 1σ 안(시작일)', first_of_run((x['share'] >= q['share']) & near1))
+        bev[f'dom_r12_{t}'] = (f'{nm} 콜 1위/2위 상위25% + 벽 1σ 안(시작일)', first_of_run((x['ratio12'] >= q['ratio12']) & near1))
+        bev[f'dom_cp_{t}'] = (f'{nm} 콜/풋 상위25% + 벽 1σ 안(시작일)', first_of_run((x['otm_cp'] >= q['otm_cp']) & near1))
+        bev[f'onset_{t}'] = (f'{nm} 콜 집중 시작일', pd.Series(td.isin(pd.DatetimeIndex(ONd[ONd['tag'] == t]['onset'])), index=td))
+    Ko20 = F0K.shift(20); cp1 = k2['close'].shift(1)
+    bev['old20_cross'] = ('근월물 20일 전 벽 종가 돌파', ((k2['close'] >= Ko20) & (cp1 < Ko20.shift(1))).fillna(False))
+    nr = ((k2['high'] >= Ko20 * 0.99) & (k2['close'] < Ko20)).fillna(False)
+    bev['old20_near'] = ('근월물 20일 전 벽 1% 안 닿고 종가는 아래', nr & ~nr.shift(1, fill_value=False))
+    bev['mig_up2_ANY'] = ('콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물)', mig_masks[('ANY', 'up2')])
+    bev['mig_dn2_ANY'] = ('콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물)', mig_masks[('ANY', 'dn2')])
+    for key, (lab0, msk) in bev.items():
+        msk = pd.Series(np.asarray(msk, dtype=bool), index=td)
+        for cond, ms_, lab in (('', msk, lab0), ('_fsell', msk & (fs < 0).values, f'{lab0} + 외국인 선물 순매도')):
+            idx_all = np.where(ms_.values)[0]
+            for k in (1.0, 1.5):
+                ex = [barrier_exit(i, k) for i in idx_all]
+                sig_d = [td[i] for i, (j, _) in zip(idx_all, ex) if j is not None]
+                ex_d = [td[j] for (j, _) in ex if j is not None]
+                if len(sig_d) >= 10:
+                    tt = pd.DataFrame({'signal': sig_d, 'exit': ex_d}).sort_values('signal').reset_index(drop=True)
+                    for dr, dn in ((1, '급등(위로 먼저)'), (-1, '급락(아래로 먼저)')):
+                        cands.append({'id': f'A3c_bar_{key}{cond}_k{k}_{"up" if dr > 0 else "dn"}', 'agent': 'A3', 'family': f'barrier_{key}',
+                                      'desc': f'{lab} → 20일 안 ±{k}σ 중 {dn}', 'direction': dr, 'trades': tt})
+                dv = [(i, r_) for i, (j, r_) in zip(idx_all, ex) if j is not None and dev[i] and i + 21 <= last_dev]
+                rr = np.array([r_ for _, r_ in dv]) if dv else np.array([])
+                BAR.append({'사건': lab, 'k(σ)': k, '날수(개발)': len(rr), '위로 먼저%': pct(rr == 1) if len(rr) else np.nan, '아래로 먼저%': pct(rr == -1) if len(rr) else np.nan,
+                            '못 넘음%': pct(rr == 0) if len(rr) else np.nan, '기준 위로 먼저%': round(base_bar[k][0] * 100, 1), '기준 아래로 먼저%': round(base_bar[k][1] * 100, 1)})
+    BAR = pd.DataFrame(BAR); BAR.to_csv(os.path.join(od, 'cause_barrier_dev.csv'), index=False, encoding='utf-8')
     OLD = pd.DataFrame(OLD); OLD.to_csv(os.path.join(od, 'cause_oldwall_dev.csv'), index=False, encoding='utf-8')
     L.save_candidates('a03c', cands)
 
@@ -439,7 +502,7 @@ def main():
             'migration': mig.reset_index().to_dict('records') if len(mig) else [],
             'cycles_wall_moved_up%': pct(CY['위로'] > 0) if len(CY) else None,
             'cycles_exp_above_first_wall%': pct(CY['만기 종가 ≥ 처음 벽']) if len(CY) else None,
-            'onset': OS.to_dict('records'), 'hindsight': hind, 'oldwall': OLD.to_dict('records'), 'wallmig': MIG.to_dict('records'), 'candidates': len(cands)}
+            'onset': OS.to_dict('records'), 'hindsight': hind, 'oldwall': OLD.to_dict('records'), 'wallmig': MIG.to_dict('records'), 'barrier': BAR.to_dict('records'), 'candidates': len(cands)}
     json.dump(summ, open(os.path.join(od, 'cause_summary.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1, default=str)
     print(json.dumps(summ, ensure_ascii=False, default=str)[:3000])
 
