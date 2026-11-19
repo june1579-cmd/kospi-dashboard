@@ -54,13 +54,15 @@ def main():
     # 3) 조합 규칙 묶음 신호의 실현 확률(해마다 시험 결과를 모음)
     rows = []
     for (inst, h, ty, side), g in ens.groupby(['대상', 'h', '종류', '쪽']):
-        if '적중' not in g: continue
-        if '적중합' in g:   # 시간봉
+        g = g.copy()
+        hourly = '적중합' in g and g['적중합'].notna().any()
+        g['n_'] = g['신호봉'] if hourly else g['신호일']
+        if hourly:
             hit = g['적중합'].sum(); n = g['신호봉'].sum(); base = g['기본합'].sum() / g['시험봉'].sum()
         else:
-            n = g['신호일'].sum(); hit = (g['적중'] * g['신호일']).sum(); base = (g['기본'] * g['시험일']).sum() / g['시험일'].sum()
+            n = g['신호일'].sum(); hit = (g['적중'].fillna(0) * g['신호일']).sum(); base = (g['기본'] * g['시험일']).sum() / g['시험일'].sum()
         p = hit / n if n else np.nan
-        gg = g[g.get('신호일', g.get('신호봉')) > 0]
+        gg = g[g['n_'] > 0]
         better = int(((gg['적중'] > gg['기본']) if side == '높임' else (gg['적중'] < gg['기본'])).sum())
         r = {'대상': inst, 'h': h, '종류': ty, '종류명': TYPE_KO.get(ty, ty), '쪽': side, '신호수': int(n), '실현확률': p, '기본확률': base,
              '차이%p': (p - base) * 100 if pd.notna(p) else np.nan, '신호있는해': len(gg), '맞는쪽해': better}
