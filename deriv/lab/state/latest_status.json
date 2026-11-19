@@ -1,11 +1,11 @@
 {
- "round": 3,
- "candidates": 436,
+ "round": 4,
+ "candidates": 580,
  "dev_pass": 1,
  "hold_pass": 0,
  "final_pass": 0,
- "trials_total": 1224,
- "holdout_peeks": 1,
+ "trials_total": 1804,
+ "holdout_peeks": 2,
  "best": [
   {
    "id": "A3c_newnear_fsell_ANY_1.5_up_m10",
@@ -49,5 +49,5 @@
   }
  ],
  "goal_reached": false,
- "note": "개선: 새 콜벽이 고가 바로 위에 생기는 신호를 근월·차월·분기물·합집합과 거리 1~2%로 넓혀 표본을 늘리고, 비슷하게 오른 뒤(5·20일 상승 맞춤) 기준선과 비교해 단순 추세와 다른지 확인, 새 벽 지표를 조합·기계학습(A6·A7)에도 넣음"
+ "note": "원인(벽은 다가가면 위로 도망가고 끌어당김이 없음)에 맞춰 벽 이동 자체(위로 물러남·아래로 내려옴)와 콜 무게중심 돌파를 새 지표·새 후보로 시험하고, 비슷하게 오른 뒤 기준선과 비교하며 조합·기계학습에도 넣음"
 }
