@@ -1,0 +1,799 @@
+{
+ "data_last": {
+  "kospi": "2026-11-19",
+  "credit": "2026-11-18",
+  "liq": "2026-11-18"
+ },
+ "last_close": 5137.89,
+ "winner": "prevlow|N60|d1",
+ "winner_row": {
+  "후보": "prevlow|N60|d1",
+  "가족": "prevlow",
+  "개발_days": 179,
+  "개발_eps": 49,
+  "개발_cr3_mean": -2.2566339714295482,
+  "개발_P_c": 0.43575418994413406,
+  "개발_R_c": 0.5379310344827586,
+  "개발_F1_c": 0.48148148148148145,
+  "개발_P_c3": 0.31843575418994413,
+  "개발_R_c3": 0.7037037037037037,
+  "개발_F1_c3": 0.4384615384615385,
+  "개발_P_m": 0.49162011173184356,
+  "개발_R_m": 0.1825726141078838,
+  "개발_F1_m": 0.26626323751891073,
+  "확인_days": 47,
+  "확인_eps": 14,
+  "확인_cr3_mean": -3.856232088482269,
+  "확인_P_c": 0.7021276595744681,
+  "확인_R_c": 0.39759036144578314,
+  "확인_F1_c": 0.5076923076923077,
+  "확인_P_c3": 0.46808510638297873,
+  "확인_R_c3": 0.46808510638297873,
+  "확인_F1_c3": 0.46808510638297873,
+  "확인_P_m": 0.425531914893617,
+  "확인_R_m": 0.0784313725490196,
+  "확인_F1_m": 0.13245033112582782,
+  "신용F1순위": 2.0,
+  "미수F1순위": 22.0,
+  "점수": 12.0
+ },
+ "rule": "개발 2016~2022, 이탈 15일·8구간 이상, 신용 F1 순위와 미수 F1 순위 평균 1등(같으면 신용 F1 높은 쪽)",
+ "targets": {
+  "credit": "신용잔고 3일 변화 ≤ -2.0%",
+  "credit_severe": "≤ -3.0%",
+  "misu": "t+1~t+3 미수 반대매매 비중 최고 ≥ 직전 120일 90% 분위"
+ },
+ "base_dev": {
+  "후보": "base|all",
+  "가족": "base",
+  "개발_days": 1721,
+  "개발_eps": 1,
+  "개발_cr3_mean": 0.20434733627118903,
+  "개발_P_c": 0.084253341080767,
+  "개발_R_c": 1.0,
+  "개발_F1_c": 0.15541264737406216,
+  "개발_P_c3": 0.04706565950029053,
+  "개발_R_c3": 1.0,
+  "개발_F1_c3": 0.08990011098779134,
+  "개발_P_m": 0.2800697269029634,
+  "개발_R_m": 1.0,
+  "개발_F1_m": 0.4375851112119837,
+  "확인_days": 943,
+  "확인_eps": 1,
+  "확인_cr3_mean": 0.2939954867094309,
+  "확인_P_c": 0.088016967126193,
+  "확인_R_c": 1.0,
+  "확인_F1_c": 0.1617933723196881,
+  "확인_P_c3": 0.04984093319194061,
+  "확인_R_c3": 1.0,
+  "확인_F1_c3": 0.09494949494949494,
+  "확인_P_m": 0.2704135737009544,
+  "확인_R_m": 1.0,
+  "확인_F1_m": 0.42570951585976635,
+  "신용F1순위": NaN,
+  "미수F1순위": NaN,
+  "점수": NaN
+ },
+ "now": {
+  "prevlow|N5|d2": {
+   "line": 5067.85,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N5|d1": {
+   "line": 5018.16,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N5|d0": {
+   "line": 4968.48,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N5|d-1": {
+   "line": 4918.8,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N5|d-2": {
+   "line": 4869.11,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N5|d-3": {
+   "line": 4819.43,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N5|d-4": {
+   "line": 4769.74,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N5|d-5": {
+   "line": 4720.06,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N5|d-7": {
+   "line": 4620.69,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N5|d-10": {
+   "line": 4471.63,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N10|d2": {
+   "line": 5067.85,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N10|d1": {
+   "line": 5018.16,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N10|d0": {
+   "line": 4968.48,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N10|d-1": {
+   "line": 4918.8,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N10|d-2": {
+   "line": 4869.11,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N10|d-3": {
+   "line": 4819.43,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N10|d-4": {
+   "line": 4769.74,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N10|d-5": {
+   "line": 4720.06,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N10|d-7": {
+   "line": 4620.69,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N10|d-10": {
+   "line": 4471.63,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N20|d2": {
+   "line": 5067.85,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N20|d1": {
+   "line": 5018.16,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N20|d0": {
+   "line": 4968.48,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N20|d-1": {
+   "line": 4918.8,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N20|d-2": {
+   "line": 4869.11,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N20|d-3": {
+   "line": 4819.43,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N20|d-4": {
+   "line": 4769.74,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N20|d-5": {
+   "line": 4720.06,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N20|d-7": {
+   "line": 4620.69,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N20|d-10": {
+   "line": 4471.63,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N40|d2": {
+   "line": 5067.85,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N40|d1": {
+   "line": 5018.16,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N40|d0": {
+   "line": 4968.48,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N40|d-1": {
+   "line": 4918.8,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N40|d-2": {
+   "line": 4869.11,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N40|d-3": {
+   "line": 4819.43,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N40|d-4": {
+   "line": 4769.74,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N40|d-5": {
+   "line": 4720.06,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N40|d-7": {
+   "line": 4620.69,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N40|d-10": {
+   "line": 4471.63,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N60|d2": {
+   "line": 5067.85,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N60|d1": {
+   "line": 5018.16,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N60|d0": {
+   "line": 4968.48,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N60|d-1": {
+   "line": 4918.8,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N60|d-2": {
+   "line": 4869.11,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N60|d-3": {
+   "line": 4819.43,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N60|d-4": {
+   "line": 4769.74,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N60|d-5": {
+   "line": 4720.06,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N60|d-7": {
+   "line": 4620.69,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N60|d-10": {
+   "line": 4471.63,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N120|d2": {
+   "line": 5067.85,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N120|d1": {
+   "line": 5018.16,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N120|d0": {
+   "line": 4968.48,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N120|d-1": {
+   "line": 4918.8,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N120|d-2": {
+   "line": 4869.11,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N120|d-3": {
+   "line": 4819.43,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N120|d-4": {
+   "line": 4769.74,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N120|d-5": {
+   "line": 4720.06,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N120|d-7": {
+   "line": 4620.69,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N120|d-10": {
+   "line": 4471.63,
+   "base_low": 4968.48,
+   "base_date": "2026-11-17"
+  },
+  "prevlow|N250|d2": {
+   "line": 3922.98,
+   "base_low": 3846.06,
+   "base_date": "2025-11-24"
+  },
+  "prevlow|N250|d1": {
+   "line": 3884.52,
+   "base_low": 3846.06,
+   "base_date": "2025-11-24"
+  },
+  "prevlow|N250|d0": {
+   "line": 3846.06,
+   "base_low": 3846.06,
+   "base_date": "2025-11-24"
+  },
+  "prevlow|N250|d-1": {
+   "line": 3807.6,
+   "base_low": 3846.06,
+   "base_date": "2025-11-24"
+  },
+  "prevlow|N250|d-2": {
+   "line": 3769.14,
+   "base_low": 3846.06,
+   "base_date": "2025-11-24"
+  },
+  "prevlow|N250|d-3": {
+   "line": 3730.68,
+   "base_low": 3846.06,
+   "base_date": "2025-11-24"
+  },
+  "prevlow|N250|d-4": {
+   "line": 3692.22,
+   "base_low": 3846.06,
+   "base_date": "2025-11-24"
+  },
+  "prevlow|N250|d-5": {
+   "line": 3653.76,
+   "base_low": 3846.06,
+   "base_date": "2025-11-24"
+  },
+  "prevlow|N250|d-7": {
+   "line": 3576.84,
+   "base_low": 3846.06,
+   "base_date": "2025-11-24"
+  },
+  "prevlow|N250|d-10": {
+   "line": 3461.45,
+   "base_low": 3846.06,
+   "base_date": "2025-11-24"
+  },
+  "ddhigh|N20|D5": {
+   "line": 5711.82,
+   "base_high": 6012.44
+  },
+  "ddhigh|N20|D10": {
+   "line": 5411.2,
+   "base_high": 6012.44
+  },
+  "ddhigh|N20|D15": {
+   "line": 5110.57,
+   "base_high": 6012.44
+  },
+  "ddhigh|N20|D20": {
+   "line": 4809.95,
+   "base_high": 6012.44
+  },
+  "ddhigh|N20|D25": {
+   "line": 4509.33,
+   "base_high": 6012.44
+  },
+  "ddhigh|N20|D30": {
+   "line": 4208.71,
+   "base_high": 6012.44
+  },
+  "ddhigh|N20|D35": {
+   "line": 3908.09,
+   "base_high": 6012.44
+  },
+  "ddhigh|N20|D40": {
+   "line": 3607.46,
+   "base_high": 6012.44
+  },
+  "ddhigh|N20|D45": {
+   "line": 3306.84,
+   "base_high": 6012.44
+  },
+  "ddhigh|N60|D5": {
+   "line": 6726.87,
+   "base_high": 7080.92
+  },
+  "ddhigh|N60|D10": {
+   "line": 6372.83,
+   "base_high": 7080.92
+  },
+  "ddhigh|N60|D15": {
+   "line": 6018.78,
+   "base_high": 7080.92
+  },
+  "ddhigh|N60|D20": {
+   "line": 5664.74,
+   "base_high": 7080.92
+  },
+  "ddhigh|N60|D25": {
+   "line": 5310.69,
+   "base_high": 7080.92
+  },
+  "ddhigh|N60|D30": {
+   "line": 4956.64,
+   "base_high": 7080.92
+  },
+  "ddhigh|N60|D35": {
+   "line": 4602.6,
+   "base_high": 7080.92
+  },
+  "ddhigh|N60|D40": {
+   "line": 4248.55,
+   "base_high": 7080.92
+  },
+  "ddhigh|N60|D45": {
+   "line": 3894.51,
+   "base_high": 7080.92
+  },
+  "ddhigh|N120|D5": {
+   "line": 8658.82,
+   "base_high": 9114.55
+  },
+  "ddhigh|N120|D10": {
+   "line": 8203.09,
+   "base_high": 9114.55
+  },
+  "ddhigh|N120|D15": {
+   "line": 7747.37,
+   "base_high": 9114.55
+  },
+  "ddhigh|N120|D20": {
+   "line": 7291.64,
+   "base_high": 9114.55
+  },
+  "ddhigh|N120|D25": {
+   "line": 6835.91,
+   "base_high": 9114.55
+  },
+  "ddhigh|N120|D30": {
+   "line": 6380.18,
+   "base_high": 9114.55
+  },
+  "ddhigh|N120|D35": {
+   "line": 5924.46,
+   "base_high": 9114.55
+  },
+  "ddhigh|N120|D40": {
+   "line": 5468.73,
+   "base_high": 9114.55
+  },
+  "ddhigh|N120|D45": {
+   "line": 5013.0,
+   "base_high": 9114.55
+  },
+  "ddhigh|N250|D5": {
+   "line": 8658.82,
+   "base_high": 9114.55
+  },
+  "ddhigh|N250|D10": {
+   "line": 8203.09,
+   "base_high": 9114.55
+  },
+  "ddhigh|N250|D15": {
+   "line": 7747.37,
+   "base_high": 9114.55
+  },
+  "ddhigh|N250|D20": {
+   "line": 7291.64,
+   "base_high": 9114.55
+  },
+  "ddhigh|N250|D25": {
+   "line": 6835.91,
+   "base_high": 9114.55
+  },
+  "ddhigh|N250|D30": {
+   "line": 6380.18,
+   "base_high": 9114.55
+  },
+  "ddhigh|N250|D35": {
+   "line": 5924.46,
+   "base_high": 9114.55
+  },
+  "ddhigh|N250|D40": {
+   "line": 5468.73,
+   "base_high": 9114.55
+  },
+  "ddhigh|N250|D45": {
+   "line": 5013.0,
+   "base_high": 9114.55
+  },
+  "avgcost|recent|m1.4|s0.6": {
+   "line": 4343.39,
+   "entry": 5170.7
+  },
+  "avgcost|recent|m1.4|s0.5": {
+   "line": 3619.49,
+   "entry": 5170.7
+  },
+  "avgcost|recent|m1.3|s0.6": {
+   "line": 4033.14,
+   "entry": 5170.7
+  },
+  "avgcost|recent|m1.3|s0.5": {
+   "line": 3360.95,
+   "entry": 5170.7
+  },
+  "avgcost|low250|m1.4|s0.6": {
+   "line": 5402.03,
+   "entry": 6430.99
+  },
+  "avgcost|low250|m1.4|s0.5": {
+   "line": 4501.69,
+   "entry": 6430.99
+  },
+  "avgcost|low250|m1.3|s0.6": {
+   "line": 5016.17,
+   "entry": 6430.99
+  },
+  "avgcost|low250|m1.3|s0.5": {
+   "line": 4180.14,
+   "entry": 6430.99
+  },
+  "avgcost|low500|m1.4|s0.6": {
+   "line": 4627.47,
+   "entry": 5508.89
+  },
+  "avgcost|low500|m1.4|s0.5": {
+   "line": 3856.22,
+   "entry": 5508.89
+  },
+  "avgcost|low500|m1.3|s0.6": {
+   "line": 4296.94,
+   "entry": 5508.89
+  },
+  "avgcost|low500|m1.3|s0.5": {
+   "line": 3580.78,
+   "entry": 5508.89
+  },
+  "avgcost|primary|m1.4|s0.6": {
+   "line": 5402.03,
+   "entry": 6430.99
+  },
+  "avgcost|primary|m1.4|s0.5": {
+   "line": 4501.69,
+   "entry": 6430.99
+  },
+  "avgcost|primary|m1.3|s0.6": {
+   "line": 5016.17,
+   "entry": 6430.99
+  },
+  "avgcost|primary|m1.3|s0.5": {
+   "line": 4180.14,
+   "entry": 6430.99
+  },
+  "avgcost|fifo_tr|m1.4|s0.6": {
+   "line": 4323.32,
+   "entry": 5146.81
+  },
+  "avgcost|fifo_tr|m1.4|s0.5": {
+   "line": 3602.77,
+   "entry": 5146.81
+  },
+  "avgcost|fifo_tr|m1.3|s0.6": {
+   "line": 4014.51,
+   "entry": 5146.81
+  },
+  "avgcost|fifo_tr|m1.3|s0.5": {
+   "line": 3345.43,
+   "entry": 5146.81
+  },
+  "avgcost|lifo_tr|m1.4|s0.6": {
+   "line": 4373.62,
+   "entry": 5206.69
+  },
+  "avgcost|lifo_tr|m1.4|s0.5": {
+   "line": 3644.69,
+   "entry": 5206.69
+  },
+  "avgcost|lifo_tr|m1.3|s0.6": {
+   "line": 4061.22,
+   "entry": 5206.69
+  },
+  "avgcost|lifo_tr|m1.3|s0.5": {
+   "line": 3384.35,
+   "entry": 5206.69
+  },
+  "avgcost|worst_tr|m1.4|s0.6": {
+   "line": 4323.32,
+   "entry": 5146.81
+  },
+  "avgcost|worst_tr|m1.4|s0.5": {
+   "line": 3602.77,
+   "entry": 5146.81
+  },
+  "avgcost|worst_tr|m1.3|s0.6": {
+   "line": 4014.51,
+   "entry": 5146.81
+  },
+  "avgcost|worst_tr|m1.3|s0.5": {
+   "line": 3345.43,
+   "entry": 5146.81
+  },
+  "avgcost|fifo250|m1.4|s0.6": {
+   "line": 5455.75,
+   "entry": 6494.94
+  },
+  "avgcost|fifo250|m1.4|s0.5": {
+   "line": 4546.46,
+   "entry": 6494.94
+  },
+  "avgcost|fifo250|m1.3|s0.6": {
+   "line": 5066.06,
+   "entry": 6494.94
+  },
+  "avgcost|fifo250|m1.3|s0.5": {
+   "line": 4221.71,
+   "entry": 6494.94
+  },
+  "avgcost|lifo250|m1.4|s0.6": {
+   "line": 3966.44,
+   "entry": 4721.95
+  },
+  "avgcost|lifo250|m1.4|s0.5": {
+   "line": 3305.36,
+   "entry": 4721.95
+  },
+  "avgcost|lifo250|m1.3|s0.6": {
+   "line": 3683.12,
+   "entry": 4721.95
+  },
+  "avgcost|lifo250|m1.3|s0.5": {
+   "line": 3069.27,
+   "entry": 4721.95
+  },
+  "avgcost|worst250|m1.4|s0.6": {
+   "line": 3921.55,
+   "entry": 4668.51
+  },
+  "avgcost|worst250|m1.4|s0.5": {
+   "line": 3267.95,
+   "entry": 4668.51
+  },
+  "avgcost|worst250|m1.3|s0.6": {
+   "line": 3641.44,
+   "entry": 4668.51
+  },
+  "avgcost|worst250|m1.3|s0.5": {
+   "line": 3034.53,
+   "entry": 4668.51
+  },
+  "avgcost|prorata_all|m1.4|s0.6": {
+   "line": 4651.84,
+   "entry": 5537.91
+  },
+  "avgcost|prorata_all|m1.4|s0.5": {
+   "line": 3876.54,
+   "entry": 5537.91
+  },
+  "avgcost|prorata_all|m1.3|s0.6": {
+   "line": 4319.57,
+   "entry": 5537.91
+  },
+  "avgcost|prorata_all|m1.3|s0.5": {
+   "line": 3599.64,
+   "entry": 5537.91
+  },
+  "avgcost|fifo_all|m1.4|s0.6": {
+   "line": 5954.31,
+   "entry": 7088.47
+  },
+  "avgcost|fifo_all|m1.4|s0.5": {
+   "line": 4961.93,
+   "entry": 7088.47
+  },
+  "avgcost|fifo_all|m1.3|s0.6": {
+   "line": 5529.0,
+   "entry": 7088.47
+  },
+  "avgcost|fifo_all|m1.3|s0.5": {
+   "line": 4607.5,
+   "entry": 7088.47
+  },
+  "avgcost|lifo_all|m1.4|s0.6": {
+   "line": 2535.96,
+   "entry": 3019.0
+  },
+  "avgcost|lifo_all|m1.4|s0.5": {
+   "line": 2113.3,
+   "entry": 3019.0
+  },
+  "avgcost|lifo_all|m1.3|s0.6": {
+   "line": 2354.82,
+   "entry": 3019.0
+  },
+  "avgcost|lifo_all|m1.3|s0.5": {
+   "line": 1962.35,
+   "entry": 3019.0
+  },
+  "prq|q10|m1.4": {
+   "line": 6801.42
+  },
+  "prq|q10|m1.3": {
+   "line": 6315.61
+  },
+  "prq|q25|m1.4": {
+   "line": 5742.07
+  },
+  "prq|q25|m1.3": {
+   "line": 5331.92
+  },
+  "prq|q50|m1.4": {
+   "line": 5059.87
+  },
+  "prq|q50|m1.3": {
+   "line": 4698.45
+  }
+ }
+}
