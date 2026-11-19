@@ -1,12 +1,35 @@
-기준일 20261118 · 지수 일수 524
+기준일 20261119 · 지수 일수 525
 종목 400 (통합 명단 250 + 방어1 성장 종목 중 명단 밖 150 )
-KOSPI 단면 날짜 {'cap': '20261118', 'fund': '20261118', 'fr': '20261118', 'short': '20261116'}
-KOSDAQ 단면 날짜 {'cap': '20261118', 'fund': '20261118', 'fr': '20261118', 'short': '20261116'}
+KOSPI 단면 날짜 {'cap': '20261119', 'fund': '20261119', 'fr': '20261119', 'short': '20261117'}
+KOSDAQ 단면 날짜 {'cap': '20261119', 'fund': '20261119', 'fr': '20261119', 'short': '20261117'}
   일별 100/400 (1.6분)
   일별 200/400 (2.5분)
-  일별 300/400 (3.4분)
-  일별 400/400 (4.3분)
+  일별 300/400 (3.5분)
+  일별 400/400 (4.4분)
 일별 종가 400 / 400
-주간 등락률 104 주 20241129 ~ 20261118
-방어1 계산 가능: 성장 종목 250 / 250 · 명단 밖 150 
-저장 250 종목 · 방어1 1~5위 [('골프존홀딩스', 80.1), ('에이플러스에셋', 77.1), ('우리금융지주', 76.7), ('나이스정보통신', 75.6), ('코메론', 75.2)] · 4.6분
+주간 등락률 104 주 20241129 ~ 20261119
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/pandas/core/indexes/base.py", line 3812, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas/_libs/index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7096, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: '등락률'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/kospi-dashboard/kospi-dashboard/research/validation/stocks_daily.py", line 457, in <module>
+    main()
+  File "/home/runner/work/kospi-dashboard/kospi-dashboard/research/validation/stocks_daily.py", line 248, in main
+    YTD[m], R2[m] = y['등락률'].astype(float), p2['등락률'].astype(float)
+                                               ~~^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/pandas/core/frame.py", line 4113, in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/pandas/core/indexes/base.py", line 3819, in get_loc
+    raise KeyError(key) from err
+KeyError: '등락률'
+
