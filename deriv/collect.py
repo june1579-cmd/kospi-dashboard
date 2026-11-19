@@ -352,6 +352,51 @@ def compact_chain(df):
 def chain(): dayloop('opt_chain_daily', 'MDCSTAT12501', START_CHAIN, lambda s8: dict(trdDd=s8, prodId='KRDRVOPK2I', mktTpCd='T', rghtTpCd='T', aggBasTpCd='0', share='1', money='1'), post=compact_chain)
 
 
+def compact_chain_n(df, n_exp=4, band=0.25):
+    """옵션 전종목 응답 → 가까운 결제월 n_exp 개(다음 분기 결제월이 늘 들어가도록 4개), 기초자산 ±band 행사가."""
+    nm = df['ISU_NM'].astype(str)
+    m = nm.str.extract(r'\s([CP])\s+(\d{6})\s+([\d.]+)')
+    df = df.assign(cp=m[0], ym=m[1], K=pd.to_numeric(m[2], errors='coerce'))
+    df = df[df['cp'].notna()]
+    n = lambda c: pd.to_numeric(df[c].astype(str).str.replace(',', '').replace({'-': None}), errors='coerce')
+    df = df.assign(settle=n('SETL_PRC'), close=n('TDD_CLSPRC'), vol=n('ACC_TRDVOL'), oi=n('ACC_OPNINT_QTY'), spot=n('SPOT_PRC'))
+    yms = sorted(df['ym'].dropna().unique())[:n_exp]
+    S = df['spot'].median()
+    df = df[df['ym'].isin(yms) & (df['K'] >= S * (1 - band)) & (df['K'] <= S * (1 + band))]
+    return df[['날짜', 'cp', 'ym', 'K', 'settle', 'close', 'vol', 'oi', 'spot']]
+
+
+def compact_chainw(df):
+    """위클리 옵션 전종목 → 이름 그대로(만기 표기가 월물과 달라 원문 보존) + C/P·만기 표기·행사가, 기초자산 ±20%."""
+    nm = df['ISU_NM'].astype(str)
+    m = nm.str.extract(r'\s([CP])\s+(\S+)\s+([\d.]+)\s*$')
+    df = df.assign(cp=m[0], exp=m[1], K=pd.to_numeric(m[2], errors='coerce'))
+    df = df[df['cp'].notna()]
+    n = lambda c: pd.to_numeric(df[c].astype(str).str.replace(',', '').replace({'-': None}), errors='coerce') if c in df else float('nan')
+    df = df.assign(settle=n('SETL_PRC'), close=n('TDD_CLSPRC'), vol=n('ACC_TRDVOL'), oi=n('ACC_OPNINT_QTY'), spot=n('SPOT_PRC'))
+    S = df['spot'].median()
+    df = df[(df['K'] >= S * 0.8) & (df['K'] <= S * 1.2)]
+    return df[['날짜', 'ISU_CD', 'ISU_NM', 'cp', 'exp', 'K', 'settle', 'close', 'vol', 'oi', 'spot']]
+
+
+OPT_MAKER = lambda prod: (lambda s8: dict(trdDd=s8, prodId=prod, mktTpCd='T', rghtTpCd='T', aggBasTpCd='0', share='1', money='1'))
+
+
+def chainx():
+    """연구소(deriv/lab)용: 월물 옵션 결제월 4개(다음 분기물 포함)·±25% — 분기 만기 뒤 연장(롤오버)되는 콜 물량까지 추적."""
+    dayloop('opt_chainx_daily', 'MDCSTAT12501', START_CHAIN, OPT_MAKER('KRDRVOPK2I'), post=lambda d: compact_chain_n(d, 4, 0.25))
+
+
+def chainwt():
+    """목요일 위클리 옵션 행사가별(2019-09-23 상장~)."""
+    dayloop('opt_chainwt_daily', 'MDCSTAT12501', '20190923', OPT_MAKER('KRDRVOPWKI'), post=compact_chainw)
+
+
+def chainwm():
+    """월요일 위클리 옵션 행사가별(2023-07-31 상장~)."""
+    dayloop('opt_chainwm_daily', 'MDCSTAT12501', '20230731', OPT_MAKER('KRDRVOPWKM'), post=compact_chainw)
+
+
 def roll_days(y0, y1):
     """분기 만기(3·6·9·12월 둘째 목요일, 휴장이면 앞 거래일) 앞 15거래일 ~ 뒤 2거래일. 거래일은 kospi_long.csv."""
     k = pd.read_csv(os.path.join(DATA, 'kospi_long.csv'))
@@ -443,7 +488,7 @@ def git_save(msg):
         if r.returncode and 'commit' not in c: log(f'git 실패: {c} {r.stderr[:200]}')
 
 
-TASKS = {'roll1': lambda: roll_part('roll1'), 'roll2': lambda: roll_part('roll2'), 'roll3': lambda: roll_part('roll3'), 'inv2': inv2, 'front2': front2, 'index': index_long, 'inv': inv, 'basis': basis, 'iv': iv, 'pcr': pcr, 'front': front, 'program': program, 'chain': chain}
+TASKS = {'chainx': chainx, 'chainwt': chainwt, 'chainwm': chainwm, 'roll1': lambda: roll_part('roll1'), 'roll2': lambda: roll_part('roll2'), 'roll3': lambda: roll_part('roll3'), 'inv2': inv2, 'front2': front2, 'index': index_long, 'inv': inv, 'basis': basis, 'iv': iv, 'pcr': pcr, 'front': front, 'program': program, 'chain': chain}
 
 
 def main():

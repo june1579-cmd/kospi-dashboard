@@ -1,0 +1,84 @@
+name: deriv-lab
+# 콜 우위 가설 연구소 — 에이전트 A2~A10 (KRX 로그인 없음, 저장소 자료만). deriv/lab/round.json 을 바꿔 push 하면 한 라운드가 돈다.
+on:
+  push:
+    branches: [deriv-research]
+    paths: ['deriv/lab/round.json']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: deriv-lab
+  cancel-in-progress: false
+jobs:
+  a02:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: deriv-research}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q pandas numpy scipy scikit-learn yfinance
+      - name: A2 정의 + 공통 자료
+        run: |
+          python deriv/scan/scan_data.py
+          python -c "import sys; sys.path.insert(0,'deriv/lab'); import lab_common as L; L.fetch_etf()"
+          python deriv/lab/a02_features.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: work
+          path: |
+            deriv/scan/work
+            deriv/lab/work
+            deriv/data/etf_069500.csv
+          retention-days: 3
+      - uses: actions/upload-artifact@v4
+        with: {name: out-a02, path: deriv/lab/out, retention-days: 3}
+  agents:
+    needs: a02
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    strategy:
+      fail-fast: false
+      matrix:
+        agent: [a03_events, a04_flows, a05_roll, a06_rules, a07_ml]
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: deriv-research}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q pandas numpy scipy scikit-learn
+      - uses: actions/download-artifact@v4
+        with: {name: work, path: deriv}
+      - run: python deriv/lab/${{ matrix.agent }}.py
+      - uses: actions/upload-artifact@v4
+        with: {name: 'out-${{ matrix.agent }}', path: deriv/lab/out, retention-days: 3}
+  judge:
+    needs: agents
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: deriv-research}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q pandas numpy scipy scikit-learn
+      - uses: actions/download-artifact@v4
+        with: {name: work, path: deriv}
+      - uses: actions/download-artifact@v4
+        with: {pattern: 'out-*', path: deriv/lab/out, merge-multiple: true}
+      - name: A8 검증 → A9 매매 → A10 반증 → 정리
+        run: |
+          python deriv/lab/a08_validate.py
+          python deriv/lab/a09_trade.py
+          python deriv/lab/a10_redteam.py
+          python deriv/lab/lab_merge.py
+      - name: 저장
+        run: |
+          find deriv/lab/out -name 'candidates.pkl' -size +20M -delete || true
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add deriv/lab/out deriv/lab/state
+          git commit -q -m "연구소 라운드 $(python -c "import json;print(json.load(open('deriv/lab/round.json'))['round'])") 결과 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || echo "변경 없음"
+          for i in 1 2 3 4; do git pull -q --rebase origin deriv-research && git push -q origin HEAD:deriv-research && break; sleep 15; done
