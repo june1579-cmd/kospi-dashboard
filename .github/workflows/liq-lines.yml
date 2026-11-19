@@ -1,0 +1,40 @@
+name: liq-lines
+# 반대매매(강제 청산) 기준선 후보 비교 검증 — research/liq_lines/run.txt 를 고쳐 push 하면 돈다.
+# 자료는 main 의 out/credit.csv·market_daily.csv·liq_daily.csv 를 읽기만 하고(main 은 쓰지 않음), 결과는 이 가지의 research/liq_lines/out/ 에 커밋한다.
+on:
+  push:
+    branches: [deriv-research]
+    paths: ['research/liq_lines/run.txt']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: liq-lines
+  cancel-in-progress: false
+jobs:
+  study:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: deriv-research
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -q pandas numpy
+      - name: main 자료 읽기(읽기만)
+        run: |
+          git fetch -q --depth=1 origin +refs/heads/main:refs/remotes/origin/main
+          mkdir -p "$RUNNER_TEMP/data"
+          for f in credit market_daily liq_daily; do git show origin/main:out/$f.csv > "$RUNNER_TEMP/data/$f.csv"; done
+          echo "main $(git rev-parse --short origin/main)" > research/liq_lines/data_source.txt
+          wc -l "$RUNNER_TEMP"/data/*.csv
+      - name: 검증
+        run: python research/liq_lines/liq_line_study.py "$RUNNER_TEMP/data" | tee research/liq_lines/run_log.txt
+      - name: 결과 커밋
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add research/liq_lines/out research/liq_lines/run_log.txt research/liq_lines/data_source.txt
+          git commit -q -m "반대매매 기준선 검증 결과 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || { echo "변경 없음"; exit 0; }
+          for i in 1 2 3 4; do git pull -q --rebase origin deriv-research && git push -q origin HEAD:deriv-research && break; sleep 5; done
