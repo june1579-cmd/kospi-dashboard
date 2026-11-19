@@ -350,18 +350,38 @@ def main():
             v10 = fwd[10][idx]; v5 = fwd[5][idx]; fl = post5_for[idx]
             OLD.append({'벽': f'{lag}일 전', '사건': lab, '날수(개발)': int(len(idx)), '5일 하락%': pct(v5[np.isfinite(v5)] < 0), '10일 하락%': pct(v10[np.isfinite(v10)] < 0),
                         '10일 하락 기준%': round(base_down10 * 100, 1), '뒤 5일 외국인 순매도%': pct(fl[np.isfinite(fl)] < 0)})
-    # 5c) 새 벽이 고가 바로 위에 생김(벽 행사가가 오늘 바뀌었고 고가 위 0~1.5%): 고점에서 벽이 늦게 생긴다는 관찰을 신호로
-    Kd = F0K; newwall = ((Kd != Kd.shift(1)) & (Kd / k2['high'] - 1 >= 0) & (Kd / k2['high'] - 1 <= 0.015)).fillna(False)
-    for nm, ms_, lab in (('newnear', newwall, '근월물 새 콜벽이 고가 바로 위(1.5% 안)에 생김'),
-                         ('newnear_fsell', newwall & (fs < 0), '새 콜벽이 고가 바로 위 + 외국인 선물 순매도')):
-        dts = td[ms_.values]
-        for m in (3, 5, 10):
-            add(f'A3c_{nm}_m{m}', f'{lab} → {m}일 하락', -1, 'newwall', dts, m)
-            add(f'A3c_{nm}_up_m{m}', f'{lab} → {m}일 상승(반대 방향: 개발 구간 서술에서 상승이 많았음)', 1, 'newwall_up', dts, m)
-        idx = np.where(ms_.values & dev)[0]; idx = idx[idx + 10 <= last_dev]
-        v10 = fwd[10][idx]; v5 = fwd[5][idx]; fl = post5_for[idx]
-        OLD.append({'벽': '오늘 새로 생긴 벽', '사건': lab, '날수(개발)': int(len(idx)), '5일 하락%': pct(v5[np.isfinite(v5)] < 0), '10일 하락%': pct(v10[np.isfinite(v10)] < 0),
-                    '10일 하락 기준%': round(base_down10 * 100, 1), '뒤 5일 외국인 순매도%': pct(fl[np.isfinite(fl)] < 0)})
+    # 5c) 새 벽이 고가 바로 위에 생김(벽 행사가가 오늘 바뀌었고 고가 위 0~x%): 고점에서 벽이 늦게 생긴다는 관찰을 신호로.
+    #     라운드 3: 근월·차월·분기물 각각과 어느 하나라도(합집합), 거리 1.0·1.5·2.0%, 그리고 '비슷하게 오른 뒤' 기준선(직전 5·20일 상승 5분위 맞춤)과 비교
+    r20 = (k2['close'] / k2['close'].shift(20) - 1).values
+    okm = dev & np.isfinite(fwd[10]) & (np.arange(n_td) + 10 <= last_dev)
+    e5 = np.nanquantile(r5[okm], [0.2, 0.4, 0.6, 0.8]); e20 = np.nanquantile(r20[okm & np.isfinite(r20)], [0.2, 0.4, 0.6, 0.8])
+    b5 = np.digitize(r5, e5); b20 = np.digitize(r20, e20)
+    up5 = {b: float(np.mean(fwd[10][okm & (b5 == b)] > 0)) for b in range(5)}
+    up20 = {b: float(np.mean(fwd[10][okm & np.isfinite(r20) & (b20 == b)] > 0)) for b in range(5)}
+    def newwall_mask(tag, x):
+        Wt = W[W['tag'] == tag].drop_duplicates('date').set_index('date')['K'].reindex(td)
+        return ((Wt != Wt.shift(1)) & (Wt.shift(1).notna()) & (Wt / k2['high'] - 1 >= 0) & (Wt / k2['high'] - 1 <= x / 100)).fillna(False)
+    NW = {}
+    for tag in ('F0', 'F1', 'Q'):
+        for x in ((1.0, 1.5, 2.0) if tag == 'F0' else (1.5,)):
+            NW[(tag, x)] = newwall_mask(tag, x)
+    NW[('ANY', 1.5)] = NW[('F0', 1.5)] | NW[('F1', 1.5)] | NW[('Q', 1.5)]
+    for (tag, x), msk in NW.items():
+        nmtag = {'F0': '근월물', 'F1': '차월물', 'Q': '분기물', 'ANY': '근월·차월·분기물 중 하나'}[tag]
+        for nm, ms_, lab in ((f'newnear_{tag}_{x}', msk, f'{nmtag} 새 콜벽이 고가 바로 위({x}% 안)에 생김'),
+                             (f'newnear_fsell_{tag}_{x}', msk & (fs < 0), f'{nmtag} 새 콜벽이 고가 바로 위({x}%) + 외국인 선물 순매도')):
+            dts = td[ms_.values]
+            for m in (5, 10):
+                if tag == 'F0' and x == 1.5:
+                    add(f'A3c_{nm}_m{m}', f'{lab} → {m}일 하락', -1, 'newwall', dts, m)
+                add(f'A3c_{nm}_up_m{m}', f'{lab} → {m}일 상승', 1, 'newwall_up', dts, m)
+            idx = np.where(ms_.values & dev)[0]; idx = idx[idx + 10 <= last_dev]
+            v10 = fwd[10][idx]; v5 = fwd[5][idx]; fl = post5_for[idx]
+            OLD.append({'벽': '오늘 새로 생긴 벽', '사건': lab, '날수(개발)': int(len(idx)), '5일 하락%': pct(v5[np.isfinite(v5)] < 0), '10일 하락%': pct(v10[np.isfinite(v10)] < 0),
+                        '10일 하락 기준%': round(base_down10 * 100, 1), '뒤 5일 외국인 순매도%': pct(fl[np.isfinite(fl)] < 0),
+                        '10일 상승%': pct(v10[np.isfinite(v10)] > 0),
+                        '같은 5일 상승 뒤 10일 상승%': round(float(np.mean([up5[b] for b in b5[idx] if b in up5])) * 100, 1) if len(idx) else np.nan,
+                        '같은 20일 상승 뒤 10일 상승%': round(float(np.mean([up20[b] for b, rr in zip(b20[idx], r20[idx]) if np.isfinite(rr) and b in up20])) * 100, 1) if len(idx) else np.nan})
     OLD = pd.DataFrame(OLD); OLD.to_csv(os.path.join(od, 'cause_oldwall_dev.csv'), index=False, encoding='utf-8')
     L.save_candidates('a03c', cands)
 

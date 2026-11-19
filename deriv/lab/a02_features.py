@@ -76,7 +76,9 @@ def main():
     by_date = dict(tuple(ch.groupby('date')))
     pos = {d: i for i, d in enumerate(dates)}
     rows, walls = [], []
+    last_k = {}
     for d, g in ch.groupby('date'):
+        Hd = float(k2['high'].get(d, np.nan))
         S = float(k2['close'].get(d, np.nan))
         if not np.isfinite(S): S = float(g['spot'].median())
         sg = float(sig20.get(d, np.nan))
@@ -91,6 +93,13 @@ def main():
             dte = L.tdays_between(d, exp_of[ym], td)
             r, k1 = series_feats(gg, S, sg, dte)
             r.update({'date': d, 'tag': tag, 'ym': ym})
+            if np.isfinite(k1 if k1 is not None else np.nan) and np.isfinite(Hd):
+                # 라운드 3: 새 벽(오늘 벽 행사가가 바뀜)과 고가까지 거리 — 원인 분해에서 '새 벽이 고가 바로 위에 생기면 상승'이 보여 조합·기계학습에도 넣는다
+                r['wall_to_high%'] = (k1 / Hd - 1) * 100
+                if tag in last_k:
+                    r['wall_new'] = float(k1 != last_k[tag])
+                    r['newwall_near'] = float(k1 != last_k[tag] and 0 <= r['wall_to_high%'] <= 1.5)
+                last_k[tag] = k1
             if np.isfinite(k1 if k1 is not None else np.nan):
                 i = pos[d]
                 for lag in (1, 3, 5):
