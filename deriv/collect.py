@@ -352,6 +352,73 @@ def compact_chain(df):
 def chain(): dayloop('opt_chain_daily', 'MDCSTAT12501', START_CHAIN, lambda s8: dict(trdDd=s8, prodId='KRDRVOPK2I', mktTpCd='T', rghtTpCd='T', aggBasTpCd='0', share='1', money='1'), post=compact_chain)
 
 
+def roll_days(y0, y1):
+    """분기 만기(3·6·9·12월 둘째 목요일, 휴장이면 앞 거래일) 앞 15거래일 ~ 뒤 2거래일. 거래일은 kospi_long.csv."""
+    k = pd.read_csv(os.path.join(DATA, 'kospi_long.csv'))
+    dcol = '날짜' if '날짜' in k else k.columns[0]
+    td = pd.DatetimeIndex(sorted(pd.to_datetime(k[dcol]).unique()))
+    td = td[td < pd.Timestamp(TODAY)]
+    out = []
+    for y in range(y0, y1 + 1):
+        for m in (3, 6, 9, 12):
+            d = pd.Timestamp(y, m, 1); d += pd.Timedelta(days=(3 - d.weekday()) % 7 + 7)
+            if d >= pd.Timestamp(TODAY): continue
+            i = td.searchsorted(d, side='right') - 1
+            if i < 0 or td[i] < pd.Timestamp('2008-01-01') or td[i] >= pd.Timestamp(TODAY): continue
+            out += list(td[max(0, i - 15): i + 3])
+    return sorted(set(out))
+
+
+def compact_fut(df):
+    """선물 전종목 응답에서 코스피200 선물 월물만(스프레드 제외): 가격·정산가·거래량·미결제."""
+    nm = df['ISU_NM'].astype(str)
+    df = df[~nm.str.contains('SP|스프레드', regex=True)].copy()
+    df['ym'] = df['ISU_NM'].astype(str).str.extract(r'(\d{6})')[0]
+    n = lambda c: pd.to_numeric(df[c].astype(str).str.replace(',', '').replace({'-': None}), errors='coerce') if c in df else float('nan')
+    df = df.assign(close=n('TDD_CLSPRC'), settle=n('SETL_PRC'), vol=n('ACC_TRDVOL'), val=n('ACC_TRDVAL'), oi=n('ACC_OPNINT_QTY'), spot=n('SPOT_PRC'))
+    keep = ['날짜', 'ISU_CD', 'ISU_NM', 'ym', 'close', 'settle', 'vol', 'val', 'oi', 'spot']
+    return df[[c for c in keep if c in df]]
+
+
+ROLL_PARTS = {'roll1': (2008, 2013), 'roll2': (2014, 2019), 'roll3': (2020, 2026)}
+ROLL_PARAMS = [dict(prodId='KRDRVFUK2I', mktTpCd='T', aggBasTpCd='0', share='1', money='1'),
+               dict(prodId='KRDRVFUK2I', mktTpCd='T', rghtTpCd='T', aggBasTpCd='0', share='1', money='1'),
+               dict(prodId='KRDRVFUK2I', share='1', money='1')]
+
+
+def roll_part(part):
+    """롤오버 연구용: 분기 만기 무렵 코스피200 선물 전 월물 일별. 이어받기(받은 날짜 건너뜀), 파트별로 나눠 받는다."""
+    y0, y1 = ROLL_PARTS[part]
+    p = os.path.join(DATA, 'fut_roll_daily.csv.gz')
+    have = pd.read_csv(p) if os.path.exists(p) else pd.DataFrame()
+    done = set(have['날짜']) if len(have) else set()
+    days = [d for d in roll_days(y0, y1) if d.strftime('%Y-%m-%d') not in done]
+    log(f'{part}: {y0}~{y1} 받을 날 {len(days)}일(이미 {len(done)}일)')
+    prm = None; buf = []; n = 0
+    for d in days:
+        ds = d.strftime('%Y-%m-%d'); wait_clear()
+        rows = []
+        for cand in ([prm] if prm else ROLL_PARAMS):
+            try:
+                rows, _ = call('MDCSTAT12501', trdDd=d8(d), **cand)
+            except Exception as e:
+                log(f'{part} {ds} 실패: {e!r}'[:200]); rows = []
+            if rows:
+                if prm is None: prm = cand; log(f'{part}: 쓰는 인자 {cand}')
+                break
+        if rows:
+            df = pd.DataFrame(rows); df.insert(0, '날짜', ds)
+            try: buf.append(compact_fut(df))
+            except Exception as e: log(f'{part} {ds} 정리 실패: {e!r}'[:200])
+        else: FAILED.append({'task': part, 'date': ds})
+        n += 1; time.sleep(0.25)
+        if n % 100 == 0 and buf:
+            have = pd.concat([have] + buf, ignore_index=True); buf = []; have.to_csv(p, index=False); git_save(f'{part} 중간 {ds}')
+    if buf: have = pd.concat([have] + buf, ignore_index=True)
+    if len(have):
+        have = have.drop_duplicates(['날짜', 'ISU_CD']); have.to_csv(p, index=False); log(f'{part} 저장 {len(have)}행 · 날짜 {have["날짜"].nunique()}일')
+
+
 def index_long():
     """코스피·코스피200 지수 일별(가능한 처음부터) — pykrx."""
     from pykrx import stock
@@ -376,7 +443,7 @@ def git_save(msg):
         if r.returncode and 'commit' not in c: log(f'git 실패: {c} {r.stderr[:200]}')
 
 
-TASKS = {'inv2': inv2, 'front2': front2, 'index': index_long, 'inv': inv, 'basis': basis, 'iv': iv, 'pcr': pcr, 'front': front, 'program': program, 'chain': chain}
+TASKS = {'roll1': lambda: roll_part('roll1'), 'roll2': lambda: roll_part('roll2'), 'roll3': lambda: roll_part('roll3'), 'inv2': inv2, 'front2': front2, 'index': index_long, 'inv': inv, 'basis': basis, 'iv': iv, 'pcr': pcr, 'front': front, 'program': program, 'chain': chain}
 
 
 def main():
