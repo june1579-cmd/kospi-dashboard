@@ -41,6 +41,7 @@ jobs:
         if: always()
         run: |
           git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
-          git add deriv/lab/notify/last.json 2>/dev/null; git add deriv/lab/state/kakao_renewed.json 2>/dev/null
+          [ -f deriv/lab/notify/last.json ] && git add deriv/lab/notify/last.json
+          [ -f deriv/lab/state/kakao_renewed.json ] && git add deriv/lab/state/kakao_renewed.json || true
           git commit -q -m "연구소 카카오 알림 기록 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || { echo "기록 변경 없음"; exit 0; }
           for i in 1 2 3 4; do git pull -q --rebase origin deriv-research && git push -q origin HEAD:deriv-research && break; sleep 5; done
