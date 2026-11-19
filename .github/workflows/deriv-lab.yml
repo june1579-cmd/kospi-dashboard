@@ -42,7 +42,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        agent: [a03_events, a04_flows, a05_roll, a06_rules, a07_ml]
+        agent: [a03_events, a03_cause, a04_flows, a05_roll, a06_rules, a07_ml]
     steps:
       - uses: actions/checkout@v4
         with: {ref: deriv-research}
