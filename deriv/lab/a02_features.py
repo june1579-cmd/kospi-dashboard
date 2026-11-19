@@ -10,6 +10,8 @@
   거래량벽 = 오늘 거래량 최대 콜 행사가(위쪽) 거리 %
   풋벽     = 현재가 아래 풋 미결제 최대 행사가 거리 %, share
   최대고통 = 만기 정산 시 매수자 손실이 가장 큰 행사가 거리 %
+  (라운드 4) 벽 이동 = 최근 5일 벽이 위로·아래로 옮겨 간 날 수(같은 결제월), 5일 전 대비 벽 이동 %
+  (라운드 4) 무게중심 = 현재가 ±15% 안 콜(풋) 미결제 가중 평균 행사가 거리 %, 콜−풋 무게중심 간격
 출력: work/lab_feat.pkl {'wide': 날짜×지표, 'walls': 날짜·시리즈별 벽 행사가·만기일(경로 사건용)}
 """
 import os
@@ -57,6 +59,13 @@ def series_feats(g, S, sig, dte):
     # 현재가 바로 위·아래 이외에 '현재가 아래 콜 최대'(이미 넘어선 벽)
     cb = c[c['K'] <= S]
     if len(cb): r['passed_wall_dist%'] = (float(cb.loc[cb['oi'].idxmax(), 'K']) / S - 1) * 100
+    # 라운드 4: 무게중심(현재가 ±15% 안 미결제 가중 평균 행사가) — 벽 '하나' 대신 콜 물량 전체의 위치
+    cw = c[(c['K'] >= S * 0.85) & (c['K'] <= S * 1.15)]; pw = p[(p['K'] >= S * 0.85) & (p['K'] <= S * 1.15)]
+    if len(cw) >= 3 and cw['oi'].sum() > 0:
+        r['ccent'] = float((cw['K'] * cw['oi']).sum() / cw['oi'].sum()); r['ccent_dist%'] = (r['ccent'] / S - 1) * 100
+    if len(pw) >= 3 and pw['oi'].sum() > 0:
+        r['pcent_dist%'] = (float((pw['K'] * pw['oi']).sum() / pw['oi'].sum()) / S - 1) * 100
+        if 'ccent_dist%' in r: r['cpcent_gap%'] = r['ccent_dist%'] - r['pcent_dist%']
     return r, k1
 
 
@@ -77,6 +86,7 @@ def main():
     pos = {d: i for i, d in enumerate(dates)}
     rows, walls = [], []
     last_k = {}
+    khist = {}          # 라운드 4: 벽 이동 지표용 — 시리즈별 (ym, 벽 행사가) 최근 6일
     for d, g in ch.groupby('date'):
         Hd = float(k2['high'].get(d, np.nan))
         S = float(k2['close'].get(d, np.nan))
@@ -101,6 +111,14 @@ def main():
                     r['newwall_near'] = float(k1 != last_k[tag] and 0 <= r['wall_to_high%'] <= 1.5)
                 last_k[tag] = k1
             if np.isfinite(k1 if k1 is not None else np.nan):
+                # 라운드 4: 벽 이동(같은 결제월 안에서) — 최근 5일 동안 벽이 위로 옮겨 간 날 수·아래로 옮겨 간 날 수, 5일 전 대비 벽 이동 폭
+                hq = [x for x in khist.get(tag, []) if x[0] == ym][-5:] + [(ym, k1)]
+                if len(hq) >= 2:
+                    dk = np.diff([x[1] for x in hq])
+                    r['wall_mig_up5'] = float((dk > 0).sum()); r['wall_mig_dn5'] = float((dk < 0).sum())
+                    r['wall_mig_today'] = float(np.sign(dk[-1]))
+                if len(hq) == 6: r['wall_shift5%'] = (k1 / hq[0][1] - 1) * 100
+                khist[tag] = (khist.get(tag, []) + [(ym, k1)])[-6:]
                 i = pos[d]
                 for lag in (1, 3, 5):
                     if i - lag >= 0:
@@ -110,10 +128,10 @@ def main():
                     pg = by_date[dates[i - 5]]; pg = pg[(pg['ym'] == ym) & (pg['cp'] == 'C') & (pg['K'] > S)]
                     if len(pg) and pg['oi'].sum() > 0: r['callotm_chg5%'] = (r['callotm_oi'] / pg['oi'].sum() - 1) * 100
                 walls.append({'date': d, 'tag': tag, 'ym': ym, 'exp': exp_of[ym], 'K': k1, 'S': S, 'share': r.get('wall_share'),
-                              'ratio12': r.get('wall_ratio12'), 'otm_cp': r.get('otm_cp'), 'dist%': r.get('wall_dist%'), 'dist_sig': r.get('wall_dist_sig'), 'dte': dte})
+                              'ratio12': r.get('wall_ratio12'), 'otm_cp': r.get('otm_cp'), 'dist%': r.get('wall_dist%'), 'dist_sig': r.get('wall_dist_sig'), 'dte': dte, 'ccent': r.get('ccent', np.nan)})
             rows.append(r)
     F = pd.DataFrame(rows)
-    feat_cols = [c for c in F.columns if c not in ('date', 'tag', 'ym')]
+    feat_cols = [c for c in F.columns if c not in ('date', 'tag', 'ym', 'ccent')]
     wide = F.pivot_table(index='date', columns='tag', values=feat_cols)
     wide.columns = [f'OW_{t}_{c}' for c, t in wide.columns]
     wide = wide.sort_index()

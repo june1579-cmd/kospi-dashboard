@@ -11,6 +11,7 @@
   우위 시작일 추적: 집중도가 상위 25%가 된 첫날 행사가를 고정하고 만기 뒤(롤오버 연장)까지 60거래일 추적.
   국면: 추세(60일선 위·아래)·외국인 20일 선물 누적(매수·매도 쪽)·변동성(3분위).
 후보(전체 기간 날짜, 판정은 A8): 우위 시작일 매수, 돌파 실패 매도, 닿고 밀림 매도, 돌파 뒤 외국인 이틀 연속 매도 확인 매도.
+라운드 4: 벽 이동(위로 물러남·아래로 내려옴)과 콜 무게중심 돌파를 신호로(양방향 사전 등록) — cause_wallmig_dev.csv.
 """
 import json
 import os
@@ -382,6 +383,46 @@ def main():
                         '10일 상승%': pct(v10[np.isfinite(v10)] > 0),
                         '같은 5일 상승 뒤 10일 상승%': round(float(np.mean([up5[b] for b in b5[idx] if b in up5])) * 100, 1) if len(idx) else np.nan,
                         '같은 20일 상승 뒤 10일 상승%': round(float(np.mean([up20[b] for b, rr in zip(b20[idx], r20[idx]) if np.isfinite(rr) and b in up20])) * 100, 1) if len(idx) else np.nan})
+    # 5d) 라운드 4 — 벽 이동 자체를 지표로(라운드 2 원인: 다가가면 벽이 위로 도망감 75%) + 콜 무게중심.
+    #     벽이 위로 물러남(최근 5일 같은 결제월에서 2번 이상 위로) / 벽이 아래로 내려옴(상단 낮춤, 현재가 위 유지) / 콜 무게중심 종가 돌파.
+    #     방향은 미리 양쪽 다 등록(개발 구간 서술을 보고 한쪽만 고르지 않음). 기준선 = 비슷하게 오른 뒤(5·20일 상승 5분위 맞춤).
+    MIG = []
+
+    def wall_series(tag):
+        Wt = W[W['tag'] == tag].drop_duplicates('date').set_index('date')
+        return Wt['K'].reindex(td), Wt['ym'].reindex(td), Wt['ccent'].reindex(td) if 'ccent' in Wt else pd.Series(np.nan, index=td)
+    mig_masks = {}
+    for tag in ('F0', 'F1', 'Q'):
+        Kt, ymt, cc = wall_series(tag)
+        same = (ymt == ymt.shift(1)) & Kt.notna() & Kt.shift(1).notna()
+        up1 = ((Kt > Kt.shift(1)) & same).astype(float); dn1 = ((Kt < Kt.shift(1)) & same).astype(float)
+        up5n = up1.rolling(5, min_periods=1).sum(); dn5n = dn1.rolling(5, min_periods=1).sum()
+        above = (Kt > k2['close'])
+        mig_masks[(tag, 'up2')] = ((up5n >= 2) & (up1 > 0)).fillna(False)                 # 오늘 위로 옮겨 갔고 5일 안 2번째 이상
+        mig_masks[(tag, 'dn')] = ((dn1 > 0) & above).fillna(False)                         # 오늘 벽이 내려옴(여전히 현재가 위)
+        mig_masks[(tag, 'dn2')] = ((dn5n >= 2) & (dn1 > 0) & above).fillna(False)
+        ccp = cc.shift(1); cpv = k2['close'].shift(1)
+        mig_masks[(tag, 'ccross')] = ((k2['close'] >= cc) & (cpv < ccp) & (ymt == ymt.shift(1))).fillna(False)   # 콜 무게중심 종가 돌파
+    for kind in ('up2', 'dn', 'dn2', 'ccross'):
+        mig_masks[('ANY', kind)] = mig_masks[('F0', kind)] | mig_masks[('F1', kind)] | mig_masks[('Q', kind)]
+    labs = {'up2': '콜벽이 5일 안 2번 이상 위로 물러남', 'dn': '콜벽이 아래로 내려옴(상단 낮춤)', 'dn2': '콜벽이 5일 안 2번 이상 내려옴',
+            'ccross': '지수가 콜 무게중심을 종가로 넘음'}
+    for (tag, kind), msk in mig_masks.items():
+        if tag == 'F1' and kind != 'up2': continue
+        nmtag = {'F0': '근월물', 'F1': '차월물', 'Q': '분기물', 'ANY': '근월·차월·분기물 중 하나'}[tag]
+        for cond, ms_, lab in (('', msk, f'{nmtag} {labs[kind]}'), ('_fsell', msk & (fs < 0), f'{nmtag} {labs[kind]} + 외국인 선물 순매도'),
+                               ('_fbuy', msk & (fs > 0), f'{nmtag} {labs[kind]} + 외국인 선물 순매수')):
+            dts = td[ms_.values]
+            for m in (5, 10):
+                add(f'A3c_mig_{kind}{cond}_{tag}_up_m{m}', f'{lab} → {m}일 상승', 1, f'wallmig_{kind}', dts, m)
+                add(f'A3c_mig_{kind}{cond}_{tag}_dn_m{m}', f'{lab} → {m}일 하락', -1, f'wallmig_{kind}', dts, m)
+            idx = np.where(ms_.values & dev)[0]; idx = idx[idx + 10 <= last_dev]
+            v10 = fwd[10][idx]; v5 = fwd[5][idx]; fl = post5_for[idx]
+            MIG.append({'사건': lab, '날수(개발)': int(len(idx)), '5일 상승%': pct(v5[np.isfinite(v5)] > 0), '10일 상승%': pct(v10[np.isfinite(v10)] > 0),
+                        '같은 5일 상승 뒤 10일 상승%': round(float(np.mean([up5[b] for b in b5[idx] if b in up5])) * 100, 1) if len(idx) else np.nan,
+                        '같은 20일 상승 뒤 10일 상승%': round(float(np.mean([up20[b] for b, rr in zip(b20[idx], r20[idx]) if np.isfinite(rr) and b in up20])) * 100, 1) if len(idx) else np.nan,
+                        '뒤 5일 외국인 순매도%': pct(fl[np.isfinite(fl)] < 0), '10일 평균 수익%': round(float(np.nanmean(v10)), 2) if len(idx) else np.nan})
+    MIG = pd.DataFrame(MIG); MIG.to_csv(os.path.join(od, 'cause_wallmig_dev.csv'), index=False, encoding='utf-8')
     OLD = pd.DataFrame(OLD); OLD.to_csv(os.path.join(od, 'cause_oldwall_dev.csv'), index=False, encoding='utf-8')
     L.save_candidates('a03c', cands)
 
@@ -398,7 +439,7 @@ def main():
             'migration': mig.reset_index().to_dict('records') if len(mig) else [],
             'cycles_wall_moved_up%': pct(CY['위로'] > 0) if len(CY) else None,
             'cycles_exp_above_first_wall%': pct(CY['만기 종가 ≥ 처음 벽']) if len(CY) else None,
-            'onset': OS.to_dict('records'), 'hindsight': hind, 'oldwall': OLD.to_dict('records'), 'candidates': len(cands)}
+            'onset': OS.to_dict('records'), 'hindsight': hind, 'oldwall': OLD.to_dict('records'), 'wallmig': MIG.to_dict('records'), 'candidates': len(cands)}
     json.dump(summ, open(os.path.join(od, 'cause_summary.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1, default=str)
     print(json.dumps(summ, ensure_ascii=False, default=str)[:3000])
 
