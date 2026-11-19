@@ -1,5 +1,4 @@
-[18:12:59] 시작 full ['roll2'] — 로그인 계정 설정 있음
-[18:12:59] == roll2
-[18:12:59] roll2: 2014~2019 받을 날 432일(이미 432일)
-[18:13:00] roll2: 쓰는 인자 {'prodId': 'KRDRVFUK2I', 'mktTpCd': 'T', 'aggBasTpCd': '0', 'share': '1', 'money': '1'}
-[18:26:38] roll2 저장 4614행 · 날짜 864일
+[21:43:47] 시작 full ['roll3'] — 로그인 계정 설정 있음
+[21:43:47] == roll3
+[21:43:47] roll3: 2020~2026 받을 날 486일(이미 864일)
+[21:43:48] roll3: 쓰는 인자 {'prodId': 'KRDRVFUK2I', 'mktTpCd': 'T', 'aggBasTpCd': '0', 'share': '1', 'money': '1'}
