@@ -1,0 +1,12 @@
+{
+ "trials_total": 364,
+ "holdout_peeks": 0,
+ "rounds": [
+  {
+   "round": 1,
+   "candidates": 364,
+   "dev_pass": 0,
+   "hold_pass": 0
+  }
+ ]
+}
