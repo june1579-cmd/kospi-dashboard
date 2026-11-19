@@ -1,0 +1,80 @@
+name: deriv-scan
+# 기간별 예측 가능성 탐색(시간·일·주·월·년, 코스피·코스피200 선물) — 무거운 계산 전용. KRX 로그인 없음(저장소 자료만), 다른 수집과 충돌 없음.
+# deriv/scan/trigger.txt 를 바꿔 push 하면 돈다. 결과는 deriv/scan/out·result 에 커밋.
+on:
+  push:
+    branches: [deriv-research]
+    paths: ['deriv/scan/trigger.txt']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: deriv-scan
+  cancel-in-progress: false
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix:
+        job:
+          - {inst: KOSPI, hs: '1,2,3'}
+          - {inst: KOSPI, hs: '5,10'}
+          - {inst: KOSPI, hs: '20,40'}
+          - {inst: KOSPI, hs: '60,120,250'}
+          - {inst: K200F, hs: '1,2,3'}
+          - {inst: K200F, hs: '5,10'}
+          - {inst: K200F, hs: '20,40'}
+          - {inst: K200F, hs: '60,120,250'}
+          - {inst: HOURLY, hs: '-'}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: deriv-research
+      - uses: actions/checkout@v4
+        if: matrix.job.inst == 'HOURLY'
+        with:
+          ref: intraday-data
+          path: intraday-data
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -q pandas numpy scipy scikit-learn
+      - name: 자료 만들기
+        run: python deriv/scan/scan_data.py
+      - name: 탐색
+        run: |
+          if [ "${{ matrix.job.inst }}" = "HOURLY" ]; then python deriv/scan/scan_hourly.py intraday-data/intraday
+          else python deriv/scan/scan_run.py ${{ matrix.job.inst }} ${{ matrix.job.hs }}; fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: scan-${{ matrix.job.inst }}-${{ strategy.job-index }}
+          path: deriv/scan/out
+          retention-days: 7
+  merge:
+    needs: scan
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: deriv-research
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -q pandas numpy scipy
+      - uses: actions/download-artifact@v4
+        with:
+          path: art
+      - name: 합치기
+        run: |
+          mkdir -p deriv/scan/out
+          for d in art/*/; do cp -r "$d"* deriv/scan/out/ 2>/dev/null || true; done
+          python deriv/scan/scan_merge.py
+      - name: 저장
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add deriv/scan/out deriv/scan/result
+          git commit -q -m "기간별 예측 가능성 탐색 결과 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || echo "변경 없음"
+          for i in 1 2 3; do git pull -q --rebase origin deriv-research && git push -q origin HEAD:deriv-research && break; sleep 10; done
