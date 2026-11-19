@@ -1,15 +1,15 @@
 {
  "date": "2026-11-19",
- "tag": "1540",
- "label": "잠정 15:37",
+ "tag": "1840",
+ "label": "확정 20:37",
  "alerts": [
-  "5일 급락 확률 34% → 22% (위험 신호 꺼짐, 기준 27%)"
+  "5일 급락 확률 34% → 11% (위험 신호 꺼짐, 기준 27%)"
  ],
  "korean_font": true,
  "signals_on_today": [
   "재진입 규칙(보유)",
   "매도 최적화 3위"
  ],
- "vkospi_hold": true,
- "vkospi_date": "2026-11-18"
+ "vkospi_hold": false,
+ "vkospi_date": "2026-11-19"
 }
