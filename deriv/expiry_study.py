@@ -59,7 +59,7 @@ def expiry_dates():
         for m in range(1, 13):
             st = second_thursday(y, m)
             t = prev_td(st)
-            if t is None or t > LAST or t < pd.Timestamp('2008-01-01'): continue
+            if t is None or t > LAST or st > LAST or t < pd.Timestamp('2008-01-01'): continue   # 아직 오지 않은 만기(앞 거래일로 당겨지는 것 방지)
             rows.append({'date': t, '종류': '분기' if m in (3, 6, 9, 12) else '월물', '원래': st})
     sec = {second_thursday(y, m) for y in range(2019, 2027) for m in range(1, 13)}
     d = pd.Timestamp('2019-09-26')
@@ -236,6 +236,17 @@ def test(d, xcol):
     return out
 
 
+def grade(r):
+    """등급: A/B/C/탈락/판정 불가(roll_study 등 다른 연구도 이 함수를 그대로 쓴다)."""
+    if r.get('등급') == '판정 불가' or pd.isna(r['p']): return '판정 불가'
+    same = pd.notna(r['앞절반rho']) and pd.notna(r['뒤절반rho']) and np.sign(r['앞절반rho']) == np.sign(r['뒤절반rho']) == np.sign(r['rho'])
+    if r['q'] <= 0.10 and same and pd.notna(r.get('선행rho')) and r['선행rho'] > 0 and r['선행p'] < 0.10 and np.sign(r['부분rho']) == np.sign(r['rho']):
+        return 'A'
+    if r['q'] <= 0.10 and same: return 'B'
+    if r['p'] < 0.05: return 'C'
+    return '탈락'
+
+
 def main():
     E = expiry_dates()
     nchk, bad = check_monthly(E)
@@ -259,14 +270,6 @@ def main():
     ok = T['p'].notna()
     T.loc[ok, 'q'] = stats.false_discovery_control(T.loc[ok, 'p'].values, method='bh')
 
-    def grade(r):
-        if r.get('등급') == '판정 불가' or pd.isna(r['p']): return '판정 불가'
-        same = pd.notna(r['앞절반rho']) and pd.notna(r['뒤절반rho']) and np.sign(r['앞절반rho']) == np.sign(r['뒤절반rho']) == np.sign(r['rho'])
-        if r['q'] <= 0.10 and same and pd.notna(r.get('선행rho')) and r['선행rho'] > 0 and r['선행p'] < 0.10 and np.sign(r['부분rho']) == np.sign(r['rho']):
-            return 'A'
-        if r['q'] <= 0.10 and same: return 'B'
-        if r['p'] < 0.05: return 'C'
-        return '탈락'
     T['등급'] = T.apply(grade, axis=1)
     T = T.sort_values(['등급', 'q'], key=lambda c: c.map({'A': 0, 'B': 1, 'C': 2, '탈락': 3, '판정 불가': 4}) if c.name == '등급' else c)
     T.round(4).to_csv(os.path.join(OUT, 'expiry_tests.csv'), index=False, encoding='utf-8')
