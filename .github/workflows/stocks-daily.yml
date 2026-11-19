@@ -1,0 +1,53 @@
+name: stocks-daily
+# 통합 명단(웹판 docs/stocks/stocks.json) 매일 갱신. validation 가지에 있고, research/validation/stocks_run.txt 가 push 되면 돈다
+# (Claude 예약 작업이 평일 20:25 KST 에 이 파일을 고쳐 올림). 결과는 validation 의 research/validation/stocks_out/ 와 main 의 docs/stocks/stocks.json.
+on:
+  push:
+    branches: [validation]
+    paths:
+      - 'research/validation/stocks_run.txt'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: stocks-daily
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: validation
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -q pykrx==1.2.9 requests pandas numpy
+      - name: 계산
+        id: run
+        env:
+          KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
+          KRX_ID: ${{ secrets.KRX_ID }}
+          KRX_PW: ${{ secrets.KRX_PW }}
+        run: python research/validation/stocks_daily.py
+      - name: validation 에 저장
+        if: always()
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add research/validation/stocks_out research/validation/raw/weekly
+          git commit -q -m "통합 명단 매일 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || echo "변경 없음"
+          for i in 1 2 3; do git pull --rebase -q origin validation && git push -q origin HEAD:validation && break; sleep 5; done
+      - name: 웹판(main) 반영
+        if: success()
+        run: |
+          OK=$(python -c "import json;m=json.load(open('research/validation/stocks_out/meta.json'));print(1 if m.get('ok') and not m.get('skipped') else 0)")
+          if [ "$OK" != "1" ]; then echo "새 결과 없음 — 웹판 그대로"; exit 0; fi
+          ASOF=$(python -c "import json;print(json.load(open('research/validation/stocks_out/meta.json'))['asof'])")
+          git fetch -q origin main
+          git worktree add -q -B stocks-main /tmp/main origin/main
+          cp research/validation/stocks_out/stocks.json /tmp/main/docs/stocks/stocks.json
+          cd /tmp/main
+          git add docs/stocks/stocks.json
+          git commit -q -m "통합 명단 $ASOF 종가 기준 갱신" || { echo "변경 없음"; exit 0; }
+          for i in 1 2 3; do git pull --rebase -q origin main && git push -q origin HEAD:main && break; sleep 5; done
