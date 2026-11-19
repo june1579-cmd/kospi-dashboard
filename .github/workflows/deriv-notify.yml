@@ -1,0 +1,46 @@
+name: deriv-notify
+# 콜 우위 연구소(deriv/lab) 보고를 카카오톡 '나에게 보내기'로 보낸다(글만, ===== 로 나눈 한 통마다 200자 이내, 링크 = 연구 일지).
+# 총괄(Claude 예약 작업)이 deriv/lab/notify/kakao.txt 를 고쳐 push 하면 돈다(judge 가 목표 도달 때 직접 부를 수도 있음).
+# 대시보드와 같은 비밀값을 쓰되 토큰은 읽기만 한다 — main 은 읽기만 하고 절대 쓰지 않는다.
+#   카카오는 refresh 토큰 연장 때 옛 토큰을 폐기하므로, 연장이 일어날 수 없는 기간(발급·연장 뒤 28일)에만 보내고
+#   그 밖이면 '보류'로 기록한다(deriv/lab/notify/last.json). 자세한 규칙은 deriv/lab/kakao_lab.py 맨 위.
+on:
+  push:
+    branches: [deriv-research]
+    paths: ['deriv/lab/notify/kakao.txt']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: deriv-notify
+  cancel-in-progress: false
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: deriv-research
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -q requests cryptography
+      - name: 카카오톡(연구소 보고, 글만)
+        env:
+          KAKAO_REST_KEY: ${{ secrets.KAKAO_REST_KEY }}
+          KAKAO_REFRESH_TOKEN: ${{ secrets.KAKAO_REFRESH_TOKEN }}
+          KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git fetch -q --depth=1 origin +refs/heads/main:refs/remotes/origin/main
+          git show origin/main:state/kakao_token.json > "$RUNNER_TEMP/main_token.json" 2>/dev/null || rm -f "$RUNNER_TEMP/main_token.json"
+          export TOKEN_RENEWED_AT="$(gh api "repos/$GITHUB_REPOSITORY/commits?path=state/kakao_token.json&sha=main&per_page=1" -q '.[0].commit.committer.date' 2>/dev/null || true)"
+          python deriv/lab/kakao_lab.py --file deriv/lab/notify/kakao.txt --main-state "$RUNNER_TEMP/main_token.json" --link https://claude.ai/artifact/PtZRViSn6y88UTNmYVsspR
+      - name: 결과 기록(deriv/lab/notify/last.json)
+        if: always()
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add deriv/lab/notify/last.json 2>/dev/null; git add deriv/lab/state/kakao_renewed.json 2>/dev/null
+          git commit -q -m "연구소 카카오 알림 기록 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || { echo "기록 변경 없음"; exit 0; }
+          for i in 1 2 3 4; do git pull -q --rebase origin deriv-research && git push -q origin HEAD:deriv-research && break; sleep 5; done
