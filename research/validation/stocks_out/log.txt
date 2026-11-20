@@ -2,27 +2,19 @@
 종목 400 (통합 명단 250 + 방어1 성장 종목 중 명단 밖 150 )
 KOSPI 단면 날짜 {'cap': '20261119', 'fund': '20261119', 'fr': '20261119', 'short': '20261117'}
 KOSDAQ 단면 날짜 {'cap': '20261119', 'fund': '20261119', 'fr': '20261119', 'short': '20261117'}
-  KOSPI 일별 100/519 (2.0분)
-  KOSPI 일별 200/519 (3.6분)
-  KOSPI 일별 300/519 (5.1분)
-  KOSPI 일별 400/519 (6.6분)
-  KOSPI 일별 500/519 (7.9분)
-  KOSDAQ 일별 100/519 (10.0분)
-  KOSDAQ 일별 200/519 (11.7분)
-  KOSDAQ 일별 300/519 (13.6분)
-  KOSDAQ 일별 400/519 (15.4분)
-  KOSDAQ 일별 500/519 (17.2분)
+  KOSPI 일별 100/519 (0.7분)
+  KOSPI 일별 200/519 (0.7분)
+  KOSPI 일별 300/519 (0.7분)
+  KOSPI 일별 400/519 (0.7분)
+  KOSPI 일별 500/519 (0.7분)
+  KOSDAQ 일별 100/519 (0.7분)
+  KOSDAQ 일별 200/519 (0.7분)
+  KOSDAQ 일별 300/519 (0.7분)
+  KOSDAQ 일별 400/519 (0.7분)
+  KOSDAQ 일별 500/519 (0.8분)
 일별 수정 종가(KRX) 400 / 400 · 20241002 ~ 20261119
 주간 등락률 104 주 20241129 ~ 20261119
 일별 수정 종가 ↔ KRX 주간 등락률 대조(최근 8주, 0.6%p 초과) 0 건
-  실패 PC_KOSPI_20241118_20261119 (1/4): ValueError 빈 표 또는 등락률 칸 없음
-  실패 PC_KOSPI_20241118_20261119 (2/4): ValueError 빈 표 또는 등락률 칸 없음
-  실패 PC_KOSPI_20241118_20261119 (3/4): ValueError 빈 표 또는 등락률 칸 없음
-  실패 PC_KOSPI_20241118_20261119 (4/4): ValueError 빈 표 또는 등락률 칸 없음
-Traceback (most recent call last):
-  File "/home/runner/work/kospi-dashboard/kospi-dashboard/research/validation/stocks_daily.py", line 516, in <module>
-    main()
-  File "/home/runner/work/kospi-dashboard/kospi-dashboard/research/validation/stocks_daily.py", line 283, in main
-    raise RuntimeError(f'{m} 기간 등락률 못 받음')
-RuntimeError: KOSPI 기간 등락률 못 받음
-
+방어1 최대 낙폭 KRX ↔ 원래 값 {'n': 250, 'corr': 0.9986, 'median_abs': 0.04, 'over2': 5, 'deeper_since': 5}
+방어1 계산 가능: 성장 종목 250 / 250 · 명단 밖 150 
+저장 250 종목 · 방어1 1~5위 [('골프존홀딩스', 79.9), ('에이플러스에셋', 76.5), ('우리금융지주', 76.2), ('나이스정보통신', 75.5), ('코메론', 74.7)] · 0.9분
