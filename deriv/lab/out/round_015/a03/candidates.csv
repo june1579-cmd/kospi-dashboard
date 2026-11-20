@@ -1,0 +1,1101 @@
+id,agent,desc,direction,family,n_signals
+A3_magnet_ALL_5_전체,A3,"ALL 콜벽(만기 5일 전, 전체) → 만기까지 상승",1,magnet,68
+A3_crossdown_ALL_5_전체_m1,A3,ALL 콜벽(전체) 종가 돌파 다음 날부터 1일 하락,-1,cross_down,17
+A3_crossdown_ALL_5_전체_m3,A3,ALL 콜벽(전체) 종가 돌파 다음 날부터 3일 하락,-1,cross_down,17
+A3_crossdown_ALL_5_전체_m5,A3,ALL 콜벽(전체) 종가 돌파 다음 날부터 5일 하락,-1,cross_down,17
+A3_crossdown_ALL_5_전체_m10,A3,ALL 콜벽(전체) 종가 돌파 다음 날부터 10일 하락,-1,cross_down,17
+A3_crossdown_ALL_5_전체_m20,A3,ALL 콜벽(전체) 종가 돌파 다음 날부터 20일 하락,-1,cross_down,17
+A3_magnet_ALL_5_집중 상위50%,A3,"ALL 콜벽(만기 5일 전, 집중 상위50%) → 만기까지 상승",1,magnet,24
+A3_magnet_ALL_5_집중 상위25%,A3,"ALL 콜벽(만기 5일 전, 집중 상위25%) → 만기까지 상승",1,magnet,11
+A3_magnet_ALL_5_1위/2위 상위25%,A3,"ALL 콜벽(만기 5일 전, 1위/2위 상위25%) → 만기까지 상승",1,magnet,15
+A3_magnet_ALL_5_콜/풋 상위25%,A3,"ALL 콜벽(만기 5일 전, 콜/풋 상위25%) → 만기까지 상승",1,magnet,16
+A3_magnet_ALL_5_가까움(≤1σ),A3,"ALL 콜벽(만기 5일 전, 가까움(≤1σ)) → 만기까지 상승",1,magnet,15
+A3_magnet_ALL_10_전체,A3,"ALL 콜벽(만기 10일 전, 전체) → 만기까지 상승",1,magnet,95
+A3_crossdown_ALL_10_전체_m1,A3,ALL 콜벽(전체) 종가 돌파 다음 날부터 1일 하락,-1,cross_down,19
+A3_crossdown_ALL_10_전체_m3,A3,ALL 콜벽(전체) 종가 돌파 다음 날부터 3일 하락,-1,cross_down,19
+A3_crossdown_ALL_10_전체_m5,A3,ALL 콜벽(전체) 종가 돌파 다음 날부터 5일 하락,-1,cross_down,19
+A3_crossdown_ALL_10_전체_m10,A3,ALL 콜벽(전체) 종가 돌파 다음 날부터 10일 하락,-1,cross_down,19
+A3_crossdown_ALL_10_전체_m20,A3,ALL 콜벽(전체) 종가 돌파 다음 날부터 20일 하락,-1,cross_down,19
+A3_magnet_ALL_10_집중 상위50%,A3,"ALL 콜벽(만기 10일 전, 집중 상위50%) → 만기까지 상승",1,magnet,44
+A3_magnet_ALL_10_집중 상위25%,A3,"ALL 콜벽(만기 10일 전, 집중 상위25%) → 만기까지 상승",1,magnet,26
+A3_magnet_ALL_10_1위/2위 상위25%,A3,"ALL 콜벽(만기 10일 전, 1위/2위 상위25%) → 만기까지 상승",1,magnet,33
+A3_magnet_ALL_10_콜/풋 상위25%,A3,"ALL 콜벽(만기 10일 전, 콜/풋 상위25%) → 만기까지 상승",1,magnet,28
+A3_magnet_ALL_10_가까움(≤1σ),A3,"ALL 콜벽(만기 10일 전, 가까움(≤1σ)) → 만기까지 상승",1,magnet,24
+A3_magnet_ALL_15_전체,A3,"ALL 콜벽(만기 15일 전, 전체) → 만기까지 상승",1,magnet,108
+A3_crossdown_ALL_15_전체_m1,A3,ALL 콜벽(전체) 종가 돌파 다음 날부터 1일 하락,-1,cross_down,26
+A3_crossdown_conf_ALL_15_전체_m1,A3,ALL 콜벽(전체) 돌파 + 다음 날 외국인 선물 순매도 → 1일 하락,-1,cross_down_conf,13
+A3_crossdown_ALL_15_전체_m3,A3,ALL 콜벽(전체) 종가 돌파 다음 날부터 3일 하락,-1,cross_down,26
+A3_crossdown_conf_ALL_15_전체_m3,A3,ALL 콜벽(전체) 돌파 + 다음 날 외국인 선물 순매도 → 3일 하락,-1,cross_down_conf,13
+A3_crossdown_ALL_15_전체_m5,A3,ALL 콜벽(전체) 종가 돌파 다음 날부터 5일 하락,-1,cross_down,26
+A3_crossdown_conf_ALL_15_전체_m5,A3,ALL 콜벽(전체) 돌파 + 다음 날 외국인 선물 순매도 → 5일 하락,-1,cross_down_conf,13
+A3_crossdown_ALL_15_전체_m10,A3,ALL 콜벽(전체) 종가 돌파 다음 날부터 10일 하락,-1,cross_down,26
+A3_crossdown_conf_ALL_15_전체_m10,A3,ALL 콜벽(전체) 돌파 + 다음 날 외국인 선물 순매도 → 10일 하락,-1,cross_down_conf,13
+A3_crossdown_ALL_15_전체_m20,A3,ALL 콜벽(전체) 종가 돌파 다음 날부터 20일 하락,-1,cross_down,25
+A3_crossdown_conf_ALL_15_전체_m20,A3,ALL 콜벽(전체) 돌파 + 다음 날 외국인 선물 순매도 → 20일 하락,-1,cross_down_conf,13
+A3_magnet_ALL_15_집중 상위50%,A3,"ALL 콜벽(만기 15일 전, 집중 상위50%) → 만기까지 상승",1,magnet,53
+A3_crossdown_ALL_15_집중 상위50%_m1,A3,ALL 콜벽(집중 상위50%) 종가 돌파 다음 날부터 1일 하락,-1,cross_down,13
+A3_crossdown_ALL_15_집중 상위50%_m3,A3,ALL 콜벽(집중 상위50%) 종가 돌파 다음 날부터 3일 하락,-1,cross_down,13
+A3_crossdown_ALL_15_집중 상위50%_m5,A3,ALL 콜벽(집중 상위50%) 종가 돌파 다음 날부터 5일 하락,-1,cross_down,13
+A3_crossdown_ALL_15_집중 상위50%_m10,A3,ALL 콜벽(집중 상위50%) 종가 돌파 다음 날부터 10일 하락,-1,cross_down,13
+A3_crossdown_ALL_15_집중 상위50%_m20,A3,ALL 콜벽(집중 상위50%) 종가 돌파 다음 날부터 20일 하락,-1,cross_down,12
+A3_magnet_ALL_15_집중 상위25%,A3,"ALL 콜벽(만기 15일 전, 집중 상위25%) → 만기까지 상승",1,magnet,26
+A3_magnet_ALL_15_1위/2위 상위25%,A3,"ALL 콜벽(만기 15일 전, 1위/2위 상위25%) → 만기까지 상승",1,magnet,29
+A3_crossdown_ALL_15_1위/2위 상위25%_m1,A3,ALL 콜벽(1위/2위 상위25%) 종가 돌파 다음 날부터 1일 하락,-1,cross_down,10
+A3_crossdown_ALL_15_1위/2위 상위25%_m3,A3,ALL 콜벽(1위/2위 상위25%) 종가 돌파 다음 날부터 3일 하락,-1,cross_down,10
+A3_crossdown_ALL_15_1위/2위 상위25%_m5,A3,ALL 콜벽(1위/2위 상위25%) 종가 돌파 다음 날부터 5일 하락,-1,cross_down,10
+A3_crossdown_ALL_15_1위/2위 상위25%_m10,A3,ALL 콜벽(1위/2위 상위25%) 종가 돌파 다음 날부터 10일 하락,-1,cross_down,10
+A3_crossdown_ALL_15_1위/2위 상위25%_m20,A3,ALL 콜벽(1위/2위 상위25%) 종가 돌파 다음 날부터 20일 하락,-1,cross_down,9
+A3_magnet_ALL_15_콜/풋 상위25%,A3,"ALL 콜벽(만기 15일 전, 콜/풋 상위25%) → 만기까지 상승",1,magnet,29
+A3_magnet_ALL_15_가까움(≤1σ),A3,"ALL 콜벽(만기 15일 전, 가까움(≤1σ)) → 만기까지 상승",1,magnet,34
+A3_crossdown_ALL_15_가까움(≤1σ)_m1,A3,ALL 콜벽(가까움(≤1σ)) 종가 돌파 다음 날부터 1일 하락,-1,cross_down,13
+A3_crossdown_conf_ALL_15_가까움(≤1σ)_m1,A3,ALL 콜벽(가까움(≤1σ)) 돌파 + 다음 날 외국인 선물 순매도 → 1일 하락,-1,cross_down_conf,9
+A3_crossdown_ALL_15_가까움(≤1σ)_m3,A3,ALL 콜벽(가까움(≤1σ)) 종가 돌파 다음 날부터 3일 하락,-1,cross_down,13
+A3_crossdown_conf_ALL_15_가까움(≤1σ)_m3,A3,ALL 콜벽(가까움(≤1σ)) 돌파 + 다음 날 외국인 선물 순매도 → 3일 하락,-1,cross_down_conf,9
+A3_crossdown_ALL_15_가까움(≤1σ)_m5,A3,ALL 콜벽(가까움(≤1σ)) 종가 돌파 다음 날부터 5일 하락,-1,cross_down,13
+A3_crossdown_conf_ALL_15_가까움(≤1σ)_m5,A3,ALL 콜벽(가까움(≤1σ)) 돌파 + 다음 날 외국인 선물 순매도 → 5일 하락,-1,cross_down_conf,9
+A3_crossdown_ALL_15_가까움(≤1σ)_m10,A3,ALL 콜벽(가까움(≤1σ)) 종가 돌파 다음 날부터 10일 하락,-1,cross_down,13
+A3_crossdown_conf_ALL_15_가까움(≤1σ)_m10,A3,ALL 콜벽(가까움(≤1σ)) 돌파 + 다음 날 외국인 선물 순매도 → 10일 하락,-1,cross_down_conf,9
+A3_crossdown_ALL_15_가까움(≤1σ)_m20,A3,ALL 콜벽(가까움(≤1σ)) 종가 돌파 다음 날부터 20일 하락,-1,cross_down,12
+A3_crossdown_conf_ALL_15_가까움(≤1σ)_m20,A3,ALL 콜벽(가까움(≤1σ)) 돌파 + 다음 날 외국인 선물 순매도 → 20일 하락,-1,cross_down_conf,9
+A3_magnet_ALL_20_전체,A3,"ALL 콜벽(만기 20일 전, 전체) → 만기까지 상승",1,magnet,115
+A3_crossdown_ALL_20_전체_m1,A3,ALL 콜벽(전체) 종가 돌파 다음 날부터 1일 하락,-1,cross_down,28
+A3_crossdown_conf_ALL_20_전체_m1,A3,ALL 콜벽(전체) 돌파 + 다음 날 외국인 선물 순매도 → 1일 하락,-1,cross_down_conf,13
+A3_crossdown_ALL_20_전체_m3,A3,ALL 콜벽(전체) 종가 돌파 다음 날부터 3일 하락,-1,cross_down,28
+A3_crossdown_conf_ALL_20_전체_m3,A3,ALL 콜벽(전체) 돌파 + 다음 날 외국인 선물 순매도 → 3일 하락,-1,cross_down_conf,13
+A3_crossdown_ALL_20_전체_m5,A3,ALL 콜벽(전체) 종가 돌파 다음 날부터 5일 하락,-1,cross_down,28
+A3_crossdown_conf_ALL_20_전체_m5,A3,ALL 콜벽(전체) 돌파 + 다음 날 외국인 선물 순매도 → 5일 하락,-1,cross_down_conf,13
+A3_crossdown_ALL_20_전체_m10,A3,ALL 콜벽(전체) 종가 돌파 다음 날부터 10일 하락,-1,cross_down,28
+A3_crossdown_conf_ALL_20_전체_m10,A3,ALL 콜벽(전체) 돌파 + 다음 날 외국인 선물 순매도 → 10일 하락,-1,cross_down_conf,13
+A3_crossdown_ALL_20_전체_m20,A3,ALL 콜벽(전체) 종가 돌파 다음 날부터 20일 하락,-1,cross_down,27
+A3_crossdown_conf_ALL_20_전체_m20,A3,ALL 콜벽(전체) 돌파 + 다음 날 외국인 선물 순매도 → 20일 하락,-1,cross_down_conf,13
+A3_magnet_ALL_20_집중 상위50%,A3,"ALL 콜벽(만기 20일 전, 집중 상위50%) → 만기까지 상승",1,magnet,57
+A3_crossdown_ALL_20_집중 상위50%_m1,A3,ALL 콜벽(집중 상위50%) 종가 돌파 다음 날부터 1일 하락,-1,cross_down,17
+A3_crossdown_ALL_20_집중 상위50%_m3,A3,ALL 콜벽(집중 상위50%) 종가 돌파 다음 날부터 3일 하락,-1,cross_down,17
+A3_crossdown_ALL_20_집중 상위50%_m5,A3,ALL 콜벽(집중 상위50%) 종가 돌파 다음 날부터 5일 하락,-1,cross_down,17
+A3_crossdown_ALL_20_집중 상위50%_m10,A3,ALL 콜벽(집중 상위50%) 종가 돌파 다음 날부터 10일 하락,-1,cross_down,17
+A3_crossdown_ALL_20_집중 상위50%_m20,A3,ALL 콜벽(집중 상위50%) 종가 돌파 다음 날부터 20일 하락,-1,cross_down,16
+A3_magnet_ALL_20_집중 상위25%,A3,"ALL 콜벽(만기 20일 전, 집중 상위25%) → 만기까지 상승",1,magnet,27
+A3_magnet_ALL_20_1위/2위 상위25%,A3,"ALL 콜벽(만기 20일 전, 1위/2위 상위25%) → 만기까지 상승",1,magnet,38
+A3_crossdown_ALL_20_1위/2위 상위25%_m1,A3,ALL 콜벽(1위/2위 상위25%) 종가 돌파 다음 날부터 1일 하락,-1,cross_down,10
+A3_crossdown_ALL_20_1위/2위 상위25%_m3,A3,ALL 콜벽(1위/2위 상위25%) 종가 돌파 다음 날부터 3일 하락,-1,cross_down,10
+A3_crossdown_ALL_20_1위/2위 상위25%_m5,A3,ALL 콜벽(1위/2위 상위25%) 종가 돌파 다음 날부터 5일 하락,-1,cross_down,10
+A3_crossdown_ALL_20_1위/2위 상위25%_m10,A3,ALL 콜벽(1위/2위 상위25%) 종가 돌파 다음 날부터 10일 하락,-1,cross_down,10
+A3_crossdown_ALL_20_1위/2위 상위25%_m20,A3,ALL 콜벽(1위/2위 상위25%) 종가 돌파 다음 날부터 20일 하락,-1,cross_down,10
+A3_magnet_ALL_20_콜/풋 상위25%,A3,"ALL 콜벽(만기 20일 전, 콜/풋 상위25%) → 만기까지 상승",1,magnet,28
+A3_magnet_ALL_20_가까움(≤1σ),A3,"ALL 콜벽(만기 20일 전, 가까움(≤1σ)) → 만기까지 상승",1,magnet,44
+A3_crossdown_ALL_20_가까움(≤1σ)_m1,A3,ALL 콜벽(가까움(≤1σ)) 종가 돌파 다음 날부터 1일 하락,-1,cross_down,17
+A3_crossdown_conf_ALL_20_가까움(≤1σ)_m1,A3,ALL 콜벽(가까움(≤1σ)) 돌파 + 다음 날 외국인 선물 순매도 → 1일 하락,-1,cross_down_conf,9
+A3_crossdown_ALL_20_가까움(≤1σ)_m3,A3,ALL 콜벽(가까움(≤1σ)) 종가 돌파 다음 날부터 3일 하락,-1,cross_down,17
+A3_crossdown_conf_ALL_20_가까움(≤1σ)_m3,A3,ALL 콜벽(가까움(≤1σ)) 돌파 + 다음 날 외국인 선물 순매도 → 3일 하락,-1,cross_down_conf,9
+A3_crossdown_ALL_20_가까움(≤1σ)_m5,A3,ALL 콜벽(가까움(≤1σ)) 종가 돌파 다음 날부터 5일 하락,-1,cross_down,17
+A3_crossdown_conf_ALL_20_가까움(≤1σ)_m5,A3,ALL 콜벽(가까움(≤1σ)) 돌파 + 다음 날 외국인 선물 순매도 → 5일 하락,-1,cross_down_conf,9
+A3_crossdown_ALL_20_가까움(≤1σ)_m10,A3,ALL 콜벽(가까움(≤1σ)) 종가 돌파 다음 날부터 10일 하락,-1,cross_down,17
+A3_crossdown_conf_ALL_20_가까움(≤1σ)_m10,A3,ALL 콜벽(가까움(≤1σ)) 돌파 + 다음 날 외국인 선물 순매도 → 10일 하락,-1,cross_down_conf,9
+A3_crossdown_ALL_20_가까움(≤1σ)_m20,A3,ALL 콜벽(가까움(≤1σ)) 종가 돌파 다음 날부터 20일 하락,-1,cross_down,16
+A3_crossdown_conf_ALL_20_가까움(≤1σ)_m20,A3,ALL 콜벽(가까움(≤1σ)) 돌파 + 다음 날 외국인 선물 순매도 → 20일 하락,-1,cross_down_conf,9
+A3_magnet_ALL_20_가까움+집중25%,A3,"ALL 콜벽(만기 20일 전, 가까움+집중25%) → 만기까지 상승",1,magnet,15
+A3_magnet_F0_5_전체,A3,"F0 콜벽(만기 5일 전, 전체) → 만기까지 상승",1,magnet,74
+A3_crossdown_F0_5_전체_m1,A3,F0 콜벽(전체) 종가 돌파 다음 날부터 1일 하락,-1,cross_down,15
+A3_crossdown_F0_5_전체_m3,A3,F0 콜벽(전체) 종가 돌파 다음 날부터 3일 하락,-1,cross_down,15
+A3_crossdown_F0_5_전체_m5,A3,F0 콜벽(전체) 종가 돌파 다음 날부터 5일 하락,-1,cross_down,15
+A3_crossdown_F0_5_전체_m10,A3,F0 콜벽(전체) 종가 돌파 다음 날부터 10일 하락,-1,cross_down,15
+A3_crossdown_F0_5_전체_m20,A3,F0 콜벽(전체) 종가 돌파 다음 날부터 20일 하락,-1,cross_down,15
+A3_magnet_F0_5_집중 상위50%,A3,"F0 콜벽(만기 5일 전, 집중 상위50%) → 만기까지 상승",1,magnet,32
+A3_magnet_F0_5_집중 상위25%,A3,"F0 콜벽(만기 5일 전, 집중 상위25%) → 만기까지 상승",1,magnet,18
+A3_magnet_F0_5_1위/2위 상위25%,A3,"F0 콜벽(만기 5일 전, 1위/2위 상위25%) → 만기까지 상승",1,magnet,15
+A3_magnet_F0_5_콜/풋 상위25%,A3,"F0 콜벽(만기 5일 전, 콜/풋 상위25%) → 만기까지 상승",1,magnet,16
+A3_magnet_F0_5_가까움(≤1σ),A3,"F0 콜벽(만기 5일 전, 가까움(≤1σ)) → 만기까지 상승",1,magnet,14
+A3_magnet_F0_10_전체,A3,"F0 콜벽(만기 10일 전, 전체) → 만기까지 상승",1,magnet,100
+A3_crossdown_F0_10_전체_m1,A3,F0 콜벽(전체) 종가 돌파 다음 날부터 1일 하락,-1,cross_down,21
+A3_crossdown_conf_F0_10_전체_m1,A3,F0 콜벽(전체) 돌파 + 다음 날 외국인 선물 순매도 → 1일 하락,-1,cross_down_conf,13
+A3_crossdown_F0_10_전체_m3,A3,F0 콜벽(전체) 종가 돌파 다음 날부터 3일 하락,-1,cross_down,21
+A3_crossdown_conf_F0_10_전체_m3,A3,F0 콜벽(전체) 돌파 + 다음 날 외국인 선물 순매도 → 3일 하락,-1,cross_down_conf,13
+A3_crossdown_F0_10_전체_m5,A3,F0 콜벽(전체) 종가 돌파 다음 날부터 5일 하락,-1,cross_down,21
+A3_crossdown_conf_F0_10_전체_m5,A3,F0 콜벽(전체) 돌파 + 다음 날 외국인 선물 순매도 → 5일 하락,-1,cross_down_conf,13
+A3_crossdown_F0_10_전체_m10,A3,F0 콜벽(전체) 종가 돌파 다음 날부터 10일 하락,-1,cross_down,21
+A3_crossdown_conf_F0_10_전체_m10,A3,F0 콜벽(전체) 돌파 + 다음 날 외국인 선물 순매도 → 10일 하락,-1,cross_down_conf,13
+A3_crossdown_F0_10_전체_m20,A3,F0 콜벽(전체) 종가 돌파 다음 날부터 20일 하락,-1,cross_down,21
+A3_crossdown_conf_F0_10_전체_m20,A3,F0 콜벽(전체) 돌파 + 다음 날 외국인 선물 순매도 → 20일 하락,-1,cross_down_conf,13
+A3_magnet_F0_10_집중 상위50%,A3,"F0 콜벽(만기 10일 전, 집중 상위50%) → 만기까지 상승",1,magnet,46
+A3_magnet_F0_10_집중 상위25%,A3,"F0 콜벽(만기 10일 전, 집중 상위25%) → 만기까지 상승",1,magnet,28
+A3_magnet_F0_10_1위/2위 상위25%,A3,"F0 콜벽(만기 10일 전, 1위/2위 상위25%) → 만기까지 상승",1,magnet,30
+A3_magnet_F0_10_콜/풋 상위25%,A3,"F0 콜벽(만기 10일 전, 콜/풋 상위25%) → 만기까지 상승",1,magnet,25
+A3_magnet_F0_10_가까움(≤1σ),A3,"F0 콜벽(만기 10일 전, 가까움(≤1σ)) → 만기까지 상승",1,magnet,18
+A3_magnet_F0_15_전체,A3,"F0 콜벽(만기 15일 전, 전체) → 만기까지 상승",1,magnet,113
+A3_crossdown_F0_15_전체_m1,A3,F0 콜벽(전체) 종가 돌파 다음 날부터 1일 하락,-1,cross_down,25
+A3_crossdown_conf_F0_15_전체_m1,A3,F0 콜벽(전체) 돌파 + 다음 날 외국인 선물 순매도 → 1일 하락,-1,cross_down_conf,13
+A3_crossdown_F0_15_전체_m3,A3,F0 콜벽(전체) 종가 돌파 다음 날부터 3일 하락,-1,cross_down,25
+A3_crossdown_conf_F0_15_전체_m3,A3,F0 콜벽(전체) 돌파 + 다음 날 외국인 선물 순매도 → 3일 하락,-1,cross_down_conf,13
+A3_crossdown_F0_15_전체_m5,A3,F0 콜벽(전체) 종가 돌파 다음 날부터 5일 하락,-1,cross_down,25
+A3_crossdown_conf_F0_15_전체_m5,A3,F0 콜벽(전체) 돌파 + 다음 날 외국인 선물 순매도 → 5일 하락,-1,cross_down_conf,13
+A3_crossdown_F0_15_전체_m10,A3,F0 콜벽(전체) 종가 돌파 다음 날부터 10일 하락,-1,cross_down,25
+A3_crossdown_conf_F0_15_전체_m10,A3,F0 콜벽(전체) 돌파 + 다음 날 외국인 선물 순매도 → 10일 하락,-1,cross_down_conf,13
+A3_crossdown_F0_15_전체_m20,A3,F0 콜벽(전체) 종가 돌파 다음 날부터 20일 하락,-1,cross_down,25
+A3_crossdown_conf_F0_15_전체_m20,A3,F0 콜벽(전체) 돌파 + 다음 날 외국인 선물 순매도 → 20일 하락,-1,cross_down_conf,13
+A3_magnet_F0_15_집중 상위50%,A3,"F0 콜벽(만기 15일 전, 집중 상위50%) → 만기까지 상승",1,magnet,56
+A3_crossdown_F0_15_집중 상위50%_m1,A3,F0 콜벽(집중 상위50%) 종가 돌파 다음 날부터 1일 하락,-1,cross_down,11
+A3_crossdown_F0_15_집중 상위50%_m3,A3,F0 콜벽(집중 상위50%) 종가 돌파 다음 날부터 3일 하락,-1,cross_down,11
+A3_crossdown_F0_15_집중 상위50%_m5,A3,F0 콜벽(집중 상위50%) 종가 돌파 다음 날부터 5일 하락,-1,cross_down,11
+A3_crossdown_F0_15_집중 상위50%_m10,A3,F0 콜벽(집중 상위50%) 종가 돌파 다음 날부터 10일 하락,-1,cross_down,11
+A3_crossdown_F0_15_집중 상위50%_m20,A3,F0 콜벽(집중 상위50%) 종가 돌파 다음 날부터 20일 하락,-1,cross_down,11
+A3_magnet_F0_15_집중 상위25%,A3,"F0 콜벽(만기 15일 전, 집중 상위25%) → 만기까지 상승",1,magnet,31
+A3_magnet_F0_15_1위/2위 상위25%,A3,"F0 콜벽(만기 15일 전, 1위/2위 상위25%) → 만기까지 상승",1,magnet,30
+A3_magnet_F0_15_콜/풋 상위25%,A3,"F0 콜벽(만기 15일 전, 콜/풋 상위25%) → 만기까지 상승",1,magnet,31
+A3_magnet_F0_15_가까움(≤1σ),A3,"F0 콜벽(만기 15일 전, 가까움(≤1σ)) → 만기까지 상승",1,magnet,31
+A3_crossdown_F0_15_가까움(≤1σ)_m1,A3,F0 콜벽(가까움(≤1σ)) 종가 돌파 다음 날부터 1일 하락,-1,cross_down,13
+A3_crossdown_conf_F0_15_가까움(≤1σ)_m1,A3,F0 콜벽(가까움(≤1σ)) 돌파 + 다음 날 외국인 선물 순매도 → 1일 하락,-1,cross_down_conf,8
+A3_crossdown_F0_15_가까움(≤1σ)_m3,A3,F0 콜벽(가까움(≤1σ)) 종가 돌파 다음 날부터 3일 하락,-1,cross_down,13
+A3_crossdown_conf_F0_15_가까움(≤1σ)_m3,A3,F0 콜벽(가까움(≤1σ)) 돌파 + 다음 날 외국인 선물 순매도 → 3일 하락,-1,cross_down_conf,8
+A3_crossdown_F0_15_가까움(≤1σ)_m5,A3,F0 콜벽(가까움(≤1σ)) 종가 돌파 다음 날부터 5일 하락,-1,cross_down,13
+A3_crossdown_conf_F0_15_가까움(≤1σ)_m5,A3,F0 콜벽(가까움(≤1σ)) 돌파 + 다음 날 외국인 선물 순매도 → 5일 하락,-1,cross_down_conf,8
+A3_crossdown_F0_15_가까움(≤1σ)_m10,A3,F0 콜벽(가까움(≤1σ)) 종가 돌파 다음 날부터 10일 하락,-1,cross_down,13
+A3_crossdown_conf_F0_15_가까움(≤1σ)_m10,A3,F0 콜벽(가까움(≤1σ)) 돌파 + 다음 날 외국인 선물 순매도 → 10일 하락,-1,cross_down_conf,8
+A3_crossdown_F0_15_가까움(≤1σ)_m20,A3,F0 콜벽(가까움(≤1σ)) 종가 돌파 다음 날부터 20일 하락,-1,cross_down,13
+A3_crossdown_conf_F0_15_가까움(≤1σ)_m20,A3,F0 콜벽(가까움(≤1σ)) 돌파 + 다음 날 외국인 선물 순매도 → 20일 하락,-1,cross_down_conf,8
+A3_magnet_F0_15_가까움+집중25%,A3,"F0 콜벽(만기 15일 전, 가까움+집중25%) → 만기까지 상승",1,magnet,10
+A3_magnet_F0_20_전체,A3,"F0 콜벽(만기 20일 전, 전체) → 만기까지 상승",1,magnet,118
+A3_crossdown_F0_20_전체_m1,A3,F0 콜벽(전체) 종가 돌파 다음 날부터 1일 하락,-1,cross_down,28
+A3_crossdown_conf_F0_20_전체_m1,A3,F0 콜벽(전체) 돌파 + 다음 날 외국인 선물 순매도 → 1일 하락,-1,cross_down_conf,13
+A3_crossdown_F0_20_전체_m3,A3,F0 콜벽(전체) 종가 돌파 다음 날부터 3일 하락,-1,cross_down,28
+A3_crossdown_conf_F0_20_전체_m3,A3,F0 콜벽(전체) 돌파 + 다음 날 외국인 선물 순매도 → 3일 하락,-1,cross_down_conf,13
+A3_crossdown_F0_20_전체_m5,A3,F0 콜벽(전체) 종가 돌파 다음 날부터 5일 하락,-1,cross_down,28
+A3_crossdown_conf_F0_20_전체_m5,A3,F0 콜벽(전체) 돌파 + 다음 날 외국인 선물 순매도 → 5일 하락,-1,cross_down_conf,13
+A3_crossdown_F0_20_전체_m10,A3,F0 콜벽(전체) 종가 돌파 다음 날부터 10일 하락,-1,cross_down,28
+A3_crossdown_conf_F0_20_전체_m10,A3,F0 콜벽(전체) 돌파 + 다음 날 외국인 선물 순매도 → 10일 하락,-1,cross_down_conf,13
+A3_crossdown_F0_20_전체_m20,A3,F0 콜벽(전체) 종가 돌파 다음 날부터 20일 하락,-1,cross_down,28
+A3_crossdown_conf_F0_20_전체_m20,A3,F0 콜벽(전체) 돌파 + 다음 날 외국인 선물 순매도 → 20일 하락,-1,cross_down_conf,13
+A3_magnet_F0_20_집중 상위50%,A3,"F0 콜벽(만기 20일 전, 집중 상위50%) → 만기까지 상승",1,magnet,57
+A3_crossdown_F0_20_집중 상위50%_m1,A3,F0 콜벽(집중 상위50%) 종가 돌파 다음 날부터 1일 하락,-1,cross_down,14
+A3_crossdown_F0_20_집중 상위50%_m3,A3,F0 콜벽(집중 상위50%) 종가 돌파 다음 날부터 3일 하락,-1,cross_down,14
+A3_crossdown_F0_20_집중 상위50%_m5,A3,F0 콜벽(집중 상위50%) 종가 돌파 다음 날부터 5일 하락,-1,cross_down,14
+A3_crossdown_F0_20_집중 상위50%_m10,A3,F0 콜벽(집중 상위50%) 종가 돌파 다음 날부터 10일 하락,-1,cross_down,14
+A3_crossdown_F0_20_집중 상위50%_m20,A3,F0 콜벽(집중 상위50%) 종가 돌파 다음 날부터 20일 하락,-1,cross_down,14
+A3_magnet_F0_20_집중 상위25%,A3,"F0 콜벽(만기 20일 전, 집중 상위25%) → 만기까지 상승",1,magnet,31
+A3_magnet_F0_20_1위/2위 상위25%,A3,"F0 콜벽(만기 20일 전, 1위/2위 상위25%) → 만기까지 상승",1,magnet,37
+A3_magnet_F0_20_콜/풋 상위25%,A3,"F0 콜벽(만기 20일 전, 콜/풋 상위25%) → 만기까지 상승",1,magnet,33
+A3_magnet_F0_20_가까움(≤1σ),A3,"F0 콜벽(만기 20일 전, 가까움(≤1σ)) → 만기까지 상승",1,magnet,46
+A3_crossdown_F0_20_가까움(≤1σ)_m1,A3,F0 콜벽(가까움(≤1σ)) 종가 돌파 다음 날부터 1일 하락,-1,cross_down,17
+A3_crossdown_conf_F0_20_가까움(≤1σ)_m1,A3,F0 콜벽(가까움(≤1σ)) 돌파 + 다음 날 외국인 선물 순매도 → 1일 하락,-1,cross_down_conf,8
+A3_crossdown_F0_20_가까움(≤1σ)_m3,A3,F0 콜벽(가까움(≤1σ)) 종가 돌파 다음 날부터 3일 하락,-1,cross_down,17
+A3_crossdown_conf_F0_20_가까움(≤1σ)_m3,A3,F0 콜벽(가까움(≤1σ)) 돌파 + 다음 날 외국인 선물 순매도 → 3일 하락,-1,cross_down_conf,8
+A3_crossdown_F0_20_가까움(≤1σ)_m5,A3,F0 콜벽(가까움(≤1σ)) 종가 돌파 다음 날부터 5일 하락,-1,cross_down,17
+A3_crossdown_conf_F0_20_가까움(≤1σ)_m5,A3,F0 콜벽(가까움(≤1σ)) 돌파 + 다음 날 외국인 선물 순매도 → 5일 하락,-1,cross_down_conf,8
+A3_crossdown_F0_20_가까움(≤1σ)_m10,A3,F0 콜벽(가까움(≤1σ)) 종가 돌파 다음 날부터 10일 하락,-1,cross_down,17
+A3_crossdown_conf_F0_20_가까움(≤1σ)_m10,A3,F0 콜벽(가까움(≤1σ)) 돌파 + 다음 날 외국인 선물 순매도 → 10일 하락,-1,cross_down_conf,8
+A3_crossdown_F0_20_가까움(≤1σ)_m20,A3,F0 콜벽(가까움(≤1σ)) 종가 돌파 다음 날부터 20일 하락,-1,cross_down,17
+A3_crossdown_conf_F0_20_가까움(≤1σ)_m20,A3,F0 콜벽(가까움(≤1σ)) 돌파 + 다음 날 외국인 선물 순매도 → 20일 하락,-1,cross_down_conf,8
+A3_magnet_F0_20_가까움+집중25%,A3,"F0 콜벽(만기 20일 전, 가까움+집중25%) → 만기까지 상승",1,magnet,20
+A3_magnet_F1_20_전체,A3,"F1 콜벽(만기 20일 전, 전체) → 만기까지 상승",1,magnet,42
+A3_crossdown_F1_20_전체_m1,A3,F1 콜벽(전체) 종가 돌파 다음 날부터 1일 하락,-1,cross_down,12
+A3_crossdown_F1_20_전체_m3,A3,F1 콜벽(전체) 종가 돌파 다음 날부터 3일 하락,-1,cross_down,12
+A3_crossdown_F1_20_전체_m5,A3,F1 콜벽(전체) 종가 돌파 다음 날부터 5일 하락,-1,cross_down,12
+A3_crossdown_F1_20_전체_m10,A3,F1 콜벽(전체) 종가 돌파 다음 날부터 10일 하락,-1,cross_down,12
+A3_crossdown_F1_20_전체_m20,A3,F1 콜벽(전체) 종가 돌파 다음 날부터 20일 하락,-1,cross_down,12
+A3_magnet_F1_20_집중 상위50%,A3,"F1 콜벽(만기 20일 전, 집중 상위50%) → 만기까지 상승",1,magnet,28
+A3_magnet_F1_20_집중 상위25%,A3,"F1 콜벽(만기 20일 전, 집중 상위25%) → 만기까지 상승",1,magnet,11
+A3_magnet_F1_20_1위/2위 상위25%,A3,"F1 콜벽(만기 20일 전, 1위/2위 상위25%) → 만기까지 상승",1,magnet,15
+A3_magnet_F1_20_콜/풋 상위25%,A3,"F1 콜벽(만기 20일 전, 콜/풋 상위25%) → 만기까지 상승",1,magnet,15
+A3_magnet_F1_20_가까움(≤1σ),A3,"F1 콜벽(만기 20일 전, 가까움(≤1σ)) → 만기까지 상승",1,magnet,13
+A3_magnet_Q_5_전체,A3,"Q 콜벽(만기 5일 전, 전체) → 만기까지 상승",1,magnet,24
+A3_magnet_Q_5_집중 상위50%,A3,"Q 콜벽(만기 5일 전, 집중 상위50%) → 만기까지 상승",1,magnet,10
+A3_magnet_Q_10_전체,A3,"Q 콜벽(만기 10일 전, 전체) → 만기까지 상승",1,magnet,35
+A3_magnet_Q_10_집중 상위50%,A3,"Q 콜벽(만기 10일 전, 집중 상위50%) → 만기까지 상승",1,magnet,13
+A3_magnet_Q_10_1위/2위 상위25%,A3,"Q 콜벽(만기 10일 전, 1위/2위 상위25%) → 만기까지 상승",1,magnet,10
+A3_magnet_Q_15_전체,A3,"Q 콜벽(만기 15일 전, 전체) → 만기까지 상승",1,magnet,35
+A3_magnet_Q_15_집중 상위50%,A3,"Q 콜벽(만기 15일 전, 집중 상위50%) → 만기까지 상승",1,magnet,16
+A3_magnet_Q_15_1위/2위 상위25%,A3,"Q 콜벽(만기 15일 전, 1위/2위 상위25%) → 만기까지 상승",1,magnet,12
+A3_magnet_Q_20_전체,A3,"Q 콜벽(만기 20일 전, 전체) → 만기까지 상승",1,magnet,36
+A3_magnet_Q_20_집중 상위50%,A3,"Q 콜벽(만기 20일 전, 집중 상위50%) → 만기까지 상승",1,magnet,18
+A3_magnet_Q_20_1위/2위 상위25%,A3,"Q 콜벽(만기 20일 전, 1위/2위 상위25%) → 만기까지 상승",1,magnet,13
+A3_magnet_Q_20_콜/풋 상위25%,A3,"Q 콜벽(만기 20일 전, 콜/풋 상위25%) → 만기까지 상승",1,magnet,10
+A3_magnet_Q_20_가까움(≤1σ),A3,"Q 콜벽(만기 20일 전, 가까움(≤1σ)) → 만기까지 상승",1,magnet,12
+A3pe_ALL_1_c6_m1,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 1일 하락,-1,post_expiry,131
+A3pe_ALL_1_c6_up_m1,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 1일 상승,1,post_expiry_up,131
+A3pe_ALL_1_c6_m3,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 3일 하락,-1,post_expiry,131
+A3pe_ALL_1_c6_up_m3,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 3일 상승,1,post_expiry_up,131
+A3pe_ALL_1_c6_m5,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 5일 하락,-1,post_expiry,130
+A3pe_ALL_1_c6_up_m5,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 5일 상승,1,post_expiry_up,130
+A3pe_ALL_1_c6_m10,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 10일 하락,-1,post_expiry,130
+A3pe_ALL_1_c6_up_m10,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 10일 상승,1,post_expiry_up,130
+A3pe_ALL_1_c6_m20,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 20일 하락,-1,post_expiry,130
+A3pe_ALL_1_c6_up_m20,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 20일 상승,1,post_expiry_up,130
+A3pe_ALL_1_c7_m1,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 1일 하락,-1,post_expiry,21
+A3pe_ALL_1_c7_up_m1,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 1일 상승,1,post_expiry_up,21
+A3pe_ALL_1_c7_m3,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 3일 하락,-1,post_expiry,21
+A3pe_ALL_1_c7_up_m3,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 3일 상승,1,post_expiry_up,21
+A3pe_ALL_1_c7_m5,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 5일 하락,-1,post_expiry,21
+A3pe_ALL_1_c7_up_m5,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 5일 상승,1,post_expiry_up,21
+A3pe_ALL_1_c7_m10,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 10일 하락,-1,post_expiry,21
+A3pe_ALL_1_c7_up_m10,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 10일 상승,1,post_expiry_up,21
+A3pe_ALL_1_c7_m20,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 20일 하락,-1,post_expiry,21
+A3pe_ALL_1_c7_up_m20,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 20일 상승,1,post_expiry_up,21
+A3pe_ALL_1_c8_m1,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 1일 하락,-1,post_expiry,39
+A3pe_ALL_1_c8_up_m1,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 1일 상승,1,post_expiry_up,39
+A3pe_ALL_1_c8_m3,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 3일 하락,-1,post_expiry,39
+A3pe_ALL_1_c8_up_m3,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 3일 상승,1,post_expiry_up,39
+A3pe_ALL_1_c8_m5,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 5일 하락,-1,post_expiry,39
+A3pe_ALL_1_c8_up_m5,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 5일 상승,1,post_expiry_up,39
+A3pe_ALL_1_c8_m10,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 10일 하락,-1,post_expiry,39
+A3pe_ALL_1_c8_up_m10,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 10일 상승,1,post_expiry_up,39
+A3pe_ALL_1_c8_m20,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 20일 하락,-1,post_expiry,39
+A3pe_ALL_1_c8_up_m20,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 20일 상승,1,post_expiry_up,39
+A3pe_ALL_1_c10_m1,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 1일 하락,-1,post_expiry,18
+A3pe_ALL_1_c10_up_m1,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 1일 상승,1,post_expiry_up,18
+A3pe_ALL_1_c10_m3,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 3일 하락,-1,post_expiry,18
+A3pe_ALL_1_c10_up_m3,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 3일 상승,1,post_expiry_up,18
+A3pe_ALL_1_c10_m5,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 5일 하락,-1,post_expiry,18
+A3pe_ALL_1_c10_up_m5,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 5일 상승,1,post_expiry_up,18
+A3pe_ALL_1_c10_m10,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 10일 하락,-1,post_expiry,18
+A3pe_ALL_1_c10_up_m10,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 10일 상승,1,post_expiry_up,18
+A3pe_ALL_1_c10_m20,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 20일 하락,-1,post_expiry,18
+A3pe_ALL_1_c10_up_m20,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 20일 상승,1,post_expiry_up,18
+A3pe_ALL_1_c13_m1,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 1일 하락,-1,post_expiry,16
+A3pe_ALL_1_c13_m3,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 3일 하락,-1,post_expiry,16
+A3pe_ALL_1_c13_m5,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 5일 하락,-1,post_expiry,16
+A3pe_ALL_1_c13_m10,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 10일 하락,-1,post_expiry,16
+A3pe_ALL_1_c13_m20,A3,ALL 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 20일 하락,-1,post_expiry,16
+A3pe_ALL_1_c14_m1,A3,ALL 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 1일 하락,-1,post_expiry,15
+A3pe_ALL_1_c14_up_m1,A3,ALL 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 1일 상승,1,post_expiry_up,15
+A3pe_ALL_1_c14_m3,A3,ALL 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 3일 하락,-1,post_expiry,15
+A3pe_ALL_1_c14_up_m3,A3,ALL 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 3일 상승,1,post_expiry_up,15
+A3pe_ALL_1_c14_m5,A3,ALL 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 5일 하락,-1,post_expiry,14
+A3pe_ALL_1_c14_up_m5,A3,ALL 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 5일 상승,1,post_expiry_up,14
+A3pe_ALL_1_c14_m10,A3,ALL 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 10일 하락,-1,post_expiry,14
+A3pe_ALL_1_c14_up_m10,A3,ALL 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 10일 상승,1,post_expiry_up,14
+A3pe_ALL_1_c14_m20,A3,ALL 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 20일 하락,-1,post_expiry,14
+A3pe_ALL_1_c14_up_m20,A3,ALL 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 20일 상승,1,post_expiry_up,14
+A3pe_ALL_1_c15_m1,A3,ALL 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 1일 하락,-1,post_expiry,22
+A3pe_ALL_1_c15_up_m1,A3,ALL 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 1일 상승,1,post_expiry_up,22
+A3pe_ALL_1_c15_m3,A3,ALL 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 3일 하락,-1,post_expiry,22
+A3pe_ALL_1_c15_up_m3,A3,ALL 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 3일 상승,1,post_expiry_up,22
+A3pe_ALL_1_c15_m5,A3,ALL 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 5일 하락,-1,post_expiry,22
+A3pe_ALL_1_c15_up_m5,A3,ALL 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 5일 상승,1,post_expiry_up,22
+A3pe_ALL_1_c15_m10,A3,ALL 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 10일 하락,-1,post_expiry,22
+A3pe_ALL_1_c15_up_m10,A3,ALL 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 10일 상승,1,post_expiry_up,22
+A3pe_ALL_1_c15_m20,A3,ALL 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 20일 하락,-1,post_expiry,22
+A3pe_ALL_1_c15_up_m20,A3,ALL 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 20일 상승,1,post_expiry_up,22
+A3pe_ALL_1_c16_m1,A3,ALL 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 1일 하락,-1,post_expiry,100
+A3pe_ALL_1_c16_up_m1,A3,ALL 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 1일 상승,1,post_expiry_up,100
+A3pe_ALL_1_c16_m3,A3,ALL 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 3일 하락,-1,post_expiry,100
+A3pe_ALL_1_c16_up_m3,A3,ALL 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 3일 상승,1,post_expiry_up,100
+A3pe_ALL_1_c16_m5,A3,ALL 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 5일 하락,-1,post_expiry,100
+A3pe_ALL_1_c16_up_m5,A3,ALL 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 5일 상승,1,post_expiry_up,100
+A3pe_ALL_1_c16_m10,A3,ALL 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 10일 하락,-1,post_expiry,100
+A3pe_ALL_1_c16_up_m10,A3,ALL 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 10일 상승,1,post_expiry_up,100
+A3pe_ALL_1_c16_m20,A3,ALL 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 20일 하락,-1,post_expiry,100
+A3pe_ALL_1_c16_up_m20,A3,ALL 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 20일 상승,1,post_expiry_up,100
+A3pe_ALL_5_c0_m1,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 1일 하락,-1,post_expiry,15
+A3pe_ALL_5_c0_up_m1,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 1일 상승,1,post_expiry_up,15
+A3pe_ALL_5_c0_m3,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 3일 하락,-1,post_expiry,15
+A3pe_ALL_5_c0_up_m3,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 3일 상승,1,post_expiry_up,15
+A3pe_ALL_5_c0_m5,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 5일 하락,-1,post_expiry,15
+A3pe_ALL_5_c0_up_m5,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 5일 상승,1,post_expiry_up,15
+A3pe_ALL_5_c0_m10,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 10일 하락,-1,post_expiry,15
+A3pe_ALL_5_c0_up_m10,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 10일 상승,1,post_expiry_up,15
+A3pe_ALL_5_c0_m20,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 20일 하락,-1,post_expiry,15
+A3pe_ALL_5_c0_up_m20,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 20일 상승,1,post_expiry_up,15
+A3pe_ALL_5_c2_m1,A3,ALL 만기 5일 전 콜벽 기준 주기 중 넘고 만기에도 벽 위 → 만기 다음 날부터 1일 하락,-1,post_expiry,15
+A3pe_ALL_5_c2_m3,A3,ALL 만기 5일 전 콜벽 기준 주기 중 넘고 만기에도 벽 위 → 만기 다음 날부터 3일 하락,-1,post_expiry,15
+A3pe_ALL_5_c2_m5,A3,ALL 만기 5일 전 콜벽 기준 주기 중 넘고 만기에도 벽 위 → 만기 다음 날부터 5일 하락,-1,post_expiry,15
+A3pe_ALL_5_c2_m10,A3,ALL 만기 5일 전 콜벽 기준 주기 중 넘고 만기에도 벽 위 → 만기 다음 날부터 10일 하락,-1,post_expiry,15
+A3pe_ALL_5_c2_m20,A3,ALL 만기 5일 전 콜벽 기준 주기 중 넘고 만기에도 벽 위 → 만기 다음 날부터 20일 하락,-1,post_expiry,15
+A3pe_ALL_5_c6_m1,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 1일 하락,-1,post_expiry,123
+A3pe_ALL_5_c6_up_m1,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 1일 상승,1,post_expiry_up,123
+A3pe_ALL_5_c6_m3,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 3일 하락,-1,post_expiry,123
+A3pe_ALL_5_c6_up_m3,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 3일 상승,1,post_expiry_up,123
+A3pe_ALL_5_c6_m5,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 5일 하락,-1,post_expiry,122
+A3pe_ALL_5_c6_up_m5,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 5일 상승,1,post_expiry_up,122
+A3pe_ALL_5_c6_m10,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 10일 하락,-1,post_expiry,122
+A3pe_ALL_5_c6_up_m10,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 10일 상승,1,post_expiry_up,122
+A3pe_ALL_5_c6_m20,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 20일 하락,-1,post_expiry,122
+A3pe_ALL_5_c6_up_m20,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 20일 상승,1,post_expiry_up,122
+A3pe_ALL_5_c7_m1,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 1일 하락,-1,post_expiry,26
+A3pe_ALL_5_c7_up_m1,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 1일 상승,1,post_expiry_up,26
+A3pe_ALL_5_c7_m3,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 3일 하락,-1,post_expiry,26
+A3pe_ALL_5_c7_up_m3,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 3일 상승,1,post_expiry_up,26
+A3pe_ALL_5_c7_m5,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 5일 하락,-1,post_expiry,26
+A3pe_ALL_5_c7_up_m5,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 5일 상승,1,post_expiry_up,26
+A3pe_ALL_5_c7_m10,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 10일 하락,-1,post_expiry,26
+A3pe_ALL_5_c7_up_m10,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 10일 상승,1,post_expiry_up,26
+A3pe_ALL_5_c7_m20,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 20일 하락,-1,post_expiry,26
+A3pe_ALL_5_c7_up_m20,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 20일 상승,1,post_expiry_up,26
+A3pe_ALL_5_c8_m1,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 1일 하락,-1,post_expiry,37
+A3pe_ALL_5_c8_up_m1,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 1일 상승,1,post_expiry_up,37
+A3pe_ALL_5_c8_m3,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 3일 하락,-1,post_expiry,37
+A3pe_ALL_5_c8_up_m3,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 3일 상승,1,post_expiry_up,37
+A3pe_ALL_5_c8_m5,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 5일 하락,-1,post_expiry,37
+A3pe_ALL_5_c8_up_m5,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 5일 상승,1,post_expiry_up,37
+A3pe_ALL_5_c8_m10,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 10일 하락,-1,post_expiry,37
+A3pe_ALL_5_c8_up_m10,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 10일 상승,1,post_expiry_up,37
+A3pe_ALL_5_c8_m20,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 20일 하락,-1,post_expiry,37
+A3pe_ALL_5_c8_up_m20,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 20일 상승,1,post_expiry_up,37
+A3pe_ALL_5_c10_m1,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 1일 하락,-1,post_expiry,25
+A3pe_ALL_5_c10_up_m1,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 1일 상승,1,post_expiry_up,25
+A3pe_ALL_5_c10_m3,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 3일 하락,-1,post_expiry,25
+A3pe_ALL_5_c10_up_m3,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 3일 상승,1,post_expiry_up,25
+A3pe_ALL_5_c10_m5,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 5일 하락,-1,post_expiry,25
+A3pe_ALL_5_c10_up_m5,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 5일 상승,1,post_expiry_up,25
+A3pe_ALL_5_c10_m10,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 10일 하락,-1,post_expiry,25
+A3pe_ALL_5_c10_up_m10,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 10일 상승,1,post_expiry_up,25
+A3pe_ALL_5_c10_m20,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 20일 하락,-1,post_expiry,25
+A3pe_ALL_5_c10_up_m20,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 20일 상승,1,post_expiry_up,25
+A3pe_ALL_5_c13_m1,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 1일 하락,-1,post_expiry,16
+A3pe_ALL_5_c13_m3,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 3일 하락,-1,post_expiry,16
+A3pe_ALL_5_c13_m5,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 5일 하락,-1,post_expiry,16
+A3pe_ALL_5_c13_m10,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 10일 하락,-1,post_expiry,16
+A3pe_ALL_5_c13_m20,A3,ALL 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 20일 하락,-1,post_expiry,16
+A3pe_ALL_5_c14_m1,A3,ALL 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 1일 하락,-1,post_expiry,21
+A3pe_ALL_5_c14_up_m1,A3,ALL 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 1일 상승,1,post_expiry_up,21
+A3pe_ALL_5_c14_m3,A3,ALL 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 3일 하락,-1,post_expiry,21
+A3pe_ALL_5_c14_up_m3,A3,ALL 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 3일 상승,1,post_expiry_up,21
+A3pe_ALL_5_c14_m5,A3,ALL 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 5일 하락,-1,post_expiry,20
+A3pe_ALL_5_c14_up_m5,A3,ALL 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 5일 상승,1,post_expiry_up,20
+A3pe_ALL_5_c14_m10,A3,ALL 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 10일 하락,-1,post_expiry,20
+A3pe_ALL_5_c14_up_m10,A3,ALL 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 10일 상승,1,post_expiry_up,20
+A3pe_ALL_5_c14_m20,A3,ALL 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 20일 하락,-1,post_expiry,20
+A3pe_ALL_5_c14_up_m20,A3,ALL 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 20일 상승,1,post_expiry_up,20
+A3pe_ALL_5_c15_m1,A3,ALL 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 1일 하락,-1,post_expiry,14
+A3pe_ALL_5_c15_up_m1,A3,ALL 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 1일 상승,1,post_expiry_up,14
+A3pe_ALL_5_c15_m3,A3,ALL 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 3일 하락,-1,post_expiry,14
+A3pe_ALL_5_c15_up_m3,A3,ALL 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 3일 상승,1,post_expiry_up,14
+A3pe_ALL_5_c15_m5,A3,ALL 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 5일 하락,-1,post_expiry,14
+A3pe_ALL_5_c15_up_m5,A3,ALL 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 5일 상승,1,post_expiry_up,14
+A3pe_ALL_5_c15_m10,A3,ALL 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 10일 하락,-1,post_expiry,14
+A3pe_ALL_5_c15_up_m10,A3,ALL 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 10일 상승,1,post_expiry_up,14
+A3pe_ALL_5_c15_m20,A3,ALL 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 20일 하락,-1,post_expiry,14
+A3pe_ALL_5_c15_up_m20,A3,ALL 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 20일 상승,1,post_expiry_up,14
+A3pe_ALL_5_c16_m1,A3,ALL 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 1일 하락,-1,post_expiry,102
+A3pe_ALL_5_c16_up_m1,A3,ALL 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 1일 상승,1,post_expiry_up,102
+A3pe_ALL_5_c16_m3,A3,ALL 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 3일 하락,-1,post_expiry,102
+A3pe_ALL_5_c16_up_m3,A3,ALL 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 3일 상승,1,post_expiry_up,102
+A3pe_ALL_5_c16_m5,A3,ALL 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 5일 하락,-1,post_expiry,102
+A3pe_ALL_5_c16_up_m5,A3,ALL 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 5일 상승,1,post_expiry_up,102
+A3pe_ALL_5_c16_m10,A3,ALL 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 10일 하락,-1,post_expiry,102
+A3pe_ALL_5_c16_up_m10,A3,ALL 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 10일 상승,1,post_expiry_up,102
+A3pe_ALL_5_c16_m20,A3,ALL 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 20일 하락,-1,post_expiry,102
+A3pe_ALL_5_c16_up_m20,A3,ALL 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 20일 상승,1,post_expiry_up,102
+A3pe_ALL_5_c17_m1,A3,ALL 만기 5일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 1일 하락,-1,post_expiry,12
+A3pe_ALL_5_c17_up_m1,A3,ALL 만기 5일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 1일 상승,1,post_expiry_up,12
+A3pe_ALL_5_c17_m3,A3,ALL 만기 5일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 3일 하락,-1,post_expiry,12
+A3pe_ALL_5_c17_up_m3,A3,ALL 만기 5일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 3일 상승,1,post_expiry_up,12
+A3pe_ALL_5_c17_m5,A3,ALL 만기 5일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 5일 하락,-1,post_expiry,11
+A3pe_ALL_5_c17_up_m5,A3,ALL 만기 5일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 5일 상승,1,post_expiry_up,11
+A3pe_ALL_5_c17_m10,A3,ALL 만기 5일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 10일 하락,-1,post_expiry,11
+A3pe_ALL_5_c17_up_m10,A3,ALL 만기 5일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 10일 상승,1,post_expiry_up,11
+A3pe_ALL_5_c17_m20,A3,ALL 만기 5일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 20일 하락,-1,post_expiry,11
+A3pe_ALL_5_c17_up_m20,A3,ALL 만기 5일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 20일 상승,1,post_expiry_up,11
+A3pe_ALL_10_c0_m1,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 1일 하락,-1,post_expiry,16
+A3pe_ALL_10_c0_up_m1,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 1일 상승,1,post_expiry_up,16
+A3pe_ALL_10_c0_m3,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 3일 하락,-1,post_expiry,16
+A3pe_ALL_10_c0_up_m3,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 3일 상승,1,post_expiry_up,16
+A3pe_ALL_10_c0_m5,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 5일 하락,-1,post_expiry,16
+A3pe_ALL_10_c0_up_m5,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 5일 상승,1,post_expiry_up,16
+A3pe_ALL_10_c0_m10,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 10일 하락,-1,post_expiry,16
+A3pe_ALL_10_c0_up_m10,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 10일 상승,1,post_expiry_up,16
+A3pe_ALL_10_c0_m20,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 20일 하락,-1,post_expiry,16
+A3pe_ALL_10_c0_up_m20,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 20일 상승,1,post_expiry_up,16
+A3pe_ALL_10_c2_m1,A3,ALL 만기 10일 전 콜벽 기준 주기 중 넘고 만기에도 벽 위 → 만기 다음 날부터 1일 하락,-1,post_expiry,16
+A3pe_ALL_10_c2_m3,A3,ALL 만기 10일 전 콜벽 기준 주기 중 넘고 만기에도 벽 위 → 만기 다음 날부터 3일 하락,-1,post_expiry,16
+A3pe_ALL_10_c2_m5,A3,ALL 만기 10일 전 콜벽 기준 주기 중 넘고 만기에도 벽 위 → 만기 다음 날부터 5일 하락,-1,post_expiry,16
+A3pe_ALL_10_c2_m10,A3,ALL 만기 10일 전 콜벽 기준 주기 중 넘고 만기에도 벽 위 → 만기 다음 날부터 10일 하락,-1,post_expiry,16
+A3pe_ALL_10_c2_m20,A3,ALL 만기 10일 전 콜벽 기준 주기 중 넘고 만기에도 벽 위 → 만기 다음 날부터 20일 하락,-1,post_expiry,16
+A3pe_ALL_10_c6_m1,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 1일 하락,-1,post_expiry,123
+A3pe_ALL_10_c6_up_m1,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 1일 상승,1,post_expiry_up,123
+A3pe_ALL_10_c6_m3,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 3일 하락,-1,post_expiry,123
+A3pe_ALL_10_c6_up_m3,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 3일 상승,1,post_expiry_up,123
+A3pe_ALL_10_c6_m5,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 5일 하락,-1,post_expiry,122
+A3pe_ALL_10_c6_up_m5,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 5일 상승,1,post_expiry_up,122
+A3pe_ALL_10_c6_m10,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 10일 하락,-1,post_expiry,122
+A3pe_ALL_10_c6_up_m10,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 10일 상승,1,post_expiry_up,122
+A3pe_ALL_10_c6_m20,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 20일 하락,-1,post_expiry,122
+A3pe_ALL_10_c6_up_m20,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 20일 상승,1,post_expiry_up,122
+A3pe_ALL_10_c7_m1,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 1일 하락,-1,post_expiry,23
+A3pe_ALL_10_c7_up_m1,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 1일 상승,1,post_expiry_up,23
+A3pe_ALL_10_c7_m3,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 3일 하락,-1,post_expiry,23
+A3pe_ALL_10_c7_up_m3,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 3일 상승,1,post_expiry_up,23
+A3pe_ALL_10_c7_m5,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 5일 하락,-1,post_expiry,23
+A3pe_ALL_10_c7_up_m5,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 5일 상승,1,post_expiry_up,23
+A3pe_ALL_10_c7_m10,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 10일 하락,-1,post_expiry,23
+A3pe_ALL_10_c7_up_m10,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 10일 상승,1,post_expiry_up,23
+A3pe_ALL_10_c7_m20,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 20일 하락,-1,post_expiry,23
+A3pe_ALL_10_c7_up_m20,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 20일 상승,1,post_expiry_up,23
+A3pe_ALL_10_c8_m1,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 1일 하락,-1,post_expiry,35
+A3pe_ALL_10_c8_up_m1,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 1일 상승,1,post_expiry_up,35
+A3pe_ALL_10_c8_m3,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 3일 하락,-1,post_expiry,35
+A3pe_ALL_10_c8_up_m3,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 3일 상승,1,post_expiry_up,35
+A3pe_ALL_10_c8_m5,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 5일 하락,-1,post_expiry,35
+A3pe_ALL_10_c8_up_m5,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 5일 상승,1,post_expiry_up,35
+A3pe_ALL_10_c8_m10,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 10일 하락,-1,post_expiry,35
+A3pe_ALL_10_c8_up_m10,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 10일 상승,1,post_expiry_up,35
+A3pe_ALL_10_c8_m20,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 20일 하락,-1,post_expiry,35
+A3pe_ALL_10_c8_up_m20,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 20일 상승,1,post_expiry_up,35
+A3pe_ALL_10_c10_m1,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 1일 하락,-1,post_expiry,19
+A3pe_ALL_10_c10_up_m1,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 1일 상승,1,post_expiry_up,19
+A3pe_ALL_10_c10_m3,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 3일 하락,-1,post_expiry,19
+A3pe_ALL_10_c10_up_m3,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 3일 상승,1,post_expiry_up,19
+A3pe_ALL_10_c10_m5,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 5일 하락,-1,post_expiry,19
+A3pe_ALL_10_c10_up_m5,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 5일 상승,1,post_expiry_up,19
+A3pe_ALL_10_c10_m10,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 10일 하락,-1,post_expiry,19
+A3pe_ALL_10_c10_up_m10,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 10일 상승,1,post_expiry_up,19
+A3pe_ALL_10_c10_m20,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 20일 하락,-1,post_expiry,19
+A3pe_ALL_10_c10_up_m20,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 20일 상승,1,post_expiry_up,19
+A3pe_ALL_10_c13_m1,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 1일 하락,-1,post_expiry,17
+A3pe_ALL_10_c13_m3,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 3일 하락,-1,post_expiry,17
+A3pe_ALL_10_c13_m5,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 5일 하락,-1,post_expiry,17
+A3pe_ALL_10_c13_m10,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 10일 하락,-1,post_expiry,17
+A3pe_ALL_10_c13_m20,A3,ALL 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 20일 하락,-1,post_expiry,17
+A3pe_ALL_10_c14_m1,A3,ALL 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 1일 하락,-1,post_expiry,26
+A3pe_ALL_10_c14_up_m1,A3,ALL 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 1일 상승,1,post_expiry_up,26
+A3pe_ALL_10_c14_m3,A3,ALL 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 3일 하락,-1,post_expiry,26
+A3pe_ALL_10_c14_up_m3,A3,ALL 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 3일 상승,1,post_expiry_up,26
+A3pe_ALL_10_c14_m5,A3,ALL 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 5일 하락,-1,post_expiry,25
+A3pe_ALL_10_c14_up_m5,A3,ALL 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 5일 상승,1,post_expiry_up,25
+A3pe_ALL_10_c14_m10,A3,ALL 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 10일 하락,-1,post_expiry,25
+A3pe_ALL_10_c14_up_m10,A3,ALL 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 10일 상승,1,post_expiry_up,25
+A3pe_ALL_10_c14_m20,A3,ALL 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 20일 하락,-1,post_expiry,25
+A3pe_ALL_10_c14_up_m20,A3,ALL 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 20일 상승,1,post_expiry_up,25
+A3pe_ALL_10_c15_m1,A3,ALL 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 1일 하락,-1,post_expiry,20
+A3pe_ALL_10_c15_up_m1,A3,ALL 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 1일 상승,1,post_expiry_up,20
+A3pe_ALL_10_c15_m3,A3,ALL 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 3일 하락,-1,post_expiry,20
+A3pe_ALL_10_c15_up_m3,A3,ALL 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 3일 상승,1,post_expiry_up,20
+A3pe_ALL_10_c15_m5,A3,ALL 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 5일 하락,-1,post_expiry,20
+A3pe_ALL_10_c15_up_m5,A3,ALL 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 5일 상승,1,post_expiry_up,20
+A3pe_ALL_10_c15_m10,A3,ALL 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 10일 하락,-1,post_expiry,20
+A3pe_ALL_10_c15_up_m10,A3,ALL 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 10일 상승,1,post_expiry_up,20
+A3pe_ALL_10_c15_m20,A3,ALL 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 20일 하락,-1,post_expiry,20
+A3pe_ALL_10_c15_up_m20,A3,ALL 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 20일 상승,1,post_expiry_up,20
+A3pe_ALL_10_c16_m1,A3,ALL 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 1일 하락,-1,post_expiry,91
+A3pe_ALL_10_c16_up_m1,A3,ALL 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 1일 상승,1,post_expiry_up,91
+A3pe_ALL_10_c16_m3,A3,ALL 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 3일 하락,-1,post_expiry,91
+A3pe_ALL_10_c16_up_m3,A3,ALL 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 3일 상승,1,post_expiry_up,91
+A3pe_ALL_10_c16_m5,A3,ALL 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 5일 하락,-1,post_expiry,91
+A3pe_ALL_10_c16_up_m5,A3,ALL 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 5일 상승,1,post_expiry_up,91
+A3pe_ALL_10_c16_m10,A3,ALL 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 10일 하락,-1,post_expiry,91
+A3pe_ALL_10_c16_up_m10,A3,ALL 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 10일 상승,1,post_expiry_up,91
+A3pe_ALL_10_c16_m20,A3,ALL 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 20일 하락,-1,post_expiry,91
+A3pe_ALL_10_c16_up_m20,A3,ALL 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 20일 상승,1,post_expiry_up,91
+A3pe_ALL_10_c17_m1,A3,ALL 만기 10일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 1일 하락,-1,post_expiry,15
+A3pe_ALL_10_c17_up_m1,A3,ALL 만기 10일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 1일 상승,1,post_expiry_up,15
+A3pe_ALL_10_c17_m3,A3,ALL 만기 10일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 3일 하락,-1,post_expiry,15
+A3pe_ALL_10_c17_up_m3,A3,ALL 만기 10일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 3일 상승,1,post_expiry_up,15
+A3pe_ALL_10_c17_m5,A3,ALL 만기 10일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 5일 하락,-1,post_expiry,14
+A3pe_ALL_10_c17_up_m5,A3,ALL 만기 10일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 5일 상승,1,post_expiry_up,14
+A3pe_ALL_10_c17_m10,A3,ALL 만기 10일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 10일 하락,-1,post_expiry,14
+A3pe_ALL_10_c17_up_m10,A3,ALL 만기 10일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 10일 상승,1,post_expiry_up,14
+A3pe_ALL_10_c17_m20,A3,ALL 만기 10일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 20일 하락,-1,post_expiry,14
+A3pe_ALL_10_c17_up_m20,A3,ALL 만기 10일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 20일 상승,1,post_expiry_up,14
+A3pe_ALL_20_c0_m1,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 1일 하락,-1,post_expiry,22
+A3pe_ALL_20_c0_up_m1,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 1일 상승,1,post_expiry_up,22
+A3pe_ALL_20_c0_m3,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 3일 하락,-1,post_expiry,22
+A3pe_ALL_20_c0_up_m3,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 3일 상승,1,post_expiry_up,22
+A3pe_ALL_20_c0_m5,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 5일 하락,-1,post_expiry,22
+A3pe_ALL_20_c0_up_m5,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 5일 상승,1,post_expiry_up,22
+A3pe_ALL_20_c0_m10,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 10일 하락,-1,post_expiry,22
+A3pe_ALL_20_c0_up_m10,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 10일 상승,1,post_expiry_up,22
+A3pe_ALL_20_c0_m20,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 20일 하락,-1,post_expiry,22
+A3pe_ALL_20_c0_up_m20,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 20일 상승,1,post_expiry_up,22
+A3pe_ALL_20_c2_m1,A3,ALL 만기 20일 전 콜벽 기준 주기 중 넘고 만기에도 벽 위 → 만기 다음 날부터 1일 하락,-1,post_expiry,22
+A3pe_ALL_20_c2_m3,A3,ALL 만기 20일 전 콜벽 기준 주기 중 넘고 만기에도 벽 위 → 만기 다음 날부터 3일 하락,-1,post_expiry,22
+A3pe_ALL_20_c2_m5,A3,ALL 만기 20일 전 콜벽 기준 주기 중 넘고 만기에도 벽 위 → 만기 다음 날부터 5일 하락,-1,post_expiry,22
+A3pe_ALL_20_c2_m10,A3,ALL 만기 20일 전 콜벽 기준 주기 중 넘고 만기에도 벽 위 → 만기 다음 날부터 10일 하락,-1,post_expiry,22
+A3pe_ALL_20_c2_m20,A3,ALL 만기 20일 전 콜벽 기준 주기 중 넘고 만기에도 벽 위 → 만기 다음 날부터 20일 하락,-1,post_expiry,22
+A3pe_ALL_20_c3_m1,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 위 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 1일 하락,-1,post_expiry,10
+A3pe_ALL_20_c3_m3,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 위 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 3일 하락,-1,post_expiry,10
+A3pe_ALL_20_c3_m5,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 위 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 5일 하락,-1,post_expiry,10
+A3pe_ALL_20_c3_m10,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 위 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 10일 하락,-1,post_expiry,10
+A3pe_ALL_20_c3_m20,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 위 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 20일 하락,-1,post_expiry,10
+A3pe_ALL_20_c6_m1,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 1일 하락,-1,post_expiry,117
+A3pe_ALL_20_c6_up_m1,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 1일 상승,1,post_expiry_up,117
+A3pe_ALL_20_c6_m3,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 3일 하락,-1,post_expiry,117
+A3pe_ALL_20_c6_up_m3,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 3일 상승,1,post_expiry_up,117
+A3pe_ALL_20_c6_m5,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 5일 하락,-1,post_expiry,116
+A3pe_ALL_20_c6_up_m5,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 5일 상승,1,post_expiry_up,116
+A3pe_ALL_20_c6_m10,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 10일 하락,-1,post_expiry,116
+A3pe_ALL_20_c6_up_m10,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 10일 상승,1,post_expiry_up,116
+A3pe_ALL_20_c6_m20,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 20일 하락,-1,post_expiry,116
+A3pe_ALL_20_c6_up_m20,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 20일 상승,1,post_expiry_up,116
+A3pe_ALL_20_c7_m1,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 1일 하락,-1,post_expiry,31
+A3pe_ALL_20_c7_up_m1,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 1일 상승,1,post_expiry_up,31
+A3pe_ALL_20_c7_m3,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 3일 하락,-1,post_expiry,31
+A3pe_ALL_20_c7_up_m3,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 3일 상승,1,post_expiry_up,31
+A3pe_ALL_20_c7_m5,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 5일 하락,-1,post_expiry,31
+A3pe_ALL_20_c7_up_m5,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 5일 상승,1,post_expiry_up,31
+A3pe_ALL_20_c7_m10,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 10일 하락,-1,post_expiry,31
+A3pe_ALL_20_c7_up_m10,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 10일 상승,1,post_expiry_up,31
+A3pe_ALL_20_c7_m20,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 20일 하락,-1,post_expiry,31
+A3pe_ALL_20_c7_up_m20,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 20일 상승,1,post_expiry_up,31
+A3pe_ALL_20_c8_m1,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 1일 하락,-1,post_expiry,35
+A3pe_ALL_20_c8_up_m1,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 1일 상승,1,post_expiry_up,35
+A3pe_ALL_20_c8_m3,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 3일 하락,-1,post_expiry,35
+A3pe_ALL_20_c8_up_m3,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 3일 상승,1,post_expiry_up,35
+A3pe_ALL_20_c8_m5,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 5일 하락,-1,post_expiry,35
+A3pe_ALL_20_c8_up_m5,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 5일 상승,1,post_expiry_up,35
+A3pe_ALL_20_c8_m10,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 10일 하락,-1,post_expiry,35
+A3pe_ALL_20_c8_up_m10,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 10일 상승,1,post_expiry_up,35
+A3pe_ALL_20_c8_m20,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 20일 하락,-1,post_expiry,35
+A3pe_ALL_20_c8_up_m20,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 20일 상승,1,post_expiry_up,35
+A3pe_ALL_20_c10_m1,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 1일 하락,-1,post_expiry,26
+A3pe_ALL_20_c10_up_m1,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 1일 상승,1,post_expiry_up,26
+A3pe_ALL_20_c10_m3,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 3일 하락,-1,post_expiry,26
+A3pe_ALL_20_c10_up_m3,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 3일 상승,1,post_expiry_up,26
+A3pe_ALL_20_c10_m5,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 5일 하락,-1,post_expiry,26
+A3pe_ALL_20_c10_up_m5,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 5일 상승,1,post_expiry_up,26
+A3pe_ALL_20_c10_m10,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 10일 하락,-1,post_expiry,26
+A3pe_ALL_20_c10_up_m10,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 10일 상승,1,post_expiry_up,26
+A3pe_ALL_20_c10_m20,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 20일 하락,-1,post_expiry,26
+A3pe_ALL_20_c10_up_m20,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 20일 상승,1,post_expiry_up,26
+A3pe_ALL_20_c13_m1,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 1일 하락,-1,post_expiry,18
+A3pe_ALL_20_c13_m3,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 3일 하락,-1,post_expiry,18
+A3pe_ALL_20_c13_m5,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 5일 하락,-1,post_expiry,18
+A3pe_ALL_20_c13_m10,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 10일 하락,-1,post_expiry,18
+A3pe_ALL_20_c13_m20,A3,ALL 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 20일 하락,-1,post_expiry,18
+A3pe_ALL_20_c14_m1,A3,ALL 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 1일 하락,-1,post_expiry,28
+A3pe_ALL_20_c14_up_m1,A3,ALL 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 1일 상승,1,post_expiry_up,28
+A3pe_ALL_20_c14_m3,A3,ALL 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 3일 하락,-1,post_expiry,28
+A3pe_ALL_20_c14_up_m3,A3,ALL 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 3일 상승,1,post_expiry_up,28
+A3pe_ALL_20_c14_m5,A3,ALL 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 5일 하락,-1,post_expiry,27
+A3pe_ALL_20_c14_up_m5,A3,ALL 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 5일 상승,1,post_expiry_up,27
+A3pe_ALL_20_c14_m10,A3,ALL 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 10일 하락,-1,post_expiry,27
+A3pe_ALL_20_c14_up_m10,A3,ALL 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 10일 상승,1,post_expiry_up,27
+A3pe_ALL_20_c14_m20,A3,ALL 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 20일 하락,-1,post_expiry,27
+A3pe_ALL_20_c14_up_m20,A3,ALL 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 20일 상승,1,post_expiry_up,27
+A3pe_ALL_20_c15_m1,A3,ALL 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 1일 하락,-1,post_expiry,34
+A3pe_ALL_20_c15_up_m1,A3,ALL 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 1일 상승,1,post_expiry_up,34
+A3pe_ALL_20_c15_m3,A3,ALL 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 3일 하락,-1,post_expiry,34
+A3pe_ALL_20_c15_up_m3,A3,ALL 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 3일 상승,1,post_expiry_up,34
+A3pe_ALL_20_c15_m5,A3,ALL 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 5일 하락,-1,post_expiry,34
+A3pe_ALL_20_c15_up_m5,A3,ALL 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 5일 상승,1,post_expiry_up,34
+A3pe_ALL_20_c15_m10,A3,ALL 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 10일 하락,-1,post_expiry,34
+A3pe_ALL_20_c15_up_m10,A3,ALL 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 10일 상승,1,post_expiry_up,34
+A3pe_ALL_20_c15_m20,A3,ALL 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 20일 하락,-1,post_expiry,34
+A3pe_ALL_20_c15_up_m20,A3,ALL 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 20일 상승,1,post_expiry_up,34
+A3pe_ALL_20_c16_m1,A3,ALL 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 1일 하락,-1,post_expiry,75
+A3pe_ALL_20_c16_up_m1,A3,ALL 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 1일 상승,1,post_expiry_up,75
+A3pe_ALL_20_c16_m3,A3,ALL 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 3일 하락,-1,post_expiry,75
+A3pe_ALL_20_c16_up_m3,A3,ALL 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 3일 상승,1,post_expiry_up,75
+A3pe_ALL_20_c16_m5,A3,ALL 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 5일 하락,-1,post_expiry,75
+A3pe_ALL_20_c16_up_m5,A3,ALL 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 5일 상승,1,post_expiry_up,75
+A3pe_ALL_20_c16_m10,A3,ALL 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 10일 하락,-1,post_expiry,75
+A3pe_ALL_20_c16_up_m10,A3,ALL 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 10일 상승,1,post_expiry_up,75
+A3pe_ALL_20_c16_m20,A3,ALL 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 20일 하락,-1,post_expiry,75
+A3pe_ALL_20_c16_up_m20,A3,ALL 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 20일 상승,1,post_expiry_up,75
+A3pe_ALL_20_c17_m1,A3,ALL 만기 20일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 1일 하락,-1,post_expiry,18
+A3pe_ALL_20_c17_up_m1,A3,ALL 만기 20일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 1일 상승,1,post_expiry_up,18
+A3pe_ALL_20_c17_m3,A3,ALL 만기 20일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 3일 하락,-1,post_expiry,18
+A3pe_ALL_20_c17_up_m3,A3,ALL 만기 20일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 3일 상승,1,post_expiry_up,18
+A3pe_ALL_20_c17_m5,A3,ALL 만기 20일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 5일 하락,-1,post_expiry,17
+A3pe_ALL_20_c17_up_m5,A3,ALL 만기 20일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 5일 상승,1,post_expiry_up,17
+A3pe_ALL_20_c17_m10,A3,ALL 만기 20일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 10일 하락,-1,post_expiry,17
+A3pe_ALL_20_c17_up_m10,A3,ALL 만기 20일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 10일 상승,1,post_expiry_up,17
+A3pe_ALL_20_c17_m20,A3,ALL 만기 20일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 20일 하락,-1,post_expiry,17
+A3pe_ALL_20_c17_up_m20,A3,ALL 만기 20일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 20일 상승,1,post_expiry_up,17
+A3pe_ALL_20_c18_m1,A3,ALL 만기 20일 전 콜벽 기준 천장 연장 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 1일 하락,-1,post_expiry,13
+A3pe_ALL_20_c18_m3,A3,ALL 만기 20일 전 콜벽 기준 천장 연장 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 3일 하락,-1,post_expiry,13
+A3pe_ALL_20_c18_m5,A3,ALL 만기 20일 전 콜벽 기준 천장 연장 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 5일 하락,-1,post_expiry,13
+A3pe_ALL_20_c18_m10,A3,ALL 만기 20일 전 콜벽 기준 천장 연장 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 10일 하락,-1,post_expiry,13
+A3pe_ALL_20_c18_m20,A3,ALL 만기 20일 전 콜벽 기준 천장 연장 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 20일 하락,-1,post_expiry,13
+A3pe_F0_1_c6_m1,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 1일 하락,-1,post_expiry,129
+A3pe_F0_1_c6_up_m1,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 1일 상승,1,post_expiry_up,129
+A3pe_F0_1_c6_m3,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 3일 하락,-1,post_expiry,129
+A3pe_F0_1_c6_up_m3,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 3일 상승,1,post_expiry_up,129
+A3pe_F0_1_c6_m5,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 5일 하락,-1,post_expiry,128
+A3pe_F0_1_c6_up_m5,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 5일 상승,1,post_expiry_up,128
+A3pe_F0_1_c6_m10,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 10일 하락,-1,post_expiry,128
+A3pe_F0_1_c6_up_m10,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 10일 상승,1,post_expiry_up,128
+A3pe_F0_1_c6_m20,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 20일 하락,-1,post_expiry,128
+A3pe_F0_1_c6_up_m20,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 20일 상승,1,post_expiry_up,128
+A3pe_F0_1_c7_m1,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 1일 하락,-1,post_expiry,28
+A3pe_F0_1_c7_up_m1,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 1일 상승,1,post_expiry_up,28
+A3pe_F0_1_c7_m3,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 3일 하락,-1,post_expiry,28
+A3pe_F0_1_c7_up_m3,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 3일 상승,1,post_expiry_up,28
+A3pe_F0_1_c7_m5,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 5일 하락,-1,post_expiry,28
+A3pe_F0_1_c7_up_m5,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 5일 상승,1,post_expiry_up,28
+A3pe_F0_1_c7_m10,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 10일 하락,-1,post_expiry,28
+A3pe_F0_1_c7_up_m10,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 10일 상승,1,post_expiry_up,28
+A3pe_F0_1_c7_m20,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 20일 하락,-1,post_expiry,28
+A3pe_F0_1_c7_up_m20,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 20일 상승,1,post_expiry_up,28
+A3pe_F0_1_c8_m1,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 1일 하락,-1,post_expiry,52
+A3pe_F0_1_c8_up_m1,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 1일 상승,1,post_expiry_up,52
+A3pe_F0_1_c8_m3,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 3일 하락,-1,post_expiry,52
+A3pe_F0_1_c8_up_m3,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 3일 상승,1,post_expiry_up,52
+A3pe_F0_1_c8_m5,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 5일 하락,-1,post_expiry,52
+A3pe_F0_1_c8_up_m5,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 5일 상승,1,post_expiry_up,52
+A3pe_F0_1_c8_m10,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 10일 하락,-1,post_expiry,52
+A3pe_F0_1_c8_up_m10,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 10일 상승,1,post_expiry_up,52
+A3pe_F0_1_c8_m20,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 20일 하락,-1,post_expiry,52
+A3pe_F0_1_c8_up_m20,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 20일 상승,1,post_expiry_up,52
+A3pe_F0_1_c10_m1,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 1일 하락,-1,post_expiry,27
+A3pe_F0_1_c10_up_m1,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 1일 상승,1,post_expiry_up,27
+A3pe_F0_1_c10_m3,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 3일 하락,-1,post_expiry,27
+A3pe_F0_1_c10_up_m3,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 3일 상승,1,post_expiry_up,27
+A3pe_F0_1_c10_m5,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 5일 하락,-1,post_expiry,27
+A3pe_F0_1_c10_up_m5,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 5일 상승,1,post_expiry_up,27
+A3pe_F0_1_c10_m10,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 10일 하락,-1,post_expiry,27
+A3pe_F0_1_c10_up_m10,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 10일 상승,1,post_expiry_up,27
+A3pe_F0_1_c10_m20,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 20일 하락,-1,post_expiry,27
+A3pe_F0_1_c10_up_m20,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 20일 상승,1,post_expiry_up,27
+A3pe_F0_1_c13_m1,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 1일 하락,-1,post_expiry,23
+A3pe_F0_1_c13_m3,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 3일 하락,-1,post_expiry,23
+A3pe_F0_1_c13_m5,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 5일 하락,-1,post_expiry,23
+A3pe_F0_1_c13_m10,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 10일 하락,-1,post_expiry,23
+A3pe_F0_1_c13_m20,A3,F0 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 20일 하락,-1,post_expiry,23
+A3pe_F0_1_c14_m1,A3,F0 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 1일 하락,-1,post_expiry,15
+A3pe_F0_1_c14_up_m1,A3,F0 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 1일 상승,1,post_expiry_up,15
+A3pe_F0_1_c14_m3,A3,F0 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 3일 하락,-1,post_expiry,15
+A3pe_F0_1_c14_up_m3,A3,F0 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 3일 상승,1,post_expiry_up,15
+A3pe_F0_1_c14_m5,A3,F0 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 5일 하락,-1,post_expiry,14
+A3pe_F0_1_c14_up_m5,A3,F0 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 5일 상승,1,post_expiry_up,14
+A3pe_F0_1_c14_m10,A3,F0 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 10일 하락,-1,post_expiry,14
+A3pe_F0_1_c14_up_m10,A3,F0 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 10일 상승,1,post_expiry_up,14
+A3pe_F0_1_c14_m20,A3,F0 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 20일 하락,-1,post_expiry,14
+A3pe_F0_1_c14_up_m20,A3,F0 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 20일 상승,1,post_expiry_up,14
+A3pe_F0_1_c16_m1,A3,F0 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 1일 하락,-1,post_expiry,113
+A3pe_F0_1_c16_up_m1,A3,F0 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 1일 상승,1,post_expiry_up,113
+A3pe_F0_1_c16_m3,A3,F0 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 3일 하락,-1,post_expiry,113
+A3pe_F0_1_c16_up_m3,A3,F0 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 3일 상승,1,post_expiry_up,113
+A3pe_F0_1_c16_m5,A3,F0 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 5일 하락,-1,post_expiry,113
+A3pe_F0_1_c16_up_m5,A3,F0 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 5일 상승,1,post_expiry_up,113
+A3pe_F0_1_c16_m10,A3,F0 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 10일 하락,-1,post_expiry,113
+A3pe_F0_1_c16_up_m10,A3,F0 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 10일 상승,1,post_expiry_up,113
+A3pe_F0_1_c16_m20,A3,F0 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 20일 하락,-1,post_expiry,113
+A3pe_F0_1_c16_up_m20,A3,F0 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 20일 상승,1,post_expiry_up,113
+A3pe_F0_1_c17_m1,A3,F0 만기 1일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 1일 하락,-1,post_expiry,10
+A3pe_F0_1_c17_up_m1,A3,F0 만기 1일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 1일 상승,1,post_expiry_up,10
+A3pe_F0_1_c17_m3,A3,F0 만기 1일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 3일 하락,-1,post_expiry,10
+A3pe_F0_1_c17_up_m3,A3,F0 만기 1일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 3일 상승,1,post_expiry_up,10
+A3pe_F0_1_c17_m5,A3,F0 만기 1일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 5일 하락,-1,post_expiry,9
+A3pe_F0_1_c17_up_m5,A3,F0 만기 1일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 5일 상승,1,post_expiry_up,9
+A3pe_F0_1_c17_m10,A3,F0 만기 1일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 10일 하락,-1,post_expiry,9
+A3pe_F0_1_c17_up_m10,A3,F0 만기 1일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 10일 상승,1,post_expiry_up,9
+A3pe_F0_1_c17_m20,A3,F0 만기 1일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 20일 하락,-1,post_expiry,9
+A3pe_F0_1_c17_up_m20,A3,F0 만기 1일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 20일 상승,1,post_expiry_up,9
+A3pe_F0_5_c0_m1,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 1일 하락,-1,post_expiry,14
+A3pe_F0_5_c0_up_m1,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 1일 상승,1,post_expiry_up,14
+A3pe_F0_5_c0_m3,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 3일 하락,-1,post_expiry,14
+A3pe_F0_5_c0_up_m3,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 3일 상승,1,post_expiry_up,14
+A3pe_F0_5_c0_m5,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 5일 하락,-1,post_expiry,14
+A3pe_F0_5_c0_up_m5,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 5일 상승,1,post_expiry_up,14
+A3pe_F0_5_c0_m10,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 10일 하락,-1,post_expiry,14
+A3pe_F0_5_c0_up_m10,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 10일 상승,1,post_expiry_up,14
+A3pe_F0_5_c0_m20,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 20일 하락,-1,post_expiry,14
+A3pe_F0_5_c0_up_m20,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 20일 상승,1,post_expiry_up,14
+A3pe_F0_5_c2_m1,A3,F0 만기 5일 전 콜벽 기준 주기 중 넘고 만기에도 벽 위 → 만기 다음 날부터 1일 하락,-1,post_expiry,14
+A3pe_F0_5_c2_m3,A3,F0 만기 5일 전 콜벽 기준 주기 중 넘고 만기에도 벽 위 → 만기 다음 날부터 3일 하락,-1,post_expiry,14
+A3pe_F0_5_c2_m5,A3,F0 만기 5일 전 콜벽 기준 주기 중 넘고 만기에도 벽 위 → 만기 다음 날부터 5일 하락,-1,post_expiry,14
+A3pe_F0_5_c2_m10,A3,F0 만기 5일 전 콜벽 기준 주기 중 넘고 만기에도 벽 위 → 만기 다음 날부터 10일 하락,-1,post_expiry,14
+A3pe_F0_5_c2_m20,A3,F0 만기 5일 전 콜벽 기준 주기 중 넘고 만기에도 벽 위 → 만기 다음 날부터 20일 하락,-1,post_expiry,14
+A3pe_F0_5_c6_m1,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 1일 하락,-1,post_expiry,124
+A3pe_F0_5_c6_up_m1,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 1일 상승,1,post_expiry_up,124
+A3pe_F0_5_c6_m3,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 3일 하락,-1,post_expiry,124
+A3pe_F0_5_c6_up_m3,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 3일 상승,1,post_expiry_up,124
+A3pe_F0_5_c6_m5,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 5일 하락,-1,post_expiry,123
+A3pe_F0_5_c6_up_m5,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 5일 상승,1,post_expiry_up,123
+A3pe_F0_5_c6_m10,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 10일 하락,-1,post_expiry,123
+A3pe_F0_5_c6_up_m10,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 10일 상승,1,post_expiry_up,123
+A3pe_F0_5_c6_m20,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 20일 하락,-1,post_expiry,123
+A3pe_F0_5_c6_up_m20,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 20일 상승,1,post_expiry_up,123
+A3pe_F0_5_c7_m1,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 1일 하락,-1,post_expiry,24
+A3pe_F0_5_c7_up_m1,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 1일 상승,1,post_expiry_up,24
+A3pe_F0_5_c7_m3,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 3일 하락,-1,post_expiry,24
+A3pe_F0_5_c7_up_m3,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 3일 상승,1,post_expiry_up,24
+A3pe_F0_5_c7_m5,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 5일 하락,-1,post_expiry,24
+A3pe_F0_5_c7_up_m5,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 5일 상승,1,post_expiry_up,24
+A3pe_F0_5_c7_m10,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 10일 하락,-1,post_expiry,24
+A3pe_F0_5_c7_up_m10,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 10일 상승,1,post_expiry_up,24
+A3pe_F0_5_c7_m20,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 20일 하락,-1,post_expiry,24
+A3pe_F0_5_c7_up_m20,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 20일 상승,1,post_expiry_up,24
+A3pe_F0_5_c8_m1,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 1일 하락,-1,post_expiry,40
+A3pe_F0_5_c8_up_m1,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 1일 상승,1,post_expiry_up,40
+A3pe_F0_5_c8_m3,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 3일 하락,-1,post_expiry,40
+A3pe_F0_5_c8_up_m3,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 3일 상승,1,post_expiry_up,40
+A3pe_F0_5_c8_m5,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 5일 하락,-1,post_expiry,40
+A3pe_F0_5_c8_up_m5,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 5일 상승,1,post_expiry_up,40
+A3pe_F0_5_c8_m10,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 10일 하락,-1,post_expiry,40
+A3pe_F0_5_c8_up_m10,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 10일 상승,1,post_expiry_up,40
+A3pe_F0_5_c8_m20,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 20일 하락,-1,post_expiry,40
+A3pe_F0_5_c8_up_m20,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 20일 상승,1,post_expiry_up,40
+A3pe_F0_5_c10_m1,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 1일 하락,-1,post_expiry,23
+A3pe_F0_5_c10_up_m1,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 1일 상승,1,post_expiry_up,23
+A3pe_F0_5_c10_m3,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 3일 하락,-1,post_expiry,23
+A3pe_F0_5_c10_up_m3,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 3일 상승,1,post_expiry_up,23
+A3pe_F0_5_c10_m5,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 5일 하락,-1,post_expiry,23
+A3pe_F0_5_c10_up_m5,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 5일 상승,1,post_expiry_up,23
+A3pe_F0_5_c10_m10,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 10일 하락,-1,post_expiry,23
+A3pe_F0_5_c10_up_m10,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 10일 상승,1,post_expiry_up,23
+A3pe_F0_5_c10_m20,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 20일 하락,-1,post_expiry,23
+A3pe_F0_5_c10_up_m20,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 20일 상승,1,post_expiry_up,23
+A3pe_F0_5_c13_m1,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 1일 하락,-1,post_expiry,15
+A3pe_F0_5_c13_m3,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 3일 하락,-1,post_expiry,15
+A3pe_F0_5_c13_m5,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 5일 하락,-1,post_expiry,15
+A3pe_F0_5_c13_m10,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 10일 하락,-1,post_expiry,15
+A3pe_F0_5_c13_m20,A3,F0 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 20일 하락,-1,post_expiry,15
+A3pe_F0_5_c14_m1,A3,F0 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 1일 하락,-1,post_expiry,23
+A3pe_F0_5_c14_up_m1,A3,F0 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 1일 상승,1,post_expiry_up,23
+A3pe_F0_5_c14_m3,A3,F0 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 3일 하락,-1,post_expiry,23
+A3pe_F0_5_c14_up_m3,A3,F0 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 3일 상승,1,post_expiry_up,23
+A3pe_F0_5_c14_m5,A3,F0 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 5일 하락,-1,post_expiry,22
+A3pe_F0_5_c14_up_m5,A3,F0 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 5일 상승,1,post_expiry_up,22
+A3pe_F0_5_c14_m10,A3,F0 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 10일 하락,-1,post_expiry,22
+A3pe_F0_5_c14_up_m10,A3,F0 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 10일 상승,1,post_expiry_up,22
+A3pe_F0_5_c14_m20,A3,F0 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 20일 하락,-1,post_expiry,22
+A3pe_F0_5_c14_up_m20,A3,F0 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 20일 상승,1,post_expiry_up,22
+A3pe_F0_5_c16_m1,A3,F0 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 1일 하락,-1,post_expiry,105
+A3pe_F0_5_c16_up_m1,A3,F0 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 1일 상승,1,post_expiry_up,105
+A3pe_F0_5_c16_m3,A3,F0 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 3일 하락,-1,post_expiry,105
+A3pe_F0_5_c16_up_m3,A3,F0 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 3일 상승,1,post_expiry_up,105
+A3pe_F0_5_c16_m5,A3,F0 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 5일 하락,-1,post_expiry,105
+A3pe_F0_5_c16_up_m5,A3,F0 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 5일 상승,1,post_expiry_up,105
+A3pe_F0_5_c16_m10,A3,F0 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 10일 하락,-1,post_expiry,105
+A3pe_F0_5_c16_up_m10,A3,F0 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 10일 상승,1,post_expiry_up,105
+A3pe_F0_5_c16_m20,A3,F0 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 20일 하락,-1,post_expiry,105
+A3pe_F0_5_c16_up_m20,A3,F0 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 20일 상승,1,post_expiry_up,105
+A3pe_F0_5_c17_m1,A3,F0 만기 5일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 1일 하락,-1,post_expiry,13
+A3pe_F0_5_c17_up_m1,A3,F0 만기 5일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 1일 상승,1,post_expiry_up,13
+A3pe_F0_5_c17_m3,A3,F0 만기 5일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 3일 하락,-1,post_expiry,13
+A3pe_F0_5_c17_up_m3,A3,F0 만기 5일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 3일 상승,1,post_expiry_up,13
+A3pe_F0_5_c17_m5,A3,F0 만기 5일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 5일 하락,-1,post_expiry,12
+A3pe_F0_5_c17_up_m5,A3,F0 만기 5일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 5일 상승,1,post_expiry_up,12
+A3pe_F0_5_c17_m10,A3,F0 만기 5일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 10일 하락,-1,post_expiry,12
+A3pe_F0_5_c17_up_m10,A3,F0 만기 5일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 10일 상승,1,post_expiry_up,12
+A3pe_F0_5_c17_m20,A3,F0 만기 5일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 20일 하락,-1,post_expiry,12
+A3pe_F0_5_c17_up_m20,A3,F0 만기 5일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 20일 상승,1,post_expiry_up,12
+A3pe_F0_10_c0_m1,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 1일 하락,-1,post_expiry,16
+A3pe_F0_10_c0_up_m1,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 1일 상승,1,post_expiry_up,16
+A3pe_F0_10_c0_m3,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 3일 하락,-1,post_expiry,16
+A3pe_F0_10_c0_up_m3,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 3일 상승,1,post_expiry_up,16
+A3pe_F0_10_c0_m5,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 5일 하락,-1,post_expiry,16
+A3pe_F0_10_c0_up_m5,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 5일 상승,1,post_expiry_up,16
+A3pe_F0_10_c0_m10,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 10일 하락,-1,post_expiry,16
+A3pe_F0_10_c0_up_m10,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 10일 상승,1,post_expiry_up,16
+A3pe_F0_10_c0_m20,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 20일 하락,-1,post_expiry,16
+A3pe_F0_10_c0_up_m20,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 20일 상승,1,post_expiry_up,16
+A3pe_F0_10_c2_m1,A3,F0 만기 10일 전 콜벽 기준 주기 중 넘고 만기에도 벽 위 → 만기 다음 날부터 1일 하락,-1,post_expiry,16
+A3pe_F0_10_c2_m3,A3,F0 만기 10일 전 콜벽 기준 주기 중 넘고 만기에도 벽 위 → 만기 다음 날부터 3일 하락,-1,post_expiry,16
+A3pe_F0_10_c2_m5,A3,F0 만기 10일 전 콜벽 기준 주기 중 넘고 만기에도 벽 위 → 만기 다음 날부터 5일 하락,-1,post_expiry,16
+A3pe_F0_10_c2_m10,A3,F0 만기 10일 전 콜벽 기준 주기 중 넘고 만기에도 벽 위 → 만기 다음 날부터 10일 하락,-1,post_expiry,16
+A3pe_F0_10_c2_m20,A3,F0 만기 10일 전 콜벽 기준 주기 중 넘고 만기에도 벽 위 → 만기 다음 날부터 20일 하락,-1,post_expiry,16
+A3pe_F0_10_c6_m1,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 1일 하락,-1,post_expiry,123
+A3pe_F0_10_c6_up_m1,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 1일 상승,1,post_expiry_up,123
+A3pe_F0_10_c6_m3,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 3일 하락,-1,post_expiry,123
+A3pe_F0_10_c6_up_m3,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 3일 상승,1,post_expiry_up,123
+A3pe_F0_10_c6_m5,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 5일 하락,-1,post_expiry,122
+A3pe_F0_10_c6_up_m5,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 5일 상승,1,post_expiry_up,122
+A3pe_F0_10_c6_m10,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 10일 하락,-1,post_expiry,122
+A3pe_F0_10_c6_up_m10,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 10일 상승,1,post_expiry_up,122
+A3pe_F0_10_c6_m20,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 20일 하락,-1,post_expiry,122
+A3pe_F0_10_c6_up_m20,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 20일 상승,1,post_expiry_up,122
+A3pe_F0_10_c7_m1,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 1일 하락,-1,post_expiry,23
+A3pe_F0_10_c7_up_m1,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 1일 상승,1,post_expiry_up,23
+A3pe_F0_10_c7_m3,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 3일 하락,-1,post_expiry,23
+A3pe_F0_10_c7_up_m3,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 3일 상승,1,post_expiry_up,23
+A3pe_F0_10_c7_m5,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 5일 하락,-1,post_expiry,23
+A3pe_F0_10_c7_up_m5,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 5일 상승,1,post_expiry_up,23
+A3pe_F0_10_c7_m10,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 10일 하락,-1,post_expiry,23
+A3pe_F0_10_c7_up_m10,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 10일 상승,1,post_expiry_up,23
+A3pe_F0_10_c7_m20,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 20일 하락,-1,post_expiry,23
+A3pe_F0_10_c7_up_m20,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 20일 상승,1,post_expiry_up,23
+A3pe_F0_10_c8_m1,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 1일 하락,-1,post_expiry,37
+A3pe_F0_10_c8_up_m1,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 1일 상승,1,post_expiry_up,37
+A3pe_F0_10_c8_m3,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 3일 하락,-1,post_expiry,37
+A3pe_F0_10_c8_up_m3,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 3일 상승,1,post_expiry_up,37
+A3pe_F0_10_c8_m5,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 5일 하락,-1,post_expiry,37
+A3pe_F0_10_c8_up_m5,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 5일 상승,1,post_expiry_up,37
+A3pe_F0_10_c8_m10,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 10일 하락,-1,post_expiry,37
+A3pe_F0_10_c8_up_m10,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 10일 상승,1,post_expiry_up,37
+A3pe_F0_10_c8_m20,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 20일 하락,-1,post_expiry,37
+A3pe_F0_10_c8_up_m20,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 20일 상승,1,post_expiry_up,37
+A3pe_F0_10_c10_m1,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 1일 하락,-1,post_expiry,20
+A3pe_F0_10_c10_up_m1,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 1일 상승,1,post_expiry_up,20
+A3pe_F0_10_c10_m3,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 3일 하락,-1,post_expiry,20
+A3pe_F0_10_c10_up_m3,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 3일 상승,1,post_expiry_up,20
+A3pe_F0_10_c10_m5,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 5일 하락,-1,post_expiry,20
+A3pe_F0_10_c10_up_m5,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 5일 상승,1,post_expiry_up,20
+A3pe_F0_10_c10_m10,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 10일 하락,-1,post_expiry,20
+A3pe_F0_10_c10_up_m10,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 10일 상승,1,post_expiry_up,20
+A3pe_F0_10_c10_m20,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 20일 하락,-1,post_expiry,20
+A3pe_F0_10_c10_up_m20,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 20일 상승,1,post_expiry_up,20
+A3pe_F0_10_c13_m1,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 1일 하락,-1,post_expiry,17
+A3pe_F0_10_c13_m3,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 3일 하락,-1,post_expiry,17
+A3pe_F0_10_c13_m5,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 5일 하락,-1,post_expiry,17
+A3pe_F0_10_c13_m10,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 10일 하락,-1,post_expiry,17
+A3pe_F0_10_c13_m20,A3,F0 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 20일 하락,-1,post_expiry,17
+A3pe_F0_10_c14_m1,A3,F0 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 1일 하락,-1,post_expiry,30
+A3pe_F0_10_c14_up_m1,A3,F0 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 1일 상승,1,post_expiry_up,30
+A3pe_F0_10_c14_m3,A3,F0 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 3일 하락,-1,post_expiry,30
+A3pe_F0_10_c14_up_m3,A3,F0 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 3일 상승,1,post_expiry_up,30
+A3pe_F0_10_c14_m5,A3,F0 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 5일 하락,-1,post_expiry,29
+A3pe_F0_10_c14_up_m5,A3,F0 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 5일 상승,1,post_expiry_up,29
+A3pe_F0_10_c14_m10,A3,F0 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 10일 하락,-1,post_expiry,29
+A3pe_F0_10_c14_up_m10,A3,F0 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 10일 상승,1,post_expiry_up,29
+A3pe_F0_10_c14_m20,A3,F0 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 20일 하락,-1,post_expiry,29
+A3pe_F0_10_c14_up_m20,A3,F0 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 20일 상승,1,post_expiry_up,29
+A3pe_F0_10_c15_m1,A3,F0 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 1일 하락,-1,post_expiry,14
+A3pe_F0_10_c15_up_m1,A3,F0 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 1일 상승,1,post_expiry_up,14
+A3pe_F0_10_c15_m3,A3,F0 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 3일 하락,-1,post_expiry,14
+A3pe_F0_10_c15_up_m3,A3,F0 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 3일 상승,1,post_expiry_up,14
+A3pe_F0_10_c15_m5,A3,F0 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 5일 하락,-1,post_expiry,14
+A3pe_F0_10_c15_up_m5,A3,F0 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 5일 상승,1,post_expiry_up,14
+A3pe_F0_10_c15_m10,A3,F0 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 10일 하락,-1,post_expiry,14
+A3pe_F0_10_c15_up_m10,A3,F0 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 10일 상승,1,post_expiry_up,14
+A3pe_F0_10_c15_m20,A3,F0 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 20일 하락,-1,post_expiry,14
+A3pe_F0_10_c15_up_m20,A3,F0 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 20일 상승,1,post_expiry_up,14
+A3pe_F0_10_c16_m1,A3,F0 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 1일 하락,-1,post_expiry,93
+A3pe_F0_10_c16_up_m1,A3,F0 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 1일 상승,1,post_expiry_up,93
+A3pe_F0_10_c16_m3,A3,F0 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 3일 하락,-1,post_expiry,93
+A3pe_F0_10_c16_up_m3,A3,F0 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 3일 상승,1,post_expiry_up,93
+A3pe_F0_10_c16_m5,A3,F0 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 5일 하락,-1,post_expiry,93
+A3pe_F0_10_c16_up_m5,A3,F0 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 5일 상승,1,post_expiry_up,93
+A3pe_F0_10_c16_m10,A3,F0 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 10일 하락,-1,post_expiry,93
+A3pe_F0_10_c16_up_m10,A3,F0 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 10일 상승,1,post_expiry_up,93
+A3pe_F0_10_c16_m20,A3,F0 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 20일 하락,-1,post_expiry,93
+A3pe_F0_10_c16_up_m20,A3,F0 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 20일 상승,1,post_expiry_up,93
+A3pe_F0_10_c17_m1,A3,F0 만기 10일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 1일 하락,-1,post_expiry,17
+A3pe_F0_10_c17_up_m1,A3,F0 만기 10일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 1일 상승,1,post_expiry_up,17
+A3pe_F0_10_c17_m3,A3,F0 만기 10일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 3일 하락,-1,post_expiry,17
+A3pe_F0_10_c17_up_m3,A3,F0 만기 10일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 3일 상승,1,post_expiry_up,17
+A3pe_F0_10_c17_m5,A3,F0 만기 10일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 5일 하락,-1,post_expiry,16
+A3pe_F0_10_c17_up_m5,A3,F0 만기 10일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 5일 상승,1,post_expiry_up,16
+A3pe_F0_10_c17_m10,A3,F0 만기 10일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 10일 하락,-1,post_expiry,16
+A3pe_F0_10_c17_up_m10,A3,F0 만기 10일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 10일 상승,1,post_expiry_up,16
+A3pe_F0_10_c17_m20,A3,F0 만기 10일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 20일 하락,-1,post_expiry,16
+A3pe_F0_10_c17_up_m20,A3,F0 만기 10일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 20일 상승,1,post_expiry_up,16
+A3pe_F0_20_c0_m1,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 1일 하락,-1,post_expiry,23
+A3pe_F0_20_c0_up_m1,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 1일 상승,1,post_expiry_up,23
+A3pe_F0_20_c0_m3,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 3일 하락,-1,post_expiry,23
+A3pe_F0_20_c0_up_m3,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 3일 상승,1,post_expiry_up,23
+A3pe_F0_20_c0_m5,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 5일 하락,-1,post_expiry,23
+A3pe_F0_20_c0_up_m5,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 5일 상승,1,post_expiry_up,23
+A3pe_F0_20_c0_m10,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 10일 하락,-1,post_expiry,23
+A3pe_F0_20_c0_up_m10,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 10일 상승,1,post_expiry_up,23
+A3pe_F0_20_c0_m20,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 20일 하락,-1,post_expiry,23
+A3pe_F0_20_c0_up_m20,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 위 → 만기 다음 날부터 20일 상승,1,post_expiry_up,23
+A3pe_F0_20_c2_m1,A3,F0 만기 20일 전 콜벽 기준 주기 중 넘고 만기에도 벽 위 → 만기 다음 날부터 1일 하락,-1,post_expiry,23
+A3pe_F0_20_c2_m3,A3,F0 만기 20일 전 콜벽 기준 주기 중 넘고 만기에도 벽 위 → 만기 다음 날부터 3일 하락,-1,post_expiry,23
+A3pe_F0_20_c2_m5,A3,F0 만기 20일 전 콜벽 기준 주기 중 넘고 만기에도 벽 위 → 만기 다음 날부터 5일 하락,-1,post_expiry,23
+A3pe_F0_20_c2_m10,A3,F0 만기 20일 전 콜벽 기준 주기 중 넘고 만기에도 벽 위 → 만기 다음 날부터 10일 하락,-1,post_expiry,23
+A3pe_F0_20_c2_m20,A3,F0 만기 20일 전 콜벽 기준 주기 중 넘고 만기에도 벽 위 → 만기 다음 날부터 20일 하락,-1,post_expiry,23
+A3pe_F0_20_c3_m1,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 위 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 1일 하락,-1,post_expiry,10
+A3pe_F0_20_c3_m3,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 위 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 3일 하락,-1,post_expiry,10
+A3pe_F0_20_c3_m5,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 위 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 5일 하락,-1,post_expiry,10
+A3pe_F0_20_c3_m10,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 위 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 10일 하락,-1,post_expiry,10
+A3pe_F0_20_c3_m20,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 위 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 20일 하락,-1,post_expiry,10
+A3pe_F0_20_c6_m1,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 1일 하락,-1,post_expiry,116
+A3pe_F0_20_c6_up_m1,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 1일 상승,1,post_expiry_up,116
+A3pe_F0_20_c6_m3,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 3일 하락,-1,post_expiry,116
+A3pe_F0_20_c6_up_m3,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 3일 상승,1,post_expiry_up,116
+A3pe_F0_20_c6_m5,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 5일 하락,-1,post_expiry,115
+A3pe_F0_20_c6_up_m5,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 5일 상승,1,post_expiry_up,115
+A3pe_F0_20_c6_m10,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 10일 하락,-1,post_expiry,115
+A3pe_F0_20_c6_up_m10,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 10일 상승,1,post_expiry_up,115
+A3pe_F0_20_c6_m20,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 20일 하락,-1,post_expiry,115
+A3pe_F0_20_c6_up_m20,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 20일 상승,1,post_expiry_up,115
+A3pe_F0_20_c7_m1,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 1일 하락,-1,post_expiry,32
+A3pe_F0_20_c7_up_m1,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 1일 상승,1,post_expiry_up,32
+A3pe_F0_20_c7_m3,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 3일 하락,-1,post_expiry,32
+A3pe_F0_20_c7_up_m3,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 3일 상승,1,post_expiry_up,32
+A3pe_F0_20_c7_m5,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 5일 하락,-1,post_expiry,32
+A3pe_F0_20_c7_up_m5,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 5일 상승,1,post_expiry_up,32
+A3pe_F0_20_c7_m10,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 10일 하락,-1,post_expiry,32
+A3pe_F0_20_c7_up_m10,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 10일 상승,1,post_expiry_up,32
+A3pe_F0_20_c7_m20,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 20일 하락,-1,post_expiry,32
+A3pe_F0_20_c7_up_m20,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상(닿을 듯) → 만기 다음 날부터 20일 상승,1,post_expiry_up,32
+A3pe_F0_20_c8_m1,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 1일 하락,-1,post_expiry,38
+A3pe_F0_20_c8_up_m1,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 1일 상승,1,post_expiry_up,38
+A3pe_F0_20_c8_m3,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 3일 하락,-1,post_expiry,38
+A3pe_F0_20_c8_up_m3,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 3일 상승,1,post_expiry_up,38
+A3pe_F0_20_c8_m5,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 5일 하락,-1,post_expiry,38
+A3pe_F0_20_c8_up_m5,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 5일 상승,1,post_expiry_up,38
+A3pe_F0_20_c8_m10,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 10일 하락,-1,post_expiry,38
+A3pe_F0_20_c8_up_m10,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 10일 상승,1,post_expiry_up,38
+A3pe_F0_20_c8_m20,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 20일 하락,-1,post_expiry,38
+A3pe_F0_20_c8_up_m20,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 20일 상승,1,post_expiry_up,38
+A3pe_F0_20_c10_m1,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 1일 하락,-1,post_expiry,28
+A3pe_F0_20_c10_up_m1,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 1일 상승,1,post_expiry_up,28
+A3pe_F0_20_c10_m3,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 3일 하락,-1,post_expiry,28
+A3pe_F0_20_c10_up_m3,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 3일 상승,1,post_expiry_up,28
+A3pe_F0_20_c10_m5,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 5일 하락,-1,post_expiry,28
+A3pe_F0_20_c10_up_m5,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 5일 상승,1,post_expiry_up,28
+A3pe_F0_20_c10_m10,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 10일 하락,-1,post_expiry,28
+A3pe_F0_20_c10_up_m10,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 10일 상승,1,post_expiry_up,28
+A3pe_F0_20_c10_m20,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 20일 하락,-1,post_expiry,28
+A3pe_F0_20_c10_up_m20,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림) → 만기 다음 날부터 20일 상승,1,post_expiry_up,28
+A3pe_F0_20_c13_m1,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 1일 하락,-1,post_expiry,19
+A3pe_F0_20_c13_m3,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 3일 하락,-1,post_expiry,19
+A3pe_F0_20_c13_m5,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 5일 하락,-1,post_expiry,19
+A3pe_F0_20_c13_m10,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 10일 하락,-1,post_expiry,19
+A3pe_F0_20_c13_m20,A3,F0 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 20일 하락,-1,post_expiry,19
+A3pe_F0_20_c14_m1,A3,F0 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 1일 하락,-1,post_expiry,30
+A3pe_F0_20_c14_up_m1,A3,F0 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 1일 상승,1,post_expiry_up,30
+A3pe_F0_20_c14_m3,A3,F0 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 3일 하락,-1,post_expiry,30
+A3pe_F0_20_c14_up_m3,A3,F0 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 3일 상승,1,post_expiry_up,30
+A3pe_F0_20_c14_m5,A3,F0 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 5일 하락,-1,post_expiry,29
+A3pe_F0_20_c14_up_m5,A3,F0 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 5일 상승,1,post_expiry_up,29
+A3pe_F0_20_c14_m10,A3,F0 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 10일 하락,-1,post_expiry,29
+A3pe_F0_20_c14_up_m10,A3,F0 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 10일 상승,1,post_expiry_up,29
+A3pe_F0_20_c14_m20,A3,F0 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 20일 하락,-1,post_expiry,29
+A3pe_F0_20_c14_up_m20,A3,F0 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 아래(천장 내림) → 만기 다음 날부터 20일 상승,1,post_expiry_up,29
+A3pe_F0_20_c15_m1,A3,F0 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 1일 하락,-1,post_expiry,24
+A3pe_F0_20_c15_up_m1,A3,F0 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 1일 상승,1,post_expiry_up,24
+A3pe_F0_20_c15_m3,A3,F0 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 3일 하락,-1,post_expiry,24
+A3pe_F0_20_c15_up_m3,A3,F0 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 3일 상승,1,post_expiry_up,24
+A3pe_F0_20_c15_m5,A3,F0 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 5일 하락,-1,post_expiry,24
+A3pe_F0_20_c15_up_m5,A3,F0 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 5일 상승,1,post_expiry_up,24
+A3pe_F0_20_c15_m10,A3,F0 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 10일 하락,-1,post_expiry,24
+A3pe_F0_20_c15_up_m10,A3,F0 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 10일 상승,1,post_expiry_up,24
+A3pe_F0_20_c15_m20,A3,F0 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 20일 하락,-1,post_expiry,24
+A3pe_F0_20_c15_up_m20,A3,F0 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 20일 상승,1,post_expiry_up,24
+A3pe_F0_20_c16_m1,A3,F0 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 1일 하락,-1,post_expiry,83
+A3pe_F0_20_c16_up_m1,A3,F0 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 1일 상승,1,post_expiry_up,83
+A3pe_F0_20_c16_m3,A3,F0 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 3일 하락,-1,post_expiry,83
+A3pe_F0_20_c16_up_m3,A3,F0 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 3일 상승,1,post_expiry_up,83
+A3pe_F0_20_c16_m5,A3,F0 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 5일 하락,-1,post_expiry,83
+A3pe_F0_20_c16_up_m5,A3,F0 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 5일 상승,1,post_expiry_up,83
+A3pe_F0_20_c16_m10,A3,F0 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 10일 하락,-1,post_expiry,83
+A3pe_F0_20_c16_up_m10,A3,F0 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 10일 상승,1,post_expiry_up,83
+A3pe_F0_20_c16_m20,A3,F0 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 20일 하락,-1,post_expiry,83
+A3pe_F0_20_c16_up_m20,A3,F0 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 20일 상승,1,post_expiry_up,83
+A3pe_F0_20_c17_m1,A3,F0 만기 20일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 1일 하락,-1,post_expiry,22
+A3pe_F0_20_c17_up_m1,A3,F0 만기 20일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 1일 상승,1,post_expiry_up,22
+A3pe_F0_20_c17_m3,A3,F0 만기 20일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 3일 하락,-1,post_expiry,22
+A3pe_F0_20_c17_up_m3,A3,F0 만기 20일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 3일 상승,1,post_expiry_up,22
+A3pe_F0_20_c17_m5,A3,F0 만기 20일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 5일 하락,-1,post_expiry,21
+A3pe_F0_20_c17_up_m5,A3,F0 만기 20일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 5일 상승,1,post_expiry_up,21
+A3pe_F0_20_c17_m10,A3,F0 만기 20일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 10일 하락,-1,post_expiry,21
+A3pe_F0_20_c17_up_m10,A3,F0 만기 20일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 10일 상승,1,post_expiry_up,21
+A3pe_F0_20_c17_m20,A3,F0 만기 20일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 20일 하락,-1,post_expiry,21
+A3pe_F0_20_c17_up_m20,A3,F0 만기 20일 전 콜벽 기준 천장 내림 + 만기일 외국인 선물 순매수 → 만기 다음 날부터 20일 상승,1,post_expiry_up,21
+A3pe_F0_20_c18_m1,A3,F0 만기 20일 전 콜벽 기준 천장 연장 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 1일 하락,-1,post_expiry,11
+A3pe_F0_20_c18_m3,A3,F0 만기 20일 전 콜벽 기준 천장 연장 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 3일 하락,-1,post_expiry,11
+A3pe_F0_20_c18_m5,A3,F0 만기 20일 전 콜벽 기준 천장 연장 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 5일 하락,-1,post_expiry,11
+A3pe_F0_20_c18_m10,A3,F0 만기 20일 전 콜벽 기준 천장 연장 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 10일 하락,-1,post_expiry,11
+A3pe_F0_20_c18_m20,A3,F0 만기 20일 전 콜벽 기준 천장 연장 + 만기일 외국인 선물 순매도 → 만기 다음 날부터 20일 하락,-1,post_expiry,11
+A3pe_Q_1_c6_m1,A3,Q 만기 1일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 1일 하락,-1,post_expiry,42
+A3pe_Q_1_c6_up_m1,A3,Q 만기 1일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 1일 상승,1,post_expiry_up,42
+A3pe_Q_1_c6_m3,A3,Q 만기 1일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 3일 하락,-1,post_expiry,42
+A3pe_Q_1_c6_up_m3,A3,Q 만기 1일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 3일 상승,1,post_expiry_up,42
+A3pe_Q_1_c6_m5,A3,Q 만기 1일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 5일 하락,-1,post_expiry,42
+A3pe_Q_1_c6_up_m5,A3,Q 만기 1일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 5일 상승,1,post_expiry_up,42
+A3pe_Q_1_c6_m10,A3,Q 만기 1일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 10일 하락,-1,post_expiry,42
+A3pe_Q_1_c6_up_m10,A3,Q 만기 1일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 10일 상승,1,post_expiry_up,42
+A3pe_Q_1_c6_m20,A3,Q 만기 1일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 20일 하락,-1,post_expiry,42
+A3pe_Q_1_c6_up_m20,A3,Q 만기 1일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 20일 상승,1,post_expiry_up,42
+A3pe_Q_1_c8_m1,A3,Q 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 1일 하락,-1,post_expiry,18
+A3pe_Q_1_c8_up_m1,A3,Q 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 1일 상승,1,post_expiry_up,18
+A3pe_Q_1_c8_m3,A3,Q 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 3일 하락,-1,post_expiry,18
+A3pe_Q_1_c8_up_m3,A3,Q 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 3일 상승,1,post_expiry_up,18
+A3pe_Q_1_c8_m5,A3,Q 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 5일 하락,-1,post_expiry,18
+A3pe_Q_1_c8_up_m5,A3,Q 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 5일 상승,1,post_expiry_up,18
+A3pe_Q_1_c8_m10,A3,Q 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 10일 하락,-1,post_expiry,18
+A3pe_Q_1_c8_up_m10,A3,Q 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 10일 상승,1,post_expiry_up,18
+A3pe_Q_1_c8_m20,A3,Q 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 20일 하락,-1,post_expiry,18
+A3pe_Q_1_c8_up_m20,A3,Q 만기 1일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 20일 상승,1,post_expiry_up,18
+A3pe_Q_1_c16_m1,A3,Q 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 1일 하락,-1,post_expiry,38
+A3pe_Q_1_c16_up_m1,A3,Q 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 1일 상승,1,post_expiry_up,38
+A3pe_Q_1_c16_m3,A3,Q 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 3일 하락,-1,post_expiry,38
+A3pe_Q_1_c16_up_m3,A3,Q 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 3일 상승,1,post_expiry_up,38
+A3pe_Q_1_c16_m5,A3,Q 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 5일 하락,-1,post_expiry,38
+A3pe_Q_1_c16_up_m5,A3,Q 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 5일 상승,1,post_expiry_up,38
+A3pe_Q_1_c16_m10,A3,Q 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 10일 하락,-1,post_expiry,38
+A3pe_Q_1_c16_up_m10,A3,Q 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 10일 상승,1,post_expiry_up,38
+A3pe_Q_1_c16_m20,A3,Q 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 20일 하락,-1,post_expiry,38
+A3pe_Q_1_c16_up_m20,A3,Q 만기 1일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 20일 상승,1,post_expiry_up,38
+A3pe_Q_5_c6_m1,A3,Q 만기 5일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 1일 하락,-1,post_expiry,40
+A3pe_Q_5_c6_up_m1,A3,Q 만기 5일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 1일 상승,1,post_expiry_up,40
+A3pe_Q_5_c6_m3,A3,Q 만기 5일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 3일 하락,-1,post_expiry,40
+A3pe_Q_5_c6_up_m3,A3,Q 만기 5일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 3일 상승,1,post_expiry_up,40
+A3pe_Q_5_c6_m5,A3,Q 만기 5일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 5일 하락,-1,post_expiry,40
+A3pe_Q_5_c6_up_m5,A3,Q 만기 5일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 5일 상승,1,post_expiry_up,40
+A3pe_Q_5_c6_m10,A3,Q 만기 5일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 10일 하락,-1,post_expiry,40
+A3pe_Q_5_c6_up_m10,A3,Q 만기 5일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 10일 상승,1,post_expiry_up,40
+A3pe_Q_5_c6_m20,A3,Q 만기 5일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 20일 하락,-1,post_expiry,40
+A3pe_Q_5_c6_up_m20,A3,Q 만기 5일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 20일 상승,1,post_expiry_up,40
+A3pe_Q_5_c8_m1,A3,Q 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 1일 하락,-1,post_expiry,13
+A3pe_Q_5_c8_up_m1,A3,Q 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 1일 상승,1,post_expiry_up,13
+A3pe_Q_5_c8_m3,A3,Q 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 3일 하락,-1,post_expiry,13
+A3pe_Q_5_c8_up_m3,A3,Q 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 3일 상승,1,post_expiry_up,13
+A3pe_Q_5_c8_m5,A3,Q 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 5일 하락,-1,post_expiry,13
+A3pe_Q_5_c8_up_m5,A3,Q 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 5일 상승,1,post_expiry_up,13
+A3pe_Q_5_c8_m10,A3,Q 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 10일 하락,-1,post_expiry,13
+A3pe_Q_5_c8_up_m10,A3,Q 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 10일 상승,1,post_expiry_up,13
+A3pe_Q_5_c8_m20,A3,Q 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 20일 하락,-1,post_expiry,13
+A3pe_Q_5_c8_up_m20,A3,Q 만기 5일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 20일 상승,1,post_expiry_up,13
+A3pe_Q_5_c16_m1,A3,Q 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 1일 하락,-1,post_expiry,36
+A3pe_Q_5_c16_up_m1,A3,Q 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 1일 상승,1,post_expiry_up,36
+A3pe_Q_5_c16_m3,A3,Q 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 3일 하락,-1,post_expiry,36
+A3pe_Q_5_c16_up_m3,A3,Q 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 3일 상승,1,post_expiry_up,36
+A3pe_Q_5_c16_m5,A3,Q 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 5일 하락,-1,post_expiry,36
+A3pe_Q_5_c16_up_m5,A3,Q 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 5일 상승,1,post_expiry_up,36
+A3pe_Q_5_c16_m10,A3,Q 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 10일 하락,-1,post_expiry,36
+A3pe_Q_5_c16_up_m10,A3,Q 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 10일 상승,1,post_expiry_up,36
+A3pe_Q_5_c16_m20,A3,Q 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 20일 하락,-1,post_expiry,36
+A3pe_Q_5_c16_up_m20,A3,Q 만기 5일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 20일 상승,1,post_expiry_up,36
+A3pe_Q_10_c6_m1,A3,Q 만기 10일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 1일 하락,-1,post_expiry,39
+A3pe_Q_10_c6_up_m1,A3,Q 만기 10일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 1일 상승,1,post_expiry_up,39
+A3pe_Q_10_c6_m3,A3,Q 만기 10일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 3일 하락,-1,post_expiry,39
+A3pe_Q_10_c6_up_m3,A3,Q 만기 10일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 3일 상승,1,post_expiry_up,39
+A3pe_Q_10_c6_m5,A3,Q 만기 10일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 5일 하락,-1,post_expiry,39
+A3pe_Q_10_c6_up_m5,A3,Q 만기 10일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 5일 상승,1,post_expiry_up,39
+A3pe_Q_10_c6_m10,A3,Q 만기 10일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 10일 하락,-1,post_expiry,39
+A3pe_Q_10_c6_up_m10,A3,Q 만기 10일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 10일 상승,1,post_expiry_up,39
+A3pe_Q_10_c6_m20,A3,Q 만기 10일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 20일 하락,-1,post_expiry,39
+A3pe_Q_10_c6_up_m20,A3,Q 만기 10일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 20일 상승,1,post_expiry_up,39
+A3pe_Q_10_c8_m1,A3,Q 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 1일 하락,-1,post_expiry,10
+A3pe_Q_10_c8_up_m1,A3,Q 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 1일 상승,1,post_expiry_up,10
+A3pe_Q_10_c8_m3,A3,Q 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 3일 하락,-1,post_expiry,10
+A3pe_Q_10_c8_up_m3,A3,Q 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 3일 상승,1,post_expiry_up,10
+A3pe_Q_10_c8_m5,A3,Q 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 5일 하락,-1,post_expiry,10
+A3pe_Q_10_c8_up_m5,A3,Q 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 5일 상승,1,post_expiry_up,10
+A3pe_Q_10_c8_m10,A3,Q 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 10일 하락,-1,post_expiry,10
+A3pe_Q_10_c8_up_m10,A3,Q 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 10일 상승,1,post_expiry_up,10
+A3pe_Q_10_c8_m20,A3,Q 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 20일 하락,-1,post_expiry,10
+A3pe_Q_10_c8_up_m20,A3,Q 만기 10일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 20일 상승,1,post_expiry_up,10
+A3pe_Q_10_c16_m1,A3,Q 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 1일 하락,-1,post_expiry,33
+A3pe_Q_10_c16_up_m1,A3,Q 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 1일 상승,1,post_expiry_up,33
+A3pe_Q_10_c16_m3,A3,Q 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 3일 하락,-1,post_expiry,33
+A3pe_Q_10_c16_up_m3,A3,Q 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 3일 상승,1,post_expiry_up,33
+A3pe_Q_10_c16_m5,A3,Q 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 5일 하락,-1,post_expiry,33
+A3pe_Q_10_c16_up_m5,A3,Q 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 5일 상승,1,post_expiry_up,33
+A3pe_Q_10_c16_m10,A3,Q 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 10일 하락,-1,post_expiry,33
+A3pe_Q_10_c16_up_m10,A3,Q 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 10일 상승,1,post_expiry_up,33
+A3pe_Q_10_c16_m20,A3,Q 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 20일 하락,-1,post_expiry,33
+A3pe_Q_10_c16_up_m20,A3,Q 만기 10일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 20일 상승,1,post_expiry_up,33
+A3pe_Q_20_c6_m1,A3,Q 만기 20일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 1일 하락,-1,post_expiry,40
+A3pe_Q_20_c6_up_m1,A3,Q 만기 20일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 1일 상승,1,post_expiry_up,40
+A3pe_Q_20_c6_m3,A3,Q 만기 20일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 3일 하락,-1,post_expiry,40
+A3pe_Q_20_c6_up_m3,A3,Q 만기 20일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 3일 상승,1,post_expiry_up,40
+A3pe_Q_20_c6_m5,A3,Q 만기 20일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 5일 하락,-1,post_expiry,40
+A3pe_Q_20_c6_up_m5,A3,Q 만기 20일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 5일 상승,1,post_expiry_up,40
+A3pe_Q_20_c6_m10,A3,Q 만기 20일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 10일 하락,-1,post_expiry,40
+A3pe_Q_20_c6_up_m10,A3,Q 만기 20일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 10일 상승,1,post_expiry_up,40
+A3pe_Q_20_c6_m20,A3,Q 만기 20일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 20일 하락,-1,post_expiry,40
+A3pe_Q_20_c6_up_m20,A3,Q 만기 20일 전 콜벽 기준 만기 종가가 벽 아래(대조) → 만기 다음 날부터 20일 상승,1,post_expiry_up,40
+A3pe_Q_20_c8_m1,A3,Q 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 1일 하락,-1,post_expiry,10
+A3pe_Q_20_c8_up_m1,A3,Q 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 1일 상승,1,post_expiry_up,10
+A3pe_Q_20_c8_m3,A3,Q 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 3일 하락,-1,post_expiry,10
+A3pe_Q_20_c8_up_m3,A3,Q 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 3일 상승,1,post_expiry_up,10
+A3pe_Q_20_c8_m5,A3,Q 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 5일 하락,-1,post_expiry,10
+A3pe_Q_20_c8_up_m5,A3,Q 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 5일 상승,1,post_expiry_up,10
+A3pe_Q_20_c8_m10,A3,Q 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 10일 하락,-1,post_expiry,10
+A3pe_Q_20_c8_up_m10,A3,Q 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 10일 상승,1,post_expiry_up,10
+A3pe_Q_20_c8_m20,A3,Q 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 20일 하락,-1,post_expiry,10
+A3pe_Q_20_c8_up_m20,A3,Q 만기 20일 전 콜벽 기준 만기 종가가 벽 2% 아래 이상 → 만기 다음 날부터 20일 상승,1,post_expiry_up,10
+A3pe_Q_20_c15_m1,A3,Q 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 1일 하락,-1,post_expiry,10
+A3pe_Q_20_c15_up_m1,A3,Q 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 1일 상승,1,post_expiry_up,10
+A3pe_Q_20_c15_m3,A3,Q 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 3일 하락,-1,post_expiry,10
+A3pe_Q_20_c15_up_m3,A3,Q 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 3일 상승,1,post_expiry_up,10
+A3pe_Q_20_c15_m5,A3,Q 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 5일 하락,-1,post_expiry,10
+A3pe_Q_20_c15_up_m5,A3,Q 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 5일 상승,1,post_expiry_up,10
+A3pe_Q_20_c15_m10,A3,Q 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 10일 하락,-1,post_expiry,10
+A3pe_Q_20_c15_up_m10,A3,Q 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 10일 상승,1,post_expiry_up,10
+A3pe_Q_20_c15_m20,A3,Q 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 20일 하락,-1,post_expiry,10
+A3pe_Q_20_c15_up_m20,A3,Q 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽과 같은 자리(천장 연장) → 만기 다음 날부터 20일 상승,1,post_expiry_up,10
+A3pe_Q_20_c16_m1,A3,Q 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 1일 하락,-1,post_expiry,26
+A3pe_Q_20_c16_up_m1,A3,Q 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 1일 상승,1,post_expiry_up,26
+A3pe_Q_20_c16_m3,A3,Q 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 3일 하락,-1,post_expiry,26
+A3pe_Q_20_c16_up_m3,A3,Q 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 3일 상승,1,post_expiry_up,26
+A3pe_Q_20_c16_m5,A3,Q 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 5일 하락,-1,post_expiry,26
+A3pe_Q_20_c16_up_m5,A3,Q 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 5일 상승,1,post_expiry_up,26
+A3pe_Q_20_c16_m10,A3,Q 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 10일 하락,-1,post_expiry,26
+A3pe_Q_20_c16_up_m10,A3,Q 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 10일 상승,1,post_expiry_up,26
+A3pe_Q_20_c16_m20,A3,Q 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 20일 하락,-1,post_expiry,26
+A3pe_Q_20_c16_up_m20,A3,Q 만기 20일 전 콜벽 기준 만기일 차월 콜벽이 옛 벽보다 위(천장 올림) → 만기 다음 날부터 20일 상승,1,post_expiry_up,26
