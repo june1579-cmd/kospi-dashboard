@@ -59,7 +59,7 @@ def main():
     #   천장이 옮겨 가지 않을 때(같은 자리 연장)만 나왔는데, 만기일 사건이라 연 1~2번꼴이라 거래 20개를 못 채움. 같은 뜻을 날마다로:
     #   그 시리즈 콜벽 행사가가 N거래일 이상 같은 자리(같은 결제월, ALL 은 결제월 무관)인 날 + 벽 바로 아래 + 외국인 흐름 → m일. 양방향 사전 등록.
     W = feat.get('walls')
-    age_of = {}
+    age_of = {}; kser_of = {}
     # 라운드 15(a04.age_tags·age_bands, 없으면 라운드 14 그대로 TAGS·BANDS): 라운드 14 에서 근월물(F0) '같은 벽 5일 + 2% 아래 + 외국인 콜 순매도 → 5일 하락'
     #   12거래 92%(가설 방향, 위약 p 0.000)였지만 거래 20개 미만. 표본을 넓히려고 3·7일, 3% 폭, 차월(F1)도 보고,
     #   'F0x' = 근월물 벽을 결제월이 바뀌어도 같은 행사가면 이어 세는 나이(만기 롤오버로 천장을 그대로 다시 쓰는 '연장' — 라운드 13 의 가설 방향 사건을 날마다로).
@@ -74,8 +74,25 @@ def main():
             for name, cross_ym in variants:
                 key = g['K'].astype(float).round(3).astype(str) + ('' if cross_ym else '|' + g['ym'].astype(str))
                 run = key.ne(key.shift()).cumsum()
-                age_of[name] = g.groupby(run).cumcount().add(1).where(g['K'].notna()).reindex(td)   # 오늘 포함 같은 벽 연속 거래일 수(그날 장 마감 뒤 아는 값)
+                age_of[name] = g.groupby(run).cumcount().add(1).where(g['K'].notna()).reindex(td)
+                kser_of[name] = g["K"].astype(float).reindex(td)
     age_flows = [x for x in flow_masks if x[0] in ('외국인 선물', '외국인 콜', '외국인 풋', '외국인 선물·콜 함께', '외국인 선물 대량·콜 함께')]
+    if cfg.get('age_table') and age_of:
+        # 라운드 16 원인 표(개발 구간만): 벽 나이 구간별 '벽 2% 아래' 날의 5일 하락 비율과 3일 안 벽이 위로 옮겨 간 비율 — 새 벽은 옮겨 가고 오래된 벽만 버티나.
+        arows = []
+        for tag in [t for t in AGE_TAGS if t in age_of]:
+            dist = X.get(f'OW_{"F0" if tag == "F0x" else tag}_wall_dist%')
+            if dist is None: continue
+            kk = kser_of[tag]   # 그 시리즈 벽 행사가(a02 walls)
+            up3 = pd.concat([kk.shift(-j) > kk for j in (1, 2, 3)], axis=1).any(axis=1)
+            for lo, hi in ((1, 1), (2, 3), (4, 6), (7, 10), (11, 20), (21, 999)):
+                for band in (1.0, 2.0, 3.0):
+                    mm = (age_of[tag] >= lo) & (age_of[tag] <= hi) & (dist > 0) & (dist <= band) & dev
+                    v = fwd[5][mm].dropna() if 5 in fwd else pd.Series(dtype=float)
+                    arows.append({'시리즈': tag, '벽 나이(일)': f'{lo}~{hi}' if hi < 999 else f'{lo}+', '근처폭%': band, '날수': int(mm.sum()),
+                                  '5일 하락%': (v < 0).mean() * 100 if len(v) else np.nan,
+                                  '3일 안 벽 위로%': up3[mm].mean() * 100 if mm.sum() else np.nan})
+        pd.DataFrame(arows).round(1).to_csv(os.path.join(od, 'wall_age_dev.csv'), index=False, encoding='utf-8')
     for tag in [t for t in AGE_TAGS if t in age_of]:
         dist = X.get(f'OW_{"F0" if tag == "F0x" else tag}_wall_dist%')
         if dist is None: continue
@@ -83,7 +100,13 @@ def main():
             held = age_of[tag] >= na
             for band in AGE_BANDS:
                 zm = held & (dist > 0) & (dist <= band)
-                for who, sgn, sm in [('흐름 무관', '', pd.Series(True, index=td))] + age_flows:
+                conds = [('흐름 무관', '', pd.Series(True, index=td))] + age_flows
+                # 라운드 16(a04.age_oi, 없으면 꺼짐): 오래된 벽의 물량이 5일 동안 늘었나(콜 매도자가 천장을 더 쌓음)·줄었나(천장 풀림) — 흐름 조건과 곱해 양방향.
+                oi5 = X.get(f'OW_{"F0" if tag == "F0x" else tag}_wall_oi_chg5%')
+                if cfg.get('age_oi') and oi5 is not None:
+                    conds = conds + [((f'{w}{" " + sg if sg else ""} + ' if w != '흐름 무관' else '') + f'벽 물량 5일 {nm}', sg + nm, sm & om)
+                                     for w, sg, sm in conds for nm, om in (('증가', oi5 > 0), ('감소', oi5 < 0))]
+                for who, sgn, sm in conds:
                     m_all = zm & sm
                     for m in MS:
                         v = fwd[m][m_all & dev].dropna()
@@ -96,7 +119,7 @@ def main():
                         for direction in (-1, 1):   # 양방향 사전 등록(가설 = 하락)
                             cands.append({'id': f'A4age_{tag}_{na}d_{band}_{who}_{sgn}_m{m}_{"dn" if direction < 0 else "up"}', 'agent': 'A4',
                                           'family': 'flow_wall_age',
-                                          'desc': f'{lab} 같은 콜벽 {na}일 이상 유지 + 벽 바로 아래(±{band}%)' + (f' + {who} {sgn}' if sgn else '') +
+                                          'desc': f'{lab} 같은 콜벽 {na}일 이상 유지 + 벽 바로 아래(±{band}%)' + (f' + {who}' if '벽 물량' in who else (f' + {who} {sgn}' if sgn else '')) +
                                                   f' → {m}일 {"하락" if direction < 0 else "상승"}',
                                           'direction': direction, 'trades': t})
     for tag in TAGS:
