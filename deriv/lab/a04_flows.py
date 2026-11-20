@@ -30,8 +30,9 @@ def main():
     X = wide.reindex(td)
     fwd = {m: (k2['close'].shift(-m) / k2['open'].shift(-1) - 1) * 100 for m in MS}
     od = L.out_dir('a04')
-    rows, cands = [], []
+    rows, cands, erows = [], [], []
     dev = (td <= L.DEV_END) & (td >= pd.Timestamp('2015-01-01'))
+    p2 = td >= L.HOLD_START   # flow_edge 표(설명용, 갈래 B 라운드 11 — 교차 모드에서는 탐색이 전 기간 허용)
     q_call5 = None
     # 라운드 6: 부호만이 아니라 크기·동시·연속 — 원인 분해에서 사슬 중 기준선과 가설 방향으로 다른 단계는 ④외국인 콜 순매도(76.5% vs 67.7%)뿐이고,
     # 최고 후보도 외국인 콜 흐름(벽 아래 콜 순매수 → 상승). 개발 구간 분위로 '대량'을 정하고, 선물·콜 같은 방향, 이틀 연속을 더한다(양방향 사전 등록).
@@ -140,13 +141,21 @@ def main():
             near_below = (dist > 0) & (dist <= band)
             just_above = (pdist >= -band) & (pdist <= 0) if pdist is not None else pd.Series(False, index=td)
             for zone, zm in (('벽 바로 아래', near_below), ('벽 막 넘음', just_above)):
-                for who, sgn, sm in flow_masks:
+                # 갈래 B 라운드 11(a04.zone_only, 설정 없으면 꺼짐 → 갈래 A 영향 없음): 라운드 10 에서 '벽 바로 아래 → 상승'이 외국인 순매수·순매도 어느 조건에서도
+                #   나옴 — 흐름 없이 벽 위치만의 후보('흐름 무관')를 같이 내고, 흐름별로 위치만보다 얼마나 더 아는지(flow_edge.csv, 앞·뒤 구간 따로) 원인 분해.
+                zconds = ([('흐름 무관', '', pd.Series(True, index=td))] if cfg.get('zone_only') else []) + flow_masks
+                for who, sgn, sm in zconds:
                         m_all = zm & sm
                         for m in MS:
                             v = fwd[m][m_all & dev].dropna()
                             if len(v) < 15: continue
                             rows.append({'시리즈': tag, '근처폭%': band_lab, '구역': zone, '누가': who, '부호': sgn, 'm일': m, '날수': len(v),
                                          '하락%': (v < 0).mean() * 100, '평균%': v.mean()})
+                            if cfg.get('zone_only'):
+                                v2 = fwd[m][m_all & p2].dropna()
+                                erows.append({'시리즈': tag, '근처폭%': band_lab, '구역': zone, '누가': who, '부호': sgn, 'm일': m,
+                                              '앞 날수': len(v), '앞 상승%': (v > 0).mean() * 100, '뒤 날수': len(v2),
+                                              '뒤 상승%': (v2 > 0).mean() * 100 if len(v2) else np.nan})
                             sig = td[(m_all.fillna(False)).values]
                             direction = -1 if (v < 0).mean() >= 0.5 else 1
                             t = pd.DataFrame({'signal': sig, 'exit': [L.exit_after(td, s, m) for s in sig]}).dropna()
@@ -166,6 +175,12 @@ def main():
                 cands.append({'id': f'A4_{tag}_grow_callbuy_m{m}', 'agent': 'A4', 'family': 'flow_build',
                               'desc': f'{tag} 콜 물량 증가 상위20% + 외국인 콜 순매수 → {m}일 상승', 'direction': 1, 'trades': t})
     pd.DataFrame(rows).round(3).to_csv(os.path.join(od, 'flow_wall_dev.csv'), index=False, encoding='utf-8')
+    if erows:
+        E = pd.DataFrame(erows); key = ['시리즈', '근처폭%', '구역', 'm일']
+        base = E[E['누가'] == '흐름 무관'][key + ['앞 상승%', '뒤 상승%']].rename(columns={'앞 상승%': '앞 위치만%', '뒤 상승%': '뒤 위치만%'})
+        E = E.merge(base, on=key, how='left')
+        E['앞 흐름 몫%p'] = E['앞 상승%'] - E['앞 위치만%']; E['뒤 흐름 몫%p'] = E['뒤 상승%'] - E['뒤 위치만%']
+        E.round(2).to_csv(os.path.join(od, 'flow_edge.csv'), index=False, encoding='utf-8')
     L.save_candidates('a04', cands)
     print('표', len(rows), '후보', len(cands))
 
