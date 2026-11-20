@@ -7,3 +7,4 @@
 [18:19:56] opt_chainwt_daily 중간 저장 2022-08-05 (0행)
 [18:27:44] opt_chainwt_daily 중간 저장 2023-07-21 (0행)
 [18:37:35] opt_chainwt_daily 중간 저장 2024-07-05 (0행)
+[18:46:22] opt_chainwt_daily 중간 저장 2025-06-20 (0행)
