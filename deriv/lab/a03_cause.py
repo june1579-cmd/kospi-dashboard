@@ -84,6 +84,9 @@ def main():
     callsell_by_bin = {b: float(np.mean(post5_call[okc & (r5_bin == b)] < 0)) for b in range(5)}
     cashsell_by_bin = {b: float(np.mean(post5_cash[okh & (r5_bin == b)] < 0)) for b in range(5)}
     base_down10 = float(np.mean(fwd[10][dev & np.isfinite(fwd[10]) & (np.arange(n_td) + 10 <= last_dev)] < 0))
+    # 라운드 6: ⑤ 기준선도 '비슷하게 오른 뒤'(직전 5일 상승 5분위 맞춤)로 — 넘은 날은 이미 오른 날이라 아무 날과 비교하면 치우칠 수 있음
+    okd = okb & np.isfinite(fwd[10]) & (np.arange(n_td) + 10 <= last_dev)
+    down10_by_bin = {b: float(np.mean(fwd[10][okd & (r5_bin == b)] < 0)) for b in range(5)}
     od = L.out_dir('a03c')
 
     # ---------- 1) 사슬 사건(만기 주기마다 관측일 1번, 관측일 벽 행사가 고정)
@@ -130,6 +133,9 @@ def main():
         bc = float(np.mean([callsell_by_bin.get(int(b), np.nan) for b in crp['r5_bin'].dropna()])) if len(crp) else np.nan
         bh = float(np.mean([cashsell_by_bin.get(int(b), np.nan) for b in crp['r5_bin'].dropna()])) if len(crp) else np.nan
         csell = crp['call_post5'].dropna() < 0 if len(crp) else pd.Series(dtype=bool)
+        bd = float(np.mean([down10_by_bin.get(int(b), np.nan) for b in crp['r5_bin'].dropna()])) if len(crp) else np.nan
+        cs_al = (crp['call_post5'] < 0) if len(crp) else pd.Series(dtype=bool)
+        cb_al = (crp['call_post5'] >= 0) if len(crp) else pd.Series(dtype=bool)
         hsell = crp['cash_post5'].dropna() < 0 if len(crp) else pd.Series(dtype=bool)
         full = int((sold & fell).sum()) if len(crp) else 0
         return {'주기': n0, '②닿음%': pct(x['touch']), '②기준%': pct(x['base_touch']),
@@ -137,7 +143,8 @@ def main():
                 '넘은 주기(결과 확인)': len(crp), '④외국인 5일 순매도%': pct(sold), '④기준%(같은 상승 뒤)': round(b3 * 100, 1) if np.isfinite(b3) else np.nan,
                 '④콜 5일 순매도%': pct(csell), '④콜 기준%': round(bc * 100, 1) if np.isfinite(bc) else np.nan,
                 '④현물 5일 순매도%': pct(hsell), '④현물 기준%': round(bh * 100, 1) if np.isfinite(bh) else np.nan,
-                '⑤10일 하락%': pct(fell), '⑤기준%': round(base_down10 * 100, 1),
+                '⑤10일 하락%': pct(fell), '⑤기준%': round(base_down10 * 100, 1), '⑤기준%(같은 상승 뒤)': round(bd * 100, 1) if np.isfinite(bd) else np.nan,
+                '④콜 순매도면 ⑤%': pct(fell[cs_al]) if len(crp) and cs_al.any() else np.nan, '④콜 순매수면 ⑤%': pct(fell[cb_al]) if len(crp) and cb_al.any() else np.nan,
                 '④이면 ⑤%': pct(fell[sold]) if len(crp) and sold.any() else np.nan, '④아니면 ⑤%': pct(fell[~sold]) if len(crp) and (~sold).any() else np.nan,
                 '10일 안 벽 아래 복귀%': pct(crp['back_below10'].dropna().astype(bool)) if len(crp) else np.nan,
                 '사슬 완성(②~⑤)': full, '사슬 완성%(주기 대비)': round(full / n0 * 100, 1) if n0 else np.nan}

@@ -94,6 +94,24 @@ def main():
                             d = 1 if (v > 0).mean() >= 0.5 else -1
                             cands.append({'id': f'A5_{col}_{side}_m{m}', 'agent': 'A5', 'family': 'roll_fut', 'desc': f'선물 {col} {side}(만기일 신호) → 만기 뒤 {m}일 {"상승" if d > 0 else "하락"}',
                                           'direction': d, 'trades': pd.DataFrame({'signal': sig.values, 'exit': ex}).dropna()})
+            # 라운드 6: 분기 만기 전 콜 물량이 만기 뒤 새 분기물로 '연장'됐는가 × 선물 이월이 평소보다 많았나/적었나(롤 자료 2020~2026 추가로 개발 분기 늘어남)
+            if len(E):
+                M = E.merge(RR[['exp', 'roll_vs4', 'spread_vs4']], on='exp', how='inner')
+                for same in (True, False):
+                    for col in ('roll_vs4', 'spread_vs4'):
+                        for side, f in (('높음', lambda s: s > 0), ('낮음', lambda s: s <= 0)):
+                            x = M[(M['same_wall'] == same) & M[col].notna() & f(M[col])]
+                            if len(x) < 8: continue
+                            xd = x[x['signal'] <= L.DEV_END]
+                            for m in MS:
+                                v = xd[f'post{m}%'].dropna() if f'post{m}%' in xd else pd.Series(dtype=float)
+                                if len(v) < 6: continue
+                                rows.append({'구분': f'벽 연장={same} + {col} {side}', 'm일': m, '사건': len(v), '상승%': (v > 0).mean() * 100, '평균%': v.mean()})
+                                d = 1 if (v > 0).mean() >= 0.5 else -1
+                                sig = x['signal']
+                                cands.append({'id': f'A5_wallext_{same}_{col}_{side}_m{m}', 'agent': 'A5', 'family': 'roll_wall_fut',
+                                              'desc': f'분기 만기 뒤 콜벽 연장={same} + 선물 {col} {side} → {m}일 {"상승" if d > 0 else "하락"}',
+                                              'direction': d, 'trades': pd.DataFrame({'signal': sig.values, 'exit': [L.exit_after(td, s, m) for s in sig]}).dropna()})
     pd.DataFrame(rows).round(3).to_csv(os.path.join(od, 'roll_dev.csv'), index=False, encoding='utf-8')
     L.save_candidates('a05', cands)
     print('표', len(rows), '후보', len(cands))

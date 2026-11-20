@@ -33,6 +33,18 @@ def main():
     rows, cands = [], []
     dev = (td <= L.DEV_END) & (td >= pd.Timestamp('2015-01-01'))
     q_call5 = None
+    # 라운드 6: 부호만이 아니라 크기·동시·연속 — 원인 분해에서 사슬 중 기준선과 가설 방향으로 다른 단계는 ④외국인 콜 순매도(76.5% vs 67.7%)뿐이고,
+    # 최고 후보도 외국인 콜 흐름(벽 아래 콜 순매수 → 상승). 개발 구간 분위로 '대량'을 정하고, 선물·콜 같은 방향, 이틀 연속을 더한다(양방향 사전 등록).
+    cf, ff = F['call_for'], F['fut_for']
+    cq = cf[dev].quantile([0.25, 0.75]); fq = ff[dev].quantile([0.25, 0.75])
+    flow_masks = []
+    for who, col in (('외국인 선물', 'fut_for'), ('외국인 콜', 'call_for'), ('외국인 풋', 'put_for')):
+        flow_masks += [(who, '순매도', F[col] < 0), (who, '순매수', F[col] > 0)]
+    if cfg.get('flow_ext', True):
+        flow_masks += [('외국인 콜 대량(개발 하위25%)', '순매도', cf <= cq.iloc[0]), ('외국인 콜 대량(개발 상위25%)', '순매수', cf >= cq.iloc[1]),
+                       ('외국인 선물·콜 함께', '순매도', (cf < 0) & (ff < 0)), ('외국인 선물·콜 함께', '순매수', (cf > 0) & (ff > 0)),
+                       ('외국인 선물 대량·콜 함께', '순매도', (ff <= fq.iloc[0]) & (cf < 0)), ('외국인 선물 대량·콜 함께', '순매수', (ff >= fq.iloc[1]) & (cf > 0)),
+                       ('외국인 콜 이틀 연속', '순매도', (cf < 0) & (cf.shift(1) < 0)), ('외국인 콜 이틀 연속', '순매수', (cf > 0) & (cf.shift(1) > 0))]
     for tag in TAGS:
         dist = X.get(f'OW_{tag}_wall_dist%'); pdist = X.get(f'OW_{tag}_passed_wall_dist%')
         grow = X.get(f'OW_{tag}_callotm_chg5%')
@@ -42,8 +54,7 @@ def main():
             near_below = (dist > 0) & (dist <= band)
             just_above = (pdist >= -band) & (pdist <= 0) if pdist is not None else pd.Series(False, index=td)
             for zone, zm in (('벽 바로 아래', near_below), ('벽 막 넘음', just_above)):
-                for who, col in (('외국인 선물', 'fut_for'), ('외국인 콜', 'call_for'), ('외국인 풋', 'put_for')):
-                    for sgn, sm in (('순매도', F[col] < 0), ('순매수', F[col] > 0)):
+                for who, sgn, sm in flow_masks:
                         m_all = zm & sm
                         for m in MS:
                             v = fwd[m][m_all & dev].dropna()
