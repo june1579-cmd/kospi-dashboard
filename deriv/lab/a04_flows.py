@@ -45,11 +45,20 @@ def main():
                        ('외국인 선물·콜 함께', '순매도', (cf < 0) & (ff < 0)), ('외국인 선물·콜 함께', '순매수', (cf > 0) & (ff > 0)),
                        ('외국인 선물 대량·콜 함께', '순매도', (ff <= fq.iloc[0]) & (cf < 0)), ('외국인 선물 대량·콜 함께', '순매수', (ff >= fq.iloc[1]) & (cf > 0)),
                        ('외국인 콜 이틀 연속', '순매도', (cf < 0) & (cf.shift(1) < 0)), ('외국인 콜 이틀 연속', '순매수', (cf > 0) & (cf.shift(1) > 0))]
+    # 갈래 B 라운드 7(a04.flow_sum3): 하루치 부호 대신 3일 누적 순매수 부호 — 하루 흐름은 잡음이 커서 '같은 신호가 해마다 고르지 않음'의 한 원인일 수 있음.
+    if cfg.get('flow_sum3'):
+        for who, col in (('외국인 선물 3일 누적', 'fut_for'), ('외국인 콜 3일 누적', 'call_for'), ('외국인 풋 3일 누적', 'put_for')):
+            s3 = F[col].rolling(3, min_periods=3).sum()
+            flow_masks += [(who, '순매도', s3 < 0), (who, '순매수', s3 > 0)]
+    # 갈래 B 라운드 7(a04.sigma_bands): '벽 근처'를 고정 %가 아니라 변동성 단위로 — 직전 20일 일간 등락 표준편차 × √5(1주 σ) × k.
+    #   2017 처럼 조용한 해의 2% 는 먼 거리, 2020 처럼 거친 해의 2% 는 바로 옆이라 해마다 '근처'의 뜻이 달라짐(해마다 성적이 고르지 않은 원인 후보). 그날 종가까지 아는 값.
+    sig5 = (k2['close'].pct_change().rolling(20).std() * np.sqrt(5) * 100).reindex(td)
+    band_list = [(b, f'{b}%', b, False) for b in BANDS] + [(f's{k}', f'{k}σ', sig5 * k, True) for k in (cfg.get('sigma_bands') or [])]
     for tag in TAGS:
         dist = X.get(f'OW_{tag}_wall_dist%'); pdist = X.get(f'OW_{tag}_passed_wall_dist%')
         grow = X.get(f'OW_{tag}_callotm_chg5%')
         if dist is None: continue
-        for band in BANDS:
+        for band_key, band_lab, band, is_sig in band_list:
             # 벽 바로 아래(아직 못 넘음, 거리 0~band%) 또는 막 넘어선 직후(지나간 벽이 −band~0%)
             near_below = (dist > 0) & (dist <= band)
             just_above = (pdist >= -band) & (pdist <= 0) if pdist is not None else pd.Series(False, index=td)
@@ -59,13 +68,13 @@ def main():
                         for m in MS:
                             v = fwd[m][m_all & dev].dropna()
                             if len(v) < 15: continue
-                            rows.append({'시리즈': tag, '근처폭%': band, '구역': zone, '누가': who, '부호': sgn, 'm일': m, '날수': len(v),
+                            rows.append({'시리즈': tag, '근처폭%': band_lab, '구역': zone, '누가': who, '부호': sgn, 'm일': m, '날수': len(v),
                                          '하락%': (v < 0).mean() * 100, '평균%': v.mean()})
                             sig = td[(m_all.fillna(False)).values]
                             direction = -1 if (v < 0).mean() >= 0.5 else 1
                             t = pd.DataFrame({'signal': sig, 'exit': [L.exit_after(td, s, m) for s in sig]}).dropna()
-                            cands.append({'id': f'A4_{tag}_{band}_{zone}_{who}_{sgn}_m{m}', 'agent': 'A4', 'family': 'flow_wall',
-                                          'desc': f'{tag} {zone}(±{band}%)에서 {who} {sgn} → {m}일 {"하락" if direction < 0 else "상승"}', 'direction': direction, 'trades': t})
+                            cands.append({'id': f'A4_{tag}_{band_key}_{zone}_{who}_{sgn}_m{m}', 'agent': 'A4', 'family': 'flow_wall_sigma' if is_sig else 'flow_wall',
+                                          'desc': f'{tag} {zone}(±{band_lab})에서 {who} {sgn} → {m}일 {"하락" if direction < 0 else "상승"}', 'direction': direction, 'trades': t})
         # 1단계: 콜 물량이 늘고 외국인이 콜을 사면 위로
         if grow is not None:
             g_hi = grow >= grow[dev].quantile(0.8)

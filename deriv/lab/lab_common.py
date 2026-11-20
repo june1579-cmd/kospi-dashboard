@@ -300,6 +300,74 @@ def regime_baselines():
     return out
 
 
+def mirror_p2_cfg():
+    """뒤 구간 방향 거울(갈래 B 라운드 7, round 설정 'mirror_p2' 가 있고 교차 모드(2026-11-21~)일 때만).
+    A3·A3c·A4·A5 후보는 방향(상승/하락)과 장세 변형 고르기(상위 max_base)를 앞 구간(개발)에서 정하므로, 교차 검증의 뒤→앞(뒤 구간 선별 → 앞 구간 확인)
+    방향에서 앞 구간 확인이 표본 안이 된다. 거울 후보는 같은 신호 날짜에 방향을 뒤 구간(2024~)만으로 정하고(fit_period='p2', A8 이 앞→뒤 선별에서 뺌),
+    장세 변형도 뒤 구간 단순 적중으로 골라 뒤→앞 방향을 공정하게 만든다. 11/20 까지(잠금 규칙)는 꺼짐 — 잠금 구간으로 무엇도 정하지 않음."""
+    mc = round_cfg().get('mirror_p2')
+    if not mc or cv_mode() != 'cross': return None
+    return mc if isinstance(mc, dict) else {}
+
+
+def _flip_desc(desc):
+    i, j = desc.rfind('상승'), desc.rfind('하락')
+    if i < 0 and j < 0: return desc
+    if i > j: return desc[:i] + '하락' + desc[i + 2:]
+    return desc[:j] + '상승' + desc[j + 2:]
+
+
+def _p2_simple(t, k):
+    """t(trades)에서 뒤 구간(2024~) 신호만 → 지수 단순 수익(겹침 무시, 방향 정하기용)."""
+    t = t.assign(signal=pd.to_datetime(t['signal']), exit=pd.to_datetime(t['exit']))
+    t = t[t['signal'] >= HOLD_START]
+    r = trade_returns(t, k) if len(t) else np.array([])
+    return r[~np.isnan(r)] if len(r) else r
+
+
+def p2_mirror(cands, mc):
+    """앞 구간에서 방향을 정한 원 후보(장세 변형·A6/A7 제외) → 뒤 구간 방향 거울 후보 '{id}__P2'."""
+    k = k200_index(); min_n = mc.get('min_p2_signals', 12); out = []
+    for c in cands:
+        if c.get('regime') or c.get('fit_period') or 'trades_dev' in c: continue
+        r = _p2_simple(c['trades'], k)
+        if len(r) < min_n: continue
+        d = 1 if (r > 0).mean() >= 0.5 else -1
+        v = {kk: vv for kk, vv in c.items() if kk != 'trades'}
+        v.update({'id': f"{c['id']}__P2", 'direction': d, 'fit_period': 'p2', 'base_id': c['id'],
+                  'desc': '[뒤 구간 방향] ' + (c['desc'] if d == c['direction'] else _flip_desc(c['desc'])), 'trades': c['trades'].copy()})
+        out.append(v)
+    return out
+
+
+def regime_variants_p2(cands, mc):
+    """장세 변형의 뒤 구간판: 원 후보 고르기(상위 max_base)·방향을 뒤 구간 단순 적중으로 — '{id}__{장세}__P2'."""
+    rc = round_cfg().get('regime') or {}
+    if not rc or not cands: return []
+    S = regime_states(); S = S[[c for c in rc.get('states', []) if c in S]]; k = k200_index()
+    min_sig = mc.get('min_p2_signals_regime', 20); min_after = mc.get('min_p2_after', 8); max_base = mc.get('max_base', rc.get('max_base', 120))
+    scored = []
+    for c in cands:
+        if c.get('regime') or c.get('fit_period') or 'trades_dev' in c: continue
+        r = _p2_simple(c['trades'], k)
+        if len(r) < min_sig: continue
+        up = float((r > 0).mean()); scored.append((max(up, 1 - up), c))
+    scored.sort(key=lambda x: -x[0]); out = []
+    for _, c in scored[:max_base]:
+        t = c['trades'].copy(); sd = pd.to_datetime(t['signal'])
+        for code in S.columns:
+            tt = t[S[code].reindex(sd).fillna(False).values].reset_index(drop=True)
+            r = _p2_simple(tt, k)
+            if len(r) < min_after: continue
+            d = 1 if (r > 0).mean() >= 0.5 else -1
+            v = {kk: vv for kk, vv in c.items() if kk != 'trades'}
+            v.update({'id': f"{c['id']}__{code}__P2", 'base_id': c['id'], 'direction': d, 'fit_period': 'p2', 'regime': REGIME_CODES[code],
+                      'family': f"{c.get('family')}_regime", 'trades': tt,
+                      'desc': f"[뒤 구간 방향][{REGIME_CODES[code]}] " + (c['desc'] if d == c['direction'] else _flip_desc(c['desc']))})
+            out.append(v)
+    return out
+
+
 def barrier_exits(px, W, k=1.0, vol_win=60):
     """큰 변동 대상(2026-11-20 갈래 B): t일 신호 → t+1 시가 기준, W 거래일 안에 종가가 +kσ√W 를 먼저 넘으면 1, −kσ√W 를 먼저 넘으면 0,
     둘 다 아니면 NaN. σ = 직전 vol_win 일 일간 종가 등락 표준편차(t일에 아는 값). exit = 처음 넘은 날(없으면 W 번째 날).
@@ -335,6 +403,15 @@ def save_candidates(agent, cands):
         if ex: cands = [c for c in cands if not any(c['id'] == e or c['id'].startswith(e + '__R') for e in ex)]
         if _EDGE_ROWS:
             pd.DataFrame(_EDGE_ROWS).round(4).to_csv(os.path.join(out_dir(agent), 'regime_edge_dev.csv'), index=False, encoding='utf-8')
+    mc = mirror_p2_cfg()
+    if mc is not None and agent in mc.get('agents', ['a03', 'a03c', 'a04', 'a05']):
+        try:
+            base = [c for c in cands if not c.get('regime')]
+            m1 = p2_mirror(base, mc); m2 = regime_variants_p2(base, mc) if round_cfg().get('regime') else []
+            cands = cands + m1 + m2
+            print('뒤 구간 방향 거울', len(m1), '· 뒤 구간 장세 변형', len(m2), flush=True)
+        except Exception as e:   # 거울 실패가 원 후보 저장을 막지 않게
+            print('뒤 구간 방향 거울 실패', e)
     rc = round_cfg().get('regime') or {}
     if rc.get('baseline') and agent == rc.get('baseline_agent', 'a05'):
         try:
