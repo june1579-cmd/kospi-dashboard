@@ -112,6 +112,55 @@ def main():
                                 cands.append({'id': f'A5_wallext_{same}_{col}_{side}_m{m}', 'agent': 'A5', 'family': 'roll_wall_fut',
                                               'desc': f'분기 만기 뒤 콜벽 연장={same} + 선물 {col} {side} → {m}일 {"상승" if d > 0 else "하락"}',
                                               'direction': d, 'trades': pd.DataFrame({'signal': sig.values, 'exit': [L.exit_after(td, s, m) for s in sig]}).dropna()})
+    # 라운드 7: 월물 만기마다(분기 포함, 개발 약 108번) 옵션 '콜 물량 이월' — 만기 전날 차월물 콜(현재가 위) 미결제 ÷ (근월+차월),
+    # 직전 6번 만기 평균 대비 높음/낮음, 근월물 콜벽이 새 근월물에서도 같은 행사가로 이어지나(월물 벽 연장). 라운드 6 최고(분기 벽 연장 안 됨 + 선물 이월 낮음)를
+    # 표본이 많은 월물로 넓혀 같은 방향인지 사전 등록으로 본다(양방향, 방향은 개발 구간으로).
+    if cfg.get('monthly', True):
+        wide = feat['wide']
+        F0 = W[W['tag'] == 'F0'].sort_values('date')
+        mrec = []
+        for e in sorted(F0['exp'].unique()):
+            if e > td[-1]: continue
+            b = F0[(F0['exp'] == e) & (F0['date'] < e)].tail(1)
+            a = F0[F0['date'] > e].head(1)
+            if not len(b) or not len(a): continue
+            bd, kb, ka = b['date'].iloc[0], b['K'].iloc[0], a['K'].iloc[0]
+            step = 2.5 if kb < 400 else 5.0
+            c0 = wide['OW_F0_callotm_oi'].get(bd, np.nan) if 'OW_F0_callotm_oi' in wide else np.nan
+            c1 = wide['OW_F1_callotm_oi'].get(bd, np.nan) if 'OW_F1_callotm_oi' in wide else np.nan
+            sgl = a['date'].iloc[0]
+            mrec.append({'exp': e, 'obs': bd, 'signal': sgl, 'same_wall': bool(np.isfinite(kb) and np.isfinite(ka) and abs(kb - ka) <= step),
+                         'call_roll': c1 / (c0 + c1) if np.isfinite(c0) and np.isfinite(c1) and (c0 + c1) > 0 else np.nan,
+                         'quarterly': int(pd.Timestamp(e).month) in (3, 6, 9, 12)})
+        MR = pd.DataFrame(mrec)
+        if len(MR) >= 12:
+            MR['call_roll_vs6'] = MR['call_roll'] - MR['call_roll'].rolling(6, min_periods=4).mean().shift(1)
+            ii = [td.searchsorted(x, side='right') for x in MR['signal']]
+            for m in MS:
+                MR[f'post{m}%'] = [(k2['close'].iloc[i + m - 1] / k2['open'].iloc[i] - 1) * 100 if i + m - 1 < len(td) else np.nan for i in ii]
+            MR.to_csv(os.path.join(od, 'monthly_roll_all.csv'), index=False, encoding='utf-8')
+            conds = {}
+            for same in (True, False):
+                conds[f'월물 콜벽 연장={same}'] = MR['same_wall'] == same
+            hi = MR['call_roll_vs6'] > 0; lo = MR['call_roll_vs6'] <= 0; ok = MR['call_roll_vs6'].notna()
+            conds['콜 물량 이월 평소보다 많음'] = ok & hi; conds['콜 물량 이월 평소보다 적음'] = ok & lo
+            for same in (True, False):
+                conds[f'월물 콜벽 연장={same} + 콜 이월 많음'] = (MR['same_wall'] == same) & ok & hi
+                conds[f'월물 콜벽 연장={same} + 콜 이월 적음'] = (MR['same_wall'] == same) & ok & lo
+            for nm, mk in conds.items():
+                x = MR[mk]
+                if len(x) < 12: continue
+                xd = x[x['signal'] <= L.DEV_END]
+                for m in MS:
+                    v = xd[f'post{m}%'].dropna()
+                    if len(v) < 10: continue
+                    rows.append({'구분': nm, 'm일': m, '사건': len(v), '상승%': (v > 0).mean() * 100, '평균%': v.mean()})
+                    d = 1 if (v > 0).mean() >= 0.5 else -1
+                    sig = x['signal']
+                    key = nm.replace(' ', '').replace('+', '_').replace('=', '')
+                    cands.append({'id': f'A5_m_{key}_m{m}', 'agent': 'A5', 'family': 'roll_monthly_call',
+                                  'desc': f'{nm}(월물 만기 다음 날 신호) → {m}일 {"상승" if d > 0 else "하락"}',
+                                  'direction': d, 'trades': pd.DataFrame({'signal': sig.values, 'exit': [L.exit_after(td, s, m) for s in sig]}).dropna()})
     pd.DataFrame(rows).round(3).to_csv(os.path.join(od, 'roll_dev.csv'), index=False, encoding='utf-8')
     L.save_candidates('a05', cands)
     print('표', len(rows), '후보', len(cands))

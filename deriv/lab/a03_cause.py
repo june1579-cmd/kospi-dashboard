@@ -172,7 +172,7 @@ def main():
     RG = pd.DataFrame(RG); RG.to_csv(os.path.join(od, 'cause_regime_dev.csv'), index=False, encoding='utf-8')
 
     # ---------- 2) 끌어당김·막힘: 벽 vs 같은 거리 다른 행사가(근월물, 만기 20일 전 관측일)
-    src = 'x' if L.chain('x') is not None else 'm'
+    src, _ch_best = L.chain_best()
     ch = L.chain(src); ch = ch[(ch['cp'] == 'C') & (ch['oi'] > 0)]
     ch = ch[ch['ym'].str.len() == 6]
     obs_days = E[(E['tag'] == 'F0') & (E['obs'] == 20) & E['dev']][['date', 'ym', 'exp', 'S', 'T']]

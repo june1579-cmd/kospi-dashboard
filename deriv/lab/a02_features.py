@@ -73,7 +73,7 @@ def main():
     td = L.k200_index().index
     k2 = L.k200_index()
     sig20 = np.log(k2['close']).diff().rolling(20).std() * np.sqrt(250)
-    src = 'x' if L.chain('x') is not None else 'm'
+    src, _ch_best = L.chain_best()
     ch = L.chain(src)
     print('옵션 자료', src, ch.shape)
     ch = ch[ch['ym'].str.len() == 6]

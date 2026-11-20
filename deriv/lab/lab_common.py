@@ -83,6 +83,16 @@ def chain(kind='m'):
     return c.dropna(subset=['K'])
 
 
+def chain_best():
+    """월물 4개(x)는 수집이 끝나 가까운 2개(m)와 같은 기간을 덮을 때만 쓴다(수집 중 일부만 있는 x 로 지표가 짧아지는 것을 막음)."""
+    m = chain('m'); x = chain('x')
+    if x is not None and m is not None and len(x):
+        if x['date'].min() <= m['date'].min() + pd.Timedelta(days=10) and x['date'].max() >= m['date'].max() - pd.Timedelta(days=10) \
+                and x['date'].nunique() >= 0.97 * m['date'].nunique():
+            return 'x', x
+    return 'm', m
+
+
 def second_thursday(y, m):
     d = pd.Timestamp(y, m, 1)
     return d + pd.Timedelta(days=(3 - d.weekday()) % 7 + 7)

@@ -76,7 +76,7 @@ def main():
     P = L.prices()
     if 'ETF' not in P:
         L.fetch_etf(); P = L.prices()
-    ch_raw = L.chain('x') if L.chain('x') is not None else L.chain('m')
+    ch_raw = L.chain_best()[1]
     ch = dict(tuple(ch_raw.groupby('date')))
     td = P['K200'].index
     global K2C
