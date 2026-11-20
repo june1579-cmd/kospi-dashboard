@@ -263,5 +263,20 @@
   "date": "2026-11-18",
   "index": "KOSPI",
   "close": 5067.44
+ },
+ {
+  "date": "2026-11-19",
+  "index": "KOSPI",
+  "close": 5137.89
+ },
+ {
+  "date": "2026-11-19",
+  "index": "SOX",
+  "close": 9419.72
+ },
+ {
+  "date": "2026-11-20",
+  "index": "KOSPI",
+  "close": 4869.96
  }
 ]

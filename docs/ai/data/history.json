@@ -58,10 +58,10 @@
  {
   "date": "2026-09",
   "key": "ramp_q",
-  "value": 2.86,
-  "text": "+2.9%p(2·3분기 평균)",
+  "value": 3.763,
+  "text": "+3.8%p(2·3분기 평균, 분기 평균 기준)",
   "unit": "%p",
-  "src": "https://fred.stlouisfed.org/data/RAMPAIALL"
+  "src": "https://fred.stlouisfed.org/series/RAMPAIALL"
  },
  {
   "date": "2026-08",
@@ -5682,9 +5682,105 @@
  {
   "date": "2026-11-18",
   "key": "foreign20",
-  "value": -14.24,
-  "text": "−14.2조 원(10.22~11.18, 잠정 포함)",
+  "value": -14.17,
+  "text": "−14.2조 원(10.22~11.18)",
   "unit": "조 원",
   "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-19",
+  "key": "kospi_dd",
+  "value": -43.63,
+  "text": "−43.6%(11.19, 5,137.89)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-20",
+  "key": "kospi_dd",
+  "value": -46.57,
+  "text": "−46.6%(11.20, 4,869.96)",
+  "unit": "%",
+  "src": "https://www.businesskorea.co.kr/news/articleView.html?idxno=281841"
+ },
+ {
+  "date": "2026-11-19",
+  "key": "sox_dd",
+  "value": -35.63,
+  "text": "−35.6%(11.19, 9,419.72)",
+  "unit": "%",
+  "src": "https://finance.yahoo.com/quote/%5ESOX/history/"
+ },
+ {
+  "date": "2026-11-18",
+  "key": "vkospi",
+  "value": 55.29,
+  "text": "55.3(11.18)",
+  "unit": "",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-19",
+  "key": "vkospi",
+  "value": 53.93,
+  "text": "53.9(11.19)",
+  "unit": "",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-18",
+  "key": "forced_liq",
+  "value": 284.51,
+  "text": "285억 원(11.18)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-19",
+  "key": "forced_liq",
+  "value": 120.05,
+  "text": "120억 원(11.19)",
+  "unit": "억 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-18",
+  "key": "margin_dd",
+  "value": -32.01,
+  "text": "−32.0%(11.18, 26.27조 원 / 6.24 정점 38.63조 원)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-19",
+  "key": "margin_dd",
+  "value": -32.49,
+  "text": "−32.5%(11.19, 26.08조 원 / 6.24 정점 38.63조 원)",
+  "unit": "%",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-19",
+  "key": "foreign20",
+  "value": -14.62,
+  "text": "−14.6조 원(10.23~11.19)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-20",
+  "key": "foreign20",
+  "value": -14.77,
+  "text": "−14.8조 원(10.26~11.20, 잠정 포함)",
+  "unit": "조 원",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-18",
+  "key": "hy_oas",
+  "value": 3.47,
+  "text": "3.47%(11.18)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/BAMLH0A0HYM2"
  }
 ]
