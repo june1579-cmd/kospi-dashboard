@@ -375,10 +375,14 @@ def compact_chainw(df):
     C/P 는 이름 안 어디든 따로 선 글자, 행사가는 이름 끝 숫자, 만기 표기는 나머지로 읽는다. 현물가가 없으면 범위를 자르지 않고 그대로 둔다(추정으로 채우지 않음).
     처음 한 번은 이름 보기를 로그에 남겨 다음 회차에 확인한다."""
     nm = df['ISU_NM'].astype(str).str.strip()
+    # 2026-11-20 18시(연구소 A): 실제 이름은 '코스피위클리 C 1909W4 257.5 (주간)' — 끝의 '(주간)' 때문에 행사가를 못 읽어 0행이었음.
+    # 끝 괄호 표기를 떼고 읽고, '(야간)' 표기 행은 뺀다(주간 정규장만).
+    night = nm.str.contains(r'\(야간\)\s*$', regex=True)
+    df = df[~night]; nm = nm[~night].str.replace(r'\s*\([^)]*\)\s*$', '', regex=True).str.strip()
     key = str(df['날짜'].iloc[0])[:4] if '날짜' in df and len(df) else ''
     if 'w' not in _CHAINW_LOGGED:
         _CHAINW_LOGGED.add('w')
-        log(f'위클리 이름 보기 {key}: {list(nm.head(3))} / 열 {list(df.columns)[:14]} / {len(df)}행'[:400])
+        log(f'위클리 이름 보기 {key}: {list(nm.head(3))} / 열 {list(df.columns)} / {len(df)}행'[:600])
     cp = nm.str.extract(r'(?:^|\s)([CP])(?:\s|$)')[0]
     K = pd.to_numeric(nm.str.extract(r'(\d+(?:\.\d+)?)\s*$')[0], errors='coerce')
     exp = nm.str.replace(r'(?:^|\s)[CP](?:\s|$)', ' ', regex=True).str.replace(r'\d+(?:\.\d+)?\s*$', '', regex=True).str.strip()
