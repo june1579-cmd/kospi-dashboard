@@ -1,15 +1,3 @@
-[10:45:29] 시작 full ['chainx'] — 로그인 계정 설정 있음
-[10:45:29] == chainx
-[10:57:52] opt_chainx_daily 중간 저장 2015-12-16 (69916행)
-[11:11:25] opt_chainx_daily 중간 저장 2016-11-30 (137408행)
-[11:24:28] opt_chainx_daily 중간 저장 2017-11-15 (209806행)
-[11:38:46] opt_chainx_daily 중간 저장 2018-10-31 (299212행)
-[11:53:02] opt_chainx_daily 중간 저장 2019-10-16 (388508행)
-[12:06:01] opt_chainx_daily 중간 저장 2020-09-30 (483890행)
-[12:18:28] opt_chainx_daily 중간 저장 2021-09-15 (591150행)
-[12:30:44] opt_chainx_daily 중간 저장 2022-08-31 (707526행)
-[12:42:50] opt_chainx_daily 중간 저장 2023-08-16 (813576행)
-[12:54:57] opt_chainx_daily 중간 저장 2024-07-31 (928898행)
-[13:08:38] opt_chainx_daily 중간 저장 2025-07-16 (1040314행)
-[13:24:05] opt_chainx_daily 중간 저장 2026-07-01 (1188968행)
-[13:31:26] 저장 opt_chainx_daily.csv.gz 1247760행
+[13:32:36] 시작 full ['chainx', 'chainwt', 'chainwm'] — 로그인 계정 설정 있음
+[13:32:36] == chainx
+[13:40:54] 저장 opt_chainx_daily.csv.gz 1247760행
