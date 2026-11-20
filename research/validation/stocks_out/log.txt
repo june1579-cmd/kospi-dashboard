@@ -2,34 +2,27 @@
 종목 400 (통합 명단 250 + 방어1 성장 종목 중 명단 밖 150 )
 KOSPI 단면 날짜 {'cap': '20261119', 'fund': '20261119', 'fr': '20261119', 'short': '20261117'}
 KOSDAQ 단면 날짜 {'cap': '20261119', 'fund': '20261119', 'fr': '20261119', 'short': '20261117'}
-  일별 100/400 (1.6분)
-  일별 200/400 (2.5분)
-  일별 300/400 (3.5분)
-  일별 400/400 (4.4분)
-일별 종가 400 / 400
+  KOSPI 일별 100/519 (2.0분)
+  KOSPI 일별 200/519 (3.6분)
+  KOSPI 일별 300/519 (5.1분)
+  KOSPI 일별 400/519 (6.6분)
+  KOSPI 일별 500/519 (7.9분)
+  KOSDAQ 일별 100/519 (10.0분)
+  KOSDAQ 일별 200/519 (11.7분)
+  KOSDAQ 일별 300/519 (13.6분)
+  KOSDAQ 일별 400/519 (15.4분)
+  KOSDAQ 일별 500/519 (17.2분)
+일별 수정 종가(KRX) 400 / 400 · 20241002 ~ 20261119
 주간 등락률 104 주 20241129 ~ 20261119
+일별 수정 종가 ↔ KRX 주간 등락률 대조(최근 8주, 0.6%p 초과) 0 건
+  실패 PC_KOSPI_20241118_20261119 (1/4): ValueError 빈 표 또는 등락률 칸 없음
+  실패 PC_KOSPI_20241118_20261119 (2/4): ValueError 빈 표 또는 등락률 칸 없음
+  실패 PC_KOSPI_20241118_20261119 (3/4): ValueError 빈 표 또는 등락률 칸 없음
+  실패 PC_KOSPI_20241118_20261119 (4/4): ValueError 빈 표 또는 등락률 칸 없음
 Traceback (most recent call last):
-  File "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/pandas/core/indexes/base.py", line 3812, in get_loc
-    return self._engine.get_loc(casted_key)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "pandas/_libs/index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
-  File "pandas/_libs/index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
-  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
-  File "pandas/_libs/hashtable_class_helper.pxi", line 7096, in pandas._libs.hashtable.PyObjectHashTable.get_item
-KeyError: '등락률'
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "/home/runner/work/kospi-dashboard/kospi-dashboard/research/validation/stocks_daily.py", line 457, in <module>
+  File "/home/runner/work/kospi-dashboard/kospi-dashboard/research/validation/stocks_daily.py", line 516, in <module>
     main()
-  File "/home/runner/work/kospi-dashboard/kospi-dashboard/research/validation/stocks_daily.py", line 248, in main
-    YTD[m], R2[m] = y['등락률'].astype(float), p2['등락률'].astype(float)
-                                               ~~^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/pandas/core/frame.py", line 4113, in __getitem__
-    indexer = self.columns.get_loc(key)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/pandas/core/indexes/base.py", line 3819, in get_loc
-    raise KeyError(key) from err
-KeyError: '등락률'
+  File "/home/runner/work/kospi-dashboard/kospi-dashboard/research/validation/stocks_daily.py", line 283, in main
+    raise RuntimeError(f'{m} 기간 등락률 못 받음')
+RuntimeError: KOSPI 기간 등락률 못 받음
 

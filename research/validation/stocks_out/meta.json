@@ -5,7 +5,7 @@
  "asof_short": "2026-11-16",
  "asof_fund": "20261118",
  "run_at": "2026-11-19T11:58:05+09:00",
- "marker": "2026-11-19T20:26:02+09:00 예약 작업",
+ "marker": "2026-11-20T08:56:54+09:00 최대 낙폭 일별 KRX 전환",
  "n": 250,
  "d1_growth_n": 250,
  "d1_top5": [
@@ -33,6 +33,6 @@
  "warnings": [],
  "minutes": 4.6,
  "local": false,
- "failed_at": "2026-11-19T20:31:20+09:00",
- "error": "core/frame.py\", line 4113, in __getitem__\n    indexer = self.columns.get_loc(key)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/pandas/core/indexes/base.py\", line 3819, in get_loc\n    raise KeyError(key) from err\nKeyError: '등락률'\n"
+ "failed_at": "2026-11-20T09:17:18+09:00",
+ "error": "er/work/kospi-dashboard/kospi-dashboard/research/validation/stocks_daily.py\", line 516, in <module>\n    main()\n  File \"/home/runner/work/kospi-dashboard/kospi-dashboard/research/validation/stocks_daily.py\", line 283, in main\n    raise RuntimeError(f'{m} 기간 등락률 못 받음')\nRuntimeError: KOSPI 기간 등락률 못 받음\n"
 }
