@@ -13,3 +13,4 @@
 [23:57:28] opt_chainwm_daily 중간 저장 2024-07-12 (19742행)
 [00:02:40] opt_chainwm_daily 중간 저장 2025-06-27 (39656행)
 [00:07:28] opt_chainwm_daily 중간 저장 2026-06-12 (61162행)
+[00:09:55] 저장 opt_chainwm_daily.csv.gz 72208행
