@@ -1,6 +1,13 @@
 {
- "trials_total": 4208,
- "holdout_peeks": 2,
- "rounds": [],
+ "trials_total": 5741,
+ "holdout_peeks": 3,
+ "rounds": [
+  {
+   "round": 1,
+   "candidates": 1533,
+   "dev_pass": 1,
+   "hold_pass": 0
+  }
+ ],
  "note": "갈래 A 원장(2026-11-20 11시 기준) 시험 수·잠금 열람 수를 이어받아 시작 — 통과 기준이 A 보다 느슨해지지 않게"
 }
