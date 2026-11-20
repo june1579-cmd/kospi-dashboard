@@ -333,6 +333,9 @@ def p2_mirror(cands, mc):
         r = _p2_simple(c['trades'], k)
         if len(r) < min_n: continue
         d = 1 if (r > 0).mean() >= 0.5 else -1
+        # 갈래 B 라운드 12(mirror_p2.only_flip, 없으면 예전대로): 뒤 구간 방향이 원 후보와 같으면 거울은 원 후보와 거래가 똑같아
+        #   A8 뒤→앞 선별 수(확인 p 의 나눗수)만 두 배로 늘림(라운드 11: 뒤 선별 70 중 같은 쌍 다수) — 방향이 뒤집힐 때만 거울을 만든다.
+        if mc.get('only_flip') and d == c['direction']: continue
         v = {kk: vv for kk, vv in c.items() if kk != 'trades'}
         v.update({'id': f"{c['id']}__P2", 'direction': d, 'fit_period': 'p2', 'base_id': c['id'],
                   'desc': '[뒤 구간 방향] ' + (c['desc'] if d == c['direction'] else _flip_desc(c['desc'])), 'trades': c['trades'].copy()})
