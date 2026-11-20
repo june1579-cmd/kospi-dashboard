@@ -366,16 +366,30 @@ def compact_chain_n(df, n_exp=4, band=0.25):
     return df[['날짜', 'cp', 'ym', 'K', 'settle', 'close', 'vol', 'oi', 'spot']]
 
 
+_CHAINW_LOGGED = set()
+
+
 def compact_chainw(df):
-    """위클리 옵션 전종목 → 이름 그대로(만기 표기가 월물과 달라 원문 보존) + C/P·만기 표기·행사가, 기초자산 ±20%."""
-    nm = df['ISU_NM'].astype(str)
-    m = nm.str.extract(r'\s([CP])\s+(\S+)\s+([\d.]+)\s*$')
-    df = df.assign(cp=m[0], exp=m[1], K=pd.to_numeric(m[2], errors='coerce'))
-    df = df[df['cp'].notna()]
+    """위클리 옵션 전종목 → 이름 그대로(만기 표기가 월물과 달라 원문 보존) + C/P·만기 표기·행사가, 기초자산 ±20%.
+    2026-11-20(연구소 A): 첫 수집에서 응답은 왔는데 정리 뒤 0행 — 이름 순서(만기 표기가 C/P 앞에 올 수 있음)나 현물가 칸 없음 때문으로 보고,
+    C/P 는 이름 안 어디든 따로 선 글자, 행사가는 이름 끝 숫자, 만기 표기는 나머지로 읽는다. 현물가가 없으면 범위를 자르지 않고 그대로 둔다(추정으로 채우지 않음).
+    처음 한 번은 이름 보기를 로그에 남겨 다음 회차에 확인한다."""
+    nm = df['ISU_NM'].astype(str).str.strip()
+    key = str(df['날짜'].iloc[0])[:4] if '날짜' in df and len(df) else ''
+    if 'w' not in _CHAINW_LOGGED:
+        _CHAINW_LOGGED.add('w')
+        log(f'위클리 이름 보기 {key}: {list(nm.head(3))} / 열 {list(df.columns)[:14]} / {len(df)}행'[:400])
+    cp = nm.str.extract(r'(?:^|\s)([CP])(?:\s|$)')[0]
+    K = pd.to_numeric(nm.str.extract(r'(\d+(?:\.\d+)?)\s*$')[0], errors='coerce')
+    exp = nm.str.replace(r'(?:^|\s)[CP](?:\s|$)', ' ', regex=True).str.replace(r'\d+(?:\.\d+)?\s*$', '', regex=True).str.strip()
+    df = df.assign(cp=cp, exp=exp, K=K)
+    df = df[df['cp'].notna() & df['K'].notna()]
     n = lambda c: pd.to_numeric(df[c].astype(str).str.replace(',', '').replace({'-': None}), errors='coerce') if c in df else float('nan')
     df = df.assign(settle=n('SETL_PRC'), close=n('TDD_CLSPRC'), vol=n('ACC_TRDVOL'), oi=n('ACC_OPNINT_QTY'), spot=n('SPOT_PRC'))
-    S = df['spot'].median()
-    df = df[(df['K'] >= S * 0.8) & (df['K'] <= S * 1.2)]
+    S = pd.to_numeric(df['spot'], errors='coerce').median() if len(df) else float('nan')
+    if pd.notna(S) and S > 0:
+        df = df[(df['K'] >= S * 0.8) & (df['K'] <= S * 1.2)]
+    if 'ISU_CD' not in df: df = df.assign(ISU_CD=df.get('ISU_SRT_CD', ''))
     return df[['날짜', 'ISU_CD', 'ISU_NM', 'cp', 'exp', 'K', 'settle', 'close', 'vol', 'oi', 'spot']]
 
 
