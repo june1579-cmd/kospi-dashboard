@@ -77,6 +77,7 @@ jobs:
         with: {pattern: 'out-*', path: deriv/lab/out_b, merge-multiple: true}
       - name: A8 검증 → A9 매매 → A10 반증 → 정리
         run: |
+          python deriv/lab/a06c_consensus.py || echo '합의·메타 라벨(A6c) 실패 — 건너뜀'   # 갈래 B 라운드 5: round_b.json consensus 있을 때만
           python deriv/lab/a08_validate.py
           python deriv/lab/a09_trade.py
           python deriv/lab/a10_redteam.py
