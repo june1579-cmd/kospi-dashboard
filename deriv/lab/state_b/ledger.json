@@ -1,6 +1,6 @@
 {
- "trials_total": 8322,
- "holdout_peeks": 8,
+ "trials_total": 11007,
+ "holdout_peeks": 10,
  "rounds": [
   {
    "round": 1,
@@ -12,6 +12,12 @@
    "round": 2,
    "candidates": 2581,
    "dev_pass": 5,
+   "hold_pass": 0
+  },
+  {
+   "round": 3,
+   "candidates": 2685,
+   "dev_pass": 2,
    "hold_pass": 0
   }
  ],
