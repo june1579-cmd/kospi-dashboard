@@ -139,6 +139,8 @@ def post_expiry(W, k2, td, F, dev_end, od):
     방향: 가설(하락)은 모든 조건, 상승은 위·아래 기본만. 서술 통계는 개발 구간만."""
     OBS_PE = cfg.get('pe_obs', [20, 10, 5, 1]); MS_PE = cfg.get('pe_m', [1, 3, 5, 10, 20]); TAGS_PE = cfg.get('pe_tags', ['F0', 'Q', 'ALL'])
     ffor = F['fut_for'].reindex(td); cfor = F['call_for'].reindex(td)
+    V2 = cfg.get('pe_v2', False)  # 라운드 12~: 만기에 벽 근처(1·2% 아래까지)·차월 벽 연장/올림 조건
+    K1 = W[W['tag'] == 'F1'].drop_duplicates('date').set_index('date')['K'] if V2 else pd.Series(dtype=float)
     rows = []
     for (tag, ym), g in W[W['tag'].isin(TAGS_PE)].groupby(['tag', 'ym']):
         g = g.sort_values('date'); exp = g['exp'].iloc[0]
@@ -154,7 +156,8 @@ def post_expiry(W, k2, td, F, dev_end, od):
             rows.append({'tag': tag, 'ym': ym, 'N': N, 'obs': d, 'exp': exp, 'K': K, 'cexp': cexp,
                          'above': cexp >= K, 'pin': (cexp >= K) & (cexp <= K * 1.01), 'crossed': bool((path['close'] >= K).any()),
                          'ff_exp': float(ffor.get(exp, np.nan)), 'call_cyc': float(np.nansum(cfor[cyc].values)),
-                         'share': float(r0['share'])})
+                         'share': float(r0['share']),
+                         'gap%': (cexp / K - 1) * 100, 'k1': float(K1.get(exp, np.nan)) if V2 else np.nan})
     P = pd.DataFrame(rows)
     if not len(P): return []
     for m in MS_PE:
@@ -167,6 +170,17 @@ def post_expiry(W, k2, td, F, dev_end, od):
              '만기 종가가 벽 위 + 콜 순매수 + 만기일 선물 순매도': lambda x: x['above'] & (x['call_cyc'] > 0) & (x['ff_exp'] < 0),
              '만기 종가가 벽 아래(대조)': lambda x: ~x['above']}
     up_ok = {'만기 종가가 벽 위', '만기 종가가 벽 아래(대조)'}
+    if V2:
+        same = lambda x: (x['k1'] - x['K']).abs() <= x['K'] * 0.005
+        raised = lambda x: x['k1'] > x['K'] * 1.005
+        conds.update({'만기 종가가 벽 1% 아래 이상(닿을 듯)': lambda x: x['gap%'] >= -1,
+                      '만기 종가가 벽 2% 아래 이상': lambda x: x['gap%'] >= -2,
+                      '만기 종가가 벽 1% 아래 이상 + 차월 콜벽 같은 자리(연장)': lambda x: (x['gap%'] >= -1) & same(x),
+                      '만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림)': lambda x: (x['gap%'] >= -1) & raised(x),
+                      '만기 종가가 벽 2% 아래 이상 + 차월 콜벽 같은 자리(연장)': lambda x: (x['gap%'] >= -2) & same(x),
+                      '만기 종가가 벽 위 + 차월 콜벽 같은 자리(연장)': lambda x: x['above'] & same(x),
+                      '만기 종가가 벽 2% 아래 이상 + 만기일 외국인 선물 순매도': lambda x: (x['gap%'] >= -2) & (x['ff_exp'] < 0)})
+        up_ok |= {'만기 종가가 벽 1% 아래 이상(닿을 듯)', '만기 종가가 벽 2% 아래 이상', '만기 종가가 벽 1% 아래 이상 + 차월 콜벽 더 위(올림)'}
     dev = P[P['exp'] <= dev_end]
     T = []
     for (tag, N), g in dev.groupby(['tag', 'N']):
