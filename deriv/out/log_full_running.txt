@@ -3,3 +3,4 @@
 [13:40:54] 저장 opt_chainx_daily.csv.gz 1247760행
 [13:40:57] == chainwt
 [13:51:20] opt_chainwt_daily 중간 저장 2020-09-04 (0행)
+[14:02:40] opt_chainwt_daily 중간 저장 2021-08-20 (0행)
