@@ -5770,8 +5770,8 @@
  {
   "date": "2026-11-20",
   "key": "foreign20",
-  "value": -14.77,
-  "text": "−14.8조 원(10.26~11.20, 잠정 포함)",
+  "value": -14.74,
+  "text": "−14.7조 원(10.26~11.20)",
   "unit": "조 원",
   "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
  },
@@ -5780,6 +5780,30 @@
   "key": "hy_oas",
   "value": 3.47,
   "text": "3.47%(11.18)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/BAMLH0A0HYM2"
+ },
+ {
+  "date": "2026-11-20",
+  "key": "sox_dd",
+  "value": -42.54,
+  "text": "−42.5%(11.20, 8,408.59)",
+  "unit": "%",
+  "src": "https://indexes.nasdaqomx.com/Index/History/SOX"
+ },
+ {
+  "date": "2026-11-20",
+  "key": "vkospi",
+  "value": 53.18,
+  "text": "53.2(11.20)",
+  "unit": "",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-19",
+  "key": "hy_oas",
+  "value": 3.52,
+  "text": "3.52%(11.19)",
   "unit": "%",
   "src": "https://fred.stlouisfed.org/series/BAMLH0A0HYM2"
  }
