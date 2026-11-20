@@ -121,7 +121,7 @@
     {tier: '1선', name: '1선 · 주의', rule: '직전 60거래일 최저 종가 +1%', f: 1.01, p_dev: 43.6, p_test: 70.2, n_dev: 179, e_dev: 49, n_test: 47, e_test: 14, c3_dev: -2.26, c3_test: -3.86, sev_dev: 31.8, sev_test: 46.8},
     {tier: '2선', name: '2선 · 새 저점', rule: '직전 60거래일 최저 종가', f: 1.00, p_dev: 60.5, p_test: 82.1, n_dev: 86, e_dev: 45, n_test: 28, e_test: 19, c3_dev: -3.60, c3_test: -5.13, sev_dev: 51.2, sev_test: 60.7},
     {tier: '3선', name: '3선 · 대량 청산', rule: '직전 60거래일 최저 종가 −2%', f: 0.98, p_dev: 100, p_test: 88.9, n_dev: 17, e_dev: 11, n_test: 9, e_test: 8, c3_dev: -8.36, c3_test: -7.31, sev_dev: 100, sev_test: 88.9}];
-  const LL_NOTE = '1선 = 직전 60거래일 최저 종가 +1%, 2선 = 그 최저 종가(새 저점), 3선 = 그 최저 종가 −2%. 종가가 이 선을 깨면 그 뒤 사흘 안에 신용 강제 청산(코스피 신용잔고 3일 −2% 이상 감소 = 청산 물결)이 몰렸다. 후보 168개(직전 저점 창 5~250일·문턱 +2~−10%, 고점 대비 낙폭, 아래 신용 평균 매수 지수 선 방법별, 비례 상환 분포선)를 2016~2022년 자료로 미리 정한 규칙(신용·미수 청산 물결 맞힘 순위)대로 고르고 2023~2026년에 확인했다(2026-11-20). 새 저점이 생기면 선이 따라 내려가 이미 청산된 물량이 저절로 빠진다. 평소(아무 날) 청산 물결은 2016~2022년 8.4%·2023~2026년 8.8%, 사흘 신용 변화 평균 +0.2%·+0.3%. 선 아래에 머문 날은 날마다 셌고 이탈 구간 = 처음 깬 횟수, 3선은 표본이 적다(11·8구간). 아래 표 첫 줄의 담보비율 140% 선은 같은 검증에서 청산 물결의 15%(2016~2022)·10%(2023~2026)만 그 선 아래에서 일어나(1선은 54%·40%) 그래프에서 뺐다. 미수 반대매매는 지수 수준과 상관없이 결제일(T+2)에 정리되므로 따로 급락 이틀 뒤를 본다. 지수 기준이라 신용이 몰린 종목은 더 먼저 걸린다. 한눈에 보기 그래프 코스피 칸의 세 선(1선 점선 · 2선 실선 · 3선 촘촘한 점선)이 날마다의 기준선이다. 참고용이지 추천이 아니다.';
+  const LL_NOTE = '1선 = 직전 60거래일 최저 종가 +1%, 2선 = 그 최저 종가(새 저점), 3선 = 그 최저 종가 −2%. 종가가 이 선을 깨면 그 뒤 사흘 안에 신용 강제 청산(코스피 신용잔고 3일 −2% 이상 감소 = 청산 물결)이 몰렸다. 후보 168개(직전 저점 창 5~250일·문턱 +2~−10%, 고점 대비 낙폭, 아래 신용 평균 매수 지수 선 방법별, 비례 상환 분포선)를 2016~2022년 자료로 미리 정한 규칙(신용·미수 청산 물결 맞힘 순위)대로 고르고 2023~2026년에 확인했다(2026-11-20). 새 저점이 생기면 선이 따라 내려가 이미 청산된 물량이 저절로 빠진다. 평소(아무 날) 청산 물결은 2016~2022년 8.4%·2023~2026년 8.8%, 사흘 신용 변화 평균 +0.2%·+0.3%. 선 아래에 머문 날은 날마다 셌고 이탈 구간 = 처음 깬 횟수, 3선은 표본이 적다(11·8구간). 아래 표 첫 줄의 담보비율 140% 선은 같은 검증에서 청산 물결의 15%(2016~2022)·10%(2023~2026)만 그 선 아래에서 일어나(1선은 54%·40%) 그래프에서 뺐다. 미수 반대매매는 지수 수준과 상관없이 결제일(T+2)에 정리되므로 따로 급락 이틀 뒤를 본다. 지수 기준이라 신용이 몰린 종목은 더 먼저 걸린다. 한눈에 보기 그래프 코스피 칸의 세 선(1선 점선 · 2선 실선 · 3선 촘촘한 점선)이 날마다의 기준선이다. 표 위 칸 셋은 신용 평균(1년 저점 뒤 늘어난 신용을 그날 종가로 가중한 평균)·해소 반영 평균(줄어든 만큼을 비싸게 산 신용부터 뺀 남은 신용의 평균)·정점 대비 해소분이고, 그래프의 파란 긴 점선 두 개가 날마다의 그 값이다. 신용 강제 청산 금액은 따로 공시되지 않아 상환과 구분하지 못하는 추정값이다. 참고용이지 추천이 아니다.';
   dash.calc('liq_lines', {
     inputs: ['market'],
     title: '반대매매 기준선(직전 60거래일 최저 종가 기준 · 2026-11-20 검증)',
@@ -149,6 +149,50 @@
       for (let i = 60; i < mk.length; i++) { let lo = Infinity; for (let k = i - 60; k < i; k++) if (mk[k].v < lo) lo = mk[k].v;
         out.push({date: mk[i].d, l1: Math.round(lo * 101) / 100, l2: lo, l3: Math.round(lo * 98) / 100}); }
       return out;
+    }
+  });
+
+  // 2026-11-20 추가(사용자 요청): 신용 평균과 해소분 — 1년(250거래일) 저점 뒤 늘어난 신용을 그날 코스피 종가로 가중한 평균(유입 기준)과, 그 뒤 줄어든 만큼(상환·청산)을 비싸게 산 신용부터 뺀 '해소 반영 평균'. 날마다 값은 그래프 선, 지금 값은 반대매매 기준선 표 위 칸 셋.
+  dash.calc('credit_hist', {
+    inputs: ['credit', 'market'],
+    title: '신용 평균·해소 반영 평균 날마다(그래프 선)',
+    description: 'ca = 그날까지 250거래일 안 코스피 신용잔고 최저일(1년 저점) 뒤 잔고가 늘어난 날의 증가분을 그날 코스피 종가로 가중한 평균(신용 평균, 유입 기준). cc = 잔고가 줄어든 날 그만큼을 가장 비싸게 산 신용부터 뺀 뒤 남은 신용의 평균(해소 반영 평균). rem = 남은 신용 조원, inw = 1년 저점 뒤 유입 합계 조원, lo_date = 1년 저점. 추정값.',
+    fn: (credit, market) => {
+      const cr = credit.filter(r => r.kospi_jo !== '' && r.kospi_jo != null && isFinite(+r.kospi_jo)).map(r => ({d: String(r.date), v: +r.kospi_jo})).sort((a, b) => a.d < b.d ? -1 : 1);
+      const px = new Map(market.filter(r => r.kospi !== '' && r.kospi != null && isFinite(+r.kospi)).map(r => [String(r.date), +r.kospi]));
+      const out = []; let anchor = -1, L = [], inW = 0, inS = 0, rW = 0, rS = 0;   // L = 남은 신용 [금액, 매수 지수], 지수 낮은 순
+      const step = k => { const d = cr[k].v - cr[k - 1].v, p = px.get(cr[k].d);
+        if (d > 0) { if (p == null) return; inW += d; inS += d * p; rW += d; rS += d * p; let a = 0, b = L.length; while (a < b) { const m = (a + b) >> 1; if (L[m][1] <= p) a = m + 1; else b = m; } L.splice(a, 0, [d, p]); }
+        else { let q = -d; while (q > 1e-9 && L.length) { const t = L[L.length - 1], u = Math.min(q, t[0]); t[0] -= u; q -= u; rW -= u; rS -= u * t[1]; if (t[0] <= 1e-9) L.pop(); } } };   // 줄어든 만큼은 가장 비싸게 산 것부터
+      for (let t = 1; t < cr.length; t++) {
+        let lo = Math.max(0, t - 249); for (let k = lo; k <= t; k++) if (cr[k].v <= cr[lo].v) lo = k;   // 1년 저점(같으면 나중 날)
+        if (lo !== anchor) { anchor = lo; L = []; inW = inS = rW = rS = 0; for (let k = lo + 1; k <= t; k++) step(k); } else step(t);
+        out.push({date: cr[t].d, ca: inW > 1e-9 ? Math.round(inS / inW) : null, cc: rW > 1e-9 ? Math.round(rS / rW) : null, rem: Math.round(rW * 1000) / 1000, inw: Math.round(inW * 1000) / 1000, lo_date: cr[lo].d});
+      }
+      return out;
+    }
+  });
+  dash.calc('credit_clear', {
+    inputs: ['credit', 'market', 'liq'],
+    title: '신용 평균과 해소분(지금 값)',
+    description: 'avg = 1년(250거래일) 저점 뒤 코스피 신용잔고가 늘어난 날의 증가분을 그날 코스피 종가로 가중한 평균. clr = 그 뒤 줄어든 만큼(상환·청산)을 비싸게 산 신용부터 뺀 남은 신용의 평균(alt = 먼저 산 것부터 뺀 경우). gone = 250거래일 안 정점 대비 잔고 감소 조원(pct %), misu_jo = 정점 다음 날부터 미수 반대매매 합계 조원. vs = 마지막 코스피 종가가 그 평균보다 몇 % 위(+)·아래(−). in_jo·out_jo·rem_jo = 1년 저점 뒤 유입·감소·남은 신용 조원. 신용 강제 청산 금액은 따로 공시되지 않아 상환과 구분하지 못하는 추정값.',
+    fn: (credit, market, liq) => {
+      const cr = credit.filter(r => r.kospi_jo !== '' && r.kospi_jo != null && isFinite(+r.kospi_jo)).map(r => ({d: String(r.date), v: +r.kospi_jo})).sort((a, b) => a.d < b.d ? -1 : 1);
+      const mk = market.filter(r => r.kospi !== '' && r.kospi != null && isFinite(+r.kospi)).map(r => [String(r.date), +r.kospi]).sort((a, b) => a[0] < b[0] ? -1 : 1), px = new Map(mk);
+      const n = cr.length; if (n < 30 || !mk.length) return [];
+      const s = Math.max(0, n - 250); let lo = s, pk = s; for (let k = s; k < n; k++) { if (cr[k].v <= cr[lo].v) lo = k; if (cr[k].v > cr[pk].v) pk = k; }
+      const sim = worst => { const L = []; let inW = 0, inS = 0, outW = 0;
+        for (let k = lo + 1; k < n; k++) { const d = cr[k].v - cr[k - 1].v, p = px.get(cr[k].d);
+          if (d > 0) { if (p != null) { inW += d; inS += d * p; L.push([d, p]); } }
+          else if (d < 0) { let q = -d; outW += q; if (worst) L.sort((a, b) => a[1] - b[1]); while (q > 1e-9 && L.length) { const i = worst ? L.length - 1 : 0, u = Math.min(q, L[i][0]); L[i][0] -= u; q -= u; if (L[i][0] <= 1e-9) L.splice(i, 1); } } }
+        const w = L.reduce((a, l) => a + l[0], 0); return {e: inW ? inS / inW : null, c: w > 1e-9 ? L.reduce((a, l) => a + l[0] * l[1], 0) / w : null, inW, outW, w}; };
+      const W = sim(true), F = sim(false), last = cr[n - 1], [kd, k] = mk[mk.length - 1];
+      const ms = liq.filter(r => String(r.date) > cr[pk].d && r.liq_eok !== '' && r.liq_eok != null && isFinite(+r.liq_eok));
+      const r0 = v => v == null ? null : Math.round(v), r1 = v => Math.round(v * 10) / 10, r2 = v => Math.round(v * 100) / 100;
+      const base = {credit_date: last.d, last_date: kd, last_kospi: k, lo_date: cr[lo].d, lo_jo: cr[lo].v, peak_date: cr[pk].d, peak_jo: cr[pk].v, last_jo: last.v, in_jo: r2(W.inW), out_jo: r2(W.outW), rem_jo: r2(W.w)};
+      return [{key: 'avg', label: '신용 평균', value: r0(W.e), vs: W.e ? r1((k / W.e - 1) * 100) : null, ...base},
+        {key: 'clr', label: '해소 반영 평균', value: r0(W.c), vs: W.c ? r1((k / W.c - 1) * 100) : null, alt: r0(F.c), ...base},
+        {key: 'gone', label: '해소분', value: r2(cr[pk].v - last.v), pct: r1((last.v / cr[pk].v - 1) * 100), misu_jo: r2(ms.reduce((a, r) => a + +r.liq_eok, 0) / 10000), misu_days: ms.length, ...base}];
     }
   });
 
@@ -209,6 +253,18 @@
           const nw = R.filter(r => r.broke_new).map(r => r.tier);
           if (ls) ls.textContent = `${md(R[0].last_date)} 종가 ${f2(k)}는 ${pos}` + (nw.length ? `(오늘 ${nw.join('·')}을 새로 깼다)` : '') + `. 다음 거래일 기준선은 직전 60거래일 최저 종가 ${f2(R[0].base_low)}(${md(R[0].base_date)}) 기준 ` + R.map(r => `${r.tier} ${f0(r.line)}(종가 대비 ${pcs(r.need_pct)})`).join(' · ') + `. 종가가 1선 아래면 사흘 안 신용 청산 물결이 2016~2022년 ${f1(R[0].p_dev)}%·2023~2026년 ${f1(R[0].p_test)}%(평소 ${f1(R[0].base_dev)}·${f1(R[0].base_test)}%), 2선 아래면 ${f1(R[1].p_dev)}·${f1(R[1].p_test)}%, 3선 아래면 ${f1(R[2].p_dev)}·${f1(R[2].p_test)}%였다.`;
         } else { lt.classList.toggle('dash-skeleton', !BAD.includes(ld.status)); if (ls) ls.textContent = ''; } }
+      // 신용 평균·해소분(11/20 사용자 요청): 반대매매 기준선 표 위 칸 셋 — 매 갱신 자동 계산
+      const cq = dash.data('credit_clear'), lw = lt && lt.closest('.rv-tbl-wrap');
+      let cb = document.getElementById('ca-box');
+      if (!cb && lw) { cb = document.createElement('div'); cb.id = 'ca-box'; cb.className = 'rv-kpis'; cb.dataset.source = 'credit_clear'; cb.style.margin = 'var(--cds-gap-sm) 0'; lw.before(cb); }
+      if (cb) { cb.replaceChildren();
+        if (cq.status === 'ok' && cq.data.length) { cb.classList.remove('dash-skeleton'); const R = Object.fromEntries(cq.data.map(r => [r.key, r])), A = R.avg, Q = R.clr, G = R.gone, ud = v => v == null ? '—' : v >= 0 ? `${f1(v)}% 위` : `${f1(-v)}% 아래`;
+          const el = (t, c, x) => { const e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; };
+          const tile = (key, lab, val, unit, sub) => { const d = el('div', 'rv-kpi'), v = el('span', 'rv-kpi-v'), nv = el('span', null, val); nv.dataset.source = 'credit_clear'; nv.dataset.field = 'value'; nv.dataset.where = 'key=' + key; v.appendChild(nv); if (unit) v.appendChild(el('span', 'rv-kpi-u', unit)); d.append(el('span', 'rv-kpi-l', lab), v, el('span', 'rv-kpi-l', sub)); return d; };
+          cb.append(tile('avg', `신용 평균(1년 저점 ${md(A.lo_date)} 뒤 유입)`, A.value == null ? '—' : f0(A.value), '', `${md(A.last_date)} 종가는 ${ud(A.vs)} · 유입 ${f2(A.in_jo)}조원`),
+            tile('clr', '해소 반영 평균(남은 신용)', Q.value == null ? '—' : f0(Q.value), '', `종가는 ${ud(Q.vs)} · 유입 ${f2(Q.in_jo)}조 중 ${f2(Q.out_jo)}조 정리, ${f2(Q.rem_jo)}조 남음 · 비싸게 산 것부터 정리 가정(먼저 산 것부터면 ${Q.alt == null ? '—' : f0(Q.alt)})`),
+            tile('gone', `해소분(정점 ${md(G.peak_date)} 대비)`, f2(G.value), '조원', `${f2(G.peak_jo)}조 → ${f2(G.last_jo)}조(${pcs(G.pct)}, 신용 ${md(G.credit_date)}분) · 그사이 미수 반대매매 ${f2(G.misu_jo)}조원`));
+        } else cb.classList.toggle('dash-skeleton', !BAD.includes(cq.status)); }
       // 신용 청산 참고선(참고 — 11/20부터 그래프에서 뺌)
       const cd = dash.data('credit_entry'), ct = document.getElementById('ce-tbl'), cs = document.getElementById('ce-sum');
       if (ct) { const tb = ct.tBodies[0]; tb.replaceChildren();

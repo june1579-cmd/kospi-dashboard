@@ -228,7 +228,7 @@
           <span class="rv-win" id="all-win"></span>
       </div>
       <p class="rv-note" id="all-touch">휴대폰·태블릿: 그래프를 두 손가락으로 벌리면 기간이 좁아지고(확대) 오므리면 넓어진다(축소). 한 손가락으로 좌우로 밀면 기간이 과거·최근으로 옮겨지고, 세게 밀고 떼면 조금 더 미끄러지다 멈춘다(눈금은 제자리). 한 번 터치하면 그날 상세가 뜨고, 누른 채 좌우로 움직이면 상세 날짜가 앞뒤로 따라간다. 화면 아무 데나 다시 터치하면 닫힌다.</p>
-      <div class="rv-chart dash-skeleton" id="all-chart" data-source="market credit liq events monthly flows_daily combo alarms fx_daily fut_daily etf_lev reentry buy3 sell3 trend_champ trend_champ_rules relief liq_lines liq_hist fpanic fpanic_eps fpanic_now health" style="min-height:860px"></div>
+      <div class="rv-chart dash-skeleton" id="all-chart" data-source="market credit liq events monthly flows_daily combo alarms fx_daily fut_daily etf_lev reentry buy3 sell3 trend_champ trend_champ_rules relief liq_lines liq_hist credit_hist fpanic fpanic_eps fpanic_now health" style="min-height:860px"></div>
       <div class="rv-tbl-wrap" style="margin-top:var(--cds-gap-sm)">
         <table class="rv-tbl" id="sig-tbl" data-source="alarms reentry buy3 sell3">
           <thead><tr><th>신호</th><th>조건(셋 다 켜질 때)</th><th>2026 신호일(시작)</th><th class="rv-num">2015~2025 큰 전환 직전</th><th class="rv-num">헛신호(11년)</th></tr></thead>
@@ -1344,6 +1344,7 @@
     legendItem(lg, C()[4], '미수금 대비 %(짧은 선)', {shape: 'line'});
     legendItem(lg, C()[4], '담보비율 유지의무 면제 기간(코스피 칸 음영 · 반대매매 완화 조치)');
     legendItem(lg, C()[4], '반대매매 기준선(코스피 칸 · 직전 60거래일 최저 종가: 1선 +1% 점선 · 2선 실선 · 3선 −2% 촘촘한 점선)', {shape: 'dash'});
+    legendItem(lg, C()[0], '신용 평균·해소 반영 평균(코스피 칸 파란 긴 점선 · 추정)', {shape: 'dash'});
     legendItem(lg, C()[6], '월 미수 반대매매 일평균(점선 = 부분월)', {shape: 'line'});
     ['신용 한도','외부 변수','시장','레버리지'].forEach(c => legendItem(lg, EVC(c), '이벤트: ' + c, {shape: 'dot'}));
 
@@ -1444,14 +1445,15 @@
         const x0 = x(s < a ? a : s), x1 = x(e > b ? b : e);
         svg.append('rect').attr('x', x0).attr('width', Math.max(1, x1 - x0)).attr('y', P0.top).attr('height', P0.bot - P0.top).style('fill', C()[4]).attr('opacity', 0.12);
         svg.append('text').attr('class', 'rv-tick').attr('x', x0 + 3).attr('y', P0.top + 10).style('font-size', '9px').text('담보비율 면제 ' + String(r.start).slice(5) + '~'); });
-      const dom = P0.yL.domain();
-      if (lhD.status === 'ok' && lhD.data.length) { const vis = lhD.data.filter(inR);   // 날마다 그날 기준선(그 전 60거래일 최저 종가 × 1.01 · 1 · 0.98) 계단 선
-        [['l1', '5 3', 0.8, 1.2], ['l2', null, 0.9, 1.4], ['l3', '1.5 3', 0.95, 1.8]].forEach(([k, da, op, sw]) => svg.append('path').datum(vis).attr('fill', 'none').style('stroke', C()[4]).attr('stroke-width', sw).attr('stroke-dasharray', da).attr('opacity', op)
-          .attr('d', d3.line().defined(p => p[k] >= dom[0] && p[k] <= dom[1]).curve(d3.curveStepAfter).x(p => x(P(p.date))).y(p => P0.yL(p[k])))); }
-      if (llD.status === 'ok' && llD.data.length) {
-        const ceRows = llD.data.map(r => ({lab: LL_LAB[r.tier] + ' ' + f0(num(r.line)), v: num(r.line)})).filter(r => r.v != null && r.v >= dom[0] && r.v <= dom[1]).map(r => ({...r, y: P0.yL(r.v), ty: P0.yL(r.v)}));
-        ceRows.sort((p, q) => p.y - q.y); for (let i = 1; i < ceRows.length; i++) if (ceRows[i].ty - ceRows[i - 1].ty < 11) ceRows[i].ty = ceRows[i - 1].ty + 11;   // 라벨이 겹치지 않게 아래로 밀기
-        ceRows.forEach(r => svg.append('text').attr('class', 'rv-tick').attr('x', W - mr + 4).attr('y', r.ty).attr('dy', '0.32em').attr('text-anchor', 'start').style('font-size', '9px').style('fill', C()[4]).text(r.lab)); }   // 글자는 그래프 밖 오른쪽에(다음 거래일 값)
+      const dom = P0.yL.domain(), chD = dash.data('credit_hist'), okD = d => d.status === 'ok' && d.data.length;
+      const stepL = (rows, k, da, op, sw, col) => svg.append('path').datum(rows.filter(inR)).attr('fill', 'none').style('stroke', col).attr('stroke-width', sw).attr('stroke-dasharray', da).attr('opacity', op)
+        .attr('d', d3.line().defined(p => p[k] >= dom[0] && p[k] <= dom[1]).curve(d3.curveStepAfter).x(p => x(P(p.date))).y(p => P0.yL(p[k])));
+      if (okD(lhD)) [['l1', '5 3', 0.8, 1.2], ['l2', null, 0.9, 1.4], ['l3', '1.5 3', 0.95, 1.8]].forEach(a => stepL(lhD.data, ...a, C()[4]));   // 기준선 = 그 전 60거래일 최저 종가 × 1.01·1·0.98
+      if (okD(chD)) [['ca', '9 3', 0.85, 1.5], ['cc', '9 3 2 3', 0.85, 1.5]].forEach(a => stepL(chD.data, ...a, C()[0]));   // 신용 평균·해소 반영 평균(11/20)
+      const cl = okD(chD) ? chD.data[chD.data.length - 1] : {};
+      const ceRows = (okD(llD) ? llD.data.map(r => [LL_LAB[r.tier], r.line, C()[4]]) : []).concat([['신용 평균', cl.ca, C()[0]], ['해소 반영', cl.cc, C()[0]]]).map(([l, v, c]) => ({lab: l + ' ' + f0(num(v)), v: num(v), c})).filter(r => r.v != null && r.v >= dom[0] && r.v <= dom[1]).map(r => ({...r, y: P0.yL(r.v), ty: P0.yL(r.v)}));
+      ceRows.sort((p, q) => p.y - q.y); for (let i = 1; i < ceRows.length; i++) if (ceRows[i].ty - ceRows[i - 1].ty < 11) ceRows[i].ty = ceRows[i - 1].ty + 11;   // 라벨 겹침 방지
+      ceRows.forEach(r => svg.append('text').attr('class', 'rv-tick').attr('x', W - mr + 4).attr('y', r.ty).attr('dy', '0.32em').attr('text-anchor', 'start').style('font-size', '9px').style('fill', r.c).text(r.lab));   // 오른쪽 바깥 글자
     } catch (e) {}
     // big-trend strips: actual zigzag leg vs combo state
     const cb = dash.data('combo').data.filter(inR);
