@@ -3,3 +3,4 @@
 [17:55:10] == chainwt
 [17:55:11] 위클리 이름 보기 2019: ['코스피위클리 C 1909W4 257.5 (주간)', '코스피위클리 C 1909W4 260.0 (주간)', '코스피위클리 C 1909W4 262.5 (주간)'] / 열 ['날짜', 'ISU_CD', 'ISU_SRT_CD', 'ISU_NM', 'TDD_CLSPRC', 'FLUC_TP_CD', 'CMPPREVDD_PRC', 'TDD_OPNPRC', 'TDD_HGPRC', 'TDD_LWPRC', 'SPOT_PRC', 'SETL_PRC', 'ACC_TRDVOL', 'ACC_TRDVAL'] / 34행
 [18:03:31] opt_chainwt_daily 중간 저장 2020-09-04 (0행)
+[18:11:59] opt_chainwt_daily 중간 저장 2021-08-20 (0행)
