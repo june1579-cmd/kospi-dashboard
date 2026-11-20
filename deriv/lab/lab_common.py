@@ -164,8 +164,84 @@ def save_ledger(L):
 # 후보 하나 = dict(id, agent, desc, direction(+1 오름/−1 내림), trades=DataFrame[signal, exit], dev_note)
 #   signal = 신호를 아는 날(그날 장 마감 뒤), 진입 = 다음 거래일 시가, 청산 = exit 날 종가.
 #   잠금 구간(2024~)의 신호 날짜도 같은 규칙으로 만들어 넘기되, 그 구간 결과는 A8 만 계산한다.
+def regime_states():
+    """장세 상태(그날 종가까지 아는 값, 문턱은 개발 구간에서만): 변동성(20일 일간 변동 표준편차, 개발 중앙값 기준 높음/낮음),
+    추세(종가가 60일 이평 위/아래). 반환 DataFrame[bool] (2026-11-20 갈래 B, round 설정 'regime' 이 있을 때만 쓰임)."""
+    k = k200_index(); c = k['close']
+    rv = c.pct_change().rolling(20).std()
+    med = rv[(rv.index >= '2010-01-01') & (rv.index <= DEV_END)].median()
+    ma = c.rolling(60).mean()
+    S = pd.DataFrame(index=k.index)
+    S['변동성 높음'] = (rv > med) & rv.notna(); S['변동성 낮음'] = (rv <= med) & rv.notna()
+    S['상승 추세(60일선 위)'] = (c > ma) & ma.notna(); S['하락 추세(60일선 아래)'] = (c <= ma) & ma.notna()
+    return S
+
+
+def regime_variants(cands):
+    """후보마다 장세 조건을 붙인 변형(신호 날 장세가 맞을 때만). 방향은 원 후보(개발 구간에서 정함) 그대로.
+    많아지지 않게: 개발 구간 신호 40개 이상인 후보 중 개발 구간 단순 적중(지수, 겹침 무시) 상위 max_base 개만."""
+    rc = round_cfg().get('regime') or {}
+    if not rc or not cands: return []
+    S = regime_states(); k = k200_index(); td = k.index
+    min_sig = rc.get('min_dev_signals', 40); max_base = rc.get('max_base', 250)
+    scored = []
+    for c in cands:
+        if c.get('regime') or 'trades_dev' in c: continue
+        t = c['trades']; t = t[pd.to_datetime(t['exit']) <= DEV_END]
+        if len(t) < min_sig: continue
+        r = trade_returns(t.assign(signal=pd.to_datetime(t['signal']), exit=pd.to_datetime(t['exit'])), k)
+        r = r[~np.isnan(r)]
+        if len(r) < min_sig: continue
+        scored.append((float((c['direction'] * r > 0).mean()), c))
+    scored.sort(key=lambda x: -x[0])
+    out = []
+    for _, c in scored[:max_base]:
+        t = c['trades'].copy(); sd = pd.to_datetime(t['signal'])
+        for nm in S.columns:
+            st = S[nm].reindex(sd).fillna(False).values
+            tt = t[st]
+            if len(tt[pd.to_datetime(tt['exit']) <= DEV_END]) < 15: continue
+            v = {kk: vv for kk, vv in c.items() if kk != 'trades'}
+            v.update({'id': f"{c['id']}__R{list(S.columns).index(nm)}", 'desc': f"[{nm}] {c['desc']}", 'family': f"{c.get('family')}_regime",
+                      'regime': nm, 'trades': tt.reset_index(drop=True)})
+            out.append(v)
+    print('장세 조건 변형', len(out), '(원 후보', len(scored), '중 상위', min(len(scored), max_base), ')', flush=True)
+    return out
+
+
+def barrier_exits(px, W, k=1.0, vol_win=60):
+    """큰 변동 대상(2026-11-20 갈래 B): t일 신호 → t+1 시가 기준, W 거래일 안에 종가가 +kσ√W 를 먼저 넘으면 1, −kσ√W 를 먼저 넘으면 0,
+    둘 다 아니면 NaN. σ = 직전 vol_win 일 일간 종가 등락 표준편차(t일에 아는 값). exit = 처음 넘은 날(없으면 W 번째 날).
+    반환 (y_up Series, exit Series)."""
+    c, o = px['close'].values, px['open'].values; td = px.index; n = len(td)
+    sig = px['close'].pct_change().rolling(vol_win).std().values
+    y = np.full(n, np.nan); ex = np.full(n, np.datetime64('NaT'), dtype='datetime64[ns]')
+    for i in range(n - 1):
+        if not np.isfinite(sig[i]): continue
+        o1 = o[i + 1]
+        if not np.isfinite(o1) or o1 <= 0: continue
+        b = k * sig[i] * np.sqrt(W); end = min(n - 1, i + W)
+        if i + W > n - 1: continue
+        hit = None
+        for j in range(i + 1, end + 1):
+            r = c[j] / o1 - 1
+            if r >= b: hit = (1.0, j); break
+            if r <= -b: hit = (0.0, j); break
+        if hit: y[i] = hit[0]; ex[i] = td.values[hit[1]]
+        else: ex[i] = td.values[end]
+    return pd.Series(y, index=td), pd.Series(ex, index=td)
+
+
 def save_candidates(agent, cands):
     import pickle
+    ex = round_cfg().get('exclude_ids') or []   # 이미 잠금 구간에서 탈락한 후보(+그 장세 변형)는 다시 열지 않게 뺌 — 열람 낭비 방지
+    if ex: cands = [c for c in cands if not any(c['id'] == e or c['id'].startswith(e + '__R') for e in ex)]
+    if round_cfg().get('regime') and agent in (round_cfg().get('regime') or {}).get('agents', ['a03', 'a03c', 'a04', 'a05']):
+        try:
+            cands = cands + regime_variants(cands)
+        except Exception as e:   # 장세 변형 실패가 원 후보 저장을 막지 않게
+            print('장세 조건 변형 실패', e)
+        if ex: cands = [c for c in cands if not any(c['id'] == e or c['id'].startswith(e + '__R') for e in ex)]
     d = out_dir(agent)
     pickle.dump(cands, open(os.path.join(d, 'candidates.pkl'), 'wb'))
     pd.DataFrame([{k: v for k, v in c.items() if k != 'trades'} | {'n_signals': len(c['trades'])} for c in cands]).to_csv(

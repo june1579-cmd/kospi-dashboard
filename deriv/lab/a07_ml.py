@@ -18,9 +18,12 @@ import a06_rules as A6  # noqa: E402
 
 cfg = L.round_cfg().get('a07', {})
 HS = cfg.get('h', [1, 3, 5, 10, 20])
-SHARD = os.environ.get('A07_SHARD', '')   # 'i/n' 이면 보유 기간을 n 조각 중 i 번째만(워크플로가 조각을 동시에 돌림, 2026-11-20)
+BARRIER = cfg.get('barrier', [])   # 큰 변동 창(거래일, 먼저 닿는 쪽), 2026-11-20 갈래 B
+BK = cfg.get('barrier_k', 1.0)
+JOBS = [('h', h) for h in HS] + [('b', w) for w in BARRIER]
+SHARD = os.environ.get('A07_SHARD', '')   # 'i/n' 이면 (보유 기간 + 큰 변동 창) 을 n 조각 중 i 번째만(워크플로가 조각을 동시에 돌림, 2026-11-20)
 if SHARD:
-    _i, _n = (int(v) for v in SHARD.split('/')); HS = HS[_i::_n]
+    _i, _n = (int(v) for v in SHARD.split('/')); JOBS = JOBS[_i::_n]
 SUB = f'a07s{SHARD.split("/")[0]}' if SHARD else 'a07'
 TARGET = cfg.get('target_prec', 0.8)
 YEARS = list(range(cfg.get('first_test_year', 2016), 2024))
@@ -62,10 +65,17 @@ def main():
     Xv = X[cols].values
     od = L.out_dir(SUB)
     cands, rows = [], []
-    for h in HS:
-        r = (px['close'].shift(-h) / px['open'].shift(-1) - 1).reindex(td)
+    for kind, h in JOBS:
+        if kind == 'h':
+            r = (px['close'].shift(-h) / px['open'].shift(-1) - 1).reindex(td)
+            yup = (r > 0).astype(float).where(r.notna() & (r != 0)); exs = None
+        else:
+            yup, ex = L.barrier_exits(px, h, BK); yup = yup.reindex(td); exs = ex.reindex(td).dropna().to_dict()
+        ex_of = (lambda ss, h=h: [L.exit_after(td, s_, h) for s_ in ss]) if exs is None else (lambda ss, exs=exs: [exs.get(s_, pd.NaT) for s_ in ss])
+        tgt = f'{h}일' if exs is None else f'{h}일 안 큰 변동(±{BK:g}σ) 먼저'
+        idt = f'h{h}' if exs is None else f'b{h}'
         for direction in (1, -1):
-            y = (direction * r > 0).astype(float).where(r.notna() & (r != 0))
+            y = yup if direction > 0 else (1 - yup)
             oos = []
             for Y in YEARS:
                 te = np.where(td.year == Y)[0]
@@ -78,7 +88,7 @@ def main():
                 s = te[p >= tau]
                 oos += list(td[s])
                 yy = y.values[s]; yy = yy[~np.isnan(yy)]
-                rows.append({'h': h, '방향': direction, '해': Y, '문턱': tau, '신호일': len(s), '적중': float(yy.mean()) if len(yy) else np.nan})
+                rows.append({'h': idt, '방향': direction, '해': Y, '문턱': tau, '신호일': len(s), '적중': float(yy.mean()) if len(yy) else np.nan})
             trm = (td >= TRAIN_START) & (td <= L.DEV_END - pd.Timedelta(days=int(h * 1.5))) & y.notna().values
             tri = np.where(trm)[0]
             tau = pick_tau(Xv[tri], y.values[tri].astype(int), td[tri], h)
@@ -86,10 +96,10 @@ def main():
             m = fit(Xv[tri], y.values[tri].astype(int))
             p = m.predict_proba(Xv)[:, 1]
             sig = td[p >= tau]
-            cands.append({'id': f'A7_ml_h{h}_{"up" if direction > 0 else "dn"}', 'agent': 'A7', 'family': 'ml',
-                          'desc': f'기계학습(확률 상위, 목표 정밀도 {TARGET:.0%}) → {h}일 {"상승" if direction > 0 else "하락"}', 'direction': direction,
-                          'trades': pd.DataFrame({'signal': sig, 'exit': [L.exit_after(td, s, h) for s in sig]}).dropna(),
-                          'trades_dev': pd.DataFrame({'signal': oos, 'exit': [L.exit_after(td, s, h) for s in oos]}).dropna(),
+            cands.append({'id': f'A7_ml_{idt}_{"up" if direction > 0 else "dn"}', 'agent': 'A7', 'family': 'ml' if exs is None else 'ml_big',
+                          'desc': f'기계학습(확률 상위, 목표 정밀도 {TARGET:.0%}) → {tgt} {"상승" if direction > 0 else "하락"}', 'direction': direction,
+                          'trades': pd.DataFrame({'signal': sig, 'exit': ex_of(sig)}).dropna(),
+                          'trades_dev': pd.DataFrame({'signal': oos, 'exit': ex_of(oos)}).dropna(),
                           'tau': tau, 'p_last': float(p[-1])})
             print('h', h, 'dir', direction, flush=True)
     pd.DataFrame(rows).round(4).to_csv(os.path.join(od, 'ml_by_year.csv'), index=False, encoding='utf-8')

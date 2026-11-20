@@ -83,10 +83,12 @@ def main():
     od = L.out_dir('a06')
     cands, log_rows = [], []
     n_rules_tried = 0
-    for h in HS:
-        r = (px['close'].shift(-h) / px['open'].shift(-1) - 1).reindex(td)
+    for tkey, h, yup, exs in targets(px, td):
         for direction in (1, -1):
-            y_all = (direction * r > 0).astype(float).where(r.notna() & (r != 0))
+            y_all = yup if direction > 0 else (1 - yup)
+            ex_of = (lambda ss, h=h: [L.exit_after(td, s_, h) for s_ in ss]) if exs is None else (lambda ss, exs=exs: [exs.get(s_, pd.NaT) for s_ in ss])
+            tgt = f'{h}일' if exs is None else f'{h}일 안 큰 변동(±{BK:g}σ) 먼저'
+            idt = f'h{h}' if exs is None else f'b{h}'
             oos_sig = {k: [] for k in ('top1', 'top3', 'any')}
             templ = {}
             for Y in YEARS:
@@ -116,10 +118,10 @@ def main():
                 if not fires[:kk] or len(oos_sig[k]) < 10: continue
                 f = np.any(fires[:kk], axis=0)
                 sig_all = td[f]
-                cands.append({'id': f'A6_ens_{k}_h{h}_{"up" if direction > 0 else "dn"}', 'agent': 'A6', 'family': 'rules_ens',
-                              'desc': f'조합 규칙 묶음({k}) → {h}일 {"상승" if direction > 0 else "하락"}', 'direction': direction,
-                              'trades': pd.DataFrame({'signal': sig_all, 'exit': [L.exit_after(td, s, h) for s in sig_all]}).dropna(),
-                              'trades_dev': pd.DataFrame({'signal': oos_sig[k], 'exit': [L.exit_after(td, s, h) for s in oos_sig[k]]}).dropna(),
+                cands.append({'id': f'A6_ens_{k}_{idt}_{"up" if direction > 0 else "dn"}', 'agent': 'A6', 'family': 'rules_ens' if exs is None else 'rules_ens_big',
+                              'desc': f'조합 규칙 묶음({k}) → {tgt} {"상승" if direction > 0 else "하락"}', 'direction': direction,
+                              'trades': pd.DataFrame({'signal': sig_all, 'exit': ex_of(sig_all)}).dropna(),
+                              'trades_dev': pd.DataFrame({'signal': oos_sig[k], 'exit': ex_of(oos_sig[k])}).dropna(),
                               'rules_final': [' & '.join(names[i] for i in rr) for rr, *_ in rules[:kk]]})
             # 해마다 거듭 뽑힌 규칙 틀(문턱만 다름)
             final_t = {' & '.join(SR_strip(names[i]) for i in rr): (rr, f) for (rr, *_), f in zip(rules, fires)}
@@ -128,15 +130,31 @@ def main():
                 if tname in final_t and len(sigs) >= 8 and yrs >= 3:
                     rr, f = final_t[tname]
                     sig_all = td[f]
-                    cands.append({'id': f'A6_rule_h{h}_{"up" if direction > 0 else "dn"}_{abs(hash(tname)) % 10**6}', 'agent': 'A6', 'family': 'rule',
-                                  'desc': f'{tname} → {h}일 {"상승" if direction > 0 else "하락"}', 'direction': direction,
-                                  'trades': pd.DataFrame({'signal': sig_all, 'exit': [L.exit_after(td, s, h) for s in sig_all]}).dropna(),
-                                  'trades_dev': pd.DataFrame({'signal': sigs, 'exit': [L.exit_after(td, s, h) for s in sigs]}).dropna(),
+                    cands.append({'id': f'A6_rule_{idt}_{"up" if direction > 0 else "dn"}_{abs(hash(tname)) % 10**6}', 'agent': 'A6', 'family': 'rule' if exs is None else 'rule_big',
+                                  'desc': f'{tname} → {tgt} {"상승" if direction > 0 else "하락"}', 'direction': direction,
+                                  'trades': pd.DataFrame({'signal': sig_all, 'exit': ex_of(sig_all)}).dropna(),
+                                  'trades_dev': pd.DataFrame({'signal': sigs, 'exit': ex_of(sigs)}).dropna(),
                                   'rules_final': [' & '.join(names[i] for i in rr)]})
-            print('h', h, 'dir', direction, '후보 누계', len(cands), flush=True)
+            print(tkey, h, 'dir', direction, '후보 누계', len(cands), flush=True)
     pd.DataFrame(log_rows).to_csv(os.path.join(od, 'rules_by_year.csv'), index=False, encoding='utf-8')
     L.save_candidates('a06', cands)
     open(os.path.join(od, 'trials.txt'), 'w').write(str(n_rules_tried))
+
+
+BARRIER = cfg.get('barrier', [])   # 큰 변동 창(거래일), 2026-11-20 갈래 B
+BK = cfg.get('barrier_k', 1.0)
+
+
+def targets(px, td):
+    """(종류, 기간, 오름=1 표지 Series(td), 청산일 dict 또는 None). 고정 보유 h일 + 큰 변동 창 W일(먼저 닿는 쪽)."""
+    out = []
+    for h in HS:
+        r = (px['close'].shift(-h) / px['open'].shift(-1) - 1).reindex(td)
+        out.append(('h', h, (r > 0).astype(float).where(r.notna() & (r != 0)), None))
+    for W in BARRIER:
+        y, ex = L.barrier_exits(px, W, BK)
+        out.append(('b', W, y.reindex(td), ex.reindex(td).dropna().to_dict()))
+    return out
 
 
 def SR_strip(nm):
