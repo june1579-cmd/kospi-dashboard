@@ -1500,12 +1500,12 @@
         // every trading day in range; days without a value break the line
         const full = allMk.filter(inR).filter(r => num(r.kospi) != null || num(r[s.k]) != null).sort((u, v) => u.date < v.date ? -1 : 1)
           .map(r => ({date: r.date, v: num(r[s.k]) == null ? null : s.map(num(r[s.k]))}));
-        svg.append('path').datum(full).attr('fill', 'none').style('stroke', s.c).attr('stroke-width', 1.5).attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round')
+        svg.append('path').datum(full).attr('fill', 'none').style('stroke', s.c).attr('stroke-width', /^(credit|cr_|deposit)/.test(s.id) ? 0.75 : 1.5).attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round')
           .attr('d', d3.line().defined(p => p.v != null).x(p => x(P(p.date))).y(p => P0.yL(p.v)));
         svg.append('g').selectAll('circle').data(s.pts).join('circle').attr('cx', p => x(P(p.date))).attr('cy', p => P0.yL(p.v)).attr('r', 3).style('fill', s.c);
         return;
       }
-      svg.append('path').datum(s.pts).attr('fill', 'none').style('stroke', s.c).attr('stroke-width', s.id === 'kospi' ? 4 : 1.5)
+      svg.append('path').datum(s.pts).attr('fill', 'none').style('stroke', s.c).attr('stroke-width', s.id === 'kospi' ? 4 : /^(credit|cr_|deposit)/.test(s.id) ? 0.75 : 1.5)   // 신용·예탁금 선은 절반 굵기(11/20)
         .attr('stroke-dasharray', s.dash || null).attr('stroke-linecap', s.dash ? 'butt' : 'round').attr('stroke-linejoin', 'round')
         .attr('d', d3.line(p => x(P(p.date)), p => P0.yL(p.v)));
       if (s.pts.length < 60) svg.append('g').selectAll('circle').data(s.pts).join('circle').attr('cx', p => x(P(p.date))).attr('cy', p => P0.yL(p.v)).attr('r', 2.2).style('fill', s.c);
