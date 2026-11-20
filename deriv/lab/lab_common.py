@@ -176,16 +176,27 @@ def save_ledger(L):
 # 후보 하나 = dict(id, agent, desc, direction(+1 오름/−1 내림), trades=DataFrame[signal, exit], dev_note)
 #   signal = 신호를 아는 날(그날 장 마감 뒤), 진입 = 다음 거래일 시가, 청산 = exit 날 종가.
 #   잠금 구간(2024~)의 신호 날짜도 같은 규칙으로 만들어 넘기되, 그 구간 결과는 A8 만 계산한다.
+REGIME_CODES = {'R0': '변동성 높음', 'R1': '변동성 낮음', 'R2': '상승 추세(60일선 위)', 'R3': '하락 추세(60일선 아래)',
+                'R4': '변동성 상대 높음(직전 250일 상위 40%)', 'R5': '변동성 상대 낮음(직전 250일 하위 40%)',
+                'R6': '5일 급락 뒤(−1.5σ 아래)', 'R7': '5일 급등 뒤(+1.5σ 위)'}
+
+
 def regime_states():
-    """장세 상태(그날 종가까지 아는 값, 문턱은 개발 구간에서만): 변동성(20일 일간 변동 표준편차, 개발 중앙값 기준 높음/낮음),
-    추세(종가가 60일 이평 위/아래). 반환 DataFrame[bool] (2026-11-20 갈래 B, round 설정 'regime' 이 있을 때만 쓰임)."""
+    """장세 상태(그날 종가까지 아는 값). 열 이름 = 코드(R0~R7, REGIME_CODES).
+    R0·R1 변동성(20일 일간 등락 표준편차)의 개발 구간 중앙값 기준(라운드 2) — 2024~ 는 96% 가 '높음'이라 잠금 구간에서 낮음 표본이 거의 없음.
+    R4·R5 같은 변동성을 직전 250거래일 안 백분위로(고정 문턱 없음, 라운드 3). R2·R3 종가 vs 60일 이평.
+    R6·R7 직전 5일 등락이 직전 750일 5일 등락 표준편차의 ±1.5배 밖(큰 변동 뒤, 라운드 3). 2026-11-20 갈래 B, round 설정 'regime' 이 있을 때만 쓰임."""
     k = k200_index(); c = k['close']
     rv = c.pct_change().rolling(20).std()
     med = rv[(rv.index >= '2010-01-01') & (rv.index <= DEV_END)].median()
+    pr = rv.rolling(250, min_periods=120).apply(lambda w: (w[:-1] < w[-1]).mean() if len(w) > 1 else np.nan, raw=True)
     ma = c.rolling(60).mean()
+    r5 = c.pct_change(5); s5 = r5.rolling(750, min_periods=250).std()
     S = pd.DataFrame(index=k.index)
-    S['변동성 높음'] = (rv > med) & rv.notna(); S['변동성 낮음'] = (rv <= med) & rv.notna()
-    S['상승 추세(60일선 위)'] = (c > ma) & ma.notna(); S['하락 추세(60일선 아래)'] = (c <= ma) & ma.notna()
+    S['R0'] = (rv > med) & rv.notna(); S['R1'] = (rv <= med) & rv.notna()
+    S['R2'] = (c > ma) & ma.notna(); S['R3'] = (c <= ma) & ma.notna()
+    S['R4'] = (pr >= 0.6) & pr.notna(); S['R5'] = (pr <= 0.4) & pr.notna()
+    S['R6'] = (r5 < -1.5 * s5) & s5.notna(); S['R7'] = (r5 > 1.5 * s5) & s5.notna()
     return S
 
 
@@ -194,7 +205,7 @@ def regime_variants(cands):
     많아지지 않게: 개발 구간 신호 40개 이상인 후보 중 개발 구간 단순 적중(지수, 겹침 무시) 상위 max_base 개만."""
     rc = round_cfg().get('regime') or {}
     if not rc or not cands: return []
-    S = regime_states(); k = k200_index(); td = k.index
+    S = regime_states(); S = S[[c for c in rc.get('states', ['R0', 'R1', 'R2', 'R3']) if c in S]]; k = k200_index(); td = k.index
     min_sig = rc.get('min_dev_signals', 40); max_base = rc.get('max_base', 250)
     scored = []
     for c in cands:
@@ -209,12 +220,13 @@ def regime_variants(cands):
     out = []
     for _, c in scored[:max_base]:
         t = c['trades'].copy(); sd = pd.to_datetime(t['signal'])
-        for nm in S.columns:
-            st = S[nm].reindex(sd).fillna(False).values
+        for code in S.columns:
+            nm = REGIME_CODES[code]
+            st = S[code].reindex(sd).fillna(False).values
             tt = t[st]
-            if len(tt[pd.to_datetime(tt['exit']) <= DEV_END]) < 15: continue
+            if len(tt[pd.to_datetime(tt['exit']) <= DEV_END]) < rc.get('min_dev_after', 15): continue
             v = {kk: vv for kk, vv in c.items() if kk != 'trades'}
-            v.update({'id': f"{c['id']}__R{list(S.columns).index(nm)}", 'desc': f"[{nm}] {c['desc']}", 'family': f"{c.get('family')}_regime",
+            v.update({'id': f"{c['id']}__{code}", 'desc': f"[{nm}] {c['desc']}", 'family': f"{c.get('family')}_regime",
                       'regime': nm, 'trades': tt.reset_index(drop=True)})
             out.append(v)
     print('장세 조건 변형', len(out), '(원 후보', len(scored), '중 상위', min(len(scored), max_base), ')', flush=True)
