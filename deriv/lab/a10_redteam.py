@@ -57,7 +57,8 @@ def main():
         for _ in range(300):
             sh = []
             for s, hd in zip(t['signal'], hold):
-                i = td.get_loc(s) + int(rng.integers(20, 61)) * (1 if rng.random() < 0.5 else -1)
+                # 교차 모드(2026-11-21~)는 앞 구간 2010~ 신호까지 들어와 선물 가격표에 없는 날(휴장·자료 시작 전)이 생김 — get_loc 대신 그날 이후 첫 거래일 위치(있는 날이면 같은 값)
+                i = int(td.searchsorted(s)) + int(rng.integers(20, 61)) * (1 if rng.random() < 0.5 else -1)
                 i = int(np.clip(i, 0, len(td) - hd - 2))
                 sh.append((td[i], td[i + hd]))
             st = pd.DataFrame(sh, columns=['signal', 'exit'])
