@@ -34,6 +34,8 @@ def dataset():
     X = X0.join(W, how='left')
     drop = cfg.get('drop_prefix', [])
     X = X[[c for c in X.columns if not any(c.startswith(p) for p in drop)]]
+    if cfg.get('regime_feats'):   # 갈래 B 라운드 4: 장세 연속 지표를 조건·특징에 더함(A7 도 이 자료를 씀)
+        X = X.join(L.regime_features(), how='left')
     return X
 
 

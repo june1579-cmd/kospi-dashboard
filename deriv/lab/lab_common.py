@@ -178,7 +178,8 @@ def save_ledger(L):
 #   잠금 구간(2024~)의 신호 날짜도 같은 규칙으로 만들어 넘기되, 그 구간 결과는 A8 만 계산한다.
 REGIME_CODES = {'R0': '변동성 높음', 'R1': '변동성 낮음', 'R2': '상승 추세(60일선 위)', 'R3': '하락 추세(60일선 아래)',
                 'R4': '변동성 상대 높음(직전 250일 상위 40%)', 'R5': '변동성 상대 낮음(직전 250일 하위 40%)',
-                'R6': '5일 급락 뒤(−1.5σ 아래)', 'R7': '5일 급등 뒤(+1.5σ 위)'}
+                'R6': '5일 급락 뒤(−1.5σ 아래)', 'R7': '5일 급등 뒤(+1.5σ 위)',
+                'R8': '60일 고점 대비 −5% 넘게 조정 중', 'R9': '60일 고점 1% 안(신고가 근처)'}
 
 
 def regime_states():
@@ -197,7 +198,23 @@ def regime_states():
     S['R2'] = (c > ma) & ma.notna(); S['R3'] = (c <= ma) & ma.notna()
     S['R4'] = (pr >= 0.6) & pr.notna(); S['R5'] = (pr <= 0.4) & pr.notna()
     S['R6'] = (r5 < -1.5 * s5) & s5.notna(); S['R7'] = (r5 > 1.5 * s5) & s5.notna()
+    hi = c.rolling(60).max(); dd = c / hi - 1   # R8·R9 (라운드 4): 60일 고점과의 거리
+    S['R8'] = (dd <= -0.05) & hi.notna(); S['R9'] = (dd >= -0.01) & hi.notna()
     return S
+
+
+def regime_features():
+    """장세 연속 지표(그날 종가까지 아는 값) — A6 조건·A7 특징으로 쓰는 용도(갈래 B 라운드 4, round 설정 a06.regime_feats 일 때만).
+    rg_volpct 20일 변동성의 직전 250일 백분위, rg_r5z·rg_r20z 5·20일 등락 ÷ 직전 750일 같은 등락 표준편차, rg_ma60 60일선 이격, rg_dd60 60일 고점 대비."""
+    k = k200_index(); c = k['close']
+    rv = c.pct_change().rolling(20).std()
+    F = pd.DataFrame(index=k.index)
+    F['rg_volpct'] = rv.rolling(250, min_periods=120).apply(lambda w: (w[:-1] < w[-1]).mean() if len(w) > 1 else np.nan, raw=True)
+    for n in (5, 20):
+        r = c.pct_change(n); F[f'rg_r{n}z'] = r / r.rolling(750, min_periods=250).std()
+    F['rg_ma60'] = c / c.rolling(60).mean() - 1
+    F['rg_dd60'] = c / c.rolling(60).max() - 1
+    return F
 
 
 def regime_variants(cands):
@@ -217,7 +234,7 @@ def regime_variants(cands):
         if len(r) < min_sig: continue
         scored.append((float((c['direction'] * r > 0).mean()), c))
     scored.sort(key=lambda x: -x[0])
-    out = []
+    out, edge = [], []
     for _, c in scored[:max_base]:
         t = c['trades'].copy(); sd = pd.to_datetime(t['signal'])
         for code in S.columns:
@@ -225,11 +242,59 @@ def regime_variants(cands):
             st = S[code].reindex(sd).fillna(False).values
             tt = t[st]
             if len(tt[pd.to_datetime(tt['exit']) <= DEV_END]) < rc.get('min_dev_after', 15): continue
+            try:   # 원인 분해(라운드 4): 장세 변형의 적중이 '장세 자체'의 기본 확률보다 얼마나 높은가(개발 구간, 겹침 무시 단순 비율)
+                edge.append(_regime_edge(c, tt, code, S, k))
+            except Exception as e:
+                print('장세 기준선 계산 실패', c['id'], code, e)
             v = {kk: vv for kk, vv in c.items() if kk != 'trades'}
             v.update({'id': f"{c['id']}__{code}", 'desc': f"[{nm}] {c['desc']}", 'family': f"{c.get('family')}_regime",
                       'regime': nm, 'trades': tt.reset_index(drop=True)})
             out.append(v)
     print('장세 조건 변형', len(out), '(원 후보', len(scored), '중 상위', min(len(scored), max_base), ')', flush=True)
+    if edge: _EDGE_ROWS.extend(edge)
+    return out
+
+
+_EDGE_ROWS = []
+
+
+def _fwd_up(k, h):
+    """t일 신호 → t+1 시가 진입, t+h 종가 청산 수익 부호(지수)."""
+    r = k['close'].shift(-h) / k['open'].shift(-1) - 1
+    return r.where(r != 0)
+
+
+def _regime_edge(c, tt, code, S, k):
+    td = k.index
+    t = tt.assign(signal=pd.to_datetime(tt['signal']), exit=pd.to_datetime(tt['exit']))
+    t = t[t['exit'] <= DEV_END]
+    hs = [max(1, int(td.searchsorted(e) - td.searchsorted(s))) for s, e in zip(t['signal'], t['exit']) if e in td]
+    h = int(np.median(hs)) if hs else 1
+    r = trade_returns(t, k); r = r[~np.isnan(r)]
+    fr = _fwd_up(k, h); dev = (td >= '2015-01-01') & (td <= DEV_END - pd.Timedelta(days=int(h * 1.5)))
+    st = S[code].reindex(td).fillna(False).values
+    g = fr[dev & st].dropna(); u = fr[dev].dropna()
+    d = c['direction']
+    rb = float((d * g > 0).mean()) if len(g) else np.nan; ub = float((d * u > 0).mean()) if len(u) else np.nan
+    hit = float((d * r > 0).mean()) if len(r) else np.nan
+    return {'id': f"{c['id']}__{code}", 'base_id': c['id'], 'regime': code, 'h': h, 'direction': d, 'n_dev_signals': len(r),
+            'hit_simple': hit, 'regime_base': rb, 'uncond_base': ub, 'edge_vs_regime': hit - rb, 'regime_vs_uncond': rb - ub}
+
+
+def regime_baselines():
+    """장세만으로 낸 신호(장세 상태인 날마다, 독립 거래는 A8 이 셈) — 벽 신호가 장세보다 더 아는지 비교용 후보(갈래 B 라운드 4, regime.baseline)."""
+    rc = round_cfg().get('regime') or {}
+    S = regime_states(); k = k200_index(); td = k.index
+    out = []
+    for code in [c for c in rc.get('states', []) if c in S]:
+        sd = td[S[code].reindex(td).fillna(False).values & (td >= '2015-01-01')]
+        for h in rc.get('baseline_h', [1, 3, 5, 10, 20]):
+            ex = [exit_after(td, s_, h) for s_ in sd]
+            tr = pd.DataFrame({'signal': sd, 'exit': ex}).dropna()
+            for d in (1, -1):
+                out.append({'id': f'RG_{code}_m{h}_{"up" if d > 0 else "dn"}', 'agent': 'RG', 'family': 'regime_only',
+                            'desc': f'[장세만] {REGIME_CODES[code]} → {h}일 {"상승" if d > 0 else "하락"}', 'direction': d,
+                            'regime': REGIME_CODES[code], 'trades': tr.copy()})
     return out
 
 
@@ -266,6 +331,14 @@ def save_candidates(agent, cands):
         except Exception as e:   # 장세 변형 실패가 원 후보 저장을 막지 않게
             print('장세 조건 변형 실패', e)
         if ex: cands = [c for c in cands if not any(c['id'] == e or c['id'].startswith(e + '__R') for e in ex)]
+        if _EDGE_ROWS:
+            pd.DataFrame(_EDGE_ROWS).round(4).to_csv(os.path.join(out_dir(agent), 'regime_edge_dev.csv'), index=False, encoding='utf-8')
+    rc = round_cfg().get('regime') or {}
+    if rc.get('baseline') and agent == rc.get('baseline_agent', 'a05'):
+        try:
+            cands = cands + regime_baselines()
+        except Exception as e:
+            print('장세만 후보 실패', e)
     d = out_dir(agent)
     pickle.dump(cands, open(os.path.join(d, 'candidates.pkl'), 'wb'))
     pd.DataFrame([{k: v for k, v in c.items() if k != 'trades'} | {'n_signals': len(c['trades'])} for c in cands]).to_csv(
