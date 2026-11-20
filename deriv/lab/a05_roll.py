@@ -129,7 +129,16 @@ def main():
             c0 = wide['OW_F0_callotm_oi'].get(bd, np.nan) if 'OW_F0_callotm_oi' in wide else np.nan
             c1 = wide['OW_F1_callotm_oi'].get(bd, np.nan) if 'OW_F1_callotm_oi' in wide else np.nan
             sgl = a['date'].iloc[0]
-            mrec.append({'exp': e, 'obs': bd, 'signal': sgl, 'same_wall': bool(np.isfinite(kb) and np.isfinite(ka) and abs(kb - ka) <= step),
+            # 라운드 10(갈래 A, a05.monthly_x): 월물 4개 자료로 '이월·연장'을 뒤 결제월 3개까지 — 만기 전날 차월·차차월·넷째 월물 콜(현재가 위) 미결제 ÷ 4개 합,
+            #   근월물 콜벽 행사가가 만기 전날 차월 또는 차차월에서도 콜벽인가(같은 천장이 뒤 달에 이미 준비됨). 설정 없으면 계산만 하고 후보는 안 만듦.
+            cx = [wide[f'OW_{t}_callotm_oi'].get(bd, np.nan) if f'OW_{t}_callotm_oi' in wide else np.nan for t in ('F1', 'F2', 'F3')]
+            kl = []
+            for t in ('F1', 'F2'):
+                wt = W[(W['tag'] == t) & (W['date'] == bd)]
+                kl.append(float(wt['K'].iloc[0]) if len(wt) else np.nan)
+            tot_x = c0 + np.nansum(cx) if np.isfinite(c0) and np.isfinite(cx).all() else np.nan
+            mrec.append({'call_roll_x': (np.nansum(cx) / tot_x) if np.isfinite(tot_x) and tot_x > 0 else np.nan,
+                         'wall_ahead': bool(np.isfinite(kb) and any(np.isfinite(k) and abs(k - kb) <= step for k in kl)) if np.isfinite(kl).any() else np.nan,'exp': e, 'obs': bd, 'signal': sgl, 'same_wall': bool(np.isfinite(kb) and np.isfinite(ka) and abs(kb - ka) <= step),
                          'call_roll': c1 / (c0 + c1) if np.isfinite(c0) and np.isfinite(c1) and (c0 + c1) > 0 else np.nan,
                          'quarterly': int(pd.Timestamp(e).month) in (3, 6, 9, 12)})
         MR = pd.DataFrame(mrec)
@@ -142,6 +151,18 @@ def main():
             conds = {}
             for same in (True, False):
                 conds[f'월물 콜벽 연장={same}'] = MR['same_wall'] == same
+            if cfg.get('monthly_x') and MR['call_roll_x'].notna().sum() >= 24:
+                MR['call_roll_x_vs6'] = MR['call_roll_x'] - MR['call_roll_x'].rolling(6, min_periods=4).mean().shift(1)
+                okx = MR['call_roll_x_vs6'].notna() & MR['wall_ahead'].notna()
+                hix = okx & (MR['call_roll_x_vs6'] > 0); lox = okx & (MR['call_roll_x_vs6'] <= 0)
+                wa = MR['wall_ahead'] == True  # noqa: E712
+                conds['뒤 결제월(차월·차차월)에 같은 콜벽 있음'] = okx & wa
+                conds['뒤 결제월(차월·차차월)에 같은 콜벽 없음'] = okx & ~wa
+                conds['뒤 결제월 3개 콜 이월 평소보다 적음'] = lox; conds['뒤 결제월 3개 콜 이월 평소보다 많음'] = hix
+                for wn, wm in (('있음', wa), ('없음', ~wa)):
+                    conds[f'뒤 결제월에 같은 콜벽 {wn} + 3개 콜 이월 적음'] = lox & wm
+                    conds[f'뒤 결제월에 같은 콜벽 {wn} + 3개 콜 이월 많음'] = hix & wm
+                    conds[f'월물 콜벽 연장=True + 뒤 결제월에 같은 콜벽 {wn}'] = okx & (MR['same_wall'] == True) & wm  # noqa: E712
             hi = MR['call_roll_vs6'] > 0; lo = MR['call_roll_vs6'] <= 0; ok = MR['call_roll_vs6'].notna()
             conds['콜 물량 이월 평소보다 많음'] = ok & hi; conds['콜 물량 이월 평소보다 적음'] = ok & lo
             for same in (True, False):
