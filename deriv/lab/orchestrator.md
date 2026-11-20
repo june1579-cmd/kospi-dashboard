@@ -1,0 +1,62 @@
+# 연구소 총괄(오케스트레이터) 지시 — 갈래 A·B 공통
+
+예약 작업이 이 파일을 읽고 그대로 따릅니다(2026-11-20부터, 사용자 지시로 두 갈래 동시 진행). 한국어·존댓말로, 질문 없이 끝까지 진행합니다. 무거운 계산은 전부 GitHub Actions 에서 돌리고, 세션에서는 읽기·계획·코드 수정·보고만 합니다.
+
+## 갈래별 설정
+
+| 항목 | 갈래 A | 갈래 B |
+|---|---|---|
+| 회차(KST) | 10:43·13:43·17:43·22:43 | 12:13·15:13·19:13·23:13 |
+| 라운드 설정 파일 | deriv/lab/round.json | deriv/lab/round_b.json |
+| 결과 폴더 | deriv/lab/out/round_NNN | deriv/lab/out_b/round_NNN |
+| 상태 폴더(plan.md·history.md·latest_status.json·ledger.json) | deriv/lab/state | deriv/lab/state_b |
+| 워크플로 | deriv-lab | deriv-lab-b (LAB_TRACK=b) |
+| 카카오톡 머리말 | [연구소 A …] | [연구소 B …] |
+| 마지막 보고 기록 | deriv/lab/notify/last_reported.json | deriv/lab/notify/last_reported_b.json |
+| 보고 문서 절 | '라운드 기록' | '갈래 B 라운드 기록'(없으면 '라운드 기록' 절 뒤에 만듦) |
+| 주제 | 가설 본선: 콜벽·외국인 흐름·원인 분해·롤오버, 새 자료(월물 4개·위클리) 붙이기, 수집 관리 | 기간 전부(단시간 1일~장기 120일)·큰 변동 대상·반대 방향 적합(fit_period)·장세 조건·조합(A6)·기계학습(A7) |
+| 수집(deriv/trigger.txt) | 맡음(아래 4단계) | 절대 건드리지 않음 |
+
+두 갈래는 같은 deriv-research 가지에 커밋합니다. 늘 git pull --rebase 뒤 push 하고, 다른 갈래의 파일(설정·결과·상태)은 고치지 않습니다. 공통 코드(a02~a10, lab_common.py)를 고칠 때는 다른 갈래를 깨지 않게 설정 값으로 켜고 끄는 방식으로 고치고, 커밋 메시지에 갈래를 적습니다.
+
+## 사용자 목표
+
+사용자(신태준) 가설: "코스피200 옵션에서 콜 행사가·물량이 압도적으로 우세하면, 단기든 장기든 외국인은 지수를 그 행사가 위로 만든 뒤 매도를 이어간다." 이 가설이 왜 지금까지 확률이 낮게 나왔는지 찾고, 추세·급락·급등 방향을 80% 이상 맞히는 신호를 찾아 매매 포지션(코스피200 선물·옵션·ETF, 일봉·분봉) 판단에 쓰도록 만드는 것. 조건: 콜 우위 정의 전부, 위클리 포함, 분기 만기 전까지와 만기 뒤 롤오버로 연장되는 물량까지. 기준을 통과하는 후보가 나올 때까지 라운드를 계속합니다.
+- 2026-11-19: "계속 진행하고 계속 개선점을 찾아서 원인을 분석해" — 라운드마다 원인 분석과 개선을 반드시 합니다.
+- 2026-11-20: 더 빠르게(회차 하루 4번·회차당 최대 3라운드, 남은 수집은 쉬지 않고 이어서, 두 갈래 동시), 그리고 "오늘까지는 잠금 구간 규칙을 그대로 두고 내일부터는 잠금 구간 규칙을 제거해 반대로 교차 검증도 실시하고 단시간 단기간 장기간 모든 가능성을 열어두고 검증".
+
+## 저장소와 구조
+
+- 저장소 june1579-cmd/kospi-dashboard 의 deriv-research 가지만 씁니다. main·대시보드·웹판과 대시보드 쪽 카카오 작업은 건드리지 않습니다. 비밀값(KRX·카카오)은 읽지도 쓰지도 않습니다.
+- deriv/lab/README.md: 에이전트 10개, 규칙·통과 기준·검증 방식 바뀜(2026-11-21~)·알림. 반드시 먼저 읽습니다.
+- 라운드 실행: 갈래의 설정 파일에서 round 를 1 올리고 note·에이전트 설정을 바꿔 push 하면 그 갈래의 워크플로가 돌아 결과·상태 폴더를 커밋합니다(보통 6~9분). 기계학습(A7)은 보유 기간을 3조각으로 나눠 동시에 돕니다(결과 폴더 a07s0·a07s1·a07s2). 저장 단계가 최근 10라운드만 전체 결과를 남깁니다.
+- 원인 분해 결과(A3, a03_cause.py → round_NNN/a03c/): cause_summary.json, cause_funnel_dev.csv, cause_regime_dev.csv, cause_magnet_dev.csv, cause_migration_dev.csv, cause_hindsight_*, cause_oldwall_dev.csv, cause_onset_dev.csv, cause_wallmig_dev.csv 등.
+- 수집(A1, 갈래 A 만): deriv/collect.py 작업 chainx(월물 결제월 4개, 2015~), chainwt(목 위클리, 2019-09~), chainwm(월 위클리, 2023-08~). deriv/trigger.txt 를 두 줄 'full' / '<작업들>'(공백으로 여러 개, 순서대로 이어서) 로 바꿔 push 하면 'deriv-research' 워크플로가 KRX 계정으로 돕니다. 같은 KRX 계정 동시 로그인 시 서로 끊기고, 이 워크플로는 진행 중인 다른 deriv-research 실행 뒤에 줄을 서거나 취소합니다. 이어받기 지원(받은 날 건너뜀). 대시보드 수집 시간대(08:15~10:50·15:35~18:05·20:15~22:50 KST) 대기는 코드가 처리. KRX 요청 속도(쉼)는 절대 줄이거나 동시 수집을 하지 않습니다 — 계정·IP 가 막히면 대시보드 매일 갱신까지 멈춥니다. 2026-11-20 11:00 에 'chainx chainwt chainwm' 이 이어서 돌도록 걸어 두었습니다.
+
+## 규칙
+
+- 2026-11-20(KST)까지: 고정 규칙 그대로 — 개발 구간 ~2023-12-31, 잠금 구간 2024-01-01~. 탐색·문턱·방향 정하기는 개발 구간에서만. 잠금 구간 결과는 A8 만 계산. a08_validate.py 의 기준값·구간, lab_common.py 의 DEV_END·HOLD_START, 원장(ledger.json)은 고치지 않습니다. 잠금 구간 결과를 보고 정의를 고치지 않습니다.
+- 2026-11-21(KST)부터: 잠금 규칙 없음. A8 이 날짜로 자동 전환해 양방향 교차 검증을 합니다(README '검증 방식 바뀜'). 앞 구간 P1 = 2010~2023, 뒤 구간 P2 = 2024~. 앞→뒤(P1 선별 → P2 확인)와 뒤→앞(P2 선별 → P1 확인)을 모두 보고, 목표 판정 = 두 방향 모두 통과 + A10 반증 '버팀'. 한 방향만 통과는 따로 보고. 탐색은 전 기간 어디서나. A8 의 교차 기준값(rev_n 12, conf_hit 80%, 라운드 안 선별 수로 나눈 p)은 고치지 않습니다.
+- 언제나: 표본 10개 미만을 '80%'로 보고하지 않습니다. 원자료를 추정으로 채우지 않습니다. 신호는 그날 장 마감 뒤 아는 값만, 다음 거래일 시가 진입, 독립 거래만 셉니다.
+- 통과(11/20까지) = A8 dev_pass·hold_pass + A10 '버팀'. 11/21부터 = A8 hold_pass(양방향) + A10 '버팀'. 둘 다 lab_merge 의 final_pass ≥ 1, latest_status.json goal_reached=true.
+
+## 순서
+
+1. add_repo 로 june1579-cmd/kospi-dashboard 를 push 권한으로 붙이고 git clone --depth 60 -b deriv-research https://github.com/june1579-cmd/kospi-dashboard repo. git config user.name dashboard-bot / user.email dashboard-bot@users.noreply.github.com. pip install --break-system-packages -q pandas numpy scipy scikit-learn (무거운 실행은 하지 않음). 세션 시작 시각을 적어 둡니다.
+2. 내 갈래 워크플로가 진행 중·대기 중이면(gh run list -R june1579-cmd/kospi-dashboard -w <워크플로> -L 3) 끝날 때까지 **1분마다** 확인(최대 60분) 뒤 git pull. 그 라운드를 아직 보고 문서에 적지 않았으면 7단계로 먼저 적고 8단계 규칙대로 알립니다.
+3. 읽기: README.md, 내 갈래 상태 폴더의 plan.md·history.md·latest_status.json, 가장 최근 round_NNN/report.md·leaderboard.csv·a03c/·a08/verdicts.csv·a09/trades.csv·a10/redteam.csv(교차 모드면 verdicts 의 p2_*·all_*·sel_fwd·sel_rev·fwd_pass·rev_pass 칸). 다른 갈래의 latest_status.json 도 읽어 같은 시험을 겹치지 않게 합니다.
+4. 수집 관리(갈래 A 만): (a) deriv-research 실행이 진행 중·대기 중이면 trigger 를 push 하지 않습니다. (b) 그 밖에는 chainx → chainwt → chainwm 중 끝나지 않은 것을 모두 이 순서대로 둘째 줄에 이어 써서 한 번에 시작합니다(끝남 = deriv/data/opt_chain*_daily.csv.gz 의 마지막 날짜가 직전 거래일 근처, 시작일부터 빠진 달 없음). (c) 첫 로그(deriv/out/log_full_*.txt)에서 행이 0이면 KRX 공개 화면(https://data.krx.co.kr/contents/MDC/STAT/standard/MDCSTAT125.jsp 등)에서 MDCSTAT12501 의 위클리 상품 인자를 확인해 collect.py 를 고치고 다음 회차에 다시 시작합니다. (d) 끝난 자료는 lab_common.chain('x'·'wt'·'wm') 이 쓰도록 확인하고, A2·a03_cause 에 월물 4개(차월·차차월 벽)·위클리 벽 지표·원인 분해를 더하는 라운드를 계획합니다.
+5. 원인 분석과 다음 라운드 계획(매 라운드 필수):
+   (a) 원인 분석 3~5줄: 사슬의 어느 단계가 기준선과 가장 다른지(또는 같아서 힘이 없는지), 국면별 차이, 벽 이동·착시·오래된 벽·새 벽의 뜻, 직전 라운드 대비 변화. 교차 모드에서는 앞·뒤 구간 성적이 엇갈리는 이유(장세·변동성)도 봅니다. 숫자는 결과 파일에서만 옮깁니다.
+   (b) 개선 1~3개: 최소 하나는 코드(a02~a07·a03_cause·a09·a10)를 고치거나 새 지표·새 후보를 더해 이번 라운드에 실제로 시험합니다(python -m py_compile 로 문법 확인).
+   (b-2) 2026-11-21부터 우선순위 — 갈래 B 가 주로, 갈래 A 는 자기 주제에서: ① 기간 전부 열기(보유 1(다음 날 시가→종가)·2·3·5·10·20·40·60·120일, 큰 변동 창 5·10·20·40·60일). 장기 보유는 뒤 구간 독립 거래 12개를 넘기 어려우니 '뒤 구간 표본 부족'으로 보고. ② 반대 방향이 공정하도록 앞 구간에서 문턱·조합을 정하던 에이전트(A5 분위, A6 조합, A7 학습)에 뒤 구간에서 다시 정하는 변형(fit_period). ③ 한 방향만 통과한 후보는 해마다 성적(all_by_year)을 보고 장세 조건과 묶어 다시 시험. ④ 잠금 규칙 때문에 막았던 후보 가족(a03c.newwall_candidates 등)도 다시 열어도 됨.
+   (c) 설정 파일의 round +1, note 한 문장. 상태 폴더 plan.md 에 '원인: …', '시도함: …(결과)', '다음: …' 갱신. 커밋 → git pull --rebase → git -c push.negotiate=true push origin HEAD:deriv-research.
+6. 실행이 끝날 때까지 **1분마다** 확인(최대 60분). 실패하면 gh run view --log-failed 로 원인을 찾아 고치고 한 번 더 돌립니다. 끝나면 git pull 하고 결과를 읽습니다. 한 세션 최대 3라운드, 세션 시작 후 2시간이 지나면 새 라운드를 시작하지 않습니다. 라운드마다 7단계 기록, 8단계 규칙에 맞을 때만 카카오톡.
+7. 보고 문서: Claude Docs 문서 https://claude.ai/artifact/PtZRViSn6y88UTNmYVsspR (문서 id b95bf6b8-f806-4d7e-b365-ca09135f9f36, 탭 file 90cda311-2757, 본문 node f083d705-161f). docs 도구 지침(guide topic.index·topic.editing)을 먼저 읽고: (a) '지금 상태' 절을 최신으로(두 갈래 모두 한 줄씩: 목표 도달 여부, 검증 방식, 가장 가까운 후보와 앞·뒤 구간 수치, 누적 시험·잠금 열람·교차 확인 수, 밝혀진 원인 한두 줄). (b) 내 갈래 절 끝에 '### 라운드 N (날짜 시각)' 소절: 계획 한 줄, 결과(후보→선별/개발 통과→확인/잠금 통과→최종, 교차 모드면 앞→뒤·뒤→앞 따로), 상위 후보 3개 표(설명·독립 거래·적중·하한·기본·위약 p, 교차 모드면 앞·뒤 각각), 원인 분석 3~5줄, 개선 1~3줄, 다음 계획 1줄. 숫자는 결과 파일에서만.
+8. 카카오톡 — 라운드마다 보내지 않습니다. 내 갈래의 마지막 보고 기록({round, best_id, best_lb, at}, 없으면 만듦)과 비교해 다음 중 하나일 때만: (a) 새로 개발 통과·선별(sel_fwd·sel_rev)·확인 통과(hold_pass·fwd_pass·rev_pass)·최종 통과, (b) 최고 후보가 바뀜(id 가 다르거나 하한 2%p 이상 오름), (c) 그날 마지막 회차(A 22:43, B 23:13)의 하루 요약, (d) 정체 진단(9단계)이 새로 생김. 보낼 때 deriv/lab/notify/kakao.txt 를 통째로 바꿔 쓰고(한 통마다 200자 이내, 통 사이 줄 하나에 ===== ), 그 파일과 마지막 보고 기록을 커밋 → pull --rebase → push 하면 deriv-notify 가 카카오톡 '나에게 보내기'로 보냅니다.
+   보통 1통: "[연구소 A|B 라운드 N] 후보 X→(개발 통과|앞 선별 a·뒤 선별 b) Y→(잠금|양방향) Z · 최고: <설명> (앞 a%·n거래, 뒤 b%·m거래) · 목표 80%: <도달/미도달>" / 2통: "[원인] … [개선] … [다음] … · 투자 권유 아님".
+   하루 요약 1통: "[연구소 A|B 하루 요약 M/D] 라운드 a~b(c개) · 최고: <설명> (앞 a%·뒤 b%) · 통과 <수> · 수집: <진행>(B 는 '수집: A 담당')" / 2통: "[오늘 원인] … [내일] … · 투자 권유 아님".
+   push 뒤 3분 기다렸다 git pull 하고 deriv/lab/notify/last.json 을 읽어, 내가 보낸 내용의 status 가 sent 가 아니면(deferred·failed·skipped) PushNotification 도구(없으면 ToolSearch)로 같은 1통을 200자 이내로 보냅니다. 같은 내용을 두 번 보내지 않습니다.
+9. 정체 점검: 내 갈래 history.md 에서 최근 8라운드 동안 개발 통과(교차 모드면 양방향 통과)도, 최고 하한 개선도 없으면 보고 문서에 '정체 진단'(해 본 것, 안 되는 이유, 자료 한계 — 투자자별·행사가별 포지션 자료 없음 등)과 대안 2~3개를 적고 카카오톡 2통에도 한 줄. 그래도 라운드는 계속합니다.
+10. 목표 도달(goal_reached=true)이면: 통과 후보의 정확한 규칙·문턱, 앞·뒤(또는 개발·잠금) 성적, 해마다 성적, 매매 시뮬레이션(선물·ETF·옵션), 반증 결과를 보고 문서 '통과한 신호' 절로 정리하고, 매일 신호를 기록할 전진 검증 계획을 적은 뒤 카카오톡으로 알립니다(8단계 (a)). 그리고 list_triggers 에서 '콜 우위 연구소 총괄'로 시작하는 예약 작업 두 개를 모두 update_trigger 로 enabled=false.
+11. 마지막 메시지: 이번 회차 라운드 결과 3줄 + 원인 한 줄 + 수집 상황(A) + 해결 못 한 것. 끝에 '투자 권유 아님'.

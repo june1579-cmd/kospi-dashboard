@@ -7,7 +7,8 @@ import re
 import sys
 
 LAB = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(LAB, 'out')
+_T = os.environ.get('LAB_TRACK', '').strip().lower()
+OUT = os.path.join(LAB, 'out' + (f'_{_T}' if _T else ''))
 KEEP = int(sys.argv[1]) if len(sys.argv) > 1 else 10
 KEEP_NAMES = {'status.json', 'leaderboard.csv', 'verdicts.csv', 'redteam.csv', 'cause_summary.json'}
 

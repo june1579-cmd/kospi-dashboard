@@ -42,7 +42,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        agent: [a03_events, a03_cause, a04_flows, a05_roll, a06_rules, a07_ml]
+        agent: [a03_events, a03_cause, a04_flows, a05_roll, a06_rules, a07_ml-s0, a07_ml-s1, a07_ml-s2]   # 기계학습은 보유 기간 3조각 동시(2026-11-20)
     steps:
       - uses: actions/checkout@v4
         with: {ref: deriv-research}
@@ -51,7 +51,11 @@ jobs:
       - run: pip install -q pandas numpy scipy scikit-learn
       - uses: actions/download-artifact@v4
         with: {name: work, path: deriv}
-      - run: python deriv/lab/${{ matrix.agent }}.py
+      - name: 에이전트 실행
+        run: |
+          A="${{ matrix.agent }}"
+          if [[ "$A" == *-s* ]]; then export A07_SHARD="${A##*-s}/3"; A="${A%-s*}"; fi
+          python deriv/lab/$A.py
       - uses: actions/upload-artifact@v4
         with: {name: 'out-${{ matrix.agent }}', path: deriv/lab/out, retention-days: 3}
   judge:

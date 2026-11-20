@@ -18,6 +18,10 @@ import a06_rules as A6  # noqa: E402
 
 cfg = L.round_cfg().get('a07', {})
 HS = cfg.get('h', [1, 3, 5, 10, 20])
+SHARD = os.environ.get('A07_SHARD', '')   # 'i/n' 이면 보유 기간을 n 조각 중 i 번째만(워크플로가 조각을 동시에 돌림, 2026-11-20)
+if SHARD:
+    _i, _n = (int(v) for v in SHARD.split('/')); HS = HS[_i::_n]
+SUB = f'a07s{SHARD.split("/")[0]}' if SHARD else 'a07'
 TARGET = cfg.get('target_prec', 0.8)
 YEARS = list(range(cfg.get('first_test_year', 2016), 2024))
 TRAIN_START = pd.Timestamp(cfg.get('train_start', '2010-01-01'))
@@ -56,7 +60,7 @@ def main():
     td = X.index
     cols = [c for c in X.columns if X.loc[:L.DEV_END, c].notna().sum() >= 300]
     Xv = X[cols].values
-    od = L.out_dir('a07')
+    od = L.out_dir(SUB)
     cands, rows = [], []
     for h in HS:
         r = (px['close'].shift(-h) / px['open'].shift(-1) - 1).reindex(td)
@@ -89,7 +93,7 @@ def main():
                           'tau': tau, 'p_last': float(p[-1])})
             print('h', h, 'dir', direction, flush=True)
     pd.DataFrame(rows).round(4).to_csv(os.path.join(od, 'ml_by_year.csv'), index=False, encoding='utf-8')
-    L.save_candidates('a07', cands)
+    L.save_candidates(SUB, cands)
 
 
 if __name__ == '__main__':

@@ -23,17 +23,19 @@ sys.path.insert(0, os.path.join(DERIV, 'scan'))
 
 DEV_END = pd.Timestamp('2023-12-31')
 HOLD_START = pd.Timestamp('2024-01-01')
-STATE = os.path.join(LAB, 'state')
+TRACK = os.environ.get('LAB_TRACK', '').strip().lower()   # '' = 갈래 A(기본), 'b' = 갈래 B (2026-11-20 두 갈래 동시 진행)
+SFX = f'_{TRACK}' if TRACK else ''
+STATE = os.path.join(LAB, 'state' + SFX)
 os.makedirs(STATE, exist_ok=True)
 
 
 def round_cfg():
-    return json.load(open(os.path.join(LAB, 'round.json'), encoding='utf-8'))
+    return json.load(open(os.path.join(LAB, f'round{SFX}.json'), encoding='utf-8'))
 
 
 def out_dir(sub=None):
     r = round_cfg()['round']
-    d = os.path.join(LAB, 'out', f'round_{r:03d}', *( [sub] if sub else []))
+    d = os.path.join(LAB, 'out' + SFX, f'round_{r:03d}', *( [sub] if sub else []))
     os.makedirs(d, exist_ok=True)
     return d
 
