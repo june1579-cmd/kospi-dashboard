@@ -130,7 +130,8 @@ def kospi_today(today):
 def tavily(day, key):
     d = dt.date.fromisoformat(day)
     body = {'query': f'{d.month}월 {d.day}일 코스피 급락 속 상승 종목 이유', 'max_results': 5, 'search_depth': 'advanced',
-            'start_date': day, 'end_date': (d + dt.timedelta(days=2)).isoformat(), 'country': 'south korea', 'include_published_date': True}
+            'start_date': day, 'end_date': (d + dt.timedelta(days=2)).isoformat(), 'country': 'south korea', 'include_published_date': True,
+            'exclude_domains': ['instagram.com', 'tiktok.com', 'facebook.com', 'threads.net']}   # 첫 수집에서 SNS 짧은 글이 7% 섞여 뺀다
     r = requests.post('https://api.tavily.com/search', json=body, headers={'Authorization': f'Bearer {key}'}, timeout=60)
     js = r.json()
     if 'results' not in js: raise RuntimeError(str(js)[:120])
