@@ -439,6 +439,31 @@ def main():
                         '같은 20일 상승 뒤 10일 상승%': round(float(np.mean([up20[b] for b, rr in zip(b20[idx], r20[idx]) if np.isfinite(rr) and b in up20])) * 100, 1) if len(idx) else np.nan,
                         '뒤 5일 외국인 순매도%': pct(fl[np.isfinite(fl)] < 0), '10일 평균 수익%': round(float(np.nanmean(v10)), 2) if len(idx) else np.nan})
     MIG = pd.DataFrame(MIG); MIG.to_csv(os.path.join(od, 'cause_wallmig_dev.csv'), index=False, encoding='utf-8')
+    # 5d-2) 라운드 9(갈래 A): 결제월 정렬 벽 — 근월물 콜벽과 같은 행사가가 차월·차차월·넷째 월물에서도 콜벽(현재가 위 콜 미결제 최대)인 상태.
+    #     라운드 7 의 유일한 가설 방향 힌트('벽이 다음 달에도 같은 행사가로 이어짐 → 하락')를 만기 날 하루가 아니라 날마다, 월물 4개 자료로 본다.
+    #     사건 = 정렬 개수(F0 와 같은 벽인 다른 결제월 수) ≥ k 가 되고 근월 벽이 1.5σ 안인 상태의 첫날. 방향은 상승·하락 둘 다 미리 등록.
+    if cfg.get('align_walls') and {'F0', 'F1', 'F2'} <= set(W['tag']):
+        Wp = W[W['tag'].isin(['F0', 'F1', 'F2', 'F3'])].drop_duplicates(['date', 'tag']).pivot(index='date', columns='tag', values='K').reindex(td)
+        zt = W[W['tag'] == 'F0'].drop_duplicates('date').set_index('date')['dist_sig'].reindex(td)
+        n_al = sum((Wp[t] == Wp['F0']).astype(int) for t in ('F1', 'F2', 'F3') if t in Wp)
+        base5 = pct(fwd[5][dev & np.isfinite(fwd[5])] > 0); base10 = pct(fwd[10][dev & np.isfinite(fwd[10])] > 0)
+        AL = []
+        for k, zmax in ((1, 1.5), (2, 1.5), (2, 3.0), (3, 3.0)):
+            st = ((n_al >= k) & (zt > 0) & (zt <= zmax)).fillna(False)
+            onset = st & ~st.shift(1, fill_value=False)
+            zk = '' if zmax == 1.5 else f'z{zmax:g}'
+            lab0 = f'근월물 콜벽이 다른 결제월 {k}개 이상과 같은 행사가(정렬 벽, {zmax:g}σ 안) 시작'
+            for cond, ms_, lab in (('', onset, lab0), ('_fsell', onset & (fs < 0), lab0 + ' + 외국인 선물 순매도'),
+                                   ('_csell', onset & (cs < 0), lab0 + ' + 외국인 콜 순매도')):
+                dts = td[ms_.values]
+                for m in (5, 10, 20):
+                    add(f'A3c_align{k}{zk}{cond}_up_m{m}', f'{lab} → {m}일 상승', 1, 'align_wall', dts, m)
+                    add(f'A3c_align{k}{zk}{cond}_dn_m{m}', f'{lab} → {m}일 하락', -1, 'align_wall', dts, m)
+                idx = np.where(ms_.values & dev)[0]; idx = idx[idx + 10 <= last_dev]
+                v5 = fwd[5][idx]; v10 = fwd[10][idx]
+                AL.append({'사건': lab, '날수(개발)': int(len(idx)), '5일 상승%': pct(v5[np.isfinite(v5)] > 0), '10일 상승%': pct(v10[np.isfinite(v10)] > 0),
+                           '아무 날 5일 상승%': base5, '아무 날 10일 상승%': base10, '정렬 상태 날 비율%(개발)': pct(st.values[dev])})
+        pd.DataFrame(AL).to_csv(os.path.join(od, 'cause_align_dev.csv'), index=False, encoding='utf-8')
     # 5e) 라운드 5 — 대상 바꾸기: 고정 h일 수익 대신 '다음 큰 변동의 방향'(급등·급락 먼저 오는 쪽).
     #     진입(다음 날 시가) 뒤 20거래일 안에 종가가 ±kσ(신호일 20일 변동성 × √10, k = 1.0·1.5)를 처음 넘는 날 청산, 못 넘으면 20일째 청산.
     #     사건: 콜 우위 압도 상태 시작일(집중·1위/2위·콜/풋 상위25% + 벽 1σ 안), 오래된 벽 돌파·닿고 밀림, 벽 이동, 우위 시작일.
