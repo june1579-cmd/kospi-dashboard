@@ -1,0 +1,16 @@
+[13:32:36] 시작 full ['chainx', 'chainwt', 'chainwm'] — 로그인 계정 설정 있음
+[13:32:36] == chainx
+[13:40:54] 저장 opt_chainx_daily.csv.gz 1247760행
+[13:40:57] == chainwt
+[13:51:20] opt_chainwt_daily 중간 저장 2020-09-04 (0행)
+[14:02:40] opt_chainwt_daily 중간 저장 2021-08-20 (0행)
+[14:14:00] opt_chainwt_daily 중간 저장 2022-08-05 (0행)
+[14:24:44] opt_chainwt_daily 중간 저장 2023-07-21 (0행)
+[14:35:04] opt_chainwt_daily 중간 저장 2024-07-05 (0행)
+[14:44:56] opt_chainwt_daily 중간 저장 2025-06-20 (0행)
+[14:55:41] opt_chainwt_daily 중간 저장 2026-06-05 (0행)
+[15:01:26] == chainwm
+[15:12:42] opt_chainwm_daily 중간 저장 2024-07-12 (0행)
+[15:23:12] opt_chainwm_daily 중간 저장 2025-06-27 (0행)
+[15:34:57] opt_chainwm_daily 중간 저장 2026-06-12 (0행)
+[15:35:04] 대시보드 수집 시간대 — 16:05 KST 까지 대기
