@@ -1446,7 +1446,7 @@
         svg.append('rect').attr('x', x0).attr('width', Math.max(1, x1 - x0)).attr('y', P0.top).attr('height', P0.bot - P0.top).style('fill', C()[4]).attr('opacity', 0.12);
         svg.append('text').attr('class', 'rv-tick').attr('x', x0 + 3).attr('y', P0.top + 10).style('font-size', '9px').text('담보비율 면제 ' + String(r.start).slice(5) + '~'); });
       const dom = P0.yL.domain(), chD = dash.data('credit_hist'), okD = d => d.status === 'ok' && d.data.length;
-      const stepL = (rows, k, da, op, sw, col) => svg.append('path').datum(rows.filter(inR)).attr('fill', 'none').style('stroke', col).attr('stroke-width', sw).attr('stroke-dasharray', da).attr('opacity', op)
+      const stepL = (rows, k, da, op, sw, col) => svg.append('path').datum(rows.filter(inR)).attr('fill', 'none').style('stroke', col).style('stroke-width', sw + 'px').attr('stroke-dasharray', da).attr('opacity', op)
         .attr('d', d3.line().defined(p => p[k] >= dom[0] && p[k] <= dom[1]).curve(d3.curveStepAfter).x(p => x(P(p.date))).y(p => P0.yL(p[k])));
       if (okD(lhD)) [['l1', '5 3', 0.8, 1.2], ['l2', null, 0.9, 1.4], ['l3', '1.5 3', 0.95, 1.8]].forEach(a => stepL(lhD.data, ...a, C()[4]));   // 기준선 = 그 전 60거래일 최저 종가 × 1.01·1·0.98
       if (okD(chD)) [['ca', '9 3', 0.85, 1.5], ['cc', '9 3 2 3', 0.85, 1.5]].forEach(a => stepL(chD.data, ...a, C()[0]));   // 신용 평균·해소 반영 평균(11/20)
@@ -1500,12 +1500,12 @@
         // every trading day in range; days without a value break the line
         const full = allMk.filter(inR).filter(r => num(r.kospi) != null || num(r[s.k]) != null).sort((u, v) => u.date < v.date ? -1 : 1)
           .map(r => ({date: r.date, v: num(r[s.k]) == null ? null : s.map(num(r[s.k]))}));
-        svg.append('path').datum(full).attr('fill', 'none').style('stroke', s.c).attr('stroke-width', /^(credit|cr_|deposit)/.test(s.id) ? 0.75 : 1.5).attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round')
+        svg.append('path').datum(full).attr('fill', 'none').style('stroke', s.c).style('stroke-width', (/^(credit|cr_|deposit)/.test(s.id) ? 0.75 : 1.5) + 'px').attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round')
           .attr('d', d3.line().defined(p => p.v != null).x(p => x(P(p.date))).y(p => P0.yL(p.v)));
         svg.append('g').selectAll('circle').data(s.pts).join('circle').attr('cx', p => x(P(p.date))).attr('cy', p => P0.yL(p.v)).attr('r', 3).style('fill', s.c);
         return;
       }
-      svg.append('path').datum(s.pts).attr('fill', 'none').style('stroke', s.c).attr('stroke-width', s.id === 'kospi' ? 4 : /^(credit|cr_|deposit)/.test(s.id) ? 0.75 : 1.5)   // 신용·예탁금 선은 절반 굵기(11/20)
+      svg.append('path').datum(s.pts).attr('fill', 'none').style('stroke', s.c).style('stroke-width', (s.id === 'kospi' ? 4 : /^(credit|cr_|deposit)/.test(s.id) ? 0.75 : 1.5) + 'px')   // 신용·예탁금 선은 절반 굵기(11/20) — 굵기는 style 로 지정(대시보드 기본 선 굵기에 덮이지 않게)
         .attr('stroke-dasharray', s.dash || null).attr('stroke-linecap', s.dash ? 'butt' : 'round').attr('stroke-linejoin', 'round')
         .attr('d', d3.line(p => x(P(p.date)), p => P0.yL(p.v)));
       if (s.pts.length < 60) svg.append('g').selectAll('circle').data(s.pts).join('circle').attr('cx', p => x(P(p.date))).attr('cy', p => P0.yL(p.v)).attr('r', 2.2).style('fill', s.c);
