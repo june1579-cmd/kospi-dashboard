@@ -1,2 +1,2 @@
 full
-chainx chainwt chainwm
+chainwt chainwm
