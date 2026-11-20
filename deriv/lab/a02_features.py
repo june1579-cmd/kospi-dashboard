@@ -25,6 +25,10 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import lab_common as L  # noqa: E402
 
 WORK = os.path.join(L.LAB, 'work'); os.makedirs(WORK, exist_ok=True)
+CFG = L.round_cfg().get('a02', {})
+# 라운드 8(갈래 A): 월물 4개 자료(opt_chainx)가 다 받아진 뒤 F2·F3(차차월·그다음)과 ALL(살아 있는 결제월 4개 콜·풋 미결제를 행사가별로 합친 '전체 물량 벽',
+#   만기 뒤 이월된 물량까지 한 벽으로 봄; 주기·만기는 F0 기준)을 켠다. 설정이 없으면(갈래 B 등) 예전과 같다.
+EXTRA = [t for t in CFG.get('extra_tags', []) if t in ('F2', 'F3', 'ALL')]
 
 
 def series_feats(g, S, sig, dte):
@@ -98,8 +102,17 @@ def main():
         if len(live) > 1: picks['F1'] = live[1]
         q = [ym for ym in live if int(ym[4:6]) in (3, 6, 9, 12)]
         if q: picks['Q'] = q[0]
+        if src == 'x':
+            if 'F2' in EXTRA and len(live) > 2: picks['F2'] = live[2]
+            if 'F3' in EXTRA and len(live) > 3: picks['F3'] = live[3]
+            if 'ALL' in EXTRA and live: picks['ALL'] = live[0]
         for tag, ym in picks.items():
-            gg = g[g['ym'] == ym]
+            if tag == 'ALL':
+                ga = g[g['ym'].isin(live)]
+                gg = ga.groupby(['cp', 'K'], as_index=False).agg(oi=('oi', 'sum'), vol=('vol', 'sum'))
+                gg['ym'] = ym
+            else:
+                gg = g[g['ym'] == ym]
             dte = L.tdays_between(d, exp_of[ym], td)
             r, k1 = series_feats(gg, S, sg, dte)
             r.update({'date': d, 'tag': tag, 'ym': ym})
@@ -120,12 +133,13 @@ def main():
                 if len(hq) == 6: r['wall_shift5%'] = (k1 / hq[0][1] - 1) * 100
                 khist[tag] = (khist.get(tag, []) + [(ym, k1)])[-6:]
                 i = pos[d]
-                for lag in (1, 3, 5):
+                for lag in ((1, 3, 5) if tag != 'ALL' else ()):
                     if i - lag >= 0:
                         prev = oi_key.get((dates[i - lag], ym, 'C', k1), np.nan)
                         if prev and prev > 0: r[f'wall_oi_chg{lag}%'] = (r['wall_oi'] / prev - 1) * 100
                 if i - 5 >= 0:
-                    pg = by_date[dates[i - 5]]; pg = pg[(pg['ym'] == ym) & (pg['cp'] == 'C') & (pg['K'] > S)]
+                    pg = by_date[dates[i - 5]]
+                    pg = pg[(pg['ym'].isin(live) if tag == 'ALL' else (pg['ym'] == ym)) & (pg['cp'] == 'C') & (pg['K'] > S)]
                     if len(pg) and pg['oi'].sum() > 0: r['callotm_chg5%'] = (r['callotm_oi'] / pg['oi'].sum() - 1) * 100
                 walls.append({'date': d, 'tag': tag, 'ym': ym, 'exp': exp_of[ym], 'K': k1, 'S': S, 'share': r.get('wall_share'),
                               'ratio12': r.get('wall_ratio12'), 'otm_cp': r.get('otm_cp'), 'dist%': r.get('wall_dist%'), 'dist_sig': r.get('wall_dist_sig'), 'dte': dte, 'ccent': r.get('ccent', np.nan)})

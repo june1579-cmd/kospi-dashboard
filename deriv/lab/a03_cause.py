@@ -28,6 +28,10 @@ import lab_common as L  # noqa: E402
 cfg = L.round_cfg().get('a03c', {})
 OBS = cfg.get('obs_dte', {'F0': [20, 10], 'Q': [40, 20]})
 TRACK = cfg.get('track_days', [20, 40, 60])
+# 라운드 8(갈래 A): 월물 4개 자료로 생긴 시리즈(F2·F3·ALL)를 시작일·돌파 실패·벽 이동 후보에도 쓰게(설정 없으면 예전과 같음)
+CAND_TAGS = cfg.get('cand_tags', ['F0', 'Q'])
+MIG_TAGS = cfg.get('mig_tags', ['F0', 'F1', 'Q'])
+TAGNM = {'F0': '근월물', 'F1': '차월물', 'F2': '차차월물', 'F3': '넷째 월물', 'Q': '분기물', 'ALL': '결제월 4개 합산', 'ANY': '근월·차월·분기물 중 하나'}
 DEV0 = pd.Timestamp('2015-01-01')
 
 
@@ -233,7 +237,7 @@ def main():
 
     # ---------- 4) 우위 시작일 추적(행사가 고정, 만기 뒤 롤오버 연장까지 60거래일)
     ON = []
-    for (tag, ym), g in W[W['tag'].isin(['F0', 'Q'])].groupby(['tag', 'ym']):
+    for (tag, ym), g in W[W['tag'].isin(CAND_TAGS)].groupby(['tag', 'ym']):
         g = g[(g['dte'] >= 3) & (g['dist_sig'] > 0) & (g['dist_sig'] <= 2.5)].sort_values('date')
         g = g[g['share'] >= qd[tag]['share']]
         if not len(g): continue
@@ -307,14 +311,14 @@ def main():
         t = pd.DataFrame({'signal': dates, 'exit': [L.exit_after(td, s, m) for s in dates]}).dropna()
         cands.append({'id': cid, 'agent': 'A3', 'desc': desc, 'direction': direction, 'family': fam, 'trades': t.sort_values('signal').reset_index(drop=True)})
 
-    for tag in ('F0', 'Q'):
+    for tag in CAND_TAGS:
         g = ONd[ONd['tag'] == tag]
         for m in (3, 5, 10):
             add(f'A3c_onset_{tag}_m{m}', f'{tag} 콜 집중 상위25% 시작일 → {m}일 상승', 1, 'onset', g['onset'], m)
             add(f'A3c_onset_callbuy_{tag}_m{m}', f'{tag} 콜 집중 시작일 + 외국인 콜 순매수 → {m}일 상승', 1, 'onset', g[g['call_for'] > 0]['onset'], m)
             add(f'A3c_onset_near_{tag}_m{m}', f'{tag} 콜 집중 시작일(벽 1σ 안) → {m}일 상승', 1, 'onset', g[g['z'] <= 1]['onset'], m)
     # 날마다의 벽(전날 벽 행사가 기준)으로 돌파·돌파 실패·닿고 밀림
-    for tag in ('F0', 'Q'):
+    for tag in CAND_TAGS:
         fail, rej, rejs, sell2 = [], [], [], []
         for ym, g in W[W['tag'] == tag].groupby('ym'):
             g = g.sort_values('date').reset_index(drop=True)
@@ -403,7 +407,7 @@ def main():
         Wt = W[W['tag'] == tag].drop_duplicates('date').set_index('date')
         return Wt['K'].reindex(td), Wt['ym'].reindex(td), Wt['ccent'].reindex(td) if 'ccent' in Wt else pd.Series(np.nan, index=td)
     mig_masks = {}
-    for tag in ('F0', 'F1', 'Q'):
+    for tag in [t for t in MIG_TAGS if t in set(W['tag'])]:
         Kt, ymt, cc = wall_series(tag)
         same = (ymt == ymt.shift(1)) & Kt.notna() & Kt.shift(1).notna()
         up1 = ((Kt > Kt.shift(1)) & same).astype(float); dn1 = ((Kt < Kt.shift(1)) & same).astype(float)
@@ -420,7 +424,7 @@ def main():
             'ccross': '지수가 콜 무게중심을 종가로 넘음'}
     for (tag, kind), msk in mig_masks.items():
         if tag == 'F1' and kind != 'up2': continue
-        nmtag = {'F0': '근월물', 'F1': '차월물', 'Q': '분기물', 'ANY': '근월·차월·분기물 중 하나'}[tag]
+        nmtag = TAGNM[tag]
         for cond, ms_, lab in (('', msk, f'{nmtag} {labs[kind]}'), ('_fsell', msk & (fs < 0), f'{nmtag} {labs[kind]} + 외국인 선물 순매도'),
                                ('_fbuy', msk & (fs > 0), f'{nmtag} {labs[kind]} + 외국인 선물 순매수')):
             dts = td[ms_.values]
