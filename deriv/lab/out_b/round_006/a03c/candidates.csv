@@ -1,0 +1,796 @@
+id,agent,desc,direction,family,n_signals,regime
+A3c_onset_F0_m3,A3,F0 콜 집중 상위25% 시작일 → 3일 상승,1,onset,70,
+A3c_onset_callbuy_F0_m3,A3,F0 콜 집중 시작일 + 외국인 콜 순매수 → 3일 상승,1,onset,27,
+A3c_onset_near_F0_m3,A3,F0 콜 집중 시작일(벽 1σ 안) → 3일 상승,1,onset,22,
+A3c_onset_F0_m5,A3,F0 콜 집중 상위25% 시작일 → 5일 상승,1,onset,69,
+A3c_onset_near_F0_m5,A3,F0 콜 집중 시작일(벽 1σ 안) → 5일 상승,1,onset,21,
+A3c_onset_F0_m10,A3,F0 콜 집중 상위25% 시작일 → 10일 상승,1,onset,69,
+A3c_onset_callbuy_F0_m10,A3,F0 콜 집중 시작일 + 외국인 콜 순매수 → 10일 상승,1,onset,26,
+A3c_onset_near_F0_m10,A3,F0 콜 집중 시작일(벽 1σ 안) → 10일 상승,1,onset,21,
+A3c_onset_Q_m3,A3,Q 콜 집중 상위25% 시작일 → 3일 상승,1,onset,38,
+A3c_onset_callbuy_Q_m3,A3,Q 콜 집중 시작일 + 외국인 콜 순매수 → 3일 상승,1,onset,16,
+A3c_onset_near_Q_m3,A3,Q 콜 집중 시작일(벽 1σ 안) → 3일 상승,1,onset,23,
+A3c_onset_Q_m5,A3,Q 콜 집중 상위25% 시작일 → 5일 상승,1,onset,38,
+A3c_onset_callbuy_Q_m5,A3,Q 콜 집중 시작일 + 외국인 콜 순매수 → 5일 상승,1,onset,16,
+A3c_onset_near_Q_m5,A3,Q 콜 집중 시작일(벽 1σ 안) → 5일 상승,1,onset,23,
+A3c_onset_Q_m10,A3,Q 콜 집중 상위25% 시작일 → 10일 상승,1,onset,38,
+A3c_onset_callbuy_Q_m10,A3,Q 콜 집중 시작일 + 외국인 콜 순매수 → 10일 상승,1,onset,16,
+A3c_onset_near_Q_m10,A3,Q 콜 집중 시작일(벽 1σ 안) → 10일 상승,1,onset,23,
+A3c_reject_F0_m1,A3,F0 콜벽에 장중 닿고 종가는 아래(첫 번째) → 1일 하락,-1,touch_reject,13,
+A3c_reject_F0_m3,A3,F0 콜벽에 장중 닿고 종가는 아래(첫 번째) → 3일 하락,-1,touch_reject,13,
+A3c_reject_F0_m5,A3,F0 콜벽에 장중 닿고 종가는 아래(첫 번째) → 5일 하락,-1,touch_reject,13,
+A3c_reject_Q_m1,A3,Q 콜벽에 장중 닿고 종가는 아래(첫 번째) → 1일 하락,-1,touch_reject,15,
+A3c_reject_fsell_Q_m1,A3,Q 콜벽 닿고 밀림 + 외국인 선물 순매도 → 1일 하락,-1,touch_reject,10,
+A3c_reject_Q_m3,A3,Q 콜벽에 장중 닿고 종가는 아래(첫 번째) → 3일 하락,-1,touch_reject,15,
+A3c_reject_fsell_Q_m3,A3,Q 콜벽 닿고 밀림 + 외국인 선물 순매도 → 3일 하락,-1,touch_reject,10,
+A3c_reject_Q_m5,A3,Q 콜벽에 장중 닿고 종가는 아래(첫 번째) → 5일 하락,-1,touch_reject,15,
+A3c_reject_fsell_Q_m5,A3,Q 콜벽 닿고 밀림 + 외국인 선물 순매도 → 5일 하락,-1,touch_reject,10,
+A3c_old10_near_m3,A3,근월물 10일 전 벽 1% 안까지 와서 종가는 아래 → 3일 하락,-1,oldwall_near,133,
+A3c_old10_near_m5,A3,근월물 10일 전 벽 1% 안까지 와서 종가는 아래 → 5일 하락,-1,oldwall_near,133,
+A3c_old10_near_m10,A3,근월물 10일 전 벽 1% 안까지 와서 종가는 아래 → 10일 하락,-1,oldwall_near,133,
+A3c_old10_cross_m3,A3,근월물 10일 전 벽을 종가로 처음 넘음 → 3일 하락,-1,oldwall_cross,85,
+A3c_old10_cross_m5,A3,근월물 10일 전 벽을 종가로 처음 넘음 → 5일 하락,-1,oldwall_cross,85,
+A3c_old10_cross_m10,A3,근월물 10일 전 벽을 종가로 처음 넘음 → 10일 하락,-1,oldwall_cross,85,
+A3c_old10_crossconf_m3,A3,근월물 10일 전 벽 돌파 + 다음 날 외국인 선물 순매도 → 3일 하락,-1,oldwall_crossconf,42,
+A3c_old10_crossconf_up_m3,A3,근월물 10일 전 벽 돌파 + 다음 날 외국인 선물 순매도 → 3일 상승(반대 방향),1,oldwall_crossconf_up,42,
+A3c_old10_crossconf_m5,A3,근월물 10일 전 벽 돌파 + 다음 날 외국인 선물 순매도 → 5일 하락,-1,oldwall_crossconf,42,
+A3c_old10_crossconf_up_m5,A3,근월물 10일 전 벽 돌파 + 다음 날 외국인 선물 순매도 → 5일 상승(반대 방향),1,oldwall_crossconf_up,42,
+A3c_old10_crossconf_m10,A3,근월물 10일 전 벽 돌파 + 다음 날 외국인 선물 순매도 → 10일 하락,-1,oldwall_crossconf,42,
+A3c_old10_crossconf_up_m10,A3,근월물 10일 전 벽 돌파 + 다음 날 외국인 선물 순매도 → 10일 상승(반대 방향),1,oldwall_crossconf_up,42,
+A3c_old20_near_m3,A3,근월물 20일 전 벽 1% 안까지 와서 종가는 아래 → 3일 하락,-1,oldwall_near,143,
+A3c_old20_near_m5,A3,근월물 20일 전 벽 1% 안까지 와서 종가는 아래 → 5일 하락,-1,oldwall_near,143,
+A3c_old20_near_m10,A3,근월물 20일 전 벽 1% 안까지 와서 종가는 아래 → 10일 하락,-1,oldwall_near,143,
+A3c_old20_cross_m3,A3,근월물 20일 전 벽을 종가로 처음 넘음 → 3일 하락,-1,oldwall_cross,99,
+A3c_old20_cross_m5,A3,근월물 20일 전 벽을 종가로 처음 넘음 → 5일 하락,-1,oldwall_cross,99,
+A3c_old20_cross_m10,A3,근월물 20일 전 벽을 종가로 처음 넘음 → 10일 하락,-1,oldwall_cross,99,
+A3c_old20_crossconf_m3,A3,근월물 20일 전 벽 돌파 + 다음 날 외국인 선물 순매도 → 3일 하락,-1,oldwall_crossconf,50,
+A3c_old20_crossconf_up_m3,A3,근월물 20일 전 벽 돌파 + 다음 날 외국인 선물 순매도 → 3일 상승(반대 방향),1,oldwall_crossconf_up,50,
+A3c_old20_crossconf_m5,A3,근월물 20일 전 벽 돌파 + 다음 날 외국인 선물 순매도 → 5일 하락,-1,oldwall_crossconf,50,
+A3c_old20_crossconf_up_m5,A3,근월물 20일 전 벽 돌파 + 다음 날 외국인 선물 순매도 → 5일 상승(반대 방향),1,oldwall_crossconf_up,50,
+A3c_old20_crossconf_m10,A3,근월물 20일 전 벽 돌파 + 다음 날 외국인 선물 순매도 → 10일 하락,-1,oldwall_crossconf,50,
+A3c_old20_crossconf_up_m10,A3,근월물 20일 전 벽 돌파 + 다음 날 외국인 선물 순매도 → 10일 상승(반대 방향),1,oldwall_crossconf_up,50,
+A3c_mig_up2_F0_up_m5,A3,근월물 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 상승,1,wallmig_up2,186,
+A3c_mig_up2_F0_dn_m5,A3,근월물 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 하락,-1,wallmig_up2,186,
+A3c_mig_up2_F0_up_m10,A3,근월물 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 상승,1,wallmig_up2,186,
+A3c_mig_up2_F0_dn_m10,A3,근월물 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 하락,-1,wallmig_up2,186,
+A3c_mig_up2_fsell_F0_up_m5,A3,근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 상승,1,wallmig_up2,87,
+A3c_mig_up2_fsell_F0_dn_m5,A3,근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_up2,87,
+A3c_mig_up2_fsell_F0_up_m10,A3,근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 10일 상승,1,wallmig_up2,87,
+A3c_mig_up2_fsell_F0_dn_m10,A3,근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 10일 하락,-1,wallmig_up2,87,
+A3c_mig_up2_fbuy_F0_up_m5,A3,근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 상승,1,wallmig_up2,99,
+A3c_mig_up2_fbuy_F0_dn_m5,A3,근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 하락,-1,wallmig_up2,99,
+A3c_mig_up2_fbuy_F0_up_m10,A3,근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 상승,1,wallmig_up2,99,
+A3c_mig_up2_fbuy_F0_dn_m10,A3,근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 하락,-1,wallmig_up2,99,
+A3c_mig_dn_F0_up_m5,A3,근월물 콜벽이 아래로 내려옴(상단 낮춤) → 5일 상승,1,wallmig_dn,484,
+A3c_mig_dn_F0_dn_m5,A3,근월물 콜벽이 아래로 내려옴(상단 낮춤) → 5일 하락,-1,wallmig_dn,484,
+A3c_mig_dn_F0_up_m10,A3,근월물 콜벽이 아래로 내려옴(상단 낮춤) → 10일 상승,1,wallmig_dn,484,
+A3c_mig_dn_F0_dn_m10,A3,근월물 콜벽이 아래로 내려옴(상단 낮춤) → 10일 하락,-1,wallmig_dn,484,
+A3c_mig_dn_fsell_F0_up_m5,A3,근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn,277,
+A3c_mig_dn_fsell_F0_dn_m5,A3,근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 하락,-1,wallmig_dn,277,
+A3c_mig_dn_fsell_F0_up_m10,A3,근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn,277,
+A3c_mig_dn_fsell_F0_dn_m10,A3,근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 하락,-1,wallmig_dn,277,
+A3c_mig_dn_fbuy_F0_up_m5,A3,근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn,207,
+A3c_mig_dn_fbuy_F0_dn_m5,A3,근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 하락,-1,wallmig_dn,207,
+A3c_mig_dn_fbuy_F0_up_m10,A3,근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn,207,
+A3c_mig_dn_fbuy_F0_dn_m10,A3,근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 10일 하락,-1,wallmig_dn,207,
+A3c_mig_dn2_F0_up_m5,A3,근월물 콜벽이 5일 안 2번 이상 내려옴 → 5일 상승,1,wallmig_dn2,278,
+A3c_mig_dn2_F0_dn_m5,A3,근월물 콜벽이 5일 안 2번 이상 내려옴 → 5일 하락,-1,wallmig_dn2,278,
+A3c_mig_dn2_F0_up_m10,A3,근월물 콜벽이 5일 안 2번 이상 내려옴 → 10일 상승,1,wallmig_dn2,278,
+A3c_mig_dn2_F0_dn_m10,A3,근월물 콜벽이 5일 안 2번 이상 내려옴 → 10일 하락,-1,wallmig_dn2,278,
+A3c_mig_dn2_fsell_F0_up_m5,A3,근월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn2,170,
+A3c_mig_dn2_fsell_F0_dn_m5,A3,근월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_dn2,170,
+A3c_mig_dn2_fsell_F0_up_m10,A3,근월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn2,170,
+A3c_mig_dn2_fsell_F0_dn_m10,A3,근월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 10일 하락,-1,wallmig_dn2,170,
+A3c_mig_dn2_fbuy_F0_up_m5,A3,근월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn2,108,
+A3c_mig_dn2_fbuy_F0_dn_m5,A3,근월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 5일 하락,-1,wallmig_dn2,108,
+A3c_mig_dn2_fbuy_F0_up_m10,A3,근월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn2,108,
+A3c_mig_dn2_fbuy_F0_dn_m10,A3,근월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 10일 하락,-1,wallmig_dn2,108,
+A3c_mig_ccross_F0_up_m5,A3,근월물 지수가 콜 무게중심을 종가로 넘음 → 5일 상승,1,wallmig_ccross,15,
+A3c_mig_ccross_F0_dn_m5,A3,근월물 지수가 콜 무게중심을 종가로 넘음 → 5일 하락,-1,wallmig_ccross,15,
+A3c_mig_ccross_F0_up_m10,A3,근월물 지수가 콜 무게중심을 종가로 넘음 → 10일 상승,1,wallmig_ccross,15,
+A3c_mig_ccross_F0_dn_m10,A3,근월물 지수가 콜 무게중심을 종가로 넘음 → 10일 하락,-1,wallmig_ccross,15,
+A3c_mig_ccross_fsell_F0_up_m5,A3,근월물 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매도 → 5일 상승,1,wallmig_ccross,11,
+A3c_mig_ccross_fsell_F0_dn_m5,A3,근월물 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_ccross,11,
+A3c_mig_ccross_fsell_F0_up_m10,A3,근월물 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매도 → 10일 상승,1,wallmig_ccross,11,
+A3c_mig_ccross_fsell_F0_dn_m10,A3,근월물 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매도 → 10일 하락,-1,wallmig_ccross,11,
+A3c_mig_up2_F1_up_m5,A3,차월물 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 상승,1,wallmig_up2,71,
+A3c_mig_up2_F1_dn_m5,A3,차월물 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 하락,-1,wallmig_up2,71,
+A3c_mig_up2_F1_up_m10,A3,차월물 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 상승,1,wallmig_up2,71,
+A3c_mig_up2_F1_dn_m10,A3,차월물 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 하락,-1,wallmig_up2,71,
+A3c_mig_up2_fsell_F1_up_m5,A3,차월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 상승,1,wallmig_up2,34,
+A3c_mig_up2_fsell_F1_dn_m5,A3,차월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_up2,34,
+A3c_mig_up2_fsell_F1_up_m10,A3,차월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 10일 상승,1,wallmig_up2,34,
+A3c_mig_up2_fsell_F1_dn_m10,A3,차월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 10일 하락,-1,wallmig_up2,34,
+A3c_mig_up2_fbuy_F1_up_m5,A3,차월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 상승,1,wallmig_up2,37,
+A3c_mig_up2_fbuy_F1_dn_m5,A3,차월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 하락,-1,wallmig_up2,37,
+A3c_mig_up2_fbuy_F1_up_m10,A3,차월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 상승,1,wallmig_up2,37,
+A3c_mig_up2_fbuy_F1_dn_m10,A3,차월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 하락,-1,wallmig_up2,37,
+A3c_mig_up2_Q_up_m5,A3,분기물 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 상승,1,wallmig_up2,83,
+A3c_mig_up2_Q_dn_m5,A3,분기물 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 하락,-1,wallmig_up2,83,
+A3c_mig_up2_Q_up_m10,A3,분기물 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 상승,1,wallmig_up2,83,
+A3c_mig_up2_Q_dn_m10,A3,분기물 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 하락,-1,wallmig_up2,83,
+A3c_mig_up2_fsell_Q_up_m5,A3,분기물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 상승,1,wallmig_up2,43,
+A3c_mig_up2_fsell_Q_dn_m5,A3,분기물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_up2,43,
+A3c_mig_up2_fsell_Q_up_m10,A3,분기물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 10일 상승,1,wallmig_up2,43,
+A3c_mig_up2_fsell_Q_dn_m10,A3,분기물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 10일 하락,-1,wallmig_up2,43,
+A3c_mig_up2_fbuy_Q_up_m5,A3,분기물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 상승,1,wallmig_up2,40,
+A3c_mig_up2_fbuy_Q_dn_m5,A3,분기물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 하락,-1,wallmig_up2,40,
+A3c_mig_up2_fbuy_Q_up_m10,A3,분기물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 상승,1,wallmig_up2,40,
+A3c_mig_up2_fbuy_Q_dn_m10,A3,분기물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 하락,-1,wallmig_up2,40,
+A3c_mig_dn_Q_up_m5,A3,분기물 콜벽이 아래로 내려옴(상단 낮춤) → 5일 상승,1,wallmig_dn,253,
+A3c_mig_dn_Q_dn_m5,A3,분기물 콜벽이 아래로 내려옴(상단 낮춤) → 5일 하락,-1,wallmig_dn,253,
+A3c_mig_dn_Q_up_m10,A3,분기물 콜벽이 아래로 내려옴(상단 낮춤) → 10일 상승,1,wallmig_dn,253,
+A3c_mig_dn_Q_dn_m10,A3,분기물 콜벽이 아래로 내려옴(상단 낮춤) → 10일 하락,-1,wallmig_dn,253,
+A3c_mig_dn_fsell_Q_up_m5,A3,분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn,134,
+A3c_mig_dn_fsell_Q_dn_m5,A3,분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 하락,-1,wallmig_dn,134,
+A3c_mig_dn_fsell_Q_up_m10,A3,분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn,134,
+A3c_mig_dn_fsell_Q_dn_m10,A3,분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 하락,-1,wallmig_dn,134,
+A3c_mig_dn_fbuy_Q_up_m5,A3,분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn,119,
+A3c_mig_dn_fbuy_Q_dn_m5,A3,분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 하락,-1,wallmig_dn,119,
+A3c_mig_dn_fbuy_Q_up_m10,A3,분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn,119,
+A3c_mig_dn_fbuy_Q_dn_m10,A3,분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 10일 하락,-1,wallmig_dn,119,
+A3c_mig_dn2_Q_up_m5,A3,분기물 콜벽이 5일 안 2번 이상 내려옴 → 5일 상승,1,wallmig_dn2,104,
+A3c_mig_dn2_Q_dn_m5,A3,분기물 콜벽이 5일 안 2번 이상 내려옴 → 5일 하락,-1,wallmig_dn2,104,
+A3c_mig_dn2_Q_up_m10,A3,분기물 콜벽이 5일 안 2번 이상 내려옴 → 10일 상승,1,wallmig_dn2,104,
+A3c_mig_dn2_Q_dn_m10,A3,분기물 콜벽이 5일 안 2번 이상 내려옴 → 10일 하락,-1,wallmig_dn2,104,
+A3c_mig_dn2_fsell_Q_up_m5,A3,분기물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn2,59,
+A3c_mig_dn2_fsell_Q_dn_m5,A3,분기물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_dn2,59,
+A3c_mig_dn2_fsell_Q_up_m10,A3,분기물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn2,59,
+A3c_mig_dn2_fsell_Q_dn_m10,A3,분기물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 10일 하락,-1,wallmig_dn2,59,
+A3c_mig_dn2_fbuy_Q_up_m5,A3,분기물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn2,45,
+A3c_mig_dn2_fbuy_Q_dn_m5,A3,분기물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 5일 하락,-1,wallmig_dn2,45,
+A3c_mig_dn2_fbuy_Q_up_m10,A3,분기물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn2,45,
+A3c_mig_dn2_fbuy_Q_dn_m10,A3,분기물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 10일 하락,-1,wallmig_dn2,45,
+A3c_mig_ccross_Q_up_m5,A3,분기물 지수가 콜 무게중심을 종가로 넘음 → 5일 상승,1,wallmig_ccross,26,
+A3c_mig_ccross_Q_dn_m5,A3,분기물 지수가 콜 무게중심을 종가로 넘음 → 5일 하락,-1,wallmig_ccross,26,
+A3c_mig_ccross_Q_up_m10,A3,분기물 지수가 콜 무게중심을 종가로 넘음 → 10일 상승,1,wallmig_ccross,26,
+A3c_mig_ccross_Q_dn_m10,A3,분기물 지수가 콜 무게중심을 종가로 넘음 → 10일 하락,-1,wallmig_ccross,26,
+A3c_mig_ccross_fsell_Q_up_m5,A3,분기물 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매도 → 5일 상승,1,wallmig_ccross,10,
+A3c_mig_ccross_fsell_Q_dn_m5,A3,분기물 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_ccross,10,
+A3c_mig_ccross_fsell_Q_up_m10,A3,분기물 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매도 → 10일 상승,1,wallmig_ccross,10,
+A3c_mig_ccross_fsell_Q_dn_m10,A3,분기물 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매도 → 10일 하락,-1,wallmig_ccross,10,
+A3c_mig_ccross_fbuy_Q_up_m5,A3,분기물 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매수 → 5일 상승,1,wallmig_ccross,16,
+A3c_mig_ccross_fbuy_Q_dn_m5,A3,분기물 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매수 → 5일 하락,-1,wallmig_ccross,16,
+A3c_mig_ccross_fbuy_Q_up_m10,A3,분기물 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매수 → 10일 상승,1,wallmig_ccross,16,
+A3c_mig_ccross_fbuy_Q_dn_m10,A3,분기물 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매수 → 10일 하락,-1,wallmig_ccross,16,
+A3c_mig_up2_ANY_up_m5,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 상승,1,wallmig_up2,260,
+A3c_mig_up2_ANY_dn_m5,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 하락,-1,wallmig_up2,260,
+A3c_mig_up2_ANY_up_m10,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 상승,1,wallmig_up2,260,
+A3c_mig_up2_ANY_dn_m10,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 하락,-1,wallmig_up2,260,
+A3c_mig_up2_fsell_ANY_up_m5,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 상승,1,wallmig_up2,124,
+A3c_mig_up2_fsell_ANY_dn_m5,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_up2,124,
+A3c_mig_up2_fsell_ANY_up_m10,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 10일 상승,1,wallmig_up2,124,
+A3c_mig_up2_fsell_ANY_dn_m10,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 10일 하락,-1,wallmig_up2,124,
+A3c_mig_up2_fbuy_ANY_up_m5,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 상승,1,wallmig_up2,136,
+A3c_mig_up2_fbuy_ANY_dn_m5,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 하락,-1,wallmig_up2,136,
+A3c_mig_up2_fbuy_ANY_up_m10,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 상승,1,wallmig_up2,136,
+A3c_mig_up2_fbuy_ANY_dn_m10,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 하락,-1,wallmig_up2,136,
+A3c_mig_dn_ANY_up_m5,A3,근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) → 5일 상승,1,wallmig_dn,716,
+A3c_mig_dn_ANY_dn_m5,A3,근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) → 5일 하락,-1,wallmig_dn,716,
+A3c_mig_dn_ANY_up_m10,A3,근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) → 10일 상승,1,wallmig_dn,716,
+A3c_mig_dn_ANY_dn_m10,A3,근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) → 10일 하락,-1,wallmig_dn,716,
+A3c_mig_dn_fsell_ANY_up_m5,A3,근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn,388,
+A3c_mig_dn_fsell_ANY_dn_m5,A3,근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 하락,-1,wallmig_dn,388,
+A3c_mig_dn_fsell_ANY_up_m10,A3,근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn,388,
+A3c_mig_dn_fsell_ANY_dn_m10,A3,근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 하락,-1,wallmig_dn,388,
+A3c_mig_dn_fbuy_ANY_up_m5,A3,근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn,328,
+A3c_mig_dn_fbuy_ANY_dn_m5,A3,근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 하락,-1,wallmig_dn,328,
+A3c_mig_dn_fbuy_ANY_up_m10,A3,근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn,328,
+A3c_mig_dn_fbuy_ANY_dn_m10,A3,근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 10일 하락,-1,wallmig_dn,328,
+A3c_mig_dn2_ANY_up_m5,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 → 5일 상승,1,wallmig_dn2,365,
+A3c_mig_dn2_ANY_dn_m5,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 → 5일 하락,-1,wallmig_dn2,365,
+A3c_mig_dn2_ANY_up_m10,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 → 10일 상승,1,wallmig_dn2,365,
+A3c_mig_dn2_ANY_dn_m10,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 → 10일 하락,-1,wallmig_dn2,365,
+A3c_mig_dn2_fsell_ANY_up_m5,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn2,215,
+A3c_mig_dn2_fsell_ANY_dn_m5,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_dn2,215,
+A3c_mig_dn2_fsell_ANY_up_m10,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn2,215,
+A3c_mig_dn2_fsell_ANY_dn_m10,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 10일 하락,-1,wallmig_dn2,215,
+A3c_mig_dn2_fbuy_ANY_up_m5,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn2,150,
+A3c_mig_dn2_fbuy_ANY_dn_m5,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 5일 하락,-1,wallmig_dn2,150,
+A3c_mig_dn2_fbuy_ANY_up_m10,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn2,150,
+A3c_mig_dn2_fbuy_ANY_dn_m10,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 10일 하락,-1,wallmig_dn2,150,
+A3c_mig_ccross_ANY_up_m5,A3,근월·차월·분기물 중 하나 지수가 콜 무게중심을 종가로 넘음 → 5일 상승,1,wallmig_ccross,46,
+A3c_mig_ccross_ANY_dn_m5,A3,근월·차월·분기물 중 하나 지수가 콜 무게중심을 종가로 넘음 → 5일 하락,-1,wallmig_ccross,46,
+A3c_mig_ccross_ANY_up_m10,A3,근월·차월·분기물 중 하나 지수가 콜 무게중심을 종가로 넘음 → 10일 상승,1,wallmig_ccross,46,
+A3c_mig_ccross_ANY_dn_m10,A3,근월·차월·분기물 중 하나 지수가 콜 무게중심을 종가로 넘음 → 10일 하락,-1,wallmig_ccross,46,
+A3c_mig_ccross_fsell_ANY_up_m5,A3,근월·차월·분기물 중 하나 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매도 → 5일 상승,1,wallmig_ccross,22,
+A3c_mig_ccross_fsell_ANY_dn_m5,A3,근월·차월·분기물 중 하나 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_ccross,22,
+A3c_mig_ccross_fsell_ANY_up_m10,A3,근월·차월·분기물 중 하나 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매도 → 10일 상승,1,wallmig_ccross,22,
+A3c_mig_ccross_fsell_ANY_dn_m10,A3,근월·차월·분기물 중 하나 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매도 → 10일 하락,-1,wallmig_ccross,22,
+A3c_mig_ccross_fbuy_ANY_up_m5,A3,근월·차월·분기물 중 하나 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매수 → 5일 상승,1,wallmig_ccross,24,
+A3c_mig_ccross_fbuy_ANY_dn_m5,A3,근월·차월·분기물 중 하나 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매수 → 5일 하락,-1,wallmig_ccross,24,
+A3c_mig_ccross_fbuy_ANY_up_m10,A3,근월·차월·분기물 중 하나 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매수 → 10일 상승,1,wallmig_ccross,24,
+A3c_mig_ccross_fbuy_ANY_dn_m10,A3,근월·차월·분기물 중 하나 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매수 → 10일 하락,-1,wallmig_ccross,24,
+A3c_bar_dom_share_F0_k1.0_up,A3,근월물 콜 집중 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_dom_share_F0,55,
+A3c_bar_dom_share_F0_k1.0_dn,A3,근월물 콜 집중 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_dom_share_F0,55,
+A3c_bar_dom_share_F0_k1.5_up,A3,근월물 콜 집중 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_dom_share_F0,55,
+A3c_bar_dom_share_F0_k1.5_dn,A3,근월물 콜 집중 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_dom_share_F0,55,
+A3c_bar_dom_share_F0_fsell_k1.0_up,A3,근월물 콜 집중 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_dom_share_F0,20,
+A3c_bar_dom_share_F0_fsell_k1.0_dn,A3,근월물 콜 집중 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_dom_share_F0,20,
+A3c_bar_dom_share_F0_fsell_k1.5_up,A3,근월물 콜 집중 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_dom_share_F0,20,
+A3c_bar_dom_share_F0_fsell_k1.5_dn,A3,근월물 콜 집중 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_dom_share_F0,20,
+A3c_bar_dom_r12_F0_k1.0_up,A3,근월물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_dom_r12_F0,81,
+A3c_bar_dom_r12_F0_k1.0_dn,A3,근월물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_dom_r12_F0,81,
+A3c_bar_dom_r12_F0_k1.5_up,A3,근월물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_dom_r12_F0,81,
+A3c_bar_dom_r12_F0_k1.5_dn,A3,근월물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_dom_r12_F0,81,
+A3c_bar_dom_r12_F0_fsell_k1.0_up,A3,근월물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_dom_r12_F0,28,
+A3c_bar_dom_r12_F0_fsell_k1.0_dn,A3,근월물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_dom_r12_F0,28,
+A3c_bar_dom_r12_F0_fsell_k1.5_up,A3,근월물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_dom_r12_F0,28,
+A3c_bar_dom_r12_F0_fsell_k1.5_dn,A3,근월물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_dom_r12_F0,28,
+A3c_bar_dom_cp_F0_k1.0_up,A3,근월물 콜/풋 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_dom_cp_F0,53,
+A3c_bar_dom_cp_F0_k1.0_dn,A3,근월물 콜/풋 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_dom_cp_F0,53,
+A3c_bar_dom_cp_F0_k1.5_up,A3,근월물 콜/풋 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_dom_cp_F0,53,
+A3c_bar_dom_cp_F0_k1.5_dn,A3,근월물 콜/풋 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_dom_cp_F0,53,
+A3c_bar_dom_cp_F0_fsell_k1.0_up,A3,근월물 콜/풋 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_dom_cp_F0,18,
+A3c_bar_dom_cp_F0_fsell_k1.0_dn,A3,근월물 콜/풋 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_dom_cp_F0,18,
+A3c_bar_dom_cp_F0_fsell_k1.5_up,A3,근월물 콜/풋 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_dom_cp_F0,18,
+A3c_bar_dom_cp_F0_fsell_k1.5_dn,A3,근월물 콜/풋 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_dom_cp_F0,18,
+A3c_bar_onset_F0_k1.0_up,A3,근월물 콜 집중 시작일 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_onset_F0,69,
+A3c_bar_onset_F0_k1.0_dn,A3,근월물 콜 집중 시작일 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_onset_F0,69,
+A3c_bar_onset_F0_k1.5_up,A3,근월물 콜 집중 시작일 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_onset_F0,69,
+A3c_bar_onset_F0_k1.5_dn,A3,근월물 콜 집중 시작일 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_onset_F0,69,
+A3c_bar_onset_F0_fsell_k1.0_up,A3,근월물 콜 집중 시작일 + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_onset_F0,32,
+A3c_bar_onset_F0_fsell_k1.0_dn,A3,근월물 콜 집중 시작일 + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_onset_F0,32,
+A3c_bar_onset_F0_fsell_k1.5_up,A3,근월물 콜 집중 시작일 + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_onset_F0,32,
+A3c_bar_onset_F0_fsell_k1.5_dn,A3,근월물 콜 집중 시작일 + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_onset_F0,32,
+A3c_bar_dom_share_Q_k1.0_up,A3,분기물 콜 집중 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_dom_share_Q,71,
+A3c_bar_dom_share_Q_k1.0_dn,A3,분기물 콜 집중 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_dom_share_Q,71,
+A3c_bar_dom_share_Q_k1.5_up,A3,분기물 콜 집중 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_dom_share_Q,71,
+A3c_bar_dom_share_Q_k1.5_dn,A3,분기물 콜 집중 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_dom_share_Q,71,
+A3c_bar_dom_share_Q_fsell_k1.0_up,A3,분기물 콜 집중 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_dom_share_Q,23,
+A3c_bar_dom_share_Q_fsell_k1.0_dn,A3,분기물 콜 집중 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_dom_share_Q,23,
+A3c_bar_dom_share_Q_fsell_k1.5_up,A3,분기물 콜 집중 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_dom_share_Q,23,
+A3c_bar_dom_share_Q_fsell_k1.5_dn,A3,분기물 콜 집중 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_dom_share_Q,23,
+A3c_bar_dom_r12_Q_k1.0_up,A3,분기물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_dom_r12_Q,96,
+A3c_bar_dom_r12_Q_k1.0_dn,A3,분기물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_dom_r12_Q,96,
+A3c_bar_dom_r12_Q_k1.5_up,A3,분기물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_dom_r12_Q,95,
+A3c_bar_dom_r12_Q_k1.5_dn,A3,분기물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_dom_r12_Q,95,
+A3c_bar_dom_r12_Q_fsell_k1.0_up,A3,분기물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_dom_r12_Q,33,
+A3c_bar_dom_r12_Q_fsell_k1.0_dn,A3,분기물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_dom_r12_Q,33,
+A3c_bar_dom_r12_Q_fsell_k1.5_up,A3,분기물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_dom_r12_Q,33,
+A3c_bar_dom_r12_Q_fsell_k1.5_dn,A3,분기물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_dom_r12_Q,33,
+A3c_bar_dom_cp_Q_k1.0_up,A3,분기물 콜/풋 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_dom_cp_Q,55,
+A3c_bar_dom_cp_Q_k1.0_dn,A3,분기물 콜/풋 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_dom_cp_Q,55,
+A3c_bar_dom_cp_Q_k1.5_up,A3,분기물 콜/풋 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_dom_cp_Q,55,
+A3c_bar_dom_cp_Q_k1.5_dn,A3,분기물 콜/풋 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_dom_cp_Q,55,
+A3c_bar_dom_cp_Q_fsell_k1.0_up,A3,분기물 콜/풋 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_dom_cp_Q,23,
+A3c_bar_dom_cp_Q_fsell_k1.0_dn,A3,분기물 콜/풋 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_dom_cp_Q,23,
+A3c_bar_dom_cp_Q_fsell_k1.5_up,A3,분기물 콜/풋 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_dom_cp_Q,23,
+A3c_bar_dom_cp_Q_fsell_k1.5_dn,A3,분기물 콜/풋 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_dom_cp_Q,23,
+A3c_bar_onset_Q_k1.0_up,A3,분기물 콜 집중 시작일 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_onset_Q,38,
+A3c_bar_onset_Q_k1.0_dn,A3,분기물 콜 집중 시작일 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_onset_Q,38,
+A3c_bar_onset_Q_k1.5_up,A3,분기물 콜 집중 시작일 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_onset_Q,38,
+A3c_bar_onset_Q_k1.5_dn,A3,분기물 콜 집중 시작일 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_onset_Q,38,
+A3c_bar_onset_Q_fsell_k1.0_up,A3,분기물 콜 집중 시작일 + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_onset_Q,10,
+A3c_bar_onset_Q_fsell_k1.0_dn,A3,분기물 콜 집중 시작일 + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_onset_Q,10,
+A3c_bar_onset_Q_fsell_k1.5_up,A3,분기물 콜 집중 시작일 + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_onset_Q,10,
+A3c_bar_onset_Q_fsell_k1.5_dn,A3,분기물 콜 집중 시작일 + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_onset_Q,10,
+A3c_bar_old20_cross_k1.0_up,A3,근월물 20일 전 벽 종가 돌파 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_old20_cross,99,
+A3c_bar_old20_cross_k1.0_dn,A3,근월물 20일 전 벽 종가 돌파 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_old20_cross,99,
+A3c_bar_old20_cross_k1.5_up,A3,근월물 20일 전 벽 종가 돌파 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_old20_cross,99,
+A3c_bar_old20_cross_k1.5_dn,A3,근월물 20일 전 벽 종가 돌파 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_old20_cross,99,
+A3c_bar_old20_cross_fsell_k1.0_up,A3,근월물 20일 전 벽 종가 돌파 + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_old20_cross,36,
+A3c_bar_old20_cross_fsell_k1.0_dn,A3,근월물 20일 전 벽 종가 돌파 + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_old20_cross,36,
+A3c_bar_old20_cross_fsell_k1.5_up,A3,근월물 20일 전 벽 종가 돌파 + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_old20_cross,36,
+A3c_bar_old20_cross_fsell_k1.5_dn,A3,근월물 20일 전 벽 종가 돌파 + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_old20_cross,36,
+A3c_bar_old20_near_k1.0_up,A3,근월물 20일 전 벽 1% 안 닿고 종가는 아래 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_old20_near,143,
+A3c_bar_old20_near_k1.0_dn,A3,근월물 20일 전 벽 1% 안 닿고 종가는 아래 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_old20_near,143,
+A3c_bar_old20_near_k1.5_up,A3,근월물 20일 전 벽 1% 안 닿고 종가는 아래 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_old20_near,143,
+A3c_bar_old20_near_k1.5_dn,A3,근월물 20일 전 벽 1% 안 닿고 종가는 아래 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_old20_near,143,
+A3c_bar_old20_near_fsell_k1.0_up,A3,근월물 20일 전 벽 1% 안 닿고 종가는 아래 + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_old20_near,68,
+A3c_bar_old20_near_fsell_k1.0_dn,A3,근월물 20일 전 벽 1% 안 닿고 종가는 아래 + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_old20_near,68,
+A3c_bar_old20_near_fsell_k1.5_up,A3,근월물 20일 전 벽 1% 안 닿고 종가는 아래 + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_old20_near,68,
+A3c_bar_old20_near_fsell_k1.5_dn,A3,근월물 20일 전 벽 1% 안 닿고 종가는 아래 + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_old20_near,68,
+A3c_bar_mig_up2_ANY_k1.0_up,A3,콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_mig_up2_ANY,260,
+A3c_bar_mig_up2_ANY_k1.0_dn,A3,콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_mig_up2_ANY,260,
+A3c_bar_mig_up2_ANY_k1.5_up,A3,콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_mig_up2_ANY,259,
+A3c_bar_mig_up2_ANY_k1.5_dn,A3,콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_mig_up2_ANY,259,
+A3c_bar_mig_up2_ANY_fsell_k1.0_up,A3,콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_mig_up2_ANY,124,
+A3c_bar_mig_up2_ANY_fsell_k1.0_dn,A3,콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_mig_up2_ANY,124,
+A3c_bar_mig_up2_ANY_fsell_k1.5_up,A3,콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_mig_up2_ANY,124,
+A3c_bar_mig_up2_ANY_fsell_k1.5_dn,A3,콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_mig_up2_ANY,124,
+A3c_bar_mig_dn2_ANY_k1.0_up,A3,콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_mig_dn2_ANY,365,
+A3c_bar_mig_dn2_ANY_k1.0_dn,A3,콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_mig_dn2_ANY,365,
+A3c_bar_mig_dn2_ANY_k1.5_up,A3,콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_mig_dn2_ANY,364,
+A3c_bar_mig_dn2_ANY_k1.5_dn,A3,콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_mig_dn2_ANY,364,
+A3c_bar_mig_dn2_ANY_fsell_k1.0_up,A3,콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_mig_dn2_ANY,215,
+A3c_bar_mig_dn2_ANY_fsell_k1.0_dn,A3,콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_mig_dn2_ANY,215,
+A3c_bar_mig_dn2_ANY_fsell_k1.5_up,A3,콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_mig_dn2_ANY,214,
+A3c_bar_mig_dn2_ANY_fsell_k1.5_dn,A3,콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_mig_dn2_ANY,214,
+A3c_mig_up2_Q_up_m5__R2,A3,[상승 추세(60일선 위)] 분기물 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 상승,1,wallmig_up2_regime,62,상승 추세(60일선 위)
+A3c_mig_up2_Q_up_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 분기물 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 상승,1,wallmig_up2_regime,23,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_up2_Q_up_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 분기물 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 상승,1,wallmig_up2_regime,42,60일 고점 1% 안(신고가 근처)
+A3c_mig_up2_Q_up_m10__R2,A3,[상승 추세(60일선 위)] 분기물 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 상승,1,wallmig_up2_regime,62,상승 추세(60일선 위)
+A3c_mig_up2_Q_up_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 분기물 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 상승,1,wallmig_up2_regime,23,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_up2_Q_up_m10__R9,A3,[60일 고점 1% 안(신고가 근처)] 분기물 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 상승,1,wallmig_up2_regime,42,60일 고점 1% 안(신고가 근처)
+A3c_mig_dn_fbuy_Q_up_m10__R2,A3,[상승 추세(60일선 위)] 분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn_regime,61,상승 추세(60일선 위)
+A3c_mig_dn_fbuy_Q_up_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn_regime,35,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn_fbuy_Q_up_m10__R9,A3,[60일 고점 1% 안(신고가 근처)] 분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn_regime,23,60일 고점 1% 안(신고가 근처)
+A3c_mig_dn_fbuy_Q_up_m10__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn_regime,23,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_bar_dom_share_Q_k1.0_up__R2,A3,[상승 추세(60일선 위)] 분기물 콜 집중 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_dom_share_Q_regime,55,상승 추세(60일선 위)
+A3c_bar_dom_share_Q_k1.0_up__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 분기물 콜 집중 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_dom_share_Q_regime,23,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_dom_share_Q_k1.0_up__R9,A3,[60일 고점 1% 안(신고가 근처)] 분기물 콜 집중 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_dom_share_Q_regime,28,60일 고점 1% 안(신고가 근처)
+A3c_bar_dom_share_Q_k1.0_up__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 분기물 콜 집중 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_dom_share_Q_regime,19,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_up2_fsell_F0_up_m10__R2,A3,[상승 추세(60일선 위)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 10일 상승,1,wallmig_up2_regime,59,상승 추세(60일선 위)
+A3c_mig_up2_fsell_F0_up_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 10일 상승,1,wallmig_up2_regime,20,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_up2_fsell_F0_up_m10__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 10일 상승,1,wallmig_up2_regime,39,60일 고점 1% 안(신고가 근처)
+A3c_mig_up2_fsell_F0_up_m10__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 10일 상승,1,wallmig_up2_regime,18,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_up2_fsell_ANY_up_m10__R2,A3,[상승 추세(60일선 위)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 10일 상승,1,wallmig_up2_regime,90,상승 추세(60일선 위)
+A3c_mig_up2_fsell_ANY_up_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 10일 상승,1,wallmig_up2_regime,34,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_up2_fsell_ANY_up_m10__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 10일 상승,1,wallmig_up2_regime,59,60일 고점 1% 안(신고가 근처)
+A3c_mig_up2_fsell_ANY_up_m10__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 10일 상승,1,wallmig_up2_regime,30,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_up2_fsell_ANY_up_m10__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 10일 상승,1,wallmig_up2_regime,20,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_onset_F0_m5__R2,A3,[상승 추세(60일선 위)] F0 콜 집중 상위25% 시작일 → 5일 상승,1,onset_regime,44,상승 추세(60일선 위)
+A3c_onset_F0_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] F0 콜 집중 상위25% 시작일 → 5일 상승,1,onset_regime,26,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_onset_F0_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] F0 콜 집중 상위25% 시작일 → 5일 상승,1,onset_regime,29,60일 고점 1% 안(신고가 근처)
+A3c_onset_F0_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] F0 콜 집중 상위25% 시작일 → 5일 상승,1,onset_regime,20,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn2_Q_up_m5__R2,A3,[상승 추세(60일선 위)] 분기물 콜벽이 5일 안 2번 이상 내려옴 → 5일 상승,1,wallmig_dn2_regime,53,상승 추세(60일선 위)
+A3c_mig_dn2_Q_up_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 분기물 콜벽이 5일 안 2번 이상 내려옴 → 5일 상승,1,wallmig_dn2_regime,35,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn2_Q_up_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 분기물 콜벽이 5일 안 2번 이상 내려옴 → 5일 상승,1,wallmig_dn2_regime,23,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn_fbuy_Q_up_m5__R2,A3,[상승 추세(60일선 위)] 분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn_regime,61,상승 추세(60일선 위)
+A3c_mig_dn_fbuy_Q_up_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn_regime,35,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn_fbuy_Q_up_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn_regime,23,60일 고점 1% 안(신고가 근처)
+A3c_mig_dn_fbuy_Q_up_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn_regime,23,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn2_fbuy_F0_up_m5__R2,A3,[상승 추세(60일선 위)] 근월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn2_regime,52,상승 추세(60일선 위)
+A3c_mig_dn2_fbuy_F0_up_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn2_regime,41,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn2_fbuy_F0_up_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn2_regime,28,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn2_fbuy_F0_up_m10__R2,A3,[상승 추세(60일선 위)] 근월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn2_regime,52,상승 추세(60일선 위)
+A3c_mig_dn2_fbuy_F0_up_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn2_regime,41,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn2_fbuy_F0_up_m10__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn2_regime,28,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn2_fbuy_ANY_up_m10__R2,A3,[상승 추세(60일선 위)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn2_regime,72,상승 추세(60일선 위)
+A3c_mig_dn2_fbuy_ANY_up_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn2_regime,51,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn2_fbuy_ANY_up_m10__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn2_regime,20,60일 고점 1% 안(신고가 근처)
+A3c_mig_dn2_fbuy_ANY_up_m10__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn2_regime,34,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn_fbuy_F0_up_m5__R2,A3,[상승 추세(60일선 위)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn_regime,105,상승 추세(60일선 위)
+A3c_mig_dn_fbuy_F0_up_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn_regime,75,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn_fbuy_F0_up_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn_regime,36,60일 고점 1% 안(신고가 근처)
+A3c_mig_dn_fbuy_F0_up_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn_regime,52,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn_fbuy_F0_up_m5__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn_regime,22,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_dn_fbuy_F0_up_m10__R2,A3,[상승 추세(60일선 위)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn_regime,105,상승 추세(60일선 위)
+A3c_mig_dn_fbuy_F0_up_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn_regime,75,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn_fbuy_F0_up_m10__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn_regime,36,60일 고점 1% 안(신고가 근처)
+A3c_mig_dn_fbuy_F0_up_m10__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn_regime,52,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn_fbuy_F0_up_m10__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn_regime,22,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_dn2_ANY_up_m10__R2,A3,[상승 추세(60일선 위)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 → 10일 상승,1,wallmig_dn2_regime,166,상승 추세(60일선 위)
+A3c_mig_dn2_ANY_up_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 → 10일 상승,1,wallmig_dn2_regime,120,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn2_ANY_up_m10__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 → 10일 상승,1,wallmig_dn2_regime,34,60일 고점 1% 안(신고가 근처)
+A3c_mig_dn2_ANY_up_m10__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 → 10일 상승,1,wallmig_dn2_regime,81,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn2_ANY_up_m10__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 → 10일 상승,1,wallmig_dn2_regime,20,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_dn2_Q_up_m10__R2,A3,[상승 추세(60일선 위)] 분기물 콜벽이 5일 안 2번 이상 내려옴 → 10일 상승,1,wallmig_dn2_regime,53,상승 추세(60일선 위)
+A3c_mig_dn2_Q_up_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 분기물 콜벽이 5일 안 2번 이상 내려옴 → 10일 상승,1,wallmig_dn2_regime,35,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn2_Q_up_m10__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 분기물 콜벽이 5일 안 2번 이상 내려옴 → 10일 상승,1,wallmig_dn2_regime,23,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn_fbuy_ANY_up_m10__R2,A3,[상승 추세(60일선 위)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn_regime,172,상승 추세(60일선 위)
+A3c_mig_dn_fbuy_ANY_up_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn_regime,113,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn_fbuy_ANY_up_m10__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn_regime,64,60일 고점 1% 안(신고가 근처)
+A3c_mig_dn_fbuy_ANY_up_m10__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn_regime,76,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn_fbuy_ANY_up_m10__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn_regime,35,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_dn2_fbuy_ANY_up_m5__R2,A3,[상승 추세(60일선 위)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn2_regime,72,상승 추세(60일선 위)
+A3c_mig_dn2_fbuy_ANY_up_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn2_regime,51,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn2_fbuy_ANY_up_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn2_regime,20,60일 고점 1% 안(신고가 근처)
+A3c_mig_dn2_fbuy_ANY_up_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn2_regime,34,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn2_fsell_ANY_up_m10__R2,A3,[상승 추세(60일선 위)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn2_regime,94,상승 추세(60일선 위)
+A3c_mig_dn2_fsell_ANY_up_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn2_regime,69,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn2_fsell_ANY_up_m10__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn2_regime,47,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn_Q_up_m10__R2,A3,[상승 추세(60일선 위)] 분기물 콜벽이 아래로 내려옴(상단 낮춤) → 10일 상승,1,wallmig_dn_regime,133,상승 추세(60일선 위)
+A3c_mig_dn_Q_up_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 분기물 콜벽이 아래로 내려옴(상단 낮춤) → 10일 상승,1,wallmig_dn_regime,79,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn_Q_up_m10__R9,A3,[60일 고점 1% 안(신고가 근처)] 분기물 콜벽이 아래로 내려옴(상단 낮춤) → 10일 상승,1,wallmig_dn_regime,37,60일 고점 1% 안(신고가 근처)
+A3c_mig_dn_Q_up_m10__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 분기물 콜벽이 아래로 내려옴(상단 낮춤) → 10일 상승,1,wallmig_dn_regime,53,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn2_F0_up_m5__R2,A3,[상승 추세(60일선 위)] 근월물 콜벽이 5일 안 2번 이상 내려옴 → 5일 상승,1,wallmig_dn2_regime,130,상승 추세(60일선 위)
+A3c_mig_dn2_F0_up_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 콜벽이 5일 안 2번 이상 내려옴 → 5일 상승,1,wallmig_dn2_regime,96,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn2_F0_up_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 콜벽이 5일 안 2번 이상 내려옴 → 5일 상승,1,wallmig_dn2_regime,24,60일 고점 1% 안(신고가 근처)
+A3c_mig_dn2_F0_up_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 콜벽이 5일 안 2번 이상 내려옴 → 5일 상승,1,wallmig_dn2_regime,68,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn2_F0_up_m10__R2,A3,[상승 추세(60일선 위)] 근월물 콜벽이 5일 안 2번 이상 내려옴 → 10일 상승,1,wallmig_dn2_regime,130,상승 추세(60일선 위)
+A3c_mig_dn2_F0_up_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 콜벽이 5일 안 2번 이상 내려옴 → 10일 상승,1,wallmig_dn2_regime,96,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn2_F0_up_m10__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 콜벽이 5일 안 2번 이상 내려옴 → 10일 상승,1,wallmig_dn2_regime,24,60일 고점 1% 안(신고가 근처)
+A3c_mig_dn2_F0_up_m10__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 콜벽이 5일 안 2번 이상 내려옴 → 10일 상승,1,wallmig_dn2_regime,68,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_bar_onset_F0_k1.0_up__R2,A3,[상승 추세(60일선 위)] 근월물 콜 집중 시작일 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_onset_F0_regime,44,상승 추세(60일선 위)
+A3c_bar_onset_F0_k1.0_up__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 콜 집중 시작일 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_onset_F0_regime,26,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_onset_F0_k1.0_up__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 콜 집중 시작일 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_onset_F0_regime,29,60일 고점 1% 안(신고가 근처)
+A3c_bar_onset_F0_k1.0_up__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 콜 집중 시작일 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_onset_F0_regime,20,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_up2_F0_up_m10__R2,A3,[상승 추세(60일선 위)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 상승,1,wallmig_up2_regime,126,상승 추세(60일선 위)
+A3c_mig_up2_F0_up_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 상승,1,wallmig_up2_regime,60,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_up2_F0_up_m10__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 상승,1,wallmig_up2_regime,77,60일 고점 1% 안(신고가 근처)
+A3c_mig_up2_F0_up_m10__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 상승,1,wallmig_up2_regime,50,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_up2_F0_up_m10__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 상승,1,wallmig_up2_regime,33,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_dn2_fsell_Q_up_m5__R2,A3,[상승 추세(60일선 위)] 분기물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn2_regime,28,상승 추세(60일선 위)
+A3c_mig_dn2_fsell_Q_up_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 분기물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn2_regime,21,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn_ANY_up_m10__R2,A3,[상승 추세(60일선 위)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) → 10일 상승,1,wallmig_dn_regime,355,상승 추세(60일선 위)
+A3c_mig_dn_ANY_up_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) → 10일 상승,1,wallmig_dn_regime,238,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn_ANY_up_m10__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) → 10일 상승,1,wallmig_dn_regime,100,60일 고점 1% 안(신고가 근처)
+A3c_mig_dn_ANY_up_m10__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) → 10일 상승,1,wallmig_dn_regime,161,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn_ANY_up_m10__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) → 10일 상승,1,wallmig_dn_regime,55,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_dn2_ANY_up_m5__R2,A3,[상승 추세(60일선 위)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 → 5일 상승,1,wallmig_dn2_regime,166,상승 추세(60일선 위)
+A3c_mig_dn2_ANY_up_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 → 5일 상승,1,wallmig_dn2_regime,120,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn2_ANY_up_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 → 5일 상승,1,wallmig_dn2_regime,34,60일 고점 1% 안(신고가 근처)
+A3c_mig_dn2_ANY_up_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 → 5일 상승,1,wallmig_dn2_regime,81,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn2_ANY_up_m5__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 → 5일 상승,1,wallmig_dn2_regime,20,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_dn_F0_up_m10__R2,A3,[상승 추세(60일선 위)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) → 10일 상승,1,wallmig_dn_regime,234,상승 추세(60일선 위)
+A3c_mig_dn_F0_up_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) → 10일 상승,1,wallmig_dn_regime,164,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn_F0_up_m10__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) → 10일 상승,1,wallmig_dn_regime,55,60일 고점 1% 안(신고가 근처)
+A3c_mig_dn_F0_up_m10__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) → 10일 상승,1,wallmig_dn_regime,112,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn_F0_up_m10__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) → 10일 상승,1,wallmig_dn_regime,34,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_onset_F0_m10__R2,A3,[상승 추세(60일선 위)] F0 콜 집중 상위25% 시작일 → 10일 상승,1,onset_regime,44,상승 추세(60일선 위)
+A3c_onset_F0_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] F0 콜 집중 상위25% 시작일 → 10일 상승,1,onset_regime,26,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_onset_F0_m10__R9,A3,[60일 고점 1% 안(신고가 근처)] F0 콜 집중 상위25% 시작일 → 10일 상승,1,onset_regime,29,60일 고점 1% 안(신고가 근처)
+A3c_onset_F0_m10__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] F0 콜 집중 상위25% 시작일 → 10일 상승,1,onset_regime,20,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_bar_dom_share_Q_k1.5_up__R2,A3,[상승 추세(60일선 위)] 분기물 콜 집중 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_dom_share_Q_regime,55,상승 추세(60일선 위)
+A3c_bar_dom_share_Q_k1.5_up__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 분기물 콜 집중 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_dom_share_Q_regime,23,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_dom_share_Q_k1.5_up__R9,A3,[60일 고점 1% 안(신고가 근처)] 분기물 콜 집중 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_dom_share_Q_regime,28,60일 고점 1% 안(신고가 근처)
+A3c_bar_dom_share_Q_k1.5_up__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 분기물 콜 집중 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_dom_share_Q_regime,19,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_bar_mig_dn2_ANY_k1.5_up__R2,A3,[상승 추세(60일선 위)] 콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_mig_dn2_ANY_regime,166,상승 추세(60일선 위)
+A3c_bar_mig_dn2_ANY_k1.5_up__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_mig_dn2_ANY_regime,120,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_mig_dn2_ANY_k1.5_up__R9,A3,[60일 고점 1% 안(신고가 근처)] 콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_mig_dn2_ANY_regime,34,60일 고점 1% 안(신고가 근처)
+A3c_bar_mig_dn2_ANY_k1.5_up__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_mig_dn2_ANY_regime,81,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_bar_mig_dn2_ANY_k1.5_up__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_mig_dn2_ANY_regime,20,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_dn_F0_up_m5__R2,A3,[상승 추세(60일선 위)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) → 5일 상승,1,wallmig_dn_regime,234,상승 추세(60일선 위)
+A3c_mig_dn_F0_up_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) → 5일 상승,1,wallmig_dn_regime,164,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn_F0_up_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) → 5일 상승,1,wallmig_dn_regime,55,60일 고점 1% 안(신고가 근처)
+A3c_mig_dn_F0_up_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) → 5일 상승,1,wallmig_dn_regime,112,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn_F0_up_m5__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) → 5일 상승,1,wallmig_dn_regime,34,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_up2_ANY_up_m10__R2,A3,[상승 추세(60일선 위)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 상승,1,wallmig_up2_regime,190,상승 추세(60일선 위)
+A3c_mig_up2_ANY_up_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 상승,1,wallmig_up2_regime,83,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_up2_ANY_up_m10__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 상승,1,wallmig_up2_regime,115,60일 고점 1% 안(신고가 근처)
+A3c_mig_up2_ANY_up_m10__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 상승,1,wallmig_up2_regime,71,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_up2_ANY_up_m10__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 상승,1,wallmig_up2_regime,48,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_dn_Q_up_m5__R2,A3,[상승 추세(60일선 위)] 분기물 콜벽이 아래로 내려옴(상단 낮춤) → 5일 상승,1,wallmig_dn_regime,133,상승 추세(60일선 위)
+A3c_mig_dn_Q_up_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 분기물 콜벽이 아래로 내려옴(상단 낮춤) → 5일 상승,1,wallmig_dn_regime,79,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn_Q_up_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 분기물 콜벽이 아래로 내려옴(상단 낮춤) → 5일 상승,1,wallmig_dn_regime,37,60일 고점 1% 안(신고가 근처)
+A3c_mig_dn_Q_up_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 분기물 콜벽이 아래로 내려옴(상단 낮춤) → 5일 상승,1,wallmig_dn_regime,53,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn_Q_up_m5__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 분기물 콜벽이 아래로 내려옴(상단 낮춤) → 5일 상승,1,wallmig_dn_regime,18,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_dn_fsell_ANY_up_m10__R2,A3,[상승 추세(60일선 위)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn_regime,183,상승 추세(60일선 위)
+A3c_mig_dn_fsell_ANY_up_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn_regime,125,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn_fsell_ANY_up_m10__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn_regime,36,60일 고점 1% 안(신고가 근처)
+A3c_mig_dn_fsell_ANY_up_m10__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn_regime,85,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn_fsell_ANY_up_m10__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn_regime,20,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_dn2_fsell_ANY_up_m5__R2,A3,[상승 추세(60일선 위)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn2_regime,94,상승 추세(60일선 위)
+A3c_mig_dn2_fsell_ANY_up_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn2_regime,69,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn2_fsell_ANY_up_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn2_regime,47,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_bar_mig_up2_ANY_fsell_k1.0_up__R2,A3,[상승 추세(60일선 위)] 콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_mig_up2_ANY_regime,90,상승 추세(60일선 위)
+A3c_bar_mig_up2_ANY_fsell_k1.0_up__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_mig_up2_ANY_regime,34,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_mig_up2_ANY_fsell_k1.0_up__R9,A3,[60일 고점 1% 안(신고가 근처)] 콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_mig_up2_ANY_regime,59,60일 고점 1% 안(신고가 근처)
+A3c_bar_mig_up2_ANY_fsell_k1.0_up__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_mig_up2_ANY_regime,30,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_bar_mig_up2_ANY_fsell_k1.0_up__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_mig_up2_ANY_regime,20,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_bar_mig_up2_ANY_fsell_k1.5_up__R2,A3,[상승 추세(60일선 위)] 콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_mig_up2_ANY_regime,90,상승 추세(60일선 위)
+A3c_bar_mig_up2_ANY_fsell_k1.5_up__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_mig_up2_ANY_regime,34,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_mig_up2_ANY_fsell_k1.5_up__R9,A3,[60일 고점 1% 안(신고가 근처)] 콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_mig_up2_ANY_regime,59,60일 고점 1% 안(신고가 근처)
+A3c_bar_mig_up2_ANY_fsell_k1.5_up__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_mig_up2_ANY_regime,30,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_bar_mig_up2_ANY_fsell_k1.5_up__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_mig_up2_ANY_regime,20,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_dn2_fsell_F0_up_m5__R2,A3,[상승 추세(60일선 위)] 근월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn2_regime,78,상승 추세(60일선 위)
+A3c_mig_dn2_fsell_F0_up_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn2_regime,55,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn2_fsell_F0_up_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn2_regime,40,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn2_fsell_F0_up_m10__R2,A3,[상승 추세(60일선 위)] 근월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn2_regime,78,상승 추세(60일선 위)
+A3c_mig_dn2_fsell_F0_up_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn2_regime,55,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn2_fsell_F0_up_m10__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn2_regime,40,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_bar_mig_up2_ANY_k1.5_up__R2,A3,[상승 추세(60일선 위)] 콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_mig_up2_ANY_regime,190,상승 추세(60일선 위)
+A3c_bar_mig_up2_ANY_k1.5_up__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_mig_up2_ANY_regime,83,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_mig_up2_ANY_k1.5_up__R9,A3,[60일 고점 1% 안(신고가 근처)] 콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_mig_up2_ANY_regime,115,60일 고점 1% 안(신고가 근처)
+A3c_bar_mig_up2_ANY_k1.5_up__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_mig_up2_ANY_regime,71,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_bar_mig_up2_ANY_k1.5_up__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_mig_up2_ANY_regime,48,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_bar_mig_up2_ANY_k1.0_up__R2,A3,[상승 추세(60일선 위)] 콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_mig_up2_ANY_regime,190,상승 추세(60일선 위)
+A3c_bar_mig_up2_ANY_k1.0_up__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_mig_up2_ANY_regime,83,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_mig_up2_ANY_k1.0_up__R9,A3,[60일 고점 1% 안(신고가 근처)] 콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_mig_up2_ANY_regime,115,60일 고점 1% 안(신고가 근처)
+A3c_bar_mig_up2_ANY_k1.0_up__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_mig_up2_ANY_regime,71,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_bar_mig_up2_ANY_k1.0_up__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_mig_up2_ANY_regime,48,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_dn_fsell_F0_up_m10__R2,A3,[상승 추세(60일선 위)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn_regime,129,상승 추세(60일선 위)
+A3c_mig_dn_fsell_F0_up_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn_regime,89,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn_fsell_F0_up_m10__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn_regime,19,60일 고점 1% 안(신고가 근처)
+A3c_mig_dn_fsell_F0_up_m10__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn_regime,60,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn2_fsell_Q_up_m10__R2,A3,[상승 추세(60일선 위)] 분기물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn2_regime,28,상승 추세(60일선 위)
+A3c_mig_dn2_fsell_Q_up_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 분기물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn2_regime,21,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_onset_F0_k1.5_up__R2,A3,[상승 추세(60일선 위)] 근월물 콜 집중 시작일 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_onset_F0_regime,44,상승 추세(60일선 위)
+A3c_bar_onset_F0_k1.5_up__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 콜 집중 시작일 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_onset_F0_regime,26,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_onset_F0_k1.5_up__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 콜 집중 시작일 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_onset_F0_regime,29,60일 고점 1% 안(신고가 근처)
+A3c_bar_onset_F0_k1.5_up__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 콜 집중 시작일 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_onset_F0_regime,20,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn_fbuy_ANY_up_m5__R2,A3,[상승 추세(60일선 위)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn_regime,172,상승 추세(60일선 위)
+A3c_mig_dn_fbuy_ANY_up_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn_regime,113,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn_fbuy_ANY_up_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn_regime,64,60일 고점 1% 안(신고가 근처)
+A3c_mig_dn_fbuy_ANY_up_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn_regime,76,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn_fbuy_ANY_up_m5__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn_regime,35,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_dn_ANY_up_m5__R2,A3,[상승 추세(60일선 위)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) → 5일 상승,1,wallmig_dn_regime,355,상승 추세(60일선 위)
+A3c_mig_dn_ANY_up_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) → 5일 상승,1,wallmig_dn_regime,238,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn_ANY_up_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) → 5일 상승,1,wallmig_dn_regime,100,60일 고점 1% 안(신고가 근처)
+A3c_mig_dn_ANY_up_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) → 5일 상승,1,wallmig_dn_regime,161,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn_ANY_up_m5__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) → 5일 상승,1,wallmig_dn_regime,55,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_dn_fsell_F0_up_m5__R2,A3,[상승 추세(60일선 위)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn_regime,129,상승 추세(60일선 위)
+A3c_mig_dn_fsell_F0_up_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn_regime,89,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn_fsell_F0_up_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn_regime,19,60일 고점 1% 안(신고가 근처)
+A3c_mig_dn_fsell_F0_up_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn_regime,60,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_up2_F1_dn_m5__R2,A3,[상승 추세(60일선 위)] 차월물 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 하락,-1,wallmig_up2_regime,62,상승 추세(60일선 위)
+A3c_mig_up2_F1_dn_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 차월물 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 하락,-1,wallmig_up2_regime,39,60일 고점 1% 안(신고가 근처)
+A3c_bar_mig_dn2_ANY_fsell_k1.5_up__R2,A3,[상승 추세(60일선 위)] 콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_mig_dn2_ANY_regime,94,상승 추세(60일선 위)
+A3c_bar_mig_dn2_ANY_fsell_k1.5_up__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_mig_dn2_ANY_regime,69,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_mig_dn2_ANY_fsell_k1.5_up__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_mig_dn2_ANY_regime,47,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_bar_old20_near_k1.0_up__R2,A3,[상승 추세(60일선 위)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_old20_near_regime,133,상승 추세(60일선 위)
+A3c_bar_old20_near_k1.0_up__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_old20_near_regime,69,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_old20_near_k1.0_up__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_old20_near_regime,60,60일 고점 1% 안(신고가 근처)
+A3c_bar_old20_near_k1.0_up__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_old20_near_regime,66,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_bar_old20_near_k1.0_up__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_old20_near_regime,39,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_up2_fsell_F0_up_m5__R2,A3,[상승 추세(60일선 위)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 상승,1,wallmig_up2_regime,59,상승 추세(60일선 위)
+A3c_mig_up2_fsell_F0_up_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 상승,1,wallmig_up2_regime,20,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_up2_fsell_F0_up_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 상승,1,wallmig_up2_regime,39,60일 고점 1% 안(신고가 근처)
+A3c_mig_up2_fsell_F0_up_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 상승,1,wallmig_up2_regime,18,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn_fsell_ANY_up_m5__R2,A3,[상승 추세(60일선 위)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn_regime,183,상승 추세(60일선 위)
+A3c_mig_dn_fsell_ANY_up_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn_regime,125,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn_fsell_ANY_up_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn_regime,36,60일 고점 1% 안(신고가 근처)
+A3c_mig_dn_fsell_ANY_up_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn_regime,85,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn_fsell_ANY_up_m5__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn_regime,20,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_bar_old20_cross_k1.0_up__R2,A3,[상승 추세(60일선 위)] 근월물 20일 전 벽 종가 돌파 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_old20_cross_regime,94,상승 추세(60일선 위)
+A3c_bar_old20_cross_k1.0_up__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 20일 전 벽 종가 돌파 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_old20_cross_regime,38,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_old20_cross_k1.0_up__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 20일 전 벽 종가 돌파 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_old20_cross_regime,58,60일 고점 1% 안(신고가 근처)
+A3c_bar_old20_cross_k1.0_up__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 20일 전 벽 종가 돌파 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_old20_cross_regime,37,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_bar_old20_cross_k1.0_up__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월물 20일 전 벽 종가 돌파 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_old20_cross_regime,32,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_dn_fsell_Q_up_m5__R2,A3,[상승 추세(60일선 위)] 분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn_regime,72,상승 추세(60일선 위)
+A3c_mig_dn_fsell_Q_up_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn_regime,44,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn_fsell_Q_up_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn_regime,30,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_up2_F0_up_m5__R2,A3,[상승 추세(60일선 위)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 상승,1,wallmig_up2_regime,126,상승 추세(60일선 위)
+A3c_mig_up2_F0_up_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 상승,1,wallmig_up2_regime,60,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_up2_F0_up_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 상승,1,wallmig_up2_regime,77,60일 고점 1% 안(신고가 근처)
+A3c_mig_up2_F0_up_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 상승,1,wallmig_up2_regime,50,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_up2_F0_up_m5__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 상승,1,wallmig_up2_regime,33,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_bar_mig_dn2_ANY_k1.0_up__R2,A3,[상승 추세(60일선 위)] 콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_mig_dn2_ANY_regime,166,상승 추세(60일선 위)
+A3c_bar_mig_dn2_ANY_k1.0_up__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_mig_dn2_ANY_regime,120,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_mig_dn2_ANY_k1.0_up__R9,A3,[60일 고점 1% 안(신고가 근처)] 콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_mig_dn2_ANY_regime,34,60일 고점 1% 안(신고가 근처)
+A3c_bar_mig_dn2_ANY_k1.0_up__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_mig_dn2_ANY_regime,81,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_bar_mig_dn2_ANY_k1.0_up__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_mig_dn2_ANY_regime,20,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_onset_F0_m3__R2,A3,[상승 추세(60일선 위)] F0 콜 집중 상위25% 시작일 → 3일 상승,1,onset_regime,44,상승 추세(60일선 위)
+A3c_onset_F0_m3__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] F0 콜 집중 상위25% 시작일 → 3일 상승,1,onset_regime,26,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_onset_F0_m3__R9,A3,[60일 고점 1% 안(신고가 근처)] F0 콜 집중 상위25% 시작일 → 3일 상승,1,onset_regime,29,60일 고점 1% 안(신고가 근처)
+A3c_onset_F0_m3__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] F0 콜 집중 상위25% 시작일 → 3일 상승,1,onset_regime,20,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_up2_fbuy_F0_up_m5__R2,A3,[상승 추세(60일선 위)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 상승,1,wallmig_up2_regime,67,상승 추세(60일선 위)
+A3c_mig_up2_fbuy_F0_up_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 상승,1,wallmig_up2_regime,40,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_up2_fbuy_F0_up_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 상승,1,wallmig_up2_regime,38,60일 고점 1% 안(신고가 근처)
+A3c_mig_up2_fbuy_F0_up_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 상승,1,wallmig_up2_regime,32,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_up2_fbuy_F0_up_m5__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 상승,1,wallmig_up2_regime,21,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_up2_fbuy_F0_up_m10__R2,A3,[상승 추세(60일선 위)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 상승,1,wallmig_up2_regime,67,상승 추세(60일선 위)
+A3c_mig_up2_fbuy_F0_up_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 상승,1,wallmig_up2_regime,40,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_up2_fbuy_F0_up_m10__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 상승,1,wallmig_up2_regime,38,60일 고점 1% 안(신고가 근처)
+A3c_mig_up2_fbuy_F0_up_m10__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 상승,1,wallmig_up2_regime,32,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_up2_fbuy_F0_up_m10__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 상승,1,wallmig_up2_regime,21,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_dn_fsell_Q_up_m10__R2,A3,[상승 추세(60일선 위)] 분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn_regime,72,상승 추세(60일선 위)
+A3c_mig_dn_fsell_Q_up_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn_regime,44,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn_fsell_Q_up_m10__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn_regime,30,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_old20_near_m3__R2,A3,[상승 추세(60일선 위)] 근월물 20일 전 벽 1% 안까지 와서 종가는 아래 → 3일 하락,-1,oldwall_near_regime,133,상승 추세(60일선 위)
+A3c_old20_near_m3__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 20일 전 벽 1% 안까지 와서 종가는 아래 → 3일 하락,-1,oldwall_near_regime,69,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_old20_near_m3__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 20일 전 벽 1% 안까지 와서 종가는 아래 → 3일 하락,-1,oldwall_near_regime,60,60일 고점 1% 안(신고가 근처)
+A3c_old20_near_m3__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 20일 전 벽 1% 안까지 와서 종가는 아래 → 3일 하락,-1,oldwall_near_regime,66,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_old20_near_m3__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월물 20일 전 벽 1% 안까지 와서 종가는 아래 → 3일 하락,-1,oldwall_near_regime,39,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_up2_F1_up_m10__R2,A3,[상승 추세(60일선 위)] 차월물 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 상승,1,wallmig_up2_regime,62,상승 추세(60일선 위)
+A3c_mig_up2_F1_up_m10__R9,A3,[60일 고점 1% 안(신고가 근처)] 차월물 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 상승,1,wallmig_up2_regime,39,60일 고점 1% 안(신고가 근처)
+A3c_mig_up2_fsell_ANY_up_m5__R2,A3,[상승 추세(60일선 위)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 상승,1,wallmig_up2_regime,90,상승 추세(60일선 위)
+A3c_mig_up2_fsell_ANY_up_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 상승,1,wallmig_up2_regime,34,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_up2_fsell_ANY_up_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 상승,1,wallmig_up2_regime,59,60일 고점 1% 안(신고가 근처)
+A3c_mig_up2_fsell_ANY_up_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 상승,1,wallmig_up2_regime,30,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_up2_fsell_ANY_up_m5__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 상승,1,wallmig_up2_regime,20,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_up2_fbuy_ANY_up_m10__R2,A3,[상승 추세(60일선 위)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 상승,1,wallmig_up2_regime,100,상승 추세(60일선 위)
+A3c_mig_up2_fbuy_ANY_up_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 상승,1,wallmig_up2_regime,49,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_up2_fbuy_ANY_up_m10__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 상승,1,wallmig_up2_regime,56,60일 고점 1% 안(신고가 근처)
+A3c_mig_up2_fbuy_ANY_up_m10__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 상승,1,wallmig_up2_regime,41,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_up2_fbuy_ANY_up_m10__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 상승,1,wallmig_up2_regime,28,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_bar_dom_r12_F0_k1.0_up__R2,A3,[상승 추세(60일선 위)] 근월물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_dom_r12_F0_regime,56,상승 추세(60일선 위)
+A3c_bar_dom_r12_F0_k1.0_up__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_dom_r12_F0_regime,33,60일 고점 1% 안(신고가 근처)
+A3c_bar_old20_cross_k1.5_up__R2,A3,[상승 추세(60일선 위)] 근월물 20일 전 벽 종가 돌파 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_old20_cross_regime,94,상승 추세(60일선 위)
+A3c_bar_old20_cross_k1.5_up__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 20일 전 벽 종가 돌파 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_old20_cross_regime,38,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_old20_cross_k1.5_up__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 20일 전 벽 종가 돌파 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_old20_cross_regime,58,60일 고점 1% 안(신고가 근처)
+A3c_bar_old20_cross_k1.5_up__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 20일 전 벽 종가 돌파 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_old20_cross_regime,37,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_bar_old20_cross_k1.5_up__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월물 20일 전 벽 종가 돌파 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_old20_cross_regime,32,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_bar_old20_near_fsell_k1.0_up__R2,A3,[상승 추세(60일선 위)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_old20_near_regime,61,상승 추세(60일선 위)
+A3c_bar_old20_near_fsell_k1.0_up__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_old20_near_regime,32,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_old20_near_fsell_k1.0_up__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_old20_near_regime,26,60일 고점 1% 안(신고가 근처)
+A3c_bar_old20_near_fsell_k1.0_up__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_old20_near_regime,30,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_bar_old20_near_k1.5_up__R2,A3,[상승 추세(60일선 위)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_old20_near_regime,133,상승 추세(60일선 위)
+A3c_bar_old20_near_k1.5_up__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_old20_near_regime,69,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_old20_near_k1.5_up__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_old20_near_regime,60,60일 고점 1% 안(신고가 근처)
+A3c_bar_old20_near_k1.5_up__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_old20_near_regime,66,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_bar_old20_near_k1.5_up__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_old20_near_regime,39,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_up2_ANY_up_m5__R2,A3,[상승 추세(60일선 위)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 상승,1,wallmig_up2_regime,190,상승 추세(60일선 위)
+A3c_mig_up2_ANY_up_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 상승,1,wallmig_up2_regime,83,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_up2_ANY_up_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 상승,1,wallmig_up2_regime,115,60일 고점 1% 안(신고가 근처)
+A3c_mig_up2_ANY_up_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 상승,1,wallmig_up2_regime,71,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_up2_ANY_up_m5__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 상승,1,wallmig_up2_regime,48,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_bar_mig_dn2_ANY_fsell_k1.0_up__R2,A3,[상승 추세(60일선 위)] 콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_mig_dn2_ANY_regime,94,상승 추세(60일선 위)
+A3c_bar_mig_dn2_ANY_fsell_k1.0_up__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_mig_dn2_ANY_regime,69,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_mig_dn2_ANY_fsell_k1.0_up__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_mig_dn2_ANY_regime,47,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_old20_near_m5__R2,A3,[상승 추세(60일선 위)] 근월물 20일 전 벽 1% 안까지 와서 종가는 아래 → 5일 하락,-1,oldwall_near_regime,133,상승 추세(60일선 위)
+A3c_old20_near_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 20일 전 벽 1% 안까지 와서 종가는 아래 → 5일 하락,-1,oldwall_near_regime,69,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_old20_near_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 20일 전 벽 1% 안까지 와서 종가는 아래 → 5일 하락,-1,oldwall_near_regime,60,60일 고점 1% 안(신고가 근처)
+A3c_old20_near_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 20일 전 벽 1% 안까지 와서 종가는 아래 → 5일 하락,-1,oldwall_near_regime,66,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_old20_near_m5__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월물 20일 전 벽 1% 안까지 와서 종가는 아래 → 5일 하락,-1,oldwall_near_regime,39,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_bar_dom_r12_Q_k1.0_dn__R2,A3,[상승 추세(60일선 위)] 분기물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_dom_r12_Q_regime,68,상승 추세(60일선 위)
+A3c_bar_dom_r12_Q_k1.0_dn__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 분기물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_dom_r12_Q_regime,23,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_dom_r12_Q_k1.0_dn__R9,A3,[60일 고점 1% 안(신고가 근처)] 분기물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_dom_r12_Q_regime,32,60일 고점 1% 안(신고가 근처)
+A3c_bar_dom_r12_Q_k1.5_up__R2,A3,[상승 추세(60일선 위)] 분기물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_dom_r12_Q_regime,68,상승 추세(60일선 위)
+A3c_bar_dom_r12_Q_k1.5_up__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 분기물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_dom_r12_Q_regime,23,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_dom_r12_Q_k1.5_up__R9,A3,[60일 고점 1% 안(신고가 근처)] 분기물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_dom_r12_Q_regime,32,60일 고점 1% 안(신고가 근처)
+A3c_bar_old20_near_fsell_k1.5_up__R2,A3,[상승 추세(60일선 위)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_old20_near_regime,61,상승 추세(60일선 위)
+A3c_bar_old20_near_fsell_k1.5_up__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_old20_near_regime,32,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_old20_near_fsell_k1.5_up__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_old20_near_regime,26,60일 고점 1% 안(신고가 근처)
+A3c_bar_old20_near_fsell_k1.5_up__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_old20_near_regime,30,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_up2_fbuy_ANY_up_m5__R2,A3,[상승 추세(60일선 위)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 상승,1,wallmig_up2_regime,100,상승 추세(60일선 위)
+A3c_mig_up2_fbuy_ANY_up_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 상승,1,wallmig_up2_regime,49,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_up2_fbuy_ANY_up_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 상승,1,wallmig_up2_regime,56,60일 고점 1% 안(신고가 근처)
+A3c_mig_up2_fbuy_ANY_up_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 상승,1,wallmig_up2_regime,41,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_up2_fbuy_ANY_up_m5__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 상승,1,wallmig_up2_regime,28,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_bar_dom_r12_F0_k1.5_up__R2,A3,[상승 추세(60일선 위)] 근월물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_dom_r12_F0_regime,56,상승 추세(60일선 위)
+A3c_bar_dom_r12_F0_k1.5_up__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_dom_r12_F0_regime,33,60일 고점 1% 안(신고가 근처)
+A3c_bar_dom_r12_F0_k1.5_dn__R2,A3,[상승 추세(60일선 위)] 근월물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_dom_r12_F0_regime,56,상승 추세(60일선 위)
+A3c_bar_dom_r12_F0_k1.5_dn__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_dom_r12_F0_regime,33,60일 고점 1% 안(신고가 근처)
+A3c_old10_near_m5__R2,A3,[상승 추세(60일선 위)] 근월물 10일 전 벽 1% 안까지 와서 종가는 아래 → 5일 하락,-1,oldwall_near_regime,122,상승 추세(60일선 위)
+A3c_old10_near_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 10일 전 벽 1% 안까지 와서 종가는 아래 → 5일 하락,-1,oldwall_near_regime,53,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_old10_near_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 10일 전 벽 1% 안까지 와서 종가는 아래 → 5일 하락,-1,oldwall_near_regime,61,60일 고점 1% 안(신고가 근처)
+A3c_old10_near_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 10일 전 벽 1% 안까지 와서 종가는 아래 → 5일 하락,-1,oldwall_near_regime,52,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_old10_near_m5__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월물 10일 전 벽 1% 안까지 와서 종가는 아래 → 5일 하락,-1,oldwall_near_regime,36,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_old10_near_m10__R2,A3,[상승 추세(60일선 위)] 근월물 10일 전 벽 1% 안까지 와서 종가는 아래 → 10일 하락,-1,oldwall_near_regime,122,상승 추세(60일선 위)
+A3c_old10_near_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 10일 전 벽 1% 안까지 와서 종가는 아래 → 10일 하락,-1,oldwall_near_regime,53,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_old10_near_m10__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 10일 전 벽 1% 안까지 와서 종가는 아래 → 10일 하락,-1,oldwall_near_regime,61,60일 고점 1% 안(신고가 근처)
+A3c_old10_near_m10__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 10일 전 벽 1% 안까지 와서 종가는 아래 → 10일 하락,-1,oldwall_near_regime,52,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_old10_near_m10__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월물 10일 전 벽 1% 안까지 와서 종가는 아래 → 10일 하락,-1,oldwall_near_regime,36,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_up2_fbuy_ANY_dn_m5__R2,A3,[상승 추세(60일선 위)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 하락,-1,wallmig_up2_regime,100,상승 추세(60일선 위)
+A3c_mig_up2_fbuy_ANY_dn_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 하락,-1,wallmig_up2_regime,49,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_up2_fbuy_ANY_dn_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 하락,-1,wallmig_up2_regime,56,60일 고점 1% 안(신고가 근처)
+A3c_mig_up2_fbuy_ANY_dn_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 하락,-1,wallmig_up2_regime,41,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_up2_fbuy_ANY_dn_m5__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 하락,-1,wallmig_up2_regime,28,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_bar_dom_r12_Q_k1.0_up__R2,A3,[상승 추세(60일선 위)] 분기물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_dom_r12_Q_regime,68,상승 추세(60일선 위)
+A3c_bar_dom_r12_Q_k1.0_up__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 분기물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_dom_r12_Q_regime,23,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_dom_r12_Q_k1.0_up__R9,A3,[60일 고점 1% 안(신고가 근처)] 분기물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_dom_r12_Q_regime,32,60일 고점 1% 안(신고가 근처)
+A3c_bar_dom_r12_Q_k1.5_dn__R2,A3,[상승 추세(60일선 위)] 분기물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_dom_r12_Q_regime,68,상승 추세(60일선 위)
+A3c_bar_dom_r12_Q_k1.5_dn__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 분기물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_dom_r12_Q_regime,23,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_dom_r12_Q_k1.5_dn__R9,A3,[60일 고점 1% 안(신고가 근처)] 분기물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_dom_r12_Q_regime,32,60일 고점 1% 안(신고가 근처)
+A3c_bar_old20_near_fsell_k1.5_dn__R2,A3,[상승 추세(60일선 위)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_old20_near_regime,61,상승 추세(60일선 위)
+A3c_bar_old20_near_fsell_k1.5_dn__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_old20_near_regime,32,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_old20_near_fsell_k1.5_dn__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_old20_near_regime,26,60일 고점 1% 안(신고가 근처)
+A3c_bar_old20_near_fsell_k1.5_dn__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_old20_near_regime,30,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_old20_near_m10__R2,A3,[상승 추세(60일선 위)] 근월물 20일 전 벽 1% 안까지 와서 종가는 아래 → 10일 하락,-1,oldwall_near_regime,133,상승 추세(60일선 위)
+A3c_old20_near_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 20일 전 벽 1% 안까지 와서 종가는 아래 → 10일 하락,-1,oldwall_near_regime,69,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_old20_near_m10__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 20일 전 벽 1% 안까지 와서 종가는 아래 → 10일 하락,-1,oldwall_near_regime,60,60일 고점 1% 안(신고가 근처)
+A3c_old20_near_m10__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 20일 전 벽 1% 안까지 와서 종가는 아래 → 10일 하락,-1,oldwall_near_regime,66,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_old20_near_m10__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월물 20일 전 벽 1% 안까지 와서 종가는 아래 → 10일 하락,-1,oldwall_near_regime,39,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_bar_mig_dn2_ANY_fsell_k1.0_dn__R2,A3,[상승 추세(60일선 위)] 콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_mig_dn2_ANY_regime,94,상승 추세(60일선 위)
+A3c_bar_mig_dn2_ANY_fsell_k1.0_dn__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_mig_dn2_ANY_regime,69,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_mig_dn2_ANY_fsell_k1.0_dn__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_mig_dn2_ANY_regime,47,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_old20_cross_m3__R2,A3,[상승 추세(60일선 위)] 근월물 20일 전 벽을 종가로 처음 넘음 → 3일 하락,-1,oldwall_cross_regime,94,상승 추세(60일선 위)
+A3c_old20_cross_m3__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 20일 전 벽을 종가로 처음 넘음 → 3일 하락,-1,oldwall_cross_regime,38,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_old20_cross_m3__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 20일 전 벽을 종가로 처음 넘음 → 3일 하락,-1,oldwall_cross_regime,58,60일 고점 1% 안(신고가 근처)
+A3c_old20_cross_m3__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 20일 전 벽을 종가로 처음 넘음 → 3일 하락,-1,oldwall_cross_regime,37,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_old20_cross_m3__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월물 20일 전 벽을 종가로 처음 넘음 → 3일 하락,-1,oldwall_cross_regime,32,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_up2_ANY_dn_m5__R2,A3,[상승 추세(60일선 위)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 하락,-1,wallmig_up2_regime,190,상승 추세(60일선 위)
+A3c_mig_up2_ANY_dn_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 하락,-1,wallmig_up2_regime,83,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_up2_ANY_dn_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 하락,-1,wallmig_up2_regime,115,60일 고점 1% 안(신고가 근처)
+A3c_mig_up2_ANY_dn_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 하락,-1,wallmig_up2_regime,71,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_up2_ANY_dn_m5__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 하락,-1,wallmig_up2_regime,48,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_bar_old20_near_k1.5_dn__R2,A3,[상승 추세(60일선 위)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_old20_near_regime,133,상승 추세(60일선 위)
+A3c_bar_old20_near_k1.5_dn__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_old20_near_regime,69,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_old20_near_k1.5_dn__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_old20_near_regime,60,60일 고점 1% 안(신고가 근처)
+A3c_bar_old20_near_k1.5_dn__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_old20_near_regime,66,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_bar_old20_near_k1.5_dn__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_old20_near_regime,39,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_bar_old20_near_fsell_k1.0_dn__R2,A3,[상승 추세(60일선 위)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_old20_near_regime,61,상승 추세(60일선 위)
+A3c_bar_old20_near_fsell_k1.0_dn__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_old20_near_regime,32,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_old20_near_fsell_k1.0_dn__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_old20_near_regime,26,60일 고점 1% 안(신고가 근처)
+A3c_bar_old20_near_fsell_k1.0_dn__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_old20_near_regime,30,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_bar_old20_cross_k1.5_dn__R2,A3,[상승 추세(60일선 위)] 근월물 20일 전 벽 종가 돌파 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_old20_cross_regime,94,상승 추세(60일선 위)
+A3c_bar_old20_cross_k1.5_dn__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 20일 전 벽 종가 돌파 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_old20_cross_regime,38,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_old20_cross_k1.5_dn__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 20일 전 벽 종가 돌파 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_old20_cross_regime,58,60일 고점 1% 안(신고가 근처)
+A3c_bar_old20_cross_k1.5_dn__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 20일 전 벽 종가 돌파 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_old20_cross_regime,37,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_bar_old20_cross_k1.5_dn__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월물 20일 전 벽 종가 돌파 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_old20_cross_regime,32,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_bar_dom_r12_F0_k1.0_dn__R2,A3,[상승 추세(60일선 위)] 근월물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_dom_r12_F0_regime,56,상승 추세(60일선 위)
+A3c_bar_dom_r12_F0_k1.0_dn__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_dom_r12_F0_regime,33,60일 고점 1% 안(신고가 근처)
+A3c_mig_up2_fbuy_ANY_dn_m10__R2,A3,[상승 추세(60일선 위)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 하락,-1,wallmig_up2_regime,100,상승 추세(60일선 위)
+A3c_mig_up2_fbuy_ANY_dn_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 하락,-1,wallmig_up2_regime,49,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_up2_fbuy_ANY_dn_m10__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 하락,-1,wallmig_up2_regime,56,60일 고점 1% 안(신고가 근처)
+A3c_mig_up2_fbuy_ANY_dn_m10__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 하락,-1,wallmig_up2_regime,41,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_up2_fbuy_ANY_dn_m10__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 하락,-1,wallmig_up2_regime,28,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_up2_fsell_ANY_dn_m5__R2,A3,[상승 추세(60일선 위)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_up2_regime,90,상승 추세(60일선 위)
+A3c_mig_up2_fsell_ANY_dn_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_up2_regime,34,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_up2_fsell_ANY_dn_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_up2_regime,59,60일 고점 1% 안(신고가 근처)
+A3c_mig_up2_fsell_ANY_dn_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_up2_regime,30,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_up2_fsell_ANY_dn_m5__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_up2_regime,20,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_old10_near_m3__R2,A3,[상승 추세(60일선 위)] 근월물 10일 전 벽 1% 안까지 와서 종가는 아래 → 3일 하락,-1,oldwall_near_regime,122,상승 추세(60일선 위)
+A3c_old10_near_m3__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 10일 전 벽 1% 안까지 와서 종가는 아래 → 3일 하락,-1,oldwall_near_regime,53,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_old10_near_m3__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 10일 전 벽 1% 안까지 와서 종가는 아래 → 3일 하락,-1,oldwall_near_regime,61,60일 고점 1% 안(신고가 근처)
+A3c_old10_near_m3__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 10일 전 벽 1% 안까지 와서 종가는 아래 → 3일 하락,-1,oldwall_near_regime,52,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_old10_near_m3__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월물 10일 전 벽 1% 안까지 와서 종가는 아래 → 3일 하락,-1,oldwall_near_regime,36,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_up2_F1_dn_m10__R2,A3,[상승 추세(60일선 위)] 차월물 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 하락,-1,wallmig_up2_regime,62,상승 추세(60일선 위)
+A3c_mig_up2_F1_dn_m10__R9,A3,[60일 고점 1% 안(신고가 근처)] 차월물 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 하락,-1,wallmig_up2_regime,39,60일 고점 1% 안(신고가 근처)
+A3c_mig_dn_fsell_Q_dn_m10__R2,A3,[상승 추세(60일선 위)] 분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 하락,-1,wallmig_dn_regime,72,상승 추세(60일선 위)
+A3c_mig_dn_fsell_Q_dn_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 하락,-1,wallmig_dn_regime,44,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn_fsell_Q_dn_m10__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 하락,-1,wallmig_dn_regime,30,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_old10_cross_m10__R2,A3,[상승 추세(60일선 위)] 근월물 10일 전 벽을 종가로 처음 넘음 → 10일 하락,-1,oldwall_cross_regime,80,상승 추세(60일선 위)
+A3c_old10_cross_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 10일 전 벽을 종가로 처음 넘음 → 10일 하락,-1,oldwall_cross_regime,30,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_old10_cross_m10__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 10일 전 벽을 종가로 처음 넘음 → 10일 하락,-1,oldwall_cross_regime,59,60일 고점 1% 안(신고가 근처)
+A3c_old10_cross_m10__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 10일 전 벽을 종가로 처음 넘음 → 10일 하락,-1,oldwall_cross_regime,30,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_old10_cross_m10__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월물 10일 전 벽을 종가로 처음 넘음 → 10일 하락,-1,oldwall_cross_regime,26,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_up2_fbuy_F0_dn_m5__R2,A3,[상승 추세(60일선 위)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 하락,-1,wallmig_up2_regime,67,상승 추세(60일선 위)
+A3c_mig_up2_fbuy_F0_dn_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 하락,-1,wallmig_up2_regime,40,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_up2_fbuy_F0_dn_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 하락,-1,wallmig_up2_regime,38,60일 고점 1% 안(신고가 근처)
+A3c_mig_up2_fbuy_F0_dn_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 하락,-1,wallmig_up2_regime,32,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_up2_fbuy_F0_dn_m5__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 하락,-1,wallmig_up2_regime,21,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_up2_fbuy_F0_dn_m10__R2,A3,[상승 추세(60일선 위)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 하락,-1,wallmig_up2_regime,67,상승 추세(60일선 위)
+A3c_mig_up2_fbuy_F0_dn_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 하락,-1,wallmig_up2_regime,40,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_up2_fbuy_F0_dn_m10__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 하락,-1,wallmig_up2_regime,38,60일 고점 1% 안(신고가 근처)
+A3c_mig_up2_fbuy_F0_dn_m10__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 하락,-1,wallmig_up2_regime,32,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_up2_fbuy_F0_dn_m10__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 하락,-1,wallmig_up2_regime,21,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_bar_mig_dn2_ANY_k1.0_dn__R2,A3,[상승 추세(60일선 위)] 콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_mig_dn2_ANY_regime,166,상승 추세(60일선 위)
+A3c_bar_mig_dn2_ANY_k1.0_dn__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_mig_dn2_ANY_regime,120,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_mig_dn2_ANY_k1.0_dn__R9,A3,[60일 고점 1% 안(신고가 근처)] 콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_mig_dn2_ANY_regime,34,60일 고점 1% 안(신고가 근처)
+A3c_bar_mig_dn2_ANY_k1.0_dn__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_mig_dn2_ANY_regime,81,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_bar_mig_dn2_ANY_k1.0_dn__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_mig_dn2_ANY_regime,20,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_up2_F0_dn_m5__R2,A3,[상승 추세(60일선 위)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 하락,-1,wallmig_up2_regime,126,상승 추세(60일선 위)
+A3c_mig_up2_F0_dn_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 하락,-1,wallmig_up2_regime,60,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_up2_F0_dn_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 하락,-1,wallmig_up2_regime,77,60일 고점 1% 안(신고가 근처)
+A3c_mig_up2_F0_dn_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 하락,-1,wallmig_up2_regime,50,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_up2_F0_dn_m5__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 하락,-1,wallmig_up2_regime,33,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_dn_fsell_Q_dn_m5__R2,A3,[상승 추세(60일선 위)] 분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 하락,-1,wallmig_dn_regime,72,상승 추세(60일선 위)
+A3c_mig_dn_fsell_Q_dn_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 하락,-1,wallmig_dn_regime,44,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn_fsell_Q_dn_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 하락,-1,wallmig_dn_regime,30,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_old20_cross_m5__R2,A3,[상승 추세(60일선 위)] 근월물 20일 전 벽을 종가로 처음 넘음 → 5일 하락,-1,oldwall_cross_regime,94,상승 추세(60일선 위)
+A3c_old20_cross_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 20일 전 벽을 종가로 처음 넘음 → 5일 하락,-1,oldwall_cross_regime,38,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_old20_cross_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 20일 전 벽을 종가로 처음 넘음 → 5일 하락,-1,oldwall_cross_regime,58,60일 고점 1% 안(신고가 근처)
+A3c_old20_cross_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 20일 전 벽을 종가로 처음 넘음 → 5일 하락,-1,oldwall_cross_regime,37,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_old20_cross_m5__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월물 20일 전 벽을 종가로 처음 넘음 → 5일 하락,-1,oldwall_cross_regime,32,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_bar_old20_cross_k1.0_dn__R2,A3,[상승 추세(60일선 위)] 근월물 20일 전 벽 종가 돌파 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_old20_cross_regime,94,상승 추세(60일선 위)
+A3c_bar_old20_cross_k1.0_dn__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 20일 전 벽 종가 돌파 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_old20_cross_regime,38,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_old20_cross_k1.0_dn__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 20일 전 벽 종가 돌파 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_old20_cross_regime,58,60일 고점 1% 안(신고가 근처)
+A3c_bar_old20_cross_k1.0_dn__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 20일 전 벽 종가 돌파 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_old20_cross_regime,37,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_bar_old20_cross_k1.0_dn__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월물 20일 전 벽 종가 돌파 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_old20_cross_regime,32,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_dn_fsell_ANY_dn_m5__R2,A3,[상승 추세(60일선 위)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 하락,-1,wallmig_dn_regime,183,상승 추세(60일선 위)
+A3c_mig_dn_fsell_ANY_dn_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 하락,-1,wallmig_dn_regime,125,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn_fsell_ANY_dn_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 하락,-1,wallmig_dn_regime,36,60일 고점 1% 안(신고가 근처)
+A3c_mig_dn_fsell_ANY_dn_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 하락,-1,wallmig_dn_regime,85,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn_fsell_ANY_dn_m5__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 하락,-1,wallmig_dn_regime,20,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_up2_fsell_F0_dn_m5__R2,A3,[상승 추세(60일선 위)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_up2_regime,59,상승 추세(60일선 위)
+A3c_mig_up2_fsell_F0_dn_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_up2_regime,20,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_up2_fsell_F0_dn_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_up2_regime,39,60일 고점 1% 안(신고가 근처)
+A3c_mig_up2_fsell_F0_dn_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_up2_regime,18,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_bar_old20_near_k1.0_dn__R2,A3,[상승 추세(60일선 위)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_old20_near_regime,133,상승 추세(60일선 위)
+A3c_bar_old20_near_k1.0_dn__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_old20_near_regime,69,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_old20_near_k1.0_dn__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_old20_near_regime,60,60일 고점 1% 안(신고가 근처)
+A3c_bar_old20_near_k1.0_dn__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_old20_near_regime,66,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_bar_old20_near_k1.0_dn__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월물 20일 전 벽 1% 안 닿고 종가는 아래 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_old20_near_regime,39,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_bar_mig_dn2_ANY_fsell_k1.5_dn__R2,A3,[상승 추세(60일선 위)] 콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_mig_dn2_ANY_regime,94,상승 추세(60일선 위)
+A3c_bar_mig_dn2_ANY_fsell_k1.5_dn__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_mig_dn2_ANY_regime,69,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_mig_dn2_ANY_fsell_k1.5_dn__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_mig_dn2_ANY_regime,47,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_up2_F1_up_m5__R2,A3,[상승 추세(60일선 위)] 차월물 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 상승,1,wallmig_up2_regime,62,상승 추세(60일선 위)
+A3c_mig_up2_F1_up_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 차월물 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 상승,1,wallmig_up2_regime,39,60일 고점 1% 안(신고가 근처)
+A3c_old20_cross_m10__R2,A3,[상승 추세(60일선 위)] 근월물 20일 전 벽을 종가로 처음 넘음 → 10일 하락,-1,oldwall_cross_regime,94,상승 추세(60일선 위)
+A3c_old20_cross_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 20일 전 벽을 종가로 처음 넘음 → 10일 하락,-1,oldwall_cross_regime,38,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_old20_cross_m10__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 20일 전 벽을 종가로 처음 넘음 → 10일 하락,-1,oldwall_cross_regime,58,60일 고점 1% 안(신고가 근처)
+A3c_old20_cross_m10__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 20일 전 벽을 종가로 처음 넘음 → 10일 하락,-1,oldwall_cross_regime,37,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_old20_cross_m10__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월물 20일 전 벽을 종가로 처음 넘음 → 10일 하락,-1,oldwall_cross_regime,32,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_dn_fsell_F0_dn_m5__R2,A3,[상승 추세(60일선 위)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 하락,-1,wallmig_dn_regime,129,상승 추세(60일선 위)
+A3c_mig_dn_fsell_F0_dn_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 하락,-1,wallmig_dn_regime,89,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn_fsell_F0_dn_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 하락,-1,wallmig_dn_regime,19,60일 고점 1% 안(신고가 근처)
+A3c_mig_dn_fsell_F0_dn_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 하락,-1,wallmig_dn_regime,60,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn_ANY_dn_m5__R2,A3,[상승 추세(60일선 위)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) → 5일 하락,-1,wallmig_dn_regime,355,상승 추세(60일선 위)
+A3c_mig_dn_ANY_dn_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) → 5일 하락,-1,wallmig_dn_regime,238,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn_ANY_dn_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) → 5일 하락,-1,wallmig_dn_regime,100,60일 고점 1% 안(신고가 근처)
+A3c_mig_dn_ANY_dn_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) → 5일 하락,-1,wallmig_dn_regime,161,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn_ANY_dn_m5__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) → 5일 하락,-1,wallmig_dn_regime,55,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_old10_cross_m5__R2,A3,[상승 추세(60일선 위)] 근월물 10일 전 벽을 종가로 처음 넘음 → 5일 하락,-1,oldwall_cross_regime,80,상승 추세(60일선 위)
+A3c_old10_cross_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 10일 전 벽을 종가로 처음 넘음 → 5일 하락,-1,oldwall_cross_regime,30,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_old10_cross_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 10일 전 벽을 종가로 처음 넘음 → 5일 하락,-1,oldwall_cross_regime,59,60일 고점 1% 안(신고가 근처)
+A3c_old10_cross_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 10일 전 벽을 종가로 처음 넘음 → 5일 하락,-1,oldwall_cross_regime,30,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_old10_cross_m5__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월물 10일 전 벽을 종가로 처음 넘음 → 5일 하락,-1,oldwall_cross_regime,26,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_bar_onset_F0_k1.5_dn__R2,A3,[상승 추세(60일선 위)] 근월물 콜 집중 시작일 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_onset_F0_regime,44,상승 추세(60일선 위)
+A3c_bar_onset_F0_k1.5_dn__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 콜 집중 시작일 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_onset_F0_regime,26,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_onset_F0_k1.5_dn__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 콜 집중 시작일 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_onset_F0_regime,29,60일 고점 1% 안(신고가 근처)
+A3c_bar_onset_F0_k1.5_dn__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 콜 집중 시작일 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_onset_F0_regime,20,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn_fsell_F0_dn_m10__R2,A3,[상승 추세(60일선 위)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 하락,-1,wallmig_dn_regime,129,상승 추세(60일선 위)
+A3c_mig_dn_fsell_F0_dn_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 하락,-1,wallmig_dn_regime,89,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn_fsell_F0_dn_m10__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 하락,-1,wallmig_dn_regime,19,60일 고점 1% 안(신고가 근처)
+A3c_mig_dn_fsell_F0_dn_m10__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 하락,-1,wallmig_dn_regime,60,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn2_fsell_Q_dn_m10__R2,A3,[상승 추세(60일선 위)] 분기물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 10일 하락,-1,wallmig_dn2_regime,28,상승 추세(60일선 위)
+A3c_mig_dn2_fsell_Q_dn_m10__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 분기물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 10일 하락,-1,wallmig_dn2_regime,21,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_mig_up2_ANY_k1.0_dn__R2,A3,[상승 추세(60일선 위)] 콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_mig_up2_ANY_regime,190,상승 추세(60일선 위)
+A3c_bar_mig_up2_ANY_k1.0_dn__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_mig_up2_ANY_regime,83,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_mig_up2_ANY_k1.0_dn__R9,A3,[60일 고점 1% 안(신고가 근처)] 콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_mig_up2_ANY_regime,115,60일 고점 1% 안(신고가 근처)
+A3c_bar_mig_up2_ANY_k1.0_dn__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_mig_up2_ANY_regime,71,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_bar_mig_up2_ANY_k1.0_dn__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_mig_up2_ANY_regime,48,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_mig_dn_fbuy_ANY_dn_m5__R2,A3,[상승 추세(60일선 위)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 하락,-1,wallmig_dn_regime,172,상승 추세(60일선 위)
+A3c_mig_dn_fbuy_ANY_dn_m5__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 하락,-1,wallmig_dn_regime,113,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_mig_dn_fbuy_ANY_dn_m5__R9,A3,[60일 고점 1% 안(신고가 근처)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 하락,-1,wallmig_dn_regime,64,60일 고점 1% 안(신고가 근처)
+A3c_mig_dn_fbuy_ANY_dn_m5__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 하락,-1,wallmig_dn_regime,76,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_mig_dn_fbuy_ANY_dn_m5__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 하락,-1,wallmig_dn_regime,35,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
+A3c_bar_mig_up2_ANY_k1.5_dn__R2,A3,[상승 추세(60일선 위)] 콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_mig_up2_ANY_regime,190,상승 추세(60일선 위)
+A3c_bar_mig_up2_ANY_k1.5_dn__R5,A3,[변동성 상대 낮음(직전 250일 하위 40%)] 콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_mig_up2_ANY_regime,83,변동성 상대 낮음(직전 250일 하위 40%)
+A3c_bar_mig_up2_ANY_k1.5_dn__R9,A3,[60일 고점 1% 안(신고가 근처)] 콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_mig_up2_ANY_regime,115,60일 고점 1% 안(신고가 근처)
+A3c_bar_mig_up2_ANY_k1.5_dn__R10,A3,[조용한 상승장(60일선 위 + 변동성 상대 낮음)] 콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_mig_up2_ANY_regime,71,조용한 상승장(60일선 위 + 변동성 상대 낮음)
+A3c_bar_mig_up2_ANY_k1.5_dn__R11,A3,[조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)] 콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_mig_up2_ANY_regime,48,조용한 신고가 근처(60일 고점 1% 안 + 변동성 상대 낮음)
