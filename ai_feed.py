@@ -4,9 +4,9 @@
    (예약 작업이 사용량 한도로 멈춰 경고판이 이틀 멈췄던 일을 줄이려는 것 — 숫자 수집은 GitHub Actions 가 맡는다)
 
  출처(모두 1차 원자료, 키가 필요 없는 것 위주)
-   FRED   하이일드 OAS(BAMLH0A0HYM2) · 미국 10년물(DGS10) · WTI(DCOILWTICO) · 미국 실업률(UNRATE)
+   FRED   하이일드 OAS(BAMLH0A0HYM2) · 미국 10년물(DGS10) · 미국 실업률(UNRATE)
           · Ramp AI Index(RAMPAIALL) · 전기요금 CPI 계절조정 전(CUUR0000SEHF01)
-   Yahoo  필라델피아 반도체지수(^SOX) — 2026년 최고 종가 대비 하락률
+   Yahoo  필라델피아 반도체지수(^SOX) — 2026년 최고 종가 대비 하락률 · WTI(CL=F, NYMEX 근월물 — 경고판 보도 기준과 같음)
    코어위브(CRWV) 주가 — Twelve Data(비밀값 TWELVEDATA_API_KEY 가 있을 때), 없거나 실패하면 Yahoo
           (코어위브 5년 CDS 는 무료 원자료가 없어 주가를 보조로만 둔다)
 
@@ -172,6 +172,15 @@ def item_sox():
                 text=f'{sgn(v)}%({md(d)}, {c:,.2f}){note}', source=f'Yahoo ^SOX(고점 {SOX_PEAK_DATE} {SOX_PEAK:,.2f})',
                 url='https://finance.yahoo.com/quote/%5ESOX/history/')
 
+def item_wti():
+    """경고판 macro 'WTI 유가'는 NYMEX 근월물 종가(보도 기준)다 — FRED DCOILWTICO(현물)는 3달러가량 달라 쓰지 않는다(2026-11-20 대조)."""
+    rows = yahoo('CL=F', '3mo')
+    (d, v), (pd_, pv) = last2(rows)
+    return dict(key='wti', board_key='', name='WTI 유가(NYMEX 근월물)', value=round(v, 2), unit='달러/배럴', as_of=d,
+                prev_value=round(pv, 2) if pv else '', prev_as_of=pd_ or '',
+                text=f'{v:.2f}달러({md(d)}, 근월물{", " + sgn((v / pv - 1) * 100, 2) + "%" if pv else ""})',
+                source='Yahoo CL=F(NYMEX WTI 근월물)', url='https://finance.yahoo.com/quote/CL%3DF/history/')
+
 def item_crwv():
     key, src, rows = os.environ.get('TWELVEDATA_API_KEY', '').strip(), '', None
     if key:
@@ -190,7 +199,7 @@ ITEMS = [
     ('hy_oas', lambda: item_daily('hy_oas', 'BAMLH0A0HYM2', '미국 하이일드 스프레드(ICE BofA OAS)', '%',
                                    lambda v, d: f'{v:.2f}%({md(d)})', 'hy_oas')),
     ('us10y', lambda: item_daily('us10y', 'DGS10', '미국 10년물 금리', '%', lambda v, d: f'{v:.2f}%({md(d)})')),
-    ('wti', lambda: item_daily('wti', 'DCOILWTICO', 'WTI 유가', '달러/배럴', lambda v, d: f'{v:.2f}달러({md(d)})')),
+    ('wti', item_wti),
     ('us_unemp', item_unrate), ('ramp_q', item_ramp), ('elec_cpi', item_elec), ('sox_dd', item_sox), ('crwv_px', item_crwv),
 ]
 
