@@ -11,3 +11,4 @@
 [23:50:10] 저장 opt_chainwt_daily.csv.gz 100662행
 [23:50:13] == chainwm
 [23:57:28] opt_chainwm_daily 중간 저장 2024-07-12 (19742행)
+[00:02:40] opt_chainwm_daily 중간 저장 2025-06-27 (39656행)
