@@ -278,10 +278,13 @@ def main():
     YTD, R2 = {}, {}
     for m in ('KOSPI', 'KOSDAQ'):
         y = src.pc(y0, END, m, keep=f'year/Y_{m}_{END[:4]}.csv.gz' if LOCAL else None)
-        p2 = src.pc('20241118', END, m, keep=f'd1/P_{m}_20241118_{END}.csv.gz' if LOCAL else None)
-        if y is None or p2 is None:
-            raise RuntimeError(f'{m} 기간 등락률 못 받음')
-        YTD[m], R2[m] = y['등락률'].astype(float), p2['등락률'].astype(float)
+        if y is None:
+            raise RuntimeError(f'{m} 올해 기간 등락률 못 받음')
+        YTD[m] = y['등락률'].astype(float)
+    # 방어1 2년 수익률(2024-11-15 종가 대비): KRX 기간 등락률은 2년 넘는 구간을 거부하므로 KRX 일별 수정 종가로 계산
+    b0 = days[days < '20241118'][-1]
+    for m in ('KOSPI', 'KOSDAQ'):
+        R2[m] = pd.Series({c: (cl.iloc[-1] / cl[b0] - 1) * 100 for c, cl in CL.items() if mk[c] == m and b0 in cl.index and cl.index[-1] == END}, dtype=float)
 
     def common(c, m):
         f = {}
