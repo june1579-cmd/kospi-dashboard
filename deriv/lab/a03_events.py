@@ -125,9 +125,74 @@ def main():
                     t = pd.DataFrame({'signal': conf, 'exit': [L.exit_after(td, s, mm) for s in conf]}).dropna()
                     cands.append({'id': f'A3_crossdown_conf_{tag}_{N}_{tn}_m{mm}', 'agent': 'A3', 'desc': f'{tag} 콜벽({tn}) 돌파 + 다음 날 외국인 선물 순매도 → {mm}일 하락',
                                   'direction': -1, 'trades': t, 'family': 'cross_down_conf'})
+    if cfg.get('post_expiry', False):
+        cands += post_expiry(W, k2, td, F, dev_end=L.DEV_END, od=od)
     for c in cands: c['trades'] = c['trades'].sort_values('signal').reset_index(drop=True)
     L.save_candidates('a03', cands)
     print('사건', len(E), '개발', len(dev), '후보', len(cands))
+
+
+def post_expiry(W, k2, td, F, dev_end, od):
+    """만기 '뒤' 시험(round.json a03.post_expiry, 갈래 A 라운드 11~): 가설의 '행사가 위로 만든 뒤 매도'를 만기 정산 기준으로.
+    만기 N일 전 벽 K 를 정하고, 만기 종가가 K 위(만들었음)·바로 위(1% 안, 핀)·주기 중 넘고 만기에도 위·아래(대조) 인지로 나눔.
+    신호일 = 만기일(장 마감 뒤 앎), 다음 거래일 시가 진입 → m일. 조건: 만기일 외국인 선물 순매도, 주기 중(관측일 다음 날~만기) 외국인 콜 순매수 합 > 0(콜 보유 → 정산 뒤 정리).
+    방향: 가설(하락)은 모든 조건, 상승은 위·아래 기본만. 서술 통계는 개발 구간만."""
+    OBS_PE = cfg.get('pe_obs', [20, 10, 5, 1]); MS_PE = cfg.get('pe_m', [1, 3, 5, 10, 20]); TAGS_PE = cfg.get('pe_tags', ['F0', 'Q', 'ALL'])
+    ffor = F['fut_for'].reindex(td); cfor = F['call_for'].reindex(td)
+    rows = []
+    for (tag, ym), g in W[W['tag'].isin(TAGS_PE)].groupby(['tag', 'ym']):
+        g = g.sort_values('date'); exp = g['exp'].iloc[0]
+        if exp not in td or exp > td[-1]: continue
+        cexp = float(k2.loc[exp, 'close'])
+        for N in OBS_PE:
+            o = g[(g['dte'] <= N) & (g['dte'] >= 1)]
+            if not len(o): continue
+            r0 = o.iloc[0]; d = r0['date']; K = float(r0['K'])
+            path = k2[(k2.index > d) & (k2.index <= exp)]
+            if not len(path): continue
+            cyc = (td > d) & (td <= exp)
+            rows.append({'tag': tag, 'ym': ym, 'N': N, 'obs': d, 'exp': exp, 'K': K, 'cexp': cexp,
+                         'above': cexp >= K, 'pin': (cexp >= K) & (cexp <= K * 1.01), 'crossed': bool((path['close'] >= K).any()),
+                         'ff_exp': float(ffor.get(exp, np.nan)), 'call_cyc': float(np.nansum(cfor[cyc].values)),
+                         'share': float(r0['share'])})
+    P = pd.DataFrame(rows)
+    if not len(P): return []
+    for m in MS_PE:
+        P[f'r{m}'] = [((k2['close'].iloc[i + m] / k2['open'].iloc[i + 1] - 1) * 100) if (i := td.get_loc(e)) + m < len(td) else np.nan for e in P['exp']]
+    conds = {'만기 종가가 벽 위': lambda x: x['above'],
+             '만기 종가가 벽 바로 위(1% 안)': lambda x: x['pin'],
+             '주기 중 넘고 만기에도 벽 위': lambda x: x['above'] & x['crossed'],
+             '만기 종가가 벽 위 + 만기일 외국인 선물 순매도': lambda x: x['above'] & (x['ff_exp'] < 0),
+             '만기 종가가 벽 위 + 주기 중 외국인 콜 순매수': lambda x: x['above'] & (x['call_cyc'] > 0),
+             '만기 종가가 벽 위 + 콜 순매수 + 만기일 선물 순매도': lambda x: x['above'] & (x['call_cyc'] > 0) & (x['ff_exp'] < 0),
+             '만기 종가가 벽 아래(대조)': lambda x: ~x['above']}
+    up_ok = {'만기 종가가 벽 위', '만기 종가가 벽 아래(대조)'}
+    dev = P[P['exp'] <= dev_end]
+    T = []
+    for (tag, N), g in dev.groupby(['tag', 'N']):
+        for cn, f in conds.items():
+            x = g[f(g)]
+            for m in MS_PE:
+                v = x[f'r{m}'].dropna(); base = g[f'r{m}'].dropna()
+                T.append({'시리즈': tag, '벽 관측(만기 N일 전)': N, '조건': cn, 'm일': m, '만기 수': len(v),
+                          '하락%': (v < 0).mean() * 100 if len(v) else np.nan, '모든 만기 하락%': (base < 0).mean() * 100 if len(base) else np.nan,
+                          '평균%': v.mean() if len(v) else np.nan})
+    pd.DataFrame(T).round(2).to_csv(os.path.join(od, 'post_expiry_dev.csv'), index=False, encoding='utf-8')
+    P.to_csv(os.path.join(od, 'post_expiry_all.csv'), index=False, encoding='utf-8')
+    cands = []
+    for (tag, N), g in P.groupby(['tag', 'N']):
+        for ci, (cn, f) in enumerate(conds.items()):
+            x = g[f(g)].drop_duplicates('exp')
+            if len(x) < 10: continue
+            for m in MS_PE:
+                t = pd.DataFrame({'signal': x['exp'].values, 'exit': [L.exit_after(td, s, m) for s in x['exp']]}).dropna()
+                cands.append({'id': f'A3pe_{tag}_{N}_c{ci}_m{m}', 'agent': 'A3', 'desc': f'{tag} 만기 {N}일 전 콜벽 기준 {cn} → 만기 다음 날부터 {m}일 하락',
+                              'direction': -1, 'trades': t, 'family': 'post_expiry'})
+                if cn in up_ok:
+                    cands.append({'id': f'A3pe_{tag}_{N}_c{ci}_up_m{m}', 'agent': 'A3', 'desc': f'{tag} 만기 {N}일 전 콜벽 기준 {cn} → 만기 다음 날부터 {m}일 상승',
+                                  'direction': 1, 'trades': t.copy(), 'family': 'post_expiry_up'})
+    print('만기 뒤 사건', len(P), '후보', len(cands))
+    return cands
 
 
 if __name__ == '__main__':
