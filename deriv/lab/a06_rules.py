@@ -36,6 +36,10 @@ def dataset():
     X = X[[c for c in X.columns if not any(c.startswith(p) for p in drop)]]
     if cfg.get('regime_feats'):   # 갈래 B 라운드 4: 장세 연속 지표를 조건·특징에 더함(A7 도 이 자료를 씀)
         X = X.join(L.regime_features(), how='left')
+    if cfg.get('flow_sums'):   # 갈래 B 라운드 9: 외국인 선물·콜·풋 n일 누적 순매수(라운드 7 A4 에서 3일 누적이 개발 하한을 올림)를 조건·특징에 — A7 도 이 자료를 씀
+        Fl = L.flows()[['fut_for', 'call_for', 'put_for']]
+        add = pd.DataFrame({f'fl_{c}_s{n}': Fl[c].rolling(n, min_periods=n).sum() for c in Fl.columns for n in cfg['flow_sums']})
+        X = X.join(add, how='left')
     return X
 
 
