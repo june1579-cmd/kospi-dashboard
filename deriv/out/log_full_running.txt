@@ -1,3 +1,5 @@
 [13:32:36] 시작 full ['chainx', 'chainwt', 'chainwm'] — 로그인 계정 설정 있음
 [13:32:36] == chainx
 [13:40:54] 저장 opt_chainx_daily.csv.gz 1247760행
+[13:40:57] == chainwt
+[13:51:20] opt_chainwt_daily 중간 저장 2020-09-04 (0행)
