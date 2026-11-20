@@ -1,5 +1,5 @@
 {
- "run": "2026-11-20 08:23",
+ "run": "2026-11-20 13:06",
  "tag": "0831",
  "kospi_last": "2026-11-19",
  "kofia_last": "2026-11-18",
@@ -15,6 +15,16 @@
   "정상": 14
  },
  "files": {
+  "ai_feed": {
+   "sha256": "07cb4929404b474113b379d7b5decd912595fd6b10a90aa250006c11443a7aea",
+   "bytes": 2029,
+   "last_date": "crwv_px"
+  },
+  "ai_feed_hist": {
+   "sha256": "cd85fd5159f7ae89444ef6d2137c1eff2c88ba2d5efbd16dd607234de490a614",
+   "bytes": 622,
+   "last_date": "2026-11-19"
+  },
   "alarms": {
    "sha256": "b4cdaa72ebc1c5c1b4553f92a7983217c79bb89dd638b91d2ada30783bfec705",
    "bytes": 63429,
@@ -36,7 +46,7 @@
    "last_date": "2026-11-19"
   },
   "am_stats": {
-   "sha256": "59cff7dfb624af5cba8e3570d4ab0a272e224736a98c7a9897ec70783f089a35",
+   "sha256": "abd9d2aa5b2bc998a39f8ecd0f9c46cb10d03b95d95fff0f70a9f2f69e033dfa",
    "bytes": 1263,
    "last_date": "기준일"
   },
@@ -74,6 +84,16 @@
    "sha256": "bcf5aef1795a4f42c4fb5f9819aec87e013bd84b17cf4740c0a82b48d5d4d189",
    "bytes": 1424,
    "last_date": "2025~26 실사용"
+  },
+  "crash_news": {
+   "sha256": "99c99358ca82d06cc23651d2df81675c18463c4ae7ba6b210018275d5d903b68",
+   "bytes": 5320,
+   "last_date": "2026-10-22"
+  },
+  "crash_news_auto": {
+   "sha256": "d7076a00f86497f495e6de2c5028c5a41c7966021d2d773fd3d3c3a3dc81c558",
+   "bytes": 109602,
+   "last_date": "2026-06-05"
   },
   "credit": {
    "sha256": "52ca3798c6839004a74e9eedaa44a2748833f5fbac2b23b363348ef406dec3aa",
@@ -121,7 +141,7 @@
    "last_date": "전체"
   },
   "health": {
-   "sha256": "abad01e905582f482b33736ff4eb39cf78c551963bf9ea51ba201f2fd8bf6446",
+   "sha256": "93b15162d9f742be42c9daeb6e19ec3965a69eec6b0170b3cabbe029dc857257",
    "bytes": 2244,
    "last_date": "web_cards"
   },
@@ -151,9 +171,19 @@
    "last_date": "2026-11"
   },
   "night_fut": {
-   "sha256": "7185fc881fb1bed762fe99936af18b5036060d92e329d90752425adaadecd064",
+   "sha256": "f38cdce0fafaf5c6c63e32119a9ef1235dc742f86b98ca3251aadbede5215265",
    "bytes": 49799,
    "last_date": "2026-11-19"
+  },
+  "overnight": {
+   "sha256": "c646f2067b048167c92c8b3b36a354c301f09dd290d402243689d534750d6767",
+   "bytes": 1171968,
+   "last_date": "2026-11-19"
+  },
+  "overnight_stats": {
+   "sha256": "4263fb63b2236639d5c9330c0a64ef4b4d693d362eb9ea49c8422b2fc2b30791",
+   "bytes": 2446,
+   "last_date": "^VIX"
   },
   "q_attr": {
    "sha256": "01c2cb9eeec0c16163f67570e07c812ae4202f49ad9e33df112a4717008d0f88",
