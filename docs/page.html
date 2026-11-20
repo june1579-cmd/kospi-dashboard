@@ -89,7 +89,7 @@
     <p class="rv-asof" id="asof-auto">기준: 자료를 읽는 중…</p>
     <p class="rv-asof">자료는 평일 08:31(전 거래일 확정·VKOSPI 반영)·15:37(정규장만 집계한 잠정치)·20:37(KRX 하루 전체 확정치) 세 번 자동 수집해 반영한다(GitHub Actions → 대시보드·웹판). 투자자별 순매수는 KRX 통계 기준 — 15:45 무렵 정규장분, 20시 이후 시간외·KRX 애프터마켓(16~20시)까지 합친 최종치. 넥스트레이드(NXT) 체결분은 들어가지 않아 증권사 앱의 'KRX+NXT 통합' 숫자와 하루 수천억 차이가 날 수 있다 — NXT 투자자별과 합친 '통합' 값은 아래 「애프터마켓 → 다음 날」 카드에. 저녁(15:40~20:00) 종목별 가격은 넥스트레이드 20:05 스냅샷을 20:37 실행에서 받는다. 시가·고가·저가처럼 받지 못한 칸은 추정으로 채우지 않고 비워 둔다. 수기 메모(10/27판): 코스피·투자자별·코스피200·레버리지 ETF 10/20~10/26은 KRX 정보데이터시스템 자동 수집(pykrx) 파일, 10/20~10/22는 먼저 받은 KRX 파일과 일치. VKOSPI 10/26은 KRX 종가를 공개 수집으로(시가·고가·저가 확인 불가). 원/달러 10/26부터는 국제 현물 환율(10/23까지의 중간값과 기준이 약간 다름). 레버리지 ETF 설정·환매는 상장좌수가 있는 날까지, 투자자별은 10/20까지. 야간선물 10/23 저녁장은 HTS 일자별(공개 사이트 종가 861.70 일치).</p>
     <p class="rv-asof">미수 반대매매 = 금투협 '위탁매매 미수금 대비 실제 반대매매'. 신용융자 담보부족 반대매매는 포함되지 않는다. 비중 = 당일 미수 반대매매 ÷ 전일 미수금. 참고: 금감원 발표 5월 일평균(주요 10개 증권사 기준) 신용+미수 반대매매 373.6억원, 이 중 미수 297.6억원(미수 비중 약 80%, 파이낸셜뉴스 6/24 보도). 집계 기준이 달라 이 대시보드 수치와 합산하지 않는다.</p>
-    <p class="rv-asof"><b>11/9부터 3개월 담보비율 유지의무 면제(반대매매 완화 조치, 11/6 발표)</b>: 증권사가 신용융자 담보부족 반대매매를 늦추거나 기준(140%)을 낮출 수 있게 한 것이다. 이 대시보드의 미수 반대매매 수치는 조치 대상이 아니라 11/9 뒤에도 그대로 유효하고, 신용 쪽은 잔고 감소로 본다. 조치 기간은 한눈에 보기 그래프에 음영으로, 과거 두 번(2020·2022)과의 비교·바닥 확인 조건·매수 엄격형 조건별 분해·신용 청산 참고선은 아래 「반대매매 완화 조치(11/9~)와 지표 읽는 법」에.</p>
+    <p class="rv-asof"><b>11/9부터 3개월 담보비율 유지의무 면제(반대매매 완화 조치, 11/6 발표)</b>: 증권사가 신용융자 담보부족 반대매매를 늦추거나 기준(140%)을 낮출 수 있게 한 것이다. 이 대시보드의 미수 반대매매 수치는 조치 대상이 아니라 11/9 뒤에도 그대로 유효하고, 신용 쪽은 잔고 감소로 본다. 조치 기간은 한눈에 보기 그래프에 음영으로, 과거 두 번(2020·2022)과의 비교·바닥 확인 조건·매수 엄격형 조건별 분해·반대매매 기준선(11/20 검증)은 아래 「반대매매 완화 조치(11/9~)와 지표 읽는 법」에.</p>
   </header>
 
   <section id="qtop">
@@ -228,7 +228,7 @@
           <span class="rv-win" id="all-win"></span>
       </div>
       <p class="rv-note" id="all-touch">휴대폰·태블릿: 그래프를 두 손가락으로 벌리면 기간이 좁아지고(확대) 오므리면 넓어진다(축소). 한 손가락으로 좌우로 밀면 기간이 과거·최근으로 옮겨지고, 세게 밀고 떼면 조금 더 미끄러지다 멈춘다(눈금은 제자리). 한 번 터치하면 그날 상세가 뜨고, 누른 채 좌우로 움직이면 상세 날짜가 앞뒤로 따라간다. 화면 아무 데나 다시 터치하면 닫힌다.</p>
-      <div class="rv-chart dash-skeleton" id="all-chart" data-source="market credit liq events monthly flows_daily combo alarms fx_daily fut_daily etf_lev reentry buy3 sell3 trend_champ trend_champ_rules relief credit_entry fpanic fpanic_eps fpanic_now health" style="min-height:860px"></div>
+      <div class="rv-chart dash-skeleton" id="all-chart" data-source="market credit liq events monthly flows_daily combo alarms fx_daily fut_daily etf_lev reentry buy3 sell3 trend_champ trend_champ_rules relief liq_lines liq_hist fpanic fpanic_eps fpanic_now health" style="min-height:860px"></div>
       <div class="rv-tbl-wrap" style="margin-top:var(--cds-gap-sm)">
         <table class="rv-tbl" id="sig-tbl" data-source="alarms reentry buy3 sell3">
           <thead><tr><th>신호</th><th>조건(셋 다 켜질 때)</th><th>2026 신호일(시작)</th><th class="rv-num">2015~2025 큰 전환 직전</th><th class="rv-num">헛신호(11년)</th></tr></thead>
@@ -345,9 +345,13 @@
         <div class="rv-tbl-wrap"><table class="rv-tbl" id="sp-tbl" data-source="strict_parts" data-row-key="date"><thead><tr><th data-field="date">날짜</th><th class="rv-num" data-field="kospi">코스피</th><th class="rv-num" data-field="r3">3일 등락(≤−7%)</th><th class="rv-num" data-field="d20">20일 저점 대비(≤+1%)</th><th class="rv-num" data-field="cr5">신용 5일(전날 공시분, ≤−1%)</th><th data-field="on">신호</th></tr></thead><tbody></tbody></table></div>
         <p class="rv-note" id="sp-next"></p>
       </div>
-      <div class="rv-card" id="ce-card">
-        <h3>신용 청산 참고선(추정 · 참고용)</h3>
-        <p class="rv-note">신용으로 산 평균 지수를 네 가지 방법으로 추정하고, 자기자금 40%(대출 60%) 가정으로 담보비율 140·130·120%에 닿는 코스피 수준을 계산했다(청산 지수 = 평균 매수 지수 × 담보비율 × 대출 비중 0.6). 지수 평균으로 낸 값이라 더 빠진 종목(삼성전자·SK하이닉스)은 먼저 걸리고 자기자금이 많은 계좌는 훨씬 아래다 — 선이 아니라 '매물이 두꺼워지는 띠'로 읽는다. 방법에 따라 추정이 수백 포인트 갈리는 것 자체가 불확실성의 크기다. 한눈에 보기 그래프의 점선은 첫 줄(최근 유입) 기준.</p>
+      <div class="rv-card" id="ce-card" style="grid-column:1/-1">
+        <h3>반대매매 기준선(검증 · 직전 60거래일 최저 종가 기준)</h3>
+        <p class="rv-note" id="ll-note"></p>
+        <div class="rv-tbl-wrap"><table class="rv-tbl" id="ll-tbl" data-source="liq_lines" data-row-key="tier"><thead><tr><th data-field="name">기준선</th><th class="rv-num" data-field="line">다음 거래일</th><th class="rv-num" data-field="need_pct">종가 대비</th><th class="rv-num" data-field="p_dev">깬 뒤 사흘 안 청산 물결(16~22 → 23~26)</th><th class="rv-num" data-field="c3_dev">사흘 신용 변화(같은 순서)</th><th class="rv-num" data-field="e_dev">이탈 구간(일)</th></tr></thead><tbody></tbody></table></div>
+        <p class="rv-verdict" id="ll-sum"></p>
+        <h4 class="rv-qa-h" style="margin-top:var(--cds-gap-md)">참고: 신용 평균 매수 지수와 담보비율 선(추정 · 청산 예측력이 약해 11/20 그래프에서 뺌)</h4>
+        <p class="rv-note">신용으로 산 평균 지수를 네 가지 방법으로 추정하고, 자기자금 40%(대출 60%) 가정으로 담보비율 140·130·120%에 닿는 코스피 수준을 계산했다(청산 지수 = 평균 매수 지수 × 담보비율 × 대출 비중 0.6). 지수 평균으로 낸 값이라 더 빠진 종목(삼성전자·SK하이닉스)은 먼저 걸리고 자기자금이 많은 계좌는 훨씬 아래다. 방법에 따라 추정이 수백 포인트 갈리는 것 자체가 불확실성의 크기다.</p>
         <div class="rv-tbl-wrap"><table class="rv-tbl" id="ce-tbl" data-source="credit_entry" data-row-key="method"><thead><tr><th data-field="name">추정 방법</th><th class="rv-num" data-field="entry">평균 매수 지수</th><th class="rv-num" data-field="l140">140% 선</th><th class="rv-num" data-field="l130">130% 선(완화)</th><th class="rv-num" data-field="l120">120% 선(유예)</th><th data-field="text">근거</th></tr></thead><tbody></tbody></table></div>
         <p class="rv-verdict" id="ce-sum"></p>
         <p class="rv-note">보도 추정과 비교: 유진투자증권은 신규 신용 매수가 집중된 코스피 지수대를 평균 6,660(10/15 기준, 평가손실 약 17%)으로 봤다(헤럴드경제 10월) — 첫 줄(최근 유입) 방식과 비슷한 값이다. 참고용이지 추천이 아니다.</p>
@@ -1339,7 +1343,7 @@
     legendItem(lg, '#e6b800', '외국인 선물 순매수(노란 점선, 조원 환산, 2024-10-02부터)', {shape: 'dash'});
     legendItem(lg, C()[4], '미수금 대비 %(짧은 선)', {shape: 'line'});
     legendItem(lg, C()[4], '담보비율 유지의무 면제 기간(코스피 칸 음영 · 반대매매 완화 조치)');
-    legendItem(lg, C()[4], '신용 청산 참고선(코스피 칸 점선 · 추정, 자기자금 40%·최근 유입 기준)', {shape: 'dash'});
+    legendItem(lg, C()[4], '반대매매 기준선(코스피 칸 · 직전 60거래일 최저 종가: 1선 +1% 점선 · 2선 실선 · 3선 −2% 촘촘한 점선)', {shape: 'dash'});
     legendItem(lg, C()[6], '월 미수 반대매매 일평균(점선 = 부분월)', {shape: 'line'});
     ['신용 한도','외부 변수','시장','레버리지'].forEach(c => legendItem(lg, EVC(c), '이벤트: ' + c, {shape: 'dot'}));
 
@@ -1410,8 +1414,8 @@
     const STRIPS = [['leg', '실제']].concat(SL.map(s => [s.k, s.lab]));
     const twFs = (s0, fs) => { const t = svg.append('text').attr('class', 'rv-tick').style('font-size', fs + 'px').text(s0); const w = t.node().getComputedTextLength(); t.remove(); return w; };
     const ml = Math.max(d3.max(panels, p => d3.max(p.tL, t => tw(svg, p.fL(t)))) + 10, d3.max(STRIPS, s => tw(svg, s[1])) + 12, KH ? Math.max(twFs('12개 해 합의', 11), twFs('초록 = 상승 비율', 9)) + 12 : 0);
-    const CE_LAB = [['entry', '신용 평균'], ['l140', '청산 140%'], ['l130', '청산 130% 완화'], ['l120', '청산 120% 유예']];   // 신용 청산 참고선 라벨(그래프 오른쪽 바깥에 표시)
-    const ceLabW = (() => { try { const c = dash.data('credit_entry'); if (c.status === 'ok' && c.data.length) return d3.max(CE_LAB, ([k, l]) => twFs(l + ' ' + f0(num(c.data[0][k])), 9)) + 12; } catch (e) {} return 0; })();
+    const LL_LAB = {'1선': '1선 주의', '2선': '2선 새 저점', '3선': '3선 대량 청산'};   // 반대매매 기준선 라벨(그래프 오른쪽 바깥, 11/20)
+    const ceLabW = (() => { try { const c = dash.data('liq_lines'); if (c.status === 'ok' && c.data.length) return d3.max(c.data, r => twFs(LL_LAB[r.tier] + ' ' + f0(num(r.line)), 9)) + 12; } catch (e) {} return 0; })();
     const mr = Math.max(28, d3.max(P1.tR, t => tw(svg, P1.fR(t))) + 10, KH ? Math.max(twFs('100%', 10), twFs('−25%p', 9)) + 8 : 0, ceLabW);
     const x = tradeX(allMk.filter(inR).filter(r => num(r.kospi) != null).map(r => r.date).concat(cr.map(r => r.date), lq.map(r => r.date), flAll.map(r => r.date)), [ml, W - mr]);
     const dayW = x.step();
@@ -1433,19 +1437,21 @@
     svg.append('g').selectAll('text').data(P1.tR).join('text').attr('class', 'rv-tick').attr('x', W - mr + 6).attr('y', d => P1.yR(d)).attr('dy', '0.32em').text(P1.fR);
     [P1, P3, P2].forEach(p => svg.append('line').attr('x1', ml).attr('x2', W - mr).attr('y1', p.yL(0)).attr('y2', p.yL(0)).style('stroke', 'var(--cds-chart-axis)'));
 
-    // 담보비율 유지의무 면제(반대매매 완화) 기간 음영 + 신용 청산 참고선(점선, 추정): 코스피 칸에만(2026-11-08 추가)
+    // 담보비율 유지의무 면제(반대매매 완화) 기간 음영(11/8) + 반대매매 기준선(11/20 검증): 코스피 칸에만
     try {
-      const rlD = dash.data('relief'), ceD = dash.data('credit_entry');
+      const rlD = dash.data('relief'), llD = dash.data('liq_lines'), lhD = dash.data('liq_hist');
       if (rlD.status === 'ok') rlD.data.forEach(r => { const s = P(String(r.start)), e = P(String(r.end)); if (!s || !e || e < a || s > b) return;
         const x0 = x(s < a ? a : s), x1 = x(e > b ? b : e);
         svg.append('rect').attr('x', x0).attr('width', Math.max(1, x1 - x0)).attr('y', P0.top).attr('height', P0.bot - P0.top).style('fill', C()[4]).attr('opacity', 0.12);
         svg.append('text').attr('class', 'rv-tick').attr('x', x0 + 3).attr('y', P0.top + 10).style('font-size', '9px').text('담보비율 면제 ' + String(r.start).slice(5) + '~'); });
-      if (ceD.status === 'ok' && ceD.data.length) { const r0 = ceD.data[0], dom = P0.yL.domain();
-        const ceRows = CE_LAB.map(([k, lab]) => ({lab, v: num(r0[k])})).filter(r => r.v != null && r.v >= dom[0] && r.v <= dom[1]).map(r => ({...r, y: P0.yL(r.v), ty: P0.yL(r.v)}));
+      const dom = P0.yL.domain();
+      if (lhD.status === 'ok' && lhD.data.length) { const vis = lhD.data.filter(inR);   // 날마다 그날 기준선(그 전 60거래일 최저 종가 × 1.01 · 1 · 0.98) 계단 선
+        [['l1', '5 3', 0.8, 1.2], ['l2', null, 0.9, 1.4], ['l3', '1.5 3', 0.95, 1.8]].forEach(([k, da, op, sw]) => svg.append('path').datum(vis).attr('fill', 'none').style('stroke', C()[4]).attr('stroke-width', sw).attr('stroke-dasharray', da).attr('opacity', op)
+          .attr('d', d3.line().defined(p => p[k] >= dom[0] && p[k] <= dom[1]).curve(d3.curveStepAfter).x(p => x(P(p.date))).y(p => P0.yL(p[k])))); }
+      if (llD.status === 'ok' && llD.data.length) {
+        const ceRows = llD.data.map(r => ({lab: LL_LAB[r.tier] + ' ' + f0(num(r.line)), v: num(r.line)})).filter(r => r.v != null && r.v >= dom[0] && r.v <= dom[1]).map(r => ({...r, y: P0.yL(r.v), ty: P0.yL(r.v)}));
         ceRows.sort((p, q) => p.y - q.y); for (let i = 1; i < ceRows.length; i++) if (ceRows[i].ty - ceRows[i - 1].ty < 11) ceRows[i].ty = ceRows[i - 1].ty + 11;   // 라벨이 겹치지 않게 아래로 밀기
-        ceRows.forEach(r => {
-          svg.append('line').attr('x1', ml).attr('x2', W - mr).attr('y1', r.y).attr('y2', r.y).style('stroke', C()[4]).attr('stroke-dasharray', '2 4').attr('opacity', 0.7);
-          svg.append('text').attr('class', 'rv-tick').attr('x', W - mr + 4).attr('y', r.ty).attr('dy', '0.32em').attr('text-anchor', 'start').style('font-size', '9px').style('fill', C()[4]).text(r.lab + ' ' + f0(r.v)); }); }   // 글자는 그래프 밖 오른쪽에
+        ceRows.forEach(r => svg.append('text').attr('class', 'rv-tick').attr('x', W - mr + 4).attr('y', r.ty).attr('dy', '0.32em').attr('text-anchor', 'start').style('font-size', '9px').style('fill', C()[4]).text(r.lab)); }   // 글자는 그래프 밖 오른쪽에(다음 거래일 값)
     } catch (e) {}
     // big-trend strips: actual zigzag leg vs combo state
     const cb = dash.data('combo').data.filter(inR);
