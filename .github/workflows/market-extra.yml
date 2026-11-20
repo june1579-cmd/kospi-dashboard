@@ -1,0 +1,35 @@
+name: market-extra
+# 보조 수집만 따로 돌리는 수동 실행(시험·과거 채우기용). 카톡은 보내지 않는다. 평소에는 dashboard-update 안에서 함께 돈다.
+on:
+  workflow_dispatch:
+    inputs:
+      crash_backfill:
+        description: '지난 급락일(코스피 −3% 이하) 뉴스를 몇 개 채울지(TAVILY_API_KEY 필요, 0=안 채움)'
+        default: '0'
+permissions:
+  contents: write
+concurrency:
+  group: dashboard-update      # 본 갱신과 동시에 커밋하지 않도록 같은 줄에 선다
+  cancel-in-progress: false
+jobs:
+  extra:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -q pandas requests
+      - name: 보조 수집
+        env:
+          TWELVEDATA_API_KEY: ${{ secrets.TWELVEDATA_API_KEY }}
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+        run: python market_extra.py --no-kakao --crash-backfill "${{ github.event.inputs.crash_backfill }}"
+      - name: 결과 저장(commit & push)
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add out/overnight.csv out/crash_news_auto.csv 2>/dev/null || true
+          git commit -m "보조 수집(밤사이 미국장·급락일 뉴스) $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || echo "변경 없음"
+          git pull --rebase -q || true
+          git push

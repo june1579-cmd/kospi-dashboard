@@ -59,6 +59,13 @@ jobs:
           KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
           DASH_LINK: https://june1579-cmd.github.io/kospi-dashboard/   # 카톡 [대시보드 열기] → 웹판(GitHub Pages)
         run: python run_pipeline.py --tag "${{ steps.tag.outputs.tag }}" --attempt "${{ steps.tag.outputs.attempt }}" --no-kakao ${{ github.event.inputs.force == 'true' && '--force' || '' }}
+      - name: 보조 수집(밤사이 미국장·급락일 뉴스 — 실패해도 본 갱신·카톡에 영향 없음)
+        continue-on-error: true
+        timeout-minutes: 5
+        env:
+          TWELVEDATA_API_KEY: ${{ secrets.TWELVEDATA_API_KEY }}   # 없으면 야후만(대조·예비 건너뜀)
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}           # 없으면 급락일 뉴스 자동 수집 건너뜀
+        run: python market_extra.py --tag "${{ steps.tag.outputs.tag }}"
       - name: 결과 저장(commit & push)
         run: |
           git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
