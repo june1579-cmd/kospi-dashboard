@@ -1,9 +1,9 @@
 key,board_key,name,value,unit,as_of,prev_value,prev_as_of,text,stage,near,source,url,fetched_at,status
-hy_oas,hy_oas,미국 하이일드 스프레드(ICE BofA OAS),3.47,%,2026-11-18,3.43,2026-11-17,3.47%(11.18),정상,참,FRED BAMLH0A0HYM2,https://fred.stlouisfed.org/series/BAMLH0A0HYM2,2026-11-20T15:52:53+09:00,정상
-us10y,,미국 10년물 금리,5.07,%,2026-11-18,5.1,2026-11-17,5.07%(11.18),,,FRED DGS10,https://fred.stlouisfed.org/series/DGS10,2026-11-20T15:52:53+09:00,정상
-wti,,WTI 유가(NYMEX 근월물),83.21,달러/배럴,2026-11-19,83.26,2026-11-18,"83.21달러(11.19, 근월물, −0.06%)",,,Yahoo CL=F(NYMEX WTI 근월물),https://finance.yahoo.com/quote/CL%3DF/history/,2026-11-20T15:52:53+09:00,정상
-us_unemp,us_unemp,미국 실업률(계절조정),4.1,%,2026-10,4.2,2026-09,4.1%(10월),정상,,FRED UNRATE,https://fred.stlouisfed.org/series/UNRATE,2026-11-20T15:52:53+09:00,정상
-ramp_q,ramp_q,Ramp AI Index 분기 증가 폭(최근 2개 분기 평균),3.763,%p,2026-09,4.453,,"+3.8%p(2·3분기 평균; 분기 평균 47.73→53.01→55.25, 최신 월 10월 56.80)",정상,,FRED RAMPAIALL(완결 분기만 계산),https://fred.stlouisfed.org/series/RAMPAIALL,2026-11-20T15:52:53+09:00,정상
-elec_cpi,elec_cpi,미국 전기요금 CPI 전년비(계절조정 전),4.37,%,2026-09,3.79,2026-08,+4.4%(9월) — 10월은 전년 같은 달 원자료가 없어 계산 불가,주의,,FRED CUUR0000SEHF01,https://fred.stlouisfed.org/series/CUUR0000SEHF01,2026-11-20T15:52:53+09:00,정상
-sox_dd,sox_dd,필라델피아 반도체지수 2026년 고점 대비,-35.63,%,2026-11-19,-34.04,2026-11-18,"−35.6%(11.19, 9,419.72)",경고,,"Yahoo ^SOX(고점 2026-06-22 14,634.72)",https://finance.yahoo.com/quote/%5ESOX/history/,2026-11-20T15:52:53+09:00,정상
-crwv_px,,코어위브 주가(CDS 보조 참고),44.91,달러,2026-11-19,47.83,2026-11-18,44.91달러(11.19) · 5거래일 −20.7% · 20거래일 −19.2%,,,Twelve Data CRWV,https://finance.yahoo.com/quote/CRWV/history/,2026-11-20T15:52:53+09:00,정상
+hy_oas,hy_oas,미국 하이일드 스프레드(ICE BofA OAS),3.47,%,2026-11-18,3.43,2026-11-17,3.47%(11.18),정상,참,FRED BAMLH0A0HYM2,https://fred.stlouisfed.org/series/BAMLH0A0HYM2,2026-11-20T16:33:59+09:00,정상
+us10y,,미국 10년물 금리,5.07,%,2026-11-18,5.1,2026-11-17,5.07%(11.18),,,FRED DGS10,https://fred.stlouisfed.org/series/DGS10,2026-11-20T16:33:59+09:00,정상
+wti,,WTI 유가(NYMEX 근월물),83.21,달러/배럴,2026-11-19,83.26,2026-11-18,"83.21달러(11.19, 근월물, −0.06%)",,,Yahoo CL=F(NYMEX WTI 근월물),https://finance.yahoo.com/quote/CL%3DF/history/,2026-11-20T16:33:59+09:00,정상
+us_unemp,us_unemp,미국 실업률(계절조정),4.1,%,2026-10,4.2,2026-09,4.1%(10월),정상,,FRED UNRATE,https://fred.stlouisfed.org/series/UNRATE,2026-11-20T16:33:59+09:00,정상
+ramp_q,ramp_q,Ramp AI Index 분기 증가 폭(최근 2개 분기 평균),3.763,%p,2026-09,4.453,,"+3.8%p(2·3분기 평균; 분기 평균 47.73→53.01→55.25, 최신 월 10월 56.80)",정상,,FRED RAMPAIALL(완결 분기만 계산),https://fred.stlouisfed.org/series/RAMPAIALL,2026-11-20T16:33:59+09:00,정상
+elec_cpi,elec_cpi,미국 전기요금 CPI 전년비(계절조정 전),4.37,%,2026-09,3.79,2026-08,+4.4%(9월) — 10월은 전년 같은 달 원자료가 없어 계산 불가,주의,,FRED CUUR0000SEHF01,https://fred.stlouisfed.org/series/CUUR0000SEHF01,2026-11-20T16:33:59+09:00,정상
+sox_dd,sox_dd,필라델피아 반도체지수 2026년 고점 대비,-35.63,%,2026-11-19,-34.04,2026-11-18,"−35.6%(11.19, 9,419.72)",경고,,"Yahoo ^SOX(고점 2026-06-22 14,634.72)",https://finance.yahoo.com/quote/%5ESOX/history/,2026-11-20T16:33:59+09:00,정상
+crwv_px,,코어위브 주가(CDS 보조 참고),44.91,달러,2026-11-19,47.83,2026-11-18,44.91달러(11.19) · 5거래일 −20.7% · 20거래일 −19.2%,,,Twelve Data CRWV,https://finance.yahoo.com/quote/CRWV/history/,2026-11-20T16:33:59+09:00,정상
