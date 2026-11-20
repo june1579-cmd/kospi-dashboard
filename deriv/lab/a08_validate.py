@@ -99,7 +99,10 @@ def main_cross(cands, fut, idx, led):
                'p2_n': d2.get('n', 0), 'p2_hit': d2.get('hit'), 'p2_lb': d2.get('lb'), 'p2_base': d2.get('base'), 'p2_p': d2.get('p_vs_base'),
                'p2_years_ok': d2.get('years_ok'), 'p2_years_with': d2.get('years_with'), 'p2_by_year': d2.get('by_year'),
                'all_n': da.get('n', 0), 'all_hit': da.get('hit'), 'all_lb': da.get('lb'), 'all_base': da.get('base'), 'all_by_year': da.get('by_year')}
-        rec['sel_fwd'] = selected(d1, DEV); rec['sel_rev'] = selected(d2, REV); rec['dev_pass'] = bool(rec['sel_fwd'] or rec['sel_rev'])
+        rec['sel_fwd'] = selected(d1, DEV); rec['sel_rev'] = selected(d2, REV)
+        if c.get('fit_period') == 'p2': rec['sel_fwd'] = False   # 뒤 구간에서 정한 후보는 뒤→앞 방향만(앞→뒤는 표본 안 확인이라 뺌, 2026-11-20 갈래 B)
+        rec['fit_period'] = c.get('fit_period', 'p1')
+        rec['dev_pass'] = bool(rec['sel_fwd'] or rec['sel_rev'])
         rec['fwd_pass'] = rec['rev_pass'] = rec['hold_pass'] = False
         rows.append(rec)
         if rec['dev_pass']: sel.append((c, rec, d1, d2))

@@ -123,6 +123,22 @@ def main():
                               'trades': pd.DataFrame({'signal': sig_all, 'exit': ex_of(sig_all)}).dropna(),
                               'trades_dev': pd.DataFrame({'signal': oos_sig[k], 'exit': ex_of(oos_sig[k])}).dropna(),
                               'rules_final': [' & '.join(names[i] for i in rr) for rr, *_ in rules[:kk]]})
+            # 뒤 구간 적합(fit_period p2, 2026-11-21~ 교차 모드에서만): 뒤 구간(2024~)에서 규칙을 골라 앞 구간에 적용 — 뒤→앞 방향 전용
+            if L.fit_p2_enabled(cfg):
+                tr2 = td[(td >= L.HOLD_START) & (td <= td[-1] - pd.Timedelta(days=int(h * 1.5)))]
+                tr2 = tr2[y_all.loc[tr2].notna().values]
+                if len(tr2) >= 250:
+                    names2, fid2, C2, Call2 = SR.conditions(X.loc[tr2], X)
+                    rules2 = mine_prec(C2, y_all.loc[tr2].values.astype(np.float32), fid2, h)
+                    fires2 = [Call2[:, list(rr)].prod(axis=1) > 0 for rr, *_ in rules2]
+                    for k, kk in (('top1', 1), ('top3', 3)):
+                        if not fires2[:kk]: continue
+                        sig2 = td[np.any(fires2[:kk], axis=0)]
+                        t2 = pd.DataFrame({'signal': sig2, 'exit': ex_of(sig2)}).dropna()
+                        cands.append({'id': f'A6_fp2_{k}_{idt}_{"up" if direction > 0 else "dn"}', 'agent': 'A6', 'family': 'rules_fp2',
+                                      'desc': f'[뒤 구간 적합] 조합 규칙 묶음({k}) → {tgt} {"상승" if direction > 0 else "하락"}', 'direction': direction,
+                                      'trades': t2, 'trades_dev': t2, 'fit_period': 'p2',
+                                      'rules_final': [' & '.join(names2[i] for i in rr) for rr, *_ in rules2[:kk]]})
             # 해마다 거듭 뽑힌 규칙 틀(문턱만 다름)
             final_t = {' & '.join(SR_strip(names[i]) for i in rr): (rr, f) for (rr, *_), f in zip(rules, fires)}
             for tname, sigs in templ.items():

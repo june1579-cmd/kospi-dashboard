@@ -101,7 +101,26 @@ def main():
                           'trades': pd.DataFrame({'signal': sig, 'exit': ex_of(sig)}).dropna(),
                           'trades_dev': pd.DataFrame({'signal': oos, 'exit': ex_of(oos)}).dropna(),
                           'tau': tau, 'p_last': float(p[-1])})
-            print('h', h, 'dir', direction, flush=True)
+            # 뒤 구간 적합(fit_period p2, 2026-11-21~ 교차 모드에서만): 뒤 구간 앞 60% 학습·뒤 40% 문턱 → 뒤 구간 전체로 다시 학습 → 앞 구간에 적용
+            if L.fit_p2_enabled(cfg):
+                m2 = (td >= L.HOLD_START) & (td <= td[-1] - pd.Timedelta(days=int(h * 1.5))) & y.notna().values
+                i2 = np.where(m2)[0]
+                if len(i2) >= 300:
+                    cut = i2[int(len(i2) * 0.6)]
+                    a_ = i2[i2 < cut - h]; b_ = i2[i2 >= cut]
+                    mm = fit(Xv[a_], y.values[a_].astype(int)); pb = mm.predict_proba(Xv[b_])[:, 1]; yb = y.values[b_]
+                    tau2 = None
+                    for tq in np.quantile(pb, np.linspace(0.80, 0.995, 40)):
+                        ss = pb >= tq
+                        if ss.sum() >= 12 and yb[ss].mean() >= TARGET: tau2 = float(tq); break
+                    if tau2 is None: tau2 = float(np.quantile(pb, 0.95))
+                    m2f = fit(Xv[i2], y.values[i2].astype(int)); p2 = m2f.predict_proba(Xv)[:, 1]
+                    sig2 = td[p2 >= tau2]
+                    t2 = pd.DataFrame({'signal': sig2, 'exit': ex_of(sig2)}).dropna()
+                    cands.append({'id': f'A7_fp2_{idt}_{"up" if direction > 0 else "dn"}', 'agent': 'A7', 'family': 'ml_fp2',
+                                  'desc': f'[뒤 구간 적합] 기계학습(목표 정밀도 {TARGET:.0%}) → {tgt} {"상승" if direction > 0 else "하락"}', 'direction': direction,
+                                  'trades': t2, 'trades_dev': t2, 'fit_period': 'p2', 'tau': tau2})
+            print(kind, h, 'dir', direction, flush=True)
     pd.DataFrame(rows).round(4).to_csv(os.path.join(od, 'ml_by_year.csv'), index=False, encoding='utf-8')
     L.save_candidates(SUB, cands)
 

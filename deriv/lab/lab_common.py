@@ -29,6 +29,18 @@ STATE = os.path.join(LAB, 'state' + SFX)
 os.makedirs(STATE, exist_ok=True)
 
 
+def cv_mode():
+    """a08_validate.cv_mode 와 같은 규칙(2026-11-21 KST 부터 'cross'). 뒤 구간 적합(fit_period='p2') 변형은 'cross' 일 때만 만든다 —
+    11/20 까지 잠금 규칙에서는 잠금 구간으로 무엇도 정하지 않음."""
+    m = (round_cfg().get('a08') or {}).get('cv_mode')
+    if m in ('holdout', 'cross'): return m
+    return 'cross' if pd.Timestamp.now(tz='Asia/Seoul').tz_localize(None).normalize() >= pd.Timestamp('2026-11-21') else 'holdout'
+
+
+def fit_p2_enabled(agent_cfg):
+    return 'p2' in (agent_cfg.get('fit_period') or []) and cv_mode() == 'cross'
+
+
 def round_cfg():
     return json.load(open(os.path.join(LAB, f'round{SFX}.json'), encoding='utf-8'))
 
