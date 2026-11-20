@@ -66,6 +66,12 @@ jobs:
           TWELVEDATA_API_KEY: ${{ secrets.TWELVEDATA_API_KEY }}   # 없으면 야후만(대조·예비 건너뜀)
           TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}           # 없으면 급락일 뉴스 자동 수집 건너뜀
         run: python market_extra.py --tag "${{ steps.tag.outputs.tag }}"
+      - name: AI 경고판 원자료(FRED·SOX·코어위브 → out/ai_feed.csv — 실패해도 본 갱신·카톡에 영향 없음)
+        continue-on-error: true
+        timeout-minutes: 3
+        env:
+          TWELVEDATA_API_KEY: ${{ secrets.TWELVEDATA_API_KEY }}
+        run: python ai_feed.py
       - name: 결과 저장(commit & push)
         run: |
           git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"

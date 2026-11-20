@@ -44,7 +44,12 @@ def fetch_yahoo(sym):
     for t, c in zip(res['timestamp'], res['indicators']['quote'][0]['close']):
         if c is None: continue
         d = dt.datetime.fromtimestamp(t, NY).strftime('%Y-%m-%d')
-        if ny_done(d): rows.append((d, float(c)))
+        if ny_done(d) and not (rows and rows[-1][0] == d): rows.append((d, float(c)))   # 선물은 같은 날짜에 장중 봉이 하나 더 붙는다 — 날짜마다 첫 일봉(정산가)만 쓴다
+    # 야후는 마지막 날 일봉 종가를 비워 두는 때가 있다(2026-11-19 CRWV 확인) — 같은 응답의 정규장 마감 가격으로 채운다
+    m = res.get('meta', {})
+    if m.get('regularMarketPrice') and m.get('regularMarketTime'):
+        mt = dt.datetime.fromtimestamp(m['regularMarketTime'], NY); md_ = mt.strftime('%Y-%m-%d')
+        if mt.hour >= 16 and ny_done(md_) and (not rows or rows[-1][0] < md_): rows.append((md_, float(m['regularMarketPrice'])))
     return rows
 
 def fetch_td(sym, key, size):

@@ -1,0 +1,33 @@
+name: ai-feed
+# AI 선행지표 경고판용 원자료(FRED 하이일드·10년물·WTI·실업률·Ramp·전기요금, 야후 SOX, 코어위브 주가)를 out/ai_feed.csv 로 받는다.
+# 매일 06:41 KST(주말 포함) — 뉴욕 장 마감(06:00 KST) 뒤, 경고판 아침 예약 작업(07:30) 전에 끝나도록.
+# 평일에는 dashboard-update 의 보조 수집 단계에서도 함께 돈다. 카톡은 보내지 않는다.
+on:
+  schedule:
+    - cron: '41 21 * * *'        # 21:41 UTC = 06:41 KST
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: dashboard-update        # 본 갱신과 동시에 커밋하지 않도록 같은 줄에 선다
+  cancel-in-progress: false
+jobs:
+  feed:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -q requests
+      - name: AI 경고판 원자료 수집
+        env:
+          TWELVEDATA_API_KEY: ${{ secrets.TWELVEDATA_API_KEY }}   # 없으면 코어위브 주가는 야후로
+        run: python ai_feed.py
+      - name: 결과 저장(commit & push)
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          for f in out/ai_feed.csv out/ai_feed_hist.csv; do [ -f "$f" ] && git add "$f"; done
+          git commit -q -m "AI 경고판 원자료 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || { echo "변경 없음"; exit 0; }
+          for i in 1 2 3; do git pull --rebase -q && git push -q && break || sleep 10; done
