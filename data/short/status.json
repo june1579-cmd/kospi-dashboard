@@ -3,20 +3,17 @@
   "trade": {},
   "balance": {}
  },
- "updated": "2026-11-20 20:25",
+ "updated": "2026-11-21 04:12",
  "mode": "daily",
- "calls": 3,
- "saved": [
-  "trade 2026-11-20",
-  "balance 2026-11-18"
- ],
+ "calls": 1,
+ "saved": [],
  "error": null,
  "left": 1,
  "last_trade": "20261120",
  "last_balance": "20261118",
  "n_trade": 16,
  "n_balance": 10,
- "n_saved": 2,
+ "n_saved": 0,
  "skipped": null,
  "first_trade": "20260327",
  "first_balance": "20261105"
