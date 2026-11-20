@@ -16,7 +16,7 @@ import pandas as pd
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import lab_common as L  # noqa: E402
-from a08_validate import independent  # noqa: E402
+from a08_validate import honest_trades, independent  # noqa: E402
 
 cfg = L.round_cfg().get('a10', {})
 TOPN = cfg.get('top_n', 10)
@@ -39,13 +39,17 @@ def main():
             for c in pickle.load(open(p, 'rb')): cands[c['id']] = c
     pick = pd.concat([V[V['dev_pass']], V[~V['dev_pass'] & (V['dev_n'] >= 10)].sort_values('dev_hit', ascending=False).head(TOPN)])
     px = L.prices()['K200F']; td = px.index
+    cross = 'cv_mode' in V.columns and bool((V['cv_mode'] == 'cross').any())   # 2026-11-21~: 잠금 없이 전 기간(앞 구간은 해마다 고른 신호)
+    END = td[-1] if cross else L.DEV_END
     rows = []
     for _, v in pick.iterrows():
         c = cands.get(v['id'])
         if c is None: continue
-        tr = c.get('trades_dev', c['trades'])
-        tr = tr.assign(signal=pd.to_datetime(tr['signal']), exit=pd.to_datetime(tr['exit']))
-        t = independent(tr[(tr['exit'] <= L.DEV_END)].dropna())
+        if cross: tr = honest_trades(c)[2]
+        else:
+            tr = c.get('trades_dev', c['trades'])
+            tr = tr.assign(signal=pd.to_datetime(tr['signal']), exit=pd.to_datetime(tr['exit']))
+        t = independent(tr[(tr['exit'] <= END)].dropna())
         if len(t) < 5: continue
         hs = hits(t, px, c['direction']); h0 = hs.mean()
         hold = [max(1, ((td > s) & (td <= e)).sum()) for s, e in zip(t['signal'], t['exit'])]
@@ -57,7 +61,7 @@ def main():
                 i = int(np.clip(i, 0, len(td) - hd - 2))
                 sh.append((td[i], td[i + hd]))
             st = pd.DataFrame(sh, columns=['signal', 'exit'])
-            st = st[st['exit'] <= L.DEV_END]
+            st = st[st['exit'] <= END]
             if len(st): sims.append(hits(st, px, c['direction']).mean())
         p = float((np.array(sims) >= h0).mean()) if sims else np.nan
         yrs = hs.index.year

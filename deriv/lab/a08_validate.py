@@ -5,6 +5,13 @@
    통과: n ≥ 20, 적중 ≥ 75%, 하한 ≥ 60%, 기본 ≤ 60%(누구나 맞히는 방향 제외), 거래 있는 해의 과반에서 적중 ≥ 70%.
 2) 개발 통과 후보만 잠금 구간을 연다(원장에 열람 횟수 누적). 통과: n ≥ 12, 적중 ≥ 80%, 기본 대비 단측 이항 p < 0.05 ÷ (누적 열람 횟수).
 대상 가격: 코스피200 선물(연속, 주 판정) + 코스피200 지수(참고).
+
+교차 검증 방식(cv_mode='cross', 사용자 지시 2026-11-20 — 오늘까지 위 잠금 규칙, 2026-11-21 KST 부터 자동 전환):
+  잠금 규칙 없이 양방향으로 본다. 앞 구간 P1(2010~2023)·뒤 구간 P2(2024~) 성적을 모두 계산하고
+  · 앞→뒤: P1 에서 위 '개발' 기준 통과(선별) → P2 에서 확인(독립 거래 ≥ 12, 적중 ≥ 80%, 기본 대비 p < 0.05 ÷ 이 라운드 앞→뒤 선별 수)
+  · 뒤→앞: P2 에서 선별(독립 거래 ≥ 12, 적중 ≥ 75%, 하한 ≥ 60%, 기본 ≤ 60%, 해마다 과반) → P1 에서 같은 확인(÷ 뒤→앞 선별 수)
+  · 목표 판정(hold_pass) = 두 방향 모두 통과. 한 방향만 통과는 따로 보고. 잠금 열람 횟수는 더 쌓지 않고 cross_tests 를 센다.
+  round.json 의 a08.cv_mode 에 'holdout'·'cross' 를 적으면 날짜와 상관없이 그 방식을 쓴다.
 """
 import os
 import pickle
@@ -19,6 +26,23 @@ import lab_common as L  # noqa: E402
 cfg = L.round_cfg().get('a08', {})
 DEV = dict(n=cfg.get('dev_n', 20), hit=cfg.get('dev_hit', 0.75), lb=cfg.get('dev_lb', 0.60), base_max=cfg.get('base_max', 0.60), year_hit=0.70)
 HOLD = dict(n=cfg.get('hold_n', 12), hit=cfg.get('hold_hit', 0.80), alpha=0.05)
+REV = dict(n=cfg.get('rev_n', 12), hit=cfg.get('dev_hit', 0.75), lb=cfg.get('dev_lb', 0.60), base_max=cfg.get('base_max', 0.60), year_hit=0.70)
+CONF = dict(n=cfg.get('conf_n', 12), hit=cfg.get('conf_hit', 0.80), alpha=0.05)
+CROSS_FROM = pd.Timestamp('2026-11-21')   # 사용자 지시(2026-11-20): 오늘까지 잠금 규칙, 내일부터 잠금 규칙 없이 양방향 교차 검증
+
+
+def cv_mode():
+    m = cfg.get('cv_mode')
+    if m in ('holdout', 'cross'): return m
+    return 'cross' if pd.Timestamp.now(tz='Asia/Seoul').tz_localize(None).normalize() >= CROSS_FROM else 'holdout'
+
+
+def honest_trades(c):
+    """앞 구간은 해마다 따로 고른 신호(trades_dev, 없으면 trades), 뒤 구간은 trades — 두 구간 모두 그 시점에 알 수 있던 규칙의 거래."""
+    tr = c['trades']; trd = c.get('trades_dev', tr)
+    tr = tr.assign(signal=pd.to_datetime(tr['signal']), exit=pd.to_datetime(tr['exit']))
+    trd = trd.assign(signal=pd.to_datetime(trd['signal']), exit=pd.to_datetime(trd['exit']))
+    return trd, tr, pd.concat([trd[trd['exit'] <= L.DEV_END], tr[tr['signal'] >= L.HOLD_START]], ignore_index=True)
 
 
 def independent(trades):
@@ -56,6 +80,47 @@ def evaluate(trades, px, direction, start, end):
             'by_year': {int(y): [int(r['size']), round(float(r['mean']), 3)] for y, r in gy.iterrows()}}
 
 
+def selected(d, need):
+    return bool(d.get('n', 0) >= need['n'] and (d.get('hit') or 0) >= need['hit'] and (d.get('lb') or 0) >= need['lb']
+                and (d.get('base') or 1) <= need['base_max'] and d.get('years_with', 0) > 0 and d['years_ok'] * 2 > d['years_with'])
+
+
+def main_cross(cands, fut, idx, led):
+    """잠금 규칙 없는 양방향 교차 검증(2026-11-21~)."""
+    P1 = (pd.Timestamp('2010-01-01'), L.DEV_END); P2 = (L.HOLD_START, fut.index[-1])
+    rows, sel = [], []
+    for c in cands:
+        trd, tr, both = honest_trades(c)
+        d1 = evaluate(trd, fut, c['direction'], *P1); d2 = evaluate(tr, fut, c['direction'], *P2)
+        da = evaluate(both, fut, c['direction'], P1[0], P2[1]); di = evaluate(trd, idx, c['direction'], *P1)
+        rec = {'id': c['id'], 'agent': c['agent'], 'family': c.get('family'), 'desc': c['desc'], 'direction': c['direction'], 'cv_mode': 'cross',
+               'dev_n': d1.get('n', 0), 'dev_hit': d1.get('hit'), 'dev_lb': d1.get('lb'), 'dev_base': d1.get('base'), 'dev_mean%': d1.get('mean_ret%'),
+               'dev_years_ok': d1.get('years_ok'), 'dev_years_with': d1.get('years_with'), 'dev_hit_index': di.get('hit'), 'dev_by_year': d1.get('by_year'),
+               'p2_n': d2.get('n', 0), 'p2_hit': d2.get('hit'), 'p2_lb': d2.get('lb'), 'p2_base': d2.get('base'), 'p2_p': d2.get('p_vs_base'),
+               'p2_years_ok': d2.get('years_ok'), 'p2_years_with': d2.get('years_with'), 'p2_by_year': d2.get('by_year'),
+               'all_n': da.get('n', 0), 'all_hit': da.get('hit'), 'all_lb': da.get('lb'), 'all_base': da.get('base'), 'all_by_year': da.get('by_year')}
+        rec['sel_fwd'] = selected(d1, DEV); rec['sel_rev'] = selected(d2, REV); rec['dev_pass'] = bool(rec['sel_fwd'] or rec['sel_rev'])
+        rec['fwd_pass'] = rec['rev_pass'] = rec['hold_pass'] = False
+        rows.append(rec)
+        if rec['dev_pass']: sel.append((c, rec, d1, d2))
+    m_f = max(1, sum(r['sel_fwd'] for _, r, _, _ in sel)); m_r = max(1, sum(r['sel_rev'] for _, r, _, _ in sel))
+    conf = lambda d, m: bool(d.get('n', 0) >= CONF['n'] and (d.get('hit') or 0) >= CONF['hit'] and (d.get('p_vs_base') or 1) < CONF['alpha'] / m)
+    for c, rec, d1, d2 in sel:
+        rec['fwd_pass'] = bool(rec['sel_fwd'] and conf(d2, m_f)); rec['rev_pass'] = bool(rec['sel_rev'] and conf(d1, m_r))
+        rec['hold_pass'] = bool(rec['fwd_pass'] and rec['rev_pass'])   # 목표 판정 = 두 방향 모두 통과
+        rec.update({'hold_n': d2.get('n', 0), 'hold_hit': d2.get('hit'), 'hold_lb': d2.get('lb'), 'hold_base': d2.get('base'), 'hold_p': d2.get('p_vs_base'),
+                    'hold_by_year': d2.get('by_year'), 'dev_p': d1.get('p_vs_base'), 'conf_div_fwd': m_f, 'conf_div_rev': m_r})
+    led['trials_total'] = led.get('trials_total', 0) + len(cands)
+    led['cross_tests'] = led.get('cross_tests', 0) + sum(r['sel_fwd'] for _, r, _, _ in sel) + sum(r['sel_rev'] for _, r, _, _ in sel)
+    R = pd.DataFrame(rows).sort_values(['hold_pass', 'dev_pass', 'dev_hit'], ascending=[False, False, False])
+    od = L.out_dir('a08'); R.to_csv(os.path.join(od, 'verdicts.csv'), index=False, encoding='utf-8')
+    pickle.dump([c for c, _, _, _ in sel], open(os.path.join(od, 'dev_passed.pkl'), 'wb'))
+    led['rounds'].append({'round': L.round_cfg()['round'], 'mode': 'cross', 'candidates': len(cands), 'sel_fwd': int(R['sel_fwd'].sum()), 'sel_rev': int(R['sel_rev'].sum()),
+                          'fwd_pass': int(R['fwd_pass'].sum()), 'rev_pass': int(R['rev_pass'].sum()), 'hold_pass': int(R['hold_pass'].sum())})
+    L.save_ledger(led)
+    print('교차 검증: 후보', len(cands), '앞 선별', int(R['sel_fwd'].sum()), '뒤 선별', int(R['sel_rev'].sum()), '앞→뒤', int(R['fwd_pass'].sum()), '뒤→앞', int(R['rev_pass'].sum()), '양방향', int(R['hold_pass'].sum()))
+
+
 def main():
     P = L.prices(); fut, idx = P['K200F'], P['K200']
     rd = L.out_dir()
@@ -64,6 +129,7 @@ def main():
         p = os.path.join(rd, a, 'candidates.pkl')
         if os.path.exists(p): cands += pickle.load(open(p, 'rb'))
     led = L.ledger()
+    if cv_mode() == 'cross': return main_cross(cands, fut, idx, led)
     rows, passed_dev = [], []
     end_all = fut.index[-1]
     for c in cands:

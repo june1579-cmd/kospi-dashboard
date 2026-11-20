@@ -22,7 +22,13 @@ def main():
     T = pd.read_csv(os.path.join(rd, 'a09', 'trades.csv')) if os.path.exists(os.path.join(rd, 'a09', 'trades.csv')) else pd.DataFrame()
     R = pd.read_csv(os.path.join(rd, 'a10', 'redteam.csv')) if os.path.exists(os.path.join(rd, 'a10', 'redteam.csv')) else pd.DataFrame()
     led = L.ledger()
-    top = V[V['dev_n'] >= 10].sort_values(['dev_pass', 'dev_lb'], ascending=[False, False]).head(15)
+    cross = 'cv_mode' in V.columns and bool((V['cv_mode'] == 'cross').any())   # 2026-11-21~ 양방향 교차 검증
+    if cross:
+        for k in ('sel_fwd', 'sel_rev', 'fwd_pass', 'rev_pass', 'hold_pass'): V[k] = V[k].fillna(False).astype(bool)
+        V['best_lb'] = V[['dev_lb', 'p2_lb']].max(axis=1)
+        top = V[(V['dev_n'] >= 10) | (V['p2_n'] >= 10)].sort_values(['hold_pass', 'dev_pass', 'best_lb'], ascending=[False, False, False]).head(15)
+    else:
+        top = V[V['dev_n'] >= 10].sort_values(['dev_pass', 'dev_lb'], ascending=[False, False]).head(15)
     if len(R): top = top.merge(R[['id', '위약p', '한해빼기_최저', '버팀']], on='id', how='left')
     top.to_csv(os.path.join(rd, 'leaderboard.csv'), index=False, encoding='utf-8')
     passed = V[V.get('hold_pass', pd.Series(False, index=V.index)).fillna(False).astype(bool)] if 'hold_pass' in V else V.iloc[0:0]
@@ -33,14 +39,19 @@ def main():
         final = passed.iloc[0:0]
     st = {'round': rnd, 'candidates': int(len(V)), 'dev_pass': int(V['dev_pass'].sum()), 'hold_pass': int(len(passed)), 'final_pass': int(len(final)),
           'trials_total': led.get('trials_total'), 'holdout_peeks': led.get('holdout_peeks'),
-          'best': top.head(5)[['id', 'desc', 'dev_n', 'dev_hit', 'dev_lb', 'dev_base']].to_dict('records'),
+          'best': top.head(5)[['id', 'desc', 'dev_n', 'dev_hit', 'dev_lb', 'dev_base'] + (['p2_n', 'p2_hit', 'p2_lb', 'p2_base', 'all_n', 'all_hit'] if cross else [])].to_dict('records'),
           'goal_reached': bool(len(final) > 0), 'note': cfg.get('note', '')}
+    if cross:
+        st.update({'cv_mode': 'cross', 'sel_fwd': int(V['sel_fwd'].sum()), 'sel_rev': int(V['sel_rev'].sum()), 'fwd_pass': int(V['fwd_pass'].sum()),
+                   'rev_pass': int(V['rev_pass'].sum()), 'cross_tests': led.get('cross_tests')})
     json.dump(st, open(os.path.join(rd, 'status.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1, default=str)
     json.dump(st, open(os.path.join(L.STATE, 'latest_status.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1, default=str)
     # 보고(한국어)
     lines = [f'# 라운드 {rnd} 보고', '', f'- 계획: {cfg.get("note", "")}',
-             f'- 후보 {len(V)}개 → 개발 구간 통과 {int(V["dev_pass"].sum())}개 → 잠금 구간 통과 {len(passed)}개 → 반증까지 통과 {len(final)}개',
-             f'- 누적: 후보 {led.get("trials_total")}개 시험, 잠금 구간 열람 {led.get("holdout_peeks")}번(통과 기준 p < 0.05 ÷ 열람 횟수)', '']
+             (f'- 후보 {len(V)}개 → 앞(2010~2023) 선별 {int(V["sel_fwd"].sum())}·뒤(2024~) 선별 {int(V["sel_rev"].sum())} → 앞→뒤 확인 {int(V["fwd_pass"].sum())}·뒤→앞 확인 {int(V["rev_pass"].sum())} → 양방향 통과 {len(passed)}개 → 반증까지 통과 {len(final)}개'
+              if cross else f'- 후보 {len(V)}개 → 개발 구간 통과 {int(V["dev_pass"].sum())}개 → 잠금 구간 통과 {len(passed)}개 → 반증까지 통과 {len(final)}개'),
+             (f'- 누적: 후보 {led.get("trials_total")}개 시험, 교차 확인 {led.get("cross_tests")}번(라운드 안 확인 p 기준 = 0.05 ÷ 그 방향 선별 수) · 잠금 규칙 없이 양방향 교차 검증(2026-11-21~)'
+              if cross else f'- 누적: 후보 {led.get("trials_total")}개 시험, 잠금 구간 열람 {led.get("holdout_peeks")}번(통과 기준 p < 0.05 ÷ 열람 횟수)'), '']
     a3 = os.path.join(rd, 'a03', 'touch_dev.csv')
     if os.path.exists(a3):
         t = pd.read_csv(a3); t0 = t[(t['시리즈'] == 'F0') & (t['조건'] == '전체')]
@@ -69,17 +80,26 @@ def main():
     for _, r in top.head(10).iterrows():
         lines.append(f'| {r["desc"]} | {int(r["dev_n"])} | {f(r["dev_hit"], 0, True)} | {f(r["dev_lb"], 0, True)} | {f(r["dev_base"], 0, True)} | '
                      f'{f(r.get("위약p"), 3)} | {r.get("버팀", "—")} |')
-    if len(passed):
+    if cross:
+        S = V[V['dev_pass']]
+        lines += ['', '## 교차 검증 — 한 구간에서 선별된 후보(앞 = 2010~2023, 뒤 = 2024~)', '| 후보 | 앞 거래·적중·기본 | 뒤 거래·적중·기본 | 앞→뒤 | 뒤→앞 |', '|---|---|---|---|---|']
+        for _, r in S.head(20).iterrows():
+            lines.append(f'| {r["desc"]} | {int(r["dev_n"])}·{f(r["dev_hit"], 0, True)}·{f(r["dev_base"], 0, True)} | {int(r["p2_n"])}·{f(r["p2_hit"], 0, True)}·{f(r["p2_base"], 0, True)} | '
+                         f'{"통과" if r["fwd_pass"] else ("선별" if r["sel_fwd"] else "—")} | {"통과" if r["rev_pass"] else ("선별" if r["sel_rev"] else "—")} |')
+        if not len(S): lines.append('| (선별 없음) | | | | |')
+    elif len(passed):
         lines += ['', '## 잠금 구간(2024~) 결과 — 개발 통과 후보만']
         for _, r in V[V['dev_pass']].iterrows():
             lines.append(f'- {r["desc"]}: 거래 {int(r.get("hold_n", 0) or 0)}, 적중 {f(r.get("hold_hit"), 0, True)}, 기본 {f(r.get("hold_base"), 0, True)}, p {f(r.get("hold_p"), 4)}, 통과 {r.get("hold_pass")}')
-    lines += ['', f'목표(방향 적중 80% 이상, 잠금 구간·반증 통과) 도달: {"예" if len(final) else "아니오"}', '', '투자 권유 아님']
+    lines += ['', f'목표(방향 적중 80% 이상, {"양방향 교차 검증" if cross else "잠금 구간"}·반증 통과) 도달: {"예" if len(final) else "아니오"}', '', '투자 권유 아님']
     open(os.path.join(rd, 'report.md'), 'w', encoding='utf-8').write('\n'.join(lines))
     hist = os.path.join(L.STATE, 'history.md')
     with open(hist, 'a', encoding='utf-8') as fh:
         fh.write(f'\n## 라운드 {rnd} — {pd.Timestamp.now(tz="Asia/Seoul"):%Y-%m-%d %H:%M}\n- 계획: {cfg.get("note", "")}\n'
-                 f'- 후보 {len(V)} / 개발 통과 {int(V["dev_pass"].sum())} / 잠금 통과 {len(passed)} / 최종 {len(final)}\n'
-                 f'- 최상위: {top.iloc[0]["desc"] if len(top) else "—"} (개발 적중 {f(top.iloc[0]["dev_hit"], 0, True) if len(top) else "—"}, 거래 {int(top.iloc[0]["dev_n"]) if len(top) else 0})\n')
+                 + (f'- 후보 {len(V)} / 앞 선별 {int(V["sel_fwd"].sum())}·뒤 선별 {int(V["sel_rev"].sum())} / 앞→뒤 {int(V["fwd_pass"].sum())}·뒤→앞 {int(V["rev_pass"].sum())} / 양방향 {len(passed)} / 최종 {len(final)}\n'
+                    if cross else f'- 후보 {len(V)} / 개발 통과 {int(V["dev_pass"].sum())} / 잠금 통과 {len(passed)} / 최종 {len(final)}\n')
+                 + (f'- 최상위: {top.iloc[0]["desc"]} (앞 적중 {f(top.iloc[0]["dev_hit"], 0, True)}·거래 {int(top.iloc[0]["dev_n"])}, 뒤 적중 {f(top.iloc[0]["p2_hit"], 0, True)}·거래 {int(top.iloc[0]["p2_n"])})\n'
+                    if cross and len(top) else f'- 최상위: {top.iloc[0]["desc"] if len(top) else "—"} (개발 적중 {f(top.iloc[0]["dev_hit"], 0, True) if len(top) else "—"}, 거래 {int(top.iloc[0]["dev_n"]) if len(top) else 0})\n'))
     print('\n'.join(lines[:12]))
 
 
