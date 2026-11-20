@@ -8,3 +8,4 @@
 [23:32:04] opt_chainwt_daily 중간 저장 2024-07-05 (61054행)
 [23:38:51] opt_chainwt_daily 중간 저장 2025-06-20 (75936행)
 [23:46:29] opt_chainwt_daily 중간 저장 2026-06-05 (91798행)
+[23:50:10] 저장 opt_chainwt_daily.csv.gz 100662행
