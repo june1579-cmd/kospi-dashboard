@@ -55,10 +55,44 @@ def main():
     #   2017 처럼 조용한 해의 2% 는 먼 거리, 2020 처럼 거친 해의 2% 는 바로 옆이라 해마다 '근처'의 뜻이 달라짐(해마다 성적이 고르지 않은 원인 후보). 그날 종가까지 아는 값.
     sig5 = (k2['close'].pct_change().rolling(20).std() * np.sqrt(5) * 100).reindex(td)
     band_list = [(b, f'{b}%', b, False) for b in BANDS] + [(f's{k}', f'{k}σ', sig5 * k, True) for k in (cfg.get('sigma_bands') or [])]
+    # 갈래 A 라운드 14(a04.wall_age: [N, …], 설정 없으면 꺼짐 → 갈래 B 영향 없음): '천장 지킴' — 라운드 7·11·13 에서 가설 방향(하락)은
+    #   천장이 옮겨 가지 않을 때(같은 자리 연장)만 나왔는데, 만기일 사건이라 연 1~2번꼴이라 거래 20개를 못 채움. 같은 뜻을 날마다로:
+    #   그 시리즈 콜벽 행사가가 N거래일 이상 같은 자리(같은 결제월, ALL 은 결제월 무관)인 날 + 벽 바로 아래 + 외국인 흐름 → m일. 양방향 사전 등록.
+    W = feat.get('walls')
+    age_of = {}
+    if cfg.get('wall_age') and W is not None and len(W):
+        W = W.copy(); W['date'] = pd.to_datetime(W['date'])   # 벽 없는 날(K 빈칸)은 연속을 끊는 날로 둠
+        W = W.drop_duplicates(['date', 'tag'], keep='last')
+        for tag, g in W.sort_values('date').groupby('tag'):
+            g = g.set_index('date')
+            key = g['K'].astype(float).round(3).astype(str) + ('' if tag == 'ALL' else '|' + g['ym'].astype(str))
+            run = key.ne(key.shift()).cumsum()
+            age_of[tag] = g.groupby(run).cumcount().add(1).where(g['K'].notna()).reindex(td)   # 오늘 포함 같은 벽 연속 거래일 수(그날 장 마감 뒤 아는 값)
+    age_flows = [x for x in flow_masks if x[0] in ('외국인 선물', '외국인 콜', '외국인 풋', '외국인 선물·콜 함께', '외국인 선물 대량·콜 함께')]
     for tag in TAGS:
         dist = X.get(f'OW_{tag}_wall_dist%'); pdist = X.get(f'OW_{tag}_passed_wall_dist%')
         grow = X.get(f'OW_{tag}_callotm_chg5%')
         if dist is None: continue
+        if tag in age_of:
+            for na in cfg.get('wall_age'):
+                held = age_of[tag] >= na
+                for band in BANDS:
+                    zm = held & (dist > 0) & (dist <= band)
+                    for who, sgn, sm in [('흐름 무관', '', pd.Series(True, index=td))] + age_flows:
+                        m_all = zm & sm
+                        for m in MS:
+                            v = fwd[m][m_all & dev].dropna()
+                            rows.append({'시리즈': tag, '근처폭%': f'{band}%', '구역': f'같은 벽 {na}일 이상 + 벽 바로 아래', '누가': who, '부호': sgn, 'm일': m,
+                                         '날수': len(v), '하락%': (v < 0).mean() * 100 if len(v) else np.nan, '평균%': v.mean() if len(v) else np.nan})
+                            if len(v) < 15: continue
+                            sig = td[(m_all.fillna(False)).values]
+                            t = pd.DataFrame({'signal': sig, 'exit': [L.exit_after(td, s, m) for s in sig]}).dropna()
+                            for direction in (-1, 1):   # 양방향 사전 등록(가설 = 하락)
+                                cands.append({'id': f'A4age_{tag}_{na}d_{band}_{who}_{sgn}_m{m}_{"dn" if direction < 0 else "up"}', 'agent': 'A4',
+                                              'family': 'flow_wall_age',
+                                              'desc': f'{tag} 같은 콜벽 {na}일 이상 유지 + 벽 바로 아래(±{band}%)' + (f' + {who} {sgn}' if sgn else '') +
+                                                      f' → {m}일 {"하락" if direction < 0 else "상승"}',
+                                              'direction': direction, 'trades': t})
         for band_key, band_lab, band, is_sig in band_list:
             # 벽 바로 아래(아직 못 넘음, 거리 0~band%) 또는 막 넘어선 직후(지나간 벽이 −band~0%)
             near_below = (dist > 0) & (dist <= band)
