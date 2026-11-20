@@ -49,6 +49,7 @@ def main():
     sig = (np.log(k2['close']).diff().rolling(20).std() * np.sqrt(250)).values
     ma60 = k2['close'].rolling(60).mean().values
     pos = pd.Series(np.arange(n_td), index=td)
+    W = W[W['date'].isin(td)].copy()   # 라운드 8: 옵션 자료(월물 4개)가 지수 자료보다 하루·이틀 늦게까지 있을 때 지수 없는 날은 뺌
     F = L.flows().reindex(td)
     fs = F['fut_for']; cs = F['call_for']
     def post5(x): return x[::-1].rolling(5, min_periods=5).sum()[::-1].shift(-1).values   # t+1..t+5 합
