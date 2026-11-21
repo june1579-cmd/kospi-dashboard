@@ -443,6 +443,16 @@ def main():
                     if base:
                         _, bm, bd = base[0]
                         conds.append((f"{bn} + {ex['name']}", bm & em, bd)); extra_names.append(f"{bn} + {ex['name']}")
+            # 갈래 B 라운드 24(zone_conds.trend_extra: [n, …], 설정 없으면 꺼짐): 라운드 22 에서 위치 가족이 하락·횡보 해(2010·2024)에 약함 —
+            #   직전 n 거래일 코스피200 수익(그날 종가까지, 문턱 0 = 정의상 값) 상승/하락을 기존 조건(extra_base)에 곱해 장세 탓인지 봄.
+            for n_tr in (zc.get('trend_extra') or []):
+                rn = c1 / c1.shift(int(n_tr)) - 1
+                for lab_tr, tm in ((f'직전 {n_tr}일 상승', rn > 0), (f'직전 {n_tr}일 하락', rn < 0)):
+                    for bn in (zc.get('extra_base') or ['하루 늦춰 진입']):
+                        base = [c for c in conds if c[0] == bn]
+                        if base:
+                            _, bm, bd = base[0]
+                            conds.append((f"{bn} + {lab_tr}", bm & tm.fillna(False), bd)); extra_names.append(f"{bn} + {lab_tr}")
             # 라운드 14(zone_conds.plain): 조건 없는 위치만 — σ 근처폭에서 기준으로 쓰려고(% 근처폭은 zone_only 후보와 같아 σ 만)
             if zc.get('plain'): conds = [('조건 없음', pd.Series(True, index=td), False)] + conds
             if zc.get('conds'): conds = [c for c in conds if c[0] in zc['conds'] or c[0] in extra_names]
