@@ -409,9 +409,22 @@ def main():
             for lg in (zc.get('combo_lags') or []):
                 oil = X.get(f'OW_{tag}_wall_oi_chg{lg}%')
                 if oil is not None: conds += [(f'벽 물량 {lg}일 증가 + 하루 늦춰 진입', oil > 0, True)]
+            # 라운드 17(zone_conds.extra: [{name, col, ge|le}, …] × extra_base): 사용자 가설의 '콜이 압도적으로 우세'를 위치 가족에 직접 — 벽 1위/2위 물량비·
+            #   벽 몫·상위3 몫·OTM 콜/풋 등 그날 아는 a02 지표의 고정 문턱(설정에 적은 값, 결과를 보고 고른 값 아님)을 기존 조건(extra_base)에 곱함. 자료 없는 날은 빠짐.
+            extra_names = []
+            for ex in (zc.get('extra') or []):
+                col = X.get(ex['col'].replace('{tag}', tag))
+                if col is None: continue
+                em = (col >= ex['ge']) if 'ge' in ex else (col <= ex['le'])
+                em = em & col.notna()
+                for bn in (zc.get('extra_base') or ['하루 늦춰 진입']):
+                    base = [c for c in conds if c[0] == bn]
+                    if base:
+                        _, bm, bd = base[0]
+                        conds.append((f"{bn} + {ex['name']}", bm & em, bd)); extra_names.append(f"{bn} + {ex['name']}")
             # 라운드 14(zone_conds.plain): 조건 없는 위치만 — σ 근처폭에서 기준으로 쓰려고(% 근처폭은 zone_only 후보와 같아 σ 만)
             if zc.get('plain'): conds = [('조건 없음', pd.Series(True, index=td), False)] + conds
-            if zc.get('conds'): conds = [c for c in conds if c[0] in zc['conds']]
+            if zc.get('conds'): conds = [c for c in conds if c[0] in zc['conds'] or c[0] in extra_names]
             # 라운드 14(zone_conds.sigma: [k, …]): 라운드 13 에서 ±1% 날은 앞 구간 거래가 2017·2020 에 몰림(조용한 해엔 1% 가 멀고 거친 해엔 가까움) —
             #   벽 거리를 1주 σ(직전 20일 일간 표준편차 × √5, 그날 아는 값) 단위로도. 라운드 7 의 σ 시험은 흐름 조건과 함께였고 위치만은 처음.
             zbands = [(b, f'{b}%', b) for b in zc.get('bands', [0.5, 1.0, 2.0])] + [(f's{k}', f'{k}σ', sig5 * k) for k in (zc.get('sigma') or [])]
