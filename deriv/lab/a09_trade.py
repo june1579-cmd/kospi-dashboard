@@ -17,6 +17,9 @@ from a08_validate import independent  # noqa: E402
 
 cfg = L.round_cfg().get('a09', {})
 TOPN = cfg.get('top_n', 10)
+# 갈래 B 라운드 22(설정 없으면 꺼짐 → 갈래 A 영향 없음): ids = 선별 여부와 상관없이 늘 두 구간 모두 시뮬레이션할 후보,
+#   by_year = 선물(K200F) 해마다 성적 표(trades_by_year.csv), baseline = 같은 보유 기간·같은 방향을 아무 날에나 잡았을 때의 평균 수익·승률(비용 뒤) 칸.
+IDS = list(cfg.get('ids') or [])
 COST = {'K200F': 0.03, 'ETF': 0.15}
 K2C = {}
 
@@ -73,6 +76,7 @@ def main():
             for c in pickle.load(open(p, 'rb')): cands[c['id']] = c
     pick = V[V['dev_pass']].copy()
     pick = pd.concat([pick, V[~V['dev_pass'] & (V['dev_n'] >= 10)].sort_values('dev_hit', ascending=False).head(TOPN)])
+    if IDS: pick = pd.concat([pick, V[V['id'].isin(IDS)]]).drop_duplicates('id')
     P = L.prices()
     if 'ETF' not in P:
         L.fetch_etf(); P = L.prices()
@@ -81,13 +85,13 @@ def main():
     td = P['K200'].index
     global K2C
     K2C = P['K200']['close'].to_dict()
-    rows = []
+    rows = []; yrows = []
     for _, v in pick.iterrows():
         c = cands.get(v['id'])
         if c is None: continue
         for part, tr, s0, s1 in (('개발', c.get('trades_dev', c['trades']), pd.Timestamp('2010-01-01'), L.DEV_END),
                                  ('잠금', c['trades'], L.HOLD_START, td[-1])):
-            if part == '잠금' and not v['dev_pass']: continue
+            if part == '잠금' and not (v['dev_pass'] or v['id'] in IDS): continue
             tr = tr.assign(signal=pd.to_datetime(tr['signal']), exit=pd.to_datetime(tr['exit']))
             t = independent(tr[(tr['signal'] >= s0) & (tr['exit'] <= s1)].dropna())
             if not len(t): continue
@@ -95,10 +99,24 @@ def main():
                 if inst not in P: continue
                 r = c['direction'] * L.trade_returns(t, P[inst]) - COST[inst]
                 if inst == 'ETF' and c['direction'] < 0: r = np.full(len(t), np.nan)   # ETF 는 매수만(하락 신호 = 현금)
-                rows.append({'id': v['id'], '구간': part, '수단': inst, **stats_of(r)})
+                extra = {}
+                if cfg.get('baseline') and inst == 'K200F':
+                    px = P[inst]; tdp = px.index
+                    hd = [tdp.searchsorted(e) - tdp.searchsorted(s_, side='right') + 1 for s_, e in zip(t['signal'], t['exit'])]
+                    h = int(max(1, np.median(hd)))
+                    rb = c['direction'] * (px['close'].shift(-h) / px['open'].shift(-1) - 1) * 100 - COST[inst]
+                    rb = rb[(rb.index >= max(s0, tdp[0])) & (rb.index <= s1)].dropna()
+                    extra = {'base_h': h, 'base_avg%': float(rb.mean()) if len(rb) else np.nan, 'base_win%': float((rb > 0).mean() * 100) if len(rb) else np.nan}
+                rows.append({'id': v['id'], '구간': part, '수단': inst, **stats_of(r), **extra})
+                if cfg.get('by_year') and inst == 'K200F':
+                    yrs = pd.DatetimeIndex(t['signal']).year
+                    for y in sorted(set(yrs)):
+                        st = stats_of(r[yrs == y])
+                        if st: yrows.append({'id': v['id'], '해': int(y), **st})
             r = option_trades(t, c['direction'], ch, td)
             rows.append({'id': v['id'], '구간': part, '수단': '옵션(등가격 매수, 자본 10%씩)', **stats_of(r, 0.1)})
     od = L.out_dir('a09'); pd.DataFrame(rows).round(3).to_csv(os.path.join(od, 'trades.csv'), index=False, encoding='utf-8')
+    if yrows: pd.DataFrame(yrows).round(3).to_csv(os.path.join(od, 'trades_by_year.csv'), index=False, encoding='utf-8')
     print('시뮬레이션', len(rows))
 
 
