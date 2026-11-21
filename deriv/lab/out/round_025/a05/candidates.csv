@@ -1,0 +1,117 @@
+id,agent,family,desc,direction,n_signals
+A5_wallext_True_m1,A5,roll_wall,분기 만기 뒤 콜벽 연장=True → 1일 하락,-1,10
+A5_wallext_True_m5,A5,roll_wall,분기 만기 뒤 콜벽 연장=True → 5일 상승,1,10
+A5_wallext_True_m10,A5,roll_wall,분기 만기 뒤 콜벽 연장=True → 10일 상승,1,10
+A5_wallext_True_m20,A5,roll_wall,분기 만기 뒤 콜벽 연장=True → 20일 상승,1,10
+A5_wallext_False_m1,A5,roll_wall,분기 만기 뒤 콜벽 연장=False → 1일 하락,-1,57
+A5_wallext_False_m5,A5,roll_wall,분기 만기 뒤 콜벽 연장=False → 5일 상승,1,57
+A5_wallext_False_m10,A5,roll_wall,분기 만기 뒤 콜벽 연장=False → 10일 상승,1,57
+A5_wallext_False_m20,A5,roll_wall,분기 만기 뒤 콜벽 연장=False → 20일 상승,1,57
+A5_roll_vs4_높음_m1,A5,roll_fut,선물 roll_vs4 높음(만기일 신호) → 만기 뒤 1일 상승,1,37
+A5_roll_vs4_높음_m5,A5,roll_fut,선물 roll_vs4 높음(만기일 신호) → 만기 뒤 5일 상승,1,37
+A5_roll_vs4_높음_m10,A5,roll_fut,선물 roll_vs4 높음(만기일 신호) → 만기 뒤 10일 상승,1,37
+A5_roll_vs4_높음_m20,A5,roll_fut,선물 roll_vs4 높음(만기일 신호) → 만기 뒤 20일 상승,1,37
+A5_roll_vs4_낮음_m1,A5,roll_fut,선물 roll_vs4 낮음(만기일 신호) → 만기 뒤 1일 상승,1,34
+A5_roll_vs4_낮음_m5,A5,roll_fut,선물 roll_vs4 낮음(만기일 신호) → 만기 뒤 5일 상승,1,34
+A5_roll_vs4_낮음_m10,A5,roll_fut,선물 roll_vs4 낮음(만기일 신호) → 만기 뒤 10일 상승,1,34
+A5_roll_vs4_낮음_m20,A5,roll_fut,선물 roll_vs4 낮음(만기일 신호) → 만기 뒤 20일 상승,1,34
+A5_spread_vs4_높음_m1,A5,roll_fut,선물 spread_vs4 높음(만기일 신호) → 만기 뒤 1일 상승,1,44
+A5_spread_vs4_높음_m5,A5,roll_fut,선물 spread_vs4 높음(만기일 신호) → 만기 뒤 5일 상승,1,44
+A5_spread_vs4_높음_m10,A5,roll_fut,선물 spread_vs4 높음(만기일 신호) → 만기 뒤 10일 하락,-1,44
+A5_spread_vs4_높음_m20,A5,roll_fut,선물 spread_vs4 높음(만기일 신호) → 만기 뒤 20일 상승,1,44
+A5_spread_vs4_낮음_m1,A5,roll_fut,선물 spread_vs4 낮음(만기일 신호) → 만기 뒤 1일 상승,1,27
+A5_spread_vs4_낮음_m5,A5,roll_fut,선물 spread_vs4 낮음(만기일 신호) → 만기 뒤 5일 상승,1,27
+A5_spread_vs4_낮음_m10,A5,roll_fut,선물 spread_vs4 낮음(만기일 신호) → 만기 뒤 10일 상승,1,27
+A5_spread_vs4_낮음_m20,A5,roll_fut,선물 spread_vs4 낮음(만기일 신호) → 만기 뒤 20일 상승,1,27
+A5_wallext_True_spread_vs4_높음_m1,A5,roll_wall_fut,분기 만기 뒤 콜벽 연장=True + 선물 spread_vs4 높음 → 1일 하락,-1,8
+A5_wallext_True_spread_vs4_높음_m5,A5,roll_wall_fut,분기 만기 뒤 콜벽 연장=True + 선물 spread_vs4 높음 → 5일 상승,1,8
+A5_wallext_True_spread_vs4_높음_m10,A5,roll_wall_fut,분기 만기 뒤 콜벽 연장=True + 선물 spread_vs4 높음 → 10일 하락,-1,8
+A5_wallext_True_spread_vs4_높음_m20,A5,roll_wall_fut,분기 만기 뒤 콜벽 연장=True + 선물 spread_vs4 높음 → 20일 상승,1,8
+A5_wallext_False_roll_vs4_높음_m1,A5,roll_wall_fut,분기 만기 뒤 콜벽 연장=False + 선물 roll_vs4 높음 → 1일 상승,1,30
+A5_wallext_False_roll_vs4_높음_m5,A5,roll_wall_fut,분기 만기 뒤 콜벽 연장=False + 선물 roll_vs4 높음 → 5일 상승,1,30
+A5_wallext_False_roll_vs4_높음_m10,A5,roll_wall_fut,분기 만기 뒤 콜벽 연장=False + 선물 roll_vs4 높음 → 10일 상승,1,30
+A5_wallext_False_roll_vs4_높음_m20,A5,roll_wall_fut,분기 만기 뒤 콜벽 연장=False + 선물 roll_vs4 높음 → 20일 상승,1,30
+A5_wallext_False_roll_vs4_낮음_m1,A5,roll_wall_fut,분기 만기 뒤 콜벽 연장=False + 선물 roll_vs4 낮음 → 1일 하락,-1,27
+A5_wallext_False_roll_vs4_낮음_m5,A5,roll_wall_fut,분기 만기 뒤 콜벽 연장=False + 선물 roll_vs4 낮음 → 5일 하락,-1,27
+A5_wallext_False_roll_vs4_낮음_m10,A5,roll_wall_fut,분기 만기 뒤 콜벽 연장=False + 선물 roll_vs4 낮음 → 10일 상승,1,27
+A5_wallext_False_roll_vs4_낮음_m20,A5,roll_wall_fut,분기 만기 뒤 콜벽 연장=False + 선물 roll_vs4 낮음 → 20일 상승,1,27
+A5_wallext_False_spread_vs4_높음_m1,A5,roll_wall_fut,분기 만기 뒤 콜벽 연장=False + 선물 spread_vs4 높음 → 1일 하락,-1,36
+A5_wallext_False_spread_vs4_높음_m5,A5,roll_wall_fut,분기 만기 뒤 콜벽 연장=False + 선물 spread_vs4 높음 → 5일 상승,1,36
+A5_wallext_False_spread_vs4_높음_m10,A5,roll_wall_fut,분기 만기 뒤 콜벽 연장=False + 선물 spread_vs4 높음 → 10일 상승,1,36
+A5_wallext_False_spread_vs4_높음_m20,A5,roll_wall_fut,분기 만기 뒤 콜벽 연장=False + 선물 spread_vs4 높음 → 20일 상승,1,36
+A5_wallext_False_spread_vs4_낮음_m1,A5,roll_wall_fut,분기 만기 뒤 콜벽 연장=False + 선물 spread_vs4 낮음 → 1일 하락,-1,21
+A5_wallext_False_spread_vs4_낮음_m5,A5,roll_wall_fut,분기 만기 뒤 콜벽 연장=False + 선물 spread_vs4 낮음 → 5일 하락,-1,21
+A5_wallext_False_spread_vs4_낮음_m10,A5,roll_wall_fut,분기 만기 뒤 콜벽 연장=False + 선물 spread_vs4 낮음 → 10일 상승,1,21
+A5_wallext_False_spread_vs4_낮음_m20,A5,roll_wall_fut,분기 만기 뒤 콜벽 연장=False + 선물 spread_vs4 낮음 → 20일 상승,1,21
+A5_m_월물콜벽연장True_m1,A5,roll_monthly_call,월물 콜벽 연장=True(월물 만기 다음 날 신호) → 1일 하락,-1,59
+A5_m_월물콜벽연장True_m5,A5,roll_monthly_call,월물 콜벽 연장=True(월물 만기 다음 날 신호) → 5일 상승,1,58
+A5_m_월물콜벽연장True_m10,A5,roll_monthly_call,월물 콜벽 연장=True(월물 만기 다음 날 신호) → 10일 상승,1,58
+A5_m_월물콜벽연장True_m20,A5,roll_monthly_call,월물 콜벽 연장=True(월물 만기 다음 날 신호) → 20일 하락,-1,58
+A5_m_월물콜벽연장False_m1,A5,roll_monthly_call,월물 콜벽 연장=False(월물 만기 다음 날 신호) → 1일 상승,1,144
+A5_m_월물콜벽연장False_m5,A5,roll_monthly_call,월물 콜벽 연장=False(월물 만기 다음 날 신호) → 5일 상승,1,144
+A5_m_월물콜벽연장False_m10,A5,roll_monthly_call,월물 콜벽 연장=False(월물 만기 다음 날 신호) → 10일 상승,1,144
+A5_m_월물콜벽연장False_m20,A5,roll_monthly_call,월물 콜벽 연장=False(월물 만기 다음 날 신호) → 20일 상승,1,144
+A5_m_뒤결제월(차월·차차월)에같은콜벽있음_m1,A5,roll_monthly_call,뒤 결제월(차월·차차월)에 같은 콜벽 있음(월물 만기 다음 날 신호) → 1일 하락,-1,91
+A5_m_뒤결제월(차월·차차월)에같은콜벽있음_m5,A5,roll_monthly_call,뒤 결제월(차월·차차월)에 같은 콜벽 있음(월물 만기 다음 날 신호) → 5일 하락,-1,90
+A5_m_뒤결제월(차월·차차월)에같은콜벽있음_m10,A5,roll_monthly_call,뒤 결제월(차월·차차월)에 같은 콜벽 있음(월물 만기 다음 날 신호) → 10일 상승,1,90
+A5_m_뒤결제월(차월·차차월)에같은콜벽있음_m20,A5,roll_monthly_call,뒤 결제월(차월·차차월)에 같은 콜벽 있음(월물 만기 다음 날 신호) → 20일 상승,1,90
+A5_m_뒤결제월(차월·차차월)에같은콜벽없음_m1,A5,roll_monthly_call,뒤 결제월(차월·차차월)에 같은 콜벽 없음(월물 만기 다음 날 신호) → 1일 상승,1,108
+A5_m_뒤결제월(차월·차차월)에같은콜벽없음_m5,A5,roll_monthly_call,뒤 결제월(차월·차차월)에 같은 콜벽 없음(월물 만기 다음 날 신호) → 5일 상승,1,108
+A5_m_뒤결제월(차월·차차월)에같은콜벽없음_m10,A5,roll_monthly_call,뒤 결제월(차월·차차월)에 같은 콜벽 없음(월물 만기 다음 날 신호) → 10일 상승,1,108
+A5_m_뒤결제월(차월·차차월)에같은콜벽없음_m20,A5,roll_monthly_call,뒤 결제월(차월·차차월)에 같은 콜벽 없음(월물 만기 다음 날 신호) → 20일 상승,1,108
+A5_m_뒤결제월3개콜이월평소보다적음_m1,A5,roll_monthly_call,뒤 결제월 3개 콜 이월 평소보다 적음(월물 만기 다음 날 신호) → 1일 하락,-1,97
+A5_m_뒤결제월3개콜이월평소보다적음_m5,A5,roll_monthly_call,뒤 결제월 3개 콜 이월 평소보다 적음(월물 만기 다음 날 신호) → 5일 상승,1,97
+A5_m_뒤결제월3개콜이월평소보다적음_m10,A5,roll_monthly_call,뒤 결제월 3개 콜 이월 평소보다 적음(월물 만기 다음 날 신호) → 10일 상승,1,97
+A5_m_뒤결제월3개콜이월평소보다적음_m20,A5,roll_monthly_call,뒤 결제월 3개 콜 이월 평소보다 적음(월물 만기 다음 날 신호) → 20일 상승,1,97
+A5_m_뒤결제월3개콜이월평소보다많음_m1,A5,roll_monthly_call,뒤 결제월 3개 콜 이월 평소보다 많음(월물 만기 다음 날 신호) → 1일 하락,-1,102
+A5_m_뒤결제월3개콜이월평소보다많음_m5,A5,roll_monthly_call,뒤 결제월 3개 콜 이월 평소보다 많음(월물 만기 다음 날 신호) → 5일 상승,1,101
+A5_m_뒤결제월3개콜이월평소보다많음_m10,A5,roll_monthly_call,뒤 결제월 3개 콜 이월 평소보다 많음(월물 만기 다음 날 신호) → 10일 하락,-1,101
+A5_m_뒤결제월3개콜이월평소보다많음_m20,A5,roll_monthly_call,뒤 결제월 3개 콜 이월 평소보다 많음(월물 만기 다음 날 신호) → 20일 하락,-1,101
+A5_m_뒤결제월에같은콜벽있음_3개콜이월적음_m1,A5,roll_monthly_call,뒤 결제월에 같은 콜벽 있음 + 3개 콜 이월 적음(월물 만기 다음 날 신호) → 1일 하락,-1,44
+A5_m_뒤결제월에같은콜벽있음_3개콜이월적음_m5,A5,roll_monthly_call,뒤 결제월에 같은 콜벽 있음 + 3개 콜 이월 적음(월물 만기 다음 날 신호) → 5일 상승,1,44
+A5_m_뒤결제월에같은콜벽있음_3개콜이월적음_m10,A5,roll_monthly_call,뒤 결제월에 같은 콜벽 있음 + 3개 콜 이월 적음(월물 만기 다음 날 신호) → 10일 상승,1,44
+A5_m_뒤결제월에같은콜벽있음_3개콜이월적음_m20,A5,roll_monthly_call,뒤 결제월에 같은 콜벽 있음 + 3개 콜 이월 적음(월물 만기 다음 날 신호) → 20일 상승,1,44
+A5_m_뒤결제월에같은콜벽있음_3개콜이월많음_m1,A5,roll_monthly_call,뒤 결제월에 같은 콜벽 있음 + 3개 콜 이월 많음(월물 만기 다음 날 신호) → 1일 하락,-1,47
+A5_m_뒤결제월에같은콜벽있음_3개콜이월많음_m5,A5,roll_monthly_call,뒤 결제월에 같은 콜벽 있음 + 3개 콜 이월 많음(월물 만기 다음 날 신호) → 5일 하락,-1,46
+A5_m_뒤결제월에같은콜벽있음_3개콜이월많음_m10,A5,roll_monthly_call,뒤 결제월에 같은 콜벽 있음 + 3개 콜 이월 많음(월물 만기 다음 날 신호) → 10일 상승,1,46
+A5_m_뒤결제월에같은콜벽있음_3개콜이월많음_m20,A5,roll_monthly_call,뒤 결제월에 같은 콜벽 있음 + 3개 콜 이월 많음(월물 만기 다음 날 신호) → 20일 상승,1,46
+A5_m_월물콜벽연장True_뒤결제월에같은콜벽있음_m1,A5,roll_monthly_call,월물 콜벽 연장=True + 뒤 결제월에 같은 콜벽 있음(월물 만기 다음 날 신호) → 1일 하락,-1,44
+A5_m_월물콜벽연장True_뒤결제월에같은콜벽있음_m5,A5,roll_monthly_call,월물 콜벽 연장=True + 뒤 결제월에 같은 콜벽 있음(월물 만기 다음 날 신호) → 5일 상승,1,43
+A5_m_월물콜벽연장True_뒤결제월에같은콜벽있음_m10,A5,roll_monthly_call,월물 콜벽 연장=True + 뒤 결제월에 같은 콜벽 있음(월물 만기 다음 날 신호) → 10일 상승,1,43
+A5_m_월물콜벽연장True_뒤결제월에같은콜벽있음_m20,A5,roll_monthly_call,월물 콜벽 연장=True + 뒤 결제월에 같은 콜벽 있음(월물 만기 다음 날 신호) → 20일 하락,-1,43
+A5_m_뒤결제월에같은콜벽없음_3개콜이월적음_m1,A5,roll_monthly_call,뒤 결제월에 같은 콜벽 없음 + 3개 콜 이월 적음(월물 만기 다음 날 신호) → 1일 상승,1,53
+A5_m_뒤결제월에같은콜벽없음_3개콜이월적음_m5,A5,roll_monthly_call,뒤 결제월에 같은 콜벽 없음 + 3개 콜 이월 적음(월물 만기 다음 날 신호) → 5일 상승,1,53
+A5_m_뒤결제월에같은콜벽없음_3개콜이월적음_m10,A5,roll_monthly_call,뒤 결제월에 같은 콜벽 없음 + 3개 콜 이월 적음(월물 만기 다음 날 신호) → 10일 상승,1,53
+A5_m_뒤결제월에같은콜벽없음_3개콜이월적음_m20,A5,roll_monthly_call,뒤 결제월에 같은 콜벽 없음 + 3개 콜 이월 적음(월물 만기 다음 날 신호) → 20일 상승,1,53
+A5_m_뒤결제월에같은콜벽없음_3개콜이월많음_m1,A5,roll_monthly_call,뒤 결제월에 같은 콜벽 없음 + 3개 콜 이월 많음(월물 만기 다음 날 신호) → 1일 상승,1,55
+A5_m_뒤결제월에같은콜벽없음_3개콜이월많음_m5,A5,roll_monthly_call,뒤 결제월에 같은 콜벽 없음 + 3개 콜 이월 많음(월물 만기 다음 날 신호) → 5일 상승,1,55
+A5_m_뒤결제월에같은콜벽없음_3개콜이월많음_m10,A5,roll_monthly_call,뒤 결제월에 같은 콜벽 없음 + 3개 콜 이월 많음(월물 만기 다음 날 신호) → 10일 하락,-1,55
+A5_m_뒤결제월에같은콜벽없음_3개콜이월많음_m20,A5,roll_monthly_call,뒤 결제월에 같은 콜벽 없음 + 3개 콜 이월 많음(월물 만기 다음 날 신호) → 20일 하락,-1,55
+A5_m_월물콜벽연장True_뒤결제월에같은콜벽없음_m1,A5,roll_monthly_call,월물 콜벽 연장=True + 뒤 결제월에 같은 콜벽 없음(월물 만기 다음 날 신호) → 1일 상승,1,13
+A5_m_월물콜벽연장True_뒤결제월에같은콜벽없음_m5,A5,roll_monthly_call,월물 콜벽 연장=True + 뒤 결제월에 같은 콜벽 없음(월물 만기 다음 날 신호) → 5일 상승,1,13
+A5_m_월물콜벽연장True_뒤결제월에같은콜벽없음_m10,A5,roll_monthly_call,월물 콜벽 연장=True + 뒤 결제월에 같은 콜벽 없음(월물 만기 다음 날 신호) → 10일 상승,1,13
+A5_m_월물콜벽연장True_뒤결제월에같은콜벽없음_m20,A5,roll_monthly_call,월물 콜벽 연장=True + 뒤 결제월에 같은 콜벽 없음(월물 만기 다음 날 신호) → 20일 상승,1,13
+A5_m_콜물량이월평소보다많음_m1,A5,roll_monthly_call,콜 물량 이월 평소보다 많음(월물 만기 다음 날 신호) → 1일 하락,-1,92
+A5_m_콜물량이월평소보다많음_m5,A5,roll_monthly_call,콜 물량 이월 평소보다 많음(월물 만기 다음 날 신호) → 5일 상승,1,91
+A5_m_콜물량이월평소보다많음_m10,A5,roll_monthly_call,콜 물량 이월 평소보다 많음(월물 만기 다음 날 신호) → 10일 상승,1,91
+A5_m_콜물량이월평소보다많음_m20,A5,roll_monthly_call,콜 물량 이월 평소보다 많음(월물 만기 다음 날 신호) → 20일 상승,1,91
+A5_m_콜물량이월평소보다적음_m1,A5,roll_monthly_call,콜 물량 이월 평소보다 적음(월물 만기 다음 날 신호) → 1일 상승,1,107
+A5_m_콜물량이월평소보다적음_m5,A5,roll_monthly_call,콜 물량 이월 평소보다 적음(월물 만기 다음 날 신호) → 5일 상승,1,107
+A5_m_콜물량이월평소보다적음_m10,A5,roll_monthly_call,콜 물량 이월 평소보다 적음(월물 만기 다음 날 신호) → 10일 상승,1,107
+A5_m_콜물량이월평소보다적음_m20,A5,roll_monthly_call,콜 물량 이월 평소보다 적음(월물 만기 다음 날 신호) → 20일 상승,1,107
+A5_m_월물콜벽연장True_콜이월많음_m1,A5,roll_monthly_call,월물 콜벽 연장=True + 콜 이월 많음(월물 만기 다음 날 신호) → 1일 하락,-1,25
+A5_m_월물콜벽연장True_콜이월많음_m5,A5,roll_monthly_call,월물 콜벽 연장=True + 콜 이월 많음(월물 만기 다음 날 신호) → 5일 상승,1,24
+A5_m_월물콜벽연장True_콜이월많음_m10,A5,roll_monthly_call,월물 콜벽 연장=True + 콜 이월 많음(월물 만기 다음 날 신호) → 10일 상승,1,24
+A5_m_월물콜벽연장True_콜이월많음_m20,A5,roll_monthly_call,월물 콜벽 연장=True + 콜 이월 많음(월물 만기 다음 날 신호) → 20일 상승,1,24
+A5_m_월물콜벽연장True_콜이월적음_m1,A5,roll_monthly_call,월물 콜벽 연장=True + 콜 이월 적음(월물 만기 다음 날 신호) → 1일 하락,-1,32
+A5_m_월물콜벽연장True_콜이월적음_m5,A5,roll_monthly_call,월물 콜벽 연장=True + 콜 이월 적음(월물 만기 다음 날 신호) → 5일 하락,-1,32
+A5_m_월물콜벽연장True_콜이월적음_m10,A5,roll_monthly_call,월물 콜벽 연장=True + 콜 이월 적음(월물 만기 다음 날 신호) → 10일 상승,1,32
+A5_m_월물콜벽연장True_콜이월적음_m20,A5,roll_monthly_call,월물 콜벽 연장=True + 콜 이월 적음(월물 만기 다음 날 신호) → 20일 하락,-1,32
+A5_m_월물콜벽연장False_콜이월많음_m1,A5,roll_monthly_call,월물 콜벽 연장=False + 콜 이월 많음(월물 만기 다음 날 신호) → 1일 하락,-1,67
+A5_m_월물콜벽연장False_콜이월많음_m5,A5,roll_monthly_call,월물 콜벽 연장=False + 콜 이월 많음(월물 만기 다음 날 신호) → 5일 상승,1,67
+A5_m_월물콜벽연장False_콜이월많음_m10,A5,roll_monthly_call,월물 콜벽 연장=False + 콜 이월 많음(월물 만기 다음 날 신호) → 10일 하락,-1,67
+A5_m_월물콜벽연장False_콜이월많음_m20,A5,roll_monthly_call,월물 콜벽 연장=False + 콜 이월 많음(월물 만기 다음 날 신호) → 20일 상승,1,67
+A5_m_월물콜벽연장False_콜이월적음_m1,A5,roll_monthly_call,월물 콜벽 연장=False + 콜 이월 적음(월물 만기 다음 날 신호) → 1일 상승,1,75
+A5_m_월물콜벽연장False_콜이월적음_m5,A5,roll_monthly_call,월물 콜벽 연장=False + 콜 이월 적음(월물 만기 다음 날 신호) → 5일 상승,1,75
+A5_m_월물콜벽연장False_콜이월적음_m10,A5,roll_monthly_call,월물 콜벽 연장=False + 콜 이월 적음(월물 만기 다음 날 신호) → 10일 상승,1,75
+A5_m_월물콜벽연장False_콜이월적음_m20,A5,roll_monthly_call,월물 콜벽 연장=False + 콜 이월 적음(월물 만기 다음 날 신호) → 20일 상승,1,75
