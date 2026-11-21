@@ -33,6 +33,12 @@ CAND_TAGS = cfg.get('cand_tags', ['F0', 'Q'])
 MIG_TAGS = cfg.get('mig_tags', ['F0', 'F1', 'Q'])
 TAGNM = {'F0': '근월물', 'F1': '차월물', 'F2': '차차월물', 'F3': '넷째 월물', 'Q': '분기물', 'ALL': '결제월 4개 합산', 'ANY': '근월·차월·분기물 중 하나'}
 DEV0 = pd.Timestamp('2015-01-01')
+DEV1 = L.DEV_END
+SUB, SAVE = 'a03c', True
+# 갈래 A 라운드 26(a03c.windows, 설정 없으면 없음 → 예전과 같고 갈래 B 영향 없음): 교차 모드(2026-11-21~)에서는 잠금 규칙이 없으므로
+#   같은 원인 분해 표를 다른 구간으로도 따로 계산(후보는 만들지 않음, 기본 구간 결과·후보는 그대로) → a03c/w_<이름>/.
+#   p1x = 2010-01-01~2023-12-31(2010~2014 월물 4개가 들어온 앞 구간 전체), p2 = 2024-01-01~자료 끝, p0 = 2010~2014(새 표본만).
+WINDOWS = {'p1x': ('2010-01-01', None), 'p2': (None, '2100-01-01'), 'p0': ('2010-01-01', '2014-12-31')}
 
 
 def pct(x):
@@ -58,8 +64,8 @@ def main():
     for20 = fs.rolling(20, min_periods=15).sum().values
     fwd = {m: (k2['close'].shift(-m) / k2['open'].shift(-1) - 1).values * 100 for m in (1, 3, 5, 10)}
     r5 = (k2['close'] / k2['close'].shift(5) - 1).values
-    dev = (td >= DEV0) & (td <= L.DEV_END)
-    last_dev = int(pos[td[td <= L.DEV_END][-1]])
+    dev = (td >= DEV0) & (td <= DEV1)
+    last_dev = int(pos[td[td <= DEV1][-1]])
 
     def ok_dev(i):          # 그 날까지의 결과가 개발 구간 안에서 끝나나(잠금 구간을 엿보지 않게)
         return i <= last_dev
@@ -92,10 +98,10 @@ def main():
     # 라운드 6: ⑤ 기준선도 '비슷하게 오른 뒤'(직전 5일 상승 5분위 맞춤)로 — 넘은 날은 이미 오른 날이라 아무 날과 비교하면 치우칠 수 있음
     okd = okb & np.isfinite(fwd[10]) & (np.arange(n_td) + 10 <= last_dev)
     down10_by_bin = {b: float(np.mean(fwd[10][okd & (r5_bin == b)] < 0)) for b in range(5)}
-    od = L.out_dir('a03c')
+    od = L.out_dir(SUB)
 
     # ---------- 1) 사슬 사건(만기 주기마다 관측일 1번, 관측일 벽 행사가 고정)
-    qd = {t: W[(W['tag'] == t) & (W['date'] <= L.DEV_END)][['share', 'ratio12', 'otm_cp']].quantile(0.75) for t in W['tag'].unique()}
+    qd = {t: W[(W['tag'] == t) & (W['date'] <= DEV1)][['share', 'ratio12', 'otm_cp']].quantile(0.75) for t in W['tag'].unique()}
     ev = []
     for (tag, ym), g in W.groupby(['tag', 'ym']):
         if tag not in OBS: continue
@@ -220,7 +226,7 @@ def main():
     MV, cyc = [], []
     for (tag, ym), g in W[W['tag'] == 'F0'].groupby(['tag', 'ym']):
         g = g[(g['dte'] <= 20) & (g['dte'] >= 1)].sort_values('date').reset_index(drop=True)
-        if len(g) < 5 or not (g['date'].iloc[0] >= DEV0 and g['exp'].iloc[0] <= L.DEV_END): continue
+        if len(g) < 5 or not (g['date'].iloc[0] >= DEV0 and g['exp'].iloc[0] <= DEV1): continue
         Ks = g['K'].values
         cyc.append({'ym': ym, '벽 바뀐 횟수': int((np.diff(Ks) != 0).sum()), '위로': int((np.diff(Ks) > 0).sum()), '아래로': int((np.diff(Ks) < 0).sum()),
                     '만기 벽 > 처음 벽': bool(Ks[-1] > Ks[0]),
@@ -245,7 +251,7 @@ def main():
         r0 = g.iloc[0]; d0 = r0['date']; i0 = int(pos[d0]); K = float(r0['K']); S0 = float(r0['S']); ie = int(pos[r0['exp']]) if r0['exp'] in pos.index else None
         rec = {'tag': tag, 'ym': ym, 'onset': d0, 'exp': r0['exp'], 'K': K, 'S': S0, 'dist%': r0['dist%'], 'z': r0['dist_sig'], 'dte': int(r0['dte']),
                'share': r0['share'], 'ratio12': r0['ratio12'], 'otm_cp': r0['otm_cp'], 'call_for': cs.iloc[i0], 'fut_for': fs.iloc[i0],
-               'dev': bool(d0 >= DEV0 and d0 <= L.DEV_END)}
+               'dev': bool(d0 >= DEV0 and d0 <= DEV1)}
         if ie is not None and ie < n_td:
             rec['touch_exp'] = bool((h[i0 + 1:ie + 1] >= K).any()); rec['base_exp'] = base_touch(int(r0['dte']), float(r0['dist_sig']), 'H')
             rec['exp_ok'] = ok_dev(ie)
@@ -524,7 +530,7 @@ def main():
                             '못 넘음%': pct(rr == 0) if len(rr) else np.nan, '기준 위로 먼저%': round(base_bar[k][0] * 100, 1), '기준 아래로 먼저%': round(base_bar[k][1] * 100, 1)})
     BAR = pd.DataFrame(BAR); BAR.to_csv(os.path.join(od, 'cause_barrier_dev.csv'), index=False, encoding='utf-8')
     OLD = pd.DataFrame(OLD); OLD.to_csv(os.path.join(od, 'cause_oldwall_dev.csv'), index=False, encoding='utf-8')
-    L.save_candidates('a03c', cands)
+    if SAVE: L.save_candidates('a03c', cands)
 
     # ---------- 6) 요약(보고·총괄용)
     def first(df, **kw):
@@ -546,3 +552,12 @@ def main():
 
 if __name__ == '__main__':
     main()
+    for w in cfg.get('windows', []) or []:
+        if w not in WINDOWS: print('구간 이름 모름', w); continue
+        lo, hi = WINDOWS[w]
+        DEV0 = pd.Timestamp(lo) if lo else L.HOLD_START
+        DEV1 = pd.Timestamp(hi) if hi else L.DEV_END
+        SUB, SAVE = f'a03c/w_{w}', False
+        print('== 원인 분해 구간', w, DEV0.date(), '~', DEV1.date(), flush=True)
+        try: main()
+        except Exception as e: print('구간', w, '실패', repr(e))

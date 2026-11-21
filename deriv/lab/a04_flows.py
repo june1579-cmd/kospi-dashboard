@@ -299,6 +299,7 @@ def main():
                             sig = td[(mall.fillna(False)).values]
                             t = pd.DataFrame({'signal': sig, 'exit': [L.exit_after(td, s_, m) for s_ in sig]}).dropna()
                             for direction in (-1, 1):
+                                ZSIG[f'A4young_{tag}_{ny}d_{bkey}_{cn}_m{m}_{"dn" if direction < 0 else "up"}'] = (sig, m, direction)   # 갈래 A 라운드 26: 전진 검증 표용(진행 중 신호 포함)
                                 cands.append({'id': f'A4young_{tag}_{ny}d_{bkey}_{cn}_m{m}_{"dn" if direction < 0 else "up"}', 'agent': 'A4', 'family': 'young_wall',
                                               'desc': f'{lab} 새 콜벽(나이 {ny}일 이하) + 벽 바로 아래(±{blab})' + ('' if cn == '흐름 무관' else f' + {cn}') +
                                                       f' → {m}일 {"하락" if direction < 0 else "상승"}', 'direction': direction, 'trades': t})
@@ -346,6 +347,7 @@ def main():
                                 sig = td[(mall.fillna(False)).values]
                                 t = pd.DataFrame({'signal': sig, 'exit': [L.exit_after(td, s_, m) for s_ in sig]}).dropna()
                                 for direction in (-1, 1):
+                                    ZSIG[f'A4yu_{uk}_{"+".join(gtags)}_{ny}d_{bkey}_{cn}_m{m}_{"dn" if direction < 0 else "up"}'] = (sig, m, direction)   # 갈래 A 라운드 26: 전진 검증 표용
                                     cands.append({'id': f'A4yu_{uk}_{"+".join(gtags)}_{ny}d_{bkey}_{cn}_m{m}_{"dn" if direction < 0 else "up"}', 'agent': 'A4',
                                                   'family': 'young_union',
                                                   'desc': f'{glab} 중 {ulab} 새 콜벽(나이 {ny}일 이하) + 벽 바로 아래(±{blab})' + ('' if cn == '흐름 무관' else f' + {cn}') +
