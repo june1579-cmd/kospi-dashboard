@@ -5789,7 +5789,7 @@
   "value": -42.54,
   "text": "−42.5%(11.20, 8,408.59)",
   "unit": "%",
-  "src": "https://indexes.nasdaqomx.com/Index/History/SOX"
+  "src": "https://finance.yahoo.com/quote/%5ESOX/history/"
  },
  {
   "date": "2026-11-20",
