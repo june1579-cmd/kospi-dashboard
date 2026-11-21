@@ -22,6 +22,113 @@ MS = cfg.get('post_m', [1, 3, 5, 10])
 TAGS = cfg.get('tags', ['F0', 'Q'])
 
 
+WLAB = {'WT': '목 위클리', 'WM': '월 위클리'}
+
+
+def weekly_walls(kind, k2, td):
+    """위클리(wt·wm) 그날 콜벽: 현재가(K200 종가) 위 콜 미결제 최대 행사가. 자료 확인(2026-11-21): 하루 한 시리즈, 상장일~만기 전날 약 5거래일.
+    빠진 날(월물 만기 주 목 위클리 없음, 2026-05~07 빈 응답 등)은 빈칸으로 둬 나이 연속을 끊는다(추정으로 채우지 않음)."""
+    c = L.chain(kind)
+    if c is None or not len(c): return None
+    c = c[(c['cp'] == 'C') & (c['oi'] > 0)].copy()
+    first = c.groupby('exp')['date'].min()
+    rows = []
+    for d, g in c.groupby('date'):
+        s = float(k2['close'].get(d, np.nan))
+        if not np.isfinite(s): continue
+        if g['exp'].nunique() > 1:
+            e = min(g['exp'].unique(), key=lambda x: first[x]); g = g[g['exp'] == e]
+        ca = g[g['K'] > s]
+        if len(ca) < 2: continue
+        o = ca.sort_values('oi', ascending=False)
+        rows.append({'date': d, 'exp': str(g['exp'].iloc[0]), 'K': float(o['K'].iloc[0]), 'dist%': (float(o['K'].iloc[0]) / s - 1) * 100,
+                     'share': float(o['oi'].iloc[0] / o['oi'].sum())})
+    if not rows: return None
+    return pd.DataFrame(rows).set_index('date').sort_index().reindex(td)
+
+
+def weekly_block(wc, k2, td, F, od):
+    """갈래 A 라운드 17(a04.weekly, 설정 없으면 꺼짐 → 갈래 B 영향 없음): 위클리 옵션 콜벽으로 '천장 지킴'을 사건 수가 많은 곳에서.
+    라운드 14~16: 월물 근월 벽이 7~10일 이상 그대로일 때만 벽 2% 아래 → 5일 하락 92%(개발 12일)였지만 9년에 22일뿐이라 판정 불가.
+    위클리는 주마다 새 시리즈(연 약 50번) — (1) 같은 위클리 시리즈 안 벽 나이 N일 이상 + 벽 바로 아래 + 외국인 흐름 → m일,
+    (1x) 다음 주 시리즈로 넘어가도 같은 행사가면 이어 센 나이(천장 연장의 주 단위판), (2) 위클리 만기(새 시리즈 첫날) 새 벽이 옛 벽보다
+    내림·같음·올림 × 옛 벽이 2% 안이었나 × 외국인 선물 → m일. 모두 하락·상승 양방향 사전 등록. 교차 모드라 앞(~2023)·뒤(2024~) 서술표를 같이 낸다."""
+    MSW = wc.get('post_m', [1, 2, 3, 5]); AGES = wc.get('age', [2, 3, 4]); BW = wc.get('bands', [1.0, 2.0])
+    fwd = {m: (k2['close'].shift(-m) / k2['open'].shift(-1) - 1) * 100 for m in MSW}
+    p1 = td <= L.DEV_END; p2 = td >= L.HOLD_START
+    flows = [('흐름 무관', '', pd.Series(True, index=td))]
+    for who, col in (('외국인 선물', 'fut_for'), ('외국인 콜', 'call_for')):
+        flows += [(who, '순매도', F[col] < 0), (who, '순매수', F[col] > 0)]
+    cands, trows, arows, rrows = [], [], [], []
+
+    def add(cid, fam, desc, mask, m, direction):
+        sig = td[mask.fillna(False).values]
+        t = pd.DataFrame({'signal': sig, 'exit': [L.exit_after(td, s, m) for s in sig]}).dropna()
+        cands.append({'id': cid, 'agent': 'A4', 'family': fam, 'desc': desc, 'direction': direction, 'trades': t})
+
+    for kind in wc.get('tags', ['WT', 'WM']):
+        Wk = weekly_walls({'WT': 'wt', 'WM': 'wm'}[kind], k2, td)
+        if Wk is None: print('위클리 자료 없음', kind); continue
+        K = Wk['K']; dist = Wk['dist%']; valid = K.notna()
+        up1 = (K.shift(-1) > K) & (Wk['exp'].shift(-1) == Wk['exp'])   # 다음 날 같은 시리즈 벽이 위로(설명표만)
+        for name, cross in ((kind, False), (kind + 'x', True)):
+            if name not in wc.get('age_tags', [kind, kind + 'x']): continue
+            key = K.round(3).astype(str) + ('' if cross else '|' + Wk['exp'].astype(str))
+            age = key.groupby(key.ne(key.shift()).cumsum()).cumcount().add(1).where(valid)
+            lab = WLAB[kind] + (' (다음 주 시리즈로 같은 행사가 이어 셈)' if cross else '')
+            for lo, hi in ((1, 1), (2, 2), (3, 3), (4, 5), (6, 999)):
+                for band in BW:
+                    mm = (age >= lo) & (age <= hi) & (dist > 0) & (dist <= band)
+                    r = {'시리즈': name, '벽 나이(일)': f'{lo}' if lo == hi else (f'{lo}~{hi}' if hi < 999 else f'{lo}+'), '근처폭%': band}
+                    for pn, pm in (('앞', p1), ('뒤', p2)):
+                        x = mm & pm; r[f'{pn} 날수'] = int(x.sum())
+                        for m in (1, 3):
+                            if m in fwd:
+                                v = fwd[m][x].dropna(); r[f'{pn} {m}일 하락%'] = (v < 0).mean() * 100 if len(v) else np.nan
+                        r[f'{pn} 다음 날 벽 위로%'] = up1[x].mean() * 100 if x.sum() else np.nan
+                    arows.append(r)
+            for na in AGES:
+                for band in BW:
+                    zm = (age >= na) & (dist > 0) & (dist <= band)
+                    for who, sgn, sm in flows:
+                        mall = zm & sm
+                        for m in MSW:
+                            v1 = fwd[m][mall & p1].dropna(); v2 = fwd[m][mall & p2].dropna()
+                            trows.append({'시리즈': name, '나이': na, '근처폭%': band, '누가': who, '부호': sgn, 'm일': m,
+                                          '앞 날수': len(v1), '앞 하락%': (v1 < 0).mean() * 100 if len(v1) else np.nan,
+                                          '뒤 날수': len(v2), '뒤 하락%': (v2 < 0).mean() * 100 if len(v2) else np.nan})
+                            if len(v1) < 20 and len(v2) < 12: continue
+                            for direction in (-1, 1):
+                                add(f'A4w_{name}_{na}d_{band}_{who}_{sgn}_m{m}_{"dn" if direction < 0 else "up"}', 'weekly_wall_age',
+                                    f'{lab} 같은 콜벽 {na}일 이상 + 벽 바로 아래(±{band}%)' + (f' + {who} {sgn}' if sgn else '') +
+                                    f' → {m}일 {"하락" if direction < 0 else "상승"}', mall, m, direction)
+        # (2) 위클리 만기 = 새 시리즈 첫날: 새 벽 vs 옛 시리즈 마지막 벽
+        e = Wk['exp']; newday = valid & e.ne(e.shift(1)) & valid.shift(1, fill_value=False)
+        oldK = K.shift(1); oldd = dist.shift(1)
+        rels = {'내림': newday & (K < oldK), '같음': newday & (K == oldK), '올림': newday & (K > oldK)}
+        nears = {'옛 벽 무관': pd.Series(True, index=td), '옛 벽 2% 안': (oldd > 0) & (oldd <= 2.0)}
+        fl2 = [x for x in flows if x[0] in ('흐름 무관', '외국인 선물')]
+        for rel, rm in rels.items():
+            for nn, nm in nears.items():
+                for who, sgn, sm in fl2:
+                    mall = rm & nm & sm
+                    for m in MSW:
+                        v1 = fwd[m][mall & p1].dropna(); v2 = fwd[m][mall & p2].dropna()
+                        rrows.append({'시리즈': kind, '새 벽': rel, '옛 벽': nn, '누가': who, '부호': sgn, 'm일': m,
+                                      '앞 날수': len(v1), '앞 하락%': (v1 < 0).mean() * 100 if len(v1) else np.nan,
+                                      '뒤 날수': len(v2), '뒤 하락%': (v2 < 0).mean() * 100 if len(v2) else np.nan})
+                        if len(v1) < 20 and len(v2) < 12: continue
+                        for direction in (-1, 1):
+                            add(f'A4wr_{kind}_{rel}_{nn}_{who}_{sgn}_m{m}_{"dn" if direction < 0 else "up"}', 'weekly_roll',
+                                f'{WLAB[kind]} 만기(새 시리즈 첫날) 새 콜벽이 옛 벽보다 {rel}({nn})' + (f' + {who} {sgn}' if sgn else '') +
+                                f' → {m}일 {"하락" if direction < 0 else "상승"}', mall, m, direction)
+    pd.DataFrame(arows).round(1).to_csv(os.path.join(od, 'wall_age_weekly.csv'), index=False, encoding='utf-8')
+    pd.DataFrame(trows).round(1).to_csv(os.path.join(od, 'weekly_wall_age_dev.csv'), index=False, encoding='utf-8')
+    pd.DataFrame(rrows).round(1).to_csv(os.path.join(od, 'weekly_roll.csv'), index=False, encoding='utf-8')
+    print('위클리 후보', len(cands), flush=True)
+    return cands
+
+
 def main():
     feat = pickle.load(open(os.path.join(L.LAB, 'work', 'lab_feat.pkl'), 'rb'))
     wide = feat['wide']
@@ -99,9 +206,14 @@ def main():
                 for band in (1.0, 2.0, 3.0):
                     mm = (age_of[tag] >= lo) & (age_of[tag] <= hi) & (dist > 0) & (dist <= band) & dev
                     v = fwd[5][mm].dropna() if 5 in fwd else pd.Series(dtype=float)
+                    # 라운드 17(교차 모드): 같은 표를 뒤 구간(2024~)에도 — 앞·뒤가 같은 모양인지(정보가 옮겨지나) 보려고.
+                    m2 = (age_of[tag] >= lo) & (age_of[tag] <= hi) & (dist > 0) & (dist <= band) & (td >= L.HOLD_START)
+                    v2 = fwd[5][m2].dropna() if 5 in fwd else pd.Series(dtype=float)
                     arows.append({'시리즈': tag, '벽 나이(일)': f'{lo}~{hi}' if hi < 999 else f'{lo}+', '근처폭%': band, '날수': int(mm.sum()),
                                   '5일 하락%': (v < 0).mean() * 100 if len(v) else np.nan,
-                                  '3일 안 벽 위로%': up3[mm].mean() * 100 if mm.sum() else np.nan})
+                                  '3일 안 벽 위로%': up3[mm].mean() * 100 if mm.sum() else np.nan,
+                                  '뒤 날수': int(m2.sum()), '뒤 5일 하락%': (v2 < 0).mean() * 100 if len(v2) else np.nan,
+                                  '뒤 3일 안 벽 위로%': up3[m2].mean() * 100 if m2.sum() else np.nan})
         pd.DataFrame(arows).round(1).to_csv(os.path.join(od, 'wall_age_dev.csv'), index=False, encoding='utf-8')
     for tag in [t for t in AGE_TAGS if t in age_of]:
         dist = X.get(f'OW_{"F0" if tag == "F0x" else tag}_wall_dist%')
@@ -174,6 +286,11 @@ def main():
                 t = pd.DataFrame({'signal': sig, 'exit': [L.exit_after(td, s, m) for s in sig]}).dropna()
                 cands.append({'id': f'A4_{tag}_grow_callbuy_m{m}', 'agent': 'A4', 'family': 'flow_build',
                               'desc': f'{tag} 콜 물량 증가 상위20% + 외국인 콜 순매수 → {m}일 상승', 'direction': 1, 'trades': t})
+    if cfg.get('weekly'):
+        try:
+            cands += weekly_block(cfg['weekly'], k2, td, F, od)
+        except Exception as e:   # 위클리 실패가 나머지 후보 저장을 막지 않게
+            print('위클리 벽 실패', repr(e))
     pd.DataFrame(rows).round(3).to_csv(os.path.join(od, 'flow_wall_dev.csv'), index=False, encoding='utf-8')
     if erows:
         E = pd.DataFrame(erows); key = ['시리즈', '근처폭%', '구역', 'm일']
