@@ -1,16 +1,3 @@
-[22:48:03] 시작 full ['chainwt', 'chainwm'] — 로그인 계정 설정 있음
-[22:48:03] == chainwt
-[22:48:05] 위클리 이름 보기 2019: ['코스피위클리 C 1909W4 257.5', '코스피위클리 C 1909W4 260.0', '코스피위클리 C 1909W4 262.5'] / 열 ['날짜', 'ISU_CD', 'ISU_SRT_CD', 'ISU_NM', 'TDD_CLSPRC', 'FLUC_TP_CD', 'CMPPREVDD_PRC', 'TDD_OPNPRC', 'TDD_HGPRC', 'TDD_LWPRC', 'SPOT_PRC', 'SETL_PRC', 'ACC_TRDVOL', 'ACC_TRDVAL', 'ACC_OPNINT_QTY', 'SECUGRP_ID'] / 34행
-[22:56:36] opt_chainwt_daily 중간 저장 2020-09-04 (8448행)
-[23:05:59] opt_chainwt_daily 중간 저장 2021-08-20 (16890행)
-[23:15:51] opt_chainwt_daily 중간 저장 2022-08-05 (30508행)
-[23:24:17] opt_chainwt_daily 중간 저장 2023-07-21 (45812행)
-[23:32:04] opt_chainwt_daily 중간 저장 2024-07-05 (61054행)
-[23:38:51] opt_chainwt_daily 중간 저장 2025-06-20 (75936행)
-[23:46:29] opt_chainwt_daily 중간 저장 2026-06-05 (91798행)
-[23:50:10] 저장 opt_chainwt_daily.csv.gz 100662행
-[23:50:13] == chainwm
-[23:57:28] opt_chainwm_daily 중간 저장 2024-07-12 (19742행)
-[00:02:40] opt_chainwm_daily 중간 저장 2025-06-27 (39656행)
-[00:07:28] opt_chainwm_daily 중간 저장 2026-06-12 (61162행)
-[00:09:55] 저장 opt_chainwm_daily.csv.gz 72208행
+[10:48:39] 시작 full ['chainx', 'chainwt', 'chainwm'] — 로그인 계정 설정 있음
+[10:48:39] == chainx
+[10:53:44] 저장 opt_chainx_daily.csv.gz 1248662행
