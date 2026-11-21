@@ -226,7 +226,7 @@ def main():
     MV, cyc = [], []
     for (tag, ym), g in W[W['tag'] == 'F0'].groupby(['tag', 'ym']):
         g = g[(g['dte'] <= 20) & (g['dte'] >= 1)].sort_values('date').reset_index(drop=True)
-        if len(g) < 5 or not (g['date'].iloc[0] >= DEV0 and g['exp'].iloc[0] <= DEV1): continue
+        if len(g) < 5 or not (g['date'].iloc[0] >= DEV0 and g['exp'].iloc[0] <= DEV1) or g['exp'].iloc[0] not in pos.index: continue   # 라운드 27: 자료 끝 뒤 만기(뒤 구간 창) 빼기
         Ks = g['K'].values
         cyc.append({'ym': ym, '벽 바뀐 횟수': int((np.diff(Ks) != 0).sum()), '위로': int((np.diff(Ks) > 0).sum()), '아래로': int((np.diff(Ks) < 0).sum()),
                     '만기 벽 > 처음 벽': bool(Ks[-1] > Ks[0]),

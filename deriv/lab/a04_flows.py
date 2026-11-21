@@ -526,6 +526,34 @@ def main():
                              '해마다': str({int(y): [int(g.size), round(float(g.mean()), 2)] for y, g in yh.groupby(level=0)})})
         pd.DataFrame(prow).to_csv(os.path.join(od, 'prereg_p0.csv'), index=False, encoding='utf-8')
         print('사전 등록 새 표본 표', len(prow), flush=True)
+    # 갈래 A 라운드 27(a04.dose, 설정 없으면 없음 → 갈래 B 영향 없음): 용량-반응(원인 확인, 후보는 만들지 않아 A8 나눗수 그대로).
+    #   새 콜벽 가족 신호 날(ZSIG)을 그날 외국인 선물 순매수 크기(직전 250거래일 안 백분위, 그날 마감 뒤 아는 값)로 3구간(≤60%·60~85%·85%↑) →
+    #   구간(앞 2010~2023·뒤 2024~)별 날수·m일 상승%. 순매수가 클수록 적중이 오르면 '외국인 매수가 원인' 쪽, 평평하면 위치(새 벽) 자체의 힘.
+    dz = cfg.get('dose')
+    if dz:
+        try:
+            ff = F['fut_for']
+            pr = ff.rolling(250, min_periods=120).apply(lambda a: (a[:-1] < a[-1]).mean() if len(a) > 1 else np.nan, raw=True)
+            cum3 = ff.rolling(3, min_periods=3).sum()
+            pr3 = cum3.rolling(250, min_periods=120).apply(lambda a: (a[:-1] < a[-1]).mean() if len(a) > 1 else np.nan, raw=True)
+            drows = []
+            for did in dz.get('ids', []):
+                if did not in ZSIG: drows.append({'id': did, '구간': '후보 없음'}); continue
+                sig, m, direction = ZSIG[did]; sig = pd.DatetimeIndex(sig)
+                q = (pr3 if '3일 누적' in did else pr).reindex(sig)
+                fr = ((k2['close'].shift(-m) / k2['open'].shift(-1) - 1) * 100).reindex(sig)
+                for pn, lo, hi in (('앞 2010~2023', '2010-01-01', '2023-12-31'), ('뒤 2024~', '2024-01-01', '2100-01-01')):
+                    inp = (sig >= lo) & (sig <= hi)
+                    for qn, a, b in (('60% 이하', -1, 0.6), ('60~85%', 0.6, 0.85), ('85% 초과', 0.85, 2)):
+                        mk = inp & (q.values > a) & (q.values <= b)
+                        v = fr[mk].dropna()
+                        drows.append({'id': did, '구간': pn, '외국인 선물 순매수 크기(직전 250일 백분위)': qn, 'm일': m, '날수': len(v),
+                                      '맞음%': round(float((direction * v > 0).mean() * 100), 1) if len(v) else np.nan,
+                                      '평균%': round(float(v.mean()), 2) if len(v) else np.nan})
+            pd.DataFrame(drows).to_csv(os.path.join(od, 'flow_dose.csv'), index=False, encoding='utf-8')
+            print('용량-반응 표', len(drows), flush=True)
+        except Exception as e:
+            print('용량-반응 표 실패', repr(e))
     # 갈래 B 라운드 19(a04.forward, 설정 없으면 없음 → 갈래 A 영향 없음): 앞→뒤 통과·사전 등록 후보를 정의 그대로 매일 기록하는 전진 검증 표.
     #   신호(그날 장 마감 뒤 아는 값, 늦춤이면 t+1 마감 뒤) → 다음 거래일 시가 진입(연속 선물) → m 거래일째 종가 청산. 청산일이 자료 밖이면 '진행 중'.
     #   start(기본 2026-11-21) 이후 신호만 '전진' 으로 세고, 맥락용으로 최근 recent 개 신호도 함께 적음(전진 성적에는 넣지 않음). A8 판정과 무관(설명용).
