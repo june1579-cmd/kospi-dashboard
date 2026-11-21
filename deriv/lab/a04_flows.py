@@ -431,7 +431,12 @@ def main():
             for ex in (zc.get('extra') or []):
                 col = X.get(ex['col'].replace('{tag}', tag))
                 if col is None: continue
-                em = (col >= ex['ge']) if 'ge' in ex else (col <= ex['le'])
+                # 갈래 B 라운드 23: ge·gt·le·lt 를 함께 줄 수 있음(모두 만족 = 구간). 예전 설정(ge 하나 또는 le 하나)은 같은 결과.
+                em = pd.Series(True, index=col.index)
+                if 'ge' in ex: em &= col >= ex['ge']
+                if 'gt' in ex: em &= col > ex['gt']
+                if 'le' in ex: em &= col <= ex['le']
+                if 'lt' in ex: em &= col < ex['lt']
                 em = em & col.notna()
                 for bn in (zc.get('extra_base') or ['하루 늦춰 진입']):
                     base = [c for c in conds if c[0] == bn]
