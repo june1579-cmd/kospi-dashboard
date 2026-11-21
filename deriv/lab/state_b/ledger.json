@@ -1,5 +1,5 @@
 {
- "trials_total": 54640,
+ "trials_total": 56986,
  "holdout_peeks": 20,
  "rounds": [
   {
@@ -121,8 +121,18 @@
    "fwd_pass": 2,
    "rev_pass": 0,
    "hold_pass": 0
+  },
+  {
+   "round": 17,
+   "mode": "cross",
+   "candidates": 2346,
+   "sel_fwd": 6,
+   "sel_rev": 54,
+   "fwd_pass": 2,
+   "rev_pass": 0,
+   "hold_pass": 0
   }
  ],
  "note": "갈래 A 원장(2026-11-20 11시 기준) 시험 수·잠금 열람 수를 이어받아 시작 — 통과 기준이 A 보다 느슨해지지 않게",
- "cross_tests": 471
+ "cross_tests": 531
 }
