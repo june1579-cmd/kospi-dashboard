@@ -1,5 +1,5 @@
 {
- "trials_total": 30369,
+ "trials_total": 32310,
  "holdout_peeks": 9,
  "rounds": [
   {
@@ -117,7 +117,17 @@
    "fwd_pass": 0,
    "rev_pass": 0,
    "hold_pass": 0
+  },
+  {
+   "round": 19,
+   "mode": "cross",
+   "candidates": 1941,
+   "sel_fwd": 11,
+   "sel_rev": 15,
+   "fwd_pass": 0,
+   "rev_pass": 0,
+   "hold_pass": 0
   }
  ],
- "cross_tests": 60
+ "cross_tests": 86
 }
