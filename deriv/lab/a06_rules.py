@@ -40,6 +40,22 @@ def dataset():
         Fl = L.flows()[['fut_for', 'call_for', 'put_for']]
         add = pd.DataFrame({f'fl_{c}_s{n}': Fl[c].rolling(n, min_periods=n).sum() for c in Fl.columns for n in cfg['flow_sums']})
         X = X.join(add, how='left')
+    zf = cfg.get('zone_feats')
+    if zf:   # 갈래 B 라운드 16(설정 없으면 꺼짐 → 갈래 A 영향 없음): 라운드 13~15 에서 정보가 '분기물 벽 바로 아래(±1~1.5%) + 벽 물량 증가 + 하루 늦춤'에 있음 —
+        #   분위 조건으로는 '0 < 거리 ≤ b%' 를 못 잡으니 0/1 위치·물량 특징(그날, 하루 전 = 늦춰 진입과 같은 뜻)을 A6 조건·A7 특징에 더함. 자료 없는 날은 빈칸(추정 안 함).
+        Wf = feat['wide'].reindex(X.index)
+        add = {}
+        for tag in zf.get('tags', ['Q']):
+            dist = Wf.get(f'OW_{tag}_wall_dist%')
+            if dist is None: continue
+            for b in zf.get('bands', [1.0, 1.5]):
+                add[f'zq_{tag}_near{b:g}'] = ((dist > 0) & (dist <= b)).astype(float).where(dist.notna())
+            for lg in zf.get('oi_lags', [1, 3, 5]):
+                oi = Wf.get(f'OW_{tag}_wall_oi_chg{lg}%')
+                if oi is not None: add[f'zq_{tag}_oiup{lg}'] = (oi > 0).astype(float).where(oi.notna())
+        Z = pd.DataFrame(add, index=X.index)
+        if zf.get('lag1', True): Z = Z.join(Z.shift(1).add_suffix('_l1'))
+        X = X.join(Z, how='left')
     return X
 
 

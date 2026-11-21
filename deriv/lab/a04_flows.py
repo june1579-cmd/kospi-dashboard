@@ -390,6 +390,8 @@ def main():
         dn_oc_next = (c1 < o1).shift(-1, fill_value=False)        # t+1 시가→종가 하락(t+1 장 마감 뒤 앎)
         dn_cc_next = (c1 < c1.shift(1)).shift(-1, fill_value=False)
         r5 = c1 / c1.shift(5) - 1
+        bk = zc.get('barrier_k', 1.0)
+        bex = {W: L.barrier_exits(k2, W, bk) for W in (zc.get('barrier') or [])}   # 라운드 16: 큰 변동 대상(아래 barrier 블록)
         zrows = []
         for tag in zc.get('tags', ['Q']):
             dist = X.get(f'OW_{tag}_wall_dist%'); dte = X.get(f'OW_{tag}_dte'); oi5 = X.get(f'OW_{tag}_wall_oi_chg5%')
@@ -435,6 +437,22 @@ def main():
                         t = pd.DataFrame({'signal': sig, 'exit': [L.exit_after(td, s_, m) for s_ in sig]}).dropna()
                         cands.append({'id': f'A4zc_{tag}_{band_key}_{cn}_m{m}', 'agent': 'A4', 'family': 'zone_cond',
                                       'desc': f'{tag} 벽 바로 아래(±{band_lab}), 흐름 무관' + ('' if cn == '조건 없음' else f' + {cn}') + f' → {m}일 {"하락" if direction < 0 else "상승"}',
+                                      'direction': direction, 'trades': t})
+                    # 갈래 B 라운드 16(zone_conds.barrier: [W, …], 설정 없으면 꺼짐 → 갈래 A 영향 없음): 라운드 15 에서 위치 가족이 3일 고정 보유에서만 앞 72~85%·
+                    #   뒤 88~95% — 고정 보유 대신 '큰 변동 대상'(W 거래일 안 ±kσ√W 중 먼저 닿는 쪽, L.barrier_exits, A6·A7 의 큰 변동 창과 같은 정의)으로도 맞나.
+                    #   진입·청산: 신호(늦춤이면 t+1 마감 뒤) 다음 날 시가 → 처음 넘은 날 종가(못 넘으면 W 번째 날). 방향은 앞 구간 '먼저 닿음' 다수.
+                    for W in (zc.get('barrier') or []):
+                        yW, exW = bex[W]
+                        yv = yW.reindex(sig); ev = exW.reindex(sig)
+                        y1 = yv[(sig <= L.DEV_END) & (sig >= pd.Timestamp('2015-01-01'))].dropna(); y2 = yv[sig >= L.HOLD_START].dropna()
+                        zrows.append({'시리즈': tag, '근처폭%': band_lab, '조건': cn, 'm일': f'b{W}', '앞 날수': len(y1), '앞 해 수': int(y1.index.year.nunique()) if len(y1) else 0,
+                                      '앞 상승%': y1.mean() * 100 if len(y1) else np.nan, '뒤 날수': len(y2), '뒤 상승%': y2.mean() * 100 if len(y2) else np.nan})
+                        if len(y1) < 15: continue
+                        direction = 1 if y1.mean() >= 0.5 else -1
+                        t = pd.DataFrame({'signal': sig, 'exit': ev.values}).dropna()
+                        cands.append({'id': f'A4zc_{tag}_{band_key}_{cn}_b{W}', 'agent': 'A4', 'family': 'zone_cond_big',
+                                      'desc': f'{tag} 벽 바로 아래(±{band_lab}), 흐름 무관' + ('' if cn == '조건 없음' else f' + {cn}') +
+                                              f' → {W}일 안 큰 변동(±{bk:g}σ) 먼저 {"하락" if direction < 0 else "상승"}',
                                       'direction': direction, 'trades': t})
         pd.DataFrame(zrows).round(1).to_csv(os.path.join(od, 'zone_cond.csv'), index=False, encoding='utf-8')
         print('위치 조건 후보', sum(1 for c in cands if c.get('family') == 'zone_cond'), flush=True)
