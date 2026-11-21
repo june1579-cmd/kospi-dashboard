@@ -417,6 +417,19 @@ def save_candidates(agent, cands):
         try:
             base = [c for c in cands if not c.get('regime')]
             m1 = p2_mirror(base, mc); m2 = regime_variants_p2(base, mc) if round_cfg().get('regime') else []
+            if mc.get('dedup_all'):
+                # 갈래 B 라운드 14(mirror_p2.dedup_all, 없으면 예전대로): 라운드 13 뒤 선별 44 중 절반 가까이가 이미 있는 후보(상승·하락 양방향으로 등록된
+                #   원 후보, 앞 구간 장세 변형)와 거래·방향이 똑같은 거울 — 같은 (거래, 방향)이 이미 있으면 거울은 만들지 않는다(A8 기준값은 그대로, 중복만 뺌).
+                def _key(c):
+                    t = c['trades']
+                    return (int(c['direction']), tuple(pd.to_datetime(t['signal']).astype('int64')), tuple(pd.to_datetime(t['exit']).astype('int64')))
+                seen = {_key(c) for c in cands}; keep = []
+                for c in m1 + m2:
+                    kk = _key(c)
+                    if kk in seen: continue
+                    seen.add(kk); keep.append(c)
+                print('거울 중복 뺌', len(m1) + len(m2) - len(keep), flush=True)
+                m1, m2 = [c for c in keep if not c.get('regime')], [c for c in keep if c.get('regime')]
             cands = cands + m1 + m2
             print('뒤 구간 방향 거울', len(m1), '· 뒤 구간 장세 변형', len(m2), flush=True)
         except Exception as e:   # 거울 실패가 원 후보 저장을 막지 않게

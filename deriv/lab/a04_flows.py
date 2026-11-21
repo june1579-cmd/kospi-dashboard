@@ -352,10 +352,19 @@ def main():
                 conds += [('만기 10거래일 이내', dte <= 10, False), ('만기 11~30거래일', (dte >= 11) & (dte <= 30), False), ('만기 31거래일 이상', dte >= 31, False)]
             if oi5 is not None:
                 conds += [('벽 물량 5일 증가', oi5 > 0, False), ('벽 물량 5일 감소', oi5 < 0, False)]
+                # 라운드 14(zone_conds.combo): 라운드 13 에서 뒤 구간을 가장 올린 두 조건(하루 늦춤·벽 물량 5일 증가)을 함께
+                if zc.get('combo'): conds += [('벽 물량 5일 증가 + 하루 늦춰 진입', oi5 > 0, True)]
+            # 라운드 14(zone_conds.plain): 조건 없는 위치만 — σ 근처폭에서 기준으로 쓰려고(% 근처폭은 zone_only 후보와 같아 σ 만)
+            if zc.get('plain'): conds = [('조건 없음', pd.Series(True, index=td), False)] + conds
             if zc.get('conds'): conds = [c for c in conds if c[0] in zc['conds']]
-            for band in zc.get('bands', [0.5, 1.0, 2.0]):
+            # 라운드 14(zone_conds.sigma: [k, …]): 라운드 13 에서 ±1% 날은 앞 구간 거래가 2017·2020 에 몰림(조용한 해엔 1% 가 멀고 거친 해엔 가까움) —
+            #   벽 거리를 1주 σ(직전 20일 일간 표준편차 × √5, 그날 아는 값) 단위로도. 라운드 7 의 σ 시험은 흐름 조건과 함께였고 위치만은 처음.
+            zbands = [(b, f'{b}%', b) for b in zc.get('bands', [0.5, 1.0, 2.0])] + [(f's{k}', f'{k}σ', sig5 * k) for k in (zc.get('sigma') or [])]
+            for band_key, band_lab, band in zbands:
+                if zc.get('plain') and not str(band_key).startswith('s'): conds_b = [c for c in conds if c[0] != '조건 없음']
+                else: conds_b = conds
                 zm = (dist > 0) & (dist <= band)
-                for cn, cm, delay in conds:
+                for cn, cm, delay in conds_b:
                     mall = (zm & cm).fillna(False).values
                     idx = np.where(mall)[0] + (1 if delay else 0)
                     idx = idx[idx < len(td)]
@@ -365,13 +374,14 @@ def main():
                         f = f.reindex(td)
                         v_all = pd.Series(f.values[idx], index=sig)
                         v1 = v_all[(sig <= L.DEV_END) & (sig >= pd.Timestamp('2015-01-01'))].dropna(); v2 = v_all[sig >= L.HOLD_START].dropna()
-                        zrows.append({'시리즈': tag, '근처폭%': band, '조건': cn, 'm일': m, '앞 날수': len(v1), '앞 상승%': (v1 > 0).mean() * 100 if len(v1) else np.nan,
+                        zrows.append({'시리즈': tag, '근처폭%': band_lab, '조건': cn, 'm일': m, '앞 날수': len(v1), '앞 해 수': int(v1.index.year.nunique()),
+                                      '앞 상승%': (v1 > 0).mean() * 100 if len(v1) else np.nan,
                                       '뒤 날수': len(v2), '뒤 상승%': (v2 > 0).mean() * 100 if len(v2) else np.nan})
                         if len(v1) < 15: continue
                         direction = -1 if (v1 < 0).mean() >= 0.5 else 1
                         t = pd.DataFrame({'signal': sig, 'exit': [L.exit_after(td, s_, m) for s_ in sig]}).dropna()
-                        cands.append({'id': f'A4zc_{tag}_{band}_{cn}_m{m}', 'agent': 'A4', 'family': 'zone_cond',
-                                      'desc': f'{tag} 벽 바로 아래(±{band}%), 흐름 무관 + {cn} → {m}일 {"하락" if direction < 0 else "상승"}',
+                        cands.append({'id': f'A4zc_{tag}_{band_key}_{cn}_m{m}', 'agent': 'A4', 'family': 'zone_cond',
+                                      'desc': f'{tag} 벽 바로 아래(±{band_lab}), 흐름 무관' + ('' if cn == '조건 없음' else f' + {cn}') + f' → {m}일 {"하락" if direction < 0 else "상승"}',
                                       'direction': direction, 'trades': t})
         pd.DataFrame(zrows).round(1).to_csv(os.path.join(od, 'zone_cond.csv'), index=False, encoding='utf-8')
         print('위치 조건 후보', sum(1 for c in cands if c.get('family') == 'zone_cond'), flush=True)
