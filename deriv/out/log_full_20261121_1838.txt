@@ -1,0 +1,8 @@
+[18:09:07] 시작 full ['chainx_early'] — 로그인 계정 설정 있음
+[18:09:07] == chainx_early
+[18:14:10] opt_chainx_daily 중간 저장 2010-12-16 (1408114행)
+[18:19:40] opt_chainx_daily 중간 저장 2011-12-01 (1450158행)
+[18:24:37] opt_chainx_daily 중간 저장 2012-11-15 (1488596행)
+[18:29:43] opt_chainx_daily 중간 저장 2013-10-31 (1522550행)
+[18:34:13] opt_chainx_daily 중간 저장 2014-10-16 (1556226행)
+[18:38:26] 저장 opt_chainx_daily.csv.gz 1570682행
