@@ -320,7 +320,7 @@ def main():
         for grp in (cfg.get('young_union') or []):
             gtags = [t for t in grp if t in age_of and X.get(f'OW_{t[:-1] if t.endswith("x") else t}_wall_dist%') is not None]
             if len(gtags) < 2: continue
-            glab = '·'.join({'F0': '근월', 'F1': '차월', 'F2': '차차월', 'F3': '분기 다음', 'ALL': '합산', 'Q': '분기물'}.get(t, t) for t in gtags)
+            glab = '·'.join({'F0': '근월', 'F1': '차월', 'F2': '차차월', 'F3': '분기 다음', 'ALL': '합산', 'Q': '분기물', 'Q2': '차기 분기물'}.get(t, t) for t in gtags)
             for ny in cfg.get('young_age'):
                 for bkey, blab, band in YBL:
                     hits = [((age_of[t] <= ny) & (X[f'OW_{t[:-1] if t.endswith("x") else t}_wall_dist%'] > 0) &

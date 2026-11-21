@@ -28,7 +28,9 @@ WORK = os.path.join(L.LAB, 'work'); os.makedirs(WORK, exist_ok=True)
 CFG = L.round_cfg().get('a02', {})
 # 라운드 8(갈래 A): 월물 4개 자료(opt_chainx)가 다 받아진 뒤 F2·F3(차차월·그다음)과 ALL(살아 있는 결제월 4개 콜·풋 미결제를 행사가별로 합친 '전체 물량 벽',
 #   만기 뒤 이월된 물량까지 한 벽으로 봄; 주기·만기는 F0 기준)을 켠다. 설정이 없으면(갈래 B 등) 예전과 같다.
-EXTRA = [t for t in CFG.get('extra_tags', []) if t in ('F2', 'F3', 'ALL')]
+EXTRA = [t for t in CFG.get('extra_tags', []) if t in ('F2', 'F3', 'ALL', 'Q2')]
+# 갈래 B 라운드 20(extra_tags 에 'Q2', 설정 없으면 없음 → 갈래 A 영향 없음): 살아 있는 결제월 4개 중 두 번째 분기월(차기 분기물) — 분기물(Q) 벽 바로 아래 위치 신호가
+#   근월(F0)에서는 안 되고 분기물에서만 되는 까닭(선물 만기와 겹친 큰 물량)이 다음 분기물 벽에도 있는지. 월물 4개(x) 자료일 때만.
 
 
 def series_feats(g, S, sig, dte):
@@ -106,6 +108,7 @@ def main():
             if 'F2' in EXTRA and len(live) > 2: picks['F2'] = live[2]
             if 'F3' in EXTRA and len(live) > 3: picks['F3'] = live[3]
             if 'ALL' in EXTRA and live: picks['ALL'] = live[0]
+            if 'Q2' in EXTRA and len(q) > 1: picks['Q2'] = q[1]
         for tag, ym in picks.items():
             if tag == 'ALL':
                 ga = g[g['ym'].isin(live)]
