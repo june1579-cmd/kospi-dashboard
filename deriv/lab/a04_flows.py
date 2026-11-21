@@ -327,6 +327,8 @@ def main():
                     f0hit = hits[gtags.index('F0')] if 'F0' in gtags else None
                     kinds = [('ANY', cnt >= 1, '하나라도'), ('K2', cnt >= 2, '둘 이상 동시')]
                     if f0hit is not None: kinds.append(('F0K2', (f0hit >= 1) & (cnt >= 2), '근월 포함 둘 이상 동시'))
+                    # 라운드 24(young_union_kinds 에 K3 있을 때만): 셋 이상 동시 — 여러 결제월이 함께 새 벽을 쓸수록 더 맞는지(ANY < K2 < K3 용량-반응, 앞·뒤 모두) 확인.
+                    if len(gtags) >= 3: kinds.append(('K3', cnt >= 3, '셋 이상 동시'))
                     kinds = [k for k in kinds if k[0] in (cfg.get('young_union_kinds') or ['ANY', 'K2'])]
                     for uk, umask, ulab in kinds:
                         for cn, cm in ucond:

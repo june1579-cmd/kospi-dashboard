@@ -406,6 +406,12 @@ def chainx():
     dayloop('opt_chainx_daily', 'MDCSTAT12501', START_CHAIN, OPT_MAKER('KRDRVOPK2I'), post=lambda d: compact_chain_n(d, 4, 0.25))
 
 
+def chainx_early():
+    """연구소 A 라운드 24(2026-11-21): 월물 4개를 2010-01~2014-12 로 앞당겨 받기 — 지금까지 어떤 후보도 보지 않은 앞 구간(새 표본).
+    chainx 와 같은 파일·같은 화면·같은 속도(dayloop 쉼 그대로), 이미 받은 날(2015~)은 건너뜀. KRX 가 빈 응답을 주는 해는 그대로 둔다(추정으로 채우지 않음)."""
+    dayloop('opt_chainx_daily', 'MDCSTAT12501', '20100101', OPT_MAKER('KRDRVOPK2I'), post=lambda d: compact_chain_n(d, 4, 0.25))
+
+
 def chainwt():
     """목요일 위클리 옵션 행사가별(2019-09-23 상장~)."""
     dayloop('opt_chainwt_daily', 'MDCSTAT12501', '20190923', OPT_MAKER('KRDRVOPWKI'), post=compact_chainw)
@@ -525,7 +531,7 @@ def chainwt_fix(): drop_big_strike_days('opt_chainwt_daily', 0.20); chainwt()
 def chainwm_fix(): drop_big_strike_days('opt_chainwm_daily', 0.20); chainwm()
 
 
-TASKS = {'chainx_fix': chainx_fix, 'chainwt_fix': chainwt_fix, 'chainwm_fix': chainwm_fix, 'chainx': chainx, 'chainwt': chainwt, 'chainwm': chainwm, 'roll1': lambda: roll_part('roll1'), 'roll2': lambda: roll_part('roll2'), 'roll3': lambda: roll_part('roll3'), 'inv2': inv2, 'front2': front2, 'index': index_long, 'inv': inv, 'basis': basis, 'iv': iv, 'pcr': pcr, 'front': front, 'program': program, 'chain': chain}
+TASKS = {'chainx_early': chainx_early, 'chainx_fix': chainx_fix, 'chainwt_fix': chainwt_fix, 'chainwm_fix': chainwm_fix, 'chainx': chainx, 'chainwt': chainwt, 'chainwm': chainwm, 'roll1': lambda: roll_part('roll1'), 'roll2': lambda: roll_part('roll2'), 'roll3': lambda: roll_part('roll3'), 'inv2': inv2, 'front2': front2, 'index': index_long, 'inv': inv, 'basis': basis, 'iv': iv, 'pcr': pcr, 'front': front, 'program': program, 'chain': chain}
 
 
 def main():
