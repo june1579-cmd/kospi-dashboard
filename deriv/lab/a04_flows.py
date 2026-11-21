@@ -491,6 +491,34 @@ def main():
         E = E.merge(base, on=key, how='left')
         E['앞 흐름 몫%p'] = E['앞 상승%'] - E['앞 위치만%']; E['뒤 흐름 몫%p'] = E['뒤 상승%'] - E['뒤 위치만%']
         E.round(2).to_csv(os.path.join(od, 'flow_edge.csv'), index=False, encoding='utf-8')
+    # 갈래 A 라운드 25(a04.prereg_ids, 설정 없으면 없음): 2010~2014 옵션 자료(chainx_early, 라운드 24 때 새로 받음)는 지금까지 어떤 후보도 보지 않은 새 표본.
+    #   라운드 24 기록(state/plan.md)에 자료를 보기 전 미리 적어 둔 후보만, 정의를 바꾸지 않고 구간별(2010~14·2015~23·2024~) 독립 거래·적중·기본·p 를 따로 적음(설명용, A8 판정은 그대로).
+    if cfg.get('prereg_ids'):
+        try: px = L.prices()['K200F']   # A8 과 같은 값(연속 선물)으로 — 없으면 지수
+        except Exception as e: print('선물 가격 못 읽음, 지수로', repr(e)); px = k2
+        prow = []; byid = {c['id']: c for c in cands}
+        for pid in cfg['prereg_ids']:
+            c = byid.get(pid)
+            if c is None: prow.append({'id': pid, '구간': '후보 없음'}); continue
+            tr = c['trades'].assign(signal=lambda d: pd.to_datetime(d['signal']), exit=lambda d: pd.to_datetime(d['exit'])).dropna()
+            for lab, lo, hi in (('2010~2014(새 표본)', '2010-01-01', '2014-12-31'), ('2015~2023', '2015-01-01', '2023-12-31'), ('2024~', '2024-01-01', '2100-01-01')):
+                tt = tr[(tr['signal'] >= lo) & (tr['exit'] <= hi)].sort_values('signal'); keep = []; last = pd.Timestamp('1900-01-01')
+                for s_, e_ in zip(tt['signal'], tt['exit']):   # A8 independent() 와 같은 규칙: 앞 거래 청산 뒤 신호만
+                    if s_ >= last: keep.append((s_, e_)); last = e_
+                tt = pd.DataFrame(keep, columns=['signal', 'exit'])
+                ret = L.trade_returns(tt, px) if len(tt) else np.array([]); okm = ~np.isnan(ret); tt = tt[okm]; ret = ret[okm]
+                hit = c['direction'] * ret > 0; n = len(ret); k = int(hit.sum())
+                tdp = px.index; hold = [((tdp > a) & (tdp <= b)).sum() for a, b in zip(tt['signal'], tt['exit'])]
+                h = int(max(1, np.median(hold))) if hold else 5
+                fr = (px['close'].shift(-h) / px['open'].shift(-1) - 1); fb = fr[(fr.index >= lo) & (fr.index <= hi)].dropna()
+                base = float((c['direction'] * fb > 0).mean()) if len(fb) else np.nan
+                yh = pd.Series(hit, index=pd.DatetimeIndex(tt['signal']).year) if n else pd.Series(dtype=float)
+                prow.append({'id': pid, 'desc': c['desc'], '구간': lab, '독립 거래': n, '적중%': round(k / n * 100, 1) if n else np.nan,
+                             '하한%': round(L.wilson(k, n)[0] * 100, 1) if n else np.nan, '기본%': round(base * 100, 1) if base == base else np.nan,
+                             'p': round(L.binom_p(k, n, base), 4) if n and base == base else np.nan,
+                             '해마다': str({int(y): [int(g.size), round(float(g.mean()), 2)] for y, g in yh.groupby(level=0)})})
+        pd.DataFrame(prow).to_csv(os.path.join(od, 'prereg_p0.csv'), index=False, encoding='utf-8')
+        print('사전 등록 새 표본 표', len(prow), flush=True)
     L.save_candidates('a04', cands)
     print('표', len(rows), '후보', len(cands))
 
