@@ -182,7 +182,7 @@ def main():
     #   'F0x' = 근월물 벽을 결제월이 바뀌어도 같은 행사가면 이어 세는 나이(만기 롤오버로 천장을 그대로 다시 쓰는 '연장' — 라운드 13 의 가설 방향 사건을 날마다로).
     AGE_TAGS = cfg.get('age_tags') or TAGS
     AGE_BANDS = cfg.get('age_bands') or BANDS
-    if cfg.get('wall_age') and W is not None and len(W):
+    if (cfg.get('wall_age') or cfg.get('young_age')) and W is not None and len(W):
         W = W.copy(); W['date'] = pd.to_datetime(W['date'])   # 벽 없는 날(K 빈칸)은 연속을 끊는 날로 둠
         W = W.drop_duplicates(['date', 'tag'], keep='last')
         for tag, g in W.sort_values('date').groupby('tag'):
@@ -218,7 +218,7 @@ def main():
     for tag in [t for t in AGE_TAGS if t in age_of]:
         dist = X.get(f'OW_{"F0" if tag == "F0x" else tag}_wall_dist%')
         if dist is None: continue
-        for na in cfg.get('wall_age'):
+        for na in (cfg.get('wall_age') or []):
             held = age_of[tag] >= na
             for band in AGE_BANDS:
                 zm = held & (dist > 0) & (dist <= band)
@@ -244,6 +244,43 @@ def main():
                                           'desc': f'{lab} 같은 콜벽 {na}일 이상 유지 + 벽 바로 아래(±{band}%)' + (f' + {who}' if '벽 물량' in who else (f' + {who} {sgn}' if sgn else '')) +
                                                   f' → {m}일 {"하락" if direction < 0 else "상승"}',
                                           'direction': direction, 'trades': t})
+    # 갈래 A 라운드 18(a04.young_age: [N, …], 설정 없으면 꺼짐 → 갈래 B 영향 없음): 라운드 17 교차 모드에서 앞·뒤 구간 모두 같은 모양은
+    #   '새로 생긴 가까운 벽'뿐 — 근월 벽 나이 1일 + 2% 아래 → 5일 하락 앞 30%·뒤 28%(상승 70%대), 3일 안 벽 위로 앞 95%·뒤 72%.
+    #   오래된 벽(천장)은 뒤 구간에서 약해짐. 그래서 벽 나이 N일 이하 + 벽 바로 아래 × (흐름 무관·외국인 선물 순매수·순매도·오늘 벽이 위로 옮겨 감·
+    #   5일 안 2번 이상 위로·60일선 위·아래) → m일, 하락·상승 양방향 사전 등록(가족 young_wall). 60일선은 그날 종가까지 아는 값.
+    YB = cfg.get('young_bands') or [1.0, 2.0]; YM = cfg.get('young_m') or MS
+    if cfg.get('young_age') and age_of:
+        ma60 = k2['close'].rolling(60, min_periods=60).mean()
+        trend_up = (k2['close'] > ma60).reindex(td); trend_dn = (k2['close'] < ma60).reindex(td)
+        yfwd = {m: (fwd[m] if m in fwd else (k2['close'].shift(-m) / k2['open'].shift(-1) - 1) * 100) for m in YM}
+        for tag in [t for t in AGE_TAGS if t in age_of]:
+            base = tag[:-1] if tag.endswith('x') else tag
+            dist = X.get(f'OW_{base}_wall_dist%')
+            if dist is None: continue
+            kk = kser_of[tag]; mup = X.get(f'OW_{base}_wall_mig_up5')
+            ycond = [('흐름 무관', pd.Series(True, index=td)),
+                     ('외국인 선물 순매수', F['fut_for'] > 0), ('외국인 선물 순매도', F['fut_for'] < 0),
+                     ('오늘 벽이 위로 옮겨 감', kk > kk.shift(1)),
+                     ('60일선 위', trend_up), ('60일선 아래', trend_dn)]
+            if mup is not None: ycond.append(('벽이 5일 안 2번 이상 위로', mup >= 2))
+            lab = {'F0x': '근월물(만기 넘어 같은 행사가 이어 셈)', 'ALL': '결제월 4개 합산'}.get(tag, tag)
+            for ny in cfg.get('young_age'):
+                for band in YB:
+                    zm = (age_of[tag] <= ny) & (dist > 0) & (dist <= band)
+                    for cn, cm in ycond:
+                        mall = zm & cm
+                        for m in YM:
+                            v1 = yfwd[m][mall & dev].dropna(); v2 = yfwd[m][mall & p2].dropna()
+                            rows.append({'시리즈': tag, '근처폭%': f'{band}%', '구역': f'새 벽(나이 {ny}일 이하) + 벽 바로 아래', '누가': cn, '부호': '', 'm일': m,
+                                         '날수': len(v1), '하락%': (v1 < 0).mean() * 100 if len(v1) else np.nan, '평균%': v1.mean() if len(v1) else np.nan,
+                                         '뒤 날수': len(v2), '뒤 하락%': (v2 < 0).mean() * 100 if len(v2) else np.nan})
+                            if len(v1) < 20 and len(v2) < 12: continue
+                            sig = td[(mall.fillna(False)).values]
+                            t = pd.DataFrame({'signal': sig, 'exit': [L.exit_after(td, s_, m) for s_ in sig]}).dropna()
+                            for direction in (-1, 1):
+                                cands.append({'id': f'A4young_{tag}_{ny}d_{band}_{cn}_m{m}_{"dn" if direction < 0 else "up"}', 'agent': 'A4', 'family': 'young_wall',
+                                              'desc': f'{lab} 새 콜벽(나이 {ny}일 이하) + 벽 바로 아래(±{band}%)' + ('' if cn == '흐름 무관' else f' + {cn}') +
+                                                      f' → {m}일 {"하락" if direction < 0 else "상승"}', 'direction': direction, 'trades': t})
     for tag in TAGS:
         dist = X.get(f'OW_{tag}_wall_dist%'); pdist = X.get(f'OW_{tag}_passed_wall_dist%')
         grow = X.get(f'OW_{tag}_callotm_chg5%')
