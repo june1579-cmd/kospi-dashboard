@@ -251,6 +251,12 @@ def main():
     YB = cfg.get('young_bands') or [1.0, 2.0]; YM = cfg.get('young_m') or MS
     # 라운드 22(a04.young_sigma: [k, …], 설정 없으면 없음): 고정 % 대신 변동성 단위 폭(직전 20일 σ×√5×k) — 라운드 21 통과 후보의 앞 구간 약한 해(2017·2018·2021)는 조용한 해라 2.5% 가 먼 거리였을 수 있음.
     YBL = [(b, f'{b}%', b) for b in YB] + [(f's{k}', f'{k}σ', sig5 * k) for k in (cfg.get('young_sigma') or [])]
+    # 갈래 A 라운드 23(a04.young_volcap: [q, …], 설정 없으면 없음): 라운드 22 최고 후보의 뒤 구간 약한 해가 2026(고변동)이라 σ 폭이 넓어져 먼 벽까지 잡힘 —
+    #   그날 변동성(sig5)이 직전 250거래일 안에서 몇 번째인지(그날 종가까지 아는 값, 앞을 보지 않음)가 q 이하인 날만 남기는 조건을 각 흐름 조건에 곱한 변형을 더함.
+    vrank = sig5.rolling(250, min_periods=120).apply(lambda a: (a <= a[-1]).mean(), raw=True) if cfg.get('young_volcap') else None
+    def _volcap(conds):
+        if vrank is None: return conds
+        return conds + [(f'{cn} + 변동성 하위 {int(q * 100)}%', cm.fillna(False) & (vrank <= q)) for cn, cm in conds for q in cfg['young_volcap']]
     if cfg.get('young_age') and age_of:
         ma60 = k2['close'].rolling(60, min_periods=60).mean()
         trend_up = (k2['close'] > ma60).reindex(td); trend_dn = (k2['close'] < ma60).reindex(td)
@@ -274,6 +280,7 @@ def main():
             # 라운드 21(a04.young_flow_sum: [N, …], 설정 없으면 없음): 외국인 선물 N일 누적 순매수 — 라운드 20 에서 3일 누적이 두 구간 모두 가장 높아 창을 넓혀 봄.
             ycond += [(f'외국인 선물 {n}일 누적 순매수', F['fut_for'].rolling(n, min_periods=n).sum() > 0) for n in (cfg.get('young_flow_sum') or []) if n != 3]
             if cfg.get('young_conds'): ycond = [c for c in ycond if c[0] in cfg['young_conds']]
+            ycond = _volcap(ycond)
             lab = {'F0x': '근월물(만기 넘어 같은 행사가 이어 셈)', 'ALL': '결제월 4개 합산'}.get(tag, tag)
             for ny in cfg.get('young_age'):
                 for bkey, blab, band in YBL:
@@ -306,6 +313,7 @@ def main():
         if qdu is not None: ucond.append(('분기물 벽도 2% 아래', (qdu > 0) & (qdu <= 2.0)))
         ucond += [(f'외국인 선물 {n}일 누적 순매수', F['fut_for'].rolling(n, min_periods=n).sum() > 0) for n in (cfg.get('young_flow_sum') or []) if n != 3]
         if cfg.get('young_conds'): ucond = [c for c in ucond if c[0] in cfg['young_conds']]
+        ucond = _volcap(ucond)
         for grp in (cfg.get('young_union') or []):
             gtags = [t for t in grp if t in age_of and X.get(f'OW_{t[:-1] if t.endswith("x") else t}_wall_dist%') is not None]
             if len(gtags) < 2: continue
