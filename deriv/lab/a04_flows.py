@@ -249,6 +249,8 @@ def main():
     #   오래된 벽(천장)은 뒤 구간에서 약해짐. 그래서 벽 나이 N일 이하 + 벽 바로 아래 × (흐름 무관·외국인 선물 순매수·순매도·오늘 벽이 위로 옮겨 감·
     #   5일 안 2번 이상 위로·60일선 위·아래) → m일, 하락·상승 양방향 사전 등록(가족 young_wall). 60일선은 그날 종가까지 아는 값.
     YB = cfg.get('young_bands') or [1.0, 2.0]; YM = cfg.get('young_m') or MS
+    # 라운드 22(a04.young_sigma: [k, …], 설정 없으면 없음): 고정 % 대신 변동성 단위 폭(직전 20일 σ×√5×k) — 라운드 21 통과 후보의 앞 구간 약한 해(2017·2018·2021)는 조용한 해라 2.5% 가 먼 거리였을 수 있음.
+    YBL = [(b, f'{b}%', b) for b in YB] + [(f's{k}', f'{k}σ', sig5 * k) for k in (cfg.get('young_sigma') or [])]
     if cfg.get('young_age') and age_of:
         ma60 = k2['close'].rolling(60, min_periods=60).mean()
         trend_up = (k2['close'] > ma60).reindex(td); trend_dn = (k2['close'] < ma60).reindex(td)
@@ -274,21 +276,21 @@ def main():
             if cfg.get('young_conds'): ycond = [c for c in ycond if c[0] in cfg['young_conds']]
             lab = {'F0x': '근월물(만기 넘어 같은 행사가 이어 셈)', 'ALL': '결제월 4개 합산'}.get(tag, tag)
             for ny in cfg.get('young_age'):
-                for band in YB:
+                for bkey, blab, band in YBL:
                     zm = (age_of[tag] <= ny) & (dist > 0) & (dist <= band)
                     for cn, cm in ycond:
                         mall = zm & cm
                         for m in YM:
                             v1 = yfwd[m][mall & dev].dropna(); v2 = yfwd[m][mall & p2].dropna()
-                            rows.append({'시리즈': tag, '근처폭%': f'{band}%', '구역': f'새 벽(나이 {ny}일 이하) + 벽 바로 아래', '누가': cn, '부호': '', 'm일': m,
+                            rows.append({'시리즈': tag, '근처폭%': blab, '구역': f'새 벽(나이 {ny}일 이하) + 벽 바로 아래', '누가': cn, '부호': '', 'm일': m,
                                          '날수': len(v1), '하락%': (v1 < 0).mean() * 100 if len(v1) else np.nan, '평균%': v1.mean() if len(v1) else np.nan,
                                          '뒤 날수': len(v2), '뒤 하락%': (v2 < 0).mean() * 100 if len(v2) else np.nan})
                             if len(v1) < 20 and len(v2) < 12: continue
                             sig = td[(mall.fillna(False)).values]
                             t = pd.DataFrame({'signal': sig, 'exit': [L.exit_after(td, s_, m) for s_ in sig]}).dropna()
                             for direction in (-1, 1):
-                                cands.append({'id': f'A4young_{tag}_{ny}d_{band}_{cn}_m{m}_{"dn" if direction < 0 else "up"}', 'agent': 'A4', 'family': 'young_wall',
-                                              'desc': f'{lab} 새 콜벽(나이 {ny}일 이하) + 벽 바로 아래(±{band}%)' + ('' if cn == '흐름 무관' else f' + {cn}') +
+                                cands.append({'id': f'A4young_{tag}_{ny}d_{bkey}_{cn}_m{m}_{"dn" if direction < 0 else "up"}', 'agent': 'A4', 'family': 'young_wall',
+                                              'desc': f'{lab} 새 콜벽(나이 {ny}일 이하) + 벽 바로 아래(±{blab})' + ('' if cn == '흐름 무관' else f' + {cn}') +
                                                       f' → {m}일 {"하락" if direction < 0 else "상승"}', 'direction': direction, 'trades': t})
         # 갈래 A 라운드 20(a04.young_union: [[시리즈, …], …], 설정 없으면 꺼짐 → 갈래 B 영향 없음): 라운드 19 에서 '근월 새 벽 + 2% 아래 → 5일 상승'이
         #   앞 75%·뒤 76% 로 두 구간이 같았지만, 뒤 구간 근월 새 벽 사건이 24일뿐이라 조건 하나만 더해도 거래 12 아래로 떨어짐.
@@ -309,7 +311,7 @@ def main():
             if len(gtags) < 2: continue
             glab = '·'.join({'F0': '근월', 'F1': '차월', 'F2': '차차월', 'F3': '분기 다음', 'ALL': '합산', 'Q': '분기물'}.get(t, t) for t in gtags)
             for ny in cfg.get('young_age'):
-                for band in YB:
+                for bkey, blab, band in YBL:
                     hits = [((age_of[t] <= ny) & (X[f'OW_{t[:-1] if t.endswith("x") else t}_wall_dist%'] > 0) &
                              (X[f'OW_{t[:-1] if t.endswith("x") else t}_wall_dist%'] <= band)).fillna(False).astype(int) for t in gtags]
                     cnt = sum(hits)
@@ -323,7 +325,7 @@ def main():
                             mall = umask & cm.fillna(False)
                             for m in YM:
                                 v1 = yfwd[m][mall & dev].dropna(); v2 = yfwd[m][mall & p2].dropna()
-                                rows.append({'시리즈': f'{uk}({"+".join(gtags)})', '근처폭%': f'{band}%', '구역': f'새 벽(나이 {ny}일 이하) + 벽 바로 아래 — {ulab}',
+                                rows.append({'시리즈': f'{uk}({"+".join(gtags)})', '근처폭%': blab, '구역': f'새 벽(나이 {ny}일 이하) + 벽 바로 아래 — {ulab}',
                                              '누가': cn, '부호': '', 'm일': m,
                                              '날수': len(v1), '하락%': (v1 < 0).mean() * 100 if len(v1) else np.nan, '평균%': v1.mean() if len(v1) else np.nan,
                                              '뒤 날수': len(v2), '뒤 하락%': (v2 < 0).mean() * 100 if len(v2) else np.nan})
@@ -331,9 +333,9 @@ def main():
                                 sig = td[(mall.fillna(False)).values]
                                 t = pd.DataFrame({'signal': sig, 'exit': [L.exit_after(td, s_, m) for s_ in sig]}).dropna()
                                 for direction in (-1, 1):
-                                    cands.append({'id': f'A4yu_{uk}_{"+".join(gtags)}_{ny}d_{band}_{cn}_m{m}_{"dn" if direction < 0 else "up"}', 'agent': 'A4',
+                                    cands.append({'id': f'A4yu_{uk}_{"+".join(gtags)}_{ny}d_{bkey}_{cn}_m{m}_{"dn" if direction < 0 else "up"}', 'agent': 'A4',
                                                   'family': 'young_union',
-                                                  'desc': f'{glab} 중 {ulab} 새 콜벽(나이 {ny}일 이하) + 벽 바로 아래(±{band}%)' + ('' if cn == '흐름 무관' else f' + {cn}') +
+                                                  'desc': f'{glab} 중 {ulab} 새 콜벽(나이 {ny}일 이하) + 벽 바로 아래(±{blab})' + ('' if cn == '흐름 무관' else f' + {cn}') +
                                                           f' → {m}일 {"하락" if direction < 0 else "상승"}', 'direction': direction, 'trades': t})
     for tag in TAGS:
         dist = X.get(f'OW_{tag}_wall_dist%'); pdist = X.get(f'OW_{tag}_passed_wall_dist%')
