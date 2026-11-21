@@ -338,8 +338,8 @@ def program(): dayloop('program_daily', 'MDCSTAT02601', START_DAYLOOP, lambda s8
 def compact_chain(df):
     """옵션 전종목 응답을 줄여 저장: 가까운 두 결제월, 기초자산 ±20% 행사가, 필요한 열만."""
     nm = df['ISU_NM'].astype(str)
-    m = nm.str.extract(r'\s([CP])\s+(\d{6})\s+([\d.]+)')
-    df = df.assign(cp=m[0], ym=m[1], K=pd.to_numeric(m[2], errors='coerce'))
+    m = nm.str.extract(r'\s([CP])\s+(\d{6})\s+([\d.,]+)')   # 2026-11-21(연구소 A): 행사가 1,000 이상은 '1,100.0' 처럼 쉼표 — 쉼표를 떼고 읽음
+    df = df.assign(cp=m[0], ym=m[1], K=pd.to_numeric(m[2].str.replace(',', ''), errors='coerce'))
     df = df[df['cp'].notna()]
     n = lambda c: pd.to_numeric(df[c].astype(str).str.replace(',', '').replace({'-': None}), errors='coerce')
     df = df.assign(settle=n('SETL_PRC'), close=n('TDD_CLSPRC'), vol=n('ACC_TRDVOL'), oi=n('ACC_OPNINT_QTY'), spot=n('SPOT_PRC'))
@@ -355,8 +355,8 @@ def chain(): dayloop('opt_chain_daily', 'MDCSTAT12501', START_CHAIN, lambda s8: 
 def compact_chain_n(df, n_exp=4, band=0.25):
     """옵션 전종목 응답 → 가까운 결제월 n_exp 개(다음 분기 결제월이 늘 들어가도록 4개), 기초자산 ±band 행사가."""
     nm = df['ISU_NM'].astype(str)
-    m = nm.str.extract(r'\s([CP])\s+(\d{6})\s+([\d.]+)')
-    df = df.assign(cp=m[0], ym=m[1], K=pd.to_numeric(m[2], errors='coerce'))
+    m = nm.str.extract(r'\s([CP])\s+(\d{6})\s+([\d.,]+)')   # 2026-11-21(연구소 A): 행사가 1,000 이상은 '1,100.0' 처럼 쉼표 — 쉼표를 떼고 읽음
+    df = df.assign(cp=m[0], ym=m[1], K=pd.to_numeric(m[2].str.replace(',', ''), errors='coerce'))
     df = df[df['cp'].notna()]
     n = lambda c: pd.to_numeric(df[c].astype(str).str.replace(',', '').replace({'-': None}), errors='coerce')
     df = df.assign(settle=n('SETL_PRC'), close=n('TDD_CLSPRC'), vol=n('ACC_TRDVOL'), oi=n('ACC_OPNINT_QTY'), spot=n('SPOT_PRC'))
@@ -384,8 +384,9 @@ def compact_chainw(df):
         _CHAINW_LOGGED.add('w')
         log(f'위클리 이름 보기 {key}: {list(nm.head(3))} / 열 {list(df.columns)} / {len(df)}행'[:600])
     cp = nm.str.extract(r'(?:^|\s)([CP])(?:\s|$)')[0]
-    K = pd.to_numeric(nm.str.extract(r'(\d+(?:\.\d+)?)\s*$')[0], errors='coerce')
-    exp = nm.str.replace(r'(?:^|\s)[CP](?:\s|$)', ' ', regex=True).str.replace(r'\d+(?:\.\d+)?\s*$', '', regex=True).str.strip()
+    # 2026-11-21(연구소 A): 행사가 1,000 이상은 '1,100.0' 처럼 쉼표 — 2026-02~11 코스피200 800 이상 구간에서 1,000 위 행사가가 빠졌던 원인.
+    K = pd.to_numeric(nm.str.extract(r'(\d[\d,]*(?:\.\d+)?)\s*$')[0].str.replace(',', ''), errors='coerce')
+    exp = nm.str.replace(r'(?:^|\s)[CP](?:\s|$)', ' ', regex=True).str.replace(r'\d[\d,]*(?:\.\d+)?\s*$', '', regex=True).str.strip()
     df = df.assign(cp=cp, exp=exp, K=K)
     df = df[df['cp'].notna() & df['K'].notna()]
     n = lambda c: pd.to_numeric(df[c].astype(str).str.replace(',', '').replace({'-': None}), errors='coerce') if c in df else float('nan')
@@ -506,7 +507,25 @@ def git_save(msg):
         if r.returncode and 'commit' not in c: log(f'git 실패: {c} {r.stderr[:200]}')
 
 
-TASKS = {'chainx': chainx, 'chainwt': chainwt, 'chainwm': chainwm, 'roll1': lambda: roll_part('roll1'), 'roll2': lambda: roll_part('roll2'), 'roll3': lambda: roll_part('roll3'), 'inv2': inv2, 'front2': front2, 'index': index_long, 'inv': inv, 'basis': basis, 'iv': iv, 'pcr': pcr, 'front': front, 'program': program, 'chain': chain}
+def drop_big_strike_days(name, band):
+    """2026-11-21(연구소 A): 행사가 1,000 이상(이름에 쉼표)을 못 읽어 잘린 날을 파일에서 지워 다시 받게 함 — 그날 기초자산 × (1+band) ≥ 990 인 날.
+    지운 날만 dayloop 가 다시 부른다(속도·순서 그대로, 받은 날은 건너뜀). 원자료를 추정으로 채우지 않음."""
+    p = os.path.join(DATA, name + '.csv.gz')
+    if not os.path.exists(p): return
+    d = pd.read_csv(p, low_memory=False)
+    sp = d.groupby('날짜')['spot'].median()
+    bad = set(sp[sp * (1 + band) >= 990].index)
+    if bad:
+        d = d[~d['날짜'].isin(bad)]; d.to_csv(p, index=False)
+    log(f'{name}: 행사가 1,000 이상 잘린 날 {len(bad)}일 지우고 다시 받음' + (f' ({min(bad)}~{max(bad)})' if bad else ''))
+
+
+def chainx_fix(): drop_big_strike_days('opt_chainx_daily', 0.25); chainx()
+def chainwt_fix(): drop_big_strike_days('opt_chainwt_daily', 0.20); chainwt()
+def chainwm_fix(): drop_big_strike_days('opt_chainwm_daily', 0.20); chainwm()
+
+
+TASKS = {'chainx_fix': chainx_fix, 'chainwt_fix': chainwt_fix, 'chainwm_fix': chainwm_fix, 'chainx': chainx, 'chainwt': chainwt, 'chainwm': chainwm, 'roll1': lambda: roll_part('roll1'), 'roll2': lambda: roll_part('roll2'), 'roll3': lambda: roll_part('roll3'), 'inv2': inv2, 'front2': front2, 'index': index_long, 'inv': inv, 'basis': basis, 'iv': iv, 'pcr': pcr, 'front': front, 'program': program, 'chain': chain}
 
 
 def main():
