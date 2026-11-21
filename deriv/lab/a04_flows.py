@@ -554,6 +554,36 @@ def main():
             print('용량-반응 표', len(drows), flush=True)
         except Exception as e:
             print('용량-반응 표 실패', repr(e))
+    # 갈래 A 라운드 28(a04.mom_base, 설정 없으면 없음 → 갈래 B 영향 없음): 새 콜벽 가족의 힘이 '이미 오르는 중'(추세)일 뿐인지 확인(후보 안 만듦).
+    #   신호 날마다 직전 5일·20일 상승률 5분위(그 구간 모든 날 기준) 칸을 찾고, 같은 칸 아무 날의 m일 맞음%를 평균 → '추세 맞춤 기준%'.
+    #   신호 맞음% − 추세 맞춤 기준% = 벽·흐름 정보가 추세 위에 더한 몫. 구간(앞 2010~2023·뒤 2024~)별, 날 단위(겹침 포함, 설명용).
+    mb = cfg.get('mom_base')
+    if mb:
+        try:
+            c_ = k2['close']; r5_ = c_ / c_.shift(5) - 1; r20_ = c_ / c_.shift(20) - 1
+            mrows = []
+            for mid in mb.get('ids', []):
+                if mid not in ZSIG: mrows.append({'id': mid, '구간': '후보 없음'}); continue
+                sig, m, direction = ZSIG[mid]; sig = pd.DatetimeIndex(sig)
+                fr = (c_.shift(-m) / k2['open'].shift(-1) - 1) * 100
+                for pn, lo, hi in (('앞 2010~2023', '2010-01-01', '2023-12-31'), ('뒤 2024~', '2024-01-01', '2100-01-01')):
+                    allm = (td >= lo) & (td <= hi) & fr.notna().values & r5_.notna().values & r20_.notna().values
+                    q5 = np.nanquantile(r5_[allm], [0.2, 0.4, 0.6, 0.8]); q20 = np.nanquantile(r20_[allm], [0.2, 0.4, 0.6, 0.8])
+                    b5 = pd.Series(np.digitize(r5_.values, q5), index=td); b20 = pd.Series(np.digitize(r20_.values, q20), index=td)
+                    hitd = pd.Series(direction * fr.values > 0, index=td)
+                    cell = hitd[allm].groupby([b5[allm], b20[allm]]).mean()
+                    ss = sig[(sig >= lo) & (sig <= hi)]; ss = ss[fr.reindex(ss).notna().values & r20_.reindex(ss).notna().values]
+                    if not len(ss): mrows.append({'id': mid, '구간': pn, '날수': 0}); continue
+                    h_ = hitd.reindex(ss); bb = [cell.get((int(b5[d]), int(b20[d])), np.nan) for d in ss]
+                    base_all = float(hitd[allm].mean())
+                    mrows.append({'id': mid, '구간': pn, 'm일': m, '날수': len(ss), '신호 맞음%': round(float(h_.mean()) * 100, 1),
+                                  '추세 맞춤 기준%': round(float(np.nanmean(bb)) * 100, 1), '아무 날 기준%': round(base_all * 100, 1),
+                                  '추세 위 더한 몫%p': round((float(h_.mean()) - float(np.nanmean(bb))) * 100, 1),
+                                  '신호 날 직전 20일 상승 5분위 평균(0~4)': round(float(np.mean([b20[d] for d in ss])), 2)})
+            pd.DataFrame(mrows).to_csv(os.path.join(od, 'mom_base.csv'), index=False, encoding='utf-8')
+            print('추세 맞춤 기준 표', len(mrows), flush=True)
+        except Exception as e:
+            print('추세 맞춤 기준 표 실패', repr(e))
     # 갈래 B 라운드 19(a04.forward, 설정 없으면 없음 → 갈래 A 영향 없음): 앞→뒤 통과·사전 등록 후보를 정의 그대로 매일 기록하는 전진 검증 표.
     #   신호(그날 장 마감 뒤 아는 값, 늦춤이면 t+1 마감 뒤) → 다음 거래일 시가 진입(연속 선물) → m 거래일째 종가 청산. 청산일이 자료 밖이면 '진행 중'.
     #   start(기본 2026-11-21) 이후 신호만 '전진' 으로 세고, 맥락용으로 최근 recent 개 신호도 함께 적음(전진 성적에는 넣지 않음). A8 판정과 무관(설명용).
