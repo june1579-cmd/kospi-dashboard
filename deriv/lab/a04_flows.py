@@ -263,6 +263,13 @@ def main():
                      ('오늘 벽이 위로 옮겨 감', kk > kk.shift(1)),
                      ('60일선 위', trend_up), ('60일선 아래', trend_dn)]
             if mup is not None: ycond.append(('벽이 5일 안 2번 이상 위로', mup >= 2))
+            # 라운드 19: 라운드 18 에서 '근월 새 벽 + 2% 아래 → 5일 상승'이 앞 44거래 75%·뒤 19거래 74%(버팀)로 두 구간이 같았지만 80% 미만 —
+            #   올릴 조건 후보: 분기물 벽도 2% 아래(갈래 B 의 분기물 위치 신호와 겹침), 직전 5일 하락(눌림 뒤), 외국인 선물 3일 누적 순매수.
+            qd = X.get('OW_Q_wall_dist%')
+            if qd is not None: ycond.append(('분기물 벽도 2% 아래', (qd > 0) & (qd <= 2.0)))
+            r5 = (k2['close'] / k2['close'].shift(5) - 1).reindex(td)
+            ycond += [('직전 5일 하락', r5 < 0), ('직전 5일 상승', r5 > 0), ('외국인 선물 3일 누적 순매수', F['fut_for'].rolling(3, min_periods=3).sum() > 0)]
+            if cfg.get('young_conds'): ycond = [c for c in ycond if c[0] in cfg['young_conds']]
             lab = {'F0x': '근월물(만기 넘어 같은 행사가 이어 셈)', 'ALL': '결제월 4개 합산'}.get(tag, tag)
             for ny in cfg.get('young_age'):
                 for band in YB:
