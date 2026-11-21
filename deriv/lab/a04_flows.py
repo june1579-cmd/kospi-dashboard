@@ -253,7 +253,7 @@ def main():
         ma60 = k2['close'].rolling(60, min_periods=60).mean()
         trend_up = (k2['close'] > ma60).reindex(td); trend_dn = (k2['close'] < ma60).reindex(td)
         yfwd = {m: (fwd[m] if m in fwd else (k2['close'].shift(-m) / k2['open'].shift(-1) - 1) * 100) for m in YM}
-        for tag in [t for t in AGE_TAGS if t in age_of]:
+        for tag in [t for t in (cfg.get('young_tags') or AGE_TAGS) if t in age_of]:   # 라운드 20: young_tags 있으면 시리즈별 후보는 그 시리즈만
             base = tag[:-1] if tag.endswith('x') else tag
             dist = X.get(f'OW_{base}_wall_dist%')
             if dist is None: continue
@@ -288,6 +288,45 @@ def main():
                                 cands.append({'id': f'A4young_{tag}_{ny}d_{band}_{cn}_m{m}_{"dn" if direction < 0 else "up"}', 'agent': 'A4', 'family': 'young_wall',
                                               'desc': f'{lab} 새 콜벽(나이 {ny}일 이하) + 벽 바로 아래(±{band}%)' + ('' if cn == '흐름 무관' else f' + {cn}') +
                                                       f' → {m}일 {"하락" if direction < 0 else "상승"}', 'direction': direction, 'trades': t})
+        # 갈래 A 라운드 20(a04.young_union: [[시리즈, …], …], 설정 없으면 꺼짐 → 갈래 B 영향 없음): 라운드 19 에서 '근월 새 벽 + 2% 아래 → 5일 상승'이
+        #   앞 75%·뒤 76% 로 두 구간이 같았지만, 뒤 구간 근월 새 벽 사건이 24일뿐이라 조건 하나만 더해도 거래 12 아래로 떨어짐.
+        #   표본을 늘리려고 여러 결제월(근월·차월·합산) 중 '하나라도' 새 벽(나이 N일 이하) + 벽 바로 아래인 날(ANY), 그리고 '둘 이상 동시'인 날(K2,
+        #   여러 결제월이 같이 새 벽을 쓰면 더 강한 뒤따름인지)을 묶음. 조건은 시리즈와 무관한 것만. 양방향 사전 등록.
+        r5u = (k2['close'] / k2['close'].shift(5) - 1).reindex(td)
+        qdu = X.get('OW_Q_wall_dist%')
+        ucond = [('흐름 무관', pd.Series(True, index=td)),
+                 ('외국인 선물 순매수', F['fut_for'] > 0), ('외국인 선물 순매도', F['fut_for'] < 0),
+                 ('60일선 위', trend_up), ('60일선 아래', trend_dn),
+                 ('직전 5일 하락', r5u < 0), ('직전 5일 상승', r5u > 0),
+                 ('외국인 선물 3일 누적 순매수', F['fut_for'].rolling(3, min_periods=3).sum() > 0)]
+        if qdu is not None: ucond.append(('분기물 벽도 2% 아래', (qdu > 0) & (qdu <= 2.0)))
+        if cfg.get('young_conds'): ucond = [c for c in ucond if c[0] in cfg['young_conds']]
+        for grp in (cfg.get('young_union') or []):
+            gtags = [t for t in grp if t in age_of and X.get(f'OW_{t[:-1] if t.endswith("x") else t}_wall_dist%') is not None]
+            if len(gtags) < 2: continue
+            glab = '·'.join({'F0': '근월', 'F1': '차월', 'F2': '차차월', 'F3': '분기 다음', 'ALL': '합산', 'Q': '분기물'}.get(t, t) for t in gtags)
+            for ny in cfg.get('young_age'):
+                for band in YB:
+                    hits = [((age_of[t] <= ny) & (X[f'OW_{t[:-1] if t.endswith("x") else t}_wall_dist%'] > 0) &
+                             (X[f'OW_{t[:-1] if t.endswith("x") else t}_wall_dist%'] <= band)).fillna(False).astype(int) for t in gtags]
+                    cnt = sum(hits)
+                    for uk, umask, ulab in (('ANY', cnt >= 1, '하나라도'), ('K2', cnt >= 2, '둘 이상 동시')):
+                        for cn, cm in ucond:
+                            mall = umask & cm.fillna(False)
+                            for m in YM:
+                                v1 = yfwd[m][mall & dev].dropna(); v2 = yfwd[m][mall & p2].dropna()
+                                rows.append({'시리즈': f'{uk}({"+".join(gtags)})', '근처폭%': f'{band}%', '구역': f'새 벽(나이 {ny}일 이하) + 벽 바로 아래 — {ulab}',
+                                             '누가': cn, '부호': '', 'm일': m,
+                                             '날수': len(v1), '하락%': (v1 < 0).mean() * 100 if len(v1) else np.nan, '평균%': v1.mean() if len(v1) else np.nan,
+                                             '뒤 날수': len(v2), '뒤 하락%': (v2 < 0).mean() * 100 if len(v2) else np.nan})
+                                if len(v1) < 20 and len(v2) < 12: continue
+                                sig = td[(mall.fillna(False)).values]
+                                t = pd.DataFrame({'signal': sig, 'exit': [L.exit_after(td, s_, m) for s_ in sig]}).dropna()
+                                for direction in (-1, 1):
+                                    cands.append({'id': f'A4yu_{uk}_{"+".join(gtags)}_{ny}d_{band}_{cn}_m{m}_{"dn" if direction < 0 else "up"}', 'agent': 'A4',
+                                                  'family': 'young_union',
+                                                  'desc': f'{glab} 중 {ulab} 새 콜벽(나이 {ny}일 이하) + 벽 바로 아래(±{band}%)' + ('' if cn == '흐름 무관' else f' + {cn}') +
+                                                          f' → {m}일 {"하락" if direction < 0 else "상승"}', 'direction': direction, 'trades': t})
     for tag in TAGS:
         dist = X.get(f'OW_{tag}_wall_dist%'); pdist = X.get(f'OW_{tag}_passed_wall_dist%')
         grow = X.get(f'OW_{tag}_callotm_chg5%')
