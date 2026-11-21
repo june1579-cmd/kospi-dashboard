@@ -269,6 +269,8 @@ def main():
             if qd is not None: ycond.append(('분기물 벽도 2% 아래', (qd > 0) & (qd <= 2.0)))
             r5 = (k2['close'] / k2['close'].shift(5) - 1).reindex(td)
             ycond += [('직전 5일 하락', r5 < 0), ('직전 5일 상승', r5 > 0), ('외국인 선물 3일 누적 순매수', F['fut_for'].rolling(3, min_periods=3).sum() > 0)]
+            # 라운드 21(a04.young_flow_sum: [N, …], 설정 없으면 없음): 외국인 선물 N일 누적 순매수 — 라운드 20 에서 3일 누적이 두 구간 모두 가장 높아 창을 넓혀 봄.
+            ycond += [(f'외국인 선물 {n}일 누적 순매수', F['fut_for'].rolling(n, min_periods=n).sum() > 0) for n in (cfg.get('young_flow_sum') or []) if n != 3]
             if cfg.get('young_conds'): ycond = [c for c in ycond if c[0] in cfg['young_conds']]
             lab = {'F0x': '근월물(만기 넘어 같은 행사가 이어 셈)', 'ALL': '결제월 4개 합산'}.get(tag, tag)
             for ny in cfg.get('young_age'):
@@ -300,6 +302,7 @@ def main():
                  ('직전 5일 하락', r5u < 0), ('직전 5일 상승', r5u > 0),
                  ('외국인 선물 3일 누적 순매수', F['fut_for'].rolling(3, min_periods=3).sum() > 0)]
         if qdu is not None: ucond.append(('분기물 벽도 2% 아래', (qdu > 0) & (qdu <= 2.0)))
+        ucond += [(f'외국인 선물 {n}일 누적 순매수', F['fut_for'].rolling(n, min_periods=n).sum() > 0) for n in (cfg.get('young_flow_sum') or []) if n != 3]
         if cfg.get('young_conds'): ucond = [c for c in ucond if c[0] in cfg['young_conds']]
         for grp in (cfg.get('young_union') or []):
             gtags = [t for t in grp if t in age_of and X.get(f'OW_{t[:-1] if t.endswith("x") else t}_wall_dist%') is not None]
@@ -310,7 +313,12 @@ def main():
                     hits = [((age_of[t] <= ny) & (X[f'OW_{t[:-1] if t.endswith("x") else t}_wall_dist%'] > 0) &
                              (X[f'OW_{t[:-1] if t.endswith("x") else t}_wall_dist%'] <= band)).fillna(False).astype(int) for t in gtags]
                     cnt = sum(hits)
-                    for uk, umask, ulab in (('ANY', cnt >= 1, '하나라도'), ('K2', cnt >= 2, '둘 이상 동시')):
+                    # 라운드 21(a04.young_union_kinds, 없으면 ANY·K2): F0K2 = 근월 새 벽이 있고 다른 결제월도 같이 새 벽(둘 이상) — 라운드 20 에서 ANY 는 흐려지고 K2 가 양방향 선별.
+                    f0hit = hits[gtags.index('F0')] if 'F0' in gtags else None
+                    kinds = [('ANY', cnt >= 1, '하나라도'), ('K2', cnt >= 2, '둘 이상 동시')]
+                    if f0hit is not None: kinds.append(('F0K2', (f0hit >= 1) & (cnt >= 2), '근월 포함 둘 이상 동시'))
+                    kinds = [k for k in kinds if k[0] in (cfg.get('young_union_kinds') or ['ANY', 'K2'])]
+                    for uk, umask, ulab in kinds:
                         for cn, cm in ucond:
                             mall = umask & cm.fillna(False)
                             for m in YM:
