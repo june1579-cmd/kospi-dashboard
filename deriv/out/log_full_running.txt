@@ -4,3 +4,5 @@
 [10:53:47] == chainwt
 [11:03:39] 위클리 이름 보기 2026: ['코스피위클리 C 2605W3 1,100.0', '코스피위클리 C 2605W3 1,102.5', '코스피위클리 C 2605W3 1,105.0'] / 열 ['날짜', 'ISU_CD', 'ISU_SRT_CD', 'ISU_NM', 'TDD_CLSPRC', 'FLUC_TP_CD', 'CMPPREVDD_PRC', 'TDD_OPNPRC', 'TDD_HGPRC', 'TDD_LWPRC', 'SPOT_PRC', 'SETL_PRC', 'ACC_TRDVOL', 'ACC_TRDVAL', 'ACC_OPNINT_QTY', 'SECUGRP_ID'] / 194행
 [11:05:24] 저장 opt_chainwt_daily.csv.gz 100854행
+[11:05:26] == chainwm
+[11:08:00] 저장 opt_chainwm_daily.csv.gz 72414행
