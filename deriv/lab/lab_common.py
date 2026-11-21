@@ -356,6 +356,8 @@ def regime_variants_p2(cands, mc):
         if len(r) < min_sig: continue
         up = float((r > 0).mean()); scored.append((max(up, 1 - up), c))
     scored.sort(key=lambda x: -x[0]); out = []
+    seen = set()   # 갈래 B 라운드 13(mirror_p2.dedup, 없으면 예전대로): 원 후보가 상승·하락 양방향으로 등록된 쌍(A3c 등)은 뒤 구간 장세 변형이
+    #   거래·방향까지 똑같이 두 번 나와(라운드 12 보고서의 같은 줄 두 개) 뒤→앞 선별 수만 늘림 — 같은 (장세, 거래, 방향)은 한 번만.
     for _, c in scored[:max_base]:
         t = c['trades'].copy(); sd = pd.to_datetime(t['signal'])
         for code in S.columns:
@@ -363,6 +365,10 @@ def regime_variants_p2(cands, mc):
             r = _p2_simple(tt, k)
             if len(r) < min_after: continue
             d = 1 if (r > 0).mean() >= 0.5 else -1
+            if mc.get('dedup'):
+                key = (code, d, tuple(pd.to_datetime(tt['signal']).astype('int64')), tuple(pd.to_datetime(tt['exit']).astype('int64')))
+                if key in seen: continue
+                seen.add(key)
             v = {kk: vv for kk, vv in c.items() if kk != 'trades'}
             v.update({'id': f"{c['id']}__{code}__P2", 'base_id': c['id'], 'direction': d, 'fit_period': 'p2', 'regime': REGIME_CODES[code],
                       'family': f"{c.get('family')}_regime", 'trades': tt,

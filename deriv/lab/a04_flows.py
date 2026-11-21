@@ -330,6 +330,51 @@ def main():
                 t = pd.DataFrame({'signal': sig, 'exit': [L.exit_after(td, s, m) for s in sig]}).dropna()
                 cands.append({'id': f'A4_{tag}_grow_callbuy_m{m}', 'agent': 'A4', 'family': 'flow_build',
                               'desc': f'{tag} 콜 물량 증가 상위20% + 외국인 콜 순매수 → {m}일 상승', 'direction': 1, 'trades': t})
+    # 갈래 B 라운드 13(a04.zone_conds, 설정 없으면 꺼짐 → 갈래 A 영향 없음): 라운드 11~12 에서 정보는 외국인 흐름이 아니라 '분기물 벽 바로 아래' 위치에 있고
+    #   두 구간 모두 같은 방향(3일 상승)이지만 앞 구간 74% 안팎·뒤 구간 90% — 앞 구간 적중을 올릴 조건 후보를 흐름 없이 위치만에 곱한다.
+    #   (1) 진입 늦춤: 신호 다음 날(t+1)이 시가→종가 하락이었으면 / 전일 대비 하락이었으면 / 무조건 — t+1 장 마감 뒤 신호, t+2 시가 진입(그날 아는 값만).
+    #   (2) 만기까지 남은 거래일(그 시리즈, a02 dte): ≤10 · 11~30 · 31+. (3) 직전 5일 하락·상승. (4) 벽 물량 5일 증가·감소(문턱 없음, 부호만).
+    #   방향은 다른 위치 후보와 같이 앞 구간 다수(뒤 구간에서 뒤집히면 mirror_p2 가 '{id}__P2' 거울을 만듦). 설명표 zone_cond.csv(앞·뒤 상승%).
+    zc = cfg.get('zone_conds')
+    if zc:
+        o1, c1 = k2['open'].reindex(td), k2['close'].reindex(td)
+        dn_oc_next = (c1 < o1).shift(-1, fill_value=False)        # t+1 시가→종가 하락(t+1 장 마감 뒤 앎)
+        dn_cc_next = (c1 < c1.shift(1)).shift(-1, fill_value=False)
+        r5 = c1 / c1.shift(5) - 1
+        zrows = []
+        for tag in zc.get('tags', ['Q']):
+            dist = X.get(f'OW_{tag}_wall_dist%'); dte = X.get(f'OW_{tag}_dte'); oi5 = X.get(f'OW_{tag}_wall_oi_chg5%')
+            if dist is None: continue
+            conds = [('다음 날 시가→종가 하락 뒤 진입', dn_oc_next, True), ('다음 날 종가 하락 뒤 진입', dn_cc_next, True),
+                     ('하루 늦춰 진입', pd.Series(True, index=td), True),
+                     ('직전 5일 하락', r5 < 0, False), ('직전 5일 상승', r5 > 0, False)]
+            if dte is not None:
+                conds += [('만기 10거래일 이내', dte <= 10, False), ('만기 11~30거래일', (dte >= 11) & (dte <= 30), False), ('만기 31거래일 이상', dte >= 31, False)]
+            if oi5 is not None:
+                conds += [('벽 물량 5일 증가', oi5 > 0, False), ('벽 물량 5일 감소', oi5 < 0, False)]
+            if zc.get('conds'): conds = [c for c in conds if c[0] in zc['conds']]
+            for band in zc.get('bands', [0.5, 1.0, 2.0]):
+                zm = (dist > 0) & (dist <= band)
+                for cn, cm, delay in conds:
+                    mall = (zm & cm).fillna(False).values
+                    idx = np.where(mall)[0] + (1 if delay else 0)
+                    idx = idx[idx < len(td)]
+                    sig = td[idx]
+                    for m in zc.get('post_m', MS):
+                        f = fwd[m] if m in fwd else (k2['close'].shift(-m) / k2['open'].shift(-1) - 1) * 100
+                        f = f.reindex(td)
+                        v_all = pd.Series(f.values[idx], index=sig)
+                        v1 = v_all[(sig <= L.DEV_END) & (sig >= pd.Timestamp('2015-01-01'))].dropna(); v2 = v_all[sig >= L.HOLD_START].dropna()
+                        zrows.append({'시리즈': tag, '근처폭%': band, '조건': cn, 'm일': m, '앞 날수': len(v1), '앞 상승%': (v1 > 0).mean() * 100 if len(v1) else np.nan,
+                                      '뒤 날수': len(v2), '뒤 상승%': (v2 > 0).mean() * 100 if len(v2) else np.nan})
+                        if len(v1) < 15: continue
+                        direction = -1 if (v1 < 0).mean() >= 0.5 else 1
+                        t = pd.DataFrame({'signal': sig, 'exit': [L.exit_after(td, s_, m) for s_ in sig]}).dropna()
+                        cands.append({'id': f'A4zc_{tag}_{band}_{cn}_m{m}', 'agent': 'A4', 'family': 'zone_cond',
+                                      'desc': f'{tag} 벽 바로 아래(±{band}%), 흐름 무관 + {cn} → {m}일 {"하락" if direction < 0 else "상승"}',
+                                      'direction': direction, 'trades': t})
+        pd.DataFrame(zrows).round(1).to_csv(os.path.join(od, 'zone_cond.csv'), index=False, encoding='utf-8')
+        print('위치 조건 후보', sum(1 for c in cands if c.get('family') == 'zone_cond'), flush=True)
     if cfg.get('weekly'):
         try:
             cands += weekly_block(cfg['weekly'], k2, td, F, od)
