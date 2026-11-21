@@ -354,6 +354,10 @@ def main():
                 conds += [('벽 물량 5일 증가', oi5 > 0, False), ('벽 물량 5일 감소', oi5 < 0, False)]
                 # 라운드 14(zone_conds.combo): 라운드 13 에서 뒤 구간을 가장 올린 두 조건(하루 늦춤·벽 물량 5일 증가)을 함께
                 if zc.get('combo'): conds += [('벽 물량 5일 증가 + 하루 늦춰 진입', oi5 > 0, True)]
+            # 라운드 15(zone_conds.combo_lags: [1, 3]): 라운드 14 앞→뒤 통과 조합이 '5일' 물량 창에만 기대는지 — 1·3일 물량 증가로 바꿔도 버티나
+            for lg in (zc.get('combo_lags') or []):
+                oil = X.get(f'OW_{tag}_wall_oi_chg{lg}%')
+                if oil is not None: conds += [(f'벽 물량 {lg}일 증가 + 하루 늦춰 진입', oil > 0, True)]
             # 라운드 14(zone_conds.plain): 조건 없는 위치만 — σ 근처폭에서 기준으로 쓰려고(% 근처폭은 zone_only 후보와 같아 σ 만)
             if zc.get('plain'): conds = [('조건 없음', pd.Series(True, index=td), False)] + conds
             if zc.get('conds'): conds = [c for c in conds if c[0] in zc['conds']]
