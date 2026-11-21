@@ -129,6 +129,9 @@ def weekly_block(wc, k2, td, F, od):
     return cands
 
 
+ZSIG = {}   # 갈래 B 라운드 19: 위치 가족 후보 id → (신호 날(진행 중 포함), 보유일, 방향) — 전진 검증 표용
+
+
 def main():
     feat = pickle.load(open(os.path.join(L.LAB, 'work', 'lab_feat.pkl'), 'rb'))
     wide = feat['wide']
@@ -374,6 +377,7 @@ def main():
                             sig = td[(m_all.fillna(False)).values]
                             direction = -1 if (v < 0).mean() >= 0.5 else 1
                             t = pd.DataFrame({'signal': sig, 'exit': [L.exit_after(td, s, m) for s in sig]}).dropna()
+                            ZSIG[f'A4_{tag}_{band_key}_{zone}_{who}_{sgn}_m{m}'] = (sig, m, direction)
                             cands.append({'id': f'A4_{tag}_{band_key}_{zone}_{who}_{sgn}_m{m}', 'agent': 'A4', 'family': 'flow_wall_sigma' if is_sig else 'flow_wall',
                                           'desc': f'{tag} {zone}(±{band_lab})에서 {who} {sgn} → {m}일 {"하락" if direction < 0 else "상승"}', 'direction': direction, 'trades': t})
         # 1단계: 콜 물량이 늘고 외국인이 콜을 사면 위로
@@ -458,6 +462,7 @@ def main():
                         if len(v1) < 15: continue
                         direction = -1 if (v1 < 0).mean() >= 0.5 else 1
                         t = pd.DataFrame({'signal': sig, 'exit': [L.exit_after(td, s_, m) for s_ in sig]}).dropna()
+                        ZSIG[f'A4zc_{tag}_{band_key}_{cn}_m{m}'] = (sig, m, direction)
                         cands.append({'id': f'A4zc_{tag}_{band_key}_{cn}_m{m}', 'agent': 'A4', 'family': 'zone_cond',
                                       'desc': f'{tag} 벽 바로 아래(±{band_lab}), 흐름 무관' + ('' if cn == '조건 없음' else f' + {cn}') + f' → {m}일 {"하락" if direction < 0 else "상승"}',
                                       'direction': direction, 'trades': t})
@@ -519,6 +524,39 @@ def main():
                              '해마다': str({int(y): [int(g.size), round(float(g.mean()), 2)] for y, g in yh.groupby(level=0)})})
         pd.DataFrame(prow).to_csv(os.path.join(od, 'prereg_p0.csv'), index=False, encoding='utf-8')
         print('사전 등록 새 표본 표', len(prow), flush=True)
+    # 갈래 B 라운드 19(a04.forward, 설정 없으면 없음 → 갈래 A 영향 없음): 앞→뒤 통과·사전 등록 후보를 정의 그대로 매일 기록하는 전진 검증 표.
+    #   신호(그날 장 마감 뒤 아는 값, 늦춤이면 t+1 마감 뒤) → 다음 거래일 시가 진입(연속 선물) → m 거래일째 종가 청산. 청산일이 자료 밖이면 '진행 중'.
+    #   start(기본 2026-11-21) 이후 신호만 '전진' 으로 세고, 맥락용으로 최근 recent 개 신호도 함께 적음(전진 성적에는 넣지 않음). A8 판정과 무관(설명용).
+    fw = cfg.get('forward')
+    if fw:
+      try:
+          try: px = L.prices()['K200F']
+          except Exception as e: print('선물 가격 못 읽음, 지수로', repr(e)); px = k2
+          fstart = pd.Timestamp(fw.get('start', '2026-11-21')); frows = []; tdp = px.index
+          for fid in fw.get('ids', []):
+              if fid not in ZSIG: frows.append({'id': fid, '구분': '후보 없음'}); continue
+              sig, m, direction = ZSIG[fid]
+              sig = pd.DatetimeIndex(sig)
+              pick = sorted(set(list(sig[sig >= fstart]) + list(sig[-int(fw.get('recent', 8)):])))
+              for s_ in pick:
+                  i = tdp.searchsorted(s_, side='right')
+                  ent = tdp[i] if i < len(tdp) else pd.NaT
+                  ex = L.exit_after(td, s_, m)
+                  r = {'id': fid, '구분': '전진' if s_ >= fstart else '최근(맥락)', '신호일': s_.date(), '방향': '상승' if direction > 0 else '하락', '보유일': m,
+                       '진입일': ent.date() if ent == ent else '다음 거래일', '진입가': float(px['open'].iloc[i]) if i < len(tdp) else np.nan,
+                       '청산일': ex.date() if ex == ex else '자료 밖'}
+                  if ex == ex and ex in tdp and i < len(tdp):
+                      ret = (float(px['close'].loc[ex]) / float(px['open'].iloc[i]) - 1) * 100
+                      r.update({'청산가': float(px['close'].loc[ex]), '수익%': round(ret, 2), '결과': '적중' if direction * ret > 0 else '빗나감'})
+                  else:
+                      r.update({'청산가': np.nan, '수익%': np.nan, '결과': '진행 중'})
+                  frows.append(r)
+          F_ = pd.DataFrame(frows); F_.to_csv(os.path.join(od, 'forward_log.csv'), index=False, encoding='utf-8')
+          if len(F_) and '구분' in F_:
+              done = F_[(F_['구분'] == '전진') & F_['결과'].isin(['적중', '빗나감'])] if '결과' in F_ else F_.iloc[:0]
+              print('전진 검증 표', len(F_), '줄 · 전진 끝난 거래', len(done), '· 적중', int((done['결과'] == '적중').sum()) if len(done) else 0, flush=True)
+      except Exception as e:   # 전진 표 실패가 후보 저장을 막지 않게
+        print('전진 검증 표 실패', repr(e))
     L.save_candidates('a04', cands)
     print('표', len(rows), '후보', len(cands))
 
