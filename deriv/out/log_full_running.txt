@@ -8,3 +8,6 @@
 [11:31:26] 위클리 이름 보기 2026: ['코스피위클리 C 2602W4   775.0', '코스피위클리 C 2602W4   777.5', '코스피위클리 C 2602W4   780.0'] / 열 ['날짜', 'ISU_CD', 'ISU_SRT_CD', 'ISU_NM', 'TDD_CLSPRC', 'FLUC_TP_CD', 'CMPPREVDD_PRC', 'TDD_OPNPRC', 'TDD_HGPRC', 'TDD_LWPRC', 'SPOT_PRC', 'SETL_PRC', 'ACC_TRDVOL', 'ACC_TRDVAL', 'ACC_OPNINT_QTY', 'SECUGRP_ID'] / 66행
 [11:34:15] opt_chainwt_daily 중간 저장 2026-07-24 (105922행)
 [11:36:22] 저장 opt_chainwt_daily.csv.gz 120944행
+[11:36:24] == chainwm_fix
+[11:36:24] opt_chainwm_daily: 행사가 1,000 이상 잘린 날 120일 지우고 다시 받음 (2026-02-19~2026-11-12)
+[11:42:10] 저장 opt_chainwm_daily.csv.gz 99546행
