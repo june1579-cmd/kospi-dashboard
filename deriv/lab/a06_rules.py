@@ -9,6 +9,7 @@
 import os
 import pickle
 import sys
+import zlib
 
 import numpy as np
 import pandas as pd
@@ -73,16 +74,16 @@ def mine_prec(C, y, fid, h):
     same = fid[:, None] == fid[None, :]
     LB2 = wilson_lb(H2 / heff, N2 / heff); LB2[(N2 / heff < MIN_NEFF) | same | ~np.isfinite(LB2)] = 0
     LB1 = wilson_lb(H1 / heff, N1 / heff); LB1[(N1 / heff < MIN_NEFF) | ~np.isfinite(LB1)] = 0
-    cand = [((int(i),), float(LB1[i])) for i in np.argsort(-LB1)[:150] if LB1[i] > 0]
+    cand = [((int(i),), float(LB1[i])) for i in np.argsort(-LB1, kind='stable')[:150] if LB1[i] > 0]
     iu = np.triu_indices_from(LB2, k=1); flat = LB2[iu]
-    top2 = np.argsort(-flat)[:400]
+    top2 = np.argsort(-flat, kind='stable')[:400]   # 동률 순서 고정(2026-11-23 진화): 기본 quicksort 는 CPU(AVX-512·AVX2)마다 동률 순서가 달라 실행마다 규칙이 바뀌었음
     pairs = [((int(iu[0][k]), int(iu[1][k])), float(flat[k])) for k in top2 if flat[k] > 0]
     cand += pairs
     for (i, j), _ in pairs[:40]:
         pm = C[:, i] * C[:, j]
         N3 = pm @ C; H3 = (pm * y) @ C
         LB3 = wilson_lb(H3 / heff, N3 / heff); LB3[(N3 / heff < MIN_NEFF) | ~np.isfinite(LB3) | (fid == fid[i]) | (fid == fid[j])] = 0
-        for k in np.argsort(-LB3)[:6]:
+        for k in np.argsort(-LB3, kind='stable')[:6]:
             if LB3[k] > 0: cand.append((tuple(sorted((i, j, int(k)))), float(LB3[k])))
     cand.sort(key=lambda t: -t[1])
     chosen, masks, seen = [], [], set()
@@ -168,7 +169,7 @@ def main():
                 if tname in final_t and len(sigs) >= 8 and yrs >= 3:
                     rr, f = final_t[tname]
                     sig_all = td[f]
-                    cands.append({'id': f'A6_rule_{idt}_{"up" if direction > 0 else "dn"}_{abs(hash(tname)) % 10**6}', 'agent': 'A6', 'family': 'rule' if exs is None else 'rule_big',
+                    cands.append({'id': f'A6_rule_{idt}_{"up" if direction > 0 else "dn"}_{zlib.crc32(tname.encode("utf-8")) % 10**6}', 'agent': 'A6', 'family': 'rule' if exs is None else 'rule_big',
                                   'desc': f'{tname} → {tgt} {"상승" if direction > 0 else "하락"}', 'direction': direction,
                                   'trades': pd.DataFrame({'signal': sig_all, 'exit': ex_of(sig_all)}).dropna(),
                                   'trades_dev': pd.DataFrame({'signal': sigs, 'exit': ex_of(sigs)}).dropna(),

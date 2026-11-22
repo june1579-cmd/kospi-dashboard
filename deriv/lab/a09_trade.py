@@ -40,7 +40,7 @@ def option_trades(t, direction, ch, td):
         ym = live[0]; ex = L.expiry_of_ym(ym, td)
         gg = g[(g['ym'] == ym) & (g['cp'] == cp) & (g['settle'] > 0)]
         if not len(gg): out.append(np.nan); continue
-        row = gg.iloc[(gg['K'] - S).abs().argsort()[:1]]
+        row = gg.iloc[(gg['K'] - S).abs().argsort(kind='stable')[:1]]
         K = float(row['K'].iloc[0]); p0 = float(row['settle'].iloc[0])
         d1 = min(e, ex)
         if d1 >= ex:                       # 만기 청산: 내재가치(코스피200 만기일 종가 기준 — 실제 최종결제가와 조금 다를 수 있음)

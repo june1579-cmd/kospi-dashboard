@@ -96,9 +96,9 @@ def mine(C, y, fid, h, n_keep=10):
     out = []
     for sgn in (1, -1):
         cand = []
-        order1 = np.argsort(-sgn * S1)[:100]
+        order1 = np.argsort(-sgn * S1, kind='stable')[:100]
         cand += [((int(i),), float(sgn * S1[i]), float(p1[i]), int(N1[i])) for i in order1 if sgn * S1[i] > 0]
-        order2 = np.argsort(-sgn * s_flat)[:300]
+        order2 = np.argsort(-sgn * s_flat, kind='stable')[:300]
         pairs = [((int(iu[0][k]), int(iu[1][k])), float(sgn * s_flat[k]), float(p2[iu[0][k], iu[1][k]]), int(N2[iu[0][k], iu[1][k]])) for k in order2 if sgn * s_flat[k] > 0]
         cand += pairs
         for (i, j), _, _, _ in pairs[:30]:      # 3개 조합(빔)
@@ -108,7 +108,7 @@ def mine(C, y, fid, h, n_keep=10):
                 p3 = H3 / N3
             S3 = (p3 - base) * np.sqrt(np.maximum(N3 / heff, 0))
             S3[(N3 / heff < 20) | ~np.isfinite(S3) | (fid == fid[i]) | (fid == fid[j])] = 0
-            for k in np.argsort(-sgn * S3)[:5]:
+            for k in np.argsort(-sgn * S3, kind='stable')[:5]:
                 if sgn * S3[k] > 0: cand.append((tuple(sorted((i, j, int(k)))), float(sgn * S3[k]), float(p3[k]), int(N3[k])))
         cand.sort(key=lambda t: -t[1])
         chosen, masks = [], []
