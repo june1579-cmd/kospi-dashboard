@@ -556,6 +556,16 @@ def main():
             cfw = {m: (close.shift(-m) / k2['open'].shift(-1) - 1) * 100 for m in CM}
             pos_ = pd.Series(np.arange(len(td)), index=td)
             crow = []; nc0 = len(cands)
+            arb_ = None
+            if cl.get('arb_split'):   # 라운드 32: 차익 프로그램 순매수(조원) — deriv/data/program_daily.csv.gz(KRX), 빠진 날은 빈칸
+                try:
+                    pg = pd.read_csv(os.path.join(os.path.dirname(L.LAB), 'data', 'program_daily.csv.gz'), low_memory=False)
+                    pg['날짜'] = pd.to_datetime(pg['날짜'])
+                    pg['v'] = pd.to_numeric(pg['NETBID_TRDVAL'].astype(str).str.replace(',', ''), errors='coerce') / 1e12
+                    arb_ = pg[pg['ITM_TP_NM'] == '차익'].drop_duplicates('날짜', keep='last').set_index('날짜')['v'].reindex(td)
+                except Exception as e:
+                    print('차익 프로그램 자료 실패', repr(e)); arb_ = None
+            cf_ = F['cash_for'] if 'cash_for' in F else None
             for tag_ in cl.get('tags', ['F0', 'Q', 'ALL']):
                 # 라운드 31: 'Q@touch' = 그 시리즈 어제 콜벽을 오늘 고가로 처음 건드린 날(장중에 '위로 만든' 날, 종가 무관) — 표본이 종가 돌파보다 많음
                 tag, _, evk = tag_.partition('@')
@@ -577,6 +587,7 @@ def main():
                 conds = [('넘은 날', '', pd.DatetimeIndex(evd))]
                 for n in POST:
                     s_sell, s_hold, s_buy = [], [], []
+                    s_hedge, s_dirn, s_cash, s_cashb = [], [], [], []
                     for d in evd:
                         i = int(pos_[d])
                         if i + n >= len(td): continue
@@ -585,7 +596,17 @@ def main():
                         if sm < 0:
                             s_sell.append(dn)
                             if close.iloc[i + n] >= Kp.loc[d]: s_hold.append(dn)
+                            # 라운드 32(a04.cross_long.arb_split): 넘은 뒤 외국인 선물 매도가 헤지·차익인가 방향 매도인가
+                            if arb_ is not None and arb_.iloc[i + 1:i + n + 1].notna().sum() == n:
+                                (s_hedge if arb_.iloc[i + 1:i + n + 1].sum() > 0 else s_dirn).append(dn)
+                            if cl.get('arb_split') and cf_ is not None and cf_.iloc[i + 1:i + n + 1].notna().sum() == n:
+                                (s_cash if cf_.iloc[i + 1:i + n + 1].sum() < 0 else s_cashb).append(dn)
                         elif sm > 0: s_buy.append(dn)
+                    if cl.get('arb_split'):
+                        conds += [(f'넘은 뒤 {n}일 외국인 선물 누적 순매도 + 차익 프로그램 누적 순매수(헤지·차익형)', f'_a{n}', pd.DatetimeIndex(s_hedge)),
+                                  (f'넘은 뒤 {n}일 외국인 선물 누적 순매도 + 차익 프로그램 누적 순매도(방향형)', f'_d{n}', pd.DatetimeIndex(s_dirn)),
+                                  (f'넘은 뒤 {n}일 외국인 선물 + 현물 함께 누적 순매도', f'_c{n}', pd.DatetimeIndex(s_cash)),
+                                  (f'넘은 뒤 {n}일 외국인 선물 누적 순매도 + 현물 누적 순매수', f'_k{n}', pd.DatetimeIndex(s_cashb))]
                     if cl.get('trend_split'):   # 라운드 30: 장세 나눔 — 신호 날 종가가 60일선 아래·위(그날 마감 뒤 아는 값)
                         ma60c = close.rolling(60, min_periods=60).mean()
                         dn_ = [x for x in s_sell if close.loc[x] < ma60c.loc[x]]; up_ = [x for x in s_sell if close.loc[x] >= ma60c.loc[x]]
