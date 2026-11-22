@@ -146,9 +146,18 @@ def main():
                     m2f = fit(Xv[i2], y.values[i2].astype(int)); p2 = m2f.predict_proba(Xv)[:, 1]
                     sig2 = td[(p2 >= tau2) & zmv]
                     t2 = pd.DataFrame({'signal': sig2, 'exit': ex_of(sig2)}).dropna()
+                    t2p2 = t2
+                    if cfg.get('fp2_oos'):
+                        # 갈래 B 라운드 26(a07.fp2_oos, 설정 없으면 예전과 같음): 라운드 25 에서 뒤 구간 적합 모형의 뒤 구간 성적이 학습 표본 안(적중 100%)이라 뒤 선별이
+                        #   공짜로 늘어남(나눗수만 키움) — 뒤 구간 성적은 앞 60% 로 학습한 모형(mm)의 뒤 40% 신호(문턱 tau2)만, 앞 구간은 뒤 구간 전체 모형 신호.
+                        pbt = np.full(len(td), np.nan); pbt[b_] = pb
+                        sgo = td[(pbt >= tau2) & zmv]
+                        t2p2 = pd.DataFrame({'signal': sgo, 'exit': ex_of(sgo)}).dropna()
+                        t2 = t2[t2['signal'] < L.HOLD_START]
                     cands.append({'id': f'A7{zid}_fp2_{idt}_{"up" if direction > 0 else "dn"}', 'agent': 'A7', 'family': 'ml_fp2' + ('_zone' if ZC else ''),
                                   'desc': f'[뒤 구간 적합] {zdesc}기계학습(목표 정밀도 {TARGET:.0%}) → {tgt} {"상승" if direction > 0 else "하락"}', 'direction': direction,
-                                  'trades': t2, 'trades_dev': t2, 'fit_period': 'p2', 'tau': tau2})
+                                  'trades': pd.concat([t2, t2p2]).drop_duplicates('signal').sort_values('signal') if cfg.get('fp2_oos') else t2,
+                                  'trades_dev': t2, 'fit_period': 'p2', 'tau': tau2})
             print(kind, h, 'dir', direction, flush=True)
     pd.DataFrame(rows).round(4).to_csv(os.path.join(od, 'ml_by_year.csv'), index=False, encoding='utf-8')
     L.save_candidates(SUB, cands)

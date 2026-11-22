@@ -501,6 +501,31 @@ def main():
                                       'direction': direction, 'trades': t})
         pd.DataFrame(zrows).round(1).to_csv(os.path.join(od, 'zone_cond.csv'), index=False, encoding='utf-8')
         print('위치 조건 후보', sum(1 for c in cands if c.get('family') == 'zone_cond'), flush=True)
+        # 갈래 B 라운드 26(zone_conds.union: [{name, ids, m, min_votes?}], 설정 없으면 꺼짐 → 갈래 A 영향 없음): 위치 가족 안의 서로 다른 신호
+        #   (벽 물량 5일 증가 + 하루 늦춤 / 외국인 선물 3일 누적 순매수 / 외국인 풋 순매수)는 앞 구간 거래 23~27개씩이라 하나로는 표본·적중이 모자람 —
+        #   같은 방향(상승) 신호 날을 합쳐(min_votes 1 = 어느 하나, 2 = 둘 이상 같은 날) 독립 거래를 늘려도 적중이 버티는지. 주의: 구성 신호는 두 구간을 본 뒤 고른 것.
+        urows = []
+        for un in (zc.get('union') or []):
+            parts = [ZSIG[i] for i in un.get('ids', []) if i in ZSIG]
+            miss = [i for i in un.get('ids', []) if i not in ZSIG]
+            if miss: print('합친 신호 구성 없음', un.get('name'), miss, flush=True)
+            if len(parts) < 2: continue
+            cnt = pd.Series(0, index=td)
+            for sig_, _m, _d in parts:
+                cnt.loc[pd.DatetimeIndex(sig_).intersection(td)] += 1
+            mu = int(un.get('m', 3)); dr = int(un.get('direction', 1))
+            sig = td[(cnt >= int(un.get('min_votes', 1))).values]
+            t = pd.DataFrame({'signal': sig, 'exit': [L.exit_after(td, s_, mu) for s_ in sig]}).dropna()
+            f = ((k2['close'].shift(-mu) / k2['open'].shift(-1) - 1) * 100).reindex(sig)
+            v1 = f[(sig <= L.DEV_END)].dropna(); v2 = f[sig >= L.HOLD_START].dropna()
+            urows.append({'이름': un.get('name'), '구성': len(parts), '최소 겹침': un.get('min_votes', 1), 'm일': mu, '앞 날수': len(v1),
+                          '앞 상승%': (v1 > 0).mean() * 100 if len(v1) else np.nan, '뒤 날수': len(v2), '뒤 상승%': (v2 > 0).mean() * 100 if len(v2) else np.nan})
+            uid = f"A4zu_{un.get('name')}_m{mu}"
+            ZSIG[uid] = (sig, mu, dr)
+            cands.append({'id': uid, 'agent': 'A4', 'family': 'zone_union',
+                          'desc': f"합친 위치 신호[{un.get('label', un.get('name'))}]" + (f" 중 {un['min_votes']}개 이상 같은 날" if un.get('min_votes', 1) > 1 else '') +
+                                  f" → {mu}일 {'상승' if dr > 0 else '하락'}", 'direction': dr, 'trades': t})
+        if urows: pd.DataFrame(urows).round(1).to_csv(os.path.join(od, 'zone_union.csv'), index=False, encoding='utf-8')
     if cfg.get('weekly'):
         try:
             cands += weekly_block(cfg['weekly'], k2, td, F, od)
