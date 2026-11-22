@@ -129,6 +129,33 @@ def weekly_block(wc, k2, td, F, od):
     return cands
 
 
+def arb_series(td):
+    """차익 프로그램 순매수(조원, KRX program_daily). 빠진 날은 빈칸(추정으로 채우지 않음)."""
+    try:
+        pg = pd.read_csv(os.path.join(os.path.dirname(L.LAB), 'data', 'program_daily.csv.gz'), low_memory=False)
+        pg['날짜'] = pd.to_datetime(pg['날짜'])
+        pg['v'] = pd.to_numeric(pg['NETBID_TRDVAL'].astype(str).str.replace(',', ''), errors='coerce') / 1e12
+        return pg[pg['ITM_TP_NM'] == '차익'].drop_duplicates('날짜', keep='last').set_index('날짜')['v'].reindex(td)
+    except Exception as e:
+        print('차익 프로그램 자료 실패', repr(e)); return None
+
+
+def spot_conds(F, td):
+    """갈래 A 라운드 33(a04.young_spot, 설정 없으면 없음 → 갈래 B 영향 없음): 새 콜벽 가족의 '외국인 선물 순매수' 확인이 방향 매수인지 —
+    외국인 현물(cash_for)도 함께 샀나, 같은 날들 차익 프로그램(현물-선물 맞바꿈)은 어느 쪽이었나로 나눔. 빈칸 날은 False(추정 안 함)."""
+    f3 = F['fut_for'].rolling(3, min_periods=3).sum(); c3 = F['cash_for'].rolling(3, min_periods=3).sum()
+    out = [('외국인 선물·현물 3일 누적 함께 순매수', (f3 > 0) & (c3 > 0)),
+           ('외국인 선물 3일 누적 순매수 + 현물 3일 누적 순매도', (f3 > 0) & (c3 < 0)),
+           ('외국인 선물·현물 함께 순매수', (F['fut_for'] > 0) & (F['cash_for'] > 0)),
+           ('외국인 선물 순매수 + 현물 순매도', (F['fut_for'] > 0) & (F['cash_for'] < 0))]
+    a = arb_series(td)
+    if a is not None:
+        a3 = a.rolling(3, min_periods=3).sum()
+        out += [('외국인 선물 3일 누적 순매수 + 차익 3일 누적 순매수', (f3 > 0) & (a3 > 0)),
+                ('외국인 선물 3일 누적 순매수 + 차익 3일 누적 순매도', (f3 > 0) & (a3 < 0))]
+    return [(n, m.reindex(td).fillna(False)) for n, m in out]
+
+
 ZSIG = {}   # 갈래 B 라운드 19: 위치 가족 후보 id → (신호 날(진행 중 포함), 보유일, 방향) — 전진 검증 표용
 
 
@@ -282,6 +309,7 @@ def main():
             ycond += [('직전 5일 하락', r5 < 0), ('직전 5일 상승', r5 > 0), ('외국인 선물 3일 누적 순매수', F['fut_for'].rolling(3, min_periods=3).sum() > 0)]
             # 라운드 21(a04.young_flow_sum: [N, …], 설정 없으면 없음): 외국인 선물 N일 누적 순매수 — 라운드 20 에서 3일 누적이 두 구간 모두 가장 높아 창을 넓혀 봄.
             ycond += [(f'외국인 선물 {n}일 누적 순매수', F['fut_for'].rolling(n, min_periods=n).sum() > 0) for n in (cfg.get('young_flow_sum') or []) if n != 3]
+            if cfg.get('young_spot'): ycond += spot_conds(F, td)
             if cfg.get('young_conds'): ycond = [c for c in ycond if c[0] in cfg['young_conds']]
             ycond = _volcap(ycond)
             lab = {'F0x': '근월물(만기 넘어 같은 행사가 이어 셈)', 'ALL': '결제월 4개 합산'}.get(tag, tag)
@@ -316,6 +344,7 @@ def main():
                  ('외국인 선물 3일 누적 순매수', F['fut_for'].rolling(3, min_periods=3).sum() > 0)]
         if qdu is not None: ucond.append(('분기물 벽도 2% 아래', (qdu > 0) & (qdu <= 2.0)))
         ucond += [(f'외국인 선물 {n}일 누적 순매수', F['fut_for'].rolling(n, min_periods=n).sum() > 0) for n in (cfg.get('young_flow_sum') or []) if n != 3]
+        if cfg.get('young_spot'): ucond += spot_conds(F, td)
         if cfg.get('young_conds'): ucond = [c for c in ucond if c[0] in cfg['young_conds']]
         ucond = _volcap(ucond)
         for grp in (cfg.get('young_union') or []):
