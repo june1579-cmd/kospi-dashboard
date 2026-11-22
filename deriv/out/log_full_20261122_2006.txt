@@ -1,0 +1,54 @@
+[19:36:40] 시작 full ['index', 'inv', 'front', 'basis', 'iv', 'pcr', 'chainx', 'chainwt', 'chainwm'] — 로그인 계정 설정 있음
+[19:36:40] == index
+[19:37:08] 저장 kospi_long.csv 7752행
+[19:37:29] 저장 k200_long.csv 7752행
+[19:37:32] == inv
+[19:37:32] inv ('FUK2I', 'ALL', '', '야간') 불완전(354행 < 4583) — 다시 받음
+[19:37:32] inv ('FUK2I', 'ALL', '', '정규') 불완전(2694행 < 4583) — 다시 받음
+[19:37:32] inv ('OPWKI', 'C', '', '정규') 불완전(1425행 < 1753) — 다시 받음
+[19:37:32] inv ('OPWKI', 'P', '', '정규') 불완전(1425행 < 1753) — 다시 받음
+[19:37:32] inv ('OPWKM', 'C', '', '정규') 불완전(803행 < 823) — 다시 받음
+[19:37:32] inv ('OPWKM', 'P', '', '정규') 불완전(803행 < 823) — 다시 받음
+[19:43:09] inv FUK2I ALL : 4657행
+[19:43:10] 저장 inv_daily.csv.gz 36272행
+[19:43:13] inv OPK2I C : 2행
+[19:43:14] 저장 inv_daily.csv.gz 36274행
+[19:43:17] inv OPK2I P : 2행
+[19:43:17] 저장 inv_daily.csv.gz 36276행
+[19:43:56] inv OPWKI C : 1427행
+[19:43:56] 저장 inv_daily.csv.gz 37703행
+[19:44:35] inv OPWKI P : 1427행
+[19:44:36] 저장 inv_daily.csv.gz 39130행
+[19:44:57] inv OPWKM C : 805행
+[19:44:58] 저장 inv_daily.csv.gz 39935행
+[19:45:18] inv OPWKM P : 805행
+[19:45:19] 저장 inv_daily.csv.gz 40740행
+[19:45:22] inv FUMKI ALL : 2행
+[19:45:23] 저장 inv_daily.csv.gz 40742행
+[19:45:25] inv OPMKI C : 2행
+[19:45:26] 저장 inv_daily.csv.gz 40744행
+[19:45:29] inv OPMKI P : 2행
+[19:45:29] 저장 inv_daily.csv.gz 40746행
+[19:45:32] inv FUK2I ALL 상세: 2행
+[19:45:33] 저장 inv_daily.csv.gz 40748행
+[19:45:36] inv OPK2I C 상세: 2행
+[19:45:37] 저장 inv_daily.csv.gz 40750행
+[19:45:39] inv OPK2I P 상세: 2행
+[19:45:40] 저장 inv_daily.csv.gz 40752행
+[19:45:50] 저장 inv_daily.csv.gz 41108행
+[19:45:51] == front
+[19:47:02] 저장 fut_front_daily.csv 7336행
+[19:47:03] == basis
+[19:48:29] 저장 basis_daily.csv.gz 27622행
+[19:48:31] == iv
+[19:48:53] 저장 iv_daily.csv 4657행
+[19:48:54] == pcr
+[19:52:45] 저장 pcr_daily.csv 4657행
+[19:52:46] git 실패: git push -q origin HEAD:deriv-research To https://github.com/june1579-cmd/kospi-dashboard
+ ! [remote rejected] HEAD -> deriv-research (cannot lock ref 'refs/heads/deriv-research': is at c496bde572675bb5061af3a6554cef776fbb5aa1 but expected
+[19:52:46] == chainx
+[19:56:26] 저장 opt_chainx_daily.csv.gz 1570682행
+[19:56:30] == chainwt
+[20:05:08] 저장 opt_chainwt_daily.csv.gz 120944행
+[20:05:10] == chainwm
+[20:06:12] 저장 opt_chainwm_daily.csv.gz 99546행
