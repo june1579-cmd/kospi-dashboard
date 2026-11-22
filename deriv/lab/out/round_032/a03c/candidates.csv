@@ -1,0 +1,467 @@
+id,agent,desc,direction,family,n_signals
+A3c_onset_F0_m3,A3,F0 콜 집중 상위25% 시작일 → 3일 상승,1,onset,104
+A3c_onset_callbuy_F0_m3,A3,F0 콜 집중 시작일 + 외국인 콜 순매수 → 3일 상승,1,onset,49
+A3c_onset_near_F0_m3,A3,F0 콜 집중 시작일(벽 1σ 안) → 3일 상승,1,onset,30
+A3c_onset_F0_m5,A3,F0 콜 집중 상위25% 시작일 → 5일 상승,1,onset,103
+A3c_onset_callbuy_F0_m5,A3,F0 콜 집중 시작일 + 외국인 콜 순매수 → 5일 상승,1,onset,48
+A3c_onset_near_F0_m5,A3,F0 콜 집중 시작일(벽 1σ 안) → 5일 상승,1,onset,30
+A3c_onset_F0_m10,A3,F0 콜 집중 상위25% 시작일 → 10일 상승,1,onset,103
+A3c_onset_callbuy_F0_m10,A3,F0 콜 집중 시작일 + 외국인 콜 순매수 → 10일 상승,1,onset,48
+A3c_onset_near_F0_m10,A3,F0 콜 집중 시작일(벽 1σ 안) → 10일 상승,1,onset,30
+A3c_onset_Q_m3,A3,Q 콜 집중 상위25% 시작일 → 3일 상승,1,onset,43
+A3c_onset_callbuy_Q_m3,A3,Q 콜 집중 시작일 + 외국인 콜 순매수 → 3일 상승,1,onset,17
+A3c_onset_near_Q_m3,A3,Q 콜 집중 시작일(벽 1σ 안) → 3일 상승,1,onset,23
+A3c_onset_Q_m5,A3,Q 콜 집중 상위25% 시작일 → 5일 상승,1,onset,43
+A3c_onset_callbuy_Q_m5,A3,Q 콜 집중 시작일 + 외국인 콜 순매수 → 5일 상승,1,onset,17
+A3c_onset_near_Q_m5,A3,Q 콜 집중 시작일(벽 1σ 안) → 5일 상승,1,onset,23
+A3c_onset_Q_m10,A3,Q 콜 집중 상위25% 시작일 → 10일 상승,1,onset,43
+A3c_onset_callbuy_Q_m10,A3,Q 콜 집중 시작일 + 외국인 콜 순매수 → 10일 상승,1,onset,17
+A3c_onset_near_Q_m10,A3,Q 콜 집중 시작일(벽 1σ 안) → 10일 상승,1,onset,23
+A3c_onset_ALL_m3,A3,ALL 콜 집중 상위25% 시작일 → 3일 상승,1,onset,104
+A3c_onset_callbuy_ALL_m3,A3,ALL 콜 집중 시작일 + 외국인 콜 순매수 → 3일 상승,1,onset,51
+A3c_onset_near_ALL_m3,A3,ALL 콜 집중 시작일(벽 1σ 안) → 3일 상승,1,onset,26
+A3c_onset_ALL_m5,A3,ALL 콜 집중 상위25% 시작일 → 5일 상승,1,onset,103
+A3c_onset_callbuy_ALL_m5,A3,ALL 콜 집중 시작일 + 외국인 콜 순매수 → 5일 상승,1,onset,50
+A3c_onset_near_ALL_m5,A3,ALL 콜 집중 시작일(벽 1σ 안) → 5일 상승,1,onset,26
+A3c_onset_ALL_m10,A3,ALL 콜 집중 상위25% 시작일 → 10일 상승,1,onset,103
+A3c_onset_callbuy_ALL_m10,A3,ALL 콜 집중 시작일 + 외국인 콜 순매수 → 10일 상승,1,onset,50
+A3c_onset_near_ALL_m10,A3,ALL 콜 집중 시작일(벽 1σ 안) → 10일 상승,1,onset,26
+A3c_reject_F0_m1,A3,F0 콜벽에 장중 닿고 종가는 아래(첫 번째) → 1일 하락,-1,touch_reject,14
+A3c_reject_F0_m3,A3,F0 콜벽에 장중 닿고 종가는 아래(첫 번째) → 3일 하락,-1,touch_reject,14
+A3c_reject_F0_m5,A3,F0 콜벽에 장중 닿고 종가는 아래(첫 번째) → 5일 하락,-1,touch_reject,14
+A3c_reject_Q_m1,A3,Q 콜벽에 장중 닿고 종가는 아래(첫 번째) → 1일 하락,-1,touch_reject,16
+A3c_reject_fsell_Q_m1,A3,Q 콜벽 닿고 밀림 + 외국인 선물 순매도 → 1일 하락,-1,touch_reject,12
+A3c_reject_Q_m3,A3,Q 콜벽에 장중 닿고 종가는 아래(첫 번째) → 3일 하락,-1,touch_reject,16
+A3c_reject_fsell_Q_m3,A3,Q 콜벽 닿고 밀림 + 외국인 선물 순매도 → 3일 하락,-1,touch_reject,12
+A3c_reject_Q_m5,A3,Q 콜벽에 장중 닿고 종가는 아래(첫 번째) → 5일 하락,-1,touch_reject,16
+A3c_reject_fsell_Q_m5,A3,Q 콜벽 닿고 밀림 + 외국인 선물 순매도 → 5일 하락,-1,touch_reject,12
+A3c_failbreak_ALL_m3,A3,ALL 콜벽 종가 돌파 뒤 2일 안 다시 아래로 → 3일 하락,-1,fail_break,11
+A3c_failbreak_ALL_m5,A3,ALL 콜벽 종가 돌파 뒤 2일 안 다시 아래로 → 5일 하락,-1,fail_break,11
+A3c_failbreak_ALL_m10,A3,ALL 콜벽 종가 돌파 뒤 2일 안 다시 아래로 → 10일 하락,-1,fail_break,11
+A3c_reject_ALL_m1,A3,ALL 콜벽에 장중 닿고 종가는 아래(첫 번째) → 1일 하락,-1,touch_reject,11
+A3c_reject_ALL_m3,A3,ALL 콜벽에 장중 닿고 종가는 아래(첫 번째) → 3일 하락,-1,touch_reject,11
+A3c_reject_ALL_m5,A3,ALL 콜벽에 장중 닿고 종가는 아래(첫 번째) → 5일 하락,-1,touch_reject,11
+A3c_old10_near_m3,A3,근월물 10일 전 벽 1% 안까지 와서 종가는 아래 → 3일 하락,-1,oldwall_near,179
+A3c_old10_near_m5,A3,근월물 10일 전 벽 1% 안까지 와서 종가는 아래 → 5일 하락,-1,oldwall_near,179
+A3c_old10_near_m10,A3,근월물 10일 전 벽 1% 안까지 와서 종가는 아래 → 10일 하락,-1,oldwall_near,179
+A3c_old10_cross_m3,A3,근월물 10일 전 벽을 종가로 처음 넘음 → 3일 하락,-1,oldwall_cross,106
+A3c_old10_cross_m5,A3,근월물 10일 전 벽을 종가로 처음 넘음 → 5일 하락,-1,oldwall_cross,106
+A3c_old10_cross_m10,A3,근월물 10일 전 벽을 종가로 처음 넘음 → 10일 하락,-1,oldwall_cross,106
+A3c_old10_crossconf_m3,A3,근월물 10일 전 벽 돌파 + 다음 날 외국인 선물 순매도 → 3일 하락,-1,oldwall_crossconf,58
+A3c_old10_crossconf_up_m3,A3,근월물 10일 전 벽 돌파 + 다음 날 외국인 선물 순매도 → 3일 상승(반대 방향),1,oldwall_crossconf_up,58
+A3c_old10_crossconf_m5,A3,근월물 10일 전 벽 돌파 + 다음 날 외국인 선물 순매도 → 5일 하락,-1,oldwall_crossconf,58
+A3c_old10_crossconf_up_m5,A3,근월물 10일 전 벽 돌파 + 다음 날 외국인 선물 순매도 → 5일 상승(반대 방향),1,oldwall_crossconf_up,58
+A3c_old10_crossconf_m10,A3,근월물 10일 전 벽 돌파 + 다음 날 외국인 선물 순매도 → 10일 하락,-1,oldwall_crossconf,58
+A3c_old10_crossconf_up_m10,A3,근월물 10일 전 벽 돌파 + 다음 날 외국인 선물 순매도 → 10일 상승(반대 방향),1,oldwall_crossconf_up,58
+A3c_old20_near_m3,A3,근월물 20일 전 벽 1% 안까지 와서 종가는 아래 → 3일 하락,-1,oldwall_near,194
+A3c_old20_near_m5,A3,근월물 20일 전 벽 1% 안까지 와서 종가는 아래 → 5일 하락,-1,oldwall_near,194
+A3c_old20_near_m10,A3,근월물 20일 전 벽 1% 안까지 와서 종가는 아래 → 10일 하락,-1,oldwall_near,194
+A3c_old20_cross_m3,A3,근월물 20일 전 벽을 종가로 처음 넘음 → 3일 하락,-1,oldwall_cross,127
+A3c_old20_cross_m5,A3,근월물 20일 전 벽을 종가로 처음 넘음 → 5일 하락,-1,oldwall_cross,127
+A3c_old20_cross_m10,A3,근월물 20일 전 벽을 종가로 처음 넘음 → 10일 하락,-1,oldwall_cross,127
+A3c_old20_crossconf_m3,A3,근월물 20일 전 벽 돌파 + 다음 날 외국인 선물 순매도 → 3일 하락,-1,oldwall_crossconf,69
+A3c_old20_crossconf_up_m3,A3,근월물 20일 전 벽 돌파 + 다음 날 외국인 선물 순매도 → 3일 상승(반대 방향),1,oldwall_crossconf_up,69
+A3c_old20_crossconf_m5,A3,근월물 20일 전 벽 돌파 + 다음 날 외국인 선물 순매도 → 5일 하락,-1,oldwall_crossconf,69
+A3c_old20_crossconf_up_m5,A3,근월물 20일 전 벽 돌파 + 다음 날 외국인 선물 순매도 → 5일 상승(반대 방향),1,oldwall_crossconf_up,69
+A3c_old20_crossconf_m10,A3,근월물 20일 전 벽 돌파 + 다음 날 외국인 선물 순매도 → 10일 하락,-1,oldwall_crossconf,69
+A3c_old20_crossconf_up_m10,A3,근월물 20일 전 벽 돌파 + 다음 날 외국인 선물 순매도 → 10일 상승(반대 방향),1,oldwall_crossconf_up,69
+A3c_mig_up2_F0_up_m5,A3,근월물 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 상승,1,wallmig_up2,245
+A3c_mig_up2_F0_dn_m5,A3,근월물 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 하락,-1,wallmig_up2,245
+A3c_mig_up2_F0_up_m10,A3,근월물 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 상승,1,wallmig_up2,245
+A3c_mig_up2_F0_dn_m10,A3,근월물 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 하락,-1,wallmig_up2,245
+A3c_mig_up2_fsell_F0_up_m5,A3,근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 상승,1,wallmig_up2,117
+A3c_mig_up2_fsell_F0_dn_m5,A3,근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_up2,117
+A3c_mig_up2_fsell_F0_up_m10,A3,근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 10일 상승,1,wallmig_up2,117
+A3c_mig_up2_fsell_F0_dn_m10,A3,근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 10일 하락,-1,wallmig_up2,117
+A3c_mig_up2_fbuy_F0_up_m5,A3,근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 상승,1,wallmig_up2,128
+A3c_mig_up2_fbuy_F0_dn_m5,A3,근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 하락,-1,wallmig_up2,128
+A3c_mig_up2_fbuy_F0_up_m10,A3,근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 상승,1,wallmig_up2,128
+A3c_mig_up2_fbuy_F0_dn_m10,A3,근월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 하락,-1,wallmig_up2,128
+A3c_mig_dn_F0_up_m5,A3,근월물 콜벽이 아래로 내려옴(상단 낮춤) → 5일 상승,1,wallmig_dn,672
+A3c_mig_dn_F0_dn_m5,A3,근월물 콜벽이 아래로 내려옴(상단 낮춤) → 5일 하락,-1,wallmig_dn,672
+A3c_mig_dn_F0_up_m10,A3,근월물 콜벽이 아래로 내려옴(상단 낮춤) → 10일 상승,1,wallmig_dn,671
+A3c_mig_dn_F0_dn_m10,A3,근월물 콜벽이 아래로 내려옴(상단 낮춤) → 10일 하락,-1,wallmig_dn,671
+A3c_mig_dn_fsell_F0_up_m5,A3,근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn,384
+A3c_mig_dn_fsell_F0_dn_m5,A3,근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 하락,-1,wallmig_dn,384
+A3c_mig_dn_fsell_F0_up_m10,A3,근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn,384
+A3c_mig_dn_fsell_F0_dn_m10,A3,근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 하락,-1,wallmig_dn,384
+A3c_mig_dn_fbuy_F0_up_m5,A3,근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn,288
+A3c_mig_dn_fbuy_F0_dn_m5,A3,근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 하락,-1,wallmig_dn,288
+A3c_mig_dn_fbuy_F0_up_m10,A3,근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn,287
+A3c_mig_dn_fbuy_F0_dn_m10,A3,근월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 10일 하락,-1,wallmig_dn,287
+A3c_mig_dn2_F0_up_m5,A3,근월물 콜벽이 5일 안 2번 이상 내려옴 → 5일 상승,1,wallmig_dn2,374
+A3c_mig_dn2_F0_dn_m5,A3,근월물 콜벽이 5일 안 2번 이상 내려옴 → 5일 하락,-1,wallmig_dn2,374
+A3c_mig_dn2_F0_up_m10,A3,근월물 콜벽이 5일 안 2번 이상 내려옴 → 10일 상승,1,wallmig_dn2,373
+A3c_mig_dn2_F0_dn_m10,A3,근월물 콜벽이 5일 안 2번 이상 내려옴 → 10일 하락,-1,wallmig_dn2,373
+A3c_mig_dn2_fsell_F0_up_m5,A3,근월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn2,218
+A3c_mig_dn2_fsell_F0_dn_m5,A3,근월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_dn2,218
+A3c_mig_dn2_fsell_F0_up_m10,A3,근월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn2,218
+A3c_mig_dn2_fsell_F0_dn_m10,A3,근월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 10일 하락,-1,wallmig_dn2,218
+A3c_mig_dn2_fbuy_F0_up_m5,A3,근월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn2,156
+A3c_mig_dn2_fbuy_F0_dn_m5,A3,근월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 5일 하락,-1,wallmig_dn2,156
+A3c_mig_dn2_fbuy_F0_up_m10,A3,근월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn2,155
+A3c_mig_dn2_fbuy_F0_dn_m10,A3,근월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 10일 하락,-1,wallmig_dn2,155
+A3c_mig_ccross_F0_up_m5,A3,근월물 지수가 콜 무게중심을 종가로 넘음 → 5일 상승,1,wallmig_ccross,17
+A3c_mig_ccross_F0_dn_m5,A3,근월물 지수가 콜 무게중심을 종가로 넘음 → 5일 하락,-1,wallmig_ccross,17
+A3c_mig_ccross_F0_up_m10,A3,근월물 지수가 콜 무게중심을 종가로 넘음 → 10일 상승,1,wallmig_ccross,17
+A3c_mig_ccross_F0_dn_m10,A3,근월물 지수가 콜 무게중심을 종가로 넘음 → 10일 하락,-1,wallmig_ccross,17
+A3c_mig_ccross_fsell_F0_up_m5,A3,근월물 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매도 → 5일 상승,1,wallmig_ccross,13
+A3c_mig_ccross_fsell_F0_dn_m5,A3,근월물 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_ccross,13
+A3c_mig_ccross_fsell_F0_up_m10,A3,근월물 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매도 → 10일 상승,1,wallmig_ccross,13
+A3c_mig_ccross_fsell_F0_dn_m10,A3,근월물 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매도 → 10일 하락,-1,wallmig_ccross,13
+A3c_mig_up2_F1_up_m5,A3,차월물 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 상승,1,wallmig_up2,97
+A3c_mig_up2_F1_dn_m5,A3,차월물 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 하락,-1,wallmig_up2,97
+A3c_mig_up2_F1_up_m10,A3,차월물 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 상승,1,wallmig_up2,97
+A3c_mig_up2_F1_dn_m10,A3,차월물 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 하락,-1,wallmig_up2,97
+A3c_mig_up2_fsell_F1_up_m5,A3,차월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 상승,1,wallmig_up2,55
+A3c_mig_up2_fsell_F1_dn_m5,A3,차월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_up2,55
+A3c_mig_up2_fsell_F1_up_m10,A3,차월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 10일 상승,1,wallmig_up2,55
+A3c_mig_up2_fsell_F1_dn_m10,A3,차월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 10일 하락,-1,wallmig_up2,55
+A3c_mig_up2_fbuy_F1_up_m5,A3,차월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 상승,1,wallmig_up2,42
+A3c_mig_up2_fbuy_F1_dn_m5,A3,차월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 하락,-1,wallmig_up2,42
+A3c_mig_up2_fbuy_F1_up_m10,A3,차월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 상승,1,wallmig_up2,42
+A3c_mig_up2_fbuy_F1_dn_m10,A3,차월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 하락,-1,wallmig_up2,42
+A3c_mig_up2_Q_up_m5,A3,분기물 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 상승,1,wallmig_up2,118
+A3c_mig_up2_Q_dn_m5,A3,분기물 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 하락,-1,wallmig_up2,118
+A3c_mig_up2_Q_up_m10,A3,분기물 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 상승,1,wallmig_up2,118
+A3c_mig_up2_Q_dn_m10,A3,분기물 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 하락,-1,wallmig_up2,118
+A3c_mig_up2_fsell_Q_up_m5,A3,분기물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 상승,1,wallmig_up2,70
+A3c_mig_up2_fsell_Q_dn_m5,A3,분기물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_up2,70
+A3c_mig_up2_fsell_Q_up_m10,A3,분기물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 10일 상승,1,wallmig_up2,70
+A3c_mig_up2_fsell_Q_dn_m10,A3,분기물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 10일 하락,-1,wallmig_up2,70
+A3c_mig_up2_fbuy_Q_up_m5,A3,분기물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 상승,1,wallmig_up2,48
+A3c_mig_up2_fbuy_Q_dn_m5,A3,분기물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 하락,-1,wallmig_up2,48
+A3c_mig_up2_fbuy_Q_up_m10,A3,분기물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 상승,1,wallmig_up2,48
+A3c_mig_up2_fbuy_Q_dn_m10,A3,분기물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 하락,-1,wallmig_up2,48
+A3c_mig_dn_Q_up_m5,A3,분기물 콜벽이 아래로 내려옴(상단 낮춤) → 5일 상승,1,wallmig_dn,356
+A3c_mig_dn_Q_dn_m5,A3,분기물 콜벽이 아래로 내려옴(상단 낮춤) → 5일 하락,-1,wallmig_dn,356
+A3c_mig_dn_Q_up_m10,A3,분기물 콜벽이 아래로 내려옴(상단 낮춤) → 10일 상승,1,wallmig_dn,354
+A3c_mig_dn_Q_dn_m10,A3,분기물 콜벽이 아래로 내려옴(상단 낮춤) → 10일 하락,-1,wallmig_dn,354
+A3c_mig_dn_fsell_Q_up_m5,A3,분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn,182
+A3c_mig_dn_fsell_Q_dn_m5,A3,분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 하락,-1,wallmig_dn,182
+A3c_mig_dn_fsell_Q_up_m10,A3,분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn,182
+A3c_mig_dn_fsell_Q_dn_m10,A3,분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 하락,-1,wallmig_dn,182
+A3c_mig_dn_fbuy_Q_up_m5,A3,분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn,174
+A3c_mig_dn_fbuy_Q_dn_m5,A3,분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 하락,-1,wallmig_dn,174
+A3c_mig_dn_fbuy_Q_up_m10,A3,분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn,172
+A3c_mig_dn_fbuy_Q_dn_m10,A3,분기물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 10일 하락,-1,wallmig_dn,172
+A3c_mig_dn2_Q_up_m5,A3,분기물 콜벽이 5일 안 2번 이상 내려옴 → 5일 상승,1,wallmig_dn2,152
+A3c_mig_dn2_Q_dn_m5,A3,분기물 콜벽이 5일 안 2번 이상 내려옴 → 5일 하락,-1,wallmig_dn2,152
+A3c_mig_dn2_Q_up_m10,A3,분기물 콜벽이 5일 안 2번 이상 내려옴 → 10일 상승,1,wallmig_dn2,151
+A3c_mig_dn2_Q_dn_m10,A3,분기물 콜벽이 5일 안 2번 이상 내려옴 → 10일 하락,-1,wallmig_dn2,151
+A3c_mig_dn2_fsell_Q_up_m5,A3,분기물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn2,77
+A3c_mig_dn2_fsell_Q_dn_m5,A3,분기물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_dn2,77
+A3c_mig_dn2_fsell_Q_up_m10,A3,분기물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn2,77
+A3c_mig_dn2_fsell_Q_dn_m10,A3,분기물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 10일 하락,-1,wallmig_dn2,77
+A3c_mig_dn2_fbuy_Q_up_m5,A3,분기물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn2,75
+A3c_mig_dn2_fbuy_Q_dn_m5,A3,분기물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 5일 하락,-1,wallmig_dn2,75
+A3c_mig_dn2_fbuy_Q_up_m10,A3,분기물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn2,74
+A3c_mig_dn2_fbuy_Q_dn_m10,A3,분기물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 10일 하락,-1,wallmig_dn2,74
+A3c_mig_ccross_Q_up_m5,A3,분기물 지수가 콜 무게중심을 종가로 넘음 → 5일 상승,1,wallmig_ccross,47
+A3c_mig_ccross_Q_dn_m5,A3,분기물 지수가 콜 무게중심을 종가로 넘음 → 5일 하락,-1,wallmig_ccross,47
+A3c_mig_ccross_Q_up_m10,A3,분기물 지수가 콜 무게중심을 종가로 넘음 → 10일 상승,1,wallmig_ccross,47
+A3c_mig_ccross_Q_dn_m10,A3,분기물 지수가 콜 무게중심을 종가로 넘음 → 10일 하락,-1,wallmig_ccross,47
+A3c_mig_ccross_fsell_Q_up_m5,A3,분기물 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매도 → 5일 상승,1,wallmig_ccross,18
+A3c_mig_ccross_fsell_Q_dn_m5,A3,분기물 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_ccross,18
+A3c_mig_ccross_fsell_Q_up_m10,A3,분기물 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매도 → 10일 상승,1,wallmig_ccross,18
+A3c_mig_ccross_fsell_Q_dn_m10,A3,분기물 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매도 → 10일 하락,-1,wallmig_ccross,18
+A3c_mig_ccross_fbuy_Q_up_m5,A3,분기물 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매수 → 5일 상승,1,wallmig_ccross,29
+A3c_mig_ccross_fbuy_Q_dn_m5,A3,분기물 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매수 → 5일 하락,-1,wallmig_ccross,29
+A3c_mig_ccross_fbuy_Q_up_m10,A3,분기물 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매수 → 10일 상승,1,wallmig_ccross,29
+A3c_mig_ccross_fbuy_Q_dn_m10,A3,분기물 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매수 → 10일 하락,-1,wallmig_ccross,29
+A3c_mig_up2_F2_up_m5,A3,차차월물 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 상승,1,wallmig_up2,55
+A3c_mig_up2_F2_dn_m5,A3,차차월물 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 하락,-1,wallmig_up2,55
+A3c_mig_up2_F2_up_m10,A3,차차월물 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 상승,1,wallmig_up2,55
+A3c_mig_up2_F2_dn_m10,A3,차차월물 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 하락,-1,wallmig_up2,55
+A3c_mig_up2_fsell_F2_up_m5,A3,차차월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 상승,1,wallmig_up2,32
+A3c_mig_up2_fsell_F2_dn_m5,A3,차차월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_up2,32
+A3c_mig_up2_fsell_F2_up_m10,A3,차차월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 10일 상승,1,wallmig_up2,32
+A3c_mig_up2_fsell_F2_dn_m10,A3,차차월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 10일 하락,-1,wallmig_up2,32
+A3c_mig_up2_fbuy_F2_up_m5,A3,차차월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 상승,1,wallmig_up2,23
+A3c_mig_up2_fbuy_F2_dn_m5,A3,차차월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 하락,-1,wallmig_up2,23
+A3c_mig_up2_fbuy_F2_up_m10,A3,차차월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 상승,1,wallmig_up2,23
+A3c_mig_up2_fbuy_F2_dn_m10,A3,차차월물 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 하락,-1,wallmig_up2,23
+A3c_mig_dn_F2_up_m5,A3,차차월물 콜벽이 아래로 내려옴(상단 낮춤) → 5일 상승,1,wallmig_dn,190
+A3c_mig_dn_F2_dn_m5,A3,차차월물 콜벽이 아래로 내려옴(상단 낮춤) → 5일 하락,-1,wallmig_dn,190
+A3c_mig_dn_F2_up_m10,A3,차차월물 콜벽이 아래로 내려옴(상단 낮춤) → 10일 상승,1,wallmig_dn,189
+A3c_mig_dn_F2_dn_m10,A3,차차월물 콜벽이 아래로 내려옴(상단 낮춤) → 10일 하락,-1,wallmig_dn,189
+A3c_mig_dn_fsell_F2_up_m5,A3,차차월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn,90
+A3c_mig_dn_fsell_F2_dn_m5,A3,차차월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 하락,-1,wallmig_dn,90
+A3c_mig_dn_fsell_F2_up_m10,A3,차차월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn,90
+A3c_mig_dn_fsell_F2_dn_m10,A3,차차월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 하락,-1,wallmig_dn,90
+A3c_mig_dn_fbuy_F2_up_m5,A3,차차월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn,100
+A3c_mig_dn_fbuy_F2_dn_m5,A3,차차월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 하락,-1,wallmig_dn,100
+A3c_mig_dn_fbuy_F2_up_m10,A3,차차월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn,99
+A3c_mig_dn_fbuy_F2_dn_m10,A3,차차월물 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 10일 하락,-1,wallmig_dn,99
+A3c_mig_dn2_F2_up_m5,A3,차차월물 콜벽이 5일 안 2번 이상 내려옴 → 5일 상승,1,wallmig_dn2,48
+A3c_mig_dn2_F2_dn_m5,A3,차차월물 콜벽이 5일 안 2번 이상 내려옴 → 5일 하락,-1,wallmig_dn2,48
+A3c_mig_dn2_F2_up_m10,A3,차차월물 콜벽이 5일 안 2번 이상 내려옴 → 10일 상승,1,wallmig_dn2,48
+A3c_mig_dn2_F2_dn_m10,A3,차차월물 콜벽이 5일 안 2번 이상 내려옴 → 10일 하락,-1,wallmig_dn2,48
+A3c_mig_dn2_fsell_F2_up_m5,A3,차차월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn2,18
+A3c_mig_dn2_fsell_F2_dn_m5,A3,차차월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_dn2,18
+A3c_mig_dn2_fsell_F2_up_m10,A3,차차월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn2,18
+A3c_mig_dn2_fsell_F2_dn_m10,A3,차차월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 10일 하락,-1,wallmig_dn2,18
+A3c_mig_dn2_fbuy_F2_up_m5,A3,차차월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn2,30
+A3c_mig_dn2_fbuy_F2_dn_m5,A3,차차월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 5일 하락,-1,wallmig_dn2,30
+A3c_mig_dn2_fbuy_F2_up_m10,A3,차차월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn2,30
+A3c_mig_dn2_fbuy_F2_dn_m10,A3,차차월물 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 10일 하락,-1,wallmig_dn2,30
+A3c_mig_ccross_F2_up_m5,A3,차차월물 지수가 콜 무게중심을 종가로 넘음 → 5일 상승,1,wallmig_ccross,40
+A3c_mig_ccross_F2_dn_m5,A3,차차월물 지수가 콜 무게중심을 종가로 넘음 → 5일 하락,-1,wallmig_ccross,40
+A3c_mig_ccross_F2_up_m10,A3,차차월물 지수가 콜 무게중심을 종가로 넘음 → 10일 상승,1,wallmig_ccross,40
+A3c_mig_ccross_F2_dn_m10,A3,차차월물 지수가 콜 무게중심을 종가로 넘음 → 10일 하락,-1,wallmig_ccross,40
+A3c_mig_ccross_fsell_F2_up_m5,A3,차차월물 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매도 → 5일 상승,1,wallmig_ccross,16
+A3c_mig_ccross_fsell_F2_dn_m5,A3,차차월물 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_ccross,16
+A3c_mig_ccross_fsell_F2_up_m10,A3,차차월물 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매도 → 10일 상승,1,wallmig_ccross,16
+A3c_mig_ccross_fsell_F2_dn_m10,A3,차차월물 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매도 → 10일 하락,-1,wallmig_ccross,16
+A3c_mig_ccross_fbuy_F2_up_m5,A3,차차월물 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매수 → 5일 상승,1,wallmig_ccross,24
+A3c_mig_ccross_fbuy_F2_dn_m5,A3,차차월물 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매수 → 5일 하락,-1,wallmig_ccross,24
+A3c_mig_ccross_fbuy_F2_up_m10,A3,차차월물 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매수 → 10일 상승,1,wallmig_ccross,24
+A3c_mig_ccross_fbuy_F2_dn_m10,A3,차차월물 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매수 → 10일 하락,-1,wallmig_ccross,24
+A3c_mig_up2_ALL_up_m5,A3,결제월 4개 합산 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 상승,1,wallmig_up2,160
+A3c_mig_up2_ALL_dn_m5,A3,결제월 4개 합산 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 하락,-1,wallmig_up2,160
+A3c_mig_up2_ALL_up_m10,A3,결제월 4개 합산 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 상승,1,wallmig_up2,160
+A3c_mig_up2_ALL_dn_m10,A3,결제월 4개 합산 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 하락,-1,wallmig_up2,160
+A3c_mig_up2_fsell_ALL_up_m5,A3,결제월 4개 합산 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 상승,1,wallmig_up2,94
+A3c_mig_up2_fsell_ALL_dn_m5,A3,결제월 4개 합산 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_up2,94
+A3c_mig_up2_fsell_ALL_up_m10,A3,결제월 4개 합산 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 10일 상승,1,wallmig_up2,94
+A3c_mig_up2_fsell_ALL_dn_m10,A3,결제월 4개 합산 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 10일 하락,-1,wallmig_up2,94
+A3c_mig_up2_fbuy_ALL_up_m5,A3,결제월 4개 합산 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 상승,1,wallmig_up2,66
+A3c_mig_up2_fbuy_ALL_dn_m5,A3,결제월 4개 합산 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 하락,-1,wallmig_up2,66
+A3c_mig_up2_fbuy_ALL_up_m10,A3,결제월 4개 합산 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 상승,1,wallmig_up2,66
+A3c_mig_up2_fbuy_ALL_dn_m10,A3,결제월 4개 합산 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 하락,-1,wallmig_up2,66
+A3c_mig_dn_ALL_up_m5,A3,결제월 4개 합산 콜벽이 아래로 내려옴(상단 낮춤) → 5일 상승,1,wallmig_dn,527
+A3c_mig_dn_ALL_dn_m5,A3,결제월 4개 합산 콜벽이 아래로 내려옴(상단 낮춤) → 5일 하락,-1,wallmig_dn,527
+A3c_mig_dn_ALL_up_m10,A3,결제월 4개 합산 콜벽이 아래로 내려옴(상단 낮춤) → 10일 상승,1,wallmig_dn,526
+A3c_mig_dn_ALL_dn_m10,A3,결제월 4개 합산 콜벽이 아래로 내려옴(상단 낮춤) → 10일 하락,-1,wallmig_dn,526
+A3c_mig_dn_fsell_ALL_up_m5,A3,결제월 4개 합산 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn,270
+A3c_mig_dn_fsell_ALL_dn_m5,A3,결제월 4개 합산 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 하락,-1,wallmig_dn,270
+A3c_mig_dn_fsell_ALL_up_m10,A3,결제월 4개 합산 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn,270
+A3c_mig_dn_fsell_ALL_dn_m10,A3,결제월 4개 합산 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 하락,-1,wallmig_dn,270
+A3c_mig_dn_fbuy_ALL_up_m5,A3,결제월 4개 합산 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn,257
+A3c_mig_dn_fbuy_ALL_dn_m5,A3,결제월 4개 합산 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 하락,-1,wallmig_dn,257
+A3c_mig_dn_fbuy_ALL_up_m10,A3,결제월 4개 합산 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn,256
+A3c_mig_dn_fbuy_ALL_dn_m10,A3,결제월 4개 합산 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 10일 하락,-1,wallmig_dn,256
+A3c_mig_dn2_ALL_up_m5,A3,결제월 4개 합산 콜벽이 5일 안 2번 이상 내려옴 → 5일 상승,1,wallmig_dn2,249
+A3c_mig_dn2_ALL_dn_m5,A3,결제월 4개 합산 콜벽이 5일 안 2번 이상 내려옴 → 5일 하락,-1,wallmig_dn2,249
+A3c_mig_dn2_ALL_up_m10,A3,결제월 4개 합산 콜벽이 5일 안 2번 이상 내려옴 → 10일 상승,1,wallmig_dn2,248
+A3c_mig_dn2_ALL_dn_m10,A3,결제월 4개 합산 콜벽이 5일 안 2번 이상 내려옴 → 10일 하락,-1,wallmig_dn2,248
+A3c_mig_dn2_fsell_ALL_up_m5,A3,결제월 4개 합산 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn2,131
+A3c_mig_dn2_fsell_ALL_dn_m5,A3,결제월 4개 합산 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_dn2,131
+A3c_mig_dn2_fsell_ALL_up_m10,A3,결제월 4개 합산 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn2,131
+A3c_mig_dn2_fsell_ALL_dn_m10,A3,결제월 4개 합산 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 10일 하락,-1,wallmig_dn2,131
+A3c_mig_dn2_fbuy_ALL_up_m5,A3,결제월 4개 합산 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn2,118
+A3c_mig_dn2_fbuy_ALL_dn_m5,A3,결제월 4개 합산 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 5일 하락,-1,wallmig_dn2,118
+A3c_mig_dn2_fbuy_ALL_up_m10,A3,결제월 4개 합산 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn2,117
+A3c_mig_dn2_fbuy_ALL_dn_m10,A3,결제월 4개 합산 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 10일 하락,-1,wallmig_dn2,117
+A3c_mig_ccross_ALL_up_m5,A3,결제월 4개 합산 지수가 콜 무게중심을 종가로 넘음 → 5일 상승,1,wallmig_ccross,20
+A3c_mig_ccross_ALL_dn_m5,A3,결제월 4개 합산 지수가 콜 무게중심을 종가로 넘음 → 5일 하락,-1,wallmig_ccross,20
+A3c_mig_ccross_ALL_up_m10,A3,결제월 4개 합산 지수가 콜 무게중심을 종가로 넘음 → 10일 상승,1,wallmig_ccross,20
+A3c_mig_ccross_ALL_dn_m10,A3,결제월 4개 합산 지수가 콜 무게중심을 종가로 넘음 → 10일 하락,-1,wallmig_ccross,20
+A3c_mig_ccross_fsell_ALL_up_m5,A3,결제월 4개 합산 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매도 → 5일 상승,1,wallmig_ccross,13
+A3c_mig_ccross_fsell_ALL_dn_m5,A3,결제월 4개 합산 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_ccross,13
+A3c_mig_ccross_fsell_ALL_up_m10,A3,결제월 4개 합산 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매도 → 10일 상승,1,wallmig_ccross,13
+A3c_mig_ccross_fsell_ALL_dn_m10,A3,결제월 4개 합산 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매도 → 10일 하락,-1,wallmig_ccross,13
+A3c_mig_up2_ANY_up_m5,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 상승,1,wallmig_up2,345
+A3c_mig_up2_ANY_dn_m5,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 → 5일 하락,-1,wallmig_up2,345
+A3c_mig_up2_ANY_up_m10,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 상승,1,wallmig_up2,345
+A3c_mig_up2_ANY_dn_m10,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 → 10일 하락,-1,wallmig_up2,345
+A3c_mig_up2_fsell_ANY_up_m5,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 상승,1,wallmig_up2,173
+A3c_mig_up2_fsell_ANY_dn_m5,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_up2,173
+A3c_mig_up2_fsell_ANY_up_m10,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 10일 상승,1,wallmig_up2,173
+A3c_mig_up2_fsell_ANY_dn_m10,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매도 → 10일 하락,-1,wallmig_up2,173
+A3c_mig_up2_fbuy_ANY_up_m5,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 상승,1,wallmig_up2,172
+A3c_mig_up2_fbuy_ANY_dn_m5,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 5일 하락,-1,wallmig_up2,172
+A3c_mig_up2_fbuy_ANY_up_m10,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 상승,1,wallmig_up2,172
+A3c_mig_up2_fbuy_ANY_dn_m10,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 위로 물러남 + 외국인 선물 순매수 → 10일 하락,-1,wallmig_up2,172
+A3c_mig_dn_ANY_up_m5,A3,근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) → 5일 상승,1,wallmig_dn,963
+A3c_mig_dn_ANY_dn_m5,A3,근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) → 5일 하락,-1,wallmig_dn,963
+A3c_mig_dn_ANY_up_m10,A3,근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) → 10일 상승,1,wallmig_dn,961
+A3c_mig_dn_ANY_dn_m10,A3,근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) → 10일 하락,-1,wallmig_dn,961
+A3c_mig_dn_fsell_ANY_up_m5,A3,근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn,518
+A3c_mig_dn_fsell_ANY_dn_m5,A3,근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 5일 하락,-1,wallmig_dn,518
+A3c_mig_dn_fsell_ANY_up_m10,A3,근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn,518
+A3c_mig_dn_fsell_ANY_dn_m10,A3,근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매도 → 10일 하락,-1,wallmig_dn,518
+A3c_mig_dn_fbuy_ANY_up_m5,A3,근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn,445
+A3c_mig_dn_fbuy_ANY_dn_m5,A3,근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 5일 하락,-1,wallmig_dn,445
+A3c_mig_dn_fbuy_ANY_up_m10,A3,근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn,443
+A3c_mig_dn_fbuy_ANY_dn_m10,A3,근월·차월·분기물 중 하나 콜벽이 아래로 내려옴(상단 낮춤) + 외국인 선물 순매수 → 10일 하락,-1,wallmig_dn,443
+A3c_mig_dn2_ANY_up_m5,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 → 5일 상승,1,wallmig_dn2,487
+A3c_mig_dn2_ANY_dn_m5,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 → 5일 하락,-1,wallmig_dn2,487
+A3c_mig_dn2_ANY_up_m10,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 → 10일 상승,1,wallmig_dn2,486
+A3c_mig_dn2_ANY_dn_m10,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 → 10일 하락,-1,wallmig_dn2,486
+A3c_mig_dn2_fsell_ANY_up_m5,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 5일 상승,1,wallmig_dn2,272
+A3c_mig_dn2_fsell_ANY_dn_m5,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_dn2,272
+A3c_mig_dn2_fsell_ANY_up_m10,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 10일 상승,1,wallmig_dn2,272
+A3c_mig_dn2_fsell_ANY_dn_m10,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매도 → 10일 하락,-1,wallmig_dn2,272
+A3c_mig_dn2_fbuy_ANY_up_m5,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 5일 상승,1,wallmig_dn2,215
+A3c_mig_dn2_fbuy_ANY_dn_m5,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 5일 하락,-1,wallmig_dn2,215
+A3c_mig_dn2_fbuy_ANY_up_m10,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 10일 상승,1,wallmig_dn2,214
+A3c_mig_dn2_fbuy_ANY_dn_m10,A3,근월·차월·분기물 중 하나 콜벽이 5일 안 2번 이상 내려옴 + 외국인 선물 순매수 → 10일 하락,-1,wallmig_dn2,214
+A3c_mig_ccross_ANY_up_m5,A3,근월·차월·분기물 중 하나 지수가 콜 무게중심을 종가로 넘음 → 5일 상승,1,wallmig_ccross,67
+A3c_mig_ccross_ANY_dn_m5,A3,근월·차월·분기물 중 하나 지수가 콜 무게중심을 종가로 넘음 → 5일 하락,-1,wallmig_ccross,67
+A3c_mig_ccross_ANY_up_m10,A3,근월·차월·분기물 중 하나 지수가 콜 무게중심을 종가로 넘음 → 10일 상승,1,wallmig_ccross,67
+A3c_mig_ccross_ANY_dn_m10,A3,근월·차월·분기물 중 하나 지수가 콜 무게중심을 종가로 넘음 → 10일 하락,-1,wallmig_ccross,67
+A3c_mig_ccross_fsell_ANY_up_m5,A3,근월·차월·분기물 중 하나 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매도 → 5일 상승,1,wallmig_ccross,31
+A3c_mig_ccross_fsell_ANY_dn_m5,A3,근월·차월·분기물 중 하나 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매도 → 5일 하락,-1,wallmig_ccross,31
+A3c_mig_ccross_fsell_ANY_up_m10,A3,근월·차월·분기물 중 하나 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매도 → 10일 상승,1,wallmig_ccross,31
+A3c_mig_ccross_fsell_ANY_dn_m10,A3,근월·차월·분기물 중 하나 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매도 → 10일 하락,-1,wallmig_ccross,31
+A3c_mig_ccross_fbuy_ANY_up_m5,A3,근월·차월·분기물 중 하나 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매수 → 5일 상승,1,wallmig_ccross,36
+A3c_mig_ccross_fbuy_ANY_dn_m5,A3,근월·차월·분기물 중 하나 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매수 → 5일 하락,-1,wallmig_ccross,36
+A3c_mig_ccross_fbuy_ANY_up_m10,A3,근월·차월·분기물 중 하나 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매수 → 10일 상승,1,wallmig_ccross,36
+A3c_mig_ccross_fbuy_ANY_dn_m10,A3,근월·차월·분기물 중 하나 지수가 콜 무게중심을 종가로 넘음 + 외국인 선물 순매수 → 10일 하락,-1,wallmig_ccross,36
+A3c_align1_up_m5,A3,"근월물 콜벽이 다른 결제월 1개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 → 5일 상승",1,align_wall,215
+A3c_align1_dn_m5,A3,"근월물 콜벽이 다른 결제월 1개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 → 5일 하락",-1,align_wall,215
+A3c_align1_up_m10,A3,"근월물 콜벽이 다른 결제월 1개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 → 10일 상승",1,align_wall,215
+A3c_align1_dn_m10,A3,"근월물 콜벽이 다른 결제월 1개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 → 10일 하락",-1,align_wall,215
+A3c_align1_up_m20,A3,"근월물 콜벽이 다른 결제월 1개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 → 20일 상승",1,align_wall,211
+A3c_align1_dn_m20,A3,"근월물 콜벽이 다른 결제월 1개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 → 20일 하락",-1,align_wall,211
+A3c_align1_fsell_up_m5,A3,"근월물 콜벽이 다른 결제월 1개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 + 외국인 선물 순매도 → 5일 상승",1,align_wall,85
+A3c_align1_fsell_dn_m5,A3,"근월물 콜벽이 다른 결제월 1개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 + 외국인 선물 순매도 → 5일 하락",-1,align_wall,85
+A3c_align1_fsell_up_m10,A3,"근월물 콜벽이 다른 결제월 1개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 + 외국인 선물 순매도 → 10일 상승",1,align_wall,85
+A3c_align1_fsell_dn_m10,A3,"근월물 콜벽이 다른 결제월 1개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 + 외국인 선물 순매도 → 10일 하락",-1,align_wall,85
+A3c_align1_fsell_up_m20,A3,"근월물 콜벽이 다른 결제월 1개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 + 외국인 선물 순매도 → 20일 상승",1,align_wall,83
+A3c_align1_fsell_dn_m20,A3,"근월물 콜벽이 다른 결제월 1개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 + 외국인 선물 순매도 → 20일 하락",-1,align_wall,83
+A3c_align1_csell_up_m5,A3,"근월물 콜벽이 다른 결제월 1개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 + 외국인 콜 순매도 → 5일 상승",1,align_wall,125
+A3c_align1_csell_dn_m5,A3,"근월물 콜벽이 다른 결제월 1개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 + 외국인 콜 순매도 → 5일 하락",-1,align_wall,125
+A3c_align1_csell_up_m10,A3,"근월물 콜벽이 다른 결제월 1개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 + 외국인 콜 순매도 → 10일 상승",1,align_wall,125
+A3c_align1_csell_dn_m10,A3,"근월물 콜벽이 다른 결제월 1개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 + 외국인 콜 순매도 → 10일 하락",-1,align_wall,125
+A3c_align1_csell_up_m20,A3,"근월물 콜벽이 다른 결제월 1개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 + 외국인 콜 순매도 → 20일 상승",1,align_wall,122
+A3c_align1_csell_dn_m20,A3,"근월물 콜벽이 다른 결제월 1개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 + 외국인 콜 순매도 → 20일 하락",-1,align_wall,122
+A3c_align2_up_m5,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 → 5일 상승",1,align_wall,48
+A3c_align2_dn_m5,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 → 5일 하락",-1,align_wall,48
+A3c_align2_up_m10,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 → 10일 상승",1,align_wall,48
+A3c_align2_dn_m10,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 → 10일 하락",-1,align_wall,48
+A3c_align2_up_m20,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 → 20일 상승",1,align_wall,48
+A3c_align2_dn_m20,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 → 20일 하락",-1,align_wall,48
+A3c_align2_fsell_up_m5,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 + 외국인 선물 순매도 → 5일 상승",1,align_wall,14
+A3c_align2_fsell_dn_m5,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 + 외국인 선물 순매도 → 5일 하락",-1,align_wall,14
+A3c_align2_fsell_up_m10,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 + 외국인 선물 순매도 → 10일 상승",1,align_wall,14
+A3c_align2_fsell_dn_m10,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 + 외국인 선물 순매도 → 10일 하락",-1,align_wall,14
+A3c_align2_fsell_up_m20,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 + 외국인 선물 순매도 → 20일 상승",1,align_wall,14
+A3c_align2_fsell_dn_m20,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 + 외국인 선물 순매도 → 20일 하락",-1,align_wall,14
+A3c_align2_csell_up_m5,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 + 외국인 콜 순매도 → 5일 상승",1,align_wall,29
+A3c_align2_csell_dn_m5,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 + 외국인 콜 순매도 → 5일 하락",-1,align_wall,29
+A3c_align2_csell_up_m10,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 + 외국인 콜 순매도 → 10일 상승",1,align_wall,29
+A3c_align2_csell_dn_m10,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 + 외국인 콜 순매도 → 10일 하락",-1,align_wall,29
+A3c_align2_csell_up_m20,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 + 외국인 콜 순매도 → 20일 상승",1,align_wall,29
+A3c_align2_csell_dn_m20,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 1.5σ 안) 시작 + 외국인 콜 순매도 → 20일 하락",-1,align_wall,29
+A3c_align2z3_up_m5,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 3σ 안) 시작 → 5일 상승",1,align_wall,108
+A3c_align2z3_dn_m5,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 3σ 안) 시작 → 5일 하락",-1,align_wall,108
+A3c_align2z3_up_m10,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 3σ 안) 시작 → 10일 상승",1,align_wall,107
+A3c_align2z3_dn_m10,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 3σ 안) 시작 → 10일 하락",-1,align_wall,107
+A3c_align2z3_up_m20,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 3σ 안) 시작 → 20일 상승",1,align_wall,107
+A3c_align2z3_dn_m20,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 3σ 안) 시작 → 20일 하락",-1,align_wall,107
+A3c_align2z3_fsell_up_m5,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 3σ 안) 시작 + 외국인 선물 순매도 → 5일 상승",1,align_wall,47
+A3c_align2z3_fsell_dn_m5,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 3σ 안) 시작 + 외국인 선물 순매도 → 5일 하락",-1,align_wall,47
+A3c_align2z3_fsell_up_m10,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 3σ 안) 시작 + 외국인 선물 순매도 → 10일 상승",1,align_wall,47
+A3c_align2z3_fsell_dn_m10,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 3σ 안) 시작 + 외국인 선물 순매도 → 10일 하락",-1,align_wall,47
+A3c_align2z3_fsell_up_m20,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 3σ 안) 시작 + 외국인 선물 순매도 → 20일 상승",1,align_wall,47
+A3c_align2z3_fsell_dn_m20,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 3σ 안) 시작 + 외국인 선물 순매도 → 20일 하락",-1,align_wall,47
+A3c_align2z3_csell_up_m5,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 3σ 안) 시작 + 외국인 콜 순매도 → 5일 상승",1,align_wall,65
+A3c_align2z3_csell_dn_m5,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 3σ 안) 시작 + 외국인 콜 순매도 → 5일 하락",-1,align_wall,65
+A3c_align2z3_csell_up_m10,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 3σ 안) 시작 + 외국인 콜 순매도 → 10일 상승",1,align_wall,64
+A3c_align2z3_csell_dn_m10,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 3σ 안) 시작 + 외국인 콜 순매도 → 10일 하락",-1,align_wall,64
+A3c_align2z3_csell_up_m20,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 3σ 안) 시작 + 외국인 콜 순매도 → 20일 상승",1,align_wall,64
+A3c_align2z3_csell_dn_m20,A3,"근월물 콜벽이 다른 결제월 2개 이상과 같은 행사가(정렬 벽, 3σ 안) 시작 + 외국인 콜 순매도 → 20일 하락",-1,align_wall,64
+A3c_align3z3_up_m5,A3,"근월물 콜벽이 다른 결제월 3개 이상과 같은 행사가(정렬 벽, 3σ 안) 시작 → 5일 상승",1,align_wall,18
+A3c_align3z3_dn_m5,A3,"근월물 콜벽이 다른 결제월 3개 이상과 같은 행사가(정렬 벽, 3σ 안) 시작 → 5일 하락",-1,align_wall,18
+A3c_align3z3_up_m10,A3,"근월물 콜벽이 다른 결제월 3개 이상과 같은 행사가(정렬 벽, 3σ 안) 시작 → 10일 상승",1,align_wall,18
+A3c_align3z3_dn_m10,A3,"근월물 콜벽이 다른 결제월 3개 이상과 같은 행사가(정렬 벽, 3σ 안) 시작 → 10일 하락",-1,align_wall,18
+A3c_align3z3_up_m20,A3,"근월물 콜벽이 다른 결제월 3개 이상과 같은 행사가(정렬 벽, 3σ 안) 시작 → 20일 상승",1,align_wall,18
+A3c_align3z3_dn_m20,A3,"근월물 콜벽이 다른 결제월 3개 이상과 같은 행사가(정렬 벽, 3σ 안) 시작 → 20일 하락",-1,align_wall,18
+A3c_bar_dom_share_F0_k1.0_up,A3,근월물 콜 집중 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_dom_share_F0,60
+A3c_bar_dom_share_F0_k1.0_dn,A3,근월물 콜 집중 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_dom_share_F0,60
+A3c_bar_dom_share_F0_k1.5_up,A3,근월물 콜 집중 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_dom_share_F0,60
+A3c_bar_dom_share_F0_k1.5_dn,A3,근월물 콜 집중 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_dom_share_F0,60
+A3c_bar_dom_share_F0_fsell_k1.0_up,A3,근월물 콜 집중 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_dom_share_F0,25
+A3c_bar_dom_share_F0_fsell_k1.0_dn,A3,근월물 콜 집중 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_dom_share_F0,25
+A3c_bar_dom_share_F0_fsell_k1.5_up,A3,근월물 콜 집중 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_dom_share_F0,25
+A3c_bar_dom_share_F0_fsell_k1.5_dn,A3,근월물 콜 집중 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_dom_share_F0,25
+A3c_bar_dom_r12_F0_k1.0_up,A3,근월물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_dom_r12_F0,81
+A3c_bar_dom_r12_F0_k1.0_dn,A3,근월물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_dom_r12_F0,81
+A3c_bar_dom_r12_F0_k1.5_up,A3,근월물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_dom_r12_F0,81
+A3c_bar_dom_r12_F0_k1.5_dn,A3,근월물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_dom_r12_F0,81
+A3c_bar_dom_r12_F0_fsell_k1.0_up,A3,근월물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_dom_r12_F0,28
+A3c_bar_dom_r12_F0_fsell_k1.0_dn,A3,근월물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_dom_r12_F0,28
+A3c_bar_dom_r12_F0_fsell_k1.5_up,A3,근월물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_dom_r12_F0,28
+A3c_bar_dom_r12_F0_fsell_k1.5_dn,A3,근월물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_dom_r12_F0,28
+A3c_bar_dom_cp_F0_k1.0_up,A3,근월물 콜/풋 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_dom_cp_F0,58
+A3c_bar_dom_cp_F0_k1.0_dn,A3,근월물 콜/풋 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_dom_cp_F0,58
+A3c_bar_dom_cp_F0_k1.5_up,A3,근월물 콜/풋 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_dom_cp_F0,57
+A3c_bar_dom_cp_F0_k1.5_dn,A3,근월물 콜/풋 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_dom_cp_F0,57
+A3c_bar_dom_cp_F0_fsell_k1.0_up,A3,근월물 콜/풋 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_dom_cp_F0,22
+A3c_bar_dom_cp_F0_fsell_k1.0_dn,A3,근월물 콜/풋 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_dom_cp_F0,22
+A3c_bar_dom_cp_F0_fsell_k1.5_up,A3,근월물 콜/풋 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_dom_cp_F0,22
+A3c_bar_dom_cp_F0_fsell_k1.5_dn,A3,근월물 콜/풋 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_dom_cp_F0,22
+A3c_bar_onset_F0_k1.0_up,A3,근월물 콜 집중 시작일 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_onset_F0,103
+A3c_bar_onset_F0_k1.0_dn,A3,근월물 콜 집중 시작일 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_onset_F0,103
+A3c_bar_onset_F0_k1.5_up,A3,근월물 콜 집중 시작일 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_onset_F0,103
+A3c_bar_onset_F0_k1.5_dn,A3,근월물 콜 집중 시작일 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_onset_F0,103
+A3c_bar_onset_F0_fsell_k1.0_up,A3,근월물 콜 집중 시작일 + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_onset_F0,43
+A3c_bar_onset_F0_fsell_k1.0_dn,A3,근월물 콜 집중 시작일 + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_onset_F0,43
+A3c_bar_onset_F0_fsell_k1.5_up,A3,근월물 콜 집중 시작일 + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_onset_F0,43
+A3c_bar_onset_F0_fsell_k1.5_dn,A3,근월물 콜 집중 시작일 + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_onset_F0,43
+A3c_bar_dom_share_Q_k1.0_up,A3,분기물 콜 집중 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_dom_share_Q,90
+A3c_bar_dom_share_Q_k1.0_dn,A3,분기물 콜 집중 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_dom_share_Q,90
+A3c_bar_dom_share_Q_k1.5_up,A3,분기물 콜 집중 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_dom_share_Q,88
+A3c_bar_dom_share_Q_k1.5_dn,A3,분기물 콜 집중 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_dom_share_Q,88
+A3c_bar_dom_share_Q_fsell_k1.0_up,A3,분기물 콜 집중 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_dom_share_Q,34
+A3c_bar_dom_share_Q_fsell_k1.0_dn,A3,분기물 콜 집중 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_dom_share_Q,34
+A3c_bar_dom_share_Q_fsell_k1.5_up,A3,분기물 콜 집중 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_dom_share_Q,34
+A3c_bar_dom_share_Q_fsell_k1.5_dn,A3,분기물 콜 집중 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_dom_share_Q,34
+A3c_bar_dom_r12_Q_k1.0_up,A3,분기물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_dom_r12_Q,105
+A3c_bar_dom_r12_Q_k1.0_dn,A3,분기물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_dom_r12_Q,105
+A3c_bar_dom_r12_Q_k1.5_up,A3,분기물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_dom_r12_Q,105
+A3c_bar_dom_r12_Q_k1.5_dn,A3,분기물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_dom_r12_Q,105
+A3c_bar_dom_r12_Q_fsell_k1.0_up,A3,분기물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_dom_r12_Q,36
+A3c_bar_dom_r12_Q_fsell_k1.0_dn,A3,분기물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_dom_r12_Q,36
+A3c_bar_dom_r12_Q_fsell_k1.5_up,A3,분기물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_dom_r12_Q,36
+A3c_bar_dom_r12_Q_fsell_k1.5_dn,A3,분기물 콜 1위/2위 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_dom_r12_Q,36
+A3c_bar_dom_cp_Q_k1.0_up,A3,분기물 콜/풋 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_dom_cp_Q,60
+A3c_bar_dom_cp_Q_k1.0_dn,A3,분기물 콜/풋 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_dom_cp_Q,60
+A3c_bar_dom_cp_Q_k1.5_up,A3,분기물 콜/풋 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_dom_cp_Q,60
+A3c_bar_dom_cp_Q_k1.5_dn,A3,분기물 콜/풋 상위25% + 벽 1σ 안(시작일) → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_dom_cp_Q,60
+A3c_bar_dom_cp_Q_fsell_k1.0_up,A3,분기물 콜/풋 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_dom_cp_Q,26
+A3c_bar_dom_cp_Q_fsell_k1.0_dn,A3,분기물 콜/풋 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_dom_cp_Q,26
+A3c_bar_dom_cp_Q_fsell_k1.5_up,A3,분기물 콜/풋 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_dom_cp_Q,26
+A3c_bar_dom_cp_Q_fsell_k1.5_dn,A3,분기물 콜/풋 상위25% + 벽 1σ 안(시작일) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_dom_cp_Q,26
+A3c_bar_onset_Q_k1.0_up,A3,분기물 콜 집중 시작일 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_onset_Q,43
+A3c_bar_onset_Q_k1.0_dn,A3,분기물 콜 집중 시작일 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_onset_Q,43
+A3c_bar_onset_Q_k1.5_up,A3,분기물 콜 집중 시작일 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_onset_Q,43
+A3c_bar_onset_Q_k1.5_dn,A3,분기물 콜 집중 시작일 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_onset_Q,43
+A3c_bar_onset_Q_fsell_k1.0_up,A3,분기물 콜 집중 시작일 + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_onset_Q,19
+A3c_bar_onset_Q_fsell_k1.0_dn,A3,분기물 콜 집중 시작일 + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_onset_Q,19
+A3c_bar_onset_Q_fsell_k1.5_up,A3,분기물 콜 집중 시작일 + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_onset_Q,19
+A3c_bar_onset_Q_fsell_k1.5_dn,A3,분기물 콜 집중 시작일 + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_onset_Q,19
+A3c_bar_old20_cross_k1.0_up,A3,근월물 20일 전 벽 종가 돌파 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_old20_cross,127
+A3c_bar_old20_cross_k1.0_dn,A3,근월물 20일 전 벽 종가 돌파 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_old20_cross,127
+A3c_bar_old20_cross_k1.5_up,A3,근월물 20일 전 벽 종가 돌파 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_old20_cross,127
+A3c_bar_old20_cross_k1.5_dn,A3,근월물 20일 전 벽 종가 돌파 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_old20_cross,127
+A3c_bar_old20_cross_fsell_k1.0_up,A3,근월물 20일 전 벽 종가 돌파 + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_old20_cross,49
+A3c_bar_old20_cross_fsell_k1.0_dn,A3,근월물 20일 전 벽 종가 돌파 + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_old20_cross,49
+A3c_bar_old20_cross_fsell_k1.5_up,A3,근월물 20일 전 벽 종가 돌파 + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_old20_cross,49
+A3c_bar_old20_cross_fsell_k1.5_dn,A3,근월물 20일 전 벽 종가 돌파 + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_old20_cross,49
+A3c_bar_old20_near_k1.0_up,A3,근월물 20일 전 벽 1% 안 닿고 종가는 아래 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_old20_near,194
+A3c_bar_old20_near_k1.0_dn,A3,근월물 20일 전 벽 1% 안 닿고 종가는 아래 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_old20_near,194
+A3c_bar_old20_near_k1.5_up,A3,근월물 20일 전 벽 1% 안 닿고 종가는 아래 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_old20_near,194
+A3c_bar_old20_near_k1.5_dn,A3,근월물 20일 전 벽 1% 안 닿고 종가는 아래 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_old20_near,194
+A3c_bar_old20_near_fsell_k1.0_up,A3,근월물 20일 전 벽 1% 안 닿고 종가는 아래 + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_old20_near,92
+A3c_bar_old20_near_fsell_k1.0_dn,A3,근월물 20일 전 벽 1% 안 닿고 종가는 아래 + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_old20_near,92
+A3c_bar_old20_near_fsell_k1.5_up,A3,근월물 20일 전 벽 1% 안 닿고 종가는 아래 + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_old20_near,92
+A3c_bar_old20_near_fsell_k1.5_dn,A3,근월물 20일 전 벽 1% 안 닿고 종가는 아래 + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_old20_near,92
+A3c_bar_mig_up2_ANY_k1.0_up,A3,콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_mig_up2_ANY,345
+A3c_bar_mig_up2_ANY_k1.0_dn,A3,콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_mig_up2_ANY,345
+A3c_bar_mig_up2_ANY_k1.5_up,A3,콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_mig_up2_ANY,345
+A3c_bar_mig_up2_ANY_k1.5_dn,A3,콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_mig_up2_ANY,345
+A3c_bar_mig_up2_ANY_fsell_k1.0_up,A3,콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_mig_up2_ANY,173
+A3c_bar_mig_up2_ANY_fsell_k1.0_dn,A3,콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_mig_up2_ANY,173
+A3c_bar_mig_up2_ANY_fsell_k1.5_up,A3,콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_mig_up2_ANY,173
+A3c_bar_mig_up2_ANY_fsell_k1.5_dn,A3,콜벽 5일 안 2번 이상 위로 물러남(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_mig_up2_ANY,173
+A3c_bar_mig_dn2_ANY_k1.0_up,A3,콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_mig_dn2_ANY,486
+A3c_bar_mig_dn2_ANY_k1.0_dn,A3,콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_mig_dn2_ANY,486
+A3c_bar_mig_dn2_ANY_k1.5_up,A3,콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_mig_dn2_ANY,484
+A3c_bar_mig_dn2_ANY_k1.5_dn,A3,콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_mig_dn2_ANY,484
+A3c_bar_mig_dn2_ANY_fsell_k1.0_up,A3,콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급등(위로 먼저),1,barrier_mig_dn2_ANY,272
+A3c_bar_mig_dn2_ANY_fsell_k1.0_dn,A3,콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.0σ 중 급락(아래로 먼저),-1,barrier_mig_dn2_ANY,272
+A3c_bar_mig_dn2_ANY_fsell_k1.5_up,A3,콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급등(위로 먼저),1,barrier_mig_dn2_ANY,271
+A3c_bar_mig_dn2_ANY_fsell_k1.5_dn,A3,콜벽 5일 안 2번 이상 내려옴(근월·차월·분기물) + 외국인 선물 순매도 → 20일 안 ±1.5σ 중 급락(아래로 먼저),-1,barrier_mig_dn2_ANY,271
