@@ -1,4 +1,16 @@
 {
  "_설명": "진화 에이전트가 새로 만든 연구 에이전트 등록부. 연구소 라운드(deriv-lab·deriv-lab-b)의 'extra' 조각이 여기 적힌 파일을 차례로 돌린다. 각 에이전트는 lab_common.save_candidates(이름, 후보) 로 후보를 내야 A8 이 판정한다.",
- "extra": []
+ "extra": [
+  {
+   "file": "a12_ivterm.py",
+   "tracks": [
+    "a",
+    "b",
+    "d"
+   ],
+   "timeout_min": 20,
+   "enabled": true,
+   "note": "2026-11-23 진화: 코스피200 옵션 근월÷차월 등가격 IV(기간구조 역전·백분위) → 하락·큰 하락(갈래 D 주제). 근거 Johnson 2017 JFQA 52(6) Risk Premia and the VIX Term Structure(https://ideas.repec.org/a/cup/jfinqa/v52y2017i06p2461-2490_00.html). 자료 opt_chainx(이미 있음)."
+  }
+ ]
 }
