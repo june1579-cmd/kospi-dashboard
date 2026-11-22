@@ -556,14 +556,24 @@ def main():
             cfw = {m: (close.shift(-m) / k2['open'].shift(-1) - 1) * 100 for m in CM}
             pos_ = pd.Series(np.arange(len(td)), index=td)
             crow = []; nc0 = len(cands)
-            for tag in cl.get('tags', ['F0', 'Q', 'ALL']):
-                g = Wc[Wc['tag'] == tag].set_index('date').sort_index()
-                if not len(g): print('돌파 장기: 벽 없음', tag); continue
-                K = g['K'].astype(float).reindex(td); ym = g['ym'].astype(str).reindex(td)
+            for tag_ in cl.get('tags', ['F0', 'Q', 'ALL']):
+                # 라운드 31: 'Q@touch' = 그 시리즈 어제 콜벽을 오늘 고가로 처음 건드린 날(장중에 '위로 만든' 날, 종가 무관) — 표본이 종가 돌파보다 많음
+                tag, _, evk = tag_.partition('@')
+                if tag in ('WT', 'WM'):   # 라운드 31: 위클리 콜벽(시리즈 = 만기일, 같은 시리즈 안에서만 돌파로 셈)
+                    Wk = weekly_walls({'WT': 'wt', 'WM': 'wm'}[tag], k2, td)
+                    if Wk is None: print('돌파 장기: 위클리 자료 없음', tag); continue
+                    K = Wk['K'].astype(float); ym = Wk['exp'].where(Wk['exp'].notna(), None).astype(object)
+                else:
+                    g = Wc[Wc['tag'] == tag].set_index('date').sort_index()
+                    if not len(g): print('돌파 장기: 벽 없음', tag); continue
+                    K = g['K'].astype(float).reindex(td); ym = g['ym'].astype(str).reindex(td)
                 Kp = K.shift(1); same = (ym == ym.shift(1)) if tag != 'ALL' else pd.Series(True, index=td)
-                ev = (close.shift(1) < Kp) & (close >= Kp) & same & Kp.notna()
+                if evk == 'touch':
+                    hi_ = k2['high']; ev = (hi_.shift(1) < Kp) & (hi_ >= Kp) & same & Kp.notna()
+                else:
+                    ev = (close.shift(1) < Kp) & (close >= Kp) & same & Kp.notna()
                 evd = td[ev.fillna(False).values]
-                lab = {'ALL': '결제월 4개 합산', 'Q': '분기물', 'F0': '근월물'}.get(tag, tag)
+                lab = {'ALL': '결제월 4개 합산', 'Q': '분기물', 'F0': '근월물', 'WT': '목 위클리', 'WM': '월 위클리'}.get(tag, tag)
                 conds = [('넘은 날', '', pd.DatetimeIndex(evd))]
                 for n in POST:
                     s_sell, s_hold, s_buy = [], [], []
@@ -591,17 +601,17 @@ def main():
                         for pn, lo, hi in (('앞 2010~2023', '2010-01-01', '2023-12-31'), ('뒤 2024~', '2024-01-01', '2100-01-01')):
                             v = fr.reindex(sig[(sig >= lo) & (sig <= hi)]).dropna()
                             b = fr[(fr.index >= lo) & (fr.index <= hi)].dropna()
-                            crow.append({'시리즈': tag, '조건': cn, 'm일': m, '구간': pn, '날수': len(v),
+                            crow.append({'시리즈': tag_, '조건': cn, 'm일': m, '구간': pn, '날수': len(v),
                                          '하락%': round(float((v < 0).mean() * 100), 1) if len(v) else np.nan,
                                          '평균%': round(float(v.mean()), 2) if len(v) else np.nan,
                                          '기준 하락%(아무 날)': round(float((b < 0).mean() * 100), 1) if len(b) else np.nan})
                         if len(sig) < 12: continue
                         t = pd.DataFrame({'signal': sig, 'exit': [L.exit_after(td, s_, m) for s_ in sig]}).dropna()
                         for direction in (-1, 1):
-                            cid = f'A4xl_{tag}{ck}_m{m}_{"dn" if direction < 0 else "up"}'
+                            cid = f'A4x{"t" if evk == "touch" else "l"}_{tag}{ck}_m{m}_{"dn" if direction < 0 else "up"}'
                             ZSIG[cid] = (sig, m, direction)
                             cands.append({'id': cid, 'agent': 'A4', 'family': 'cross_long',
-                                          'desc': f'{lab} 콜벽 종가 돌파' + ('' if cn == '넘은 날' else f' → {cn}') + f' → {m}일 {"하락" if direction < 0 else "상승"}',
+                                          'desc': f'{lab} 콜벽 ' + ('고가로 처음 건드림' if evk == 'touch' else '종가 돌파') + ('' if cn == '넘은 날' else f' → {cn}') + f' → {m}일 {"하락" if direction < 0 else "상승"}',
                                           'direction': direction, 'trades': t})
             pd.DataFrame(crow).to_csv(os.path.join(od, 'cross_long.csv'), index=False, encoding='utf-8')
             print('돌파 장기 표', len(crow), '후보', len(cands) - nc0, flush=True)
