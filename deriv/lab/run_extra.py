@@ -26,7 +26,7 @@ def main():
         except subprocess.TimeoutExpired:
             rc, tail = 124, '시간 초과'
         log.append({'file': f, 'rc': rc, 'sec': round(time.time() - t0, 1), 'tail': tail}); bad += rc != 0
-        print(f, 'rc', rc, flush=True)
+        print(f, 'rc', rc, f'{time.time() - t0:.0f}초', flush=True)
     json.dump(log, open(os.path.join(L.out_dir('extra'), 'extra_log.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     sys.exit(1 if gate and bad else 0)
 
