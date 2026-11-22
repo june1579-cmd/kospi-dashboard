@@ -400,5 +400,27 @@
     if (!old && grid) { old = document.createElement('details'); old.className = 'rv-more'; old.id = 'concl-old'; old.appendChild(document.createElement('summary')); const g2 = document.createElement('div'); g2.className = 'rv-concl'; old.appendChild(g2); cards().forEach(c => g2.appendChild(c)); grid.after(old); }
     if (old) old.querySelector('summary').textContent = `${md(base)} 장 마감 기준 수기 카드 4장(오래됨 — 펼치기)`;
   }
+  // 2026-11-22 추가: 연구소 통과 신호를 한눈에 보기 그래프 코스피 선 위에 그린다(사용자 요청). index.html 의 그래프 코드가 부른다.
+  //   원 = 조건이 뜬 날(장 마감 뒤 확정), 아래 반원 = 매수일(시가), 위 반원 = 매도일(종가). 자료: lab_sig(연구소 deriv/lab/signals/passed_signals.csv).
+  window.rvLabSig = (svg, xd, P0, mk) => {
+    const g = dash.data('lab_sig'); if (g.status !== 'ok' || !Array.isArray(g.data) || !g.data.length) return;
+    const ks = new Map(mk.filter(r => num(r.kospi) != null).map(r => [String(r.date).slice(0, 10), num(r.kospi)]));
+    const COL = '#8e24aa', R = 6, pts = [];
+    g.data.forEach(r => [['cond', 'c'], ['buy', 'b'], ['sell', 's']].forEach(([k, t]) => { const d = String(r[k] || '').slice(0, 10); if (ks.has(d) && isFinite(xd(d))) pts.push({d, t, k: ks.get(d), r}); }));
+    const tip = p => (p.t === 'c' ? '연구소 신호 조건일' : p.t === 'b' ? '연구소 신호 매수일(시가)' : '연구소 신호 매도일(종가)') + ' ' + md(p.d) + ' · 조건 ' + md(p.r.cond) + ' → 매수 ' + md(p.r.buy) + ' → 매도 ' + md(p.r.sell)
+      + (num(p.r.ret_pct) != null ? ' · 선물 ' + (num(p.r.ret_pct) > 0 ? '+' : '') + f2(num(p.r.ret_pct)) + '%' : ' · ' + (p.r.status || ''));
+    const gg = svg.append('g').attr('class', 'rv-labsig');
+    gg.selectAll('circle').data(pts.filter(p => p.t === 'c')).join('circle').attr('cx', p => xd(p.d)).attr('cy', p => P0.yL(p.k)).attr('r', R)
+      .style('fill', 'none').style('stroke', COL).style('stroke-width', '2px').append('title').text(tip);
+    gg.selectAll('path').data(pts.filter(p => p.t !== 'c')).join('path').attr('d', p => p.t === 'b' ? `M${-R},0A${R},${R} 0 0 0 ${R},0Z` : `M${-R},0A${R},${R} 0 0 1 ${R},0Z`)
+      .attr('transform', p => `translate(${xd(p.d)},${P0.yL(p.k) + (p.t === 'b' ? 4 : -4)})`).style('fill', COL).style('stroke', 'var(--color-panel)').style('stroke-width', '1px').append('title').text(tip);
+    if (pts.length && mk.length) {
+      const x0 = xd(String(mk[0].date).slice(0, 10)) + 6, y0 = P0.top + 30, lg = svg.append('g').attr('class', 'rv-labsig-leg');
+      lg.append('circle').attr('cx', x0 + R).attr('cy', y0).attr('r', R - 1).style('fill', 'none').style('stroke', COL).style('stroke-width', '2px');
+      lg.append('path').attr('d', `M${-R + 1},0A${R - 1},${R - 1} 0 0 0 ${R - 1},0Z`).attr('transform', `translate(${x0 + 100},${y0 - 2})`).style('fill', COL);
+      lg.append('path').attr('d', `M${-R + 1},0A${R - 1},${R - 1} 0 0 1 ${R - 1},0Z`).attr('transform', `translate(${x0 + 152},${y0 + 3})`).style('fill', COL);
+      [['연구소 조건일', 16], ['매수일', 110], ['매도일', 162]].forEach(([t, dx]) => lg.append('text').attr('class', 'rv-tick').attr('x', x0 + dx).attr('y', y0).attr('dy', '0.32em').style('font-size', '10px').text(t));
+    }
+  };
   window.fillRelief = () => { try { fillRelief(); } finally { try { fillHot(); } catch (e) { console.error(e); } try { fillPanic(); } catch (e) { console.error(e); } try { fillHealth(); } catch (e) { console.error(e); } try { fillStale(); } catch (e) { console.error(e); } } };   // index.html 의 dash.onData 콜백이 부른다(스크립트끼리는 window 로만 공유)
 })();

@@ -120,6 +120,14 @@ def main():
         if rows: txt += pd.DataFrame(rows).to_csv(index=False, header=False)
         open('out/fx_daily.csv', 'w', encoding='utf-8').write(txt)      # 기준 파일은 글자 그대로 두고 새 날짜 줄만 덧붙임
     except Exception as e: errors.append('5 fx_daily: ' + repr(e))
+    # 5a 연구소 통과 신호(2026-11-22 추가): deriv-research 가지의 deriv/lab/signals/passed_signals.csv(조건일·매수일·매도일)를 그대로 받아 out/lab_sig.csv 로 —
+    #     한눈에 보기 그래프의 원(조건)·반원(매수·매도) 표시용. 못 받으면 전에 받은 파일을 그대로 둔다(추정으로 채우지 않음).
+    try:
+        import urllib.request
+        b = urllib.request.urlopen('https://raw.githubusercontent.com/june1579-cmd/kospi-dashboard/deriv-research/deriv/lab/signals/passed_signals.csv', timeout=30).read()
+        if b.decode('utf-8').startswith('cond,'): open('out/lab_sig.csv', 'wb').write(b)
+        else: errors.append('5a 연구소 신호: 파일 형식이 다름')
+    except Exception as e: errors.append('5a 연구소 신호: ' + repr(e))
     # 5b 자료 점검(health_check.py): 수집 항목 실패·자료 멈춤·출처 간 불일치·과거 값 정정을 찾아 out/health.csv · report/health.json 에 적는다(알림 「자료:」 줄과 대시보드 「자료 상태」 칸)
     health = {}
     try:
