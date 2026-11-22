@@ -79,6 +79,6 @@ jobs:
       - name: 결과 저장(main)
         run: |
           git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
-          git add -A fo/data docs/fo
+          git add -A fo/data; [ -d docs/fo ] && git add -A docs/fo
           git commit -q -m "선물옵션 대시보드 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || { echo "변경 없음"; exit 0; }
           for i in 1 2 3; do git pull --rebase -q && git push -q && break || sleep 10; done
