@@ -405,8 +405,9 @@
   window.rvLabSig = (svg, xd, P0, mk) => {
     const g = dash.data('lab_sig'); if (g.status !== 'ok' || !Array.isArray(g.data) || !g.data.length) return;
     const ks = new Map(mk.filter(r => num(r.kospi) != null).map(r => [String(r.date).slice(0, 10), num(r.kospi)]));
-    const COL = '#8e24aa', R = 6, pts = [];
-    g.data.forEach(r => [['cond', 'c'], ['buy', 'b'], ['sell', 's']].forEach(([k, t]) => { const d = String(r[k] || '').slice(0, 10); if (ks.has(d) && isFinite(xd(d))) pts.push({d, t, k: ks.get(d), r}); }));
+    const COL = '#8e24aa', R = 6, all = [], OFF = window.__rvLabOff || (window.__rvLabOff = new Set());   // OFF = 범례에서 끈 표시(c 조건일 · b 매수일 · s 매도일)
+    g.data.forEach(r => [['cond', 'c'], ['buy', 'b'], ['sell', 's']].forEach(([k, t]) => { const d = String(r[k] || '').slice(0, 10); if (ks.has(d) && isFinite(xd(d))) all.push({d, t, k: ks.get(d), r}); }));
+    const pts = all.filter(p => !OFF.has(p.t));
     const tip = p => (p.t === 'c' ? '연구소 신호 조건일' : p.t === 'b' ? '연구소 신호 매수일(시가)' : '연구소 신호 매도일(종가)') + ' ' + md(p.d) + ' · 조건 ' + md(p.r.cond) + ' → 매수 ' + md(p.r.buy) + ' → 매도 ' + md(p.r.sell)
       + (num(p.r.ret_pct) != null ? ' · 선물 ' + (num(p.r.ret_pct) > 0 ? '+' : '') + f2(num(p.r.ret_pct)) + '%' : ' · ' + (p.r.status || ''));
     const gg = svg.append('g').attr('class', 'rv-labsig');
@@ -414,12 +415,19 @@
       .style('fill', 'none').style('stroke', COL).style('stroke-width', '2px').append('title').text(tip);
     gg.selectAll('path').data(pts.filter(p => p.t !== 'c')).join('path').attr('d', p => p.t === 'b' ? `M${-R},0A${R},${R} 0 0 0 ${R},0Z` : `M${-R},0A${R},${R} 0 0 1 ${R},0Z`)
       .attr('transform', p => `translate(${xd(p.d)},${P0.yL(p.k) + (p.t === 'b' ? 4 : -4)})`).style('fill', COL).style('stroke', 'var(--color-panel)').style('stroke-width', '1px').append('title').text(tip);
-    if (pts.length && mk.length) {
-      const x0 = xd(String(mk[0].date).slice(0, 10)) + 6, y0 = P0.top + 30, lg = svg.append('g').attr('class', 'rv-labsig-leg');
-      lg.append('circle').attr('cx', x0 + R).attr('cy', y0).attr('r', R - 1).style('fill', 'none').style('stroke', COL).style('stroke-width', '2px');
-      lg.append('path').attr('d', `M${-R + 1},0A${R - 1},${R - 1} 0 0 0 ${R - 1},0Z`).attr('transform', `translate(${x0 + 100},${y0 - 2})`).style('fill', COL);
-      lg.append('path').attr('d', `M${-R + 1},0A${R - 1},${R - 1} 0 0 1 ${R - 1},0Z`).attr('transform', `translate(${x0 + 152},${y0 + 3})`).style('fill', COL);
-      [['연구소 조건일', 16], ['매수일', 110], ['매도일', 162]].forEach(([t, dx]) => lg.append('text').attr('class', 'rv-tick').attr('x', x0 + dx).attr('y', y0).attr('dy', '0.32em').style('font-size', '10px').text(t));
+    // 범례는 그래프 안 글자 대신 그래프 위 다른 신호 범례 줄(#all-legend)에 둔다(11/22 사용자 요청). 누르면 그 표시만 끄고 켠다
+    const lgEl = document.getElementById('all-legend');
+    if (lgEl) {   // 자료가 있으면 보이는 기간에 신호가 없어도 범례는 늘 둔다(다른 신호와 같게)
+      const ref = Array.from(lgEl.children).find(e => /^미수 반대매매\(막대\)/.test(e.textContent || '')) || null;
+      [['c', '연구소 조건일(원)'], ['b', '연구소 매수일(아래 반원)'], ['s', '연구소 매도일(위 반원)']].forEach(([t, lab]) => {
+        const bt = document.createElement('button'); bt.type = 'button'; bt.className = 'rv-lgbtn'; bt.setAttribute('aria-pressed', String(!OFF.has(t)));
+        const sw = document.createElement('i'); sw.className = 'rv-sw';
+        if (t === 'c') { sw.style.background = 'transparent'; sw.style.border = '2px solid ' + COL; sw.style.borderRadius = '50%'; sw.style.boxSizing = 'border-box'; }
+        else { sw.style.background = COL; sw.style.width = '.75rem'; sw.style.height = '.375rem'; sw.style.borderRadius = t === 'b' ? '0 0 .375rem .375rem' : '.375rem .375rem 0 0'; }
+        bt.append(sw, document.createTextNode(lab));
+        bt.addEventListener('click', () => { OFF.has(t) ? OFF.delete(t) : OFF.add(t); const box = document.getElementById('all-chart'); if (box && box._rvApi && box._rvApi.draw) box._rvApi.draw(); });
+        lgEl.insertBefore(bt, ref);
+      });
     }
   };
   window.fillRelief = () => { try { fillRelief(); } finally { try { fillHot(); } catch (e) { console.error(e); } try { fillPanic(); } catch (e) { console.error(e); } try { fillHealth(); } catch (e) { console.error(e); } try { fillStale(); } catch (e) { console.error(e); } } };   // index.html 의 dash.onData 콜백이 부른다(스크립트끼리는 window 로만 공유)
