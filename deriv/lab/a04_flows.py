@@ -539,6 +539,69 @@ def main():
                                   f" → {mu}일 {'상승' if dr > 0 else '하락'}", 'direction': dr, 'trades': t})
         if urows: pd.DataFrame(urows).round(1).to_csv(os.path.join(od, 'zone_union.csv'), index=False, encoding='utf-8')
         if uprows: pd.DataFrame(uprows).round(2).to_csv(os.path.join(od, 'zone_union_parts.csv'), index=False, encoding='utf-8')
+    # 갈래 A 라운드 29(a04.cross_long, 설정 없으면 없음 → 갈래 B 영향 없음): 가설 본선을 '장기'까지 — 원인 분해(라운드 26~28)에서
+    #   ④ 콜벽을 넘은 뒤 외국인 선물 5일 순매도는 세 구간 모두 기준보다 많았지만 ⑤ 10일 하락은 기준과 같거나 반대였다.
+    #   사용자 가설은 '단기든 장기든' 이므로 같은 사건을 보유 1·5·10·20·40·60일로 열어 본다(2026-11-21~ 기간 전부 열기).
+    #   사건 = 그 시리즈 어제 콜벽(K, 어제 현재가 위 최대 미결제 콜)을 오늘 종가가 처음 넘은 날(같은 결제월일 때만, ALL 은 무관).
+    #   조건: (0) 넘은 날 그대로, (1) 넘은 뒤 n일 외국인 선물 누적 순매도(신호 = 넘은 날 + n 거래일 마감 뒤, 그때 아는 값),
+    #   (2) (1) + 그날 종가가 여전히 옛 벽 위('위로 만든 뒤 매도' 그대로), (3) 넘은 뒤 n일 누적 순매수(대조). 양방향 사전 등록.
+    #   표 a04/cross_long.csv: 구간(앞 2010~2023·뒤 2024~)별 날수·하락%·같은 구간 아무 날 m일 하락%(기준).
+    cl = cfg.get('cross_long')
+    if cl:
+        try:
+            Wc = feat.get('walls')
+            Wc = Wc.copy(); Wc['date'] = pd.to_datetime(Wc['date']); Wc = Wc.drop_duplicates(['date', 'tag'], keep='last')
+            close = k2['close']; ff_ = F['fut_for']
+            CM = cl.get('m', [1, 5, 10, 20, 40, 60]); POST = cl.get('post', [3, 5])
+            cfw = {m: (close.shift(-m) / k2['open'].shift(-1) - 1) * 100 for m in CM}
+            pos_ = pd.Series(np.arange(len(td)), index=td)
+            crow = []; nc0 = len(cands)
+            for tag in cl.get('tags', ['F0', 'Q', 'ALL']):
+                g = Wc[Wc['tag'] == tag].set_index('date').sort_index()
+                if not len(g): print('돌파 장기: 벽 없음', tag); continue
+                K = g['K'].astype(float).reindex(td); ym = g['ym'].astype(str).reindex(td)
+                Kp = K.shift(1); same = (ym == ym.shift(1)) if tag != 'ALL' else pd.Series(True, index=td)
+                ev = (close.shift(1) < Kp) & (close >= Kp) & same & Kp.notna()
+                evd = td[ev.fillna(False).values]
+                lab = {'ALL': '결제월 4개 합산', 'Q': '분기물', 'F0': '근월물'}.get(tag, tag)
+                conds = [('넘은 날', '', pd.DatetimeIndex(evd))]
+                for n in POST:
+                    s_sell, s_hold, s_buy = [], [], []
+                    for d in evd:
+                        i = int(pos_[d])
+                        if i + n >= len(td): continue
+                        dn = td[i + n]; sm = ff_.iloc[i + 1:i + n + 1].sum()
+                        if ff_.iloc[i + 1:i + n + 1].notna().sum() < n: continue   # 빠진 날은 추정으로 채우지 않음
+                        if sm < 0:
+                            s_sell.append(dn)
+                            if close.iloc[i + n] >= Kp.loc[d]: s_hold.append(dn)
+                        elif sm > 0: s_buy.append(dn)
+                    conds += [(f'넘은 뒤 {n}일 외국인 선물 누적 순매도', f'_s{n}', pd.DatetimeIndex(s_sell)),
+                              (f'넘은 뒤 {n}일 외국인 선물 누적 순매도 + 여전히 옛 벽 위', f'_h{n}', pd.DatetimeIndex(s_hold)),
+                              (f'넘은 뒤 {n}일 외국인 선물 누적 순매수(대조)', f'_b{n}', pd.DatetimeIndex(s_buy))]
+                for cn, ck, sig in conds:
+                    sig = pd.DatetimeIndex(sorted(set(sig)))
+                    for m in CM:
+                        fr = cfw[m]
+                        for pn, lo, hi in (('앞 2010~2023', '2010-01-01', '2023-12-31'), ('뒤 2024~', '2024-01-01', '2100-01-01')):
+                            v = fr.reindex(sig[(sig >= lo) & (sig <= hi)]).dropna()
+                            b = fr[(fr.index >= lo) & (fr.index <= hi)].dropna()
+                            crow.append({'시리즈': tag, '조건': cn, 'm일': m, '구간': pn, '날수': len(v),
+                                         '하락%': round(float((v < 0).mean() * 100), 1) if len(v) else np.nan,
+                                         '평균%': round(float(v.mean()), 2) if len(v) else np.nan,
+                                         '기준 하락%(아무 날)': round(float((b < 0).mean() * 100), 1) if len(b) else np.nan})
+                        if len(sig) < 12: continue
+                        t = pd.DataFrame({'signal': sig, 'exit': [L.exit_after(td, s_, m) for s_ in sig]}).dropna()
+                        for direction in (-1, 1):
+                            cid = f'A4xl_{tag}{ck}_m{m}_{"dn" if direction < 0 else "up"}'
+                            ZSIG[cid] = (sig, m, direction)
+                            cands.append({'id': cid, 'agent': 'A4', 'family': 'cross_long',
+                                          'desc': f'{lab} 콜벽 종가 돌파' + ('' if cn == '넘은 날' else f' → {cn}') + f' → {m}일 {"하락" if direction < 0 else "상승"}',
+                                          'direction': direction, 'trades': t})
+            pd.DataFrame(crow).to_csv(os.path.join(od, 'cross_long.csv'), index=False, encoding='utf-8')
+            print('돌파 장기 표', len(crow), '후보', len(cands) - nc0, flush=True)
+        except Exception as e:   # 실패가 나머지 후보 저장을 막지 않게
+            print('돌파 장기 실패', repr(e))
     if cfg.get('weekly'):
         try:
             cands += weekly_block(cfg['weekly'], k2, td, F, od)
