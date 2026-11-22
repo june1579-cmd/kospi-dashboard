@@ -1,5 +1,5 @@
 {
- "trials_total": 10175,
+ "trials_total": 14385,
  "holdout_peeks": 0,
  "rounds": [
   {
@@ -37,8 +37,20 @@
    "cross_pass": 0,
    "hold_pass": 2,
    "goal_rule": "전체 50거래·85%, 앞·뒤 각 12거래·80%"
+  },
+  {
+   "round": 4,
+   "mode": "cross",
+   "candidates": 4210,
+   "sel_fwd": 29,
+   "sel_rev": 104,
+   "fwd_pass": 1,
+   "rev_pass": 2,
+   "cross_pass": 0,
+   "hold_pass": 2,
+   "goal_rule": "전체 50거래·85%, 앞·뒤 각 12거래·80%"
   }
  ],
  "note": "갈래 D(하락·급락 방향 전담, 2026-11-22 시작) — 원장은 새로 셈",
- "cross_tests": 257
+ "cross_tests": 390
 }
