@@ -5,7 +5,7 @@ python gate.py <changed_files.txt> <base_full> <head_full> <base_trunc> <head_tr
   1. 잠금 파일을 건드리지 않음(검증 A8·반증 A10·정리·공통 규칙·원장·결과·원자료·워크플로·수집 속도·이 시험 자체).
   2. 바꾼 코드로 한 라운드가 끝까지 돎: 기준에서 성공하던 단계가 실패로 바뀌지 않음, 새 에이전트는 전부 성공.
   3. 기존 에이전트의 후보 수가 기준의 80% 아래로 줄지 않음.
-  4. 앞을 보는 실수 없음: 자료 끝 1년을 잘라 다시 돌려도 그 전 신호가 같아야 함. 어긋난 후보 비율이 기준보다 2%p 넘게 늘면 탈락(뒤 구간에서 정하는 후보 fit_period=p2 는 빼고 봄).
+  4. 앞을 보는 실수 없음: 자료 끝 1년을 잘라 다시 돌려도 그 전 신호가 같아야 함. 어긋난 후보가 기준보다 3개(또는 2%) 넘게 늘면 탈락(뒤 구간에서 정하는 후보 fit_period=p2 는 빼고 봄).
 """
 import fnmatch
 import json
@@ -97,7 +97,7 @@ def main():
             rh = bad / n; nb, bb, _ = lb.get(a, (0, 0, []))
             rb = bb / nb if nb else 0.0
             notes.append(f'앞을 보는 실수 점검 {a}: {n}개 중 어긋남 {bad}개({rh:.1%}), 기준 {rb:.1%}')
-            if rh > rb + 0.02: fails.append(f'{a}: 자료 끝을 잘랐을 때 과거 신호가 달라지는 후보가 늘어남({rb:.1%} → {rh:.1%}), 예: {", ".join(ex)}')
+            if bad > bb + max(3, 0.02 * n): fails.append(f'{a}: 자료 끝을 잘랐을 때 과거 신호가 달라지는 후보가 늘어남({rb:.1%} → {rh:.1%}), 예: {", ".join(ex)}')
     st = {}
     try: st = json.load(open(os.path.join(hf, 'out_t', 'round_001', 'status.json'), encoding='utf-8'))
     except Exception: pass

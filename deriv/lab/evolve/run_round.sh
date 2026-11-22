@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # 진화 시험용 한 라운드(갈래 t, 결과는 저장소에 올리지 않음). 갈래 B 설정으로 A2~A7(기계학습은 한 조각)·새 에이전트·A8·A10 을 차례로 돌리고 단계별 결과를 steps.json 에 적는다.
 set -u
-export LAB_TRACK=t EVOLVE_GATE=1
+export LAB_TRACK=t EVOLVE_GATE=1 PYTHONHASHSEED=0   # 해시 순서를 고정해 기준·바꾼 쪽이 같은 조건에서 돌게(2026-11-22: 같은 코드인데 a06 결과가 실행마다 달라짐)
 cd "$(dirname "$0")/../../.."
 python - <<'PY'
 import json
