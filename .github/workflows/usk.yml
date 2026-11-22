@@ -32,13 +32,22 @@ jobs:
       - name: 수집
         if: steps.t.outputs.stage != 'study'
         run: python deriv/us/us_collect.py ${{ steps.t.outputs.args }}
-      - name: 지표·검증·대시보드 자료
+      - name: 지표·후보(A11) → A8 검증 → A10 반증 → 정리 → 대시보드 자료
         if: steps.t.outputs.stage != 'collect'
+        env:
+          LAB_TRACK: c
         run: |
-          if [ -f deriv/us/us_study.py ]; then python deriv/scan/scan_data.py && python deriv/us/us_study.py; else echo '연구 코드 없음'; fi
+          python deriv/scan/scan_data.py
+          python deriv/us/us_study.py
+          python deriv/lab/a08_validate.py
+          python deriv/lab/a10_redteam.py
+          python deriv/lab/lab_merge.py || echo '정리 실패 — 건너뜀'
+          python deriv/us/us_dash.py
+          find deriv/lab/out_c -name 'candidates.pkl' -delete || true
+          find deriv/lab/out_c -name 'dev_passed.pkl' -delete || true
       - name: 저장
         run: |
           git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
-          git add deriv/us
+          git add deriv/us deriv/lab/out_c deriv/lab/state_c
           git commit -q -m "미국·한국 연동 연구 자료 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || echo "변경 없음"
           for i in 1 2 3 4; do git pull -q --rebase origin deriv-research && git push -q origin HEAD:deriv-research && break; sleep 15; done

@@ -117,6 +117,7 @@ def cboe_pcr_daily(max_new=400):
     """Cboe 일별 시장 통계(2019-10~) — 날짜별 JSON. 이미 받은 날은 건너뛰고, 한 번에 max_new 일까지만(천천히)."""
     p = os.path.join(DATA, 'cboe_pcr_daily.csv.gz')
     old = pd.read_csv(p, parse_dates=['date']) if os.path.exists(p) else pd.DataFrame(columns=['date', 'name', 'value'])
+    old['date'] = pd.to_datetime(old['date'])
     have = set(old['date'].dt.strftime('%Y-%m-%d'))
     ny = pd.Timestamp.now(tz='America/New_York').normalize().tz_localize(None)
     days = [d for d in pd.bdate_range('2019-10-01', ny - pd.Timedelta(days=1)) if d.strftime('%Y-%m-%d') not in have][::-1]
@@ -144,10 +145,7 @@ def cboe_pcr_daily(max_new=400):
         note('cboe_pcr_daily', err=first_err or '행 없음')
 
 
-def squeeze():
-    r = get('https://squeezemetrics.com/monitor/static/DIX.csv')
-    x = pd.read_csv(io.StringIO(r.text)); x['date'] = pd.to_datetime(x['date'])
-    x.to_csv(os.path.join(DATA, 'squeeze_dix_gex.csv.gz'), index=False); note('squeezemetrics', x); LOG['squeezemetrics']['cols'] = list(x.columns)
+# SqueezeMetrics(GEX·DIX)는 받지 않는다 — 이용 약관이 자동 수집·자료 쌓기를 허락 없이 금지(2026-11-22 확인). 감마 노출은 옵션 체인 스냅숏으로 직접 계산해 날마다 쌓는다.
 
 
 def cftc():
@@ -188,10 +186,26 @@ def cboe_chain():
             out.append({'sym': sym, 'rows': int(len(o)), 'spot': spot, 'ts': ts, 'oi': float(o['open_interest'].sum())})
         except Exception as e:
             out.append({'sym': sym, 'err': repr(e)[:200]})
+    if not any('rows' in x for x in out):   # Cboe 가 막으면 야후 옵션 체인(SPY·QQQ, 가까운 만기 8개)으로 대신 — 감마는 us_dash 에서 계산
+        import yfinance as yf
+        for sym in ('SPY', 'QQQ'):
+            try:
+                tk = yf.Ticker(sym); spot = float(tk.history(period='5d')['Close'].iloc[-1]); rows = []
+                for e in list(tk.options)[:8]:
+                    ch = tk.option_chain(e)
+                    for cp, x in (('C', ch.calls), ('P', ch.puts)):
+                        rows.append(pd.DataFrame({'root': sym, 'exp': pd.Timestamp(e), 'cp': cp, 'K': x['strike'], 'open_interest': x['openInterest'], 'volume': x['volume'],
+                                                  'iv': x['impliedVolatility'], 'delta': float('nan'), 'gamma': float('nan'), 'bid': x['bid'], 'ask': x['ask']}))
+                    time.sleep(0.5)
+                o = pd.concat(rows, ignore_index=True); o['sym'] = sym; o['spot'] = spot; o['ts'] = pd.Timestamp.now(tz='America/New_York').strftime('%Y-%m-%d %H:%M ET(야후)')
+                o.to_csv(os.path.join(DATA, f'chain_now_{sym}.csv.gz'), index=False)
+                out.append({'sym': sym, 'src': 'yahoo', 'rows': int(len(o)), 'spot': spot, 'oi': float(o['open_interest'].sum())})
+            except Exception as e:
+                out.append({'sym': sym, 'src': 'yahoo', 'err': repr(e)[:200]})
     LOG['cboe_chain'] = {'ok': any('rows' in x for x in out), 'items': out}; print('옵션 스냅숏', out, flush=True)
 
 
-STEPS = {'yf': yf_daily, 'yfh': yf_hourly, 'idx': cboe_index, 'pcra': cboe_pcr_archive, 'pcrd': cboe_pcr_daily, 'sq': squeeze, 'cftc': cftc, 'chain': cboe_chain}
+STEPS = {'yf': yf_daily, 'yfh': yf_hourly, 'idx': cboe_index, 'pcra': cboe_pcr_archive, 'pcrd': cboe_pcr_daily, 'cftc': cftc, 'chain': cboe_chain}
 
 if __name__ == '__main__':
     want = sys.argv[1:] or list(STEPS)
