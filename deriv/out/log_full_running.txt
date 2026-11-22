@@ -48,3 +48,5 @@
  ! [remote rejected] HEAD -> deriv-research (cannot lock ref 'refs/heads/deriv-research': is at c496bde572675bb5061af3a6554cef776fbb5aa1 but expected
 [19:52:46] == chainx
 [19:56:26] 저장 opt_chainx_daily.csv.gz 1570682행
+[19:56:30] == chainwt
+[20:05:08] 저장 opt_chainwt_daily.csv.gz 120944행
