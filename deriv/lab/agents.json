@@ -11,6 +11,15 @@
    "timeout_min": 20,
    "enabled": true,
    "note": "2026-11-23 진화: 코스피200 옵션 근월÷차월 등가격 IV(기간구조 역전·백분위) → 하락·큰 하락(갈래 D 주제). 근거 Johnson 2017 JFQA 52(6) Risk Premia and the VIX Term Structure(https://ideas.repec.org/a/cup/jfinqa/v52y2017i06p2461-2490_00.html). 자료 opt_chainx(이미 있음)."
+  },
+  {
+   "file": "a13_crash.py",
+   "tracks": [
+    "d"
+   ],
+   "timeout_min": 25,
+   "enabled": true,
+   "note": "2026-11-23 갈래 D 총괄: 하락·급락 전용(direction −1) — 콜벽 돌파 실패·돌파 뒤 외국인 매도·풋 무게중심/풋벽 이탈·풋 물량 급증·외국인 선물·현물 동시 매도·베이시스·IV, 장세 겹침(R3·R8·R7·R9). 자료는 저장소에 이미 있는 것만."
   }
  ]
 }

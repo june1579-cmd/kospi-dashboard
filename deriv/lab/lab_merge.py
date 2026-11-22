@@ -19,6 +19,8 @@ def main():
     cfg = L.round_cfg(); rnd = cfg['round']
     rd = L.out_dir()
     V = pd.read_csv(os.path.join(rd, 'a08', 'verdicts.csv'))
+    _fd = cfg.get('focus_direction'); n_all = len(V)   # 갈래 D 라운드 2(2026-11-23): 설정 focus_direction(−1 등)이 있으면 그 방향 후보만 고른다 — 없으면(갈래 A·B) 예전과 같음
+    if _fd in (1, -1): V = V[V['direction'] == _fd].reset_index(drop=True)
     T = pd.read_csv(os.path.join(rd, 'a09', 'trades.csv')) if os.path.exists(os.path.join(rd, 'a09', 'trades.csv')) else pd.DataFrame()
     R = pd.read_csv(os.path.join(rd, 'a10', 'redteam.csv')) if os.path.exists(os.path.join(rd, 'a10', 'redteam.csv')) else pd.DataFrame()
     led = L.ledger()
@@ -42,6 +44,7 @@ def main():
           'trials_total': led.get('trials_total'), 'holdout_peeks': led.get('holdout_peeks'),
           'best': top.head(5)[['id', 'desc', 'dev_n', 'dev_hit', 'dev_lb', 'dev_base'] + (['p2_n', 'p2_hit', 'p2_lb', 'p2_base', 'all_n', 'all_hit'] if cross else [])].to_dict('records'),
           'goal_reached': bool(len(final) > 0), 'note': cfg.get('note', '')}
+    if _fd in (1, -1): st.update({'focus_direction': int(_fd), 'candidates_all': int(n_all)})
     if cross:
         st.update({'cv_mode': 'cross', 'sel_fwd': int(V['sel_fwd'].sum()), 'sel_rev': int(V['sel_rev'].sum()), 'fwd_pass': int(V['fwd_pass'].sum()),
                    'rev_pass': int(V['rev_pass'].sum()), 'cross_pass': int(V['cross_pass'].sum()), 'cross_tests': led.get('cross_tests'),
@@ -49,7 +52,7 @@ def main():
     json.dump(st, open(os.path.join(rd, 'status.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1, default=str)
     json.dump(st, open(os.path.join(L.STATE, 'latest_status.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1, default=str)
     # 보고(한국어)
-    lines = [f'# 라운드 {rnd} 보고', '', f'- 계획: {cfg.get("note", "")}',
+    lines = [f'# 라운드 {rnd} 보고', '', f'- 계획: {cfg.get("note", "")}'] + ([f'- 보는 방향: {"하락(−1)" if _fd == -1 else "상승(+1)"} 후보만(전체 후보 {n_all}개 중 {len(V)}개) — 아래 숫자·순위·통과 판정 모두 이 방향만'] if _fd in (1, -1) else []) + [
              (f'- 후보 {len(V)}개 → 앞(2010~2023) 선별 {int(V["sel_fwd"].sum())}·뒤(2024~) 선별 {int(V["sel_rev"].sum())} → 앞→뒤 확인 {int(V["fwd_pass"].sum())}·뒤→앞 확인 {int(V["rev_pass"].sum())} → 양방향 {int(V["cross_pass"].sum())}개(참고) · 새 기준(전체 50거래·85%, 앞·뒤 각 12거래·80%) 통과 {len(passed)}개 → 반증까지 통과 {len(final)}개'
               if cross else f'- 후보 {len(V)}개 → 개발 구간 통과 {int(V["dev_pass"].sum())}개 → 잠금 구간 통과 {len(passed)}개 → 반증까지 통과 {len(final)}개'),
              (f'- 누적: 후보 {led.get("trials_total")}개 시험, 교차 확인 {led.get("cross_tests")}번(라운드 안 확인 p 기준 = 0.05 ÷ 그 방향 선별 수) · 잠금 규칙 없이 양방향 교차 검증(2026-11-21~)'

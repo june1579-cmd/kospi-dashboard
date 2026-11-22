@@ -32,6 +32,8 @@ def hits(t, px, direction):
 def main():
     rd = L.out_dir()
     V = pd.read_csv(os.path.join(rd, 'a08', 'verdicts.csv'))
+    _fd = L.round_cfg().get('focus_direction')   # 갈래 D 라운드 2(2026-11-23): 설정 focus_direction(−1 등)이 있으면 그 방향 후보만 고른다 — 없으면(갈래 A·B) 예전과 같음
+    if _fd in (1, -1): V = V[V['direction'] == _fd].reset_index(drop=True)
     cands = {}
     for a in sorted(os.listdir(rd)):
         p = os.path.join(rd, a, 'candidates.pkl')
