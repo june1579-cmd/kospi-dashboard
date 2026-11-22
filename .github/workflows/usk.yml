@@ -43,12 +43,13 @@ jobs:
           python deriv/lab/a10_redteam.py
           python deriv/lab/lab_merge.py || echo '정리 실패 — 건너뜀'
           python deriv/us/us_dash.py
+          python deriv/lab/a02_features.py && python deriv/lab/signal_export.py || echo '통과 신호 내보내기 실패 — 건너뜀'   # 코스피 대시보드 표시용(2026-11-22)
           find deriv/lab/out_c -name 'candidates.pkl' -delete || true
           find deriv/lab/out_c -name 'dev_passed.pkl' -delete || true
       - name: 저장
         if: always()
         run: |
           git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
-          git add deriv/us deriv/lab/out_c deriv/lab/state_c
+          git add deriv/us deriv/lab/out_c deriv/lab/state_c deriv/lab/signals
           git commit -q -m "미국·한국 연동 연구 자료 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || echo "변경 없음"
           for i in 1 2 3 4; do git pull -q --rebase origin deriv-research && git push -q origin HEAD:deriv-research && break; sleep 15; done

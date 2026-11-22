@@ -82,11 +82,12 @@ jobs:
           python deriv/lab/a09_trade.py
           python deriv/lab/a10_redteam.py
           python deriv/lab/lab_merge.py
+          python deriv/lab/signal_export.py || echo '통과 신호 내보내기 실패 — 건너뜀'   # 코스피 대시보드 표시용(2026-11-22)
       - name: 저장
         run: |
           find deriv/lab/out_b -name 'candidates.pkl' -size +20M -delete || true
           python deriv/lab/prune_rounds.py 10 || true   # 최근 10라운드만 전체 결과, 그 전은 보고·요약만(2026-11-20)
           git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
-          git add deriv/lab/out_b deriv/lab/state_b
+          git add deriv/lab/out_b deriv/lab/state_b deriv/lab/signals
           git commit -q -m "연구소 B 라운드 $(python -c "import json;print(json.load(open('deriv/lab/round_b.json'))['round'])") 결과 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || echo "변경 없음"
           for i in 1 2 3 4; do git pull -q --rebase origin deriv-research && git push -q origin HEAD:deriv-research && break; sleep 15; done
