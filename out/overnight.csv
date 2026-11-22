@@ -65,6 +65,8 @@ date,symbol,name,close,chg_pct,source
 2026-11-17,ES=F,S&P500 선물,7359.0,-1.08,Yahoo Finance
 2026-11-18,ES=F,S&P500 선물,7340.5,-0.25,Yahoo Finance
 2026-11-19,ES=F,S&P500 선물,7197.25,-1.95,Yahoo Finance
+2026-11-20,ES=F,S&P500 선물,6935.0,-3.64,Yahoo Finance
+2026-11-22,ES=F,S&P500 선물,7008.25,1.06,Yahoo Finance
 2007-01-08,QQQ,나스닥100 ETF(QQQ),43.88,,Twelve Data
 2007-01-09,QQQ,나스닥100 ETF(QQQ),44.1,0.5,Twelve Data
 2007-01-10,QQQ,나스닥100 ETF(QQQ),44.62,1.18,Twelve Data
@@ -5065,6 +5067,7 @@ date,symbol,name,close,chg_pct,source
 2026-11-17,QQQ,나스닥100 ETF(QQQ),656.95,-0.73,Twelve Data
 2026-11-18,QQQ,나스닥100 ETF(QQQ),659.51,0.39,Twelve Data
 2026-11-19,QQQ,나스닥100 ETF(QQQ),645.04,-2.19,Twelve Data
+2026-11-20,QQQ,나스닥100 ETF(QQQ),608.45,-5.67,Twelve Data
 2007-01-08,SOXX,반도체 ETF(SOXX),6.7867,,Twelve Data
 2007-01-09,SOXX,반도체 ETF(SOXX),6.8111,0.36,Twelve Data
 2007-01-10,SOXX,반도체 ETF(SOXX),6.9278,1.71,Twelve Data
@@ -10065,6 +10068,7 @@ date,symbol,name,close,chg_pct,source
 2026-11-17,SOXX,반도체 ETF(SOXX),141.46,0.17,Twelve Data
 2026-11-18,SOXX,반도체 ETF(SOXX),141.85,0.28,Twelve Data
 2026-11-19,SOXX,반도체 ETF(SOXX),137.95,-2.75,Twelve Data
+2026-11-20,SOXX,반도체 ETF(SOXX),123.4,-10.55,Twelve Data
 2007-01-08,SPY,S&P500 ETF(SPY),141.19,,Twelve Data
 2007-01-09,SPY,S&P500 ETF(SPY),141.07,-0.08,Twelve Data
 2007-01-10,SPY,S&P500 ETF(SPY),141.54,0.33,Twelve Data
@@ -15065,6 +15069,7 @@ date,symbol,name,close,chg_pct,source
 2026-11-17,SPY,S&P500 ETF(SPY),732.44,-1.01,Twelve Data
 2026-11-18,SPY,S&P500 ETF(SPY),730.2,-0.31,Twelve Data
 2026-11-19,SPY,S&P500 ETF(SPY),715.87,-1.96,Twelve Data
+2026-11-20,SPY,S&P500 ETF(SPY),689.81,-3.64,Twelve Data
 2008-02-19,USD/KRW,원달러,943.61,,Twelve Data
 2008-02-20,USD/KRW,원달러,941.68,-0.2,Twelve Data
 2008-02-21,USD/KRW,원달러,947.31,0.6,Twelve Data
@@ -20065,7 +20070,9 @@ date,symbol,name,close,chg_pct,source
 2026-11-18,USD/KRW,원달러,1333.5142,-0.14,Twelve Data
 2026-11-19,USD/KRW,원달러,1333.2958,-0.02,Twelve Data
 2026-11-20,USD/KRW,원달러,1345.1235,0.89,Twelve Data
-2026-11-21,USD/KRW,원달러,1346.2975,0.09,Twelve Data
+2026-11-21,USD/KRW,원달러,1346.2329,0.08,Twelve Data
+2026-11-22,USD/KRW,원달러,1346.0381,-0.01,Twelve Data
+2026-11-23,USD/KRW,원달러,1345.7732,-0.02,Twelve Data
 2026-08-20,^GSPC,S&P500,7641.1602,,Yahoo Finance
 2026-08-21,^GSPC,S&P500,7674.3701,0.43,Yahoo Finance
 2026-08-24,^GSPC,S&P500,7652.8599,-0.28,Yahoo Finance
@@ -20131,6 +20138,7 @@ date,symbol,name,close,chg_pct,source
 2026-11-17,^GSPC,S&P500,7340.5298,-1.03,Yahoo Finance
 2026-11-18,^GSPC,S&P500,7323.6299,-0.23,Yahoo Finance
 2026-11-19,^GSPC,S&P500,7175.8301,-2.02,Yahoo Finance
+2026-11-20,^GSPC,S&P500,6910.3901,-3.7,Yahoo Finance
 2026-08-20,^SOX,필라델피아 반도체,11800.0195,,Yahoo Finance
 2026-08-21,^SOX,필라델피아 반도체,11740.3701,-0.51,Yahoo Finance
 2026-08-24,^SOX,필라델피아 반도체,11423.1699,-2.7,Yahoo Finance
@@ -20196,6 +20204,7 @@ date,symbol,name,close,chg_pct,source
 2026-11-17,^SOX,필라델피아 반도체,9642.8799,0.34,Yahoo Finance
 2026-11-18,^SOX,필라델피아 반도체,9652.7998,0.1,Yahoo Finance
 2026-11-19,^SOX,필라델피아 반도체,9419.7197,-2.41,Yahoo Finance
+2026-11-20,^SOX,필라델피아 반도체,8408.5898,-10.73,Yahoo Finance
 2026-08-19,^VIX,VIX,14.89,,Yahoo Finance
 2026-08-20,^VIX,VIX,16.01,7.52,Yahoo Finance
 2026-08-21,^VIX,VIX,15.13,-5.5,Yahoo Finance
@@ -20263,3 +20272,4 @@ date,symbol,name,close,chg_pct,source
 2026-11-17,^VIX,VIX,25.46,11.13,Yahoo Finance
 2026-11-18,^VIX,VIX,24.56,-3.53,Yahoo Finance
 2026-11-19,^VIX,VIX,28.44,15.8,Yahoo Finance
+2026-11-20,^VIX,VIX,35.89,26.2,Yahoo Finance

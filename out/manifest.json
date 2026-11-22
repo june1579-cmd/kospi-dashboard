@@ -1,29 +1,29 @@
 {
- "run": "2026-11-21 05:36",
- "tag": "1840",
+ "run": "2026-11-23 08:23",
+ "tag": "0831",
  "kospi_last": "2026-11-20",
  "kofia_last": "2026-11-19",
  "vkospi_last": "2026-11-20",
- "night_last": "2026-11-20",
+ "night_last": "2026-11-23",
  "errors": [],
- "data_line": "정정 1건(신호 취소)",
+ "data_line": "정상",
  "health": {
   "오류": 0,
-  "정정": 1,
+  "정정": 0,
   "주의": 0,
   "참고": 0,
   "정상": 14
  },
  "files": {
   "ai_feed": {
-   "sha256": "82b6482d1a60fbf297888d3f21e957688f480c7a16c0179001665213b3ada19e",
-   "bytes": 2026,
+   "sha256": "841c7e56f347033998ebed1a082cd086a5b59f2ad986913b151f10218aaad8d3",
+   "bytes": 2025,
    "last_date": "crwv_px"
   },
   "ai_feed_hist": {
-   "sha256": "311e8d4d3a894718594eb58319d12672482fe3d8e0a1fc0be23b1d924f12f3d8",
-   "bytes": 690,
-   "last_date": "2026-11-19"
+   "sha256": "ba00e65d09e7d41de8a2e7ee7573ceac7cceb942f0949e31a3e2478aff9612a3",
+   "bytes": 993,
+   "last_date": "2026-11-20"
   },
   "alarms": {
    "sha256": "4bcab7ef1b4cf4ad897ea5a65492999daeb1576778d501b6c3ffa5434ac3a83c",
@@ -36,17 +36,17 @@
    "last_date": "전체"
   },
   "am_daily": {
-   "sha256": "380a12e9feb62d34b392c960bb8808cbfad73deff173705e7e8a738fe695b3f4",
-   "bytes": 236299,
+   "sha256": "2de1e2eb1539f77818f61df8f0d0c45d631d2a48d8bc6891ab9c1bc9bf61967a",
+   "bytes": 236304,
    "last_date": "2026-11-20"
   },
   "am_now": {
-   "sha256": "a311609426cd06128358421c2754fa4579cacd5168a60f1cca5071ff0bd2f1cb",
-   "bytes": 639,
+   "sha256": "f176bb498ad98b1865a8e23a9346d5d1d64aac14349d7057a492565e98d63e1b",
+   "bytes": 657,
    "last_date": "2026-11-20"
   },
   "am_stats": {
-   "sha256": "95e73c8e711043f61baf007c82c8a834eed1482eaf34e172e5c2ee3227e7d137",
+   "sha256": "ef28fc59344f86f6f14285a4f70737144d80e5fa3a65d38e1240ff6970da2813",
    "bytes": 1263,
    "last_date": "기준일"
   },
@@ -56,7 +56,7 @@
    "last_date": "2026-11-20"
   },
   "buy3": {
-   "sha256": "e0fdb3334d187420a9304678e817cb408cfb862e3b30e055ba074b802025ffd1",
+   "sha256": "7b739c11262cc264202e62b448e7907f094cdb2d35fff9c2aebbadb2ea3e907d",
    "bytes": 147071,
    "last_date": "2026-10-16"
   },
@@ -131,9 +131,9 @@
    "last_date": "2026-11-20"
   },
   "fx_daily": {
-   "sha256": "e11b6de57afb5b4bea085b3e6f16ab86d504663bc2ea38f3f3a2f3ccdd8a47ce",
-   "bytes": 571795,
-   "last_date": "2026-11-19"
+   "sha256": "138ecd3e821e9523a2d00ae1e0baa1122ba904a470b332bf358f0382235131e5",
+   "bytes": 571996,
+   "last_date": "2026-11-20"
   },
   "gap_table": {
    "sha256": "cda1b1f66c13c950c2af96efa06e4a637e22cf5fff5cf0d8249c3874951ba57d",
@@ -141,9 +141,14 @@
    "last_date": "전체"
   },
   "health": {
-   "sha256": "81c1eb451d8e7eefb9324434d141c256341706bdfb6df53408ce5eba73272c9e",
-   "bytes": 2244,
+   "sha256": "88d485f4990cdbe5e2825cee768214ce274e8fb49812338f268a1b28dc14cf72",
+   "bytes": 1995,
    "last_date": "web_cards"
+  },
+  "lab_sig": {
+   "sha256": "3e4c775ea41cf3fbf164ae7f38e1949b4b23a39fb690dea3ec64497cbcbaf3f2",
+   "bytes": 8830,
+   "last_date": "2026-08-11"
   },
   "lag": {
    "sha256": "8aea72645adb2e2a6c81debb814d356d49e10524e3e23e2ecf71bd19483effc8",
@@ -171,13 +176,13 @@
    "last_date": "2026-11"
   },
   "night_fut": {
-   "sha256": "cc10163b635463b789c8ec8cfe3bb361daf25547d3bcda26dd17599af44fc77b",
-   "bytes": 49804,
-   "last_date": "2026-11-19"
+   "sha256": "7fb725ddda51077d439a40bd5a07843f0bdcb17c5ee820210d87782ad550ce61",
+   "bytes": 50026,
+   "last_date": "2026-11-20"
   },
   "overnight": {
-   "sha256": "0bab2b076336d9425b792785427c46c27d525accd6c5e6620eeb27fb5e3e2d97",
-   "bytes": 1171967,
+   "sha256": "1fb67a6d1f5ea629a738df1b468a4a50124997bac3effc6143481ddd0d2684b8",
+   "bytes": 1172024,
    "last_date": "2026-11-19"
   },
   "overnight_stats": {
@@ -231,7 +236,7 @@
    "last_date": "2026-11-05"
   },
   "sell3": {
-   "sha256": "3aeb3ab7cc907acc89bd3dd8553587ccadd3ba9c2a0ff258fb7b058bdf97d0bc",
+   "sha256": "4e44d559885c1a9843a19ffeddc072cf88b2a659a23adcfb73cbad33ed5abdab",
    "bytes": 747743,
    "last_date": "2026-11-20"
   },
@@ -241,7 +246,7 @@
    "last_date": "2026-11-20"
   },
   "trend_champ_rules": {
-   "sha256": "eda9cc4b0abec265e07b34813bf405a7ee77b369bc51ba4769e8198e9e7eab6e",
+   "sha256": "04414c24f5ce6a3097a09a0ebbd13643da10f615de3a1a1f004e4e261efb2883",
    "bytes": 5037,
    "last_date": "2026"
   },
