@@ -179,20 +179,36 @@
    ]
   }
  },
- "pcrd": {
-  "ok": false,
-  "err": "AttributeError('Can only use .dt accessor with datetimelike values')"
- },
- "squeezemetrics": {
+ "cboe_pcr_daily": {
   "ok": true,
-  "rows": 3914,
-  "from": "2011-05-02",
+  "rows": 7558,
+  "from": "2025-05-12",
   "to": "2026-11-20",
-  "cols": [
-   "date",
-   "price",
-   "dix",
-   "gex"
+  "new_days": 386,
+  "miss": 14,
+  "first_err": "2026-09-07 HTTP 403",
+  "left": 1464,
+  "names": [
+   "CBOE VOLATILITY INDEX (VIX) PUT/CALL RATIO",
+   "CBTX PUT/CALL RATIO",
+   "DJX PUT/CALL RATIO",
+   "DJXW PUT/CALL RATIO",
+   "EQUITY PUT/CALL RATIO",
+   "EXCHANGE TRADED PRODUCTS PUT/CALL RATIO",
+   "INDEX PUT/CALL RATIO",
+   "KPI BINARY OPTION PUT/CALL RATIO",
+   "KPI BINARY OPTIONS PUT/CALL RATIO",
+   "MBTX PUT/CALL RATIO",
+   "MGTN PUT/CALL RATIO",
+   "MGTNW PUT/CALL RATIO",
+   "MRTBW PUT/CALL RATIO",
+   "MRTBX PUT/CALL RATIO",
+   "MRUT PUT/CALL RATIO",
+   "MXACW PUT/CALL RATIO",
+   "MXEA PUT/CALL RATIO",
+   "MXEF PUT/CALL RATIO",
+   "MXUSA PUT/CALL RATIO",
+   "MXWLD PUT/CALL RATIO"
   ]
  },
  "cftc_cols": [
@@ -291,7 +307,7 @@
   }
  },
  "cboe_chain": {
-  "ok": false,
+  "ok": true,
   "items": [
    {
     "sym": "SPX",
@@ -312,8 +328,22 @@
    {
     "sym": "VIX",
     "err": "RuntimeError('HTTP 403')"
+   },
+   {
+    "sym": "SPY",
+    "src": "yahoo",
+    "rows": 2450,
+    "spot": 689.8099975585938,
+    "oi": 2213626.0
+   },
+   {
+    "sym": "QQQ",
+    "src": "yahoo",
+    "rows": 2494,
+    "spot": 608.4500122070312,
+    "oi": 1296319.0
    }
   ]
  },
- "at_kst": "2026-11-22 19:36"
+ "at_kst": "2026-11-22 19:59"
 }
