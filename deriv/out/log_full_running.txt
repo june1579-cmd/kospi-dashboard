@@ -50,3 +50,5 @@
 [19:56:26] 저장 opt_chainx_daily.csv.gz 1570682행
 [19:56:30] == chainwt
 [20:05:08] 저장 opt_chainwt_daily.csv.gz 120944행
+[20:05:10] == chainwm
+[20:06:12] 저장 opt_chainwm_daily.csv.gz 99546행
