@@ -576,6 +576,11 @@ def main():
                             s_sell.append(dn)
                             if close.iloc[i + n] >= Kp.loc[d]: s_hold.append(dn)
                         elif sm > 0: s_buy.append(dn)
+                    if cl.get('trend_split'):   # 라운드 30: 장세 나눔 — 신호 날 종가가 60일선 아래·위(그날 마감 뒤 아는 값)
+                        ma60c = close.rolling(60, min_periods=60).mean()
+                        dn_ = [x for x in s_sell if close.loc[x] < ma60c.loc[x]]; up_ = [x for x in s_sell if close.loc[x] >= ma60c.loc[x]]
+                        conds += [(f'넘은 뒤 {n}일 외국인 선물 누적 순매도 + 60일선 아래', f'_s{n}d', pd.DatetimeIndex(dn_)),
+                                  (f'넘은 뒤 {n}일 외국인 선물 누적 순매도 + 60일선 위', f'_s{n}u', pd.DatetimeIndex(up_))]
                     conds += [(f'넘은 뒤 {n}일 외국인 선물 누적 순매도', f'_s{n}', pd.DatetimeIndex(s_sell)),
                               (f'넘은 뒤 {n}일 외국인 선물 누적 순매도 + 여전히 옛 벽 위', f'_h{n}', pd.DatetimeIndex(s_hold)),
                               (f'넘은 뒤 {n}일 외국인 선물 누적 순매수(대조)', f'_b{n}', pd.DatetimeIndex(s_buy))]
