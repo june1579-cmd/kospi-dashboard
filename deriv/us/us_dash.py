@@ -178,7 +178,7 @@ def main():
         V['ex1'] = V['dev_hit'] - V['dev_base']; V['ex2'] = V['p2_hit'] - V['p2_base']; V['exmin'] = V[['ex1', 'ex2']].min(axis=1)
         led = L.ledger()
         J['verdict'] = {'round': st.get('round'), 'candidates': int(len(V)), 'sel_fwd': int(V['sel_fwd'].sum()), 'sel_rev': int(V['sel_rev'].sum()), 'fwd_pass': int(V['fwd_pass'].sum()),
-                        'rev_pass': int(V['rev_pass'].sum()), 'both_pass': int(V['hold_pass'].sum()), 'trials_total': led.get('trials_total'),
+                        'rev_pass': int(V['rev_pass'].sum()), 'both_pass': int(V['cross_pass'].sum()) if 'cross_pass' in V else int(V['hold_pass'].sum()), 'goal_pass': int(V['hold_pass'].sum()), 'trials_total': led.get('trials_total'),
                         'hit80_both': int(((V['dev_hit'] >= 0.8) & (V['p2_hit'] >= 0.8) & (V['dev_n'] >= 20) & (V['p2_n'] >= 12)).sum()),
                         'p1': '2010~2023', 'p2': '2024~'}
         cols = ['desc', 'family', 'dev_n', 'dev_hit', 'dev_base', 'p2_n', 'p2_hit', 'p2_base', 'p2_p', 'sel_fwd', 'sel_rev', 'fwd_pass', 'rev_pass']
