@@ -5806,5 +5806,45 @@
   "text": "3.52%(11.19)",
   "unit": "%",
   "src": "https://fred.stlouisfed.org/series/BAMLH0A0HYM2"
+ },
+ {
+  "date": "2026-11-20",
+  "key": "metr_level",
+  "value": 40.3,
+  "text": "40.3시간(GPT-6 Astra, METR 11.20 TH1.1+TH2 합산; Opus 5.5 39.0시간)",
+  "unit": "시간",
+  "src": "https://metr.org/blog/2026-11-20-q4-2026-capability-update"
+ },
+ {
+  "date": "2026-11-23",
+  "key": "metr_stall",
+  "value": 0.1,
+  "text": "0.1개월(마지막 기록 2026-11-20)",
+  "unit": "개월",
+  "src": "https://metr.org/blog/2026-11-20-q4-2026-capability-update"
+ },
+ {
+  "date": "2026-11-16",
+  "key": "nand_spot",
+  "value": -23.4,
+  "text": "−23.4%(10.19→11.16, 512Gb TLC 18.592→14.238달러)",
+  "unit": "%",
+  "src": "https://www.trendforce.com/news/2026/11/18/insights-memory-spot-price-update-nand-spot-contract-price-gap-exceeds-20-amid-weak-demand"
+ },
+ {
+  "date": "2026-11-20",
+  "key": "x_cds_oracle",
+  "value": 327.9,
+  "text": "오라클 5년 CDS 장중 최대 327.9bp(11.20, +4.2bp, 10.20 뒤 최고 — 블룸버그(ICE) 1곳)",
+  "unit": "bp",
+  "src": "https://www.bloomberg.com/news/articles/2026-11-20/ai-credit-risk-gauges-worsen-as-tech-selloff-roils-markets"
+ },
+ {
+  "date": "2026-11-22",
+  "key": "x_taiwan",
+  "value": null,
+  "text": "봉쇄·검역 선언 없음, 선박 정지 보고 없음 — 11월 초 100척 넘는 미발표 전개는 3개 전구 합동의 봉쇄 연습으로 분석(타이완뉴스 11.22). TSMC 출하 차질 보도 없음",
+  "unit": "",
+  "src": "https://www.taiwannews.com.tw/en/news/6479698"
  }
 ]
