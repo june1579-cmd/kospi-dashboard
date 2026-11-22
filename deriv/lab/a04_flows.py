@@ -557,6 +557,45 @@ def main():
                                    '뒤 날수': len(w2), '뒤 상승%': (w2 > 0).mean() * 100 if len(w2) else np.nan,
                                    '앞 평균%': w1.mean() if len(w1) else np.nan, '뒤 평균%': w2.mean() if len(w2) else np.nan})
             sig = td[(cnt >= int(un.get('min_votes', 1))).values]
+            # 갈래 B 라운드 28(union 의 first_n, 없으면 그대로 → 예전과 같음): 라운드 27 에서 날 단위 65~70% < 독립 거래 78~79% —
+            #   몰려 나오는 신호 중 첫 신호가 더 맞는지. 직전 first_n 거래일 안에 같은 합친 신호가 없던 날만 남김(미리 정한 n, 결과 보고 고른 값 아님).
+            fn = int(un.get('first_n', 0) or 0)
+            if fn > 0 and len(sig):
+                ps = np.searchsorted(td.values, sig.values)
+                keep = np.r_[True, np.diff(ps) > fn]
+                sig = sig[keep]
+            # 갈래 B 라운드 28(union 의 first_table, 설명용 — 후보 안 만듦): 신호 날마다 독립 거래 여부·직전 신호와의 간격·변동성 분위·추세 → zone_first.csv
+            if un.get('first_table') and len(sig):
+                ps = np.searchsorted(td.values, sig.values)
+                gap = np.r_[9999, np.diff(ps)]
+                ind = set(L.thin(list(sig), mu, td))
+                c_ = k2['close']; rv = c_.pct_change().rolling(20).std()
+                rvp = rv.rolling(250, min_periods=120).apply(lambda a: (a[:-1] < a[-1]).mean() * 100 if len(a) > 1 else np.nan, raw=True)
+                ma60 = c_.rolling(60).mean()
+                fx = ((c_.shift(-mu) / k2['open'].shift(-1) - 1) * 100)
+                frows_ = []
+                for d_, g_ in zip(sig, gap):
+                    frows_.append({'이름': un.get('name'), '날짜': d_.date(), '구간': 'P1' if d_ <= L.DEV_END else 'P2', '해': d_.year,
+                                   '독립 거래': d_ in ind, '직전 신호 간격(거래일)': int(g_) if g_ < 9999 else np.nan,
+                                   '첫 신호(5일)': bool(g_ > 5), '첫 신호(10일)': bool(g_ > 10),
+                                   '20일 변동성 분위(직전 250일)': rvp.get(d_, np.nan), '60일선 위': bool(c_.get(d_, np.nan) > ma60.get(d_, np.nan)),
+                                   f'{mu}일 수익%': fx.get(d_, np.nan)})
+                FT = pd.DataFrame(frows_)
+                FT.round(2).to_csv(os.path.join(od, f"zone_first_{un.get('name')}.csv"), index=False, encoding='utf-8')
+                srows = []
+                rcol = f'{mu}일 수익%'
+                for per in ('P1', 'P2'):
+                    G = FT[(FT['구간'] == per) & FT[rcol].notna()]
+                    for lab_, mk in (('모든 신호 날', pd.Series(True, index=G.index)), ('독립 거래', G['독립 거래']),
+                                     ('독립 거래 · 첫 신호(5일)', G['독립 거래'] & G['첫 신호(5일)']), ('독립 거래 · 뒤따름(5일 안)', G['독립 거래'] & ~G['첫 신호(5일)']),
+                                     ('뒤따름(독립 아님)', ~G['독립 거래']),
+                                     ('독립 거래 · 변동성 분위 ≥ 60', G['독립 거래'] & (G['20일 변동성 분위(직전 250일)'] >= 60)),
+                                     ('독립 거래 · 변동성 분위 < 60', G['독립 거래'] & (G['20일 변동성 분위(직전 250일)'] < 60)),
+                                     ('독립 거래 · 60일선 아래', G['독립 거래'] & ~G['60일선 위'])):
+                        x = G.loc[mk.fillna(False), rcol]
+                        srows.append({'이름': un.get('name'), '구간': per, '묶음': lab_, '수': len(x),
+                                      '상승%': (x > 0).mean() * 100 if len(x) else np.nan, '평균%': x.mean() if len(x) else np.nan})
+                pd.DataFrame(srows).round(1).to_csv(os.path.join(od, f"zone_first_summary_{un.get('name')}.csv"), index=False, encoding='utf-8')
             t = pd.DataFrame({'signal': sig, 'exit': [L.exit_after(td, s_, mu) for s_ in sig]}).dropna()
             f = ((k2['close'].shift(-mu) / k2['open'].shift(-1) - 1) * 100).reindex(sig)
             v1 = f[(sig <= L.DEV_END)].dropna(); v2 = f[sig >= L.HOLD_START].dropna()
@@ -566,6 +605,7 @@ def main():
             ZSIG[uid] = (sig, mu, dr)
             cands.append({'id': uid, 'agent': 'A4', 'family': 'zone_union',
                           'desc': f"합친 위치 신호[{un.get('label', un.get('name'))}]" + (f" 중 {un['min_votes']}개 이상 같은 날" if un.get('min_votes', 1) > 1 else '') +
+                                  (f" · 직전 {fn}거래일 안 같은 신호 없는 첫 신호만" if fn > 0 else '') +
                                   f" → {mu}일 {'상승' if dr > 0 else '하락'}", 'direction': dr, 'trades': t})
         if urows: pd.DataFrame(urows).round(1).to_csv(os.path.join(od, 'zone_union.csv'), index=False, encoding='utf-8')
         if uprows: pd.DataFrame(uprows).round(2).to_csv(os.path.join(od, 'zone_union_parts.csv'), index=False, encoding='utf-8')
