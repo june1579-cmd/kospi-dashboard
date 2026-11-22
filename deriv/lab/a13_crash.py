@@ -171,6 +171,7 @@ def main():
         conds += [('fs1', '외국인 선물·현물 같은 날 순매도 모두 하위10%(3년)', fs1),
                   ('fs3', '외국인 선물·현물 3일 합 순매도 모두 하위10%(3년)', fs3),
                   ('fs5', '외국인 선물·현물 5일 합 순매도 모두 하위10%(3년)', fs5),
+                  ('fs1_first', '외국인 선물·현물 같은 날 동시 하위10% 첫날(직전 5일 없음)', first_day(fs1)),
                   ('fs3_first', '외국인 선물·현물 3일 합 동시 하위10% 첫날', first_day(fs3)),
                   ('fput3', '외국인 풋 3일 순매수 상위10% + 선물 3일 순매도', (q['put3'] >= 0.90) & (fut3 < 0))]
         B = basis_front().reindex(td)
@@ -184,6 +185,30 @@ def main():
                   ('basis_iv', '베이시스 하위10% + IV 5일 상승 상위10%', blow & iv_up.fillna(False))]
     except Exception as e:
         print('pre 실패', e, flush=True)
+
+    # --- gap: 밤사이 미국 급등 → 다음 날 시가 갭 상승 뒤 장중 되밀림(라운드 3, 갈래 D)
+    #   라운드 2 에서 뒤 구간 적합 A6 조합(S&P·나스닥 선물 급등 + 코스피 3일 상승 등)이 앞 구간에서도 1일 하락 59.6%(104거래)로 기본 48.8% 보다 높았다.
+    #   같은 생각을 고정 문턱(그 시점까지 3년 백분위)으로 다시 세워 어느 구간에도 맞추지 않은 판으로 시험한다.
+    #   해외 값은 analyze.py 의 W_ 지표와 같은 규칙: 한국 t일 = 그 시장 현지 날짜 ≤ t 의 마지막 종가(미국 t일 종가는 한국 t+1일 시가 전에 나옴), 5일 넘게 비면 빈칸.
+    try:
+        ov = pd.read_csv(os.path.join(L.DATA, 'overseas_daily.csv'), parse_dates=['date']).set_index('date').sort_index()
+        A = ov.reindex(ov.index.union(td)).ffill(limit=5).reindex(td)
+        kp = L.prices()['KOSPI']['close'].reindex(td)
+        es = A['ES=F'].pct_change(fill_method=None) * 100; nq = A['NQ=F'].pct_change(fill_method=None) * 100
+        ewyg = (A['EWY'].pct_change(fill_method=None) + A['KRW=X'].pct_change(fill_method=None)) * 100 - kp.pct_change(fill_method=None) * 100
+        qes, qnq, qew = pct_rank(es), pct_rank(nq), pct_rank(ewyg)
+        k3 = pct_rank(close.pct_change(3)); otm = pct_rank(wide['OW_F0_otm_cp']) if 'OW_F0_otm_cp' in wide else pd.Series(np.nan, index=td)
+        conds += [('gap_es', 'S&P500 선물 밤사이 등락 3년 백분위 상위10%', qes >= 0.90),
+                  ('gap_esnq', 'S&P500·나스닥 선물 밤사이 등락 모두 상위10%', (qes >= 0.90) & (qnq >= 0.90)),
+                  ('gap_ewy', 'EWY(원화 환산) − 코스피 괴리 상위10%(밤사이 재평가 큼)', qew >= 0.90),
+                  ('gap_ewy95', 'EWY − 코스피 괴리 상위5%', qew >= 0.95),
+                  ('gap_esnq_k3', 'S&P500·나스닥 선물 상위10% + 코스피200 3일 등락 상위20%', (qes >= 0.90) & (qnq >= 0.90) & (k3 >= 0.80)),
+                  ('gap_ewy_k3', 'EWY 괴리 상위10% + 코스피200 3일 등락 상위20%', (qew >= 0.90) & (k3 >= 0.80)),
+                  ('gap_ewy_otm', 'EWY 괴리 상위10% + 근월물 현재가 위 콜/아래 풋 미결제 비 상위20%', (qew >= 0.90) & (otm >= 0.80)),
+                  ('gap_ewy_fsell', 'EWY 괴리 상위10% + 그날 외국인 선물 순매도', (qew >= 0.90) & (fut1 < 0)),
+                  ('gap_es_fsell', 'S&P500 선물 상위10% + 그날 외국인 선물 순매도', (qes >= 0.90) & (fut1 < 0))]
+    except Exception as e:
+        print('gap 실패', e, flush=True)
 
     # --- 장세 겹침
     S = L.regime_states().reindex(td).fillna(False).astype(bool)
