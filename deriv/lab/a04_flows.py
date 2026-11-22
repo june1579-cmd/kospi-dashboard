@@ -347,6 +347,12 @@ def main():
         ucond += [(f'외국인 선물 {n}일 누적 순매수', F['fut_for'].rolling(n, min_periods=n).sum() > 0) for n in (cfg.get('young_flow_sum') or []) if n != 3]
         if cfg.get('young_spot'): ucond += spot_conds(F, td)
         if cfg.get('young_conds'): ucond = [c for c in ucond if c[0] in cfg['young_conds']]
+        # 갈래 A 라운드 36(a04.young_trend: [조건 이름, …], 설정 없으면 없음 → 갈래 B 영향 없음): 라운드 35 설명표에서 통과 후보의 빗나감이
+        #   60일선 아래 날에 몰림(앞 구간 위 23거래 87% · 아래 6거래 50%) — 새 콜벽 + 외국인 매수가 상승 장세에서만 '다음 자리'인지, 그 조건에 60일선 위를 곱한 변형.
+        #   주의: 두 구간을 본 뒤 고른 나눔이라 전진 검증 전 확정 아님(보고에 적음). 60일선은 미리 있던 표준 장세 구분(문턱 고르지 않음).
+        for tcn in (cfg.get('young_trend') or []):
+            base_c = dict(ucond).get(tcn)
+            if base_c is not None: ucond.append((f'{tcn} + 60일선 위', base_c.fillna(False) & trend_up.fillna(False)))
         ucond = _volcap(ucond)
         for grp in (cfg.get('young_union') or []):
             gtags = [t for t in grp if t in age_of and X.get(f'OW_{t[:-1] if t.endswith("x") else t}_wall_dist%') is not None]
