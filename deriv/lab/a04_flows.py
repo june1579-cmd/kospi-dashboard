@@ -506,6 +506,36 @@ def main():
                       variants.append((f'{cn0} + 첫 신호만({fnn}일)', idx0[np.r_[True, np.diff(idx0) > fnn]]))
                   for cn, idx in variants:
                     sig = td[idx]
+                    # 갈래 B 라운드 30(first_n.table, 설명용 — 후보 안 만듦): 첫 신호만 변형의 독립 거래(3일)마다 그날 아는 지표 — 손실 거래(앞 구간 약한 해)가 무엇이 다른지
+                    if fcfg.get('table') and '첫 신호만' in cn and len(sig):
+                        try:
+                            mt = int(fcfg.get('table_m', 3))
+                            ind_ = L.thin(list(sig), mt, td)
+                            c_ = k2['close']; rv_ = c_.pct_change().rolling(20).std()
+                            rvp_ = rv_.rolling(250, min_periods=120).apply(lambda a: (a[:-1] < a[-1]).mean() * 100 if len(a) > 1 else np.nan, raw=True)
+                            ma60_ = c_.rolling(60).mean(); r20_ = c_ / c_.shift(20) - 1
+                            ff3 = F['fut_for'].rolling(3).sum() if 'fut_for' in F else None
+                            fxr = (c_.shift(-mt) / k2['open'].shift(-1) - 1) * 100
+                            trows = []
+                            for d_ in ind_:
+                                sd = td[max(0, td.get_loc(d_) - (1 if delay else 0))]   # 늦춤이면 벽 지표는 위치가 켜진 날(t) 값
+                                trows.append({'날짜': d_.date(), '구간': 'P1' if d_ <= L.DEV_END else 'P2', '해': d_.year,
+                                              f'{mt}일 수익%(지수)': fxr.get(d_, np.nan), '20일 변동성 분위': rvp_.get(d_, np.nan),
+                                              '60일선 위': bool(c_.get(d_, np.nan) > ma60_.get(d_, np.nan)), '직전 20일 수익%': r20_.get(d_, np.nan) * 100,
+                                              '벽 거리%(t)': dist.get(sd, np.nan), '만기까지 거래일(t)': dte.get(sd, np.nan) if dte is not None else np.nan,
+                                              '벽 물량 5일 변화%(t)': oi5.get(sd, np.nan) if oi5 is not None else np.nan,
+                                              '외국인 선물 3일 누적(t)': ff3.get(sd, np.nan) if ff3 is not None else np.nan})
+                            TT = pd.DataFrame(trows)
+                            TT.round(2).to_csv(os.path.join(od, f'zone_first_trades_{tag}_{band_key}.csv'), index=False, encoding='utf-8')
+                            rc = f'{mt}일 수익%(지수)'
+                            if len(TT):
+                                TT['적중'] = TT[rc] > 0
+                                num = [c for c in TT.columns if c not in ('날짜', '구간', '해', '적중', '60일선 위')]
+                                g = TT.groupby(['구간', '적중'])[num + ['60일선 위']].mean(numeric_only=False).round(2)
+                                g['수'] = TT.groupby(['구간', '적중']).size()
+                                g.to_csv(os.path.join(od, f'zone_first_trades_summary_{tag}_{band_key}.csv'), encoding='utf-8')
+                        except Exception as e:
+                            print('첫 신호 설명표 실패', repr(e), flush=True)
                     for m in zc.get('post_m', MS):
                         f = fwd[m] if m in fwd else (k2['close'].shift(-m) / k2['open'].shift(-1) - 1) * 100
                         f = f.reindex(td)
