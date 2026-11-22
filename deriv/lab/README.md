@@ -24,6 +24,7 @@
 
 - 갈래 A: round.json → out/ · state/ · 워크플로 deriv-lab (가설 본선·새 자료·수집 관리).
 - 갈래 B: round_b.json → out_b/ · state_b/ · 워크플로 deriv-lab-b(LAB_TRACK=b) (기간 전부·큰 변동·반대 방향 적합·조합·기계학습). 원장은 A 의 시험·잠금 열람 수를 이어받아 시작.
+- 갈래 D(2026-11-22~): round_d.json → out_d/ · state_d/ · 워크플로 deriv-lab-d(LAB_TRACK=d) — 하락·급락 방향 전담(인버스용 신호 찾기). 총괄 하루 2번(05:13·21:13, Opus 5.5).
 - 기계학습(A7)은 보유 기간 3조각을 동시에(A07_SHARD, 결과 a07s0~2).
 
 ## 통과 기준(2026-11-22 사용자 지정)

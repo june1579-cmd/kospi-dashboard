@@ -1,0 +1,93 @@
+name: deriv-lab-d
+# 갈래 D(2026-11-22 추가): 하락·급락 방향 전담. 갈래 A·B·C 는 그대로.
+# 콜 우위 가설 연구소 갈래 D(2026-11-20, 갈래 A 와 동시 진행) — 에이전트 A2~A10 (KRX 로그인 없음, 저장소 자료만). deriv/lab/round.json 을 바꿔 push 하면 한 라운드가 돈다.
+on:
+  push:
+    branches: [deriv-research]
+    paths: ['deriv/lab/round_d.json']
+  workflow_dispatch:
+permissions:
+  contents: write
+env:
+  LAB_TRACK: d
+concurrency:
+  group: deriv-lab-d
+  cancel-in-progress: false
+jobs:
+  a02:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: deriv-research}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q pandas numpy scipy scikit-learn yfinance
+      - name: A2 정의 + 공통 자료
+        run: |
+          python deriv/scan/scan_data.py
+          python -c "import sys; sys.path.insert(0,'deriv/lab'); import lab_common as L; L.fetch_etf()"
+          python deriv/lab/a02_features.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: work
+          path: |
+            deriv/scan/work
+            deriv/lab/work
+            deriv/data/etf_069500.csv
+          retention-days: 3
+      - uses: actions/upload-artifact@v4
+        with: {name: out-a02, path: deriv/lab/out_d, retention-days: 3}
+  agents:
+    needs: a02
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    strategy:
+      fail-fast: false
+      matrix:
+        agent: [a03_events, a03_cause, a04_flows, a05_roll, a06_rules, a07_ml-s0, a07_ml-s1, a07_ml-s2, extra]   # 기계학습은 보유 기간 3조각 동시(2026-11-20)
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: deriv-research}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q pandas numpy scipy scikit-learn
+      - uses: actions/download-artifact@v4
+        with: {name: work, path: deriv}
+      - name: 에이전트 실행
+        run: |
+          A="${{ matrix.agent }}"
+          if [[ "$A" == *-s* ]]; then export A07_SHARD="${A##*-s}/3"; A="${A%-s*}"; fi
+          if [[ "$A" == extra ]]; then python deriv/lab/run_extra.py; else python deriv/lab/$A.py; fi   # extra = 진화 에이전트가 등록한 새 에이전트(agents.json)
+      - uses: actions/upload-artifact@v4
+        with: {name: 'out-${{ matrix.agent }}', path: deriv/lab/out_d, retention-days: 3}
+  judge:
+    needs: agents
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: deriv-research}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q pandas numpy scipy scikit-learn
+      - uses: actions/download-artifact@v4
+        with: {name: work, path: deriv}
+      - uses: actions/download-artifact@v4
+        with: {pattern: 'out-*', path: deriv/lab/out_d, merge-multiple: true}
+      - name: A8 검증 → A9 매매 → A10 반증 → 정리
+        run: |
+          python deriv/lab/a06c_consensus.py || echo '합의·메타 라벨(A6c) 실패 — 건너뜀'   # 라운드 설정에 consensus 있을 때만
+          python deriv/lab/a08_validate.py
+          python deriv/lab/a09_trade.py
+          python deriv/lab/a10_redteam.py
+          python deriv/lab/lab_merge.py
+      - name: 저장
+        run: |
+          find deriv/lab/out_d -name 'candidates.pkl' -size +20M -delete || true
+          python deriv/lab/prune_rounds.py 10 || true   # 최근 10라운드만 전체 결과, 그 전은 보고·요약만(2026-11-20)
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add deriv/lab/out_d deriv/lab/state_d
+          git commit -q -m "연구소 D 라운드 $(python -c "import json;print(json.load(open('deriv/lab/round_d.json'))['round'])") 결과 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || echo "변경 없음"
+          for i in 1 2 3 4; do git pull -q --rebase origin deriv-research && git push -q origin HEAD:deriv-research && break; sleep 15; done

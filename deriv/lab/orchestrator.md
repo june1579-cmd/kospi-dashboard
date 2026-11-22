@@ -13,20 +13,20 @@
 
 ## 갈래별 설정
 
-| 항목 | 갈래 A | 갈래 B |
-|---|---|---|
-| 회차(KST) | 10:43·13:43·17:43·22:43 | 12:13·15:13·19:13·23:13 |
-| 라운드 설정 파일 | deriv/lab/round.json | deriv/lab/round_b.json |
-| 결과 폴더 | deriv/lab/out/round_NNN | deriv/lab/out_b/round_NNN |
-| 상태 폴더(plan.md·history.md·latest_status.json·ledger.json) | deriv/lab/state | deriv/lab/state_b |
-| 워크플로 | deriv-lab | deriv-lab-b (LAB_TRACK=b) |
-| 카카오톡 머리말 | [연구소 A …] | [연구소 B …] |
-| 마지막 보고 기록 | deriv/lab/notify/last_reported.json | deriv/lab/notify/last_reported_b.json |
-| 보고 문서 절 | '라운드 기록' | '갈래 B 라운드 기록'(없으면 '라운드 기록' 절 뒤에 만듦) |
-| 주제 | 가설 본선: 콜벽·외국인 흐름·원인 분해·롤오버, 새 자료(월물 4개·위클리) 붙이기, 수집 관리 | 기간 전부(단시간 1일~장기 120일)·큰 변동 대상·반대 방향 적합(fit_period)·장세 조건·조합(A6)·기계학습(A7) |
-| 수집(deriv/trigger.txt) | 맡음(아래 4단계) | 절대 건드리지 않음 |
+| 항목 | 갈래 A | 갈래 B | 갈래 D |
+|---|---|---|---|
+| 회차(KST) | 10:43·13:43·17:43·22:43 | 12:13·15:13·19:13·23:13 | 05:13·21:13 |
+| 라운드 설정 파일 | deriv/lab/round.json | deriv/lab/round_b.json | deriv/lab/round_d.json |
+| 결과 폴더 | deriv/lab/out/round_NNN | deriv/lab/out_b/round_NNN | deriv/lab/out_d/round_NNN |
+| 상태 폴더(plan.md·history.md·latest_status.json·ledger.json) | deriv/lab/state | deriv/lab/state_b | deriv/lab/state_d |
+| 워크플로 | deriv-lab | deriv-lab-b (LAB_TRACK=b) | deriv-lab-d (LAB_TRACK=d) |
+| 카카오톡 머리말 | [연구소 A …] | [연구소 B …] | [연구소 D …] |
+| 마지막 보고 기록 | deriv/lab/notify/last_reported.json | deriv/lab/notify/last_reported_b.json | deriv/lab/notify/last_reported_d.json |
+| 보고 문서 절 | '라운드 기록' | '갈래 B 라운드 기록'(없으면 '라운드 기록' 절 뒤에 만듦) | '갈래 D 라운드 기록'(없으면 만듦) |
+| 주제 | 가설 본선: 콜벽·외국인 흐름·원인 분해·롤오버, 새 자료(월물 4개·위클리) 붙이기, 수집 관리 | 기간 전부(단시간 1일~장기 120일)·큰 변동 대상·반대 방향 적합(fit_period)·장세 조건·조합(A6)·기계학습(A7) | 하락·급락 방향만(direction −1 후보와 큰 하락 대상): 가설 뒷부분 '콜벽 위로 올린 뒤 외국인 매도'(벽 돌파·통과 뒤 n일 하락), 풋벽 이탈·풋 물량 급증, 급락 전 징후(외국인 선물·현물 동시 매도, 베이시스·변동성), 하락 장세 조건. 상승 후보는 만들어도 보고 대상 아님. 사용자 지시 2026-11-22: 인버스로 쓸 신호를 찾기 위해 추가 |
+| 수집(deriv/trigger.txt) | 맡음(아래 4단계) | 절대 건드리지 않음 | 절대 건드리지 않음 |
 
-두 갈래는 같은 deriv-research 가지에 커밋합니다. 늘 git pull --rebase 뒤 push 하고, 다른 갈래의 파일(설정·결과·상태)은 고치지 않습니다. 공통 코드(a02~a10, lab_common.py)를 고칠 때는 다른 갈래를 깨지 않게 설정 값으로 켜고 끄는 방식으로 고치고, 커밋 메시지에 갈래를 적습니다.
+갈래들은(A·B·D, 미국 연동 C 는 별도 워크플로) 같은 deriv-research 가지에 커밋합니다. 늘 git pull --rebase 뒤 push 하고, 다른 갈래의 파일(설정·결과·상태)은 고치지 않습니다. 공통 코드(a02~a10, lab_common.py)를 고칠 때는 다른 갈래를 깨지 않게 설정 값으로 켜고 끄는 방식으로 고치고, 커밋 메시지에 갈래를 적습니다.
 
 ## 사용자 목표
 
@@ -62,7 +62,7 @@
    (c) 설정 파일의 round +1, note 한 문장. 상태 폴더 plan.md 에 '원인: …', '시도함: …(결과)', '다음: …' 갱신. 커밋 → git pull --rebase → git -c push.negotiate=true push origin HEAD:deriv-research.
 6. 실행이 끝날 때까지 **1분마다** 확인(최대 60분). 실패하면 gh run view --log-failed 로 원인을 찾아 고치고 한 번 더 돌립니다. 끝나면 git pull 하고 결과를 읽습니다. 한 세션 최대 3라운드, 세션 시작 후 2시간이 지나면 새 라운드를 시작하지 않습니다. 라운드마다 7단계 기록, 8단계 규칙에 맞을 때만 카카오톡.
 7. 보고 문서: Claude Docs 문서 https://claude.ai/artifact/PtZRViSn6y88UTNmYVsspR (문서 id b95bf6b8-f806-4d7e-b365-ca09135f9f36, 탭 file 90cda311-2757, 본문 node f083d705-161f). docs 도구 지침(guide topic.index·topic.editing)을 먼저 읽고: (a) '지금 상태' 절을 최신으로(두 갈래 모두 한 줄씩: 목표 도달 여부, 검증 방식, 가장 가까운 후보와 앞·뒤 구간 수치, 누적 시험·잠금 열람·교차 확인 수, 밝혀진 원인 한두 줄). (b) 내 갈래 절 끝에 '### 라운드 N (날짜 시각)' 소절: 계획 한 줄, 결과(후보→선별/개발 통과→확인/잠금 통과→최종, 교차 모드면 앞→뒤·뒤→앞 따로), 상위 후보 3개 표(설명·독립 거래·적중·하한·기본·위약 p, 교차 모드면 앞·뒤 각각), 원인 분석 3~5줄, 개선 1~3줄, 다음 계획 1줄. 숫자는 결과 파일에서만.
-8. 카카오톡 — 라운드마다 보내지 않습니다. 내 갈래의 마지막 보고 기록({round, best_id, best_lb, at}, 없으면 만듦)과 비교해 다음 중 하나일 때만: (a) 새로 개발 통과·선별(sel_fwd·sel_rev)·확인 통과(hold_pass·fwd_pass·rev_pass)·최종 통과, (b) 최고 후보가 바뀜(id 가 다르거나 하한 2%p 이상 오름), (c) 그날 마지막 회차(A 22:43, B 23:13)의 하루 요약, (d) 정체 진단(9단계)이 새로 생김. 보낼 때 deriv/lab/notify/kakao.txt 를 통째로 바꿔 쓰고(한 통마다 200자 이내, 통 사이 줄 하나에 ===== ), 그 파일과 마지막 보고 기록을 커밋 → pull --rebase → push 하면 deriv-notify 가 카카오톡 '나에게 보내기'로 보냅니다.
+8. 카카오톡 — 라운드마다 보내지 않습니다. 내 갈래의 마지막 보고 기록({round, best_id, best_lb, at}, 없으면 만듦)과 비교해 다음 중 하나일 때만: (a) 새로 개발 통과·선별(sel_fwd·sel_rev)·확인 통과(hold_pass·fwd_pass·rev_pass)·최종 통과, (b) 최고 후보가 바뀜(id 가 다르거나 하한 2%p 이상 오름), (c) 그날 마지막 회차(A 22:43, B 23:13, D 21:13)의 하루 요약, (d) 정체 진단(9단계)이 새로 생김. 보낼 때 deriv/lab/notify/kakao.txt 를 통째로 바꿔 쓰고(한 통마다 200자 이내, 통 사이 줄 하나에 ===== ), 그 파일과 마지막 보고 기록을 커밋 → pull --rebase → push 하면 deriv-notify 가 카카오톡 '나에게 보내기'로 보냅니다.
    보통 1통: "[연구소 A|B 라운드 N] 후보 X→(개발 통과|앞 선별 a·뒤 선별 b) Y→(잠금|양방향) Z · 최고: <설명> (앞 a%·n거래, 뒤 b%·m거래) · 목표 80%: <도달/미도달>" / 2통: "[원인] … [개선] … [다음] … · 투자 권유 아님".
    하루 요약 1통: "[연구소 A|B 하루 요약 M/D] 라운드 a~b(c개) · 최고: <설명> (앞 a%·뒤 b%) · 통과 <수> · 수집: <진행>(B 는 '수집: A 담당')" / 2통: "[오늘 원인] … [내일] … · 투자 권유 아님".
    push 뒤 3분 기다렸다 git pull 하고 deriv/lab/notify/last.json 을 읽어, 내가 보낸 내용의 status 가 sent 가 아니면(deferred·failed·skipped) PushNotification 도구(없으면 ToolSearch)로 같은 1통을 200자 이내로 보냅니다. 같은 내용을 두 번 보내지 않습니다.
