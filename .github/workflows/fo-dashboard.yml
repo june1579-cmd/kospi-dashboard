@@ -19,7 +19,7 @@ jobs:
   krx:
     if: ${{ github.event.schedule == '17 10 * * 1-5' || github.event.inputs.krx == 'true' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 150
     concurrency:
       group: deriv-research-v4      # deriv-research 수집과 같은 줄 — 같은 KRX 계정이 동시에 로그인하지 않게
       cancel-in-progress: false

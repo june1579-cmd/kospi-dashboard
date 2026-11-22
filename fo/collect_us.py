@@ -185,7 +185,8 @@ def cboe_pc():
     if len(have) == 0: return mark('cboe_pc', False, note='일별 통계·옛 이력 모두 받지 못함')
     have = have.drop_duplicates('date', keep='last').sort_values('date')
     have.to_csv(p, index=False)
-    mark('cboe_pc', bool(rows) or not days, have['date'].max(), f'새로 {len(rows)}일 · 전체 {len(have)}일 · {have["date"].min()}~' + ('' if rows or not days else ' · 이번에는 새 값 없음'))
+    fresh = have['date'].max() >= (end - dt.timedelta(days=5)).strftime('%Y-%m-%d')    # 주말·휴일에는 새 값이 없는 것이 정상
+    mark('cboe_pc', bool(rows) or fresh, have['date'].max(), f'새로 {len(rows)}일 · 전체 {len(have)}일 · {have["date"].min()}~')
 
 
 # ------------------------------------------------------------------ VIX 기간구조

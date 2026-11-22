@@ -49,6 +49,7 @@
         const bar = el('div', 'fo-pbar'); const a = el('span', 'fo-pb-up'); a.style.width = r.up + '%'; const b = el('span', 'fo-pb-dn'); b.style.width = (100 - r.up) + '%';
         const ci = el('i', 'fo-pb-ci'); ci.style.left = r.lo + '%'; ci.style.width = Math.max(0.5, r.hi - r.lo) + '%'; bar.append(a, b, ci);
         bar.setAttribute('role', 'img'); bar.setAttribute('aria-label', `상승 ${r.up}% · 하락 ${r.down}% · 신뢰구간 ${r.lo}~${r.hi}%`); row.append(bar);
+        if (r.spread_txt) row.append(el('p', 'fo-pm fo-warn', r.spread_txt));
         row.append(el('p', 'fo-pm', `표본 ${fmt(r.n, 'n0')}일 · 상승 확률의 95% 신뢰구간 ${fmt(r.lo, 'pct1')} ~ ${fmt(r.hi, 'pct1')}`));
         row.append(el('p', 'fo-pm', `검증: ${r.verdict} (보류 구간 ${fmt(r.n_hold, 'n0')}일 적중 ${fmt(r.acc_hold, 'pct1')}, 늘 상승이라고 할 때 ${fmt(r.acc_base, 'pct1')})`));
         const more = el('details', 'fo-more'); more.append(el('summary', '', '근거·참고 값'));
@@ -64,7 +65,7 @@
   };
   D.passlist = (e) => {
     const P = ok('prob'); if (!P) { e.textContent = '—'; return; }
-    const pass = P.filter((r) => r.passed); const nm = (r) => `${r.tname} 다음 ${r.h}거래일(상승 ${fmt(r.up, 'pct1')}, 신뢰구간 ${fmt(r.lo, 'pct1')} ~ ${fmt(r.hi, 'pct1')})`;
+    const pass = P.filter((r) => r.passed); const nm = (r) => `${r.tname} 다음 ${r.h}거래일(상승 ${fmt(r.up, 'pct1')}, 신뢰구간 ${fmt(r.lo, 'pct1')} ~ ${fmt(r.hi, 'pct1')}${r.spread_txt ? ' · 다만 ' + r.spread_txt.replace(/\.$/, '') : ''})`;
     e.textContent = pass.length ? `지수·기간 ${P.length}칸 가운데 검증에서 고른 모형이 보류 구간까지 통과한 것은 ${pass.length}칸입니다 — ${pass.map(nm).join(', ')}. 나머지 ${P.length - pass.length}칸은 통과하지 못해(예측력 없음 또는 약함) 과거 상승 비율(기준선)을 그대로 적었습니다.`
       : `지수·기간 ${P.length}칸 모두 검증을 통과하지 못했습니다(예측력 없음 또는 약함). 모든 칸에 과거 상승 비율(기준선)을 그대로 적었습니다.`;
   };
