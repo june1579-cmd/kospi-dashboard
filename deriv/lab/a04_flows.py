@@ -509,11 +509,25 @@ def main():
                   variants = [(cn0, idx0)]
                   if fcfg and str(band_key) in [str(b) for b in fcfg.get('bands', [])] and cn0 in (fcfg.get('conds') or []) and len(idx0):
                       fnn = int(fcfg.get('n', 5))
-                      variants.append((f'{cn0} + 첫 신호만({fnn}일)', idx0[np.r_[True, np.diff(idx0) > fnn]]))
+                      idx_f = idx0[np.r_[True, np.diff(idx0) > fnn]]
+                      variants.append((f'{cn0} + 첫 신호만({fnn}일)', idx_f))
+                      # 갈래 B 라운드 31(first_n.probe_bands·probe_n·r20_lt, 설정 없으면 그대로 → 예전과 같음):
+                      #   (1) 견고성 — 같은 '첫 신호만'을 n 만 바꿔(probe_n, 미리 정한 3·10일) 결과가 n=5 에만 기대는지 봄(이웃 변형).
+                      #   (2) 과열 가설 — 라운드 30 설명표에서 빗나감이 직전 20일 많이 오른 뒤(6.9% vs 4.1%)에 조금 더 많음 →
+                      #       첫 신호만(n) 날 중 직전 20일 코스피200 수익(그날 종가까지 아는 값)이 r20_lt% 미만인 날만(문턱 5% 미리 정함, A 라운드 35 설명표와 같은 값).
+                      if str(band_key) in [str(b) for b in fcfg.get('probe_bands', fcfg.get('bands', []))]:
+                          for pn in (fcfg.get('probe_n') or []):
+                              pn = int(pn)
+                              if pn != fnn: variants.append((f'{cn0} + 첫 신호만({pn}일)', idx0[np.r_[True, np.diff(idx0) > pn]]))
+                          if fcfg.get('r20_lt') is not None:
+                              r20v = (c1 / c1.shift(20) - 1).values * 100
+                              keep_ = np.array([np.isfinite(r20v[i_]) and r20v[i_] < float(fcfg['r20_lt']) for i_ in idx_f], dtype=bool)
+                              variants.append((f"{cn0} + 첫 신호만({fnn}일) + 직전 20일 {fcfg['r20_lt']}% 미만", idx_f[keep_]))
                   for cn, idx in variants:
                     sig = td[idx]
                     # 갈래 B 라운드 30(first_n.table, 설명용 — 후보 안 만듦): 첫 신호만 변형의 독립 거래(3일)마다 그날 아는 지표 — 손실 거래(앞 구간 약한 해)가 무엇이 다른지
-                    if fcfg.get('table') and '첫 신호만' in cn and len(sig):
+                    #   라운드 31: 같은 파일 이름을 덮어쓰지 않게 기본 n 변형에서만 만듦.
+                    if fcfg.get('table') and cn == f"{cn0} + 첫 신호만({int(fcfg.get('n', 5))}일)" and len(sig):
                         try:
                             mt = int(fcfg.get('table_m', 3))
                             ind_ = L.thin(list(sig), mt, td)
