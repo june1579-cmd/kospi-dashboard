@@ -57,7 +57,10 @@ def yf_daily():
         x.columns = ['open', 'high', 'low', 'close', 'volume']; x['ticker'] = t; x.index.name = 'date'
         rows.append(x.reset_index())
     A = pd.concat(rows, ignore_index=True)
-    A.round(6).to_csv(os.path.join(DATA, 'us_ohlc.csv.gz'), index=False)
+    p = os.path.join(DATA, 'us_ohlc.csv.gz')
+    if os.path.exists(p):   # 야후가 이번에 빠뜨린 종목·날짜는 전에 받은 값으로 지킴
+        A = pd.concat([pd.read_csv(p, parse_dates=['date']), A]).drop_duplicates(['date', 'ticker'], keep='last').sort_values(['ticker', 'date'])
+    A.round(6).to_csv(p, index=False)
     note('yahoo_daily', A)
     LOG['yahoo_daily']['tickers'] = {t: [int((A.ticker == t).sum()), str(A[A.ticker == t].date.min().date()) if (A.ticker == t).any() else None] for t in YF}
 

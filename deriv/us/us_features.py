@@ -46,6 +46,10 @@ def us_native():
     ci = pd.read_csv(os.path.join(DATA, 'cboe_index.csv.gz'), parse_dates=['date']).pivot_table(index='date', columns='sym', values='close')
     cal = C['^GSPC'].dropna().index   # 뉴욕 거래일
     C = C.reindex(cal); ci = ci.reindex(cal)
+    for t in ('ES=F', 'NQ=F', '^SOX', 'EWY', 'KRW=X', '^TNX', 'DX-Y.NYB', 'HYG', '^VIX', '^VIX3M', '^VIX9D', '^VVIX', '^SKEW'):
+        if t not in C: C[t] = np.nan   # 야후가 한 종목을 빠뜨린 날에도 멈추지 않게(값은 빈칸)
+    for t in ('VIX', 'VIX3M', 'VIX9D', 'VVIX', 'SKEW'):
+        if t not in ci: ci[t] = np.nan
     r = lambda t, n: (C[t] / C[t].shift(n) - 1) * 100
     U = pd.DataFrame(index=cal)
     es, nq = C['ES=F'].ffill(limit=2), C['NQ=F'].ffill(limit=2)
