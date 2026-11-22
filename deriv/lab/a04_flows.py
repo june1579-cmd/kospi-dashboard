@@ -786,6 +786,69 @@ def main():
                              '해마다': str({int(y): [int(g.size), round(float(g.mean()), 2)] for y, g in yh.groupby(level=0)})})
         pd.DataFrame(prow).to_csv(os.path.join(od, 'prereg_p0.csv'), index=False, encoding='utf-8')
         print('사전 등록 새 표본 표', len(prow), flush=True)
+    # 갈래 A 라운드 35(a04.prereg_table: {ids}, 설정 없으면 없음 → 갈래 B 영향 없음, 후보 안 만듦 → A8 나눗수 그대로): 두 앞→뒤 통과 후보가
+    #   왜 앞 구간(특히 2010~2014·2011·2014·2022)에서 약하고 뒤→앞 확인 p 가 모자라는지 — 독립 거래마다 그날 장 마감 뒤 아는 지표와 적중/빗나감.
+    #   가설 H1(변동성 장세): 빗나감은 20일 변동성 분위가 높은 날(위기·급변 장)에 몰림. H2(과열): 빗나감은 직전 20일 많이 오른 뒤(갈래 B 라운드 30 과 같은 물음).
+    #   나눔 문턱은 미리 정함(변동성 분위 50, 직전 20일 5%, 60일선) — 결과 보고 고른 값 아님. 설명용, 새 후보로 쓰지 않음.
+    ptc = cfg.get('prereg_table')
+    if ptc:
+        try:
+            try: pxt = L.prices()['K200F']
+            except Exception as e: print('선물 가격 못 읽음, 지수로', repr(e)); pxt = k2
+            c_ = k2['close']; rv_ = c_.pct_change().rolling(20).std()
+            rvp_ = rv_.rolling(250, min_periods=120).apply(lambda a: (a[:-1] < a[-1]).mean() * 100 if len(a) > 1 else np.nan, raw=True)
+            ma60_ = c_.rolling(60).mean(); r20_ = c_ / c_.shift(20) - 1; r5_ = c_ / c_.shift(5) - 1
+            f3_ = F['fut_for'].rolling(3, min_periods=3).sum(); s3_ = F['cash_for'].rolling(3, min_periods=3).sum()
+            pct = lambda s: s.rolling(250, min_periods=120).apply(lambda a: (a[:-1] < a[-1]).mean() * 100 if len(a) > 1 else np.nan, raw=True)
+            f3p_, s3p_ = pct(f3_), pct(s3_)
+            dteF0 = X.get('OW_F0_dte'); dF0 = X.get('OW_F0_wall_dist%')
+            byid = {c['id']: c for c in cands}; trows = []
+            for pid in ptc.get('ids', []):
+                c = byid.get(pid)
+                if c is None: trows.append({'id': pid, '구간': '후보 없음'}); continue
+                tr = c['trades'].assign(signal=lambda d: pd.to_datetime(d['signal']), exit=lambda d: pd.to_datetime(d['exit'])).dropna().sort_values('signal')
+                keep = []; last = pd.Timestamp('1900-01-01')
+                for s_, e_ in zip(tr['signal'], tr['exit']):   # A8 independent() 와 같은 규칙(전 기간 한 줄로)
+                    if s_ >= last: keep.append((s_, e_)); last = e_
+                tt = pd.DataFrame(keep, columns=['signal', 'exit'])
+                if not len(tt): continue
+                ret = L.trade_returns(tt, pxt)
+                for (s_, e_), r_ in zip(keep, ret):
+                    if r_ != r_: continue
+                    trows.append({'id': pid, '신호일': s_.date(), '해': s_.year,
+                                  '구간': '2010~2014' if s_.year <= 2014 else ('2015~2023' if s_ <= L.DEV_END else '2024~'),
+                                  '수익%(선물)': round(float(r_), 2), '적중': bool(c['direction'] * r_ > 0),
+                                  '20일 변동성 분위': rvp_.get(s_, np.nan), '60일선 위': bool(c_.get(s_, np.nan) > ma60_.get(s_, np.nan)),
+                                  '직전 20일 수익%': r20_.get(s_, np.nan) * 100, '직전 5일 수익%': r5_.get(s_, np.nan) * 100,
+                                  '외국인 선물 3일 누적': f3_.get(s_, np.nan), '외국인 선물 3일 분위': f3p_.get(s_, np.nan),
+                                  '외국인 현물 3일 누적': s3_.get(s_, np.nan), '외국인 현물 3일 분위': s3p_.get(s_, np.nan),
+                                  '근월 벽 거리%': dF0.get(s_, np.nan) if dF0 is not None else np.nan,
+                                  '근월 만기까지 거래일': dteF0.get(s_, np.nan) if dteF0 is not None else np.nan})
+            T = pd.DataFrame(trows)
+            T.round(2).to_csv(os.path.join(od, 'prereg_trades.csv'), index=False, encoding='utf-8')
+            srows = []
+            if len(T) and '적중' in T:
+                T = T[T['적중'].notna()].copy()
+                num = ['수익%(선물)', '20일 변동성 분위', '직전 20일 수익%', '직전 5일 수익%', '외국인 선물 3일 분위', '외국인 현물 3일 분위', '근월 벽 거리%', '근월 만기까지 거래일']
+                for (pid, per, hit), g in T.groupby(['id', '구간', '적중']):
+                    r = {'id': pid, '나눔': '적중/빗나감 평균', '구간': per, '칸': '적중' if hit else '빗나감', '거래': len(g), '60일선 위%': round(g['60일선 위'].mean() * 100, 1)}
+                    r.update({k: round(float(g[k].mean()), 2) for k in num if k in g})
+                    srows.append(r)
+                splits = [('20일 변동성 분위', lambda d: np.where(d['20일 변동성 분위'] > 50, '높음(>50)', np.where(d['20일 변동성 분위'].notna(), '낮음(≤50)', None))),
+                          ('직전 20일 수익', lambda d: np.where(d['직전 20일 수익%'] >= 5, '5% 이상', np.where(d['직전 20일 수익%'].notna(), '5% 미만', None))),
+                          ('60일선', lambda d: np.where(d['60일선 위'], '위', '아래'))]
+                for sn, fn in splits:
+                    T['_c'] = fn(T)
+                    for per_lab, sub in (('앞 2010~2023', T[T['구간'] != '2024~']), ('뒤 2024~', T[T['구간'] == '2024~']), ('2010~2014', T[T['구간'] == '2010~2014'])):
+                        for (pid, cc), g in sub.dropna(subset=['_c']).groupby(['id', '_c']):
+                            n = len(g); k = int(g['적중'].sum())
+                            srows.append({'id': pid, '나눔': sn, '구간': per_lab, '칸': cc, '거래': n,
+                                          '적중%': round(k / n * 100, 1) if n else np.nan, '하한%': round(L.wilson(k, n)[0] * 100, 1) if n else np.nan,
+                                          '평균 수익%': round(float(g['수익%(선물)'].mean()), 2), '표본 주의': '10 미만' if n < 10 else ''})
+            pd.DataFrame(srows).to_csv(os.path.join(od, 'prereg_trades_summary.csv'), index=False, encoding='utf-8')
+            print('사전 등록 거래 설명표', len(T), '거래 ·', len(srows), '칸', flush=True)
+        except Exception as e:
+            print('사전 등록 거래 설명표 실패', repr(e), flush=True)
     # 갈래 A 라운드 27(a04.dose, 설정 없으면 없음 → 갈래 B 영향 없음): 용량-반응(원인 확인, 후보는 만들지 않아 A8 나눗수 그대로).
     #   새 콜벽 가족 신호 날(ZSIG)을 그날 외국인 선물 순매수 크기(직전 250거래일 안 백분위, 그날 마감 뒤 아는 값)로 3구간(≤60%·60~85%·85%↑) →
     #   구간(앞 2010~2023·뒤 2024~)별 날수·m일 상승%. 순매수가 클수록 적중이 오르면 '외국인 매수가 원인' 쪽, 평평하면 위치(새 벽) 자체의 힘.
