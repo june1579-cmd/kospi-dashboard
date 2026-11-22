@@ -504,16 +504,28 @@ def main():
         # 갈래 B 라운드 26(zone_conds.union: [{name, ids, m, min_votes?}], 설정 없으면 꺼짐 → 갈래 A 영향 없음): 위치 가족 안의 서로 다른 신호
         #   (벽 물량 5일 증가 + 하루 늦춤 / 외국인 선물 3일 누적 순매수 / 외국인 풋 순매수)는 앞 구간 거래 23~27개씩이라 하나로는 표본·적중이 모자람 —
         #   같은 방향(상승) 신호 날을 합쳐(min_votes 1 = 어느 하나, 2 = 둘 이상 같은 날) 독립 거래를 늘려도 적중이 버티는지. 주의: 구성 신호는 두 구간을 본 뒤 고른 것.
-        urows = []
+        urows, uprows = [], []
         for un in (zc.get('union') or []):
             parts = [ZSIG[i] for i in un.get('ids', []) if i in ZSIG]
             miss = [i for i in un.get('ids', []) if i not in ZSIG]
             if miss: print('합친 신호 구성 없음', un.get('name'), miss, flush=True)
             if len(parts) < 2: continue
             cnt = pd.Series(0, index=td)
+            memb = []
             for sig_, _m, _d in parts:
-                cnt.loc[pd.DatetimeIndex(sig_).intersection(td)] += 1
+                ix = pd.DatetimeIndex(sig_).intersection(td)
+                cnt.loc[ix] += 1; memb.append(pd.Series(td.isin(ix), index=td))
             mu = int(un.get('m', 3)); dr = int(un.get('direction', 1))
+            # 갈래 B 라운드 27: 구성별 기여(날 단위, 설명용 — 후보 안 만듦) — 한 구성만 켜진 날 / 둘 이상 켜진 날의 앞·뒤 상승%
+            fu = ((k2['close'].shift(-mu) / k2['open'].shift(-1) - 1) * 100).reindex(td)
+            pid = [i for i in un.get('ids', []) if i in ZSIG]
+            for j, mj in enumerate(memb):
+                only = mj & (cnt == 1)
+                for lab_, mk in ((f'{pid[j]} 만', only),) + (((f'둘 이상 같은 날', cnt >= 2),) if j == 0 else ()):
+                    w1 = fu[mk & (td <= L.DEV_END)].dropna(); w2 = fu[mk & (td >= L.HOLD_START)].dropna()
+                    uprows.append({'이름': un.get('name'), '구분': lab_, 'm일': mu, '앞 날수': len(w1), '앞 상승%': (w1 > 0).mean() * 100 if len(w1) else np.nan,
+                                   '뒤 날수': len(w2), '뒤 상승%': (w2 > 0).mean() * 100 if len(w2) else np.nan,
+                                   '앞 평균%': w1.mean() if len(w1) else np.nan, '뒤 평균%': w2.mean() if len(w2) else np.nan})
             sig = td[(cnt >= int(un.get('min_votes', 1))).values]
             t = pd.DataFrame({'signal': sig, 'exit': [L.exit_after(td, s_, mu) for s_ in sig]}).dropna()
             f = ((k2['close'].shift(-mu) / k2['open'].shift(-1) - 1) * 100).reindex(sig)
@@ -526,6 +538,7 @@ def main():
                           'desc': f"합친 위치 신호[{un.get('label', un.get('name'))}]" + (f" 중 {un['min_votes']}개 이상 같은 날" if un.get('min_votes', 1) > 1 else '') +
                                   f" → {mu}일 {'상승' if dr > 0 else '하락'}", 'direction': dr, 'trades': t})
         if urows: pd.DataFrame(urows).round(1).to_csv(os.path.join(od, 'zone_union.csv'), index=False, encoding='utf-8')
+        if uprows: pd.DataFrame(uprows).round(2).to_csv(os.path.join(od, 'zone_union_parts.csv'), index=False, encoding='utf-8')
     if cfg.get('weekly'):
         try:
             cands += weekly_block(cfg['weekly'], k2, td, F, od)
