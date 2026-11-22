@@ -1,0 +1,4 @@
+{
+ "_설명": "진화 에이전트가 새로 만든 연구 에이전트 등록부. 연구소 라운드(deriv-lab·deriv-lab-b)의 'extra' 조각이 여기 적힌 파일을 차례로 돌린다. 각 에이전트는 lab_common.save_candidates(이름, 후보) 로 후보를 내야 A8 이 판정한다.",
+ "extra": []
+}

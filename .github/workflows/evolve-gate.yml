@@ -1,0 +1,96 @@
+name: evolve-gate
+# 진화 에이전트 시험(2026-11-22). evolve/ 로 시작하는 가지에서 deriv-research 로 PR 을 열면 돈다.
+# 이 워크플로와 시험 코드(deriv/lab/evolve/)는 항상 '기준 가지(deriv-research)'의 것을 쓴다 — 바꾸려는 쪽이 자기 시험을 고칠 수 없다.
+# 통과하면 자동으로 합치고, 탈락하면 이유를 댓글로 남기고 PR 을 닫는다. 비밀값은 쓰지 않는다(KRX 로그인 없음).
+on:
+  pull_request_target:
+    branches: [deriv-research]
+    types: [opened, synchronize, reopened]
+permissions:
+  contents: read
+concurrency:
+  group: evolve-gate-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  run:
+    if: startsWith(github.event.pull_request.head.ref, 'evolve/') && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        variant: [base-full, head-full, base-trunc, head-trunc]
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: '${{ github.event.pull_request.base.sha }}', path: base}
+      - uses: actions/checkout@v4
+        with: {ref: '${{ github.event.pull_request.head.sha }}', path: head}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q pandas numpy scipy scikit-learn
+      - name: 작업 폴더 만들기(잠금 파일·자료는 항상 기준 것)
+        run: |
+          V="${{ matrix.variant }}"
+          if [[ "$V" == head-* ]]; then
+            cp -r head work
+            for f in a08_validate.py a10_redteam.py lab_merge.py lab_common.py prune_rounds.py; do cp base/deriv/lab/$f work/deriv/lab/$f; done
+            rm -rf work/deriv/lab/evolve work/deriv/data; cp -r base/deriv/lab/evolve work/deriv/lab/evolve; cp -r base/deriv/data work/deriv/data
+            cp base/deriv/lab/round*.json work/deriv/lab/
+          else
+            cp -r base work
+          fi
+          CUT=$(date -u -d '365 days ago' +%F); echo "CUT=$CUT" >> $GITHUB_ENV
+          if [[ "$V" == *-trunc ]]; then python work/deriv/lab/evolve/truncate.py "$CUT"; fi
+      - name: 시험 라운드
+        run: |
+          cd work && bash deriv/lab/evolve/run_round.sh
+          mkdir -p ../res && cp steps.json ../res/ 2>/dev/null || true
+          mkdir -p ../res/out_t && cp -r deriv/lab/out_t/. ../res/out_t/ 2>/dev/null || true
+          mkdir -p ../res/logs && cp log_*.txt ../res/logs/ 2>/dev/null || true
+          find ../res -name 'dev_passed.pkl' -delete || true
+      - uses: actions/upload-artifact@v4
+        with: {name: 'res-${{ matrix.variant }}', path: res, retention-days: 5}
+  judge:
+    needs: run
+    if: always() && needs.run.result != 'skipped'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: '${{ github.event.pull_request.base.sha }}', fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q pandas numpy
+      - uses: actions/download-artifact@v4
+        with: {pattern: 'res-*', path: res}
+      - name: 판정(기준 가지의 gate.py)
+        run: |
+          git fetch -q origin "${{ github.event.pull_request.head.sha }}"
+          git diff --name-only "${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}" > changed.txt
+          CUT=$(date -u -d '365 days ago' +%F)
+          python deriv/lab/evolve/gate.py changed.txt res/res-base-full res/res-head-full res/res-base-trunc res/res-head-trunc "$CUT"
+      - uses: actions/upload-artifact@v4
+        with: {name: gate-result, path: 'gate_result.*', retention-days: 30}
+  merge:
+    needs: judge
+    if: always() && needs.judge.result == 'success'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with: {name: gate-result, path: .}
+      - name: 합치기 또는 닫기
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          gh pr comment "$PR" -R "$REPO" -F gate_result.md
+          if python -c "import json,sys; sys.exit(0 if json.load(open('gate_result.json'))['pass'] else 1)"; then
+            gh pr merge "$PR" -R "$REPO" --squash --delete-branch --match-head-commit "$SHA"
+          else
+            gh pr close "$PR" -R "$REPO"
+          fi
