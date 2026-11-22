@@ -1,0 +1,44 @@
+name: usk
+# 미국·한국 선물옵션 연동 연구(2026-11-22) — 미국 공개 자료 수집 → 지표 → 연구소 기준 검증 → 대시보드 자료. KRX 로그인 없음(저장소의 한국 자료만 읽음).
+# deriv/us/trigger.txt 를 바꿔 push 하면 돈다. 첫 줄: 단계(collect / study / all), 둘째 줄: 수집 항목(빈칸이면 전부).
+on:
+  push:
+    branches: [deriv-research]
+    paths: ['deriv/us/trigger.txt']
+  schedule:
+    - cron: '17 22 * * 1-5'   # 평일 07:17 KST — 미국 장 마감 뒤, 한국 개장 전
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: usk
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: deriv-research}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q pandas numpy scipy scikit-learn yfinance requests
+      - name: 단계 읽기
+        id: t
+        run: |
+          S=$(sed -n 1p deriv/us/trigger.txt | tr -d '\r'); A=$(sed -n 2p deriv/us/trigger.txt | tr -d '\r')
+          if [ "${{ github.event_name }}" = "schedule" ]; then S=all; A=""; fi
+          echo "stage=${S:-all}" >> $GITHUB_OUTPUT; echo "args=$A" >> $GITHUB_OUTPUT
+      - name: 수집
+        if: steps.t.outputs.stage != 'study'
+        run: python deriv/us/us_collect.py ${{ steps.t.outputs.args }}
+      - name: 지표·검증·대시보드 자료
+        if: steps.t.outputs.stage != 'collect'
+        run: |
+          if [ -f deriv/us/us_study.py ]; then python deriv/scan/scan_data.py && python deriv/us/us_study.py; else echo '연구 코드 없음'; fi
+      - name: 저장
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add deriv/us
+          git commit -q -m "미국·한국 연동 연구 자료 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || echo "변경 없음"
+          for i in 1 2 3 4; do git pull -q --rebase origin deriv-research && git push -q origin HEAD:deriv-research && break; sleep 15; done
