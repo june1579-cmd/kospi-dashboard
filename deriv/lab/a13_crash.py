@@ -207,6 +207,23 @@ def main():
                   ('gap_ewy_otm', 'EWY 괴리 상위10% + 근월물 현재가 위 콜/아래 풋 미결제 비 상위20%', (qew >= 0.90) & (otm >= 0.80)),
                   ('gap_ewy_fsell', 'EWY 괴리 상위10% + 그날 외국인 선물 순매도', (qew >= 0.90) & (fut1 < 0)),
                   ('gap_es_fsell', 'S&P500 선물 상위10% + 그날 외국인 선물 순매도', (qes >= 0.90) & (fut1 < 0))]
+        # 라운드 4(갈래 D): 라운드 3 에서 'S&P·나스닥 선물 상위10% + 코스피200 3일 상위20% → 1일 하락'이 앞 60거래 66.7%·뒤 21거래 90.5%,
+        #   5일 급등 뒤(R7)를 겹치면 앞 14거래 85.7%·뒤 9거래 100%(표본 부족). '이미 오른 뒤일수록 되밀림이 강한가'(가설 5)와
+        #   '문턱을 낮춰 거래 수를 늘려도 적중이 유지되나'(가설 6)를 미리 정한 격자로 본다(문턱은 모두 그 시점까지 3년 백분위·고정값, 어느 구간 성적도 안 봄).
+        #   보유는 1일(다음 날 시가→종가)만 — gap2 가족.
+        r5z = L.regime_features()['rg_r5z'].reindex(td)
+        k5 = pct_rank(close.pct_change(5))
+        us = {'u80': ('S&P·나스닥 선물 모두 상위20%', (qes >= 0.80) & (qnq >= 0.80)),
+              'u85': ('S&P·나스닥 선물 모두 상위15%', (qes >= 0.85) & (qnq >= 0.85)),
+              'u90': ('S&P·나스닥 선물 모두 상위10%', (qes >= 0.90) & (qnq >= 0.90)),
+              'uor': ('S&P 또는 나스닥 선물 상위10%', (qes >= 0.90) | (qnq >= 0.90)),
+              'e80': ('S&P 선물 상위20%', qes >= 0.80)}
+        run = {'k3_70': ('코스피200 3일 등락 상위30%', k3 >= 0.70), 'k3_80': ('코스피200 3일 등락 상위20%', k3 >= 0.80),
+               'k5_80': ('코스피200 5일 등락 상위20%', k5 >= 0.80), 'k5_90': ('코스피200 5일 등락 상위10%', k5 >= 0.90),
+               'z1': ('5일 등락 ÷ 3년 5일 등락 표준편차 ≥ 1.0', r5z >= 1.0), 'z15': ('5일 급등(5일 등락 ≥ 1.5σ)', r5z >= 1.5)}
+        for uk, (ud, um) in us.items():
+            for rk, (rdsc, rm) in run.items():
+                conds.append((f'gap2_{uk}_{rk}', f'{ud} + {rdsc}(밤사이 미국 급등 뒤 갭 되밀림)', um & rm))
     except Exception as e:
         print('gap 실패', e, flush=True)
 
@@ -227,6 +244,7 @@ def main():
             summ.append({'cond': cid + tag, 'desc': desc + tdesc, 'n_signals': len(sig)})
             if len(sig) < MIN_SIG: continue
             for tid, tname, exs, h in tgts:
+                if cid.startswith('gap2_') and tid != 'h1': continue   # gap2 = 1일(다음 날 시가→종가)만
                 exits = [L.exit_after(td, s, h) for s in sig] if exs is None else [exs.get(s, pd.NaT) for s in sig]
                 tr = pd.DataFrame({'signal': sig, 'exit': exits}).dropna()
                 if len(tr) < MIN_SIG: continue
