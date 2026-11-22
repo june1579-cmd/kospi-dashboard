@@ -1,7 +1,7 @@
 {
  "yahoo_daily": {
   "ok": true,
-  "rows": 97876,
+  "rows": 97877,
   "from": "2005-01-03",
   "to": "2026-11-20",
   "tickers": {
@@ -34,8 +34,8 @@
     "2005-01-03"
    ],
    "^VIX9D": [
-    3995,
-    "2011-01-04"
+    3996,
+    "2011-01-03"
    ],
    "^VIX3M": [
     5121,
@@ -89,7 +89,7 @@
  },
  "yahoo_hourly": {
   "ok": true,
-  "rows": 27356,
+  "rows": 27363,
   "from": "2024-07-03",
   "to": "2026-11-21"
  },
@@ -181,13 +181,13 @@
  },
  "cboe_pcr_daily": {
   "ok": true,
-  "rows": 7558,
-  "from": "2025-05-12",
+  "rows": 26088,
+  "from": "2019-10-07",
   "to": "2026-11-20",
-  "new_days": 386,
-  "miss": 14,
+  "new_days": 1407,
+  "miss": 71,
   "first_err": "2026-09-07 HTTP 403",
-  "left": 1464,
+  "left": 0,
   "names": [
    "CBOE VOLATILITY INDEX (VIX) PUT/CALL RATIO",
    "CBTX PUT/CALL RATIO",
@@ -332,18 +332,18 @@
    {
     "sym": "SPY",
     "src": "yahoo",
-    "rows": 2450,
+    "rows": 4364,
     "spot": 689.8099975585938,
-    "oi": 2213626.0
+    "oi": 7724622.0
    },
    {
     "sym": "QQQ",
     "src": "yahoo",
-    "rows": 2494,
+    "rows": 4643,
     "spot": 608.4500122070312,
-    "oi": 1296319.0
+    "oi": 5850645.0
    }
   ]
  },
- "at_kst": "2026-11-22 19:59"
+ "at_kst": "2026-11-22 20:23"
 }
