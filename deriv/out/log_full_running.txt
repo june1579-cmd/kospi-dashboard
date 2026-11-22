@@ -44,3 +44,7 @@
 [19:48:53] 저장 iv_daily.csv 4657행
 [19:48:54] == pcr
 [19:52:45] 저장 pcr_daily.csv 4657행
+[19:52:46] git 실패: git push -q origin HEAD:deriv-research To https://github.com/june1579-cmd/kospi-dashboard
+ ! [remote rejected] HEAD -> deriv-research (cannot lock ref 'refs/heads/deriv-research': is at c496bde572675bb5061af3a6554cef776fbb5aa1 but expected
+[19:52:46] == chainx
+[19:56:26] 저장 opt_chainx_daily.csv.gz 1570682행
