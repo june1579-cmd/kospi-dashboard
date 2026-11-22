@@ -493,10 +493,18 @@ def main():
                 if zc.get('plain') and not str(band_key).startswith('s'): conds_b = [c for c in conds if c[0] != '조건 없음']
                 else: conds_b = conds
                 zm = (dist > 0) & (dist <= band)
-                for cn, cm, delay in conds_b:
-                    mall = (zm & cm).fillna(False).values
-                    idx = np.where(mall)[0] + (1 if delay else 0)
-                    idx = idx[idx < len(td)]
+                for cn0, cm, delay in conds_b:
+                  mall = (zm & cm).fillna(False).values
+                  idx0 = np.where(mall)[0] + (1 if delay else 0)
+                  idx0 = idx0[idx0 < len(td)]
+                  # 갈래 B 라운드 29(zone_conds.first_n: {n, bands, conds}, 없으면 그대로 → 갈래 A 영향 없음): 라운드 28 에서 합친 신호를 '첫 신호만'으로 하자
+                  #   앞 독립 거래 33개 79% → 21개 81% — 같은 정의를 거래가 더 많은 위치 신호(±1.5% 등)에도. 직전 n 거래일 안 같은 신호 없는 날만(n 미리 정함).
+                  fcfg = zc.get('first_n') or {}
+                  variants = [(cn0, idx0)]
+                  if fcfg and str(band_key) in [str(b) for b in fcfg.get('bands', [])] and cn0 in (fcfg.get('conds') or []) and len(idx0):
+                      fnn = int(fcfg.get('n', 5))
+                      variants.append((f'{cn0} + 첫 신호만({fnn}일)', idx0[np.r_[True, np.diff(idx0) > fnn]]))
+                  for cn, idx in variants:
                     sig = td[idx]
                     for m in zc.get('post_m', MS):
                         f = fwd[m] if m in fwd else (k2['close'].shift(-m) / k2['open'].shift(-1) - 1) * 100
