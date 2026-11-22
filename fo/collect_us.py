@@ -237,7 +237,9 @@ def px():
     if os.path.exists(p):
         old = pd.read_csv(p); got = set(new['sym'])
         new = pd.concat([old[~old['sym'].isin(got)], new], ignore_index=True)   # 이번에 못 받은 종목은 기존 값 유지
-    new = new.sort_values(['sym', 'date']); new.to_csv(p, index=False)
+    new = new[new['date'] >= '1999-01-01'].sort_values(['sym', 'date'])   # 저장소가 불어나지 않게 1999년부터, 소수 4자리
+    for c in ('open', 'high', 'low', 'close'): new[c] = new[c].round(4)
+    new.to_csv(p, index=False)
     last = new.groupby('sym')['date'].max().to_dict()
     mark('px', not bad, last.get('spx', ''), ' · '.join(f'{k} {v}' for k, v in sorted(last.items())) + (f' · 실패 {",".join(bad)}' if bad else ''))
 

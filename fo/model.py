@@ -166,6 +166,7 @@ def run_target(tkey, tname, X, close, names, asof):
         # 지금 값: 라벨이 확정된 모든 날로 다시 맞춤
         known = np.where(~np.isnan(y))[0]; yk = y[known]; Xk = X.iloc[known]; now = X.iloc[[n - 1]]
         mk = makers[chosen][0]; pm = float(mk().fit(Xk, yk).predict(now)[0]); base = float(yk.mean())
+        others = ' · '.join(f'{nm} {100 * float(m_[0]().fit(Xk, yk).predict(now)[0]):.1f}%' for nm, m_ in makers.items() if nm != chosen)
         L = max(20, 2 * h); nb = 200 if chosen != '그래디언트 부스팅' else 60; kblk = int(np.ceil(len(known) / L)); bm = []; bb = []
         for _ in range(nb):
             st = rng.integers(0, len(known), kblk); ii = ((st[:, None] + np.arange(L)[None, :]) % len(known)).ravel()[:len(known)]
@@ -184,7 +185,7 @@ def run_target(tkey, tname, X, close, names, asof):
                                 up=round(100 * up, 1), down=round(100 - 100 * up, 1), lo=round(100 * lo, 1), hi=round(100 * hi, 1), n=int(len(known)), verdict=vd,
                                 n_hold=s.get('n'), acc_hold=s.get('acc'), acc_base=s.get('acc_base'), features=' · '.join(names.get(k, k) for k in top3), model=chosen,
                                 model_ref=round(100 * pm, 1), model_lo=None if np.isnan(m_lo) else round(100 * m_lo, 1), model_hi=None if np.isnan(m_hi) else round(100 * m_hi, 1),
-                                cond_n=cn, cond_up=cu if cn >= 10 else None, cond_lo=None if np.isnan(cl) else cl, cond_hi=None if np.isnan(ch) else ch, cond_txt='' if cn >= 10 else '표본 부족(10일 미만)',
+                                cond_n=cn, cond_up=cu if cn >= 10 else None, cond_lo=None if np.isnan(cl) else cl, cond_hi=None if np.isnan(ch) else ch, cond_txt='' if cn >= 10 else '표본 부족(10일 미만)', others=others,
                                 passed=1 if passed else 0))
         for u in uni:
             if u['col'] in top3:

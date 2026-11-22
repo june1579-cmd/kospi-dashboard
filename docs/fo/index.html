@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>미국·한국 선물옵션 대시보드</title>
+<meta name="description" content="미국(ES·NQ·Cboe 풋/콜·VIX·CFTC)과 한국(코스피200 선물·옵션) 흐름, 지수 비교, 방향 확률 — GitHub Actions 가 수집·계산해 올린 자료까지 보여 준다">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+</head>
+<body>
+<div class="fo" lang="ko">
+<div class="fo-bar"><span data-draw="bar">자료 읽는 중…</span>
+  <button type="button" id="btn-reload">갱신</button>
+  <a class="btn" href="https://github.com/june1579-cmd/kospi-dashboard/actions/workflows/fo-dashboard.yml" target="_blank" rel="noopener">지금 다시 계산(GitHub Actions)</a>
+  <a href="https://github.com/june1579-cmd/kospi-dashboard/tree/main/fo" target="_blank" rel="noopener">코드</a>
+  <a href="https://github.com/june1579-cmd/kospi-dashboard/tree/main/docs/fo/data" target="_blank" rel="noopener">자료 파일</a>
+  <a href="../">코스피 대시보드</a></div>
+<p class="fo-err" id="fo-err" hidden></p>
+<header id="top">
+  <h1>미국·한국 선물옵션 대시보드</h1>
+  <p data-draw="passlist">—</p>
+  <nav class="fo-nav" aria-label="구역 이동"><button type="button" data-go="s1">한눈에</button><button type="button" data-go="s2">미국 선물</button><button type="button" data-go="s3">미국 옵션</button><button type="button" data-go="s4">한국 선물</button><button type="button" data-go="s5">한국 옵션</button><button type="button" data-go="s6">연관</button><button type="button" data-go="s7">검증</button><button type="button" data-go="s8">최근 흐름</button><button type="button" data-go="s9">자료</button></nav>
+</header>
+
+<section class="fo-sec" id="s1">
+  <h2>1. 한눈에 보기 — 방향 확률</h2>
+  <p class="fo-note">확률은 “다음 1·5·20거래일 뒤 종가가 기준일 종가보다 높을 확률”입니다. 빨강 = 상승, 파랑 = 하락. 막대 위 가는 선은 상승 확률의 95% 신뢰구간(블록 부트스트랩)입니다. “기준선”이라고 적힌 칸은 모형이 아니라 표본 기간 전체의 상승 비율입니다.</p>
+  <div class="fo-cards" id="cards" data-draw="cards">—</div>
+  <h3 id="basis-h">근거 지표 3개(지수·기간별)</h3>
+  <div class="fo-ctls"><label class="fo-ctl"><span>기간</span><select id="s-basis-h" aria-label="기간"><option value="1">다음 1거래일</option><option value="5" selected>다음 5거래일</option><option value="20">다음 20거래일</option></select></label></div>
+  <div data-table="basis"></div>
+  <p class="fo-note">“낮을 때·높을 때”는 학습 구간에서 그 지표가 아래 1/3·위 1/3이던 날의 상승 비율입니다. “검증 구간 개선”은 그 지표 하나만 쓴 조건부 빈도 모형이 기준선보다 브라이어 점수를 몇 % 낮췄는지입니다. p값 0.000은 0.0005 미만(부트스트랩 2,000회)이라는 뜻입니다.</p>
+  <h3 id="h-night">다음 한국 거래일을 앞둔 값</h3>
+  <p class="fo-note">한국 <b data-v="us2kr_now:kr_md:txt"></b> 종가 뒤에 끝난 미국 장: S&amp;P500 <b data-v="us2kr_now:us_on:spct2:s"></b>, VIX <b data-v="us2kr_now:vix_on:spct1"></b> (<b data-v="us2kr_now:have:txt"></b>). 그날 코스피200은 <b data-v="us2kr_now:k200_day:spct2:s"></b>, 이어진 야간선물은 <b data-v="us2kr_now:night:spct2:s"></b>였습니다(야간선물은 모형 입력이 아니며, 시초가가 어디서 시작할지 보여 주는 참고 값입니다. — 는 아직 저장소에 없는 값).</p>
+  <div data-table="us2kr_x"></div>
+  <p class="fo-note">코스피200 “다음 1거래일” 확률은 “기준일 종가보다 다음 거래일 종가가 높을 확률”입니다. 미국 장 결과는 시초가 갭에 거의 다 반영되므로, 장중(시가→종가) 방향과는 다른 질문입니다(6번 구역). 극단적인 날에는 모형 종류에 따라 값이 크게 갈립니다 — 카드의 “근거·참고 값”에서 다른 모형의 값과 위 단순 집계 표를 함께 보십시오.</p>
+</section>
+
+<section class="fo-sec" id="s2">
+  <h2>2. 미국 선물 — ES·NQ와 CFTC 주체별 포지션</h2>
+  <h3>가격 흐름: 지수와 선물(구간 첫날 = 100)</h3>
+  <div class="fo-ctls"><label class="fo-ctl"><span>기간</span><select id="r-us"><option value="6m">6개월</option><option value="1y" selected>1년</option><option value="3y">3년</option><option value="10y">10년</option><option value="all">전체</option></select></label></div>
+  <div class="fo-box" data-draw="us_px" style="min-height:240px">—</div>
+  <p class="fo-note">선물은 야후의 근월물 연속 시세입니다. 값이 빈 날은 받지 못한 날입니다.</p>
+  <h3 id="h-cftc">CFTC 주체별 포지션(선물만, 매주 화요일 기준 · 금요일 공표)</h3>
+  <div class="fo-ctls"><label class="fo-ctl"><span>시장</span><select id="s-cftc-mkt"><option value="ES" selected>E-mini S&amp;P500(ES)</option><option value="NQ">E-mini 나스닥100(NQ)</option></select></label><label class="fo-ctl"><span>주체</span><select id="s-cftc-who"><option value="lev" selected>헤지펀드(레버리지 펀드)</option><option value="am">자산운용사</option><option value="dealer">딜러</option><option value="small">소액(비보고)</option></select></label><label class="fo-ctl"><span>기간</span><select id="r-cftc"><option value="1y">1년</option><option value="3y" selected>3년</option><option value="10y">10년</option><option value="all">전체(2006~)</option></select></label></div>
+  <h4>주체별 순포지션(계약)</h4><div class="fo-box" data-draw="cftc_net" style="min-height:240px">—</div>
+  <h4>고른 주체의 롱·숏·순포지션</h4><div class="fo-box" data-draw="cftc_ls" style="min-height:240px">—</div>
+  <h4>숏÷롱 비율과 지수</h4><div class="fo-box" data-draw="cftc_ratio" style="min-height:240px">—</div>
+  <h4>미결제약정</h4><div class="fo-box" data-draw="cftc_oi" style="min-height:180px">—</div>
+  <h4>최신 보고서(<b data-v="week_sum:cftc_asof:txt"></b> 기준)</h4>
+  <div data-table="cftc_latest"></div>
+  <p class="fo-note">숏÷롱이 1보다 크면 매도 계약이 더 많습니다. 헤지펀드는 차익거래 때문에 평소에도 순매도인 경우가 많아, 수준보다 변화와 과거 백분위를 같이 봅니다. 보고서는 화요일 기준이라 그 뒤 며칠의 움직임은 들어 있지 않습니다.</p>
+</section>
+
+<section class="fo-sec" id="s3">
+  <h2>3. 미국 옵션 — 풋/콜·VIX·만기</h2>
+  <h3>Cboe 풋/콜 일별 추이</h3>
+  <div class="fo-ctls"><label class="fo-ctl"><span>종류</span><select id="s-pc"><option value="pc_total" selected>전체</option><option value="pc_index">지수</option><option value="pc_equity">개별주식</option><option value="pc_spx">SPX</option></select></label><label class="fo-ctl"><span>기간</span><select id="r-pc"><option value="6m">6개월</option><option value="1y" selected>1년</option><option value="3y">3년</option><option value="10y">10년</option><option value="all">전체</option></select></label></div>
+  <div class="fo-box" data-draw="us_pc" style="min-height:240px">—</div>
+  <p class="fo-note">풋/콜 = 풋 거래량 ÷ 콜 거래량(Cboe 거래소 거래분). 높을수록 풋이 많이 거래된 날입니다. 세로 점선은 월간 만기일(셋째 금요일)입니다.</p>
+  <h4>미결제약정 풋÷콜(2019-10~)</h4>
+  <div class="fo-box" data-draw="us_oi" style="min-height:200px">—</div>
+  <p class="fo-note">미국 옵션의 맥스페인과 만기별·행사가별 미결제약정은 무료 공개 자료로 받을 수 없어 싣지 않았습니다. 대신 Cboe가 공표하는 전체·SPX 미결제약정 합계의 풋÷콜을 실었습니다.</p>
+  <h3>VIX와 기간구조</h3>
+  <div class="fo-ctls"><label class="fo-ctl"><span>기간</span><select id="r-vix"><option value="6m">6개월</option><option value="1y" selected>1년</option><option value="3y">3년</option><option value="10y">10년</option><option value="all">전체</option></select></label></div>
+  <div class="fo-box" data-draw="us_vix" style="min-height:240px">—</div>
+  <h4>기간구조(만기별 내재변동성 지수)</h4>
+  <div class="fo-box" data-draw="us_term" style="min-height:200px">—</div>
+  <p class="fo-note">보통은 먼 만기가 더 높습니다(오른쪽이 올라감). VIX÷VIX3M이 1을 넘으면 가까운 만기가 더 높은, 뒤집힌 상태입니다. 최신 VIX÷VIX3M은 <b data-v="week_sum:vix_ratio:n2"></b>입니다.</p>
+  <h3>월간 만기 전후 S&amp;P500 움직임</h3>
+  <div class="fo-box" data-draw="us_opex" style="min-height:220px">—</div>
+  <div data-table="us_opex_stat"></div>
+  <p class="fo-note">만기 주의 상승 비율(<b data-v="us_opex_stat:상승비율:pct1" data-w="id=w0"></b>)과 만기 다음 주(<b data-v="us_opex_stat:상승비율:pct1" data-w="id=w1"></b>)를 아무 5거래일 구간(<b data-v="us_opex_stat:상승비율:pct1" data-w="id=all5"></b>)과 견주어 보십시오. 차이가 작으면 만기라는 사실만으로는 방향을 말하기 어렵다는 뜻입니다.</p>
+</section>
+
+<section class="fo-sec" id="s4">
+  <h2>4. 한국 선물 — 코스피200 선물</h2>
+  <h3>지수·선물·베이시스</h3>
+  <div class="fo-ctls"><label class="fo-ctl"><span>기간</span><select id="r-kr"><option value="6m">6개월</option><option value="1y" selected>1년</option><option value="3y">3년</option><option value="10y">10년</option><option value="all">전체</option></select></label></div>
+  <div class="fo-box" data-draw="kr_px" style="min-height:240px">—</div>
+  <p class="fo-note">베이시스 = 선물 종가 − 코스피200. 음수(백워데이션)가 이어지면 선물이 현물보다 싸게 거래된다는 뜻입니다.</p>
+  <h3>주간·야간 세션별 흐름(2025-06-09~)</h3>
+  <div class="fo-box" data-draw="kr_sess" style="min-height:240px">—</div>
+  <p class="fo-note">야간 세션 = 그날 주간 종가 → 다음 날 06:00 야간 종가, 주간 세션 = 야간 종가 → 그날 주간 종가. 각 세션 등락률을 단순히 더한 값입니다. 야간선물 값은 코스피 대시보드의 아침 갱신 때 들어옵니다(마지막 <b data-v="week_sum:night_asof:txt"></b> 세션, <b data-v="week_sum:night:n2"></b> · <b data-v="week_sum:night_pct:spct2:s"></b>).</p>
+  <h3>미결제약정</h3>
+  <div class="fo-box" data-draw="kr_oi" style="min-height:200px">—</div>
+  <h3>투자자별 순매수</h3>
+  <div class="fo-ctls"><label class="fo-ctl"><span>투자자</span><select id="s-inv"><option value="foreign" selected>외국인</option><option value="inst">기관</option><option value="indiv">개인</option></select></label><label class="fo-ctl"><span>단위</span><select id="s-unit"><option value="amt" selected>금액(억원, KRX)</option><option value="ct">계약</option></select></label><label class="fo-ctl"><span>기간</span><select id="r-inv"><option value="3m">3개월</option><option value="6m" selected>6개월</option><option value="1y">1년</option><option value="3y">3년</option><option value="all">전체</option></select></label></div>
+  <div class="fo-box" data-draw="kr_inv" style="min-height:240px">—</div>
+  <h4>외국인 누적 순매수(20일·60일)</h4>
+  <div class="fo-box" data-draw="kr_cum" style="min-height:240px">—</div>
+  <h3>분기물 롤오버</h3>
+  <div class="fo-box" data-draw="kr_roll" style="min-height:230px">—</div>
+</section>
+
+<section class="fo-sec" id="s5">
+  <h2>5. 한국 옵션 — 코스피200 옵션</h2>
+  <h3>풋/콜(거래량·미결제)</h3>
+  <div class="fo-ctls"><label class="fo-ctl"><span>기간</span><select id="r-kpc"><option value="6m">6개월</option><option value="1y" selected>1년</option><option value="3y">3년</option><option value="10y">10년</option><option value="all">전체</option></select></label></div>
+  <div class="fo-box" data-draw="kr_pc" style="min-height:240px">—</div>
+  <p class="fo-note">날끼리 비교는 회색 선(KRX 공표 풋/콜, 월물 거래량)을 보십시오. 빨강·보라 선은 저장해 둔 행사가 범위(그날 지수 ±25%, 위클리 ±20%) 안의 합산이라, 지수가 크게 움직인 시기에는 범위가 날마다 달라져 오르내림을 그대로 믿기 어렵습니다(참고용). 그래서 방향 모형에는 넣지 않았습니다.</p>
+  <h3>행사가별 미결제약정 집중 구간(<b data-v="kr_strike_top:기준일:txt"></b>)</h3>
+  <div class="fo-ctls"><label class="fo-ctl"><span>만기</span><select id="s-exp" data-draw="exp_sel"></select></label></div>
+  <div class="fo-box" data-draw="kr_strike" style="min-height:260px">—</div>
+  <div data-table="kr_strike_top"></div>
+  <p class="fo-note">맥스페인은 만기에 옵션 매수자가 받는 금액의 합이 가장 작아지는 행사가이며, 저장해 둔 행사가 범위(기준일 지수 <b data-v="kr_strike_top:코스피200:n2"></b>의 ±25%, 위클리 ±20%) 안에서만 계산했습니다. 지수가 급하게 움직여 범위 밖이 된 행사가의 미결제는 빠져 있으므로, 전체 행사가로 계산한 값과 다를 수 있습니다. 위클리 만기일은 이름(예: 2611W4 = 그 달 넷째 주)에서 규칙으로 계산한 날짜입니다.</p>
+  <h3>VKOSPI</h3>
+  <div class="fo-box" data-draw="kr_vk" style="min-height:210px">—</div>
+  <h3>만기 일정(월물·위클리, 미국 월간 만기)</h3>
+  <div data-table="events"></div>
+</section>
+
+<section class="fo-sec" id="s6">
+  <h2>6. 지수 비교·연관</h2>
+  <h3>지표와 지수 겹쳐 보기</h3>
+  <div class="fo-ctls"><label class="fo-ctl"><span>지표</span><select id="s-ov"><option value="us_vix" selected>미국 · VIX ↔ S&amp;P500</option><option value="us_vixr">미국 · VIX÷VIX3M ↔ 나스닥100</option><option value="us_pc_total">미국 · 풋/콜 전체 ↔ S&amp;P500</option><option value="us_pc_equity">미국 · 풋/콜 개별주식 ↔ S&amp;P500</option><option value="us_oipc">미국 · 미결제 풋÷콜 ↔ S&amp;P500</option><option value="kr_f20">한국 · 외국인 선물 20일 누적 ↔ 코스피200</option><option value="kr_f60">한국 · 외국인 선물 60일 누적 ↔ 코스피200</option><option value="kr_basis">한국 · 베이시스 ↔ 코스피200</option><option value="kr_oi">한국 · 선물 미결제 ↔ 코스피200</option><option value="kr_pcoi">한국 · KRX 풋/콜 ↔ 코스피200</option><option value="kr_vk">한국 · VKOSPI ↔ 코스피200</option><option value="kr_fx">한국 · 원/달러 ↔ 코스피200</option></select></label><label class="fo-ctl"><span>기간</span><select id="r-ov"><option value="6m">6개월</option><option value="1y">1년</option><option value="3y" selected>3년</option><option value="10y">10년</option><option value="all">전체</option></select></label></div>
+  <div class="fo-box" data-draw="overlay" style="min-height:240px">—</div>
+  <h3>선후 관계(교차상관)</h3>
+  <div class="fo-ctls"><label class="fo-ctl"><span>지표</span><select id="s-xc" data-draw="xc_sel"></select></label></div>
+  <div class="fo-box" data-draw="xcorr" style="min-height:210px">—</div>
+  <h3>미국 → 다음날 한국</h3>
+  <p class="fo-note">한국 장 마감 뒤부터 다음 개장 전까지 끝난 미국 장의 S&amp;P500 등락으로 나눠, 코스피200의 다음 거래일 시초가·종가·장중(시가→종가) 움직임을 본 표입니다(2000년~).</p>
+  <div data-table="us2kr"></div>
+  <div class="fo-ctls"><label class="fo-ctl"><span>한국 쪽</span><select id="s-sc"><option value="gap" selected>코스피200 시초가</option><option value="c2c">코스피200 종가</option><option value="intra">코스피200 장중(시가→종가)</option><option value="night">야간선물</option></select></label></div>
+  <div class="fo-box" data-draw="scatter" style="min-height:250px">—</div>
+  <div data-table="us2kr_reg"></div>
+  <p class="fo-note">미국 장의 영향은 시초가에 거의 다 반영됩니다(설명력 <b data-v="us2kr_reg:설명력:n1" data-w="id=gap"></b>%). 시가에서 종가까지의 장중 움직임과는 관계가 약합니다(설명력 <b data-v="us2kr_reg:설명력:n1" data-w="id=intra"></b>%, 기울기 <b data-v="us2kr_reg:기울기:n2" data-w="id=intra"></b>). 간밤 −3% 이하 구간의 장중 상승 비율은 <b data-v="us2kr:장중_상승비율:pct1" data-w="id=b0"></b>였습니다.</p>
+</section>
+
+<section class="fo-sec" id="s7">
+  <h2>7. 방향 확률 검증표</h2>
+  <p class="fo-note">시간 순서로 앞 60%는 학습, 다음 20%는 검증(모형·지표 고르기), 마지막 20%는 보류(고른 뒤 한 번만 확인)로 나눴습니다. 예측하는 날의 모형은 라벨이 그 전에 확정된 날만으로 맞췄고(퍼지 = 라벨 기간), 21거래일마다(그래디언트 부스팅은 63거래일마다) 다시 맞췄습니다. 지표 하나씩 시험한 횟수는 <b data-v="model_meta:n_tests:n0"></b>번이고, 다중 비교 보정(Benjamini–Hochberg, q&lt;0.10) 뒤에도 남은 것은 <b data-v="model_meta:n_sig:n0"></b>개입니다. 검증 구간 성적으로 지수·기간마다 모형 하나씩 <b data-v="model_meta:n_targets:n0"></b>개를 골랐고, 그 가운데 보류 구간까지 통과한 것은 <b data-v="model_meta:n_chosen_pass:n0"></b>개입니다(고르지 않은 모형까지 세면 표에서 <b data-v="model_meta:n_pass:n0"></b>줄이 통과).</p>
+  <div class="fo-ctls"><label class="fo-ctl"><span>지수</span><select id="s-valid-t"><option value="">전체</option><option value="S&amp;P500">S&amp;P500</option><option value="나스닥100">나스닥100</option><option value="코스피200" selected>코스피200</option></select></label></div>
+  <div data-table="valid"></div>
+  <p class="fo-note">개선(%) = 기준선 대비 브라이어 점수가 줄어든 비율(클수록 좋음, 0 이하면 기준선보다 못함). 통과 = 검증 구간과 보류 구간에서 모두 기준선보다 낫고, 보류 구간 개선이 블록 부트스트랩으로 유의(p&lt;0.10)하며, 적중률이 “늘 상승”보다 낮지 않을 때. 한눈에 보기에는 <b>검증에서 선택된 모형</b>이 통과했을 때만 그 모형의 확률을 씁니다. 그래디언트 부스팅(복잡 모형)은 검증 구간에서 단순 모형을 모두 이겼을 때만 고릅니다.</p>
+  <p class="fo-note">코스피200 1거래일 모형을 볼 때 알아 둘 점: “간밤 S&amp;P500이 오르면 상승, 내리면 하락”이라는 한 줄 규칙의 보류 구간 적중률도 <b data-v="model_meta:rule_acc:pct1"></b>(<b data-v="model_meta:rule_n:n0"></b>일)입니다. 모형의 힘은 대부분 간밤 미국 장에서 나옵니다.</p>
+  <h3>보정 곡선(예측 확률 ↔ 실제 빈도, 보류 구간)</h3>
+  <div class="fo-ctls"><label class="fo-ctl"><span>지수</span><select id="s-cal-t"><option value="spx">S&amp;P500</option><option value="ndx">나스닥100</option><option value="k200" selected>코스피200</option></select></label><label class="fo-ctl"><span>기간</span><select id="s-cal-h"><option value="1" selected>1거래일</option><option value="5">5거래일</option><option value="20">20거래일</option></select></label></div>
+  <div class="fo-box" data-draw="calib" style="min-height:240px">—</div>
+  <h3>지표 하나씩 시험한 결과(검증 구간, p값 작은 순 20개)</h3>
+  <div data-table="uni_top"></div>
+  <p class="fo-note">선물·옵션 지표는 지수와 “같은 날” 강하게 움직이는 경우가 많지만(6번 구역), 다음 날 이후를 맞히는 힘은 이 표에서 “유의”로 남은 것만 확인된 것입니다. 계산 환경: <b data-v="model_meta:versions:txt"></b>, 시드 <b data-v="model_meta:seed:txt"></b>.</p>
+</section>
+
+<section class="fo-sec" id="s8">
+  <h2>8. 최근 흐름</h2>
+  <p>S&amp;P500은 <b data-v="week_sum:us_asof:txt"></b> <b data-v="week_sum:spx:n2"></b>(<b data-v="week_sum:spx_day:spct2:s"></b>)로 마감했습니다. 5거래일 동안 <b data-v="week_sum:spx_week:spct1:s"></b>, 최근 1년 고점(<b data-v="week_sum:spx_high_date:txt"></b>) 대비 <b data-v="week_sum:spx_dd:spct1:s"></b>이고, 연속 하락은 <b data-v="week_sum:spx_streak:n0"></b>거래일째입니다 <b data-v="week_sum:opex_today:txt"></b>. 다우(DIA ETF 기준)는 하루 <b data-v="week_sum:dia_day:spct2:s"></b>, 5거래일 <b data-v="week_sum:dia_week:spct1:s"></b>, 나스닥100은 하루 <b data-v="week_sum:qqq_day:spct2:s"></b>, 5거래일 <b data-v="week_sum:qqq_week:spct1:s"></b>, 올해 들어 <b data-v="week_sum:qqq_ytd:spct1:s"></b>, 1년 고점 대비 <b data-v="week_sum:qqq_dd:spct1:s"></b>입니다.</p>
+  <p>Cboe 풋/콜(<b data-v="week_sum:pc_asof:txt"></b>)은 전체 <b data-v="week_sum:pc_total:n2"></b>, 지수 <b data-v="week_sum:pc_index:n2"></b>, 개별주식 <b data-v="week_sum:pc_equity:n2"></b>, SPX <b data-v="week_sum:pc_spx:n2"></b>(전날 <b data-v="week_sum:pc_spx_prev:n2"></b>)이고, 풋 <b data-v="week_sum:put_vol_m:n2"></b>백만 계약 · 콜 <b data-v="week_sum:call_vol_m:n2"></b>백만 계약이 거래됐습니다. VIX는 5거래일 전 <b data-v="week_sum:vix_week_ago:n2"></b>에서 <b data-v="week_sum:vix:n2"></b>, VIX÷VIX3M은 <b data-v="week_sum:vix_ratio:n2"></b>입니다(1을 넘으면 기간구조가 뒤집힌 상태).</p>
+  <p>CFTC <b data-v="week_sum:cftc_asof:txt"></b> 기준 보고서에서 헤지펀드의 ES 숏÷롱은 <b data-v="week_sum:es_lev_sl_prev:n2"></b> → <b data-v="week_sum:es_lev_sl:n2"></b>(숏 <b data-v="week_sum:es_lev_short_chg:sn0"></b>계약, 롱 <b data-v="week_sum:es_lev_long_chg:sn0"></b>계약), NQ 순포지션은 <b data-v="week_sum:nq_lev_net_prev:sn0"></b> → <b data-v="week_sum:nq_lev_net:sn0"></b>계약, 숏÷롱 <b data-v="week_sum:nq_lev_sl_prev:n2"></b> → <b data-v="week_sum:nq_lev_sl:n2"></b>입니다.</p>
+  <p>코스피는 <b data-v="week_sum:kr_asof:txt"></b> <b data-v="week_sum:kospi:n2"></b>(<b data-v="week_sum:kospi_day:spct2:s"></b>), 코스피200은 <b data-v="week_sum:k200:n2"></b>(<b data-v="week_sum:k200_day:spct2:s"></b>)로 마감했고 5거래일 동안 코스피 <b data-v="week_sum:kospi_week:spct1:s"></b>, 코스피200 <b data-v="week_sum:k200_week:spct1:s"></b>였습니다. 최근 5거래일 선물 순매수는 외국인 <b data-v="week_sum:foreign_ct_week:sn0:s"></b>계약, 기관 <b data-v="week_sum:inst_ct_week:sn0:s"></b>계약, 개인 <b data-v="week_sum:indiv_ct_week:sn0:s"></b>계약입니다. VKOSPI는 <b data-v="week_sum:vkospi:n2"></b>(<b data-v="week_sum:vkospi_asof:txt"></b>), 선물 베이시스는 <b data-v="week_sum:basis:sn2"></b>(<b data-v="week_sum:basis_asof:txt"></b>)입니다.</p>
+  <h3>일별 표</h3>
+  <div data-table="week"></div>
+  <h3>참고: 비슷한 국면(검증 모형 아님)</h3>
+  <p>S&amp;P500의 5거래일 등락이 −8% 이하로 떨어진 묶음은 2000년 이후 <b data-v="analog_sum:에피소드:n0"></b>번(<b data-v="analog_sum:일수:n0"></b>일)입니다. 지금 값은 <b data-v="analog_sum:현재값:spct2:s"></b>(<b data-v="analog_sum:현재해당:txt"></b>)입니다. 결과가 확정된 <b data-v="analog_sum:확정:n0"></b>번 가운데, 그 구간에 처음 들어선 날 기준으로 다음 1거래일에 오른 것은 <b data-v="analog_sum:상승_1일:n0"></b>번, 5거래일은 <b data-v="analog_sum:상승_5일:n0"></b>번, 20거래일은 <b data-v="analog_sum:상승_20일:n0"></b>번입니다. 표본이 적어 참고만 하시기 바랍니다.</p>
+  <div data-table="analog"></div>
+</section>
+
+<section class="fo-sec" id="s9">
+  <h2>9. 자료 설명</h2>
+  <p class="fo-note">이 웹판의 숫자는 전부 GitHub 저장소의 <code>docs/fo/data</code> 파일 6개에서 나오고, 그 파일은 GitHub Actions 워크플로 <code>fo-dashboard</code>가 수집·계산해 올립니다(화~토 07:47 · 월~금 19:17 KST 자동, 위쪽 [지금 다시 계산] 단추로 수동). 페이지는 열 때마다 저장소에 올라온 최신 파일을 읽습니다.</p>
+  <div data-table="sources"></div>
+  <h3>확인하지 못한 값</h3>
+  <div data-table="unknown"></div>
+  <h3>판단해서 정한 것</h3>
+  <ul class="fo-list">
+    <li>나스닥100은 지수 일별 이력이 있으면 지수로, 받지 못하면 QQQ ETF 종가로 계산합니다(카드에 표시).</li>
+    <li>CFTC 보고서는 기준일(화요일) 3일 뒤 금요일 종가부터 쓸 수 있다고 보았습니다. 공휴일·업무정지로 공표가 밀린 주는 따로 반영하지 않았습니다.</li>
+    <li>한국 모형의 KRX 로그인 지표(외국인·개인 선물 순매수 금액, KRX 풋/콜)는 최신일 값이 아직 없으면 마지막 값을 최대 3거래일 그대로 씁니다(위 “확인하지 못한 값”에 표시).</li>
+    <li>코스피200 옵션 풋/콜(행사가 범위 합산)은 범위가 날마다 달라질 수 있어 방향 모형에서 뺐습니다. 화면에는 참고용으로 남겼습니다.</li>
+    <li>한국의 “다음 1거래일” 확률은 다음 개장 전에 이미 알려진 미국 장 결과를 지표로 씁니다. 그래서 맞히는 힘의 대부분이 시초가 갭에서 나오고, 장중 방향에 대한 확률이 아닙니다.</li>
+    <li>세션별 누적에서 야간 세션 값이 없는 날 다음의 주간 움직임은 전일 주간 종가 기준으로 계산했습니다.</li>
+    <li>원자료는 추정으로 채우지 않습니다. 받지 못한 값은 빈칸(—)으로 두고 위 목록에 적습니다.</li>
+    <li>색은 한국 관례대로 상승·플러스 = 빨강, 하락·마이너스 = 파랑입니다.</li>
+  </ul>
+  <p class="fo-disc">투자 권유 아님. 과거 자료에 기반한 통계이며 앞으로의 결과를 보장하지 않습니다.</p>
+</section>
+</div>
+<script>document.getElementById('btn-reload').addEventListener('click', function () { location.href = location.pathname + '?r=' + Date.now(); });</script>
+<script src="app.js"></script>
+</body>
+</html>

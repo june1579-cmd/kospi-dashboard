@@ -1,0 +1,68 @@
+/* 미국·한국 선물옵션 대시보드 웹판 — 모든 선택자는 .fo 안쪽. 상승 = 빨강, 하락 = 파랑(한국 관례). 노랑은 쓰지 않는다. */
+:root{--font-sans:-apple-system,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",system-ui,sans-serif;--font-serif:"Noto Serif KR","Apple SD Gothic Neo",Georgia,serif;
+--bg:#f6f7f9;--panel:#fff;--fg:#1b1f24;--mut:#6b7280;--line:#e5e7eb;--up:#d93a40;--dn:#2f6fdd;--ok:#1f9d55}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1216;--panel:#171b21;--fg:#e6e8eb;--mut:#9aa3ad;--line:#2a3038;--up:#f0626a;--dn:#6b9cf0;--ok:#4cc38a}}
+html,body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-sans);font-size:15px;line-height:1.55;overflow-x:hidden}
+[hidden]{display:none!important}
+.fo{max-width:1080px;margin:0 auto;padding:10px 14px 40px}
+.fo-bar{font-size:12.5px;color:var(--mut);display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;margin:0 0 10px}
+.fo-bar a{color:inherit}
+.fo-bar button,.fo-bar a.btn{border:1px solid var(--line);background:var(--panel);color:var(--fg);border-radius:999px;padding:3px 12px;font-size:12.5px;cursor:pointer;text-decoration:none}
+.fo-err{background:rgba(217,58,64,.12);color:var(--up);padding:10px;border-radius:8px;margin:0 0 12px}
+.fo h1{font-family:var(--font-serif);font-weight:400;font-size:22px;margin:0 0 10px;line-height:1.25}
+.fo h2{font-size:17px;font-weight:600;margin:0 0 10px;padding-top:14px;border-top:1px solid var(--line)}
+.fo h3{font-size:15px;font-weight:600;margin:20px 0 6px}
+.fo h4{font-size:12.5px;font-weight:600;color:var(--mut);margin:14px 0 6px}
+.fo p{margin:0 0 10px}
+.fo .fo-note,.fo .fo-chart-note{color:var(--mut);font-size:12.5px;margin:6px 0 10px}
+.fo .fo-sec{margin-top:28px;scroll-margin-top:48px}
+.fo .fo-v{font-weight:600;font-variant-numeric:tabular-nums}
+.fo .fo-up{color:var(--up)}.fo .fo-dn{color:var(--dn)}.fo .fo-okc{color:var(--ok)}.fo .fo-mut{color:var(--mut)}
+.fo .fo-nav{display:flex;gap:6px;overflow-x:auto;padding:6px 0;position:sticky;top:0;background:var(--bg);z-index:3;-webkit-overflow-scrolling:touch}
+.fo .fo-nav button{flex:0 0 auto;font:inherit;font-size:12.5px;color:var(--fg);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:4px 11px;cursor:pointer}
+.fo .fo-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.fo .fo-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0}
+.fo .fo-card h3{margin:0;font-size:17px}
+.fo .fo-sub{color:var(--mut);font-size:12.5px;margin:2px 0 10px}
+.fo .fo-prow{border-top:1px solid var(--line);padding:10px 0 2px}
+.fo .fo-ph{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.fo .fo-pl{font-weight:600}
+.fo .fo-kind{font-size:12.5px;color:var(--mut);text-align:right}
+.fo .fo-kind.fo-tag-ok{color:var(--ok);font-weight:600}
+.fo .fo-pn{display:flex;justify-content:space-between;font-family:var(--font-serif);font-size:1.45em;line-height:1.3;margin:2px 0 4px}
+.fo .fo-pbar{position:relative;display:flex;height:12px;border-radius:6px;overflow:hidden;background:var(--line);margin-bottom:6px}
+.fo .fo-pb-up{background:var(--up)}.fo .fo-pb-dn{background:var(--dn)}
+.fo .fo-pb-ci{position:absolute;top:4px;height:4px;background:var(--bg);opacity:.85;border-radius:2px}
+.fo .fo-pm{color:var(--mut);font-size:12.5px;margin:0 0 3px}
+.fo details.fo-more{margin:2px 0 4px}.fo details.fo-more summary{font-size:12.5px;color:var(--mut);cursor:pointer}
+.fo .fo-ctls{display:flex;flex-wrap:wrap;gap:8px 12px;margin:6px 0 10px}
+.fo .fo-ctl{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--mut);max-width:100%;min-width:0}
+.fo .fo-ctl select{max-width:min(250px,100%);min-width:0;font:inherit;font-size:13px;color:var(--fg);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:3px 6px}
+.fo .fo-box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:10px;color:var(--mut);min-width:0}
+.fo .fo-svgbox{position:relative;touch-action:pan-y}
+.fo .fo-svgbox svg{display:block;width:100%;height:auto}
+.fo .fo-lg{display:flex;flex-wrap:wrap;gap:2px 12px;font-size:12.5px;color:var(--mut);margin-bottom:4px}
+.fo .fo-lg-i{display:inline-flex;align-items:center;gap:5px}
+.fo .fo-sw{display:inline-block;width:12px;height:3px;border-radius:2px;flex:0 0 auto}
+.fo .fo-sw-bar{height:9px;width:9px}
+.fo .fo-sw-v{width:0;height:11px;border-left:1.5px dashed var(--mut);background:none}
+.fo .fo-grid{stroke:var(--line);stroke-width:1}.fo .fo-zero{stroke:var(--mut);stroke-width:1}
+.fo .fo-ref{stroke:var(--mut);stroke-width:1;stroke-dasharray:3 3}
+.fo .fo-vline{stroke:var(--mut);stroke-width:1;stroke-dasharray:2 3;opacity:.55}
+.fo .fo-cross{stroke:var(--mut);stroke-width:1}
+.fo .fo-tick{fill:var(--mut);font-size:10.5px;font-family:var(--font-sans);font-variant-numeric:tabular-nums}
+.fo .fo-tip{position:absolute;top:4px;pointer-events:none;background:var(--panel);border:1px solid var(--line);box-shadow:0 2px 8px rgba(0,0,0,.18);border-radius:6px;padding:5px 8px;font-size:11.5px;color:var(--fg);display:flex;flex-direction:column;gap:1px;max-width:78%;z-index:2}
+.fo .fo-tip-r{display:flex;align-items:center;gap:5px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.fo .fo-tw{overflow-x:auto;margin:6px 0 10px;border:1px solid var(--line);border-radius:12px}
+.fo table.fo-t{border-collapse:collapse;width:100%;font-size:12.5px}
+.fo table.fo-t th,.fo table.fo-t td{padding:6px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.fo table.fo-t th{background:var(--panel);color:var(--mut);font-weight:600;white-space:nowrap}
+.fo table.fo-t td:not(.fo-num){min-width:6.5em}
+.fo table.fo-t td.fo-num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.fo table.fo-t tr:last-child td{border-bottom:0}
+.fo table.fo-t tr.fo-hl td{background:rgba(31,157,85,.09)}
+.fo .fo-msg{color:var(--mut);font-size:12.5px;margin:0}
+.fo .fo-list{margin:0 0 10px;padding-left:1.2em;color:var(--mut);font-size:12.5px}
+.fo .fo-list li{margin-bottom:4px}
+.fo .fo-disc{margin-top:20px;padding:10px 14px;border:1px solid var(--line);border-radius:12px;font-weight:600}
+@media print{.fo .fo-nav,.fo .fo-ctls,.fo-bar{display:none}.fo .fo-tw{overflow:visible}}
