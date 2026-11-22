@@ -1,0 +1,84 @@
+name: fo-dashboard
+# 미국·한국 선물옵션 대시보드 — 수집·계산·웹판 게시를 전부 GitHub 안에서 한다.
+#   1) krx   : KRX 로그인 자료(투자자별·베이시스·풋/콜·내재변동성·옵션 행사가별)를 deriv-research 가지에 이어받기
+#   2) build : 미국 공개 자료(CFTC·Cboe·VIX·야후) 수집 → 지표·방향 확률 계산 → docs/fo/ (웹판) 갱신
+# 웹판: https://june1579-cmd.github.io/kospi-dashboard/fo/   (Pages 가 main 의 docs/ 를 그대로 보여 준다)
+# 손으로 돌리기: Actions 탭 → fo-dashboard → Run workflow (krx 를 false 로 두면 KRX 로그인 없이 계산만 다시 한다)
+on:
+  schedule:
+    - cron: '47 22 * * 1-5'   # 07:47 KST 화~토 — 뉴욕 장 마감·CFTC 금요일 공표 뒤, 한국 개장 전
+    - cron: '17 10 * * 1-5'   # 19:17 KST 월~금 — KRX 당일 확정치(18시 이후) 반영
+  workflow_dispatch:
+    inputs:
+      krx:
+        description: 'KRX 로그인 자료도 새로 받기(true / false)'
+        default: 'true'
+permissions:
+  contents: write
+jobs:
+  krx:
+    if: ${{ github.event.schedule == '17 10 * * 1-5' || github.event.inputs.krx == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    concurrency:
+      group: deriv-research-v4      # deriv-research 수집과 같은 줄 — 같은 KRX 계정이 동시에 로그인하지 않게
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: deriv-research
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -q -r requirements.txt
+      - name: KRX 자료 이어받기(받은 날은 건너뜀, 대시보드 수집 시간대는 코드가 스스로 기다림)
+        env:
+          KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
+          KRX_ID: ${{ secrets.KRX_ID }}
+          KRX_PW: ${{ secrets.KRX_PW }}
+        run: python deriv/collect.py full index inv front basis iv pcr chainx chainwt chainwm
+      - name: 결과 저장(deriv-research)
+        if: always()
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add -A deriv/data deriv/out || true
+          git commit -q -m "선물옵션 대시보드용 KRX 이어받기 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || echo "변경 없음"
+          for i in 1 2 3; do git pull --rebase -q origin deriv-research && git push -q origin HEAD:deriv-research && break || sleep 10; done
+  build:
+    needs: krx
+    if: ${{ always() }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    concurrency:
+      group: fo-dashboard
+      cancel-in-progress: false
+    env:
+      PYTHONHASHSEED: '0'
+      TZ: Asia/Seoul
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - name: 한국 파생 자료(deriv-research 가지의 deriv/data 만)
+        uses: actions/checkout@v4
+        with:
+          ref: deriv-research
+          path: _deriv
+          sparse-checkout: deriv/data
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -q pandas==2.3.3 numpy==2.5.3 scipy==1.18.1 scikit-learn==1.9.1 requests==2.34.2
+      - name: 미국 공개 자료 수집(CFTC·Cboe 풋/콜·VIX·야후 일봉)
+        run: python fo/collect_us.py
+      - name: 지표·방향 확률 계산 → 웹판 자료(docs/fo/data)
+        run: if [ -f fo/build.py ]; then python fo/build.py --deriv _deriv/deriv/data; else echo "build.py 없음 — 수집만"; fi
+      - name: 결과 저장(main)
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add -A fo/data docs/fo
+          git commit -q -m "선물옵션 대시보드 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || { echo "변경 없음"; exit 0; }
+          for i in 1 2 3; do git pull --rebase -q && git push -q && break || sleep 10; done
