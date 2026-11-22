@@ -71,7 +71,7 @@ def us_chain():
         o = o[o['exp'] >= now]; o['T'] = ((o['exp'] - now).dt.days + 1) / 365
         o['iv'] = pd.to_numeric(o['iv'], errors='coerce'); o = o[o['iv'] > 0.01]
         if o['gamma'].isna().all() or (o['gamma'].fillna(0) == 0).all(): o['gamma'] = bs_gamma(spot, o['K'].values, o['T'].values, o['iv'].values)
-        o = o[o['T'] <= 60 / 365]   # 60일 안 만기만
+        o = o[o['T'] <= 46 / 365]   # 45일 안 만기만
         step = 5 if sym == 'SPY' else (5 if sym == 'QQQ' else 25)
         st = structure(o, spot, 100, 0.08, step); st.update({'spot': fz(spot), 'ts': ts, 'zero_gamma': zero_gamma(o, spot, 100), 'expiries': int(o['exp'].nunique())})
         near = o[o['exp'] == o['exp'].min()]

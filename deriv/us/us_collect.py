@@ -116,7 +116,7 @@ def cboe_pcr_archive():
     LOG['cboe_pcr_archive']['kinds'] = {k: [int(n), str(A[A.kind == k].date.min().date()), str(A[A.kind == k].date.max().date())] for k, n in A.kind.value_counts().items()}
 
 
-def cboe_pcr_daily(max_new=400):
+def cboe_pcr_daily(max_new=1700):
     """Cboe 일별 시장 통계(2019-10~) — 날짜별 JSON. 이미 받은 날은 건너뛰고, 한 번에 max_new 일까지만(천천히)."""
     p = os.path.join(DATA, 'cboe_pcr_daily.csv.gz')
     old = pd.read_csv(p, parse_dates=['date']) if os.path.exists(p) else pd.DataFrame(columns=['date', 'name', 'value'])
@@ -189,12 +189,13 @@ def cboe_chain():
             out.append({'sym': sym, 'rows': int(len(o)), 'spot': spot, 'ts': ts, 'oi': float(o['open_interest'].sum())})
         except Exception as e:
             out.append({'sym': sym, 'err': repr(e)[:200]})
-    if not any('rows' in x for x in out):   # Cboe 가 막으면 야후 옵션 체인(SPY·QQQ, 가까운 만기 8개)으로 대신 — 감마는 us_dash 에서 계산
+    if not any('rows' in x for x in out):   # Cboe 가 막으면 야후 옵션 체인(SPY·QQQ, 45일 안 만기)으로 대신 — 감마는 us_dash 에서 계산
         import yfinance as yf
         for sym in ('SPY', 'QQQ'):
             try:
                 tk = yf.Ticker(sym); spot = float(tk.history(period='5d')['Close'].iloc[-1]); rows = []
-                for e in list(tk.options)[:8]:
+                lim = pd.Timestamp.now().normalize() + pd.Timedelta(days=45)
+                for e in [e for e in list(tk.options) if pd.Timestamp(e) <= lim][:30]:   # 45일 안 만기 전부
                     ch = tk.option_chain(e)
                     for cp, x in (('C', ch.calls), ('P', ch.puts)):
                         rows.append(pd.DataFrame({'root': sym, 'exp': pd.Timestamp(e), 'cp': cp, 'K': x['strike'], 'open_interest': x['openInterest'], 'volume': x['volume'],
