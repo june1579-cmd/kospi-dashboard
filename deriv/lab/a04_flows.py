@@ -433,7 +433,9 @@ def main():
                 cross_ = new_ & ~roll_ & (kp_ <= S_)
                 shift_ = new_ & ~roll_ & (kp_ > S_)
                 orig_of[t_] = {'roll': roll_.fillna(False), 'cross': cross_.fillna(False), 'shift': shift_.fillna(False),
-                               'shift_up': (shift_ & (kk_ > kp_)).fillna(False)}
+                               'shift_up': (shift_ & (kk_ > kp_)).fillna(False),
+                               # 라운드 46: 만기 교체가 아닌 새 벽이 옛 벽보다 위로(up)·아래로(down) 옮겨 감 — 넘어섬·물량 이동 모두 포함.
+                               'up': (new_ & ~roll_ & (kk_ > kp_)).fillna(False), 'down': (new_ & ~roll_ & (kk_ < kp_)).fillna(False)}
             print('새 벽 생긴 까닭', {t_: {k_: int(v_.sum()) for k_, v_ in d_.items()} for t_, d_ in orig_of.items()}, flush=True)
         orows = []
         YBAR = cfg.get('young_barrier'); pxb = None
@@ -514,6 +516,25 @@ def main():
                             for cn, cm in ucond:
                                 if cn not in YO.get('conds', [cn]): continue
                                 for ol, om_ in (('1위 압도', dom_), ('1위 압도 아님', k2m & ~dom_), ('콜 우위', cpm_), ('콜 우위 아님', k2m & ~cpm_)):
+                                    mm_ = om_ & cm.fillna(False)
+                                    r_ = {'묶음': '+'.join(gtags), '폭': blab, '조건': cn, '까닭': ol}
+                                    for pn_, pm_ in (('앞', (td <= L.DEV_END) & (td >= pd.Timestamp('2010-01-01'))), ('뒤', p2)):
+                                        r_[f'{pn_} 날수'] = int((mm_ & pm_).sum())
+                                        for m in YM:
+                                            v_ = yfwd[m][mm_ & pm_].dropna(); r_[f'{pn_} {m}일 상승%'] = round(float((v_ > 0).mean() * 100), 1) if len(v_) else np.nan
+                                    orows.append(r_)
+                        # 라운드 46(kinds 에 K2up·K2dn 있을 때만): 콜 최대 자리가 '위로' 옮겨 갔나 — K2up 맞은 시리즈의 새 벽이 모두 옛 벽보다 위(만기 교체 없음),
+                        #   K2dn 하나 이상이 옛 벽보다 아래로 옮겨 감. 가설 H13: 위로 옮겨 간 날만 상승 계속(포지션이 위로 굴러감), 아래로는 힘 없음.
+                        if any(k_ in YO.get('kinds', []) for k_ in ('K2up', 'K2dn')):
+                            nup = sum((hits[i].astype(bool) & orig_of[t]['up']).astype(int) for i, t in enumerate(gtags))
+                            ndn = sum((hits[i].astype(bool) & orig_of[t]['down']).astype(int) for i, t in enumerate(gtags))
+                            up_ = k2m & (nup == cnt); dn_ = k2m & (ndn >= 1)
+                            for ok_, om_, ol_ in (('K2up', up_, '둘 이상 동시(모두 옛 벽보다 위로 옮겨 감)'),
+                                                  ('K2dn', dn_, '둘 이상 동시(하나 이상 옛 벽보다 아래로 옮겨 감)')):
+                                if ok_ in YO.get('kinds', []): kinds.append((ok_, om_, ol_)); okinds.add(ok_)
+                            for cn, cm in ucond:
+                                if cn not in YO.get('conds', [cn]): continue
+                                for ol, om_ in (('모두 위로', up_), ('아래로 포함', dn_), ('그 밖(만기 교체 섞임)', k2m & ~up_ & ~dn_)):
                                     mm_ = om_ & cm.fillna(False)
                                     r_ = {'묶음': '+'.join(gtags), '폭': blab, '조건': cn, '까닭': ol}
                                     for pn_, pm_ in (('앞', (td <= L.DEV_END) & (td >= pd.Timestamp('2010-01-01'))), ('뒤', p2)):
