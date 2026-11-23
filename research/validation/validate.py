@@ -345,6 +345,8 @@ for i, e in ep.iterrows():
     summ['quintile'] = {}
     for lab in rets:
         summ['quintile'][lab] = [round(float(U.loc[U['q5'] == q, 'x_' + lab].median()) * 100, 2) for q in (1, 2, 3, 4, 5)]
+    # 무작위 명단 비교용(2026-11-23): 그 고점일의 전체 후보와 점수·초과수익을 그대로 남긴다(random_check.py 가 읽음)
+    U[['rank', 'total', 'market'] + ['x_' + l_ for l_ in rets]].to_csv(os.path.join(OUT, f'panel_{T}.csv.gz'), compression='gzip')
     results.append(summ)
     cols = ['rank', 'name', 'market', 'sector', 'total', 's_def', 's_hold', 's_grow', 's_flow', 's_com', 'beta', 'div', 'pbr', 'profit_years', 'ret2y', 'mdd', 'beats', 'inst_3m', 'frgn_ratio', 'short'] + [c for c in U.columns if c.startswith('x_') or c in rets]
     top = U[cols].head(100).reset_index().rename(columns={'index': 'code'})
