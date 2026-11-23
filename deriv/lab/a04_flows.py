@@ -578,6 +578,14 @@ def main():
                               r20v = (c1 / c1.shift(20) - 1).values * 100
                               keep_ = np.array([np.isfinite(r20v[i_]) and r20v[i_] < float(fcfg['r20_lt']) for i_ in idx_f], dtype=bool)
                               variants.append((f"{cn0} + 첫 신호만({fnn}일) + 직전 20일 {fcfg['r20_lt']}% 미만", idx_f[keep_]))
+                      # 갈래 B 라운드 35(first_n.confirm, 설정 없으면 없음 → 갈래 A·D 영향 없음): 라운드 34 경로표에서 앞 구간 빗나감 6거래는 진입 첫날부터 모두 내림
+                      #   (1일째 상승 0%, 맞음 27거래는 74%) — '처음부터 안 감'을 거르면 보유 기간에 덜 기대나(가설 H4). 첫 신호만(n) 신호일 i 의 다음 날(원래 진입일 i+1)
+                      #   지수 종가 > 시가(그날 마감 뒤 아는 값)이면 i+1 을 새 신호일로(진입 i+2 시가), 대조로 종가 < 시가인 날도 따로. 값·정의는 미리 정함(문턱 없음).
+                      if fcfg.get('confirm'):
+                          cv_ = k2['close'].values; ov_ = k2['open'].values
+                          j_ = idx_f[idx_f + 1 < len(td)] + 1
+                          variants.append((f'{cn0} + 첫 신호만({fnn}일) + 다음 날 양봉 확인', j_[cv_[j_] > ov_[j_]]))
+                          variants.append((f'{cn0} + 첫 신호만({fnn}일) + 다음 날 음봉 뒤', j_[cv_[j_] < ov_[j_]]))
                   for cn, idx in variants:
                     sig = td[idx]
                     # 갈래 B 라운드 30(first_n.table, 설명용 — 후보 안 만듦): 첫 신호만 변형의 독립 거래(3일)마다 그날 아는 지표 — 손실 거래(앞 구간 약한 해)가 무엇이 다른지
