@@ -889,6 +889,82 @@ def main():
             print('사전 등록 거래 설명표', len(T), '거래 ·', len(srows), '칸', flush=True)
         except Exception as e:
             print('사전 등록 거래 설명표 실패', repr(e), flush=True)
+    # 갈래 A 라운드 39(a04.path_table: {ids, tags}, 설정 없으면 없음 → 갈래 B·D 영향 없음, 후보 안 만듦 → A8 나눗수 그대로): 라운드 38 에서 통과 계열이
+    #   보유 5일에만 85% 를 넘고 3·7일은 69~80% — 날별 경로로 이유를 봄. 독립 거래(A8 규칙)마다 진입(다음 날 시가, 연속 선물) 대비 1~10일째 종가 누적 수익,
+    #   신호날 가장 가까운 새 벽(묶음 시리즈 중 나이 1일·현재가 위, 지수 단위)에 1~5일 안 고가로 닿음·종가로 넘음, 5→7·5→10일 되밀림,
+    #   외국인 선물 1~5일·6~10일 누적(넘은 뒤 파나 — 가설 뒷부분). 경로 끝이 자료 밖이면 빈칸(추정 안 함).
+    pth = cfg.get('path_table')
+    if pth:
+        try:
+            try: pxp = L.prices()['K200F']
+            except Exception as e: print('선물 가격 못 읽음, 지수로', repr(e)); pxp = k2
+            ptags = [t for t in pth.get('tags', ['F0', 'F1', 'F2', 'ALL']) if t in age_of and X.get(f'OW_{t}_wall_dist%') is not None]
+            newd = pd.concat([X[f'OW_{t}_wall_dist%'].where((age_of[t] <= 1) & (X[f'OW_{t}_wall_dist%'] > 0)) for t in ptags], axis=1).min(axis=1) if ptags else None
+            ffp = F['fut_for']; byid = {c['id']: c for c in cands}; prow = []
+            tdl = list(td); pos = {d: i for i, d in enumerate(tdl)}
+            for pid in pth.get('ids', []):
+                c = byid.get(pid)
+                if c is None: prow.append({'id': pid, '구간': '후보 없음'}); continue
+                tr = c['trades'].assign(signal=lambda d: pd.to_datetime(d['signal']), exit=lambda d: pd.to_datetime(d['exit'])).dropna().sort_values('signal')
+                keep = []; last = pd.Timestamp('1900-01-01')
+                for s_, e_ in zip(tr['signal'], tr['exit']):
+                    if s_ >= last: keep.append(s_); last = e_
+                for s_ in keep:
+                    i = pos.get(s_)
+                    if i is None or i + 1 >= len(tdl): continue
+                    ent_d = tdl[i + 1]
+                    if ent_d not in pxp.index: continue
+                    o = float(pxp['open'].loc[ent_d])
+                    r = {'id': pid, '신호일': s_.date(), '구간': '2010~2014' if s_.year <= 2014 else ('2015~2023' if s_ <= L.DEV_END else '2024~')}
+                    for k in range(1, 11):
+                        dk = tdl[i + k] if i + k < len(tdl) else None
+                        r[f'{k}일%'] = round((float(pxp['close'].loc[dk]) / o - 1) * 100, 3) if dk is not None and dk in pxp.index else np.nan
+                    r['적중(5일)'] = (r['5일%'] > 0) if r['5일%'] == r['5일%'] else np.nan
+                    nd = float(newd.get(s_, np.nan)) if newd is not None else np.nan
+                    r['새 벽 거리%'] = round(nd, 2) if nd == nd else np.nan
+                    if nd == nd and i + 5 < len(tdl):
+                        Kw = float(k2['close'].loc[s_]) * (1 + nd / 100)
+                        w5 = tdl[i + 1:i + 6]
+                        r['5일 안 고가로 닿음'] = bool((k2['high'].reindex(w5) >= Kw).any()) if 'high' in k2 else np.nan
+                        r['5일 안 종가로 넘음'] = bool((k2['close'].reindex(w5) > Kw).any())
+                        r['5일째 종가가 벽 위'] = bool(float(k2['close'].loc[tdl[i + 5]]) > Kw)
+                    r['5→7일%'] = round(r['7일%'] - r['5일%'], 3) if r['7일%'] == r['7일%'] and r['5일%'] == r['5일%'] else np.nan
+                    r['5→10일%'] = round(r['10일%'] - r['5일%'], 3) if r['10일%'] == r['10일%'] and r['5일%'] == r['5일%'] else np.nan
+                    r['외국인 선물 1~5일 합'] = float(ffp.iloc[i + 1:i + 6].sum()) if i + 5 < len(tdl) and ffp.iloc[i + 1:i + 6].notna().all() else np.nan
+                    r['외국인 선물 6~10일 합'] = float(ffp.iloc[i + 6:i + 11].sum()) if i + 10 < len(tdl) and ffp.iloc[i + 6:i + 11].notna().all() else np.nan
+                    prow.append(r)
+            P = pd.DataFrame(prow); P.to_csv(os.path.join(od, 'path_trades.csv'), index=False, encoding='utf-8')
+            srows = []
+            if len(P) and '1일%' in P:
+                P = P[P['1일%'].notna()].copy()
+                P['앞뒤'] = np.where(P['구간'] == '2024~', '뒤 2024~', '앞 2010~2023')
+                for (pid, per), g in P.groupby(['id', '앞뒤']):
+                    for sub_lab, sub in (('전체', g), ('5일 적중', g[g['적중(5일)'] == True]), ('5일 빗나감', g[g['적중(5일)'] == False])):   # noqa: E712
+                        if not len(sub): continue
+                        r = {'id': pid, '구간': per, '칸': sub_lab, '거래': len(sub), '표본 주의': '10 미만' if len(sub) < 10 else ''}
+                        for k in range(1, 11):
+                            v = sub[f'{k}일%'].dropna()
+                            r[f'{k}일 평균%'] = round(float(v.mean()), 2) if len(v) else np.nan
+                            r[f'{k}일 상승%'] = round(float((v > 0).mean() * 100), 1) if len(v) else np.nan
+                        for col in ('5일 안 고가로 닿음', '5일 안 종가로 넘음', '5일째 종가가 벽 위'):
+                            if col in sub: v = sub[col].dropna(); r[col + '%'] = round(float(v.astype(float).mean() * 100), 1) if len(v) else np.nan
+                        for col in ('5→7일%', '5→10일%'):
+                            v = sub[col].dropna(); r[col.replace('%', '') + ' 평균%'] = round(float(v.mean()), 2) if len(v) else np.nan
+                            r[col.replace('%', '') + ' 하락%'] = round(float((v < 0).mean() * 100), 1) if len(v) else np.nan
+                        for col in ('외국인 선물 1~5일 합', '외국인 선물 6~10일 합'):
+                            v = sub[col].dropna(); r[col + ' 순매도%'] = round(float((v < 0).mean() * 100), 1) if len(v) else np.nan
+                        srows.append(r)
+                # 벽 넘음 여부로 나눈 5→10일(가설 뒷부분: 벽 위로 올린 뒤 파나)
+                if '5일째 종가가 벽 위' in P:
+                    for (pid, per, ab), g in P.dropna(subset=['5일째 종가가 벽 위']).groupby(['id', '앞뒤', '5일째 종가가 벽 위']):
+                        v = g['5→10일%'].dropna(); f2 = g['외국인 선물 6~10일 합'].dropna()
+                        srows.append({'id': pid, '구간': per, '칸': '5일째 벽 위' if ab else '5일째 벽 아래', '거래': len(g), '표본 주의': '10 미만' if len(g) < 10 else '',
+                                      '5→10일 평균%': round(float(v.mean()), 2) if len(v) else np.nan, '5→10일 하락%': round(float((v < 0).mean() * 100), 1) if len(v) else np.nan,
+                                      '외국인 선물 6~10일 합 순매도%': round(float((f2 < 0).mean() * 100), 1) if len(f2) else np.nan})
+            pd.DataFrame(srows).to_csv(os.path.join(od, 'path_summary.csv'), index=False, encoding='utf-8')
+            print('경로 설명표', len(P), '거래 ·', len(srows), '칸', flush=True)
+        except Exception as e:
+            print('경로 설명표 실패', repr(e), flush=True)
     # 갈래 A 라운드 27(a04.dose, 설정 없으면 없음 → 갈래 B 영향 없음): 용량-반응(원인 확인, 후보는 만들지 않아 A8 나눗수 그대로).
     #   새 콜벽 가족 신호 날(ZSIG)을 그날 외국인 선물 순매수 크기(직전 250거래일 안 백분위, 그날 마감 뒤 아는 값)로 3구간(≤60%·60~85%·85%↑) →
     #   구간(앞 2010~2023·뒤 2024~)별 날수·m일 상승%. 순매수가 클수록 적중이 오르면 '외국인 매수가 원인' 쪽, 평평하면 위치(새 벽) 자체의 힘.
