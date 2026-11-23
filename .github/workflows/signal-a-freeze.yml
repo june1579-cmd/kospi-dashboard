@@ -1,0 +1,61 @@
+# Signal A 자료 고정(2026-11-24 사용자 지시): 지금까지 수집한 자료로 자료표를 만들고 원자료와 함께 릴리스에 올린다. 이미 있으면 덮어쓰지 않는다. KRX 로그인 없음.
+name: signal-a-freeze
+on:
+  push:
+    branches: [deriv-research]
+    paths: ['deriv/signal_a/freeze.txt']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: signal-a-freeze
+  cancel-in-progress: false
+jobs:
+  freeze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: deriv-research}
+      - uses: actions/checkout@v4
+        with: {ref: main, path: _main}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q -r _main/requirements.txt joblib
+      - name: 지표 만들기(통합 예측 연구소와 같은 순서)
+        run: |
+          python deriv/scan/scan_data.py
+          python deriv/lab/a02_features.py
+          B="$RUNNER_TEMP/bm"; mkdir -p "$B"; cp _main/out/q_daily.csv "$B/"
+          python _main/pkg/combo_track.py "_main/data/통합_원자료.xlsx" "$B" --daily > /dev/null
+          python deriv/uni/uni_panel.py
+      - name: 묶기
+        run: |
+          mkdir -p _fz
+          cp deriv/uni/out/panel.pkl deriv/uni/out/panel_meta.json deriv/lab/work/lab_feat.pkl _fz/
+          tar czf _fz/raw_deriv.tgz --ignore-failed-read deriv/data deriv/us/data deriv/us/out deriv/out deriv/scan
+          tar czf _fz/raw_main.tgz --ignore-failed-read -C _main out "data/통합_원자료.xlsx"
+          git rev-parse HEAD > _fz/commit_deriv.txt; git -C _main rev-parse HEAD > _fz/commit_main.txt
+          (cd _fz && sha256sum * > SHA256SUMS && ls -la)
+      - name: 릴리스에 올리기(기한 없이 보관, 이미 있으면 그대로 둠)
+        env: {GH_TOKEN: '${{ github.token }}'}
+        run: |
+          V=signal-a-data-v1
+          if gh release view "$V" > /dev/null 2>&1; then echo "이미 있음 — 덮어쓰지 않음"; echo "SKIP=1" >> "$GITHUB_ENV"; exit 0; fi
+          gh release create "$V" _fz/* --target deriv-research --title "Signal A 고정 자료 v1" --notes "Signal A 연구용 고정 자료(2026-11-24). 이 뒤에 수집된 자료는 Signal A 에서 쓰지 않는다."
+      - name: 기록
+        if: env.SKIP != '1'
+        run: |
+          mkdir -p deriv/signal_a/state
+          cp _fz/SHA256SUMS deriv/signal_a/state/freeze_sha256.txt
+          python - <<'PY'
+          import json, datetime as dt
+          m = json.load(open('_fz/panel_meta.json', encoding='utf-8'))
+          json.dump({'release': 'signal-a-data-v1', 'made': dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).strftime('%Y-%m-%d %H:%M'), 'start': m.get('start'), 'end': m.get('end'), 'n_features': m.get('n_features'),
+                     'commit_deriv': open('_fz/commit_deriv.txt').read().strip(), 'commit_main': open('_fz/commit_main.txt').read().strip(), 'files': ['panel.pkl', 'panel_meta.json', 'lab_feat.pkl', 'raw_deriv.tgz', 'raw_main.tgz']},
+                    open('deriv/signal_a/state/freeze.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+          PY
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add deriv/signal_a/state/freeze.json deriv/signal_a/state/freeze_sha256.txt
+          git commit -q -m "Signal A 자료 고정 기록 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
+          for i in 1 2 3 4; do git pull -q --rebase origin deriv-research && git push -q origin HEAD:deriv-research && break; sleep 15; done
