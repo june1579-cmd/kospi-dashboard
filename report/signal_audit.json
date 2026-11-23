@@ -1,5 +1,5 @@
 {
- "made": "2026-11-23 13:09",
+ "made": "2026-11-23 13:13",
  "data_end": "2026-11-20",
  "signals": 455,
  "eras": [
@@ -832,11 +832,13 @@
  },
  "truncate": [
   {
-   "cut": "2025-06-30",
-   "ok": null,
+   "cut": "2026-04-30",
+   "ok": true,
    "only_full": [],
    "only_cut": [],
-   "note": "다시 계산 실패: KeyError: \"None of [Index(['crash', 'date', 'crash_pct', 't0', 't1', 't2', 't3', 'd0', 'd1', 'd2',\\n       'd3', 'overlap', 'overlap_with', 'pending', 'peak', '"
+   "note": "",
+   "n_full": 421,
+   "n_cut": 421
   },
   {
    "cut": "2026-06-30",
@@ -846,6 +848,15 @@
    "note": "",
    "n_full": 430,
    "n_cut": 430
+  },
+  {
+   "cut": "2026-09-30",
+   "ok": true,
+   "only_full": [],
+   "only_cut": [],
+   "note": "",
+   "n_full": 447,
+   "n_cut": 447
   }
  ],
  "problems": 2
