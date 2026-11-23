@@ -18,3 +18,5 @@
 [07:07:55] 저장 inv_daily.csv.gz 37719행
 [07:08:33] inv OPWKI P : 1428행
 [07:08:33] 저장 inv_daily.csv.gz 39147행
+[07:08:54] inv OPWKM C : 806행
+[07:08:55] 저장 inv_daily.csv.gz 39953행
