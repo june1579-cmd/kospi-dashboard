@@ -30,7 +30,9 @@ HS = [1, 3, 5, 10, 20]
 MIN_RAW = 35; MIN_N = 35
 # 걸어가며 고르는 규칙: (전체 거래, 전체 적중, 앞 토막 거래, 앞 적중, 뒤 토막(최근 3년) 거래, 뒤 적중)
 RULES_WF = [('85% 이상', [35, 0.85, 0, 0, 0, 0]), ('80% 이상', [35, 0.80, 0, 0, 0, 0]), ('75% 이상', [35, 0.75, 0, 0, 0, 0]),
-            ('85% 이상 + 최근 3년 8거래·75%', [35, 0.85, 0, 0, 8, 0.75]), ('80% 이상 + 최근 3년 8거래·75%', [35, 0.80, 0, 0, 8, 0.75]), ('60거래·75% 이상', [60, 0.75, 0, 0, 0, 0])]
+            ('85% 이상 + 최근 3년 8거래·75%', [35, 0.85, 0, 0, 8, 0.75]), ('80% 이상 + 최근 3년 8거래·75%', [35, 0.80, 0, 0, 8, 0.75]), ('60거래·75% 이상', [60, 0.75, 0, 0, 0, 0]),
+            # 2차 실행에서 추가: 연구소 통과·관찰 숫자를 과거에 그대로 적용한 꼴(앞 = 최근 3년 이전, 뒤 = 최근 3년)
+            ('연구소 통과 숫자 꼴(35거래·85%, 앞·최근 3년 각 12거래·80%)', [35, 0.85, 12, 0.80, 12, 0.80]), ('연구소 관찰 숫자 꼴(35거래·80%, 앞·최근 3년 각 12거래·75%)', [35, 0.80, 12, 0.75, 12, 0.75])]
 # 전체 기간: 연구소 통과·관찰 숫자(앞 = 2023년까지, 뒤 = 2024년부터)
 RULES_FULL = [('통과 숫자(35거래·85%, 앞·뒤 12거래·80%)', [35, 0.85, 12, 0.80, 12, 0.80]), ('관찰 숫자(35거래·80%, 앞·뒤 12거래·75%)', [35, 0.80, 12, 0.75, 12, 0.75]),
               ('전체만 85%', [35, 0.85, 0, 0, 0, 0]), ('전체만 80%', [35, 0.80, 0, 0, 0, 0])]
@@ -110,22 +112,13 @@ def main():
                test=[str(idx[test_start].date()), str(idx[-1].date())] if not full else None, H=HS, rules=[nm for nm, _ in rules], null_shifts=[int(s) for s in shifts[:nB]], null_types=null_types,
                enum=[int(x) for x in res['enum'][1:5]], seconds=round(sec, 1), threads=int(res['misc'][3]), level4_stopped=bool(res['misc'][0]), l3_total=int(res['misc'][1]), l3_expanded=int(res['misc'][2]),
                hist=res['hist'].tolist(), histn=res['histn'][:max(nB, 1)].tolist(), sel=res['sel'].tolist(), seln=res['seln'][:max(nB, 1)].tolist(), pool=res['pool'].tolist(), maxlevel=a.maxlevel)
-    # 시험 해 바탕 확률과, 고른 조합들이 낸 표로 만든 '합친 신호'의 성적
+    # 시험 해 바탕 확률, 날짜별 표(고른 조합이 그날 몇 개 켜졌나), 시험 해 수익 부호 — '합친 신호' 성적은 combo_report.py 가 여기서 계산한다
+    #   (1차 실행은 여기서 계산하다 합계 변수가 8비트(127)에서 넘쳐 숫자가 틀렸다 → 2차 실행부터 원자료를 저장)
     if not full:
-        base = {}; vs = []
+        base = {}
         for hi, h in enumerate(HS):
-            v = val[hi, test_start:]; ok = v >= 0; base[h] = [int(ok.sum()), int(v[ok].sum())]
-        V = res['votes']
-        for L in range(K.MAXL):
-            for r in range(len(rules)):
-                for hi, h in enumerate(HS):
-                    for dr in range(2):
-                        vv = V[L, r, hi, dr]
-                        for kmin in (1, 3, 10):
-                            days = [int(d) for d in np.where(vv >= kmin)[0]]; tr_ = [d for d in thin(days, h) if val[hi, test_start + d] >= 0]
-                            if not days: continue
-                            up = int(sum(val[hi, test_start + d] for d in tr_)); vs.append([L + 1, r, h, dr, kmin, len(days), len(tr_), up if dr == 0 else len(tr_) - up])
-        out['base'] = base; out['vote_signals'] = vs
+            v = val[hi, test_start:]; ok = v >= 0; base[h] = [int(ok.sum()), int(v[ok].astype(np.int64).sum())]
+        out['base'] = base; out['votes'] = res['votes'][:min(a.maxlevel, 3)].astype(int).tolist(); out['test_val'] = val[:, test_start:].astype(int).tolist()
     # 가장 좋아 보이는 것(하한 기준 상위 50) — 스레드별 표를 합쳐 다시 고름
     tops = []
     for L in range(K.MAXL):

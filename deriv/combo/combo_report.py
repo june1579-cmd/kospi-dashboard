@@ -8,11 +8,46 @@ import os
 import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__)); OUT = os.environ.get('COMBO_OUT') or os.path.join(HERE, 'out')
+OUT3 = os.environ.get('COMBO_OUT3') or os.path.join(HERE, 'out3')   # 2차 실행(조합 3개까지, 날짜별 표 원자료·연구소 통과 숫자 꼴 규칙 포함)
 PERIODS = [('2016~2026', range(2016, 2027)), ('2016~2023', range(2016, 2024)), ('2024~2026', range(2024, 2027))]
 DIR = ['오름', '내림']
 
 
 def pct(a, b): return '—' if not b else f'{a / b * 100:.1f}%'
+
+
+def thin(days, h):
+    out = []; last = -10 ** 6
+    for d in days:
+        if d - last >= h: out.append(int(d)); last = d
+    return out
+
+
+TAGS = [('1개 이상', 'abs', 1), ('3개 이상', 'abs', 3), ('10개 이상', 'abs', 10), ('고른 것의 1% 이상', 'frac', 0.01), ('고른 것의 5% 이상', 'frac', 0.05), ('고른 것의 20% 이상', 'frac', 0.20), ('고른 것의 50% 이상', 'frac', 0.50)]
+
+
+def vote_stats(wf3, ys, HS, base_rate):
+    """날짜별 표 → 합친 신호. 반환: {(방향, 규칙, 조합 크기, 문턱 이름): {'all': [거래, 맞음, 바탕가중], 'h': {보유일: [...]}, 'y': {해: [...]}}}"""
+    A = {}
+    for y in ys:
+        o = wf3[y]; V = np.array(o['votes']); tv = np.array(o['test_val']); sel = np.array(o['sel'])
+        for L in range(V.shape[0]):
+            for r in range(V.shape[1]):
+                for hi, h in enumerate(HS):
+                    for dr in range(2):
+                        ns = int(sel[L, r, hi, dr])
+                        if ns == 0: continue
+                        v = V[L, r, hi, dr]; b = base_rate(o, h, dr)
+                        for tag, kind, x in TAGS:
+                            k = x if kind == 'abs' else max(1, int(np.ceil(x * ns)))
+                            days = np.where(v >= k)[0]
+                            if not len(days): continue
+                            tr = [d for d in thin(days, h) if tv[hi][d] >= 0]
+                            if not tr: continue
+                            up = sum(int(tv[hi][d]) for d in tr); hit = up if dr == 0 else len(tr) - up
+                            e = A.setdefault((dr, r, L + 1, tag), dict(all=[0, 0, 0.0], h={}, y={}))
+                            for tgt in (e['all'], e['h'].setdefault(h, [0, 0, 0.0]), e['y'].setdefault(y, [0, 0, 0.0])): tgt[0] += len(tr); tgt[1] += hit; tgt[2] += len(tr) * b
+    return A
 def num(x): return f'{x:,.0f}'
 
 
@@ -21,6 +56,10 @@ def main():
     for fp in glob.glob(os.path.join(OUT, 'fit_*.json')):
         o = json.load(open(fp, encoding='utf-8')); fits[o['fit']] = o
     full = fits.get('FULL'); wf = {int(k): v for k, v in fits.items() if k != 'FULL'}; S = dict(fits=sorted(fits), periods={})
+    wf3 = {}
+    for fp in glob.glob(os.path.join(OUT3, 'fit_*.json')):
+        o = json.load(open(fp, encoding='utf-8'))
+        if o['fit'] != 'FULL': wf3[int(o['fit'])] = o
     M = ['# 조건 조합 전부 훑기 검증 결과', '']
     if fits:
         any_ = next(iter(fits.values()))
@@ -109,18 +148,40 @@ def main():
                         d = (teh / ten - bw / ten) * 100 if ten else None
                         M.append(f"| {DIR[dr]} | {rn} | {L + 1}개 | {ns / len(ys):,.0f} | {nn_ / len(ys):,.0f} | {ny_ / len(ys):,.0f} | {pct(trh, trn)} | {pct(teh, ten)} | {pct(bw, ten)} | {'—' if d is None else f'{d:+.1f}%p'} | {num(ten)} |")
                         P[f'{dr}|{r}|{L + 1}'] = dict(sel_per_year=ns / len(ys), null_global_per_year=nn_ / len(ys), null_year_per_year=ny_ / len(ys), train_hit=trh / trn if trn else None, test_hit=teh / ten if ten else None, base=bw / ten if ten else None, test_n=ten)
-            M += ['', '고른 조합들을 하나의 신호로 합쳐 채점(그날 켜진 조합이 k개 이상이면 신호, 겹치지 않게 솎음) — 실제로 매매한다면 이쪽이 맞는 숫자:', '',
-                  '| 방향 | 규칙 | 조합 크기 | 켜진 조합 수 | 거래 | 적중 | 바탕 | 차이 |', '|---|---|---|---|---|---|---|---|']
-            Vt = {}
-            for y in ys:
-                o = wf[y]
-                for L, r, h, dr, km, raw, tr_, hit in o['vote_signals']:
-                    k = (dr, r, L, km); v = Vt.setdefault(k, [0, 0, 0.0]); v[0] += tr_; v[1] += hit; v[2] += tr_ * base_rate(o, h, dr)
             Pv = {}
-            for (dr, r, L, km), (tn, th, bw) in sorted(Vt.items()):
-                if tn < 20: continue
-                M.append(f"| {DIR[dr]} | {rules[r]} | {L}개 | {km}개 이상 | {tn:,} | {pct(th, tn)} | {pct(bw, tn)} | {(th / tn - bw / tn) * 100:+.1f}%p |")
-                Pv[f'{dr}|{r}|{L}|{km}'] = dict(n=tn, hit=th / tn, base=bw / tn)
+            ys3 = [y for y in ys if y in wf3]
+            if ys3:
+                rules3 = wf3[ys3[0]]['rules']
+                # 2차 실행에서 추가한 규칙(연구소 통과·관찰 숫자 꼴)의 조합별 채점
+                M += ['', '연구소 통과·관찰 숫자를 과거에 그대로 적용했을 때(2차 실행, 조합 3개까지):', '', '| 방향 | 규칙 | 조합 크기 | 고른 수(해 평균) | 가짜(통째로)면 | 가짜(해 안)면 | 학습 적중 | 다음 해 적중 | 바탕 | 차이 | 다음 해 거래 |', '|---|---|---|---|---|---|---|---|---|---|---|']
+                for dr in range(2):
+                    for r in range(6, len(rules3)):
+                        for L in range(3):
+                            ns = nn_ = ny_ = trn = trh = ten = teh = bw = 0.0
+                            for y in ys3:
+                                o = wf3[y]; sel = np.array(o['sel']); seln = np.array(o['seln']); pool = np.array(o['pool']); g_ = np.array([t == 'global' for t in o['null_types']]); sb = seln[:, L, r, :, dr].sum(axis=1).astype(float)
+                                ns += sel[L, r, :, dr].sum(); nn_ += sb[g_].mean(); ny_ += sb[~g_].mean()
+                                for hi, h in enumerate(HS):
+                                    p = pool[L, r, hi, dr]; trn += p[0]; trh += p[1]; ten += p[2]; teh += p[3]; bw += p[2] * base_rate(o, h, dr)
+                            if ns == 0: continue
+                            M.append(f"| {DIR[dr]} | {rules3[r]} | {L + 1}개 | {ns / len(ys3):,.0f} | {nn_ / len(ys3):,.0f} | {ny_ / len(ys3):,.0f} | {pct(trh, trn)} | {pct(teh, ten)} | {pct(bw, ten)} | {((teh / ten - bw / ten) * 100 if ten else 0):+.1f}%p | {num(ten)} |")
+                            P[f'{dr}|{r}|{L + 1}'] = dict(rule=rules3[r], sel_per_year=ns / len(ys3), null_global_per_year=nn_ / len(ys3), null_year_per_year=ny_ / len(ys3), train_hit=trh / trn if trn else None, test_hit=teh / ten if ten else None, base=bw / ten if ten else None, test_n=ten)
+                VA = vote_stats(wf3, ys3, HS, base_rate)
+                M += ['', '고른 조합들을 하나의 신호로 합쳐 채점(그날 켜진 조합 수가 문턱 이상이면 신호, 겹치지 않게 솎음) — 실제로 매매한다면 이쪽이 맞는 숫자. z 는 바탕과의 차이가 우연 범위(±2)를 넘는지:', '',
+                      '| 방향 | 규칙 | 조합 크기 | 문턱 | 거래 | 적중 | 바탕 | 차이 | z |', '|---|---|---|---|---|---|---|---|---|']
+                for (dr, r, L, tag), e in sorted(VA.items(), key=lambda t: (t[0][0], t[0][1], t[0][2], [x[0] for x in TAGS].index(t[0][3]))):
+                    tn, th, bw = e['all']
+                    if tn < 30 or r not in (0, 1, 6, 7) or L < 2: continue
+                    b_ = bw / tn; z = (th / tn - b_) / np.sqrt(b_ * (1 - b_) / tn)
+                    M.append(f"| {DIR[dr]} | {rules3[r]} | {L}개 | {tag} | {tn:,} | {pct(th, tn)} | {pct(bw, tn)} | {(th / tn - b_) * 100:+.1f}%p | {z:+.1f} |")
+                    Pv[f'{dr}|{r}|{L}|{tag}'] = dict(n=tn, hit=th / tn, base=b_, z=float(z), by_hold={int(h): [v[0], v[1] / v[0], v[2] / v[0]] for h, v in e['h'].items()}, by_year={int(y): [v[0], v[1] / v[0], v[2] / v[0]] for y, v in e['y'].items()})
+                if pn == PERIODS[0][0]:
+                    for r0 in (0, 1):
+                        e = VA.get((0, r0, 3, '고른 것의 20% 이상'))
+                        if not e: continue
+                        M += ['', f'미리 정해 둔 대표 설정(오름 · "{rules3[r0]}" · 조합 3개 · 고른 것의 20% 이상이 켜진 날)을 해마다·보유일마다:', '', '| 구분 | 거래 | 적중 | 바탕 | 차이 |', '|---|---|---|---|---|']
+                        for y in sorted(e['y']): v = e['y'][y]; M.append(f"| {y}년 | {v[0]} | {pct(v[1], v[0])} | {pct(v[2], v[0])} | {(v[1] / v[0] - v[2] / v[0]) * 100:+.1f}%p |")
+                        for h in sorted(e['h']): v = e['h'][h]; M.append(f"| 보유 {h}일 | {v[0]} | {pct(v[1], v[0])} | {pct(v[2], v[0])} | {(v[1] / v[0] - v[2] / v[0]) * 100:+.1f}%p |")
             M += ['', '가장 좋아 보이는 50개(적중률 하한 기준, 보유일·방향마다)만 골랐을 때:', '', '| 방향 | 조합 크기 | 학습 적중 | 다음 해 적중 | 바탕 | 차이 | 다음 해 거래 |', '|---|---|---|---|---|---|---|']
             Pt = {}
             for dr in range(2):
@@ -147,6 +208,13 @@ def main():
                     M.append(f"| {DIR[dr]} | {L + 1}개 | {h}일 | {ns / len(ys):,.0f} | {pct(teh, ten)} | {pct(bw, ten)} | {(teh / ten - bw / ten) * 100:+.1f}%p | {num(ten)} |")
                     BH[f'{dr}|{L + 1}|{h}'] = dict(sel=ns / len(ys), hit=teh / ten, base=bw / ten, n=ten)
         S['by_hold'] = BH
+    if wf3 and wf:
+        same = True; chk = 0
+        for y in wf3:
+            if y not in wf: continue
+            a1 = np.array(wf[y]['sel'])[:3, :6]; a3 = np.array(wf3[y]['sel'])[:3, :6]; p1 = np.array(wf[y]['pool'])[:3, :6]; p3 = np.array(wf3[y]['pool'])[:3, :6]; chk += 1
+            same &= bool(np.array_equal(a1, a3) and np.array_equal(p1, p3))
+        M += ['', f"재현 확인: 1차·2차 실행에서 겹치는 숫자(조합 3개까지, 규칙 6개, {chk}개 해)가 {'모두 같음' if same else '다름 — 확인 필요'}."]; S['reproduced'] = bool(same)
     M += ['', '모두 과거 자료 성적이다. 투자 권유 아님']
     open(os.path.join(OUT, 'report.md'), 'w', encoding='utf-8').write('\n'.join(M) + '\n')
     json.dump(S, open(os.path.join(OUT, 'summary.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
