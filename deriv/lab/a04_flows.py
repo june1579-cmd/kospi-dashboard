@@ -724,16 +724,29 @@ def main():
             # 라운드 17(zone_conds.extra: [{name, col, ge|le}, …] × extra_base): 사용자 가설의 '콜이 압도적으로 우세'를 위치 가족에 직접 — 벽 1위/2위 물량비·
             #   벽 몫·상위3 몫·OTM 콜/풋 등 그날 아는 a02 지표의 고정 문턱(설정에 적은 값, 결과를 보고 고른 값 아님)을 기존 조건(extra_base)에 곱함. 자료 없는 날은 빠짐.
             extra_names = []
-            for ex in (zc.get('extra') or []):
-                col = X.get(ex['col'].replace('{tag}', tag))
-                if col is None: continue
+            def _exmask(ex_):
+                col_ = X.get(ex_['col'].replace('{tag}', tag))
+                if col_ is None: return None
                 # 갈래 B 라운드 23: ge·gt·le·lt 를 함께 줄 수 있음(모두 만족 = 구간). 예전 설정(ge 하나 또는 le 하나)은 같은 결과.
-                em = pd.Series(True, index=col.index)
-                if 'ge' in ex: em &= col >= ex['ge']
-                if 'gt' in ex: em &= col > ex['gt']
-                if 'le' in ex: em &= col <= ex['le']
-                if 'lt' in ex: em &= col < ex['lt']
-                em = em & col.notna()
+                m_ = pd.Series(True, index=col_.index)
+                if 'ge' in ex_: m_ &= col_ >= ex_['ge']
+                if 'gt' in ex_: m_ &= col_ > ex_['gt']
+                if 'le' in ex_: m_ &= col_ <= ex_['le']
+                if 'lt' in ex_: m_ &= col_ < ex_['lt']
+                # 갈래 B 라운드 43(extra 의 out: [lo, hi], 설정 없으면 없음 → 예전 설정·갈래 A·D 같은 결과): 구간 밖(< lo 또는 > hi)만 — '만기 21~40거래일 아님'.
+                if 'out' in ex_: m_ &= (col_ < ex_['out'][0]) | (col_ > ex_['out'][1])
+                return m_ & col_.notna()
+            for ex in (zc.get('extra') or []):
+                em = _exmask(ex)
+                if em is None: continue
+                # 갈래 B 라운드 43(extra 의 and: [{col, ge|le|out…}, …], 설정 없으면 없음): 다른 지표 조건을 함께(모두 만족) — 예: 분기물 만기 21~40일 + 근월 만기 5일 이하.
+                #   하나라도 자료가 없으면 그 덧조건은 만들지 않음(추정 없음). 날짜 맞춤은 같은 거래일 색인.
+                bad_ = False
+                for sub_ in (ex.get('and') or []):
+                    sm_ = _exmask(sub_)
+                    if sm_ is None: bad_ = True; break
+                    em = em & sm_.reindex(em.index).fillna(False)
+                if bad_: continue
                 for bn in (zc.get('extra_base') or ['하루 늦춰 진입']):
                     base = [c for c in conds if c[0] == bn]
                     if base:
