@@ -157,6 +157,23 @@ def spot_conds(F, td):
     return [(n, m.reindex(td).fillna(False)) for n, m in out]
 
 
+def barrier_exits(px, sigs, bpct, max_m):
+    """갈래 A 라운드 40(a04.young_barrier): 익절·손절 종가 규칙 — 신호 다음 날 시가(연속 선물) 진입 뒤 1~max_m 일째 종가 누적 수익이
+    처음 +b% 이상 또는 −b% 이하가 된 날 청산, 둘 다 없으면 max_m 일째 종가. b = 신호날 1주 σ(직전 20일, 그날 마감까지 아는 값) × k.
+    청산일이 자료 밖이면 빈칸(진행 중, 추정 안 함)."""
+    tdp = px.index; o = px['open'].values; c = px['close'].values; out = []
+    for s_ in sigs:
+        b = float(bpct.get(s_, np.nan)); i = tdp.searchsorted(s_, side='right')
+        if not np.isfinite(b) or b <= 0 or i >= len(tdp): out.append(pd.NaT); continue
+        ex = pd.NaT
+        for j in range(max_m):
+            if i + j >= len(tdp): break
+            r = (c[i + j] / o[i] - 1) * 100
+            if r >= b or r <= -b or j == max_m - 1: ex = tdp[i + j]; break
+        out.append(ex)
+    return out
+
+
 ZSIG = {}   # 갈래 B 라운드 19: 위치 가족 후보 id → (신호 날(진행 중 포함), 보유일, 방향) — 전진 검증 표용
 
 
@@ -368,6 +385,10 @@ def main():
             base_c = dict(ucond).get(tcn)
             if base_c is not None: ucond.append((f'{tcn} + 60일선 위', base_c.fillna(False) & trend_up.fillna(False)))
         ucond = _volcap(ucond)
+        YBAR = cfg.get('young_barrier'); pxb = None
+        if YBAR:
+            try: pxb = L.prices()['K200F']
+            except Exception as e: print('선물 가격 못 읽음 — 익절·손절 후보 없음', repr(e))
         for grp in (cfg.get('young_union') or []):
             gtags = [t for t in grp if t in age_of and X.get(f'OW_{t[:-1] if t.endswith("x") else t}_wall_dist%') is not None]
             if len(gtags) < 2: continue
@@ -393,6 +414,20 @@ def main():
                     for uk, umask, ulab in kinds:
                         for cn, cm in ucond:
                             mall = umask & cm.fillna(False)
+                            # 라운드 40(a04.young_barrier: {k, max_m, conds}, 설정 없으면 없음 → 갈래 B·D 영향 없음): 라운드 39 경로표에서 통과 계열의 앞 구간 상승 비율이
+                            #   5일째만 85%·4·6일째 63% 로 뾰족 — 정해진 날 종가 대신 보유 기간에 덜 기대는 익절·손절(±k×1주 σ, 종가, 최대 max_m 일) 규칙으로도 맞는지.
+                            if YBAR and pxb is not None and cn in (YBAR.get('conds') or [cn]):
+                                n1 = int((mall & dev).sum()); n2 = int((mall & p2).sum())
+                                if n1 >= 20 or n2 >= 12:
+                                    sig_b = td[mall.fillna(False).values]
+                                    for bk in YBAR.get('k', [1.0]):
+                                        mxm = int(YBAR.get('max_m', 10))
+                                        tb = pd.DataFrame({'signal': sig_b, 'exit': barrier_exits(pxb, sig_b, sig5 * bk, mxm)}).dropna()
+                                        for direction in (-1, 1):
+                                            cands.append({'id': f'A4yb_{uk}_{"+".join(gtags)}_{ny}d_{bkey}_{cn}_b{bk}x{mxm}_{"dn" if direction < 0 else "up"}', 'agent': 'A4',
+                                                          'family': 'young_barrier',
+                                                          'desc': f'{glab} 중 {ulab} 새 콜벽(나이 {ny}일 이하) + 벽 바로 아래(±{blab})' + ('' if cn == '흐름 무관' else f' + {cn}') +
+                                                                  f' → ±{bk}σ 익절·손절(종가, 최대 {mxm}일) {"하락" if direction < 0 else "상승"}', 'direction': direction, 'trades': tb})
                             for m in YM:
                                 v1 = yfwd[m][mall & dev].dropna(); v2 = yfwd[m][mall & p2].dropna()
                                 rows.append({'시리즈': f'{uk}({"+".join(gtags)})', '근처폭%': blab, '구역': f'새 벽(나이 {ny}일 이하) + 벽 바로 아래 — {ulab}',
