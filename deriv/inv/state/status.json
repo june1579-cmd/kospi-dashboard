@@ -1,0 +1,51 @@
+{
+ "made": "2026-11-23 17:33",
+ "data_end": "2026-11-20",
+ "eval": [
+  "2016-01-04",
+  "2026-11-20"
+ ],
+ "candidates": 180,
+ "rules": 225,
+ "signal_pass": 0,
+ "signal_watch": 0,
+ "signal_held": 0,
+ "signal_num_only": 0,
+ "rule_pass": 0,
+ "rule_watch": 0,
+ "rule_held": 0,
+ "rule_num_only": 0,
+ "family_chance": {
+  "signal_pass": 0.002,
+  "signal_watch": 0.028,
+  "rule_pass": 0.008
+ },
+ "registered": 0,
+ "new": [],
+ "placebo_draws": 500,
+ "prices": {
+  "inv1": {
+   "code": "114800",
+   "name": "KODEX 인버스",
+   "times": 1.0,
+   "note": "새로 받음",
+   "real_days": 4229,
+   "unit_changes": 1,
+   "real_from": "2009-09-17",
+   "corr_with_futures": 0.988,
+   "eval_real_share": 1.0
+  },
+  "inv2": {
+   "code": "252670",
+   "name": "KODEX 200선물인버스2X",
+   "times": 2.0,
+   "note": "새로 받음",
+   "real_days": 2492,
+   "unit_changes": 3,
+   "real_from": "2016-09-23",
+   "corr_with_futures": 0.9914,
+   "eval_real_share": 0.934
+  }
+ },
+ "seconds": 264
+}
