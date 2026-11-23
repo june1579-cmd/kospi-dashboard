@@ -503,12 +503,15 @@ def main():
         sl = slice(PTR[c], PTR[c + 1]); e, x = ENT[sl], EXT[sl]; per = (x <= J_DEV) | (e > P_HOLD)
         return e[per], x[per], RET[sl][per]
 
-    def curve(parts):
+    DAILY, TRADES = {}, []   # 하루 단위 손익·노출과 거래 목록을 파일로도 남긴다(대시보드 묶음 규칙과 합쳐 보는 계산용, 2026-11-23)
+
+    def curve(parts, name=None):
         pnl = np.zeros(N); expo = np.zeros(N)
         for e_, x_, d_, w_ in parts:
             for e, x in zip(e_, x_):
                 pnl[e] += w_ * d_ * (C[e] / O[e] - 1); expo[e:x + 1] += w_
                 if x > e: pnl[e + 1:x + 1] += w_ * d_ * (C[e + 1:x + 1] / C[e:x] - 1)
+        if name: DAILY[name] = (pnl, expo)
         eq = np.cumprod(1 + pnl); dd = float((eq / np.maximum.accumulate(eq) - 1).min())
         yr = pd.Series(pnl).groupby(YEAR).apply(lambda v: float((np.prod(1 + v) - 1) * 100))
         pre = YEAR <= 2024
@@ -516,11 +519,14 @@ def main():
                     total_to_2024=round(float((np.prod(1 + pnl[pre]) - 1) * 100), 1), total_2025_26=round(float((np.prod(1 + pnl[~pre]) - 1) * 100), 1),
                     by_year={int(y): round(v, 1) for y, v in yr.items() if y >= 2010 and abs(v) > 1e-9})
 
-    def oat_parts(reps):
+    def oat_parts(reps, name=None):
         E, X, R_, S = [], [], [], []
         for c in reps:
             e, x, r = trades_of(c); E.append(e); X.append(x); R_.append(r); S.append(np.full(len(e), c))
         e, x, r, s2 = map(np.concatenate, (E, X, R_, S)); k = one_at_a_time(e, x, r, s2)
+        if name:
+            for e1, x1, r1, c1 in zip(e[k], x[k], r[k], s2[k]):
+                TRADES.append(dict(mode=name, entry=str(TD[e1].date()), exit=str(TD[x1].date()), direction=int(DIRC[c1]), ret=round(float(r1), 4), id=meta[c1]['id']))
         return [(e[k][s2[k] == c], x[k][s2[k] == c], int(DIRC[c]), 1.0) for c in reps], tstats(r[k], e[k])
 
     core = rep_of(crit_pass(cur, D) & RTOK, score)
@@ -535,21 +541,27 @@ def main():
     SIM = dict(core=[dict(id=meta[c]['id'], desc=meta[c]['desc']) | tstats(trades_of(c)[2], trades_of(c)[0]) for c in core],
                aux=[dict(id=meta[c]['id'], desc=meta[c]['desc'], direction=int(DIRC[c])) | tstats(trades_of(c)[2], trades_of(c)[0]) for c in aux])
     if len(core):
-        for i, c in enumerate(core): SIM[f'only_{i}'] = curve([(trades_of(c)[0], trades_of(c)[1], int(DIRC[c]), 1.0)])
-        pp, ts = oat_parts(list(core)); SIM['core_one_at_a_time'] = curve(pp) | dict(trades=ts)
-        SIM['core_each_full'] = curve([(trades_of(c)[0], trades_of(c)[1], int(DIRC[c]), 1.0) for c in core])
+        for i, c in enumerate(core): SIM[f'only_{i}'] = curve([(trades_of(c)[0], trades_of(c)[1], int(DIRC[c]), 1.0)], f'only_{i}')
+        pp, ts = oat_parts(list(core), 'core_one_at_a_time'); SIM['core_one_at_a_time'] = curve(pp, 'core_one_at_a_time') | dict(trades=ts)
+        SIM['core_each_full'] = curve([(trades_of(c)[0], trades_of(c)[1], int(DIRC[c]), 1.0) for c in core], 'core_each_full')
         SIM['core_each_half'] = curve([(trades_of(c)[0], trades_of(c)[1], int(DIRC[c]), 1.0 / len(core)) for c in core])
         if aux:
-            pp2, ts2 = oat_parts(list(core) + aux); SIM['core_aux_one_at_a_time'] = curve(pp2) | dict(trades=ts2)
+            pp2, ts2 = oat_parts(list(core) + aux, 'core_aux_one_at_a_time'); SIM['core_aux_one_at_a_time'] = curve(pp2, 'core_aux_one_at_a_time') | dict(trades=ts2)
             SIM['core_oat_plus_aux_separate'] = curve(pp + [(trades_of(c)[0], trades_of(c)[1], int(DIRC[c]), 1.0) for c in aux])
             SIM['core_oat_plus_aux_half'] = curve(pp + [(trades_of(c)[0], trades_of(c)[1], int(DIRC[c]), 0.5) for c in aux])
-            for c in aux: SIM[f"aux_only_{meta[c]['id'][:40]}"] = curve([(trades_of(c)[0], trades_of(c)[1], int(DIRC[c]), 1.0)])
+            for q_, c in enumerate(aux): SIM[f"aux_only_{meta[c]['id'][:40]}"] = curve([(trades_of(c)[0], trades_of(c)[1], int(DIRC[c]), 1.0)], f'aux_{q_}')
         # 해마다 거래 수(계열별) — 신호가 어느 시기에 몰리는지
         SIM['trades_by_year'] = {meta[c]['id'][:40]: {int(y): int(n_) for y, n_ in zip(*np.unique(YEAR[trades_of(c)[0]], return_counts=True))} for c in list(core) + aux}
         # 2024년까지와 2025~26년을 나눈 '한 번에 하나' 성적
         e_, x_, r_, s_ = map(np.concatenate, zip(*[(trades_of(c)[0], trades_of(c)[1], trades_of(c)[2], np.full(len(trades_of(c)[0]), c)) for c in core]))
         k_ = one_at_a_time(e_, x_, r_, s_); pre_ = YEAR[e_[k_]] <= 2024
         SIM['core_oat_to_2024'] = tstats(r_[k_][pre_]); SIM['core_oat_2025_26'] = tstats(r_[k_][~pre_])
+
+    if DAILY:
+        dd_ = pd.DataFrame({'date': TD.strftime('%Y-%m-%d'), 'open': O, 'close': C})
+        for nm_, (pn_, ex_) in DAILY.items(): dd_['pnl_' + nm_] = np.round(pn_, 7); dd_['expo_' + nm_] = np.round(ex_, 3)
+        dd_.iloc[I0:].to_csv(os.path.join(OUT, 'sim_daily.csv'), index=False, encoding='utf-8')
+        pd.DataFrame(TRADES).to_csv(os.path.join(OUT, 'sim_trades.csv'), index=False, encoding='utf-8')
 
     # --- 현재 기준 통과 후보 전체 목록(계열 번호 포함)과 아슬아슬한 후보
     near = (D['n'] >= 25) & (D['h'] >= 0.78) & (D['n1'] >= 10) & (D['n2'] >= 10)
