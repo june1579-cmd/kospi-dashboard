@@ -651,7 +651,29 @@ def main():
         bex = {W: L.barrier_exits(k2, W, bk) for W in (zc.get('barrier') or [])}   # 라운드 16: 큰 변동 대상(아래 barrier 블록)
         zrows = []
         for tag in zc.get('tags', ['Q']):
-            dist = X.get(f'OW_{tag}_wall_dist%'); dte = X.get(f'OW_{tag}_dte'); oi5 = X.get(f'OW_{tag}_wall_oi_chg5%')
+            ol = '5일'
+            if tag in ('WT', 'WM'):
+                # 갈래 B 라운드 41(zone_conds.tags 에 WT·WM 있을 때만, 설정 없으면 없음 → 갈래 A·D·예전 B 영향 없음): 통과 규칙(분기물 벽 바로 아래 + 벽 물량 증가 + 하루 늦춤)을
+                #   위클리 콜벽으로 — 뒤 구간 사건을 늘리려고. 위클리 시리즈는 상장~만기 약 6거래일이라 5일 물량 변화를 같은 시리즈 안에서 셀 수 없음 →
+                #   '벽 물량 전일 대비 증가'(같은 시리즈·같은 행사가의 어제 미결제약정보다 많음, 어제 그 시리즈가 없으면 빈칸 — 추정 안 함). 만기 조건은 없음.
+                Wk = weekly_walls({'WT': 'wt', 'WM': 'wm'}[tag], k2, td)
+                if Wk is None: print('위치 조건: 위클리 자료 없음', tag, flush=True); continue
+                dist = Wk['dist%'].astype(float); dte = None; ol = '전일 대비'
+                try:
+                    cw = L.chain({'WT': 'wt', 'WM': 'wm'}[tag]); cw = cw[cw['cp'] == 'C']
+                    oimap = {(str(e), float(k_), d_): float(o_) for e, k_, d_, o_ in zip(cw['exp'], cw['K'], pd.to_datetime(cw['date']), cw['oi'])}
+                    ov = np.full(len(td), np.nan)
+                    for i_ in range(1, len(td)):
+                        e_, k_ = Wk['exp'].iloc[i_], Wk['K'].iloc[i_]
+                        if not isinstance(e_, str) or not np.isfinite(k_): continue
+                        a_ = oimap.get((e_, float(k_), td[i_])); b_ = oimap.get((e_, float(k_), td[i_ - 1]))
+                        if a_ is not None and b_ is not None: ov[i_] = a_ - b_
+                    oi5 = pd.Series(ov, index=td)
+                    print('위클리 벽 물량 전일 대비', tag, '값 있는 날', int(np.isfinite(ov).sum()), '· 증가', int((ov > 0).sum()), flush=True)
+                except Exception as e:
+                    print('위클리 벽 물량 실패', tag, repr(e), flush=True); oi5 = None
+            else:
+                dist = X.get(f'OW_{tag}_wall_dist%'); dte = X.get(f'OW_{tag}_dte'); oi5 = X.get(f'OW_{tag}_wall_oi_chg5%')
             if dist is None: continue
             conds = [('다음 날 시가→종가 하락 뒤 진입', dn_oc_next, True), ('다음 날 종가 하락 뒤 진입', dn_cc_next, True),
                      ('하루 늦춰 진입', pd.Series(True, index=td), True),
@@ -659,9 +681,9 @@ def main():
             if dte is not None:
                 conds += [('만기 10거래일 이내', dte <= 10, False), ('만기 11~30거래일', (dte >= 11) & (dte <= 30), False), ('만기 31거래일 이상', dte >= 31, False)]
             if oi5 is not None:
-                conds += [('벽 물량 5일 증가', oi5 > 0, False), ('벽 물량 5일 감소', oi5 < 0, False)]
+                conds += [(f'벽 물량 {ol} 증가', oi5 > 0, False), (f'벽 물량 {ol} 감소', oi5 < 0, False)]
                 # 라운드 14(zone_conds.combo): 라운드 13 에서 뒤 구간을 가장 올린 두 조건(하루 늦춤·벽 물량 5일 증가)을 함께
-                if zc.get('combo'): conds += [('벽 물량 5일 증가 + 하루 늦춰 진입', oi5 > 0, True)]
+                if zc.get('combo'): conds += [(f'벽 물량 {ol} 증가 + 하루 늦춰 진입', oi5 > 0, True)]
             # 라운드 15(zone_conds.combo_lags: [1, 3]): 라운드 14 앞→뒤 통과 조합이 '5일' 물량 창에만 기대는지 — 1·3일 물량 증가로 바꿔도 버티나
             for lg in (zc.get('combo_lags') or []):
                 oil = X.get(f'OW_{tag}_wall_oi_chg{lg}%')
@@ -822,7 +844,7 @@ def main():
                         t = pd.DataFrame({'signal': sig, 'exit': [L.exit_after(td, s_, m) for s_ in sig]}).dropna()
                         ZSIG[f'A4zc_{tag}_{band_key}_{cn}_m{m}'] = (sig, m, direction)
                         cands.append({'id': f'A4zc_{tag}_{band_key}_{cn}_m{m}', 'agent': 'A4', 'family': 'zone_cond',
-                                      'desc': f'{tag} 벽 바로 아래(±{band_lab}), 흐름 무관' + ('' if cn == '조건 없음' else f' + {cn}') + f' → {m}일 {"하락" if direction < 0 else "상승"}',
+                                      'desc': f'{WLAB.get(tag, tag)} 벽 바로 아래(±{band_lab}), 흐름 무관' + ('' if cn == '조건 없음' else f' + {cn}') + f' → {m}일 {"하락" if direction < 0 else "상승"}',
                                       'direction': direction, 'trades': t})
                     # 갈래 B 라운드 16(zone_conds.barrier: [W, …], 설정 없으면 꺼짐 → 갈래 A 영향 없음): 라운드 15 에서 위치 가족이 3일 고정 보유에서만 앞 72~85%·
                     #   뒤 88~95% — 고정 보유 대신 '큰 변동 대상'(W 거래일 안 ±kσ√W 중 먼저 닿는 쪽, L.barrier_exits, A6·A7 의 큰 변동 창과 같은 정의)으로도 맞나.
