@@ -17,7 +17,7 @@ env:
 jobs:
   fit:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 75
     strategy:
       fail-fast: false
       matrix:
@@ -35,7 +35,7 @@ jobs:
       - name: 검산(뻔한 계산과 숫자가 같은지)
         run: cd deriv/combo && python test_core.py
       - name: 전환점 계산
-        run: cd deriv/turn && python turn_probe.py --fit ${{ matrix.fit }} --maxlevel 3 --null 4 --out out
+        run: cd deriv/turn && python turn_probe.py --fit ${{ matrix.fit }} --maxlevel 3 --null 2 --out out
       - uses: actions/upload-artifact@v4
         with: {name: 'turn-${{ matrix.fit }}', path: 'deriv/turn/out/fit_${{ matrix.fit }}.json', retention-days: 3}
   report:
@@ -55,7 +55,7 @@ jobs:
       - name: 저장
         run: |
           git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
-          git add deriv/turn/out
+          git add deriv/turn/out/report.md deriv/turn/out/summary.json
           git diff --cached --quiet && exit 0
           git commit -q -m "전환점 연구 결과 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
           for i in 1 2 3 4; do git pull -q --rebase origin deriv-research && git push -q origin HEAD:deriv-research && break; sleep 15; done
