@@ -46,6 +46,23 @@ def first_day(mask, gap=5):
     return m & ~prev
 
 
+def pct_barrier_exits(px, W, p):
+    """고정 % 장벽(라운드 8, 갈래 D): t일 신호 → t+1 시가 기준, W 거래일 안 종가가 −p% 또는 +p% 에 처음 닿은 날(없으면 W 번째 날) = 청산일.
+    판정(A8)은 청산일 종가 < 진입 시가면 하락 맞음 → '−p% 먼저 닿음'이거나 '둘 다 안 닿고 W 일 뒤 아래'. 끝이 자료 밖이면 빈칸."""
+    c, o = px['close'].values, px['open'].values; td = px.index; n = len(td)
+    ex = np.full(n, np.datetime64('NaT'), dtype='datetime64[ns]')
+    for i in range(n - 1):
+        if i + W > n - 1: continue
+        o1 = o[i + 1]
+        if not np.isfinite(o1) or o1 <= 0: continue
+        j_end = i + W
+        for j in range(i + 1, i + W + 1):
+            r = c[j] / o1 - 1
+            if abs(r) >= p / 100: j_end = j; break
+        ex[i] = td.values[j_end]
+    return pd.Series(ex, index=td)
+
+
 def num(s):
     return pd.to_numeric(s.astype(str).str.replace(',', ''), errors='coerce')
 
@@ -312,6 +329,57 @@ def main():
     except Exception as e:
         print('gap 실패', e, flush=True)
 
+    # --- mir: 갈래 A·B 통과 신호의 거울(라운드 8, 갈래 D — 설정 a13.mirror 있을 때만)
+    #   갈래 A·B 통과: 여러 결제월 동시 새 콜벽(나이 1일 이하) + 지수가 벽 바로 아래(±1.5·1.75σ) + 외국인 선물·현물 3일 누적 함께 순매수(+60일선 위) → 5일 상승(앞 85~88%·뒤 92~94%).
+    #   가설 14: 같은 '새 콜벽 + 벽 바로 아래'에서 외국인이 선물·현물을 함께 팔면 벽까지 못 가고 내림(상승 신호의 거울).
+    #   가설 15(사용자 가설 뒷부분 그대로): 지수가 콜벽을 막 넘어선 자리(벽이 종가 아래 ±σ 안)에서 외국인 선물·현물 3일 함께 순매도 → 하락('올린 뒤 매도').
+    #   대조: 같은 흐름을 벽 조건 없이 아무 날에(벽이 정보인지 흐름이 정보인지). 문턱은 갈래 A 통과 신호와 같은 미리 정한 값(σ 배수·3일·60일선)만.
+    MC = (L.round_cfg().get('a13') or {})
+    if MC.get('mirror'):
+        try:
+            sig5 = close.pct_change().rolling(20).std() * np.sqrt(5) * 100
+            W = feat['walls'].copy(); W['date'] = pd.to_datetime(W['date']); W = W.drop_duplicates(['date', 'tag'], keep='last')
+            age_of = {}
+            for tag, g in W.sort_values('date').groupby('tag'):
+                g = g.set_index('date')
+                key = g['K'].astype(float).round(3).astype(str) + ('' if tag == 'ALL' else '|' + g['ym'].astype(str))
+                run_ = key.ne(key.shift()).cumsum()
+                age_of[tag] = g.groupby(run_).cumcount().add(1).where(g['K'].notna()).reindex(td)
+            ma60 = close.rolling(60, min_periods=60).mean()
+            up60 = (close > ma60).fillna(False); dn60 = (close < ma60).fillna(False)
+            fsell3 = (fut3 < 0) & (cash3 < 0); fbuy3 = (fut3 > 0) & (cash3 > 0)
+            fsell1 = (fut1 < 0) & (cash1 < 0)
+            mflow = {'fcs3': (' + 외국인 선물·현물 3일 누적 함께 순매도', fsell3),
+                     'fcs3d': (' + 외국인 선물·현물 3일 누적 함께 순매도 + 60일선 아래', fsell3 & dn60),
+                     'fcs3u': (' + 외국인 선물·현물 3일 누적 함께 순매도 + 60일선 위', fsell3 & up60),
+                     'fcs3p': (' + 외국인 선물·현물 3일 누적 함께 순매도 + 외국인 풋 3일 누적 순매수', fsell3 & (put3 > 0)),
+                     'fcs1': (' + 외국인 선물·현물 같은 날 함께 순매도', fsell1),
+                     'fs3c': (' + 외국인 선물 3일 누적 순매도 + 현물 3일 누적 순매수', (fut3 < 0) & (cash3 > 0)),
+                     'any': ('(흐름 무관)', pd.Series(True, index=td)),
+                     'fcb3': (' + 외국인 선물·현물 3일 누적 함께 순매수(대조: 갈래 A 통과 흐름)', fbuy3)}
+            zones = {}
+            for grp in (['F0', 'F1', 'ALL'], ['F0', 'F1', 'F2', 'ALL']):
+                gt = [t for t in grp if t in age_of and f'OW_{t}_wall_dist%' in wide]
+                if len(gt) < 2: print('mir 묶음 시리즈 부족', grp, gt, flush=True); continue
+                gl = '+'.join(gt)
+                for s in MC.get('sigma', [1.5, 1.75]):
+                    band = sig5 * s
+                    below = sum(((age_of[t] <= 1) & (wide[f'OW_{t}_wall_dist%'] > 0) & (wide[f'OW_{t}_wall_dist%'] <= band)).fillna(False).astype(int) for t in gt)
+                    zones[f'nb{gl}s{s}'] = (f'{"·".join(gt)} 중 둘 이상 동시 새 콜벽(나이 1일 이하) + 벽 바로 아래(±{s}σ)', below >= 2)
+            for tg in ('F0', 'Q'):
+                wd = wide.get(f'OW_{tg}_wall_dist%')
+                if wd is None: continue
+                for s in MC.get('sigma', [1.5, 1.75]):
+                    zones[f'ab{tg}s{s}'] = (f'지수가 {tg} 콜벽을 넘어선 자리(벽이 종가 아래 {s}σ 안)', (wd <= 0) & (wd >= -sig5 * s))
+            zones['ctl'] = ('(대조: 벽 조건 없음)', pd.Series(True, index=td))
+            for zk, (zd, zm) in zones.items():
+                for fk, (fd, fm) in mflow.items():
+                    if zk == 'ctl' and fk == 'any': continue
+                    if zk.startswith('ab') and fk == 'fcb3': continue
+                    conds.append((f'mir_{zk}_{fk}', f'{zd}{fd}', zm.fillna(False) & fm.reindex(td).fillna(False)))
+        except Exception as e:
+            print('mir 실패', repr(e), flush=True)
+
     # --- 장세 겹침
     S = L.regime_states().reindex(td).fillna(False).astype(bool)
     overlays = [('', '', None), ('_R3', ' + 하락 추세(60일선 아래)', 'R3'), ('_R8', ' + 60일 고점 −5% 넘게 조정 중', 'R8'),
@@ -320,11 +388,16 @@ def main():
     for W in BARRIER:
         y, ex = L.barrier_exits(px, W, BK)
         tgts.append((f'b{W}', f'{W}일 안 큰 변동(±{BK:g}σ) 먼저', ex.reindex(td).dropna().to_dict(), W))
+    # 라운드 8(갈래 D, 설정 a13.pct_barrier: [[W, p], …] 있을 때만): 고정 % 장벽 — 다음 날 시가 진입 뒤 W 거래일 안에 종가가 −p% 에 먼저 닿으면 그날 청산(맞음),
+    #   +p% 에 먼저 닿으면 그날 청산(틀림), 둘 다 아니면 W 번째 날 종가로 판정. 하락은 짧고 가팔라(지시 파일) 정해진 날 종가보다 '먼저 닿기'가 맞을 수 있음.
+    for W_, p_ in (MC.get('pct_barrier') or []):
+        tgts.append((f'p{p_:g}w{W_}', f'{W_}일 안 ±{p_:g}% 중 −{p_:g}% 먼저', pct_barrier_exits(px, int(W_), float(p_)).reindex(td).dropna().to_dict(), int(W_)))
     cands = []; summ = []
     for cid, desc, m in conds:
         m = m.reindex(td).fillna(False).astype(bool)
         for tag, tdesc, rg in overlays:
             if cid.startswith(('gap3_', 'gap4_', 'gap5_')) and rg: continue   # gap3 = 장세 조건이 이미 기반에 들어 있음, 겹침 없이 한 번만
+            if cid.startswith('mir_') and rg not in (None, 'R7', 'R8'): continue   # mir = 60일선은 흐름 조건에 이미 있음 — 장세는 5일 급등 뒤·조정 중만 겹침
             mm = m & S[rg] if rg else m
             sig = td[mm.values]
             summ.append({'cond': cid + tag, 'desc': desc + tdesc, 'n_signals': len(sig)})
