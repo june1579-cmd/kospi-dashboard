@@ -1,0 +1,53 @@
+name: usk
+# 미국·한국 선물옵션 연동 연구(2026-11-22) — 미국 공개 자료 수집 → 지표 → 연구소 기준 검증 → 대시보드 자료. KRX 로그인 없음(저장소의 한국 자료만 읽음).
+# 기본 가지(main)의 이 파일은 GitHub 일정으로 스스로 돈다(2026-11-23 — Claude 예약 갱신을 대신함). deriv-research 가지의 같은 파일은 deriv/us/trigger.txt 를 push 하면 돈다. 첫 줄: 단계(collect / study / all), 둘째 줄: 수집 항목(빈칸이면 전부).
+on:
+  schedule:
+    - cron: '17 22 * * 1-5'   # 화~토 07:17 KST — 미국 장 마감 뒤, 한국 개장 전
+    - cron: '27 10 * * 1-5'   # 월~금 19:27 KST — KRX 당일 확정치 수집(19:17) 뒤
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: usk
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: deriv-research}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q pandas numpy scipy scikit-learn yfinance requests
+      - name: 단계 읽기
+        id: t
+        run: |
+          S=$(sed -n 1p deriv/us/trigger.txt | tr -d '\r'); A=$(sed -n 2p deriv/us/trigger.txt | tr -d '\r')
+          if [ "${{ github.event_name }}" = "schedule" ]; then S=all; A=""; fi
+          echo "stage=${S:-all}" >> $GITHUB_OUTPUT; echo "args=$A" >> $GITHUB_OUTPUT
+      - name: 수집
+        if: steps.t.outputs.stage != 'study'
+        run: python deriv/us/us_collect.py ${{ steps.t.outputs.args }}
+      - name: 지표·후보(A11) → A8 검증 → A10 반증 → 정리 → 대시보드 자료
+        if: steps.t.outputs.stage != 'collect'
+        env:
+          LAB_TRACK: c
+        run: |
+          python deriv/scan/scan_data.py
+          python deriv/us/us_study.py
+          python deriv/lab/a08_validate.py
+          python deriv/lab/a10_redteam.py
+          python deriv/lab/lab_merge.py || echo '정리 실패 — 건너뜀'
+          python deriv/us/us_dash.py
+          python deriv/lab/a02_features.py && python deriv/lab/signal_export.py || echo '통과 신호 내보내기 실패 — 건너뜀'   # 코스피 대시보드 표시용(2026-11-22)
+          find deriv/lab/out_c -name 'candidates.pkl' -delete || true
+          find deriv/lab/out_c -name 'dev_passed.pkl' -delete || true
+      - name: 저장
+        if: always()
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add deriv/us deriv/lab/out_c deriv/lab/state_c deriv/lab/signals
+          git commit -q -m "미국·한국 연동 연구 자료 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || echo "변경 없음"
+          for i in 1 2 3 4; do git pull -q --rebase origin deriv-research && git push -q origin HEAD:deriv-research && break; sleep 15; done

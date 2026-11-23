@@ -28,3 +28,8 @@
 - 화면 문구·그래프: `docs/fo/index.html`, `docs/fo/app.js` 를 GitHub 에서 바로 고치면 Pages 에 반영됩니다.
 - 지표·모형: `fo/build.py`, `fo/model.py` 를 고친 뒤 Run workflow.
 - 실행 시각: `.github/workflows/fo-dashboard.yml` 의 `cron`.
+
+## 10절(옵션 구조 · 갭 분해 · 연구소 기준 검증) — 2026-11-23 추가
+
+- claude.ai 미국·한국 대시보드에 있던 기능을 웹판으로 옮겼습니다. 자료는 `deriv-research` 가지의 `deriv/us/out/dash.json` 이고, 기본 가지의 워크플로 `usk`(화~토 07:17, 월~금 19:27 KST)가 계산합니다.
+- 화면 코드는 `docs/fo/usk.js` 한 파일입니다(그리기만 함). 실패·멈춤은 `watchdog` 이 한 시간마다 보고 다시 돌립니다.

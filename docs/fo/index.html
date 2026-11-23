@@ -21,7 +21,7 @@
 <header id="top">
   <h1>미국·한국 선물옵션 대시보드</h1>
   <p data-draw="passlist">—</p>
-  <nav class="fo-nav" aria-label="구역 이동"><button type="button" data-go="s1">한눈에</button><button type="button" data-go="s2">미국 선물</button><button type="button" data-go="s3">미국 옵션</button><button type="button" data-go="s4">한국 선물</button><button type="button" data-go="s5">한국 옵션</button><button type="button" data-go="s6">연관</button><button type="button" data-go="s7">검증</button><button type="button" data-go="s8">최근 흐름</button><button type="button" data-go="s9">자료</button></nav>
+  <nav class="fo-nav" aria-label="구역 이동"><button type="button" data-go="s1">한눈에</button><button type="button" data-go="s2">미국 선물</button><button type="button" data-go="s3">미국 옵션</button><button type="button" data-go="s4">한국 선물</button><button type="button" data-go="s5">한국 옵션</button><button type="button" data-go="s6">연관</button><button type="button" data-go="s7">검증</button><button type="button" data-go="s8">최근 흐름</button><button type="button" data-go="s9">자료</button><button type="button" data-go="s10">옵션 구조·검증</button></nav>
 </header>
 
 <section class="fo-sec" id="s1">
@@ -158,6 +158,32 @@
   <div data-table="analog"></div>
 </section>
 
+<section class="fo-sec" id="s10">
+  <h2>10. 옵션 구조 · 갭 분해 · 연구소 기준 검증</h2>
+  <p class="fo-note" id="u-meta">자료를 읽는 중…</p>
+  <h3>옵션 구조 — 콜벽·풋벽·최대 고통·감마</h3>
+  <div id="u-struct"></div>
+  <div class="fo-box" id="u-kr" style="min-height:250px">—</div>
+  <div class="fo-box" id="u-spy" style="min-height:250px">—</div>
+  <div class="fo-box" id="u-qqq" style="min-height:250px">—</div>
+  <p class="fo-note">콜벽·풋벽은 현재가 위·아래에서 미결제약정이 가장 많은 행사가, 최대 고통은 만기에 옵션 매수자가 받는 금액의 합이 가장 작아지는 행사가입니다. 감마 값은 미결제약정과 내재변동성으로 계산한 추정이며(콜은 +, 풋은 −로 가정), 실제 딜러 포지션은 공개되지 않아 확인할 수 없습니다. 미국은 SPY·QQQ ETF 옵션(45일 안 만기)입니다.</p>
+  <h3>한국 장 마감 뒤 미국 선물</h3>
+  <div id="u-since"></div>
+  <div class="fo-box" id="u-es" style="min-height:170px">—</div>
+  <div class="fo-box" id="u-nq" style="min-height:170px">—</div>
+  <h3>미국이 움직인 다음 날 — 한국 시가 갭과 장중을 나눠 보기</h3>
+  <div class="fo-ctls"><label class="fo-ctl"><span>미국 지표</span><select id="u-ind"></select></label><label class="fo-ctl"><span>기간</span><select id="u-per"></select></label></div>
+  <div id="u-decomp"></div>
+  <p class="fo-note">미국 등락은 대부분 다음 날 한국 시가(갭)에 이미 반영됩니다. 시가에 사서 종가에 파는 장중 구간에는 방향이 거의 이어지지 않습니다(상관 0 안팎).</p>
+  <h3>연구소 기준 검증 — 미국 지표로 한국 방향을 맞힐 수 있나</h3>
+  <p class="fo-note" id="u-verdict"></p>
+  <h4>통과에 가장 가까웠던 후보</h4>
+  <div id="u-closest"></div>
+  <h4>한쪽 구간에서만 선별된 후보</h4>
+  <div id="u-selected"></div>
+  <p class="fo-note">이 절의 자료는 GitHub 워크플로 <code>usk</code>가 화~토 07:17, 월~금 19:27(한국 시각)에 계산합니다. 숫자는 저장소 파일을 그대로 읽은 것이며, 받지 못한 값은 "확인 불가"로 둡니다.</p>
+</section>
+
 <section class="fo-sec" id="s9">
   <h2>9. 자료 설명</h2>
   <p class="fo-note">이 웹판의 숫자는 전부 GitHub 저장소의 <code>docs/fo/data</code> 파일 6개에서 나오고, 그 파일은 GitHub Actions 워크플로 <code>fo-dashboard</code>가 수집·계산해 올립니다(화~토 07:47 · 월~금 19:17 KST 자동, 위쪽 [지금 다시 계산] 단추로 수동). 페이지는 열 때마다 저장소에 올라온 최신 파일을 읽습니다.</p>
@@ -180,5 +206,6 @@
 </div>
 <script>document.getElementById('btn-reload').addEventListener('click', function () { location.href = location.pathname + '?r=' + Date.now(); });</script>
 <script src="app.js"></script>
+<script src="usk.js"></script>
 </body>
 </html>

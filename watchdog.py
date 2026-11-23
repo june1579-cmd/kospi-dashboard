@@ -32,7 +32,7 @@ RUNS = [
     dict(key='run:lab-a', wf='deriv-lab.yml', br='deriv-research', label='연구소 갈래 A 라운드', need=1, grace_h=3, rerun=False, repair=True),
     dict(key='run:lab-b', wf='deriv-lab-b.yml', br='deriv-research', label='연구소 갈래 B 라운드', need=1, grace_h=3, rerun=False, repair=True),
     dict(key='run:lab-d', wf='deriv-lab-d.yml', br='deriv-research', label='연구소 갈래 D 라운드', need=1, grace_h=3, rerun=False, repair=True),
-    dict(key='run:usk', wf='usk.yml', br='deriv-research', label='미국·한국 연동 계산', need=1, grace_h=3, rerun=False, repair=True),
+    dict(key='run:usk', wf='usk.yml', br='main', label='미국·한국 연동 계산', need=1, grace_h=0, rerun=True, repair=True),
     dict(key='run:criteria', wf='criteria-study.yml', br='deriv-research', label='통과 기준 검증 계산', need=1, grace_h=0, rerun=True, repair=True),
     dict(key='run:collect', wf='deriv-research.yml', br='deriv-research', label='선물·옵션 원자료 수집(KRX)', need=1, grace_h=3, rerun=False, repair=False),
     dict(key='run:lab-notify', wf='deriv-notify.yml', br='deriv-research', label='연구소 카카오 알림', need=1, grace_h=0, rerun=False, repair=True),
@@ -45,7 +45,7 @@ FRESH = [
     dict(key='stale:lab-a', br='deriv-research', path='deriv/lab/state/latest_status.json', label='연구소 갈래 A(총괄 세션)', rule='age', max_h=15, repair=False, hint='Claude 예약 세션이 돌지 않음(사용량 한도일 수 있음)'),
     dict(key='stale:lab-b', br='deriv-research', path='deriv/lab/state_b/latest_status.json', label='연구소 갈래 B(총괄 세션)', rule='age', max_h=16, repair=False, hint='Claude 예약 세션이 돌지 않음(사용량 한도일 수 있음)'),
     dict(key='stale:lab-d', br='deriv-research', path='deriv/lab/state_d/latest_status.json', label='연구소 갈래 D(총괄 세션)', rule='age', max_h=12, repair=False, hint='Claude 예약 세션이 돌지 않음(사용량 한도일 수 있음)'),
-    dict(key='stale:usk', br='deriv-research', path='deriv/us/out/dash.json', label='미국·한국 대시보드 자료', rule='age', max_h=40, repair=False, hint='Claude 예약 세션이 돌지 않음(사용량 한도일 수 있음)'),
+    dict(key='stale:usk', br='deriv-research', path='deriv/us/out/dash.json', label='미국·한국 연동 자료(웹판 10절)', rule='age', max_h=40, repair=True),
 ]
 
 
