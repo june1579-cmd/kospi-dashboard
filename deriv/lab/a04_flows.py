@@ -1301,6 +1301,65 @@ def main():
                     print('장세 나눔 설명표', len(rrows), '칸', flush=True)
                 except Exception as e:
                     print('장세 나눔 설명표 실패', repr(e), flush=True)
+            # 갈래 B 라운드 39(path_table.cross_overlap: {other_dir, window, b_ids?}, 설정 없으면 없음 → 갈래 A·D 영향 없음, 후보 안 만듦 → A8 나눗수 그대로):
+            #   다른 갈래(A)의 통과 규칙(그 결과 폴더 a08/verdicts.csv 의 goal_pass, a04/candidates.pkl 의 거래 — 읽기만)과 B 통과 규칙이 같은 국면을 잡는지(신호일 ±window 거래일),
+            #   겹침/안 겹침별 적중, 그리고 두 규칙을 함께 쓰면(먼저 난 신호부터 각자 보유일, 보유 중 새 신호는 건너뜀) 독립 거래·적중이 얼마인지(구간별).
+            #   적중 = 다음 날 시가(연속 선물) → 보유일째 종가 > 0(방향 반영). 자료 밖은 빼고 셈(추정 안 함).
+            co_ = pth.get('cross_overlap')
+            if co_:
+                try:
+                    import re as _re
+                    labd = os.path.dirname(os.path.abspath(__file__))
+                    odir = os.path.join(labd, co_.get('other_dir', 'out/round_043'))
+                    V_ = pd.read_csv(os.path.join(odir, 'a08', 'verdicts.csv'))
+                    a_ids = V_.loc[V_['goal_pass'] == True, 'id'].tolist()   # noqa: E712
+                    with open(os.path.join(odir, 'a04', 'candidates.pkl'), 'rb') as fh: oc = {c['id']: c for c in pickle.load(fh)}
+                    cl4 = pxp['close'].reindex(td).values.astype(float); op4 = pxp['open'].reindex(td).values.astype(float); n4 = len(td)
+                    win = int(co_.get('window', 3)); byb = {c['id']: c for c in cands}
+                    def _trades(c):
+                        mm = _re.search(r'_m(\d+)', str(c['id'])); m_ = int(mm.group(1)) if mm else None
+                        tr = c['trades'].assign(signal=lambda d: pd.to_datetime(d['signal']), exit=lambda d: pd.to_datetime(d['exit'])).dropna().sort_values('signal')
+                        keep = []; last = pd.Timestamp('1900-01-01')
+                        for s_, e_ in zip(tr['signal'], tr['exit']):
+                            if s_ >= last: keep.append((s_, e_)); last = e_
+                        out = []
+                        for s_, e_ in keep:
+                            i = pos.get(s_); j = pos.get(e_)
+                            if i is None or j is None or j >= n4 or i + 1 >= n4: continue
+                            r_ = cl4[j] / op4[i + 1] - 1
+                            if not np.isfinite(r_): continue
+                            out.append((i, j, bool(r_ * int(c.get('direction', 1) or 1) > 0)))
+                        return out
+                    def _per(i): return '앞 2010~2023' if td[i] <= L.DEV_END else '뒤 2024~'
+                    crow = []
+                    for bid in (co_.get('b_ids') or pth.get('ids', [])[:2]):
+                        cb = byb.get(bid)
+                        if cb is None: continue
+                        TB = _trades(cb)
+                        for aid in a_ids:
+                            ca = oc.get(aid)
+                            if ca is None: continue
+                            TA = _trades(ca); ia = np.array([t[0] for t in TA]); ib = np.array([t[0] for t in TB])
+                            for per in ('앞 2010~2023', '뒤 2024~'):
+                                tb = [t for t in TB if _per(t[0]) == per]; ta = [t for t in TA if _per(t[0]) == per]
+                                ovb = [t for t in tb if len(ia) and np.abs(ia - t[0]).min() <= win]; nob = [t for t in tb if not (len(ia) and np.abs(ia - t[0]).min() <= win)]
+                                ova = [t for t in ta if len(ib) and np.abs(ib - t[0]).min() <= win]
+                                # 함께 쓰기: 두 규칙 신호를 날짜 순으로, 보유 중이면 건너뜀(같은 날이면 B 먼저)
+                                ev = sorted([(t[0], 0, t) for t in tb] + [(t[0], 1, t) for t in ta]); busy = -1; port = []
+                                for i_, src, t in ev:
+                                    if i_ < busy: continue
+                                    port.append((src, t[2])); busy = t[1]
+                                def _h(L_): return round(sum(x[2] for x in L_) / len(L_) * 100, 1) if L_ else np.nan
+                                crow.append({'B 규칙': bid, 'A 규칙': aid, '구간': per, 'B 거래': len(tb), 'B 적중%': _h(tb), 'A 거래': len(ta), 'A 적중%': _h(ta),
+                                             f'B 중 A 와 ±{win}일 겹침': len(ovb), '겹친 B 적중%': _h(ovb), '안 겹친 B 거래': len(nob), '안 겹친 B 적중%': _h(nob),
+                                             f'A 중 B 와 ±{win}일 겹침': len(ova),
+                                             '함께 쓰기 거래': len(port), '함께 쓰기 적중%': round(sum(p[1] for p in port) / len(port) * 100, 1) if port else np.nan,
+                                             '함께 쓰기 중 A 몫': sum(1 for p in port if p[0] == 1),
+                                             '표본 주의': '10 미만' if len(port) < 10 else ''})
+                    pd.DataFrame(crow).to_csv(os.path.join(od, 'path_cross_overlap.csv'), index=False, encoding='utf-8')
+                    print('다른 갈래 겹침 설명표', len(a_ids), 'A 규칙 ·', len(crow), '줄', flush=True)
+                except Exception as e:
+                    print('다른 갈래 겹침 설명표 실패', repr(e), flush=True)
             print('경로 설명표', len(P), '거래 ·', len(srows), '칸', flush=True)
         except Exception as e:
             print('경로 설명표 실패', repr(e), flush=True)
