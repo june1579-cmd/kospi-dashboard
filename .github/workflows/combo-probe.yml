@@ -1,0 +1,77 @@
+# 조건 조합 전부 훑기 검증(일회성, 사용자 요청 2026-11-23): 조합 1~4개를 전부 세고, 해마다 과거 자료로 고른 조합이 다음 해에 맞았는지 잰다.
+# KRX 로그인 없음 — 저장소에 모인 자료만 읽는다. 맞춤 12개(전체 기간 + 2016~2026년)를 동시에 돌린다.
+name: combo-probe
+on:
+  push:
+    branches: [deriv-research]
+    paths: ['deriv/combo/trigger.txt']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: combo-probe
+  cancel-in-progress: true
+jobs:
+  prep:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: deriv-research}
+      - uses: actions/checkout@v4
+        with: {ref: main, path: _main}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q -r _main/requirements.txt joblib
+      - name: 자료표(통합 예측 연구소와 같은 것)
+        run: |
+          python deriv/scan/scan_data.py
+          python deriv/lab/a02_features.py
+          python deriv/uni/uni_panel.py
+      - uses: actions/upload-artifact@v4
+        with: {name: panel, path: deriv/uni/out/panel.pkl, retention-days: 3}
+  fit:
+    needs: prep
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    strategy:
+      fail-fast: false
+      matrix:
+        fit: [FULL, '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026']
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: deriv-research}
+      - uses: actions/checkout@v4
+        with: {ref: main, path: _main, sparse-checkout: requirements.txt, sparse-checkout-cone-mode: false}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q -r _main/requirements.txt
+      - uses: actions/download-artifact@v4
+        with: {name: panel, path: deriv/uni/out}
+      - name: 검산(뻔한 계산과 숫자가 같은지)
+        run: cd deriv/combo && nproc && python test_core.py
+      - name: 전부 훑기
+        run: cd deriv/combo && python combo_probe.py --fit ${{ matrix.fit }} --maxlevel 4 --budget ${{ matrix.fit == 'FULL' && '2400' || '1800' }} --null ${{ matrix.fit == 'FULL' && '6' || '4' }} --out out
+      - uses: actions/upload-artifact@v4
+        with: {name: 'fit-${{ matrix.fit }}', path: 'deriv/combo/out/fit_${{ matrix.fit }}.json', retention-days: 3}
+  report:
+    needs: fit
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: deriv-research}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q numpy
+      - uses: actions/download-artifact@v4
+        with: {pattern: 'fit-*', path: deriv/combo/out, merge-multiple: true}
+      - run: python deriv/combo/combo_report.py > /dev/null && head -40 deriv/combo/out/report.md
+      - name: 저장
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add deriv/combo/out
+          git diff --cached --quiet && exit 0
+          git commit -q -m "조건 조합 전부 훑기 검증 결과 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
+          for i in 1 2 3 4; do git pull -q --rebase origin deriv-research && git push -q origin HEAD:deriv-research && break; sleep 15; done
