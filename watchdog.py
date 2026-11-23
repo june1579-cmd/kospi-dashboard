@@ -28,6 +28,7 @@ RUNS = [
     dict(key='run:update', wf='update.yml', br='main', label='코스피 대시보드 갱신', need=2, grace_h=0, rerun=False, repair=True, why='하루 3번씩 예약된 다음 실행이 재시도 역할'),
     dict(key='run:fo', wf='fo-dashboard.yml', br='main', label='선물옵션 대시보드 갱신', need=1, grace_h=0, rerun=True, safe_jobs=['build'], repair=True),
     dict(key='run:ai-feed', wf='ai-feed.yml', br='main', label='AI 경고판 원자료 수집', need=1, grace_h=0, rerun=True, repair=True),
+    dict(key='run:audit', wf='audit.yml', br='main', label='신호·종목 명단 검증', need=1, grace_h=0, rerun=True, repair=True),
     dict(key='run:short', wf='short-backfill.yml', br='main', label='공매도 수집', need=1, grace_h=0, rerun=False, repair=True),
     dict(key='run:lab-a', wf='deriv-lab.yml', br='deriv-research', label='연구소 갈래 A 라운드', need=1, grace_h=3, rerun=False, repair=True),
     dict(key='run:lab-b', wf='deriv-lab-b.yml', br='deriv-research', label='연구소 갈래 B 라운드', need=1, grace_h=3, rerun=False, repair=True),

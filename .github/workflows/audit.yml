@@ -1,0 +1,79 @@
+# 검증(2026-11-23): 대시보드 매매 신호 + 종목 명단. 주 1회 GitHub 가 스스로 돈다 — KRX 로그인 없음(저장소에 이미 있는 자료만 씀), Claude 를 쓰지 않는다.
+#  signals: signal_audit.py — 시기별 성적, 가짜 신호 시험, 저장 이력 재현, 자른 자료 시험 → report/signal_audit.md
+#  lists  : validation 가지의 validate.py(급락 구간 고점일마다 그날까지 자료로 명단 다시 만들기) + random_check.py(무작위 명단 비교) → report/list_audit.md
+#  notify : 결과가 지난번과 달라졌을 때만 카카오톡
+name: audit
+on:
+  schedule:
+    - cron: '13 18 * * 6'    # 일요일 03:13 KST
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: audit
+jobs:
+  signals:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q -r requirements.txt
+      - run: python signal_audit.py
+      - name: 저장
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add report/signal_audit.md report/signal_audit.json
+          git commit -q -m "신호 검증 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || echo "변경 없음"
+          for i in 1 2 3; do git pull -q --rebase && git push -q && break || sleep 10; done
+  lists:
+    needs: signals
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with: {ref: validation, path: _val}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q pandas numpy
+      - name: 과거 급락 구간별 명단 다시 만들기 + 무작위 비교
+        run: |
+          python _val/research/validation/validate.py
+          python _val/research/validation/random_check.py
+      - name: 저장(validation 가지 결과 + 기본 가지 보고)
+        run: |
+          git config --global user.name "dashboard-bot"; git config --global user.email "dashboard-bot@users.noreply.github.com"
+          cd _val && git add research/validation/result && (git commit -q -m "명단 검증 결과 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || echo "변경 없음")
+          for i in 1 2 3; do git pull -q --rebase origin validation && git push -q origin HEAD:validation && break || sleep 10; done
+          cd .. && cp _val/research/validation/result/random_check.md report/list_audit.md && cp _val/research/validation/result/random_check.json report/list_audit.json
+          git add report/list_audit.md report/list_audit.json && (git commit -q -m "명단 검증 보고 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || echo "변경 없음")
+          for i in 1 2 3; do git pull -q --rebase && git push -q && break || sleep 10; done
+  notify:
+    needs: [signals, lists]
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    concurrency:
+      group: dashboard-update     # 카카오 토큰 연장이 다른 알림과 겹치지 않게
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q requests cryptography
+      - id: n
+        run: python audit_notify.py
+      - name: 카카오톡(검증 결과가 달라졌을 때만)
+        if: ${{ steps.n.outputs.send == '1' }}
+        env:
+          KAKAO_REST_KEY: ${{ secrets.KAKAO_REST_KEY }}
+          KAKAO_REFRESH_TOKEN: ${{ secrets.KAKAO_REFRESH_TOKEN }}
+          KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
+        run: |
+          python kakao_send.py --file alerts/audit.txt || echo "카카오톡 발송 실패(위 로그 참고)"
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add -A state alerts/audit.txt && git commit -m "검증 알림" -q && git pull -q --rebase && git push -q || true
