@@ -99,42 +99,60 @@ def main():
         ent, ext, r = U.target_arrays(P, kind, H); T[tn] = dict(kind=kind, H=H, r=r[off:off + n][ev], hold=(H + 1 if kind == 'IDX' else H))
     today = pd.Timestamp.now(tz='Asia/Seoul').strftime('%Y-%m-%d')
 
+    # ---------------- 0) 규칙 후보(실험 2~: 대시보드 신호 + 조건, uni_rules.py). 못 만들면 규칙 후보 없이 계속하고 이유를 status 에 적는다.
+    RL = None; rules_note = ''
+    try:
+        import uni_rules
+        rinfo = uni_rules.main(); RL = pickle.load(open(os.path.join(U.OUT, 'rules.pkl'), 'rb')); rules_note = f"규칙 후보 {rinfo['candidates']}개 · 바탕 신호: {rinfo['base_note']} · 조건 후보 해마다 {rinfo['conditions_per_year']}개(지표 {rinfo['pool_features']}개)"
+    except Exception as e:
+        import traceback; traceback.print_exc(); RL = None; rules_note = f'규칙 후보 못 만듦({type(e).__name__}: {str(e)[:120]})'
+    SN = dict(U.SET_NAME); MN = dict(U.MODEL_NAME)
+    if RL: SN.update(RL['names']['set']); MN.update(RL['names']['model'])
+
     # ---------------- 1) 신호 후보
     rows = []; fam = {'pass': np.zeros(B, bool), 'watch': np.zeros(B, bool)}; SIG = {}
-    for col in PR.columns:
-        tn, sn, mn = col.split('|'); t = T[tn]; p = PR[col].values
-        for q in QS:
-            hi = thr_series(p, idx, q); lo = thr_series(p, idx, 1 - q)
-            for side, v_all, sg in (('buy', p >= hi, 1.0), ('sell', p <= lo, -1.0)):
-                v = (v_all & np.isfinite(p) & np.isfinite(hi))[ev]; rr = sg * t['r']; cid = f'{col}|{side}|q{int(q * 100)}'; SIG[cid] = (v_all & np.isfinite(p) & np.isfinite(hi))
-                known = np.isfinite(rr); base = float((rr[known] > 0).mean()); base1 = float((rr[known & fh] > 0).mean()); base2 = float((rr[known & ~fh] > 0).mean())
-                st = stat_sig(v & known, rr, t['hold'], fh)
-                rec = dict(id=cid, target=tn, set=sn, model=mn, side=side, q=q, n=0, hit=np.nan, n1=0, hit1=np.nan, n2=0, hit2=np.nan, base=round(base, 4), lb=0.0, mean=np.nan, grade_num='', days=int((v & known).sum()))
-                if st is not None:
-                    k, x, h1 = st; nn = len(x); hit = float((x > 0).mean()); n1 = int(h1.sum()); n2 = nn - n1
-                    hit1 = float((x[h1] > 0).mean()) if n1 else np.nan; hit2 = float((x[~h1] > 0).mean()) if n2 else np.nan
-                    ys = idx[ev][k].year; by = pd.Series(x).groupby(ys)
-                    loyo = min([float((x[ys != y] > 0).mean()) for y in np.unique(ys) if (ys != y).sum() >= 20] or [np.nan])
-                    tot = float(x.sum()); conc = float(by.sum().max() / tot) if tot > 0 else np.nan
-                    rec.update(n=nn, hit=round(hit, 4), n1=n1, hit1=round(hit1, 4) if n1 else np.nan, n2=n2, hit2=round(hit2, 4) if n2 else np.nan, lb=round(U.wilson_lb(int((x > 0).sum()), nn), 4),
-                               mean=round(float(x.mean()) * 100, 3), loyo=round(loyo, 4) if np.isfinite(loyo) else np.nan, conc=round(conc, 3) if np.isfinite(conc) else np.nan,
-                               base1=round(base1, 4), base2=round(base2, 4), last=str(idx[ev][k][-1].date()),
-                               by_year=json.dumps({int(y): [int(g.size), round(float((g > 0).mean()), 2)] for y, g in by}, ensure_ascii=False))
-                    rec['grade_num'] = num_grade(side, nn, hit, n1, hit1 if n1 else 0, n2, hit2 if n2 else 0)
-                    # 가짜 신호(통째로 옮김): 가까운 후보만 정밀하게, 전체는 가족 보정용으로
-                    ge = 0; near = hit >= CRIT[side]['watch']['hit'] - 0.08 and nn >= 25
-                    for bi, s in enumerate(shifts):
-                        st2 = stat_sig(np.roll(v, s) & known, rr, t['hold'], fh)
-                        if st2 is None: continue
-                        k2, x2, g2 = st2; n_ = len(x2); h_ = float((x2 > 0).mean()); ge += h_ >= hit
-                        m1 = int(g2.sum()); m2 = n_ - m1
-                        gnum = num_grade(side, n_, h_, m1, float((x2[g2] > 0).mean()) if m1 else 0, m2, float((x2[~g2] > 0).mean()) if m2 else 0)
-                        if gnum == 'pass': fam['pass'][bi] = True; fam['watch'][bi] = True
-                        elif gnum == 'watch': fam['watch'][bi] = True
-                    rec['placebo_p'] = round((ge + 1) / (B + 1), 4)
-                    c = CRIT[side][rec['grade_num']] if rec['grade_num'] else None
-                    rec['rt_ok'] = bool(c and rec['placebo_p'] < RT['p'] and rec['lb'] > base and np.isfinite(loyo) and loyo >= c['hit'] - RT['loyo_margin'] and np.isfinite(conc) and conc < RT['conc'])
-                rows.append(rec)
+    def cands():
+        """모형 후보(예측 확률의 분위 문턱) 다음에 규칙 후보. 모두 아래 같은 몸통으로 판정한다."""
+        for col in PR.columns:
+            tn, sn, mn = col.split('|'); p = PR[col].values
+            for q in QS:
+                hi = thr_series(p, idx, q); lo = thr_series(p, idx, 1 - q)
+                for side, v_all, sg in (('buy', p >= hi, 1.0), ('sell', p <= lo, -1.0)):
+                    yield f'{col}|{side}|q{int(q * 100)}', tn, sn, mn, side, sg, q, (v_all & np.isfinite(p) & np.isfinite(hi))
+        if RL:
+            RS = RL['sig'].reindex(idx)
+            for cid_, m_ in RL['meta'].items():
+                yield cid_, m_['target'], m_['set'], m_['model'], m_['side'], (1.0 if m_['side'] == 'buy' else -1.0), np.nan, np.nan_to_num(np.asarray(RS[cid_].values, dtype=float)) > 0
+    for cid, tn, sn, mn, side, sg, q, vfull in cands():
+        t = T[tn]; v = vfull[ev]; rr = sg * t['r']; SIG[cid] = vfull
+        known = np.isfinite(rr); base = float((rr[known] > 0).mean()); base1 = float((rr[known & fh] > 0).mean()); base2 = float((rr[known & ~fh] > 0).mean())
+        st = stat_sig(v & known, rr, t['hold'], fh)
+        rec = dict(id=cid, target=tn, set=sn, model=mn, side=side, q=q, n=0, hit=np.nan, n1=0, hit1=np.nan, n2=0, hit2=np.nan, base=round(base, 4), lb=0.0, mean=np.nan, grade_num='', days=int((v & known).sum()))
+        if st is not None:
+            k, x, h1 = st; nn = len(x); hit = float((x > 0).mean()); n1 = int(h1.sum()); n2 = nn - n1
+            hit1 = float((x[h1] > 0).mean()) if n1 else np.nan; hit2 = float((x[~h1] > 0).mean()) if n2 else np.nan
+            ys = idx[ev][k].year; by = pd.Series(x).groupby(ys)
+            loyo = min([float((x[ys != y] > 0).mean()) for y in np.unique(ys) if (ys != y).sum() >= 20] or [np.nan])
+            tot = float(x.sum()); conc = float(by.sum().max() / tot) if tot > 0 else np.nan
+            rec.update(n=nn, hit=round(hit, 4), n1=n1, hit1=round(hit1, 4) if n1 else np.nan, n2=n2, hit2=round(hit2, 4) if n2 else np.nan, lb=round(U.wilson_lb(int((x > 0).sum()), nn), 4),
+                       mean=round(float(x.mean()) * 100, 3), loyo=round(loyo, 4) if np.isfinite(loyo) else np.nan, conc=round(conc, 3) if np.isfinite(conc) else np.nan,
+                       base1=round(base1, 4), base2=round(base2, 4), last=str(idx[ev][k][-1].date()),
+                       by_year=json.dumps({int(y): [int(g.size), round(float((g > 0).mean()), 2)] for y, g in by}, ensure_ascii=False))
+            rec['grade_num'] = num_grade(side, nn, hit, n1, hit1 if n1 else 0, n2, hit2 if n2 else 0)
+            # 가짜 신호(통째로 옮김): 가까운 후보만 정밀하게, 전체는 가족 보정용으로
+            ge = 0; near = hit >= CRIT[side]['watch']['hit'] - 0.08 and nn >= 25
+            for bi, s in enumerate(shifts):
+                st2 = stat_sig(np.roll(v, s) & known, rr, t['hold'], fh)
+                if st2 is None: continue
+                k2, x2, g2 = st2; n_ = len(x2); h_ = float((x2 > 0).mean()); ge += h_ >= hit
+                m1 = int(g2.sum()); m2 = n_ - m1
+                gnum = num_grade(side, n_, h_, m1, float((x2[g2] > 0).mean()) if m1 else 0, m2, float((x2[~g2] > 0).mean()) if m2 else 0)
+                if gnum == 'pass': fam['pass'][bi] = True; fam['watch'][bi] = True
+                elif gnum == 'watch': fam['watch'][bi] = True
+            rec['placebo_p'] = round((ge + 1) / (B + 1), 4)
+            c = CRIT[side][rec['grade_num']] if rec['grade_num'] else None
+            rec['rt_ok'] = bool(c and rec['placebo_p'] < RT['p'] and rec['lb'] > base and np.isfinite(loyo) and loyo >= c['hit'] - RT['loyo_margin'] and np.isfinite(conc) and conc < RT['conc'])
+        rows.append(rec)
     V = pd.DataFrame(rows); fw = {g: round(float(fam[g].mean()), 4) for g in fam}
     V['grade'] = [('보류(우연 가능)' if (g == 'pass' and fw['pass'] >= FAMILY) or (g == 'watch' and fw['watch'] >= 0.5) else {'pass': '통과', 'watch': '관찰'}[g]) if (g and ok) else ('숫자만 채움(반증 탈락)' if g else '') for g, ok in zip(V['grade_num'], V.get('rt_ok', False).fillna(False))]
     V.sort_values(['lb'], ascending=False).to_csv(os.path.join(U.OUT, 'verdicts.csv'), index=False, encoding='utf-8')
@@ -199,6 +217,32 @@ def main():
     BASE = dict(signals=base_rows, kospi=KP, bundle=BP, bundle_note='묶음 규칙의 창·개수는 2026-11-15에 결과를 보고 정함' if BP else '기준선 파일 없음')
     json.dump(BASE, open(os.path.join(U.OUT, 'baseline.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 
+    # ---------------- 4b) 규칙 후보 덧붙임 점검 — 참고값이며 등급에는 쓰지 않는다(등급은 위 1)의 판정 그대로, 기준은 CRITERIA.md)
+    #   바탕 신호만 걸었을 때 · 조건이 실제로 보탰는지(바탕 신호가 켜진 날 안에서 조건 무늬를 통째로 옮김) · 2025년부터(대시보드 최적화가 보지 않은 기간) · 지표를 하루 더 늦췄을 때(누설 점검)
+    RE = pd.DataFrame()
+    if RL:
+        BS = RL['base'].reindex(idx); S1 = RL['sig_lag1'].reindex(idx); clean = np.asarray(ie >= pd.Timestamp(RL['clean_start'])); rng2 = np.random.default_rng(SEED + 1); rrows = []
+        tob = lambda a_: (np.nan_to_num(np.asarray(a_, dtype=float)) > 0)[ev]
+        def hs(vv, rr_, hold_):
+            st_ = stat_sig(vv, rr_, hold_, fh)
+            if st_ is None: return 0, np.nan, 0, np.nan
+            k_, x_, _ = st_; c_ = clean[k_]
+            return len(x_), float((x_ > 0).mean()), int(c_.sum()), (float((x_[c_] > 0).mean()) if c_.any() else np.nan)
+        for cid, m in RL['meta'].items():
+            t = T[m['target']]; rr = (1.0 if m['side'] == 'buy' else -1.0) * t['r']; known = np.isfinite(rr); yok = np.isin(ie.year, m.get('years', []))
+            v = SIG[cid][ev] & known; b = tob(BS[m['set']].values) & known & yok; vl = tob(S1[cid].values) & known
+            n_, hit_, nc, hitc = hs(v, rr, t['hold']); bn, bhit, bnc, bhitc = hs(b, rr, t['hold']); ln, lhit, _, _ = hs(vl, rr, t['hold'])
+            bpos = np.where(b)[0]; mm = len(bpos); lp = np.nan
+            if n_ and mm >= 40:
+                c = v[bpos]; ge = 0
+                for s in rng2.integers(max(1, mm // 10), mm - max(1, mm // 10), size=B):
+                    v2 = np.zeros(W, bool); v2[bpos[np.roll(c, s)]] = True; n2_, h2_, _, _ = hs(v2, rr, t['hold']); ge += bool(n2_ and h2_ >= hit_)
+                lp = round((ge + 1) / (B + 1), 4)
+            r4 = lambda z_: round(z_, 4) if np.isfinite(z_) else np.nan
+            rrows.append(dict(id=cid, years=len(m.get('years', [])), n=n_, hit=r4(hit_), base_sig_n=bn, base_sig_hit=r4(bhit), lift_p=lp, clean_n=nc, clean_hit=r4(hitc), base_clean_n=bnc, base_clean_hit=r4(bhitc), lag1_n=ln, lag1_hit=r4(lhit)))
+        RE = pd.DataFrame(rrows).merge(V[['id', 'target', 'set', 'model', 'side', 'n1', 'hit1', 'n2', 'hit2', 'base', 'lb', 'placebo_p', 'grade_num', 'grade']], on='id', how='left')
+        RE.sort_values('lb', ascending=False).to_csv(os.path.join(U.OUT, 'rules_eval.csv'), index=False, encoding='utf-8')
+
     # ---------------- 5) 등록(등록일 고정)·오늘 상태·전진 기록
     rp = os.path.join(U.STATE, 'registry.json'); REG = json.load(open(rp, encoding='utf-8')) if os.path.exists(rp) else {}
     new = []
@@ -224,13 +268,15 @@ def main():
     status = dict(made=pd.Timestamp.now(tz='Asia/Seoul').strftime('%Y-%m-%d %H:%M'), data_end=str(idx[-1].date()), eval=[str(ie[0].date()), str(ie[-1].date())], candidates=int(len(V)), strategies=int(len(SV)),
                   signal_pass=cnt(V, '통과'), signal_watch=cnt(V, '관찰'), signal_held=cnt(V, '보류(우연 가능)'), signal_num_only=cnt(V, '숫자만 채움(반증 탈락)'),
                   strat_pass=cnt(SV, '통과'), strat_watch=cnt(SV, '관찰'), strat_held=cnt(SV, '보류(우연 가능)'), family_chance=dict(signal_pass=fw['pass'], signal_watch=fw['watch'], strat_pass=sfw),
-                  registered=len(REG), new=[list(x) for x in new], placebo_draws=B, seconds=round(time.time() - t0))
+                  registered=len(REG), new=[list(x) for x in new], placebo_draws=B, seconds=round(time.time() - t0),
+                  rule_candidates=int(len(RE)), rules_note=rules_note)
     json.dump(status, open(os.path.join(U.STATE, 'status.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 
     # ---------------- 6) 보고서
     pc = lambda v_: '—' if v_ is None or (isinstance(v_, float) and not np.isfinite(v_)) else f'{v_ * 100:.1f}%'
     sgn = lambda v_: ('+' if v_ > 0 else '−' if v_ < 0 else '') + f'{abs(v_):,.1f}%'
-    nm = lambda r_: f"{r_['target']} · {U.SET_NAME[r_['set']]} · {U.MODEL_NAME[r_['model']]}"
+    qtxt = lambda q_, side_: f"{'상' if side_ == 'buy' else '하'}위 {int(round((1 - q_) * 100))}%" if np.isfinite(q_) else '규칙(조건)'
+    nm = lambda r_: f"{r_['target']} · {SN.get(r_['set'], r_['set'])} · {MN.get(r_['model'], r_['model'])}"
     M = ['# 통합 예측 연구소(갈래 U) 결과', '', f"- 만든 때 {status['made']} KST · 자료 끝 {status['data_end']} · 평가 {status['eval'][0]} ~ {status['eval'][1]} (표본 밖 예측만)",
          f"- 신호 후보 {len(V)}개: 통과 {status['signal_pass']} · 관찰 {status['signal_watch']} · 보류 {status['signal_held']} · 숫자만 채우고 반증 탈락 {status['signal_num_only']}",
          f"- 전략 후보 {len(SV)}개: 통과 {status['strat_pass']} · 관찰 {status['strat_watch']} · 보류 {status['strat_held']}",
@@ -240,7 +286,17 @@ def main():
     for side in ('buy', 'sell'):
         vs = V[(V['side'] == side) & (V['n'] >= 30)].copy(); vs['rk'] = vs['grade'].map({'통과': 0, '관찰': 1, '보류(우연 가능)': 2, '숫자만 채움(반증 탈락)': 3}).fillna(4)
         for _, r_ in vs.sort_values(['rk', 'lb'], ascending=[True, False]).head(8).iterrows():
-            M.append(f"| {r_['grade'] or '미달'} | {'매수' if side == 'buy' else '매도'} | {nm(r_)} | {'상' if side == 'buy' else '하'}위 {int(round((1 - r_['q']) * 100))}% | {int(r_['n'])} | {pc(r_['hit'])} | {int(r_['n1'])}건 {pc(r_['hit1'])} | {int(r_['n2'])}건 {pc(r_['hit2'])} | {pc(r_['base'])} | {r_.get('placebo_p', float('nan'))} | {sgn(r_['mean']) if np.isfinite(r_['mean']) else '—'} |")
+            M.append(f"| {r_['grade'] or '미달'} | {'매수' if side == 'buy' else '매도'} | {nm(r_)} | {qtxt(r_['q'], side)} | {int(r_['n'])} | {pc(r_['hit'])} | {int(r_['n1'])}건 {pc(r_['hit1'])} | {int(r_['n2'])}건 {pc(r_['hit2'])} | {pc(r_['base'])} | {r_.get('placebo_p', float('nan'))} | {sgn(r_['mean']) if np.isfinite(r_['mean']) else '—'} |")
+    if len(RE):
+        nh = lambda n__, h__: '—' if not n__ else f'{int(n__)}건 {pc(h__)}'
+        M += ['', '## 기존 신호에 조건 더하기(대시보드 최적화 신호 + 선물·옵션·미국 조건)', '', f'- {rules_note}',
+              '- 조건은 해마다 그 해 이전 자료로만 골랐다(`out/rules_pick.csv`). 그러나 **바탕 신호 자체가 2015~2024 자료를 보고 고른 규칙**이라 2016~2024 성적에는 그 부풀림이 섞여 있다. 깨끗한 구간은 2025년부터다.',
+              f'- "조건이 보탠 것 p" = 바탕 신호가 켜진 날 안에서 조건 무늬를 통째로 옮긴 {B}번 가운데 적중이 실제 이상인 비율. 작을수록 조건이 실제로 보탠 것이다(참고값, 등급에는 쓰지 않음).',
+              '- "지표 하루 늦춤" = 같은 과정을 지표를 하루 더 늦춰 돌린 것. 크게 떨어지면 누설을 의심한다.', '',
+              '| 등급 | 쪽 | 후보 | 독립 신호 | 적중 | 앞 | 뒤 | 아무 날 | 바탕 신호만 | 조건이 보탠 것 p | 2025~ | 바탕 신호 2025~ | 지표 하루 늦춤 | 가짜 신호 p |', '|---|---|---|---|---|---|---|---|---|---|---|---|---|---|']
+        for _, r_ in RE.sort_values('lb', ascending=False).head(16).iterrows():
+            M.append(f"| {r_['grade'] or '미달'} | {'매수' if r_['side'] == 'buy' else '매도'} | {nm(r_)} | {int(r_['n'])} | {pc(r_['hit'])} | {int(r_['n1'])}건 {pc(r_['hit1'])} | {int(r_['n2'])}건 {pc(r_['hit2'])} | {pc(r_['base'])} | {nh(r_['base_sig_n'], r_['base_sig_hit'])} | {r_['lift_p']} | {nh(r_['clean_n'], r_['clean_hit'])} | {nh(r_['base_clean_n'], r_['base_clean_hit'])} | {nh(r_['lag1_n'], r_['lag1_hit'])} | {r_['placebo_p']} |")
+        M += ['', f"규칙 후보 {len(RE)}개 전부는 `out/rules_eval.csv`. 바탕 신호만의 건수는 조건을 고를 수 있었던 해만 센 것이다."]
     M += ['', '## 기존 신호를 같은 잣대로 잰 값(코스피 20거래일)', '', '| 신호 | 독립 신호 | 적중 | 앞 | 뒤 | 바탕 |', '|---|---|---|---|---|---|']
     for b in base_rows: M.append(f"| {b['name']} | {b['n']} | {pc(b['hit'])} | {b['n1']}건 {pc(b['hit1'])} | {b['n2']}건 {pc(b['hit2'])} | {pc(b['base'])} |")
     M += ['', '기존 최적화 신호는 2015~2024년 자료로 고른 것이라 그 기간(앞 구간 전부와 뒤 구간 일부) 성적이 부풀어 있다.', '',
@@ -269,7 +325,7 @@ def main():
     flag = os.path.join(U.NOTIFY, 'send.flag')
     if os.path.exists(flag): os.remove(flag)
     if new:
-        lab = lambda cid: (lambda p_: f"{p_[0]} {'매수' if p_[3] == 'buy' else '매도' if p_[3] == 'sell' else '보유·현금 전략'}({U.SET_NAME[p_[1]]})")(cid.split('|'))
+        lab = lambda cid: (lambda p_: f"{p_[0]} {'매수' if p_[3] == 'buy' else '매도' if p_[3] == 'sell' else '보유·현금 전략'}({SN.get(p_[1], p_[1])})")(cid.split('|'))
         np_ = [c for c, g in new if g == 'pass']; nw = [c for c, g in new if g == 'watch']
         msg = [f"[통합 예측 연구소] 전보다 나은 결과 {today}\n새 통과 {len(np_)}개 · 새 관찰 {len(nw)}개\n(누적 등록 {len(REG)}개, 자료 끝 {status['data_end']})"]
         for c, g in (new[:4]):
@@ -277,6 +333,7 @@ def main():
             if len(row): r_ = row.iloc[0]; msg.append(f"{'통과' if g == 'pass' else '관찰'}: {lab(c)}\n독립 신호 {int(r_['n'])}건 적중 {pc(r_['hit'])} (앞 {pc(r_['hit1'])} · 뒤 {pc(r_['hit2'])}, 바탕 {pc(r_['base'])})\n가짜 신호 p {r_['placebo_p']}")
             else:
                 r_ = SV[SV['id'] == c].iloc[0]; msg.append(f"{'통과' if g == 'pass' else '관찰'}: {lab(c)}\n누적 {sgn(r_['total'])} · 낙폭 {sgn(r_['mdd'])} · 수익÷낙폭 {r_['ratio']}\n(코스피 {KP['all']['ratio']}" + (f" · 묶음 규칙 {BP['all']['ratio']})" if BP else ')'))
+        if any(c.endswith('|rule') for c, _ in new): msg.append('주의: "대시보드 신호 + 조건" 후보는 바탕 신호가 2015~24 자료로 고른 것이라 그 기간 성적이 부풀어 있습니다. 2025년부터 성적은 보고서 표를 보세요.')
         msg.append('과거 자료 성적입니다. 등록일 뒤 실제 신호는 따로 기록합니다. 투자 권유 아님')
         open(os.path.join(U.NOTIFY, 'kakao.txt'), 'w', encoding='utf-8').write('\n=====\n'.join(m[:200] for m in msg) + '\n'); open(flag, 'w').write(today)
     print(json.dumps(status, ensure_ascii=False, indent=1))

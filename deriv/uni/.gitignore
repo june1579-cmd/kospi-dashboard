@@ -2,3 +2,4 @@ out/panel.pkl
 out/preds.pkl
 notify/send.flag
 __pycache__/
+out/rules.pkl
