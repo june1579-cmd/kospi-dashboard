@@ -7,7 +7,6 @@ on:
     paths:
       - 'research/validation/collect.py'
       - 'research/validation/run.txt'
-      - '.github/workflows/validation.yml'
   workflow_dispatch:
 permissions:
   contents: write
@@ -26,6 +25,16 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install -q pykrx==1.2.9 requests pandas
+      - name: KRX 줄 서기(같은 계정으로 동시에 로그인하면 서로 끊긴다 — 한 번에 하나만, 2026-11-23)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          KRX_LOCK_WAIT_MIN: '120'
+          KRX_LOCK_TTL_MIN: '345'
+          KRX_LOCK_ON_TIMEOUT: fail
+        run: |
+          git clone -q --depth 1 -b krx-lock "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}" "$RUNNER_TEMP/krxlock" || echo "KRX 줄: 받지 못함 — 줄 없이 진행"
+          rc=0; if [ -f "$RUNNER_TEMP/krxlock/krx_lock.py" ]; then python3 "$RUNNER_TEMP/krxlock/krx_lock.py" acquire || rc=$?; fi
+          if [ "$rc" = "3" ]; then echo "KRX 줄이 비지 않아 이번 실행은 로그인하지 않고 멈춤"; exit 1; fi
       - name: 수집
         env:
           KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
@@ -45,6 +54,9 @@ jobs:
           DKEY__OPENDART_TOKEN: ${{ secrets.OPENDART_TOKEN }}
           BUDGET_MIN: '320'
         run: python research/validation/collect.py || true
+      - name: KRX 줄 비우기
+        if: always()
+        run: if [ -f "$RUNNER_TEMP/krxlock/krx_lock.py" ]; then python3 "$RUNNER_TEMP/krxlock/krx_lock.py" release || true; fi
       - name: 결과 저장
         if: always()
         run: |
