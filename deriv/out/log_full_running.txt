@@ -43,3 +43,5 @@
 [07:12:05] 저장 iv_daily.csv 4658행
 [07:12:06] == pcr
 [07:15:26] 저장 pcr_daily.csv 4658행
+[07:15:28] == chainx
+[07:18:29] 저장 opt_chainx_daily.csv.gz 1571538행
