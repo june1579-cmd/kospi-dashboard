@@ -35,6 +35,8 @@ RUNS = [
     dict(key='run:lab-d', wf='deriv-lab-d.yml', br='deriv-research', label='연구소 갈래 D 라운드', need=1, grace_h=3, rerun=False, repair=True),
     dict(key='run:usk', wf='usk.yml', br='main', label='미국·한국 연동 계산', need=1, grace_h=0, rerun=True, repair=True),
     dict(key='run:criteria', wf='criteria-study.yml', br='deriv-research', label='통과 기준 검증 계산', need=1, grace_h=0, rerun=True, repair=True),
+    dict(key='run:uni', wf='uni-lab.yml', br='main', label='통합 예측 연구소 계산(정해진 시각)', need=1, grace_h=0, rerun=True, repair=True),
+    dict(key='run:uni-push', wf='uni-lab.yml', br='deriv-research', label='통합 예측 연구소 계산(실험)', need=1, grace_h=0, rerun=True, repair=True),
     dict(key='run:collect', wf='deriv-research.yml', br='deriv-research', label='선물·옵션 원자료 수집(KRX)', need=1, grace_h=3, rerun=False, repair=False),
     dict(key='run:lab-notify', wf='deriv-notify.yml', br='deriv-research', label='연구소 카카오 알림', need=1, grace_h=0, rerun=False, repair=True),
 ]
