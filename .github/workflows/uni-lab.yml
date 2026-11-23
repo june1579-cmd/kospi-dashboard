@@ -1,0 +1,62 @@
+# 통합 예측 연구소(갈래 U): 모든 자료(가격·자금·수급·변동성 + 선물·옵션·미국)로 코스피 방향을 예측하고 매수·매도 신호를 다시 만든다 (사용자 요청 2026-11-23).
+# KRX 로그인 없음 — 저장소에 이미 모인 자료만 읽는다. 코드는 deriv-research 가지 deriv/uni, 자금 원자료·기준선은 main 을 읽기만 한다.
+# 같은 파일을 main(정해진 시각 실행용)과 deriv-research(trigger.txt push 실행용)에 둔다.
+name: uni-lab
+on:
+  schedule:
+    - cron: '47 22 * * 1-5'    # 화~토 07:47 KST (미국 장 마감·아침 자료 뒤, 한국 개장 전)
+  push:
+    branches: [deriv-research]
+    paths: ['deriv/uni/trigger.txt']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: uni-lab
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: deriv-research}
+      - uses: actions/checkout@v4
+        with: {ref: main, path: _main}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q -r _main/requirements.txt joblib
+      - name: 지표(다시 쓰는 부품) — 연구소 일별 지표·옵션 벽 지표, 대시보드 묶음 규칙 하루 수익
+        run: |
+          python deriv/scan/scan_data.py
+          python deriv/lab/a02_features.py
+          B="$RUNNER_TEMP/bm"; mkdir -p "$B"; cp _main/out/q_daily.csv "$B/"
+          python _main/pkg/combo_track.py "_main/data/통합_원자료.xlsx" "$B" --daily > /dev/null
+      - name: U1 자료 통합 → U2 예측 → U3 판정
+        env: {UNI_JOBS: '4', UNI_B: '500'}
+        run: |
+          python deriv/uni/uni_panel.py
+          python deriv/uni/uni_model.py
+          python deriv/uni/uni_judge.py --bench "$RUNNER_TEMP/bm/combo_daily.csv"
+      - name: 카카오톡(새 통과·관찰이 있을 때만)
+        if: ${{ hashFiles('deriv/uni/notify/send.flag') != '' }}
+        env:
+          KAKAO_REST_KEY: ${{ secrets.KAKAO_REST_KEY }}
+          KAKAO_REFRESH_TOKEN: ${{ secrets.KAKAO_REFRESH_TOKEN }}
+          KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
+          GH_TOKEN: ${{ github.token }}
+          KAKAO_LAST: deriv/uni/notify/last.json
+        run: |
+          cp _main/state/kakao_token.json "$RUNNER_TEMP/main_token.json" 2>/dev/null || true
+          export TOKEN_RENEWED_AT="$(gh api "repos/$GITHUB_REPOSITORY/commits?path=state/kakao_token.json&sha=main&per_page=1" -q '.[0].commit.committer.date' 2>/dev/null || true)"
+          python deriv/lab/kakao_lab.py --file deriv/uni/notify/kakao.txt --main-state "$RUNNER_TEMP/main_token.json" --link "https://github.com/$GITHUB_REPOSITORY/blob/deriv-research/deriv/uni/out/report.md" || echo "카카오톡 발송 실패(위 로그 참고)"
+      - name: 저장
+        if: always()
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add deriv/uni/out deriv/uni/state deriv/uni/notify 2>/dev/null || true
+          git add deriv/lab/state/kakao_renewed.json 2>/dev/null || true
+          git diff --cached --quiet && exit 0
+          git commit -q -m "통합 예측 연구소 결과 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
+          git stash -q -u 2>/dev/null || true
+          for i in 1 2 3 4; do git pull -q --rebase origin deriv-research && git push -q origin HEAD:deriv-research && break; sleep 15; done
