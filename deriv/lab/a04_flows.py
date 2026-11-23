@@ -1255,6 +1255,52 @@ def main():
                     print('가족 단위 위약', len(mem), '후보 ·', len(frows), '줄', flush=True)
                 except Exception as e:
                     print('가족 단위 위약 실패', repr(e), flush=True)
+            # 갈래 B 라운드 38(path_table.regime_table: {hit_day}, 설정 없으면 없음 → 갈래 A·D 영향 없음, 후보 안 만듦 → A8 나눗수 그대로):
+            #   가설 H7 '적중은 장세(상승장 해) 덕 — 같은 장세의 아무 날도 그만큼 오름'. 통과·관찰 규칙의 독립 거래를 신호일 장세(60일선 위/아래,
+            #   20일 변동성·직전 20일 수익 3분위 — 문턱은 앞 구간 분포로 미리 정함, 그날 마감 뒤 아는 값)로 나눠, 같은 구간·같은 장세 아무 날의
+            #   hit_day 일 상승 비율(기본)과 비교(차이·이항 p). 표본 10 미만은 '표본 부족'으로만 표시.
+            rt_ = pth.get('regime_table')
+            if rt_ and len(P):
+                try:
+                    hd_ = int(rt_.get('hit_day', pth.get('hit_day', 3)))
+                    cl3 = pxp['close'].reindex(td).values.astype(float); op3 = pxp['open'].reindex(td).values.astype(float); n3 = len(td)
+                    fwd = np.full(n3, np.nan)
+                    ok3 = np.arange(n3) + hd_ < n3
+                    fwd[ok3] = cl3[np.arange(n3)[ok3] + hd_] / op3[np.minimum(np.arange(n3)[ok3] + 1, n3 - 1)] - 1
+                    fwd = pd.Series(fwd, index=td)
+                    kc = k2['close'].reindex(td).astype(float)
+                    ma60 = kc.rolling(60, min_periods=60).mean(); r1 = kc.pct_change()
+                    vol20 = r1.rolling(20, min_periods=20).std() * np.sqrt(252) * 100; ret20 = (kc / kc.shift(20) - 1) * 100
+                    tdv3 = pd.DatetimeIndex(td); inP1 = (tdv3 >= pd.Timestamp('2010-01-01')) & (tdv3 <= L.DEV_END); inP2 = tdv3 >= L.HOLD_START
+                    def _terc(s):
+                        q1, q2 = s[inP1].quantile([1 / 3, 2 / 3])
+                        return pd.Series(np.where(s.isna(), None, np.where(s <= q1, '하', np.where(s <= q2, '중', '상'))), index=td), (round(float(q1), 2), round(float(q2), 2))
+                    vb, vq = _terc(vol20); rb, rq = _terc(ret20)
+                    regs = {'60일선': pd.Series(np.where(ma60.isna(), None, np.where(kc > ma60, '위', '아래')), index=td),
+                            f'20일 변동성(연율, 문턱 {vq[0]}·{vq[1]}%)': vb, f'직전 20일 수익(문턱 {rq[0]}·{rq[1]}%)': rb}
+                    rrows = []
+                    for pid in pth.get('ids', []):
+                        g0 = P[P['id'] == pid]
+                        for per, inper in (('앞 2010~2023', inP1), ('뒤 2024~', inP2)):
+                            g = g0[g0['앞뒤'] == per]
+                            if not len(g): continue
+                            sd = pd.to_datetime(g['신호일'])
+                            hit = (g[f'{hd_}일%'] > 0).values; okh = g[f'{hd_}일%'].notna().values
+                            for rn, rs in regs.items():
+                                lab = rs.reindex(sd).values
+                                for b in sorted({x for x in lab if x is not None}):
+                                    sel = (lab == b) & okh; n_ = int(sel.sum()); k_ = int(hit[sel].sum())
+                                    basem = pd.Series(np.asarray(inper), index=td) & (rs == b) & fwd.notna()
+                                    base = float((fwd[basem] > 0).mean()) if basem.sum() else np.nan
+                                    rrows.append({'id': pid, '구간': per, '장세': rn, '칸': b, '거래': n_, f'{hd_}일 적중%': round(k_ / n_ * 100, 1) if n_ else np.nan,
+                                                  '같은 장세 아무 날%': round(base * 100, 1) if base == base else np.nan, '아무 날 수': int(basem.sum()),
+                                                  '차이%p': round((k_ / n_ - base) * 100, 1) if n_ and base == base else np.nan,
+                                                  '기본 대비 p': round(L.binom_p(k_, n_, base), 4) if n_ and base == base else np.nan,
+                                                  '표본 주의': '10 미만(표본 부족)' if n_ < 10 else ''})
+                    pd.DataFrame(rrows).to_csv(os.path.join(od, 'path_regime_table.csv'), index=False, encoding='utf-8')
+                    print('장세 나눔 설명표', len(rrows), '칸', flush=True)
+                except Exception as e:
+                    print('장세 나눔 설명표 실패', repr(e), flush=True)
             print('경로 설명표', len(P), '거래 ·', len(srows), '칸', flush=True)
         except Exception as e:
             print('경로 설명표 실패', repr(e), flush=True)
