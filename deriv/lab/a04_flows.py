@@ -1183,6 +1183,78 @@ def main():
                                   '실제 1~10일 중 아무 날 95% 점 넘는 날 수': int((real > np.quantile(allk, 0.95, axis=0)).sum()), '뽑기': nd_})
                 pd.DataFrame(hrows).to_csv(os.path.join(od, 'path_hold_placebo.csv'), index=False, encoding='utf-8')
                 print('보유 기간 고르기 위약', len(hrows), flush=True)
+            # 갈래 B 라운드 37(path_table.family_placebo: {prefixes, min_n_p1, min_n_p2, gap}, 설정 없으면 없음 → 갈래 A·D 영향 없음, 후보 안 만듦 → A8 나눗수 그대로):
+            #   라운드 36 위약은 '보유일 고르기'만 셈함 → 이번엔 같은 가족(이번 A4 의 Q 위치·흐름·조건·합친 신호 후보, 이름이 _m<보유일> 로 끝나는 것) 전체를 고른 몫까지.
+            #   구간(앞 2010~2023·뒤 2024~)마다 가족 모든 후보의 독립 거래 신호일을 '같은 거래일 수만큼 함께' 돌려 옮김(원형 이동, 모든 이동량을 다 셈 — 무작위 아님).
+            #   후보끼리의 겹침·신호 몰림 모양은 그대로 두고 날짜와 값의 연결만 끊음. 이동마다 (가) 각 후보 자기 보유일 적중의 가족 최대, (나) 1~10일 중 최고까지의 가족 최대.
+            #   실제 가족 최대(이동 0)·통과 규칙 각자의 적중이 그 분포에서 어디인지 = 가족 단위 p. 표본 기준(앞 min_n_p1, 뒤 min_n_p2) 미만 후보는 최대에서 뺌(고를 수 없던 후보).
+            fp_ = pth.get('family_placebo')
+            if fp_:
+                try:
+                    import re as _re
+                    cl2 = pxp['close'].reindex(td).values.astype(float); op2 = pxp['open'].reindex(td).values.astype(float)
+                    nT2 = len(td); K2_ = 10; ii2 = np.arange(nT2)
+                    Rf = np.full((nT2, K2_), np.nan, dtype=np.float32)
+                    for k_ in range(1, K2_ + 1):
+                        ok_ = ii2 + k_ < nT2
+                        Rf[ok_, k_ - 1] = cl2[ii2[ok_] + k_] / op2[np.minimum(ii2[ok_] + 1, nT2 - 1)] - 1
+                    pfx = tuple(fp_.get('prefixes', ['A4zc_Q_', 'A4zu_', 'A4_Q_']))
+                    gap = int(fp_.get('gap', 20)); tdv = pd.DatetimeIndex(td)
+                    pers = {'앞 2010~2023': (tdv >= pd.Timestamp('2010-01-01')) & (tdv <= L.DEV_END), '뒤 2024~': tdv >= L.HOLD_START}
+                    minn = {'앞 2010~2023': int(fp_.get('min_n_p1', 20)), '뒤 2024~': int(fp_.get('min_n_p2', 12))}
+                    mem = []
+                    for c in cands:
+                        mm = _re.search(r'_m(\d+)$', str(c['id']))
+                        if not str(c['id']).startswith(pfx) or mm is None or int(mm.group(1)) > K2_: continue
+                        tr = c['trades'].assign(signal=lambda d: pd.to_datetime(d['signal']), exit=lambda d: pd.to_datetime(d['exit'])).dropna().sort_values('signal')
+                        keep = []; last = pd.Timestamp('1900-01-01')
+                        for s_, e_ in zip(tr['signal'], tr['exit']):
+                            if s_ >= last: keep.append(s_); last = e_
+                        ps = np.array([pos[s_] for s_ in keep if s_ in pos], dtype=int)
+                        mem.append((c['id'], int(mm.group(1)), int(c.get('direction', 1) or 1), ps))
+                    frows = []; mrows = []
+                    for per, msk in pers.items():
+                        idx = np.where(msk)[0]
+                        if not len(idx): continue
+                        a_, b_ = int(idx[0]), int(idx[-1]); Lp = b_ - a_ + 1
+                        S = np.arange(0, Lp, dtype=int); S = S[(S == 0) | ((S >= gap) & (S <= Lp - gap))]
+                        famA = np.full(len(S), -1.0); famB = np.full(len(S), -1.0); who = []; nmem = 0
+                        for (cid, m_, dr_, ps) in mem:
+                            pp = ps[(ps >= a_) & (ps <= b_)]
+                            if len(pp) < minn[per]: continue
+                            NI = a_ + (pp[None, :] - a_ + S[:, None]) % Lp
+                            Rk = Rf[NI] * dr_                                   # (이동, 거래, 보유일)
+                            fin = np.isfinite(Rk)
+                            up = np.where(fin, Rk > 0, False).sum(axis=1) / np.maximum(fin.sum(axis=1), 1)
+                            up = np.where(fin.sum(axis=1) >= minn[per], up, np.nan)
+                            hA = up[:, m_ - 1]; hB = np.nanmax(up, axis=1)
+                            famA = np.fmax(famA, np.nan_to_num(hA, nan=-1.0)); famB = np.fmax(famB, np.nan_to_num(hB, nan=-1.0))
+                            nmem += 1
+                            mrows.append({'id': cid, '구간': per, '거래': int(fin[0, :, m_ - 1].sum()), '보유일': m_, '실제 적중%': round(float(hA[0]) * 100, 1) if hA[0] == hA[0] else np.nan,
+                                          '실제 1~10일 최고%': round(float(hB[0]) * 100, 1) if hB[0] == hB[0] else np.nan})
+                        if not nmem: continue
+                        rA, rB = famA[0], famB[0]; dA, dB = famA[1:], famB[1:]
+                        M = pd.DataFrame([r for r in mrows if r['구간'] == per])
+                        r = {'구간': per, '가족 후보 수(표본 기준 이상)': nmem, '이동 수': int(len(S) - 1),
+                             '실제 가족 최대(자기 보유일)%': round(rA * 100, 1), '그 후보': M.loc[M['실제 적중%'].idxmax(), 'id'] if len(M) else '',
+                             '이동 가족 최대 평균%': round(float(dA.mean()) * 100, 1), '이동 가족 최대 95% 점%': round(float(np.quantile(dA, 0.95)) * 100, 1),
+                             'p(가족, 자기 보유일)': round(float((dA >= rA - 1e-9).mean()), 4),
+                             '실제 가족 최대(1~10일 고름)%': round(rB * 100, 1), '이동 가족 최대(1~10일) 평균%': round(float(dB.mean()) * 100, 1),
+                             '이동 가족 최대(1~10일) 95% 점%': round(float(np.quantile(dB, 0.95)) * 100, 1), 'p(가족, 1~10일 고름)': round(float((dB >= rB - 1e-9).mean()), 4)}
+                        frows.append(r)
+                        for pid in pth.get('ids', []):
+                            mr = M[M['id'] == pid]
+                            if not len(mr) or not (mr['실제 적중%'].iloc[0] == mr['실제 적중%'].iloc[0]): continue
+                            h_ = float(mr['실제 적중%'].iloc[0]) / 100
+                            frows.append({'구간': per, '통과·관찰 규칙': pid, '거래': int(mr['거래'].iloc[0]), '실제 적중%': round(h_ * 100, 1),
+                                          'p(가족 최대 ≥ 이 규칙, 자기 보유일)': round(float((dA >= h_ - 1e-9).mean()), 4),
+                                          'p(가족 최대(1~10일) ≥ 이 규칙)': round(float((dB >= h_ - 1e-9).mean()), 4),
+                                          '가족 안 순위': int((M['실제 적중%'] > h_ * 100 + 1e-9).sum() + 1)})
+                    pd.DataFrame(frows).to_csv(os.path.join(od, 'path_family_placebo.csv'), index=False, encoding='utf-8')
+                    pd.DataFrame(mrows).to_csv(os.path.join(od, 'path_family_members.csv'), index=False, encoding='utf-8')
+                    print('가족 단위 위약', len(mem), '후보 ·', len(frows), '줄', flush=True)
+                except Exception as e:
+                    print('가족 단위 위약 실패', repr(e), flush=True)
             print('경로 설명표', len(P), '거래 ·', len(srows), '칸', flush=True)
         except Exception as e:
             print('경로 설명표 실패', repr(e), flush=True)
