@@ -15,7 +15,7 @@
 
 | 항목 | 갈래 A | 갈래 B | 갈래 D |
 |---|---|---|---|
-| 회차(KST) | 10:43·13:43·17:43·22:43 | 12:13·15:13·19:13·23:13 | 05:13·21:13 |
+| 회차(KST) | 10:43·13:43·17:43·22:43 | 12:13·15:13·19:13·23:13 | 05:13·09:13·14:13·21:13 |
 | 라운드 설정 파일 | deriv/lab/round.json | deriv/lab/round_b.json | deriv/lab/round_d.json |
 | 결과 폴더 | deriv/lab/out/round_NNN | deriv/lab/out_b/round_NNN | deriv/lab/out_d/round_NNN |
 | 상태 폴더(plan.md·history.md·latest_status.json·ledger.json) | deriv/lab/state | deriv/lab/state_b | deriv/lab/state_d |

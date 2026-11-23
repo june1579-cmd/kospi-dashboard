@@ -11,7 +11,7 @@
 3. 계산은 전부 GitHub 에서 합니다(`criteria-study` 워크플로). 이 세션에서는 결과 파일 읽기와 글쓰기만 합니다.
 4. 비밀값(KRX·DART·Kakao·TwelveData·Tavily)은 읽지도 쓰지도 않습니다. KRX 수집은 건드리지 않습니다.
 5. 원자료가 없으면 추정으로 채우지 않고 "확인 불가"라고 씁니다. 도구가 거부하면 우회하지 않고 멈춘 뒤 log.md 에 이유를 적습니다.
-6. 커밋은 git user dashboard-bot, push 전 `git pull --rebase origin deriv-research`. 다른 갈래 예약(A 10:43·13:43·17:43·22:43, B 12:13·15:13·19:13·23:13, D 05:13·21:13 KST)의 파일과 겹치지 않게 study/ 와 알림 파일만 커밋합니다.
+6. 커밋은 git user dashboard-bot, push 전 `git pull --rebase origin deriv-research`. 다른 갈래 예약(A 10:43·13:43·17:43·22:43, B 12:13·15:13·19:13·23:13, D 05:13·09:13·14:13·21:13 KST)의 파일과 겹치지 않게 study/ 와 알림 파일만 커밋합니다.
 7. 사용량 한도에 닿으면 그 자리에서 멈춥니다. 다음 주에 이어서 합니다.
 
 ## 순서
