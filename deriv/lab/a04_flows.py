@@ -609,6 +609,46 @@ def main():
                                 g = TT.groupby(['구간', '적중'])[num + ['60일선 위']].mean(numeric_only=False).round(2)
                                 g['수'] = TT.groupby(['구간', '적중']).size()
                                 g.to_csv(os.path.join(od, f'zone_first_trades_summary_{tag}_{band_key}.csv'), encoding='utf-8')
+                            # 갈래 B 라운드 34(first_n.expiry_table, 설명용 — 후보 안 만듦 → A8 나눗수 그대로, 설정 없으면 없음 → 갈래 A·D 영향 없음):
+                            #   라운드 33 에서 통과 규칙이 같은 날짜로 3일 보유에만 86%(2일 63%·5일 78%) — 만기 달력·요일과 겹쳐서인지(가설 H2).
+                            #   독립 거래(mt일 기준)마다 진입 요일, 보유 첫날~mt째 날 안 월물 만기(둘째 목, 휴장이면 앞 거래일)가 몇째 날인지(없으면 0),
+                            #   그 만기가 분기(3·6·9·12월)인지, 진입일→다음 월물 만기 거래일 수, 같은 진입의 1·2·3·5일 지수 수익. 끝이 자료 밖이면 빈칸.
+                            if fcfg.get('expiry_table') and len(TT):
+                                mons = pd.period_range(td[0], td[-1] + pd.Timedelta(days=45), freq='M')
+                                exps = pd.DatetimeIndex(sorted({L.expiry_of_ym(f'{p_.year}{p_.month:02d}', td) for p_ in mons}))
+                                c_ = k2['close']; o_ = k2['open']; erows = []
+                                for d_ in ind_:
+                                    i_ = td.get_loc(d_)
+                                    if i_ + 1 >= len(td): continue
+                                    ent = td[i_ + 1]
+                                    r = {'날짜': d_.date(), '구간': 'P1' if d_ <= L.DEV_END else 'P2', '진입일': ent.date(), '진입 요일': '월화수목금'[ent.weekday()]}
+                                    for k_ in (1, 2, 3, 5):
+                                        r[f'{k_}일%'] = round((float(c_.iloc[i_ + k_]) / float(o_.iloc[i_ + 1]) - 1) * 100, 3) if i_ + k_ < len(td) else np.nan
+                                    nx = exps[exps >= ent]
+                                    nxt = nx[0] if len(nx) else pd.NaT
+                                    r['진입→다음 월물 만기 거래일'] = (L.tdays_between(ent, nxt, td) if pd.notna(nxt) else np.nan)
+                                    hold = list(td[i_ + 1:i_ + 1 + mt])
+                                    r['보유 중 월물 만기(몇째 날)'] = (hold.index(nxt) + 1) if (pd.notna(nxt) and nxt in hold) else 0
+                                    r['그 만기가 분기'] = bool(r['보유 중 월물 만기(몇째 날)'] > 0 and nxt.month in (3, 6, 9, 12))
+                                    erows.append(r)
+                                EX = pd.DataFrame(erows)
+                                EX.to_csv(os.path.join(od, f'zone_first_expiry_{tag}_{band_key}.csv'), index=False, encoding='utf-8')
+                                srows_ = []
+                                if len(EX):
+                                    EX['만기 칸'] = np.where(EX['보유 중 월물 만기(몇째 날)'] > 0, '보유 중 만기 ' + EX['보유 중 월물 만기(몇째 날)'].astype(str) + '째 날', '보유 중 만기 없음')
+                                    EX['다음 만기까지 칸'] = pd.cut(EX['진입→다음 월물 만기 거래일'], [-1, 2, 5, 10, 40], labels=['0~2일', '3~5일', '6~10일', '11일+']).astype(str)
+                                    for per in ('P1', 'P2', '전체'):
+                                        G = EX if per == '전체' else EX[EX['구간'] == per]
+                                        for col in ('만기 칸', '그 만기가 분기', '진입 요일', '다음 만기까지 칸'):
+                                            for val, gg in G.groupby(col):
+                                                rr = {'구간': per, '나눔': col, '칸': str(val), '거래': len(gg), '표본 주의': '10 미만' if len(gg) < 10 else ''}
+                                                for k_ in (1, 2, 3, 5):
+                                                    v_ = gg[f'{k_}일%'].dropna()
+                                                    rr[f'{k_}일 상승%'] = round(float((v_ > 0).mean() * 100), 1) if len(v_) else np.nan
+                                                    rr[f'{k_}일 평균%'] = round(float(v_.mean()), 2) if len(v_) else np.nan
+                                                srows_.append(rr)
+                                pd.DataFrame(srows_).to_csv(os.path.join(od, f'zone_first_expiry_summary_{tag}_{band_key}.csv'), index=False, encoding='utf-8')
+                                print('만기·요일 설명표', tag, band_key, len(EX), flush=True)
                         except Exception as e:
                             print('첫 신호 설명표 실패', repr(e), flush=True)
                     for m in zc.get('post_m', MS):
@@ -954,7 +994,9 @@ def main():
                     for k in range(1, 11):
                         dk = tdl[i + k] if i + k < len(tdl) else None
                         r[f'{k}일%'] = round((float(pxp['close'].loc[dk]) / o - 1) * 100, 3) if dk is not None and dk in pxp.index else np.nan
-                    r['적중(5일)'] = (r['5일%'] > 0) if r['5일%'] == r['5일%'] else np.nan
+                    # 갈래 B 라운드 34: 적중 기준일을 설정으로(path_table.hit_day, 없으면 5 → 갈래 A 그대로). 칸 이름은 그대로 '적중(5일)'(A 결과와 같은 파일 모양).
+                    hdv = r[f"{int(pth.get('hit_day', 5))}일%"]
+                    r['적중(5일)'] = (hdv > 0) if hdv == hdv else np.nan
                     nd = float(newd.get(s_, np.nan)) if newd is not None else np.nan
                     r['새 벽 거리%'] = round(nd, 2) if nd == nd else np.nan
                     if nd == nd and i + 5 < len(tdl):
@@ -974,7 +1016,7 @@ def main():
                 P = P[P['1일%'].notna()].copy()
                 P['앞뒤'] = np.where(P['구간'] == '2024~', '뒤 2024~', '앞 2010~2023')
                 for (pid, per), g in P.groupby(['id', '앞뒤']):
-                    for sub_lab, sub in (('전체', g), ('5일 적중', g[g['적중(5일)'] == True]), ('5일 빗나감', g[g['적중(5일)'] == False])):   # noqa: E712
+                    for sub_lab, sub in (('전체', g), (f"{int(pth.get('hit_day', 5))}일 적중", g[g['적중(5일)'] == True]), (f"{int(pth.get('hit_day', 5))}일 빗나감", g[g['적중(5일)'] == False])):   # noqa: E712
                         if not len(sub): continue
                         r = {'id': pid, '구간': per, '칸': sub_lab, '거래': len(sub), '표본 주의': '10 미만' if len(sub) < 10 else ''}
                         for k in range(1, 11):
