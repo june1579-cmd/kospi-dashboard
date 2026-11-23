@@ -87,12 +87,12 @@ def main():
               '많이 내린 날이라고 다 바닥이 아니고, 많이 오른 날이라고 다 꼭지가 아니다. 그런 날들 가운데 실제로 3일 안에 전환점이 온 날에만 유독 겹쳐 있던 조건을 찾았다.',
               '"z" = 그 조건의 날짜를 통째로 옮겼을 때와 견준 차이(클수록 우연이 아님). 전체 기간을 다 보고 찾은 것이므로 고른 뒤 성적은 6절에서 따로 본다.', '']
         S['lift'] = {}
-        for nm, lab in (('저점5', '바닥'), ('고점5', '꼭지')):
+        for nm, lab, lab_i in (('저점5', '바닥', '바닥이'), ('고점5', '꼭지', '꼭지가')):
             lf = full.get('lift', {}).get(nm)
             if not lf: continue
             row = nm + '앞'; f0 = lf['ctx_f10']
             M += [f"### {EVN[nm]} — 바탕 조건 `{lf['context']}`", '',
-                  f"바탕 조건만 켜진 신호 {lf['ctx_signals']}번 가운데 3일 안에 {lab}이 온 것은 {lf['ctx_hits']}번({pct(lf['ctx_hits'], lf['ctx_signals'])}). 그 뒤 10일 {dirn(row)} {fwd_cell(row, f0)}.", '',
+                  f"바탕 조건만 켜진 신호 {lf['ctx_signals']}번 가운데 3일 안에 {lab_i} 온 것은 {lf['ctx_hits']}번({pct(lf['ctx_hits'], lf['ctx_signals'])}). 그 뒤 10일 {dirn(row)} {fwd_cell(row, f0)}.", '',
                   f'| 묶음 | 겹친 조건 | 신호 | 3일 안에 {lab} | 비율 | z | 그 뒤 10일 {dirn(row)} (거래) · 평균 |', '|---|---|---|---|---|---|---|']
             for ck in ('flow', 'credit', 'opt', 'futs', 'vol', 'us', 'price'):
                 for name, ns, hs, z, f10 in lf['bycat'][ck][:5]: M.append(f'| {CATS[ck]} | {name} | {ns} | {hs} | {pct(hs, ns)} | {z:+.1f} | {fwd_cell(row, f10)} |')
@@ -248,10 +248,44 @@ def main():
                     cells.append('—' if not p or not p['sig'] else f"{p['found']}/{p['events']} · {p['inw']}/{p['sig']} · {pct(p['hit10'], p['n10'], 0)} ({p['n10']}) · {sg(p['mean10'])}")
                 M.append(f'| {y} | ' + ' | '.join(cells) + ' |')
             M.append('')
+        # ---- 6-6 맞은 신호와 틀린 신호
+        def split_hit(sk, row, r, L, x, yy):
+            hi = rows.index(row); res = {k: {h: [] for h in HS} for k in ('hit', 'miss')}; nsig = nin = 0
+            for y in yy:
+                o = wf[y]
+                if sk not in o['sets']: continue
+                so = o['sets'][sk]; ns = int(np.array(so['sel'])[L, r, hi])
+                if not ns: continue
+                v = np.array(so['votes'])[L, r, hi]; days = np.where(v >= max(1, int(np.ceil(x * ns))))[0]; tv = np.array(o['test_val'][hi]); t5 = thin(days, 5); nsig += len(t5); nin += sum(int(tv[d] == 1) for d in t5)
+                for h in HS:
+                    rr = o['test_ret'][str(h)]
+                    for d in thin([d for d in days if rr[d] is not None and rr[d] != 0], h): res['hit' if tv[d] == 1 else 'miss'][h].append(rr[d])
+            return nsig, nin, res
+
+        M += ['### 6-6. 합친 신호를 "전환 구간 안이었던 것"과 "아니었던 것"으로 나누면', '', '6-5와 같은 설정. 맞았는지는 지나고 나서야 알 수 있으므로 이 표는 설명용이다. 칸 = 오른 비율 (거래) · 평균 수익.', '',
+              '| 묶음 | 구간 | 신호 | 구간 안 | 구간 안이었던 신호: 5일 / 10일 / 20일 | 아니었던 신호: 5일 / 10일 / 20일 |', '|---|---|---|---|---|---|']
+        S['wf_split'] = {}
+        for sk, row in (('ALL', '저점5앞'), ('NOPX', '저점5앞'), ('ALL', '저점5뒤'), ('ALL', '고점5앞'), ('ALL', '고점5뒤')):
+            nsig, nin, res = split_hit(sk, row, 1, 2, 0.05, yall)
+            cell = lambda k: ' / '.join('—' if not res[k][h] else f"{np.mean(np.array(res[k][h]) > 0) * 100:.0f}% ({len(res[k][h])}) · {np.mean(res[k][h]):+.2f}%" for h in HS)
+            M.append(f"| {SETN[sk]} | {RN[row]} | {nsig} | {nin} ({pct(nin, nsig, 0)}) | {cell('hit')} | {cell('miss')} |")
+            S['wf_split'][f'{sk}|{row}'] = dict(sig=nsig, inw=nin, **{k: {h: [len(res[k][h]), int(sum(1 for z in res[k][h] if z > 0)), float(np.mean(res[k][h])) if res[k][h] else None] for h in HS} for k in res})
+        M.append('')
+        # ---- 6-7 문턱을 올리면
+        M += ['### 6-7. 겹쳐 켜진 조합이 많을수록 확률이 오르나 (문턱별, 규칙 "구간 안 35% 이상 · 8개 이상" · 조건 3개)', '', '문턱 = 고른 조합 가운데 그날 켜져 있어야 하는 비율. 방향 칸 = 적중 (거래) · 평균 수익.', '',
+              '| 묶음 | 구간 | 문턱 | 찾은 전환점 | 신호 | 신호 중 구간 안 (아무 날) | 5일 방향 | 10일 방향 | 20일 방향 | 아무 날 5일 / 10일 / 20일 |', '|---|---|---|---|---|---|---|---|---|---|']
+        S['wf_thresh'] = {}
+        for sk, row in (('ALL', '저점5앞'), ('NOPX', '저점5앞'), ('PRICE', '저점5앞'), ('OPT', '저점5앞'), ('ALL', '저점5뒤'), ('PRICE', '저점5뒤'), ('ALL', '고점5앞')):
+            for x in (0.01, 0.02, 0.05, 0.10, 0.15, 0.20, 0.30):
+                A = union(sk, row, 1, 2, 'frac', x, yall)
+                if not A['sig']: continue
+                S['wf_thresh'][f'{sk}|{row}|{x}'] = A
+                M.append(f"| {SETN[sk]} | {RN[row]} | {x * 100:.0f}% | {A['found']}/{A['events']} | {A['sig']} | {pct(A['inw'], A['sig'], 0)} ({bh(A['base_in'])}) | {fcell(A['f'][5])} | {fcell(A['f'][10])} | {fcell(A['f'][20])} | {bcell(A['f'])} |")
+        M.append('')
         S['times'] = {str(y): {sk: [wf[y]['sets'][sk]['enum'], wf[y]['sets'][sk]['seconds']] for sk in wf[y]['sets']} for y in ys}
     if full: S['times_full'] = {sk: [full['sets'][sk]['cond'], full['sets'][sk]['enum'], full['sets'][sk]['seconds']] for sk in full['sets']}
     M += ['', '모두 과거 자료 성적이다. 투자 권유 아님']
-    open(os.path.join(OUT, 'report.md'), 'w', encoding='utf-8').write('\n'.join(M) + '\n'); json.dump(S, open(os.path.join(OUT, 'summary.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    open(os.path.join(OUT, 'report.md'), 'w', encoding='utf-8').write('\n'.join(M) + '\n'); json.dump(S, open(os.path.join(OUT, 'summary.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
     print(len(M), '줄')
 
 
