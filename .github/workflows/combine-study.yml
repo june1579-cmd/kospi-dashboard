@@ -1,0 +1,38 @@
+# 대시보드 '묶음 규칙'과 연구소 통과 신호를 한 계좌에서 같이 썼을 때의 성적 (사용자 요청 2026-11-23).
+# 읽기 전용 계산: KRX 로그인 없음. 저장소에 있는 원자료 엑셀과 연구소 결과 파일만 읽고 report/combine_study.md·json 만 쓴다.
+# study/combine_trigger.txt 를 push 하거나 직접 실행하면 돈다(다른 갱신·수집 워크플로와 경로가 겹치지 않음).
+name: combine-study
+on:
+  push:
+    branches: [main]
+    paths: ['study/combine_trigger.txt']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: combine-study
+  cancel-in-progress: true
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with: {ref: deriv-research, path: _lab, sparse-checkout: deriv/lab/study/out}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q -r requirements.txt
+      - name: 계산
+        run: |
+          W="$RUNNER_TEMP/cmb"; mkdir -p "$W"; cp out/q_daily.csv "$W/"
+          python pkg/combo_track.py "data/통합_원자료.xlsx" "$W" --daily > /dev/null
+          cp _lab/deriv/lab/study/out/sim_daily.csv _lab/deriv/lab/study/out/sim_trades.csv "$W/"
+          python combine_study.py --dir "$W" --report report
+      - name: 저장
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add report/combine_study.md report/combine_study.json
+          git diff --cached --quiet && exit 0
+          git commit -q -m "묶음 규칙 + 연구소 신호 합치기 계산 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
+          for i in 1 2 3 4; do git pull -q --rebase origin main && git push -q origin HEAD:main && break; sleep 15; done

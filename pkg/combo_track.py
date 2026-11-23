@@ -61,7 +61,7 @@ def daily_ret(c, pos, tr):
     for ei, xi, _ in tr: r[ei] -= COST / 2; r[xi] -= COST / 2
     return r
 
-def run(D, q_daily=None):
+def run(D, q_daily=None, daily=False):
     c_ser = D['K'].close; idx = c_ser.index; c = c_ser.values.astype(float); n = len(c)
     B, S = signal_sets(D, q_daily)
     combos = list(itertools.product(B, S)); P = {}; TR = {}; R_ = {}; OPEN = {}
@@ -237,14 +237,17 @@ def run(D, q_daily=None):
     SEL_OUT = SEL.merge(ENS_SEL, on='month', how='outer').sort_values('month').reset_index(drop=True) if len(ENS_SEL) and len(SEL) else (ENS_SEL if len(ENS_SEL) else SEL)
     for k in ('win_trades', 'win_hit', 'changed', 'pos_start', 'ens_changed', 'ens_hold_start_pct'):   # 한쪽 규칙만 있는 달(빈칸) 때문에 정수 열이 소수로 바뀌지 않게
         if k in SEL_OUT.columns: SEL_OUT[k] = SEL_OUT[k].astype('Int64')
-    return {'combo_table': T, 'combo_select': SEL_OUT, 'combo_wf': WF, 'combo_now': NOW}
+    res = {'combo_table': T, 'combo_select': SEL_OUT, 'combo_wf': WF, 'combo_now': NOW}
+    if daily:   # 하루 단위 수익(연구소 신호와 합쳐 보는 계산용, 2026-11-23). 평소 갱신에서는 만들지 않는다
+        res['combo_daily'] = pd.DataFrame({'date': idx.strftime('%Y-%m-%d'), 'close': c, 'kospi_ret': np.round(kr, 7), 'ens_ret': np.round(ens_r, 7), 'ens_expo': np.round(ens_e, 4), 'wf_ret': np.round(wf_r, 7)}).iloc[max(a0 - 1, 0):]
+    return res
 
 if __name__ == '__main__':
     import argparse, glob, os, sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     import reproduce as R
-    ap = argparse.ArgumentParser(); ap.add_argument('xlsx'); ap.add_argument('out'); a = ap.parse_args()
+    ap = argparse.ArgumentParser(); ap.add_argument('xlsx'); ap.add_argument('out'); ap.add_argument('--daily', action='store_true'); a = ap.parse_args()
     D = R.load(a.xlsx); qd = pd.read_csv(os.path.join(a.out, 'q_daily.csv')) if os.path.exists(os.path.join(a.out, 'q_daily.csv')) else None
-    outs = run(D, qd)
+    outs = run(D, qd, a.daily)
     for k, v in outs.items(): v.to_csv(os.path.join(a.out, k + '.csv'), index=False)
     pd.set_option('display.width', 250)
     print(outs['combo_wf'].to_string(index=False)); print(outs['combo_now'].T.to_string())
