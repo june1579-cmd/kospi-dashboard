@@ -326,6 +326,9 @@ def main():
     cg, fg = run_null(gs, True, procs); log('전체 이동 위약', cg.shape, f'({time.time() - t0:.0f}s)')
     ls = np.array([s for s in range(-120, 121) if abs(s) >= 20]) if not QUICK else np.array([-60, -30, 30, 60])
     cl, fl = run_null(ls, False, procs); log('가까운 이동 위약', cl.shape, f'({time.time() - t0:.0f}s)')
+    kn = [i for i, g in enumerate(GRID) if g['name'] in ('35거래·85%·앞뒤12거래80%', '35거래·80%·앞뒤12거래75%', '35거래·75%·앞뒤12거래70%', '35거래·90%·앞뒤12거래85%')]
+    order = np.concatenate([np.arange(len(ls))[i::procs] for i in range(procs)])   # run_null 이 나눠 돌린 순서
+    pd.DataFrame({'shift': ls[order]} | {GRID[i]['name']: fl[:, i] for i in kn}).sort_values('shift').to_csv(os.path.join(OUT, 'null_local_by_shift.csv'), index=False, encoding='utf-8')
     for nm, cc, ff in (('g', cg, fg), ('l', cl, fl)):
         GR[f'{nm}_cand_mean'] = cc.mean(0).round(2); GR[f'{nm}_fam_mean'] = ff.mean(0).round(2); GR[f'{nm}_fam_p95'] = np.percentile(ff, 95, axis=0)
         GR[f'{nm}_p_any'] = (ff >= 1).mean(0).round(3); GR[f'{nm}_p_ge_actual'] = (ff >= GR['fam'].values[None, :]).mean(0).round(3)
@@ -351,22 +354,37 @@ def main():
     wf_rows, wf_year = [], []
     okfit = ~FIT2
     first_of = lambda y: int(np.searchsorted(YEAR, y)); last_of = lambda y: int(np.searchsorted(YEAR, y, side='right')) - 1
-    acc = {g['name']: dict(sel=0, pool=[], oat=[], v2=[], years=0) for g in GRID}
+    HOTF = np.unique(FAM[crit_pass(dict(N=30, H=0.80, pn=12, ph=0.75, lb=None, mr=None), D)])
+    acc = {g['name']: dict(sel=0, pool=[], oat=[], v2=[], years=0, hot=[], cold=[]) for g in GRID}
+    PICK_NAMES = {'35거래·85%·앞뒤12거래80%', '35거래·80%·앞뒤12거래75%', '35거래·90%·앞뒤12거래85%', '20거래·90%·앞뒤조건없음', '20거래·85%·앞뒤조건없음', '하한0.75·30거래·앞뒤조건없음'}
+    picks, core_hist = [], []
+    core_now = rep_of(crit_pass(dict(N=35, H=0.85, pn=12, ph=0.80, lb=None, mr=None), D) & RTOK, D['lb'] + 1e-6 * D['n'])
     for T in range(2016, 2026):
         jT = last_of(T); jF = last_of(T - 3); pB = first_of(T - 2); jY = last_of(T + 1)
         known = EXT <= jT; a = known & (EXT <= jF); b = known & (ENT > pB); ab = a | b
         DT = derived(bc(a), bc(a & hit), bc(b), bc(b & hit), bc(ab, RET))
         sc = DT['lb'] + 1e-6 * DT['n']; scale = (T - 2010 + 1) / 16.9
         fwd = (ENT - 1 > jT) & (EXT <= jY)
+        gcur = dict(N=35, H=0.85, pn=12, ph=0.80, lb=None, mr=None)
+        for c in core_now:
+            fm = fwd & (CI == c)
+            core_hist.append(dict(id=meta[c]['id'], until=T, n=int(DT['n'][c]), hit=round(float(DT['h'][c]), 3), n_front=int(DT['n1'][c]), hit_front=round(float(DT['h1'][c]), 3),
+                                  n_back3y=int(DT['n2'][c]), hit_back3y=round(float(DT['h2'][c]), 3), need_n=max(MIN_N, math.ceil(35 * scale)), passed=bool(crit_pass(gcur, DT, scale)[c]),
+                                  next_year=T + 1, next_n=int(fm.sum()), next_hit=round(float((RET[fm] > 0).mean()), 3) if fm.any() else None, next_sum=round(float(RET[fm].sum()), 2)))
         for g in GRID:
             m = crit_pass(g, DT, scale) & okfit
             reps = rep_of(m, sc); A = acc[g['name']]; A['sel'] += len(reps)
             row = dict(name=g['name'], year=T + 1, sel=len(reps), n=0)
+            if g['name'] in PICK_NAMES:
+                for c in reps:
+                    fm = fwd & (CI == c)
+                    picks.append(dict(name=g['name'], year=T + 1, id=meta[c]['id'], desc=meta[c]['desc'][:80], direction=int(DIRC[c]), hot=bool(FAM[c] in set(HOTF)), known_n=int(DT['n'][c]), known_hit=round(float(DT['h'][c]), 3),
+                                      next_n=int(fm.sum()), next_hit=round(float((RET[fm] > 0).mean()), 3) if fm.any() else None, next_sum=round(float(RET[fm].sum()), 2)))
             if len(reps):
                 rm = np.zeros(K, bool); rm[reps] = True; tm_ = fwd & rm[CI]
                 e, x, r, s = ENT[tm_], EXT[tm_], RET[tm_], CI[tm_]
                 if len(e):
-                    A['pool'].append(r)
+                    A['pool'].append(r); hm = np.isin(FAM[s], HOTF); A['hot'].append(r[hm]); A['cold'].append(r[~hm])
                     keep = one_at_a_time(e, x, r, s); A['oat'].append(r[keep]); A['years'] += 1
                     # 둘 이상 겹침: 진입일에 다른 계열 대표가 보유 중(진입일 포함 앞 3거래일 안에 진입했거나 아직 보유)
                     if len(reps) > 1:
@@ -380,7 +398,7 @@ def main():
         p_, o_, v_ = cat(A['pool']), cat(A['oat']), cat(A['v2'])
         st = lambda r, pre: {pre + 'n': int(len(r)), pre + 'hit': round(float((r > 0).mean()), 4) if len(r) else None, pre + 'mean': round(float(r.mean()), 3) if len(r) else None,
                              pre + 'sum': round(float(r.sum()), 1) if len(r) else 0.0}
-        wf_rows.append(dict(name=g['name'], wf_sel=A['sel'], wf_years=A['years']) | st(p_, 'wf_pool_') | st(o_, 'wf_oat_') | st(v_, 'wf_v2_'))
+        wf_rows.append(dict(name=g['name'], wf_sel=A['sel'], wf_years=A['years']) | st(p_, 'wf_pool_') | st(o_, 'wf_oat_') | st(v_, 'wf_v2_') | st(cat(A['hot']), 'wf_hot_') | st(cat(A['cold']), 'wf_cold_'))
     GR = GR.merge(pd.DataFrame(wf_rows), on='name', how='left')
 
     # --- 구간 교차 모의: 2010~2026 을 네 구간으로 나눠, 세 구간 자료로 고르고 남은 한 구간에서 매매(전진 모의보다 시험 거래가 많음)
@@ -388,7 +406,7 @@ def main():
     tb = np.full(len(ENT), -1, np.int64)
     for q, (ya, yb) in enumerate(BLOCKS): tb[(ENT - 1 >= first_of(ya)) & (EXT <= last_of(yb))] = q
     NB = [bc(tb == q) for q in range(4)]; KB = [bc((tb == q) & hit) for q in range(4)]; SB = [bc(tb == q, RET) for q in range(4)]
-    cv_rows = []; accv = {g['name']: dict(sel=0, pool=[], oat=[], v2=[]) for g in GRID}
+    cv_rows = []; accv = {g['name']: dict(sel=0, pool=[], oat=[], v2=[], hot=[], cold=[]) for g in GRID}
     for q, (ya, yb) in enumerate(BLOCKS):
         oth = [i for i in range(4) if i != q]
         n_ = sum(NB[i] for i in oth); k_ = sum(KB[i] for i in oth); s_ = sum(SB[i] for i in oth)
@@ -403,7 +421,7 @@ def main():
             rm = np.zeros(K, bool); rm[reps] = True; tm_ = (tb == q) & rm[CI]
             e, x, r, s2 = ENT[tm_], EXT[tm_], RET[tm_], CI[tm_]
             if not len(e): continue
-            A['pool'].append(r); keep = one_at_a_time(e, x, r, s2); A['oat'].append(r[keep])
+            A['pool'].append(r); keep = one_at_a_time(e, x, r, s2); A['oat'].append(r[keep]); hm = np.isin(FAM[s2], HOTF); A['hot'].append(r[hm]); A['cold'].append(r[~hm])
             if len(reps) > 1:
                 ac = agree_count(e, x, s2, DIRC[s2])
                 if ac is not None and (ac >= 1).any():
@@ -414,7 +432,7 @@ def main():
         A = accv[g['name']]; cat = lambda L_: np.concatenate(L_) if L_ else np.array([])
         st = lambda r, pre: {pre + 'n': int(len(r)), pre + 'hit': round(float((r > 0).mean()), 4) if len(r) else None, pre + 'mean': round(float(r.mean()), 3) if len(r) else None,
                              pre + 'sum': round(float(r.sum()), 1) if len(r) else 0.0}
-        rows2.append(dict(name=g['name'], cv_sel=A['sel']) | st(cat(A['pool']), 'cv_pool_') | st(cat(A['oat']), 'cv_oat_') | st(cat(A['v2']), 'cv_v2_'))
+        rows2.append(dict(name=g['name'], cv_sel=A['sel']) | st(cat(A['pool']), 'cv_pool_') | st(cat(A['oat']), 'cv_oat_') | st(cat(A['v2']), 'cv_v2_') | st(cat(A['hot']), 'cv_hot_') | st(cat(A['cold']), 'cv_cold_'))
     GR = GR.merge(pd.DataFrame(rows2), on='name', how='left')
     pd.DataFrame(cv_rows).to_csv(os.path.join(OUT, 'cv_by_block.csv'), index=False, encoding='utf-8')
     log('구간 교차 모의 끝', f'({time.time() - t0:.0f}s)')
@@ -435,6 +453,7 @@ def main():
     GR.to_csv(os.path.join(OUT, 'grid.csv'), index=False, encoding='utf-8')
     TRF.to_csv(os.path.join(OUT, 'transfer.csv'), index=False, encoding='utf-8')
     pd.DataFrame(wf_year).to_csv(os.path.join(OUT, 'wf_by_year.csv'), index=False, encoding='utf-8')
+    pd.DataFrame(picks).to_csv(os.path.join(OUT, 'wf_picks.csv'), index=False, encoding='utf-8'); pd.DataFrame(core_hist).to_csv(os.path.join(OUT, 'core_history.csv'), index=False, encoding='utf-8')
     log('전진 모의 끝', f'({time.time() - t0:.0f}s)')
 
     # --- 통과 신호 합치기(전체 기간, 실제 자료)
@@ -479,6 +498,59 @@ def main():
         key.append((nm + '+반증', crit_pass(g, D) & RTOK)); key.append((nm + '(반증 전)', crit_pass(g, D)))
     COMBO = [combo(m, nm) for nm, m in key]
 
+    # --- 합치는 방식 비교(하루 단위 손익: 진입일은 시가→종가, 그 뒤는 종가→종가. 겹치면 노출이 더해짐)
+    def trades_of(c):
+        sl = slice(PTR[c], PTR[c + 1]); e, x = ENT[sl], EXT[sl]; per = (x <= J_DEV) | (e > P_HOLD)
+        return e[per], x[per], RET[sl][per]
+
+    def curve(parts):
+        pnl = np.zeros(N); expo = np.zeros(N)
+        for e_, x_, d_, w_ in parts:
+            for e, x in zip(e_, x_):
+                pnl[e] += w_ * d_ * (C[e] / O[e] - 1); expo[e:x + 1] += w_
+                if x > e: pnl[e + 1:x + 1] += w_ * d_ * (C[e + 1:x + 1] / C[e:x] - 1)
+        eq = np.cumprod(1 + pnl); dd = float((eq / np.maximum.accumulate(eq) - 1).min())
+        yr = pd.Series(pnl).groupby(YEAR).apply(lambda v: float((np.prod(1 + v) - 1) * 100))
+        pre = YEAR <= 2024
+        return dict(total=round(float((eq[-1] - 1) * 100), 1), mdd=round(dd * 100, 1), days=int((expo > 0).sum()), max_expo=round(float(expo.max()), 2),
+                    total_to_2024=round(float((np.prod(1 + pnl[pre]) - 1) * 100), 1), total_2025_26=round(float((np.prod(1 + pnl[~pre]) - 1) * 100), 1),
+                    by_year={int(y): round(v, 1) for y, v in yr.items() if y >= 2010 and abs(v) > 1e-9})
+
+    def oat_parts(reps):
+        E, X, R_, S = [], [], [], []
+        for c in reps:
+            e, x, r = trades_of(c); E.append(e); X.append(x); R_.append(r); S.append(np.full(len(e), c))
+        e, x, r, s2 = map(np.concatenate, (E, X, R_, S)); k = one_at_a_time(e, x, r, s2)
+        return [(e[k][s2[k] == c], x[k][s2[k] == c], int(DIRC[c]), 1.0) for c in reps], tstats(r[k], e[k])
+
+    core = rep_of(crit_pass(cur, D) & RTOK, score)
+    IMc = in_market(core, PTR, ENT, EXT).astype(np.float32) if len(core) else None
+    g80 = dict(N=35, H=0.80, pn=12, ph=0.75, lb=None, mr=None)
+    aux_all = rep_of(crit_pass(g80, D) & RTOK & ~crit_pass(cur, D), score); aux = []
+    for c in aux_all:   # 핵심 계열과 보유일이 많이 겹치는 형제(자카드 0.2 이상)와 뒤 구간에서 정한 후보는 뺌
+        if FIT2[c] or FAM[c] in set(FAM[core]): continue
+        im = in_market([c], PTR, ENT, EXT)[0].astype(np.float32)
+        jac = max(float((im * IMc[i]).sum() / max(1.0, (np.maximum(im, IMc[i])).sum())) if DIRC[core[i]] == DIRC[c] else 0.0 for i in range(len(core))) if len(core) else 0.0
+        if jac < 0.2: aux.append(int(c))
+    SIM = dict(core=[dict(id=meta[c]['id'], desc=meta[c]['desc']) | tstats(trades_of(c)[2], trades_of(c)[0]) for c in core],
+               aux=[dict(id=meta[c]['id'], desc=meta[c]['desc'], direction=int(DIRC[c])) | tstats(trades_of(c)[2], trades_of(c)[0]) for c in aux])
+    if len(core):
+        for i, c in enumerate(core): SIM[f'only_{i}'] = curve([(trades_of(c)[0], trades_of(c)[1], int(DIRC[c]), 1.0)])
+        pp, ts = oat_parts(list(core)); SIM['core_one_at_a_time'] = curve(pp) | dict(trades=ts)
+        SIM['core_each_full'] = curve([(trades_of(c)[0], trades_of(c)[1], int(DIRC[c]), 1.0) for c in core])
+        SIM['core_each_half'] = curve([(trades_of(c)[0], trades_of(c)[1], int(DIRC[c]), 1.0 / len(core)) for c in core])
+        if aux:
+            pp2, ts2 = oat_parts(list(core) + aux); SIM['core_aux_one_at_a_time'] = curve(pp2) | dict(trades=ts2)
+            SIM['core_oat_plus_aux_separate'] = curve(pp + [(trades_of(c)[0], trades_of(c)[1], int(DIRC[c]), 1.0) for c in aux])
+            SIM['core_oat_plus_aux_half'] = curve(pp + [(trades_of(c)[0], trades_of(c)[1], int(DIRC[c]), 0.5) for c in aux])
+            for c in aux: SIM[f"aux_only_{meta[c]['id'][:40]}"] = curve([(trades_of(c)[0], trades_of(c)[1], int(DIRC[c]), 1.0)])
+        # 해마다 거래 수(계열별) — 신호가 어느 시기에 몰리는지
+        SIM['trades_by_year'] = {meta[c]['id'][:40]: {int(y): int(n_) for y, n_ in zip(*np.unique(YEAR[trades_of(c)[0]], return_counts=True))} for c in list(core) + aux}
+        # 2024년까지와 2025~26년을 나눈 '한 번에 하나' 성적
+        e_, x_, r_, s_ = map(np.concatenate, zip(*[(trades_of(c)[0], trades_of(c)[1], trades_of(c)[2], np.full(len(trades_of(c)[0]), c)) for c in core]))
+        k_ = one_at_a_time(e_, x_, r_, s_); pre_ = YEAR[e_[k_]] <= 2024
+        SIM['core_oat_to_2024'] = tstats(r_[k_][pre_]); SIM['core_oat_2025_26'] = tstats(r_[k_][~pre_])
+
     # --- 현재 기준 통과 후보 전체 목록(계열 번호 포함)과 아슬아슬한 후보
     near = (D['n'] >= 25) & (D['h'] >= 0.78) & (D['n1'] >= 10) & (D['n2'] >= 10)
     rowsP = []
@@ -498,7 +570,7 @@ def main():
     summ = dict(made=time.strftime('%Y-%m-%d %H:%M:%S'), quick=QUICK, data_end=str(TD[-1].date()), pool=dict(unique=K, trades=int(len(ENT)), elig15=int(len(elig)),
                 families=int(lab.max()) + 1, up=int((DIRC > 0).sum()), down=int((DIRC < 0).sum()), fit_p2=int(FIT2.sum()),
                 by_track={t: int(sum(t in m['tracks'] for m in meta)) for t in 'ABDC'}),
-                null=dict(global_draws=int(len(gs)), local_shifts=int(len(ls))), base=base, combo=COMBO, redteam_n=len(RT), redteam_ok=int(RTOK.sum()))
+                null=dict(global_draws=int(len(gs)), local_shifts=int(len(ls))), base=base, combo=COMBO, sim=SIM, redteam_n=len(RT), redteam_ok=int(RTOK.sum()))
     json.dump(summ, open(os.path.join(OUT, 'summary.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1, default=lambda o: o.item() if hasattr(o, 'item') else str(o))
     log('끝', f'({time.time() - t0:.0f}s)')
 
