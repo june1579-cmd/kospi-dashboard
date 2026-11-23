@@ -431,6 +431,38 @@ def main():
         except Exception as e:
             print('gap6 실패', repr(e), flush=True)
 
+    # --- gap7: 갭 되밀림을 강하게 한 조건의 개수(라운드 10, 갈래 D — 설정 a13.gap7 있을 때만)
+    #   주의: 아래 5개는 라운드 5~9 에서 전 기간 결과를 보고 '되밀림을 올린 쪽'으로 고른 것 — 뒤 구간도 독립 확인이 아님(전진 검증 전 확정 아님).
+    #   그날 외국인 선물 순매도 · 대표 IV 백분위 50% 이상 · VIX 밤사이 하위20% · EWY−코스피 괴리 상위20% · 5일 급등 뒤(R7). 개수 ≥2·≥3(미리 정한 칸).
+    if MC.get('gap7'):
+        try:
+            parts = [(fut1 < 0), ivq50, pct_rank(A['^VIX'].pct_change(fill_method=None) * 100) <= 0.20, qew >= 0.80, S0['R7']]
+            sc = sum(p.reindex(td).fillna(False).astype(int) for p in parts)
+            for bk, (bd, bm) in (('u85k3', bases['u85k3']), ('u80k3', bases['u80k3']), ('u90k3', bases4['u90k3'])):
+                for k in (2, 3):
+                    conds.append((f'gap7_{bk}_sc{k}', f'{bd} + 되밀림 조건 5개(외국인 선물 순매도·IV 50%↑·VIX 급락·EWY 괴리 상위20%·5일 급등 뒤) 중 {k}개 이상(밤사이 미국 급등 뒤 갭 되밀림)', bm & (sc >= k)))
+        except Exception as e:
+            print('gap7 실패', repr(e), flush=True)
+
+    # --- ind: 개인 쏠림(라운드 10, 갈래 D — 설정 a13.ind 있을 때만)
+    #   가설 19: 신고가 근처·급등 뒤 개인이 콜·선물을 몰아 사면(외국인은 콜을 팔면) 고점 — 사용자 가설 '올린 뒤 외국인 매도'를 상대편(개인)에서 봄.
+    #   문턱은 그 시점까지 3년 백분위 90%·80%(미리 정한 값). 자료 없는 날은 빈칸(추정 안 함).
+    if MC.get('ind'):
+        try:
+            ci1 = Fl['call_ind']; fi1 = Fl['fut_ind']; pi1 = Fl['put_ind']; cf1 = Fl['call_for']
+            ci3 = ci1.rolling(3, min_periods=3).sum(); fi3 = fi1.rolling(3, min_periods=3).sum(); pi3 = pi1.rolling(3, min_periods=3).sum()
+            cf3 = cf1.rolling(3, min_periods=3).sum()
+            qci1, qci3, qfi3, qpi3 = pct_rank(ci1), pct_rank(ci3), pct_rank(fi3), pct_rank(pi3)
+            conds += [('ind_c1', '개인 콜 순매수(그날) 3년 백분위 상위10%', qci1 >= 0.90),
+                      ('ind_c3', '개인 콜 3일 누적 순매수 상위10%', qci3 >= 0.90),
+                      ('ind_f3', '개인 선물 3일 누적 순매수 상위10%', qfi3 >= 0.90),
+                      ('ind_cf3', '개인 콜·선물 3일 누적 모두 상위20%', (qci3 >= 0.80) & (qfi3 >= 0.80)),
+                      ('ind_cp3', '개인 콜 3일 누적 상위10% + 개인 풋 3일 누적 하위20%(개인 낙관)', (qci3 >= 0.90) & (qpi3 <= 0.20)),
+                      ('ind_cfor', '개인 콜 3일 누적 상위10% + 외국인 콜 3일 누적 순매도(외국인이 콜을 개인에게 넘김)', (qci3 >= 0.90) & (cf3 < 0)),
+                      ('ind_cforfs', '개인 콜 3일 상위10% + 외국인 콜 3일 순매도 + 외국인 선물 3일 순매도', (qci3 >= 0.90) & (cf3 < 0) & (fut3 < 0))]
+        except Exception as e:
+            print('ind 실패', repr(e), flush=True)
+
     # --- 장세 겹침
     S = L.regime_states().reindex(td).fillna(False).astype(bool)
     overlays = [('', '', None), ('_R3', ' + 하락 추세(60일선 아래)', 'R3'), ('_R8', ' + 60일 고점 −5% 넘게 조정 중', 'R8'),
@@ -447,14 +479,14 @@ def main():
     for cid, desc, m in conds:
         m = m.reindex(td).fillna(False).astype(bool)
         for tag, tdesc, rg in overlays:
-            if cid.startswith(('gap3_', 'gap4_', 'gap5_', 'gap6_')) and rg: continue   # gap3 = 장세 조건이 이미 기반에 들어 있음, 겹침 없이 한 번만
+            if cid.startswith(('gap3_', 'gap4_', 'gap5_', 'gap6_', 'gap7_')) and rg: continue   # gap3 = 장세 조건이 이미 기반에 들어 있음, 겹침 없이 한 번만
             if cid.startswith(('mir_', 'xmir_')) and rg not in (None, 'R7', 'R8'): continue   # mir = 60일선은 흐름 조건에 이미 있음 — 장세는 5일 급등 뒤·조정 중만 겹침
             mm = m & S[rg] if rg else m
             sig = td[mm.values]
             summ.append({'cond': cid + tag, 'desc': desc + tdesc, 'n_signals': len(sig)})
             if len(sig) < MIN_SIG: continue
             for tid, tname, exs, h in tgts:
-                if cid.startswith(('gap2_', 'gap3_', 'gap4_', 'gap5_', 'gap6_')) and tid != 'h1': continue   # gap2~gap5 = 1일(다음 날 시가→종가)만
+                if cid.startswith(('gap2_', 'gap3_', 'gap4_', 'gap5_', 'gap6_', 'gap7_')) and tid != 'h1': continue   # gap2~gap5 = 1일(다음 날 시가→종가)만
                 exits = [L.exit_after(td, s, h) for s in sig] if exs is None else [exs.get(s, pd.NaT) for s in sig]
                 tr = pd.DataFrame({'signal': sig, 'exit': exits}).dropna()
                 if len(tr) < MIN_SIG: continue
