@@ -430,5 +430,19 @@
       });
     }
   };
-  window.fillRelief = () => { try { fillRelief(); } finally { try { fillHot(); } catch (e) { console.error(e); } try { fillPanic(); } catch (e) { console.error(e); } try { fillHealth(); } catch (e) { console.error(e); } try { fillStale(); } catch (e) { console.error(e); } } };   // index.html 의 dash.onData 콜백이 부른다(스크립트끼리는 window 로만 공유)
+  // 전진 성적표(2026-11-23): 알림으로 나간 신호의 그 뒤 성적. 자료: fwd(forward_score.py) — 합계 줄(kind sum)은 요약 문장, 나머지는 표
+  const fillFwd = () => {
+    const t = document.getElementById('fwd-tbl'), s = document.getElementById('fwd-sum'); if (!t) return;
+    let d; try { d = dash.data('fwd'); } catch (e) { return; } if (!d || d.status !== 'ok' || !Array.isArray(d.data)) return;
+    const tb = t.tBodies[0]; tb.replaceChildren();
+    const no = v => v === '' || v == null, pc = v => (+v > 0 ? '+' : '') + (+v).toFixed(2) + '%';
+    const cell = (r, h) => (no(r['r' + h]) ? '' : pc(r['r' + h]) + ' ') + (r['h' + h] || '');
+    const sums = d.data.filter(r => r.kind === 'sum'), rows = d.data.filter(r => r.kind === 'row');
+    if (s) s.textContent = sums.length ? sums.map(r => `${r.group}: ${r.status} · 5일 뒤 ${r.h5}${no(r.r5) ? '' : '(평균 ' + pc(r.r5) + ')'} · 10일 뒤 ${r.h10}${no(r.r10) ? '' : '(평균 ' + pc(r.r10) + ')'} · 20일 뒤 ${r.h20}`).join(' / ') : '아직 채점된 신호가 없습니다.';
+    rows.forEach(r => { const tr = document.createElement('tr'); tr.dataset.key = r.key; if (String(r.status || '').startsWith('취소')) tr.style.opacity = '.55';
+      [[r.date, ''], [r.label, ''], [r.status || '', ''], [(r.entry_date ? String(r.entry_date).slice(5).replace('-', '/') + ' ' : '') + (no(r.entry) ? '' : (+r.entry).toLocaleString('ko-KR', {maximumFractionDigits: 2})), 'rv-num'], [cell(r, 5), 'rv-num'], [cell(r, 10), 'rv-num'], [cell(r, 20), 'rv-num']]
+        .forEach(([x, c]) => { const td = document.createElement('td'); td.textContent = x; if (c) td.className = c; tr.appendChild(td); });
+      tb.appendChild(tr); });
+  };
+  window.fillRelief = () => { try { fillRelief(); } finally { try { fillFwd(); } catch (e) { console.error(e); } try { fillHot(); } catch (e) { console.error(e); } try { fillPanic(); } catch (e) { console.error(e); } try { fillHealth(); } catch (e) { console.error(e); } try { fillStale(); } catch (e) { console.error(e); } } };   // index.html 의 dash.onData 콜백이 부른다(스크립트끼리는 window 로만 공유)
 })();

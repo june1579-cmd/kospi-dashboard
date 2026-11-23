@@ -1,0 +1,66 @@
+# 감시·재시도·수리 요청(2026-11-23). 한 시간마다 GitHub 가 스스로 돈다 — Claude 를 쓰지 않는다.
+#  check : watchdog.py — 워크플로 실패·자료 멈춤을 보고, 안전한 것은 실패한 작업만 다시 돌리고(최대 2번), 안 풀리면 수리 요청(state/repair_request.json)과 알림 글을 만든다
+#  notify: 알림 글이 있을 때만 카카오톡 '나에게 보내기'. 수리 에이전트(Claude 예약 작업)가 alerts/repair.txt 를 push 하면 그 글을 보낸다
+name: watchdog
+on:
+  schedule:
+    - cron: '37 * * * *'
+  push:
+    branches: [main]
+    paths: ['alerts/repair.txt']
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+jobs:
+  check:
+    if: ${{ github.event_name != 'push' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    concurrency:
+      group: watchdog
+    outputs:
+      send: ${{ steps.w.outputs.send }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: 감시
+        id: w
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 watchdog.py
+      - name: 상태 저장(문제 목록이 바뀐 때만)
+        if: ${{ steps.w.outputs.changed == '1' }}
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add -A state/watchdog.json state/repair_request.json report/watchdog.md alerts/watchdog.txt 2>/dev/null || true
+          git diff --cached --quiet && exit 0
+          git commit -q -m "감시 상태 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
+          for i in 1 2 3; do git pull -q --rebase && git push -q && break || sleep 10; done
+  notify:
+    needs: check
+    if: ${{ always() && (github.event_name == 'push' || needs.check.outputs.send == '1') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    concurrency:
+      group: dashboard-update     # 카카오 토큰 연장이 다른 알림과 겹치지 않게 같은 줄에 선다
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q requests cryptography
+      - name: 카카오톡(감시 알림 · 수리 보고)
+        env:
+          KAKAO_REST_KEY: ${{ secrets.KAKAO_REST_KEY }}
+          KAKAO_REFRESH_TOKEN: ${{ secrets.KAKAO_REFRESH_TOKEN }}
+          KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
+        run: |
+          git pull -q --rebase || true
+          F=alerts/watchdog.txt; [ "${{ github.event_name }}" = "push" ] && F=alerts/repair.txt
+          if [ -s "$F" ]; then
+            python kakao_send.py --file "$F" || echo "카카오톡 발송 실패(위 로그 참고)"
+            git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+            git add -A state && git commit -m "카카오 토큰 연장" -q && git pull -q --rebase && git push -q || true
+          else
+            echo "보낼 글 없음"
+          fi

@@ -128,6 +128,8 @@ def main():
         if b.decode('utf-8').startswith('cond,'): open('out/lab_sig.csv', 'wb').write(b)
         else: errors.append('5a 연구소 신호: 파일 형식이 다름')
     except Exception as e: errors.append('5a 연구소 신호: ' + repr(e))
+    # 5a2 전진 성적표(2026-11-23 추가): 알림으로 나간 신호(report/sent_signals.json)와 연구소의 고정 뒤 신호를 며칠 뒤 자동 채점 → out/fwd.csv · report/forward.md
+    run([sys.executable, 'forward_score.py', '--out', 'out', '--report', 'report'], '5a2 전진 성적표', timeout=180)
     # 5b 자료 점검(health_check.py): 수집 항목 실패·자료 멈춤·출처 간 불일치·과거 값 정정을 찾아 out/health.csv · report/health.json 에 적는다(알림 「자료:」 줄과 대시보드 「자료 상태」 칸)
     health = {}
     try:

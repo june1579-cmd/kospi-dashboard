@@ -1,0 +1,4 @@
+{
+ "open": [],
+ "note": "열린 요청이 있을 때만 Claude 수리 에이전트가 일한다(REPAIR_AGENT.md). 문제가 사라지면 watchdog.py 가 지운다."
+}

@@ -435,6 +435,12 @@
       </div>
       <p class="rv-note">★ = 이번 달 첫 거래일에 뽑힌 묶음 5개(숫자는 선정 때 순서 — 월중에 순위가 바뀌어도 다음 달 첫 거래일에 다시 뽑는다). 표는 묶음에 든 조합을 먼저, 그다음 최근 750거래일 순위대로 놓았다. 순위가 '—'인 조합은 그 창에 닫힌 거래가 2건 미만이라 후보에서 뺀 것. 경보형 매수 3개는 같은 날 켜지는 일이 많아 성적이 같은 조합이 묶음에 함께 들 수 있다(그만큼 그 신호에 더 실린다). 거래가 한 해 2~3번뿐이라 적중률 하나하나는 우연의 영향이 크고, 믿을 것은 2016년부터 쌓인 규칙의 긴 성적이다. 투자 권유가 아니다.</p>
     </div>
+    <div class="rv-card" id="fwd-card">
+      <h3 id="fwd-title">전진 성적표 — 알림으로 나간 신호의 그 뒤 성적(자동)</h3>
+      <p class="rv-note">과거 자료로 고른 신호는 고를 때 성적이 좋게 보이는 것이 당연해서, 알림으로 실제 나간 신호만 날짜를 고정해 두고 며칠 뒤 자동으로 채점한다. 기준가는 신호 다음 거래일 코스피 종가이고, 매수는 올랐으면·매도는 내렸으면 맞음이다. 연구소 신호는 규칙을 고정한 날 뒤에 난 것만 싣는다(첫 10번은 절반 크기로 확인하는 단계). 표본이 20건이 안 되면 판단 근거로 쓰지 않는다.</p>
+      <p class="rv-verdict" id="fwd-sum"></p>
+      <div class="rv-tbl-wrap"><table class="rv-tbl" id="fwd-tbl" data-source="fwd" data-row-key="key"><thead><tr><th data-field="date">신호일</th><th data-field="label">신호</th><th data-field="status">상태</th><th class="rv-num" data-field="entry">기준가(다음 거래일 종가)</th><th class="rv-num" data-field="r5">5일 뒤</th><th class="rv-num" data-field="r10">10일 뒤</th><th class="rv-num" data-field="r20">20일 뒤</th></tr></thead><tbody></tbody></table></div>
+    </div>
   </section>
 
   <details class="rv-more" id="more">
