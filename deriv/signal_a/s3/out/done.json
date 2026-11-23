@@ -1,0 +1,1 @@
+{"at": "2026-11-24 04:59", "n_cands": 60, "n_final": 0, "n_c31": 44, "n_goal_only": 4, "n_watch": 12, "n_cut": 14, "n_clusters": 43, "n_falsify_hold": 46, "n_falsify_part": 12, "n_falsify_broken": 2, "tracks_read": ["t1", "t2", "t3", "t4", "t5", "t6"], "tracks_missing": [], "iters": 2000}
