@@ -48,12 +48,12 @@ def main():
     if cross:
         st.update({'cv_mode': 'cross', 'sel_fwd': int(V['sel_fwd'].sum()), 'sel_rev': int(V['sel_rev'].sum()), 'fwd_pass': int(V['fwd_pass'].sum()),
                    'rev_pass': int(V['rev_pass'].sum()), 'cross_pass': int(V['cross_pass'].sum()), 'cross_tests': led.get('cross_tests'),
-                   'goal_rule': '전체 50거래 이상·적중 85% 이상, 앞·뒤 각 12거래 이상·80% 이상, 반증 버팀(2026-11-22 사용자 지정)'})
+                   'goal_rule': '전체 35거래 이상·적중 85% 이상, 앞·뒤 각 12거래 이상·80% 이상, 반증 버팀(2026-11-22 사용자 지정)'})
     json.dump(st, open(os.path.join(rd, 'status.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1, default=str)
     json.dump(st, open(os.path.join(L.STATE, 'latest_status.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1, default=str)
     # 보고(한국어)
     lines = [f'# 라운드 {rnd} 보고', '', f'- 계획: {cfg.get("note", "")}'] + ([f'- 보는 방향: {"하락(−1)" if _fd == -1 else "상승(+1)"} 후보만(전체 후보 {n_all}개 중 {len(V)}개) — 아래 숫자·순위·통과 판정 모두 이 방향만'] if _fd in (1, -1) else []) + [
-             (f'- 후보 {len(V)}개 → 앞(2010~2023) 선별 {int(V["sel_fwd"].sum())}·뒤(2024~) 선별 {int(V["sel_rev"].sum())} → 앞→뒤 확인 {int(V["fwd_pass"].sum())}·뒤→앞 확인 {int(V["rev_pass"].sum())} → 양방향 {int(V["cross_pass"].sum())}개(참고) · 새 기준(전체 50거래·85%, 앞·뒤 각 12거래·80%) 통과 {len(passed)}개 → 반증까지 통과 {len(final)}개'
+             (f'- 후보 {len(V)}개 → 앞(2010~2023) 선별 {int(V["sel_fwd"].sum())}·뒤(2024~) 선별 {int(V["sel_rev"].sum())} → 앞→뒤 확인 {int(V["fwd_pass"].sum())}·뒤→앞 확인 {int(V["rev_pass"].sum())} → 양방향 {int(V["cross_pass"].sum())}개(참고) · 새 기준(전체 35거래·85%, 앞·뒤 각 12거래·80%) 통과 {len(passed)}개 → 반증까지 통과 {len(final)}개'
               if cross else f'- 후보 {len(V)}개 → 개발 구간 통과 {int(V["dev_pass"].sum())}개 → 잠금 구간 통과 {len(passed)}개 → 반증까지 통과 {len(final)}개'),
              (f'- 누적: 후보 {led.get("trials_total")}개 시험, 교차 확인 {led.get("cross_tests")}번(라운드 안 확인 p 기준 = 0.05 ÷ 그 방향 선별 수) · 잠금 규칙 없이 양방향 교차 검증(2026-11-21~)'
               if cross else f'- 누적: 후보 {led.get("trials_total")}개 시험, 잠금 구간 열람 {led.get("holdout_peeks")}번(통과 기준 p < 0.05 ÷ 열람 횟수)'), '']
@@ -96,7 +96,7 @@ def main():
         lines += ['', '## 잠금 구간(2024~) 결과 — 개발 통과 후보만']
         for _, r in V[V['dev_pass']].iterrows():
             lines.append(f'- {r["desc"]}: 거래 {int(r.get("hold_n", 0) or 0)}, 적중 {f(r.get("hold_hit"), 0, True)}, 기본 {f(r.get("hold_base"), 0, True)}, p {f(r.get("hold_p"), 4)}, 통과 {r.get("hold_pass")}')
-    lines += ['', f'목표({"전체 50거래·85% 이상, 앞·뒤 각 12거래·80% 이상" if cross else "방향 적중 80% 이상, 잠금 구간"}·반증 통과) 도달: {"예" if len(final) else "아니오"}', '', '투자 권유 아님']
+    lines += ['', f'목표({"전체 35거래·85% 이상, 앞·뒤 각 12거래·80% 이상" if cross else "방향 적중 80% 이상, 잠금 구간"}·반증 통과) 도달: {"예" if len(final) else "아니오"}', '', '투자 권유 아님']
     open(os.path.join(rd, 'report.md'), 'w', encoding='utf-8').write('\n'.join(lines))
     hist = os.path.join(L.STATE, 'history.md')
     with open(hist, 'a', encoding='utf-8') as fh:

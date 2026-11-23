@@ -28,9 +28,9 @@ DEV = dict(n=cfg.get('dev_n', 20), hit=cfg.get('dev_hit', 0.75), lb=cfg.get('dev
 HOLD = dict(n=cfg.get('hold_n', 12), hit=cfg.get('hold_hit', 0.80), alpha=0.05)
 REV = dict(n=cfg.get('rev_n', 12), hit=cfg.get('dev_hit', 0.75), lb=cfg.get('dev_lb', 0.60), base_max=cfg.get('base_max', 0.60), year_hit=0.70)
 CONF = dict(n=cfg.get('conf_n', 12), hit=cfg.get('conf_hit', 0.80), alpha=0.05)
-# 통과 기준(사용자 지정 2026-11-22, 설정 파일로 못 바꿈): 전체 50거래 이상·적중 85% 이상, 앞·뒤 각 12거래 이상·80% 이상 (+ A10 반증 '버팀').
+# 통과 기준(사용자 지정 2026-11-22, 2026-11-23 전체 50→35거래로 바꿈, 설정 파일로 못 바꿈): 전체 35거래 이상·적중 85% 이상, 앞·뒤 각 12거래 이상·80% 이상 (+ A10 반증 '버팀').
 # 그 전의 양방향 교차 통과(앞→뒤·뒤→앞 둘 다)는 cross_pass 칸에 참고로 남긴다.
-GOAL = dict(all_n=50, all_hit=0.85, part_n=12, part_hit=0.80)
+GOAL = dict(all_n=35, all_hit=0.85, part_n=12, part_hit=0.80)
 CROSS_FROM = pd.Timestamp('2026-11-21')   # 사용자 지시(2026-11-20): 오늘까지 잠금 규칙, 내일부터 잠금 규칙 없이 양방향 교차 검증
 
 
@@ -126,7 +126,7 @@ def main_cross(cands, fut, idx, led):
     od = L.out_dir('a08'); R.to_csv(os.path.join(od, 'verdicts.csv'), index=False, encoding='utf-8')
     pickle.dump([c for c, _, _, _ in sel], open(os.path.join(od, 'dev_passed.pkl'), 'wb'))
     led['rounds'].append({'round': L.round_cfg()['round'], 'mode': 'cross', 'candidates': len(cands), 'sel_fwd': int(R['sel_fwd'].sum()), 'sel_rev': int(R['sel_rev'].sum()),
-                          'fwd_pass': int(R['fwd_pass'].sum()), 'rev_pass': int(R['rev_pass'].sum()), 'cross_pass': int(R['cross_pass'].sum()), 'hold_pass': int(R['hold_pass'].sum()), 'goal_rule': '전체 50거래·85%, 앞·뒤 각 12거래·80%'})
+                          'fwd_pass': int(R['fwd_pass'].sum()), 'rev_pass': int(R['rev_pass'].sum()), 'cross_pass': int(R['cross_pass'].sum()), 'hold_pass': int(R['hold_pass'].sum()), 'goal_rule': '전체 35거래·85%, 앞·뒤 각 12거래·80%'})
     L.save_ledger(led)
     print('교차 검증: 후보', len(cands), '앞 선별', int(R['sel_fwd'].sum()), '뒤 선별', int(R['sel_rev'].sum()), '앞→뒤', int(R['fwd_pass'].sum()), '뒤→앞', int(R['rev_pass'].sum()), '양방향', int(R['cross_pass'].sum()), '새 기준 통과', int(R['hold_pass'].sum()))
 

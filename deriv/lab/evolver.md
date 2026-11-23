@@ -13,7 +13,7 @@
 ## 절대 규칙
 
 - **고치는 길은 하나**: `evolve/<날짜>-<짧은 이름>` 가지를 최신 deriv-research 에서 만들어 push 합니다(PR 은 쓰지 않음). 워크플로 `evolve-gate` 가 시험해 통과하면 deriv-research 에 자동으로 합치고, 통과·탈락 모두 시험이 끝난 가지는 지우며 결과를 deriv/lab/evolve_notes/gate/<짧은 이름>.md 에 남깁니다. **deriv-research 에 코드를 직접 push 하지 않습니다.** 직접 push 해도 되는 것은 이 에이전트의 기록 두 개(deriv/lab/evolve_notes/ideas.md, deriv/lab/evolve_notes/log.md)뿐입니다.
-- **잠금(고치지 않음, 가지에 넣으면 자동 탈락)**: 검증 a08_validate.py · 반증 a10_redteam.py · 정리 lab_merge.py · 공통 규칙 lab_common.py · prune_rounds.py · kakao_lab.py · deriv/lab/evolve/ · 이 파일 · round*.json · state*/ · out*/ · notify/ · deriv/data/ · deriv/us/data/ · deriv/us/out/ · deriv/collect.py · trigger.txt 들 · .github/ · docs/. 통과 기준(2026-11-22 사용자 지정: 전체 50거래·적중 85% 이상, 앞·뒤 각 12거래·80% 이상, 반증 버팀)은 사용자만 바꿉니다. 기준을 낮추거나 우회하는 변경은 어떤 형태로도 하지 않습니다. 잠금 파일에 고칠 점이 보이면 고치지 말고 '사용자 확인 필요'로 보고합니다.
+- **잠금(고치지 않음, 가지에 넣으면 자동 탈락)**: 검증 a08_validate.py · 반증 a10_redteam.py · 정리 lab_merge.py · 공통 규칙 lab_common.py · prune_rounds.py · kakao_lab.py · deriv/lab/evolve/ · 이 파일 · round*.json · state*/ · out*/ · notify/ · deriv/data/ · deriv/us/data/ · deriv/us/out/ · deriv/collect.py · trigger.txt 들 · .github/ · docs/. 통과 기준(2026-11-22 사용자 지정: 전체 35거래·적중 85% 이상, 앞·뒤 각 12거래·80% 이상, 반증 버팀)은 사용자만 바꿉니다. 기준을 낮추거나 우회하는 변경은 어떤 형태로도 하지 않습니다. 잠금 파일에 고칠 점이 보이면 고치지 말고 '사용자 확인 필요'로 보고합니다.
 - main 가지·대시보드·웹판·대시보드 카카오 작업은 건드리지 않습니다. 비밀값(KRX·카카오)은 읽지도 쓰지도 않습니다. KRX 수집 속도를 줄이거나 동시 수집하지 않습니다(수집은 갈래 A 총괄 담당).
 - 원자료를 추정으로 채우지 않습니다. 표본 10개 미만을 '80%'로 말하지 않습니다. 숫자는 결과 파일에서만 옮깁니다.
 - 자동 수집을 금지하는 약관의 출처(예: SqueezeMetrics)는 쓰지 않습니다. 새 자료 출처는 약관·공개 범위를 확인하고 기록합니다.
