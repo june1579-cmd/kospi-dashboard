@@ -403,6 +403,19 @@ def main():
                 if bn not in dct: print('young_and 기준 조건 없음', bn); continue
                 for xn in YA.get('extras', list(xmap)):
                     if xn in xmap: ucond.append((f'{bn} + {xn}', dct[bn].fillna(False) & xmap[xn].reindex(td).fillna(False)))
+            # 라운드 45(young_and.control: [조건 이름, …], 없으면 없음): 같은 흐름 조건을 새 콜벽·벽 거리 조건 없이 아무 날에나 건 대조 후보 —
+            #   통과 계열의 적중이 콜벽 덕인지(벽 있는 날 > 아무 날) 흐름 덕인지(비슷) 직접 비교. 양방향, 보유 YM 그대로.
+            dct2 = dict(ucond)
+            for cn_ in YA.get('control', []):
+                cm_ = dct2.get(cn_)
+                if cm_ is None: print('대조 조건 없음', cn_); continue
+                sig_c = td[cm_.fillna(False).values]
+                for m in YM:
+                    t_c = pd.DataFrame({'signal': sig_c, 'exit': [L.exit_after(td, s_, m) for s_ in sig_c]}).dropna()
+                    for direction in (-1, 1):
+                        cands.append({'id': f'A4ctl_{cn_}_m{m}_{"dn" if direction < 0 else "up"}', 'agent': 'A4', 'family': 'flow_control',
+                                      'desc': f'(대조: 콜벽 조건 없음) {cn_} → {m}일 {"하락" if direction < 0 else "상승"}',
+                                      'direction': direction, 'trades': t_c})
         ucond = _volcap(ucond)
         # 갈래 A 라운드 41(a04.young_origin: {kinds, sigma, conds}, 설정 없으면 없음 → 갈래 B·D 영향 없음): 통과 계열의 '새 콜벽'이 왜 새로 생겼나로 나눔.
         #   (가) 넘어섬 = 앞 거래일 벽 행사가 ≤ 오늘 종가(값이 옛 벽을 넘어서 다음 행사가가 저절로 벽이 됨 → 돌파 추세의 다른 이름),
