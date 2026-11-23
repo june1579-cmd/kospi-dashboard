@@ -10,6 +10,7 @@
   poi    풋 물량 급증: 살아 있는 월물 풋 미결제 합 5일 변화 백분위 상위 10%, 풋/콜 미결제 비 5일 변화 상위 10%, 풋/콜 거래량 비(PCR) 상위 5%.
   pre    급락 전 징후: 외국인 선물·현물 동시 순매도(1·3·5일 합 모두 3년 백분위 하위 10%), 베이시스(근월물 시장 베이시스 ÷ 지수) 하위 10%,
          시장−이론 베이시스 괴리 하위 10%, 대표 IV 5일 상승 상위 10%, 풋−콜 평균 IV 차 상위 10%, 외국인 풋 3일 순매수 상위 10% + 선물 매도, 그리고 이들 2개 겹침.
+  gap·gap2·gap3(라운드 3~5) 밤사이 미국 급등 뒤 갭 되밀림(1일), gap3 = 넓힌 기반 × 콜벽·외국인·IV·베이시스 거르개.
   장세 겹침: 그대로 / 하락 추세(R3) / 60일 고점 −5% 조정 중(R8) / 5일 급등 뒤(R7) / 60일 고점 1% 안(R9) — '올린 뒤 매도'는 R7·R9 쪽.
 대상: 코스피200 선물 다음 날 시가 → 1·2·3·5·10·20일 뒤 종가 하락, 큰 변동 창 5·10·20일(±1σ√W 중 아래쪽 먼저).
 자료 없는 날은 빈칸(추정으로 채우지 않음). 판정은 A8·A10.
@@ -224,6 +225,45 @@ def main():
         for uk, (ud, um) in us.items():
             for rk, (rdsc, rm) in run.items():
                 conds.append((f'gap2_{uk}_{rk}', f'{ud} + {rdsc}(밤사이 미국 급등 뒤 갭 되밀림)', um & rm))
+        # 라운드 5(갈래 D): 라운드 4 최고 'S&P·나스닥 상위15% + 코스피200 3일 상위20% + 5일 급등 뒤'가 전체 35거래 82.9%(29/35)로
+        #   새 기준(35거래·85%)에 1거래 모자람. 거래 수를 늘린 기반(문턱 완화·R7 또는 R9)에 '왜 되밀리나'를 가르는 거르개를 곱해 본다(gap3, 1일만).
+        #   가설 7: 콜벽까지 올린 뒤 되밀림(사용자 가설 뒷부분의 1일 판) — 그날 종가가 근월물·분기물 콜벽 0.5% 아래까지 왔거나 넘어섬.
+        #   가설 8: 외국인 추격 매수 뒤(선물 순매수 상위20%) 되밀림 vs 오른 날에도 외국인 선물 순매도.
+        #   가설 9: 안심 국면(대표 IV 3년 백분위 30% 이하)에서 되밀림이 강함 / 선물 고평가(베이시스 상위20%) 차익 매도.
+        #   거르개 문턱은 모두 미리 정한 값·그 시점까지 3년 백분위(어느 구간 성적도 안 봄).
+        S0 = L.regime_states().reindex(td).fillna(False).astype(bool)
+        r79 = S0['R7'] | S0['R9']
+        bases = {'u85k3R7': ('S&P·나스닥 상위15% + 코스피200 3일 상위20% + 5일 급등 뒤', us['u85'][1] & run['k3_80'][1] & S0['R7']),
+                 'u85k5R7': ('S&P·나스닥 상위15% + 코스피200 5일 상위20% + 5일 급등 뒤', us['u85'][1] & run['k5_80'][1] & S0['R7']),
+                 'u80k5R7': ('S&P·나스닥 상위20% + 코스피200 5일 상위20% + 5일 급등 뒤', us['u80'][1] & run['k5_80'][1] & S0['R7']),
+                 'u85k3R79': ('S&P·나스닥 상위15% + 코스피200 3일 상위20% + (5일 급등 뒤 또는 60일 고점 1% 안)', us['u85'][1] & run['k3_80'][1] & r79),
+                 'u85k3': ('S&P·나스닥 상위15% + 코스피200 3일 상위20%', us['u85'][1] & run['k3_80'][1]),
+                 'u80k3': ('S&P·나스닥 상위20% + 코스피200 3일 상위20%', us['u80'][1] & run['k3_80'][1])}
+        filt = {'': ('', None)}
+        for tg in ('F0', 'Q'):
+            wd = wide.get(f'OW_{tg}_wall_dist%')
+            if wd is not None:
+                filt[f'cw{tg}'] = (f' + 종가가 {tg} 콜벽 0.5% 아래까지 오거나 넘어섬', wd.notna() & (wd <= 0.5))
+                filt[f'cf{tg}'] = (f' + {tg} 콜벽까지 0.5% 넘게 남음', wd.notna() & (wd > 0.5))
+        filt['ffb'] = (' + 그날 외국인 선물 순매수 상위20%(3년)', q['fut1'] >= 0.80)
+        filt['ffs'] = (' + 그날 외국인 선물 순매도', fut1 < 0)
+        filt['fcb'] = (' + 그날 외국인 현물 순매수 상위20%(3년)', q['cash1'] >= 0.80)
+        try:
+            ivq = pct_rank(iv_pcr().reindex(td)['iv'])
+            filt['ivlo'] = (' + 대표 IV 3년 백분위 30% 이하(안심 국면)', ivq <= 0.30)
+            filt['ivhi'] = (' + 대표 IV 3년 백분위 70% 이상', ivq >= 0.70)
+        except Exception as e:
+            print('gap3 IV 실패', e, flush=True)
+        try:
+            bq = pct_rank(basis_front().reindex(td)['bp'])
+            filt['bhi'] = (' + 근월물 베이시스 3년 백분위 상위20%(선물 고평가)', bq >= 0.80)
+        except Exception as e:
+            print('gap3 베이시스 실패', e, flush=True)
+        for bk, (bd, bm) in bases.items():
+            for fk, (fd, fm) in filt.items():
+                if fk == '' and bk in ('u85k3R7', 'u85k3', 'u80k3'): continue   # gap2·gap 가족에 이미 같은 조건 있음
+                mm = bm if fm is None else (bm & fm.reindex(td).fillna(False).astype(bool))
+                conds.append((f'gap3_{bk}' + (f'_{fk}' if fk else ''), f'{bd}{fd}(밤사이 미국 급등 뒤 갭 되밀림)', mm))
     except Exception as e:
         print('gap 실패', e, flush=True)
 
@@ -239,12 +279,13 @@ def main():
     for cid, desc, m in conds:
         m = m.reindex(td).fillna(False).astype(bool)
         for tag, tdesc, rg in overlays:
+            if cid.startswith('gap3_') and rg: continue   # gap3 = 장세 조건이 이미 기반에 들어 있음, 겹침 없이 한 번만
             mm = m & S[rg] if rg else m
             sig = td[mm.values]
             summ.append({'cond': cid + tag, 'desc': desc + tdesc, 'n_signals': len(sig)})
             if len(sig) < MIN_SIG: continue
             for tid, tname, exs, h in tgts:
-                if cid.startswith('gap2_') and tid != 'h1': continue   # gap2 = 1일(다음 날 시가→종가)만
+                if cid.startswith(('gap2_', 'gap3_')) and tid != 'h1': continue   # gap2·gap3 = 1일(다음 날 시가→종가)만
                 exits = [L.exit_after(td, s, h) for s in sig] if exs is None else [exs.get(s, pd.NaT) for s in sig]
                 tr = pd.DataFrame({'signal': sig, 'exit': exits}).dropna()
                 if len(tr) < MIN_SIG: continue
