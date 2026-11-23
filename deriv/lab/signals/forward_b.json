@@ -8,7 +8,14 @@
    "tier": "통과",
    "fixed": "2026-11-22",
    "round": 31,
-   "trades": []
+   "trades": [],
+   "now": "이번 라운드 기준 미달·미계산",
+   "computed": false,
+   "group": null,
+   "stage": "확인 중(절반)",
+   "size": 0.5,
+   "fwd_n": 0,
+   "fwd_hit": 0
   },
   {
    "id": "A4zu_Q1.5물량늦춤+Q1.0선물3일_첫5_m3",
@@ -17,7 +24,17 @@
    "tier": "통과",
    "fixed": "2026-11-22",
    "round": 32,
-   "trades": []
+   "trades": [],
+   "now": "이번 라운드 기준 미달·미계산",
+   "computed": false,
+   "group": null,
+   "stage": "확인 중(절반)",
+   "size": 0.5,
+   "fwd_n": 0,
+   "fwd_hit": 0
   }
- ]
+ ],
+ "updated": "2026-11-23",
+ "round": 34,
+ "rule": "통과 신호는 고정 뒤 첫 10번까지 절반 크기. 10번 안에 8번 이상 맞으면 전액, 6~7번이면 절반 유지, 틀린 것이 5번이면 중단. 관찰 등급은 매매 없이 기록만."
 }
