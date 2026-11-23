@@ -37,6 +37,16 @@ jobs:
           python-version: '3.12'
           cache: pip
       - run: pip install -q -r requirements.txt
+      - name: KRX 줄 서기(같은 계정으로 동시에 로그인하면 서로 끊긴다 — 한 번에 하나만, 2026-11-23)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          KRX_LOCK_WAIT_MIN: '120'
+          KRX_LOCK_TTL_MIN: '330'
+          KRX_LOCK_ON_TIMEOUT: fail
+        run: |
+          git clone -q --depth 1 -b krx-lock "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}" "$RUNNER_TEMP/krxlock" || echo "KRX 줄: 받지 못함 — 줄 없이 진행"
+          rc=0; if [ -f "$RUNNER_TEMP/krxlock/krx_lock.py" ]; then python3 "$RUNNER_TEMP/krxlock/krx_lock.py" acquire || rc=$?; fi
+          if [ "$rc" = "3" ]; then echo "KRX 줄이 비지 않아 이번 실행은 로그인하지 않고 멈춤"; exit 1; fi
       - name: 실행
         env:
           KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
@@ -46,6 +56,9 @@ jobs:
           MODE=$(head -1 deriv/trigger.txt | tr -d '\r'); ARGS=$(sed -n 2p deriv/trigger.txt | tr -d '\r')
           echo "모드 $MODE 인자 $ARGS"
           if [ "$MODE" = "analyze" ]; then pip install -q yfinance && (python deriv/overseas.py || echo "해외 자료 실패 — 기존 파일로 분석"); python deriv/analyze.py $ARGS; else python deriv/collect.py "$MODE" $ARGS; fi
+      - name: KRX 줄 비우기
+        if: always()
+        run: if [ -f "$RUNNER_TEMP/krxlock/krx_lock.py" ]; then python3 "$RUNNER_TEMP/krxlock/krx_lock.py" release || true; fi
       - name: 결과 저장
         if: always()
         run: |
