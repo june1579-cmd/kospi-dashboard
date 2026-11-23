@@ -1375,7 +1375,7 @@
     const sw = d3.sum(panels, p => p.w);
     let yy = TOP;
     const KH = CONS ? Math.round(Math.max(24, Math.min(36, avail * panels[1].w / sw / nStrip * 2.6))) : 0;   // 맨 아래 12개 해 합의 줄 높이
-    panels.forEach(p => { p.h = Math.round(avail * p.w / sw) + (p.kind === 'combo' && KH ? KH + 6 : 0); p.top = yy + PT; p.bot = p.top + p.h; yy = p.bot + GAP; });
+    panels.forEach(p => { p.h = Math.round(avail * p.w / sw) + (p.kind === 'combo' && KH ? KH + 6 : 0); p.top = yy + PT; p.bot = p.top + p.h; yy = p.bot + GAP + (p.kind === 'over' ? 14 : 0); });   // 코스피 칸 아래 날짜 줄 자리 14px(11/24)
     const H = panels[panels.length - 1].bot + BOT;
     const svg = newSvg(box, W, H);
 
@@ -1563,6 +1563,7 @@
     const xT = fitTicks(svg, dayAx ? x.dayTicks(W < 520 ? 5 : 2) : x.monthTicks(W < 520 ? (mSpan > 14 ? 6 : mSpan > 7 ? 2 : 1) : W < 900 ? (mSpan > 14 ? 2 : 1) : 1), d => x(d),
       d => dayAx ? (d.getUTCMonth() + 1) + '/' + d.getUTCDate() : mlab(d), ml, true);
     svg.append('g').selectAll('text').data(xT).join('text').attr('class', 'rv-tick').attr('x', o => o.px).attr('y', H - 6).attr('text-anchor', o => o.st ? 'start' : 'middle').text(o => o.lab);
+    svg.append('g').selectAll('text').data(xT).join('text').attr('class', 'rv-tick').attr('x', o => o.px).attr('y', P0.bot + 13).attr('text-anchor', o => o.st ? 'start' : 'middle').text(o => o.lab);   // 코스피 칸 바로 밑 날짜(11/24 사용자 요청 — 아래 날짜는 화면 밖이라)
 
     // hover
     const dates = Array.from(new Set([...mk, ...cr, ...lq, ...ev, ...flAll].map(r => r.date))).sort();
