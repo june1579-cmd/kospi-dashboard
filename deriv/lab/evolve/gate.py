@@ -15,7 +15,7 @@ import sys
 
 import pandas as pd
 
-PROTECTED = ['deriv/lab/a08_validate.py', 'deriv/lab/a10_redteam.py', 'deriv/lab/lab_merge.py', 'deriv/lab/lab_common.py', 'deriv/lab/prune_rounds.py', 'deriv/lab/kakao_lab.py',
+PROTECTED = ['deriv/lab/a08_validate.py', 'deriv/lab/a10_redteam.py', 'deriv/lab/lab_merge.py', 'deriv/lab/lab_common.py', 'deriv/lab/prune_rounds.py', 'deriv/lab/kakao_lab.py', 'deriv/lab/forward_stage.py', 'deriv/lab/signals/*', 'deriv/lab/criteria_agent.md', 'deriv/lab/study/proposals.md',
              'deriv/lab/evolve/*', 'deriv/lab/evolver.md', 'deriv/lab/round*.json', 'deriv/lab/state*/*', 'deriv/lab/out*/*', 'deriv/lab/notify/*',
              'deriv/data/*', 'deriv/us/data/*', 'deriv/us/out/*', 'deriv/collect.py', 'deriv/trigger.txt', 'deriv/us/trigger.txt', 'deriv/scan/trigger.txt', '.github/*', 'docs/*']
 MARGIN_DAYS = 90

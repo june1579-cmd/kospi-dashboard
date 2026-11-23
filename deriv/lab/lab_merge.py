@@ -40,11 +40,17 @@ def main():
         final = passed[passed['버팀'] == True]
     else:
         final = passed.iloc[0:0]
+    # 관찰 등급(2026-11-23 사용자 지정): 전체 35거래·80%, 앞·뒤 각 12거래·75% + 반증 버팀. 매매 대상 아님 — 전진 기록만(forward_stage.py). 통과 판정에는 영향 없음
+    watch = V[V['watch_pass'].fillna(False).astype(bool)] if 'watch_pass' in V else V.iloc[0:0]
+    watch = watch.merge(R[['id', '버팀']], on='id', how='left') if len(watch) and len(R) else watch.iloc[0:0]
+    if len(watch): watch = watch[watch['버팀'] == True]
     st = {'round': rnd, 'candidates': int(len(V)), 'dev_pass': int(V['dev_pass'].sum()), 'hold_pass': int(len(passed)), 'final_pass': int(len(final)),
           'trials_total': led.get('trials_total'), 'holdout_peeks': led.get('holdout_peeks'),
           'best': top.head(5)[['id', 'desc', 'dev_n', 'dev_hit', 'dev_lb', 'dev_base'] + (['p2_n', 'p2_hit', 'p2_lb', 'p2_base', 'all_n', 'all_hit'] if cross else [])].to_dict('records'),
           'goal_reached': bool(len(final) > 0), 'note': cfg.get('note', '')}
     if _fd in (1, -1): st.update({'focus_direction': int(_fd), 'candidates_all': int(n_all)})
+    st.update({'watch_pass': int(len(watch)), 'watch': watch.head(5)[['id', 'desc', 'direction', 'all_n', 'all_hit', 'dev_n', 'dev_hit', 'p2_n', 'p2_hit']].to_dict('records') if len(watch) else [],
+               'watch_rule': '관찰 등급: 전체 35거래·80%, 앞·뒤 각 12거래·75%, 반증 버팀 — 매매 없이 전진 기록만(2026-11-23 사용자 지정)'})
     if cross:
         st.update({'cv_mode': 'cross', 'sel_fwd': int(V['sel_fwd'].sum()), 'sel_rev': int(V['sel_rev'].sum()), 'fwd_pass': int(V['fwd_pass'].sum()),
                    'rev_pass': int(V['rev_pass'].sum()), 'cross_pass': int(V['cross_pass'].sum()), 'cross_tests': led.get('cross_tests'),
@@ -57,6 +63,9 @@ def main():
               if cross else f'- 후보 {len(V)}개 → 개발 구간 통과 {int(V["dev_pass"].sum())}개 → 잠금 구간 통과 {len(passed)}개 → 반증까지 통과 {len(final)}개'),
              (f'- 누적: 후보 {led.get("trials_total")}개 시험, 교차 확인 {led.get("cross_tests")}번(라운드 안 확인 p 기준 = 0.05 ÷ 그 방향 선별 수) · 잠금 규칙 없이 양방향 교차 검증(2026-11-21~)'
               if cross else f'- 누적: 후보 {led.get("trials_total")}개 시험, 잠금 구간 열람 {led.get("holdout_peeks")}번(통과 기준 p < 0.05 ÷ 열람 횟수)'), '']
+    if len(watch):
+        lines += [f'- 관찰 등급(전체 35거래·80%, 앞·뒤 각 12거래·75%, 반증 버팀 — 매매 없음, 전진 기록만) {len(watch)}개: ' +
+                  ' / '.join(f'{r["desc"]} (전체 {int(r["all_n"])}거래 {r["all_hit"] * 100:.1f}%)' for _, r in watch.head(3).iterrows()), '']
     a3 = os.path.join(rd, 'a03', 'touch_dev.csv')
     if os.path.exists(a3):
         t = pd.read_csv(a3); t0 = t[(t['시리즈'] == 'F0') & (t['조건'] == '전체')]

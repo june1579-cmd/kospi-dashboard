@@ -31,6 +31,9 @@ CONF = dict(n=cfg.get('conf_n', 12), hit=cfg.get('conf_hit', 0.80), alpha=0.05)
 # 통과 기준(사용자 지정 2026-11-22, 2026-11-23 전체 50→35거래로 바꿈, 설정 파일로 못 바꿈): 전체 35거래 이상·적중 85% 이상, 앞·뒤 각 12거래 이상·80% 이상 (+ A10 반증 '버팀').
 # 그 전의 양방향 교차 통과(앞→뒤·뒤→앞 둘 다)는 cross_pass 칸에 참고로 남긴다.
 GOAL = dict(all_n=35, all_hit=0.85, part_n=12, part_hit=0.80)
+# 관찰 등급(사용자 지정 2026-11-23, 설정 파일로 못 바꿈): 통과 기준에는 못 미치지만 전체 35거래·80%, 앞·뒤 각 12거래·75% 이상(+ A10 반증 '버팀')인 후보.
+# 매매 대상이 아니라 규칙을 고정해 전진 기록만 한다(forward_stage.py). 통과 판정(hold_pass·goal_reached)에는 영향 없음.
+WATCH = dict(all_n=35, all_hit=0.80, part_n=12, part_hit=0.75)
 CROSS_FROM = pd.Timestamp('2026-11-21')   # 사용자 지시(2026-11-20): 오늘까지 잠금 규칙, 내일부터 잠금 규칙 없이 양방향 교차 검증
 
 
@@ -108,7 +111,10 @@ def main_cross(cands, fut, idx, led):
         rec['goal_pass'] = bool(da.get('n', 0) >= GOAL['all_n'] and (da.get('hit') or 0) >= GOAL['all_hit']
                                 and d1.get('n', 0) >= GOAL['part_n'] and (d1.get('hit') or 0) >= GOAL['part_hit']
                                 and d2.get('n', 0) >= GOAL['part_n'] and (d2.get('hit') or 0) >= GOAL['part_hit'])
-        rec['dev_pass'] = bool(rec['sel_fwd'] or rec['sel_rev'] or rec['goal_pass'])   # 새 기준 통과 후보도 A9·A10 으로 넘김
+        rec['watch_pass'] = bool(not rec['goal_pass'] and da.get('n', 0) >= WATCH['all_n'] and (da.get('hit') or 0) >= WATCH['all_hit']
+                                 and d1.get('n', 0) >= WATCH['part_n'] and (d1.get('hit') or 0) >= WATCH['part_hit']
+                                 and d2.get('n', 0) >= WATCH['part_n'] and (d2.get('hit') or 0) >= WATCH['part_hit'])
+        rec['dev_pass'] = bool(rec['sel_fwd'] or rec['sel_rev'] or rec['goal_pass'] or rec['watch_pass'])   # 새 기준 통과·관찰 등급 후보도 A9·A10 으로 넘김
         rec['fwd_pass'] = rec['rev_pass'] = rec['cross_pass'] = False
         rec['hold_pass'] = rec['goal_pass']   # 목표 판정(2026-11-22~) = 새 기준. lab_merge 가 여기에 A10 '버팀'을 더해 최종 통과를 정함
         rows.append(rec)

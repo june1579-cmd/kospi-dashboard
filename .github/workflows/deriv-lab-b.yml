@@ -82,6 +82,7 @@ jobs:
           python deriv/lab/a09_trade.py
           python deriv/lab/a10_redteam.py
           python deriv/lab/lab_merge.py
+          python deriv/lab/forward_stage.py || echo '실전 확인 단계 기록 실패 — 건너뜀'   # 통과 뒤 실제 신호 성적·관찰 등급(2026-11-23)
           python deriv/lab/signal_export.py || echo '통과 신호 내보내기 실패 — 건너뜀'   # 코스피 대시보드 표시용(2026-11-22)
       - name: 저장
         run: |

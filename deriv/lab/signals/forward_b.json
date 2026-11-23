@@ -1,0 +1,23 @@
+{
+ "track": "B",
+ "entries": [
+  {
+   "id": "A4zc_Q_1.5_벽 물량 5일 증가 + 하루 늦춰 진입 + 첫 신호만(5일)_m3",
+   "desc": "",
+   "direction": 1,
+   "tier": "통과",
+   "fixed": "2026-11-22",
+   "round": 31,
+   "trades": []
+  },
+  {
+   "id": "A4zu_Q1.5물량늦춤+Q1.0선물3일_첫5_m3",
+   "desc": "",
+   "direction": 1,
+   "tier": "통과",
+   "fixed": "2026-11-22",
+   "round": 32,
+   "trades": []
+  }
+ ]
+}

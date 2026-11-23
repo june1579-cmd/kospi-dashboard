@@ -1,0 +1,59 @@
+{
+ "track": "A",
+ "entries": [
+  {
+   "id": "A4yu_K2_F0+F1+F2+ALL_1d_s1.75_외국인 선물·현물 3일 누적 함께 순매수 + 60일선 위_m5_up",
+   "desc": "",
+   "direction": 1,
+   "tier": "통과",
+   "fixed": "2026-11-22",
+   "round": 37,
+   "trades": []
+  },
+  {
+   "id": "A4yu_K2_F0+F1+F2+ALL_1d_s1.5_외국인 선물·현물 3일 누적 함께 순매수 + 60일선 위_m5_up",
+   "desc": "",
+   "direction": 1,
+   "tier": "통과",
+   "fixed": "2026-11-23",
+   "round": 38,
+   "trades": []
+  },
+  {
+   "id": "A4yu_K2_F0+F1+ALL_1d_s1.5_외국인 선물·현물 3일 누적 함께 순매수 + 60일선 위_m5_up",
+   "desc": "",
+   "direction": 1,
+   "tier": "통과",
+   "fixed": "2026-11-23",
+   "round": 38,
+   "trades": []
+  },
+  {
+   "id": "A4yu_K2_F0+F1+ALL_1d_s1.75_외국인 선물·현물 3일 누적 함께 순매수 + 60일선 위_m5_up",
+   "desc": "",
+   "direction": 1,
+   "tier": "통과",
+   "fixed": "2026-11-23",
+   "round": 38,
+   "trades": []
+  },
+  {
+   "id": "A4yu_K2_F0+F1+F2+ALL_1d_s1.5_외국인 선물·현물 3일 누적 함께 순매수_m5_up",
+   "desc": "",
+   "direction": 1,
+   "tier": "통과",
+   "fixed": "2026-11-23",
+   "round": 38,
+   "trades": []
+  },
+  {
+   "id": "A4yu_K2_F0+F1+ALL_1d_s1.5_외국인 선물·현물 3일 누적 함께 순매수_m5_up",
+   "desc": "",
+   "direction": 1,
+   "tier": "통과",
+   "fixed": "2026-11-23",
+   "round": 38,
+   "trades": []
+  }
+ ]
+}
