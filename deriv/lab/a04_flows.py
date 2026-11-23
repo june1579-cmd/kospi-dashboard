@@ -470,6 +470,29 @@ def main():
                                             for m in YM:
                                                 v_ = yfwd[m][mm_ & pm_].dropna(); r_[f'{pn_} {m}일 상승%'] = round(float((v_ > 0).mean() * 100), 1) if len(v_) else np.nan
                                         orows.append(r_)
+                        # 라운드 43(kinds 에 K2d·K2cp·K2dcp 있을 때만): 사용자 가설의 '콜이 압도적으로 우세' 크기 — 새 벽마다 1위 ÷ 2위 미결제(ratio12) ≥ d12,
+                        #   현재가 위 콜 미결제 ÷ 현재가 아래 풋 미결제(otm_cp) ≥ dcp (문턱 미리 정함: 1.5·1.0). 값 없는 시리즈는 '아님'(추정 안 함).
+                        if any(k_ in YO.get('kinds', []) for k_ in ('K2d', 'K2cp', 'K2dcp')):
+                            d12 = float(YO.get('d12', 1.5)); dcp = float(YO.get('dcp', 1.0))
+                            def _allhit(col, thr):
+                                ok = [(hits[i].astype(bool) & ~(X[f'OW_{t}_{col}'] >= thr).fillna(False)) if X.get(f'OW_{t}_{col}') is not None else hits[i].astype(bool)
+                                      for i, t in enumerate(gtags)]
+                                return ~pd.concat(ok, axis=1).any(axis=1)   # 맞은 시리즈 중 문턱 못 넘은 것이 하나도 없음
+                            dom_ = k2m & _allhit('wall_ratio12', d12); cpm_ = k2m & _allhit('otm_cp', dcp)
+                            for ok_, om_, ol_ in (('K2d', dom_, f'둘 이상 동시(새 벽마다 1위가 2위의 {d12}배 이상)'),
+                                                  ('K2cp', cpm_, f'둘 이상 동시(시리즈마다 위쪽 콜 ≥ 아래쪽 풋×{dcp})'),
+                                                  ('K2dcp', dom_ & cpm_, '둘 이상 동시(1위 압도 + 콜 우위 둘 다)')):
+                                if ok_ in YO.get('kinds', []): kinds.append((ok_, om_, ol_)); okinds.add(ok_)
+                            for cn, cm in ucond:
+                                if cn not in YO.get('conds', [cn]): continue
+                                for ol, om_ in (('1위 압도', dom_), ('1위 압도 아님', k2m & ~dom_), ('콜 우위', cpm_), ('콜 우위 아님', k2m & ~cpm_)):
+                                    mm_ = om_ & cm.fillna(False)
+                                    r_ = {'묶음': '+'.join(gtags), '폭': blab, '조건': cn, '까닭': ol}
+                                    for pn_, pm_ in (('앞', (td <= L.DEV_END) & (td >= pd.Timestamp('2010-01-01'))), ('뒤', p2)):
+                                        r_[f'{pn_} 날수'] = int((mm_ & pm_).sum())
+                                        for m in YM:
+                                            v_ = yfwd[m][mm_ & pm_].dropna(); r_[f'{pn_} {m}일 상승%'] = round(float((v_ > 0).mean() * 100), 1) if len(v_) else np.nan
+                                    orows.append(r_)
                         # 설명표(날 단위, 겹침 포함, 후보 안 만듦): K2 날을 까닭으로 나눠 앞·뒤 m일 상승%.
                         lab4 = pd.Series('섞임', index=td)
                         lab4[k2m & (nro >= 1) & (ncr == 0)] = '만기 교체 포함'
