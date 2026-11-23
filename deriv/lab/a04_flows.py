@@ -616,7 +616,7 @@ def main():
                             if fcfg.get('expiry_table') and len(TT):
                                 mons = pd.period_range(td[0], td[-1] + pd.Timedelta(days=45), freq='M')
                                 exps = pd.DatetimeIndex(sorted({L.expiry_of_ym(f'{p_.year}{p_.month:02d}', td) for p_ in mons}))
-                                c_ = k2['close']; o_ = k2['open']; erows = []
+                                c_ = k2['close']; o_ = k2['open']; exrows_ = []
                                 for d_ in ind_:
                                     i_ = td.get_loc(d_)
                                     if i_ + 1 >= len(td): continue
@@ -630,8 +630,8 @@ def main():
                                     hold = list(td[i_ + 1:i_ + 1 + mt])
                                     r['보유 중 월물 만기(몇째 날)'] = (hold.index(nxt) + 1) if (pd.notna(nxt) and nxt in hold) else 0
                                     r['그 만기가 분기'] = bool(r['보유 중 월물 만기(몇째 날)'] > 0 and nxt.month in (3, 6, 9, 12))
-                                    erows.append(r)
-                                EX = pd.DataFrame(erows)
+                                    exrows_.append(r)
+                                EX = pd.DataFrame(exrows_)
                                 EX.to_csv(os.path.join(od, f'zone_first_expiry_{tag}_{band_key}.csv'), index=False, encoding='utf-8')
                                 srows_ = []
                                 if len(EX):
