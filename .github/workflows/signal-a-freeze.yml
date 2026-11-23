@@ -58,4 +58,4 @@ jobs:
           git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
           git add deriv/signal_a/state/freeze.json deriv/signal_a/state/freeze_sha256.txt
           git commit -q -m "Signal A 자료 고정 기록 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
-          for i in 1 2 3 4; do git pull -q --rebase origin deriv-research && git push -q origin HEAD:deriv-research && break; sleep 15; done
+          for i in 1 2 3 4; do git pull -q --rebase --autostash origin deriv-research && git push -q origin HEAD:deriv-research && break; sleep 15; done

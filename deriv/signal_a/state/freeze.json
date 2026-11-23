@@ -1,0 +1,17 @@
+{
+ "release": "signal-a-data-v1",
+ "made": "2026-11-24 01:31",
+ "start": "2007-01-02",
+ "end": "2026-11-20",
+ "n_features": 434,
+ "commit_deriv": "60e1b1e17124c82de4ceafa19df42ea997780a59",
+ "commit_main": "1a38c545e92ae0e49b80bae03a67d1b489121da0",
+ "files": [
+  "panel.pkl",
+  "panel_meta.json",
+  "lab_feat.pkl",
+  "raw_deriv.tgz",
+  "raw_main.tgz"
+ ],
+ "note": "워크플로의 기록 단계가 저장에 실패해(풀기 전 바뀐 파일) 릴리스의 파일에서 다시 적음"
+}
