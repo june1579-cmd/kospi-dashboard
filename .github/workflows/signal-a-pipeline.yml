@@ -1,0 +1,500 @@
+# Signal A 파이프라인(2026-11-24 사용자 지시 "GitHub 에서 가능한 건 무조건 GitHub 에서"): 고정 자료만 읽어 줄기 계산 → 판정 → T6 → S3 까지 한 번의 실행에서 잇는다.
+# 순서: 준비(자료·시험대·할 일) → T1~T5 계산(조각마다 동시에) → 판정·저장·카카오톡 → T6 계산 → 판정 → S3 → 상태 맞춤(남은 일이 있으면 스스로 다시 시작).
+# KRX 로그인·수집 없음. main 은 읽기만(requirements.txt·카카오 토큰 파일). 고치는 곳은 deriv/signal_a 뿐. 긴 로직은 deriv/signal_a/sa_pipeline.py 에 있다.
+# 이 파일은 deriv-research 가지에만 있다 — 그래서 '스스로 다시 시작'이 안 될 수 있어, 한 번의 실행 안에서 작업을 needs 로 끝까지 잇는다.
+name: signal-a-pipeline
+on:
+  push:
+    branches: [deriv-research]
+    paths: ['deriv/signal_a/run.txt']      # 이 파일을 고쳐 push 하면 시작
+  workflow_dispatch:
+    inputs:
+      round:
+        description: '스스로 다시 시작한 횟수(사람이 띄울 때는 0 그대로 둔다)'
+        required: false
+        default: '0'
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: signal-a-pipeline
+  cancel-in-progress: false
+defaults:
+  run:
+    shell: bash                             # bash -eo pipefail: "명령 | tee 파일" 에서 앞 명령이 실패하면 실패로 본다
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+  PYTHONUNBUFFERED: '1'
+
+jobs:
+  # ------------------------------------------------------------------ 1. 준비: 자료 → 시험대 확인 → 할 일 정하기
+  plan:
+    name: 준비(자료·시험대·할 일 정하기)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    outputs:
+      matrix: ${{ steps.plan.outputs.matrix }}      # {"include": [{track, part, n}, …]} — 준비된 t1~t5 의 조각 목록
+      has: ${{ steps.plan.outputs.has }}            # yes = 돌릴 조각이 있음
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: deriv-research}
+      - uses: actions/checkout@v4
+        with: {ref: main, path: _main}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q -r _main/requirements.txt joblib
+      - name: 고정 자료 내려받기(릴리스 signal-a-data-v1 — sa_common.fetch 가 sha256 을 확인)
+        env: {GH_TOKEN: '${{ github.token }}'}
+        run: |
+          SA_DATA="$RUNNER_TEMP/sa_data"; mkdir -p "$SA_DATA"; echo "SA_DATA=$SA_DATA" >> "$GITHUB_ENV"
+          echo "PYTHONPATH=$GITHUB_WORKSPACE/deriv/signal_a" >> "$GITHUB_ENV"      # 줄기 코드가 어디서 돌든 sa_common 을 찾게
+          for k in 1 2 3; do gh release download signal-a-data-v1 -p panel.pkl -p lab_feat.pkl -D "$SA_DATA" --clobber && break; sleep 10; done
+          test -s "$SA_DATA/panel.pkl" && test -s "$SA_DATA/lab_feat.pkl"
+      - name: 시험대 확인(연구소 통과 신호를 넣어 같은 숫자가 나오는지) — 실패하면 이 실행 전체를 멈춘다
+        id: harness
+        env: {GH_TOKEN: '${{ github.token }}'}
+        run: python deriv/signal_a/test_harness.py 2>&1 | tee "$RUNNER_TEMP/harness.log"
+      - name: 할 일 정하기(준비된 줄기 t1~t5 → 조각 목록)
+        id: plan
+        run: |
+          python deriv/signal_a/sa_pipeline.py plan --phase 1 | tee "$RUNNER_TEMP/m.json"
+          echo "matrix=$(cat "$RUNNER_TEMP/m.json")" >> "$GITHUB_OUTPUT"
+          if grep -q '"track"' "$RUNNER_TEMP/m.json"; then echo "has=yes"; else echo "has=no"; fi >> "$GITHUB_OUTPUT"
+      - name: 저장(시험대 확인 기록이 생겼을 때만 커밋됨 — 저장이 안 돼도 계산은 계속)
+        continue-on-error: true
+        run: python deriv/signal_a/sa_pipeline.py save --msg "시험대 확인"
+      # ---- 아래 넷은 시험대가 실패했을 때만: status.json 에 적고(need_claude) 카카오톡 1통
+      - name: 시험대 실패 기록
+        id: kk
+        if: ${{ failure() && steps.harness.outcome == 'failure' }}
+        run: |
+          python deriv/signal_a/sa_pipeline.py fail --track harness --part 0 --log "$RUNNER_TEMP/harness.log"
+          python deriv/signal_a/sa_pipeline.py kakao
+      - name: 저장(시험대 실패)
+        if: ${{ failure() && steps.harness.outcome == 'failure' }}
+        run: python deriv/signal_a/sa_pipeline.py save --msg "시험대 확인 실패 — 수리 대기"
+      - name: 카카오톡(시험대 실패)
+        if: ${{ failure() && steps.kk.outputs.send == 'yes' }}
+        env:
+          KAKAO_REST_KEY: ${{ secrets.KAKAO_REST_KEY }}
+          KAKAO_REFRESH_TOKEN: ${{ secrets.KAKAO_REFRESH_TOKEN }}
+          KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
+          GH_TOKEN: ${{ github.token }}
+          KAKAO_LAST: deriv/signal_a/notify/last.json
+        run: |
+          cp _main/state/kakao_token.json "$RUNNER_TEMP/main_token.json" 2>/dev/null || true
+          export TOKEN_RENEWED_AT="$(gh api "repos/$GITHUB_REPOSITORY/commits?path=state/kakao_token.json&sha=main&per_page=1" -q '.[0].commit.committer.date' 2>/dev/null || true)"
+          python deriv/lab/kakao_lab.py --file deriv/signal_a/notify/kakao.txt --main-state "$RUNNER_TEMP/main_token.json" --link "https://github.com/$GITHUB_REPOSITORY/blob/deriv-research/deriv/signal_a/REPORT_draft.md" || echo "카카오톡 발송 실패(위 로그 참고)"
+          # 일어나면 안 되는 일(카카오가 토큰을 일찍 연장)이 생기면 새 토큰(암호화됨)을 잃지 않게 이 연구 폴더에 옮겨 둔다 — 다음 '알림 기록 저장'이 커밋한다
+          if [ -n "$(git status --porcelain -- deriv/lab/state/kakao_renewed.json)" ]; then cp deriv/lab/state/kakao_renewed.json deriv/signal_a/state/kakao_renewed.json; echo "::error::카카오 토큰이 연장됨 — deriv/signal_a/state/kakao_renewed.json 에 보관(총괄에게 알릴 것)"; fi
+      - name: 알림 기록 저장(보낸 글을 적어 두 번 보내지 않게)
+        if: ${{ failure() && steps.kk.outputs.send == 'yes' }}
+        continue-on-error: true
+        run: |
+          python deriv/signal_a/sa_pipeline.py kakao --mark
+          python deriv/signal_a/sa_pipeline.py save --msg "카카오톡 기록"
+
+  # ------------------------------------------------------------------ 2. T1~T5 계산: 조각마다 작업 하나(한 번에 20개까지)
+  calc1:
+    name: 계산 ${{ matrix.track }} ${{ matrix.part }}/${{ matrix.n }}
+    needs: plan
+    if: ${{ needs.plan.outputs.has == 'yes' }}      # 준비된 줄기가 없으면 건너뜀(빈 매트릭스는 오류라서 여기서 막는다)
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    permissions:
+      contents: read                                # 계산 작업은 읽기만(저장은 판정 작업이 한다)
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: deriv-research}
+      - uses: actions/checkout@v4
+        with: {ref: main, path: _main}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q -r _main/requirements.txt joblib
+      - name: 고정 자료 내려받기
+        env: {GH_TOKEN: '${{ github.token }}'}
+        run: |
+          SA_DATA="$RUNNER_TEMP/sa_data"; mkdir -p "$SA_DATA"; echo "SA_DATA=$SA_DATA" >> "$GITHUB_ENV"
+          echo "PYTHONPATH=$GITHUB_WORKSPACE/deriv/signal_a" >> "$GITHUB_ENV"      # 줄기 코드가 어디서 돌든 sa_common 을 찾게
+          for k in 1 2 3; do gh release download signal-a-data-v1 -p panel.pkl -p lab_feat.pkl -D "$SA_DATA" --clobber && break; sleep 10; done
+          test -s "$SA_DATA/panel.pkl" && test -s "$SA_DATA/lab_feat.pkl"
+      - name: 계산(3번까지 시도 — 다 실패해도 이 작업은 성공으로 끝내 다른 조각·줄기가 계속 가게 한다)
+        id: calc
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TRACK: ${{ matrix.track }}
+          PART: ${{ matrix.part }}
+          N: ${{ matrix.n }}
+        run: |
+          LOG="$RUNNER_TEMP/calc.log"; OUT="deriv/signal_a/$TRACK/out/parts"; OK=0; : > "$LOG"
+          END=$(( $(date +%s) + 3600 ))      # 한 조각 60분 이내. 작업 제한(70분)에 걸리기 전에 끊어 실패 기록을 올릴 시간을 남긴다
+          for k in 1 2 3; do
+            LEFT=$(( END - $(date +%s) ))
+            if [ "$LEFT" -lt 120 ]; then echo "남은 시간이 없어 더 시도하지 않음(60분 넘김)" | tee -a "$LOG"; break; fi
+            echo "::group::$TRACK 조각 $PART/$N — 시도 $k/3"
+            RC=0; timeout -k 30s "${LEFT}s" python "deriv/signal_a/$TRACK/run.py" --part "$PART/$N" 2>&1 | tee "$LOG" || RC=$?
+            echo "::endgroup::"
+            if [ "$RC" = 0 ] && [ -n "$(ls -A "$OUT" 2>/dev/null)" ]; then OK=1
+            elif [ "$RC" = 0 ]; then echo "끝났지만 조각 결과 파일이 없음($OUT)" | tee -a "$LOG"
+            elif [ "$RC" = 124 ] || [ "$RC" = 137 ]; then echo "시간 초과(한 조각 60분 제한)로 끊음" | tee -a "$LOG"; fi
+            if [ "$OK" = 1 ]; then break; fi
+            echo "시도 $k 실패"; sleep 15
+          done
+          echo "ok=$OK" >> "$GITHUB_OUTPUT"
+          if [ "$OK" != 1 ]; then
+            python deriv/signal_a/sa_pipeline.py fail --track "$TRACK" --part "$PART" --log "$LOG" --out "$RUNNER_TEMP/sa_fail/fail.json"
+            echo "::warning::$TRACK 조각 $PART/$N 계산 실패 — 실패 기록을 올림(판정 작업이 status.json 에 적는다)"
+          fi
+      - name: 조각 결과 올리기
+        if: ${{ steps.calc.outputs.ok == '1' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: sa-${{ matrix.track }}-${{ matrix.part }}
+          path: deriv/signal_a/${{ matrix.track }}/out/parts/
+          if-no-files-found: error
+          retention-days: 14
+          overwrite: true
+      - name: 실패 기록 올리기
+        if: ${{ steps.calc.outputs.ok == '0' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: sa-fail-${{ matrix.track }}-${{ matrix.part }}
+          path: ${{ runner.temp }}/sa_fail/fail.json
+          if-no-files-found: error
+          retention-days: 14
+          overwrite: true
+
+  # ------------------------------------------------------------------ 3. T1~T5 합치기·판정 → 저장 → 카카오톡 → T6 이 준비됐는지
+  judge1:
+    name: 판정 T1~T5
+    needs: [plan, calc1]
+    if: ${{ !cancelled() && needs.plan.result == 'success' }}      # 계산이 건너뛰어졌거나 일부가 죽어도 돈다(취소했을 때만 안 돎)
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    outputs:
+      matrix: ${{ steps.next.outputs.matrix }}      # t6 의 조각 목록
+      has: ${{ steps.next.outputs.has }}
+      done: ${{ steps.judge.outputs.done }}         # 이번에 새로 끝난 줄기 수
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: deriv-research}
+      - uses: actions/checkout@v4
+        with: {ref: main, path: _main}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q -r _main/requirements.txt joblib
+      - name: 고정 자료 내려받기
+        env: {GH_TOKEN: '${{ github.token }}'}
+        run: |
+          SA_DATA="$RUNNER_TEMP/sa_data"; mkdir -p "$SA_DATA"; echo "SA_DATA=$SA_DATA" >> "$GITHUB_ENV"
+          echo "PYTHONPATH=$GITHUB_WORKSPACE/deriv/signal_a" >> "$GITHUB_ENV"      # 줄기 코드가 어디서 돌든 sa_common 을 찾게
+          for k in 1 2 3; do gh release download signal-a-data-v1 -p panel.pkl -p lab_feat.pkl -D "$SA_DATA" --clobber && break; sleep 10; done
+          test -s "$SA_DATA/panel.pkl" && test -s "$SA_DATA/lab_feat.pkl"
+      - name: 조각 결과·실패 기록 내려받기
+        if: ${{ needs.plan.outputs.has == 'yes' }}
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          pattern: sa-*
+          path: ${{ runner.temp }}/sa_art           # artifact 이름마다 폴더 하나(sa-t1-3/, sa-fail-t2-1/ …)
+      - name: 줄기마다 합치기 → 판정(3번까지). 조각이 하나라도 실패한 줄기는 판정하지 않고 '실패'로 적는다
+        id: judge
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MATRIX: ${{ needs.plan.outputs.matrix }}
+        run: python deriv/signal_a/sa_pipeline.py judge --matrix "$MATRIX" --art "$RUNNER_TEMP/sa_art"
+      - name: 카카오 글 모으기(새로 생긴 것만)
+        id: kk
+        if: ${{ !cancelled() }}                     # 판정 단계가 중간에 죽어도 그때까지 끝난 줄기는 저장한다
+        run: python deriv/signal_a/sa_pipeline.py kakao
+      - name: 저장
+        if: ${{ !cancelled() }}
+        run: python deriv/signal_a/sa_pipeline.py save --msg "T1~T5 판정"
+      - name: 다음 할 일(T6 이 준비됐는지)
+        id: next
+        run: |
+          python deriv/signal_a/sa_pipeline.py plan --phase 2 | tee "$RUNNER_TEMP/m.json"
+          echo "matrix=$(cat "$RUNNER_TEMP/m.json")" >> "$GITHUB_OUTPUT"
+          if grep -q '"track"' "$RUNNER_TEMP/m.json"; then echo "has=yes"; else echo "has=no"; fi >> "$GITHUB_OUTPUT"
+      - name: 카카오톡(새로 생긴 글이 있을 때만)
+        if: ${{ !cancelled() && steps.kk.outputs.send == 'yes' }}
+        env:
+          KAKAO_REST_KEY: ${{ secrets.KAKAO_REST_KEY }}
+          KAKAO_REFRESH_TOKEN: ${{ secrets.KAKAO_REFRESH_TOKEN }}
+          KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
+          GH_TOKEN: ${{ github.token }}
+          KAKAO_LAST: deriv/signal_a/notify/last.json
+        run: |
+          cp _main/state/kakao_token.json "$RUNNER_TEMP/main_token.json" 2>/dev/null || true
+          export TOKEN_RENEWED_AT="$(gh api "repos/$GITHUB_REPOSITORY/commits?path=state/kakao_token.json&sha=main&per_page=1" -q '.[0].commit.committer.date' 2>/dev/null || true)"
+          python deriv/lab/kakao_lab.py --file deriv/signal_a/notify/kakao.txt --main-state "$RUNNER_TEMP/main_token.json" --link "https://github.com/$GITHUB_REPOSITORY/blob/deriv-research/deriv/signal_a/REPORT_draft.md" || echo "카카오톡 발송 실패(위 로그 참고)"
+          # 일어나면 안 되는 일(카카오가 토큰을 일찍 연장)이 생기면 새 토큰(암호화됨)을 잃지 않게 이 연구 폴더에 옮겨 둔다 — 다음 '알림 기록 저장'이 커밋한다
+          if [ -n "$(git status --porcelain -- deriv/lab/state/kakao_renewed.json)" ]; then cp deriv/lab/state/kakao_renewed.json deriv/signal_a/state/kakao_renewed.json; echo "::error::카카오 토큰이 연장됨 — deriv/signal_a/state/kakao_renewed.json 에 보관(총괄에게 알릴 것)"; fi
+      - name: 알림 기록 저장(보낸 글을 적어 두 번 보내지 않게)
+        if: ${{ !cancelled() && steps.kk.outputs.send == 'yes' }}
+        continue-on-error: true
+        run: |
+          python deriv/signal_a/sa_pipeline.py kakao --mark
+          python deriv/signal_a/sa_pipeline.py save --msg "카카오톡 기록"
+
+  # ------------------------------------------------------------------ 4. T6 계산(T1~T5 가 모두 끝났을 때만) — calc1 과 같은 단계
+  calc2:
+    name: 계산 ${{ matrix.track }} ${{ matrix.part }}/${{ matrix.n }}
+    needs: judge1
+    if: ${{ !cancelled() && needs.judge1.result == 'success' && needs.judge1.outputs.has == 'yes' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix: ${{ fromJSON(needs.judge1.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: deriv-research}                 # 가지 이름으로 받으므로 판정 작업이 방금 push 한 T1~T5 결과가 들어 있다
+      - uses: actions/checkout@v4
+        with: {ref: main, path: _main}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q -r _main/requirements.txt joblib
+      - name: 고정 자료 내려받기
+        env: {GH_TOKEN: '${{ github.token }}'}
+        run: |
+          SA_DATA="$RUNNER_TEMP/sa_data"; mkdir -p "$SA_DATA"; echo "SA_DATA=$SA_DATA" >> "$GITHUB_ENV"
+          echo "PYTHONPATH=$GITHUB_WORKSPACE/deriv/signal_a" >> "$GITHUB_ENV"      # 줄기 코드가 어디서 돌든 sa_common 을 찾게
+          for k in 1 2 3; do gh release download signal-a-data-v1 -p panel.pkl -p lab_feat.pkl -D "$SA_DATA" --clobber && break; sleep 10; done
+          test -s "$SA_DATA/panel.pkl" && test -s "$SA_DATA/lab_feat.pkl"
+      - name: 계산(3번까지 시도 — 다 실패해도 이 작업은 성공으로 끝낸다)
+        id: calc
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TRACK: ${{ matrix.track }}
+          PART: ${{ matrix.part }}
+          N: ${{ matrix.n }}
+        run: |
+          LOG="$RUNNER_TEMP/calc.log"; OUT="deriv/signal_a/$TRACK/out/parts"; OK=0; : > "$LOG"
+          END=$(( $(date +%s) + 3600 ))      # 한 조각 60분 이내. 작업 제한(70분)에 걸리기 전에 끊어 실패 기록을 올릴 시간을 남긴다
+          for k in 1 2 3; do
+            LEFT=$(( END - $(date +%s) ))
+            if [ "$LEFT" -lt 120 ]; then echo "남은 시간이 없어 더 시도하지 않음(60분 넘김)" | tee -a "$LOG"; break; fi
+            echo "::group::$TRACK 조각 $PART/$N — 시도 $k/3"
+            RC=0; timeout -k 30s "${LEFT}s" python "deriv/signal_a/$TRACK/run.py" --part "$PART/$N" 2>&1 | tee "$LOG" || RC=$?
+            echo "::endgroup::"
+            if [ "$RC" = 0 ] && [ -n "$(ls -A "$OUT" 2>/dev/null)" ]; then OK=1
+            elif [ "$RC" = 0 ]; then echo "끝났지만 조각 결과 파일이 없음($OUT)" | tee -a "$LOG"
+            elif [ "$RC" = 124 ] || [ "$RC" = 137 ]; then echo "시간 초과(한 조각 60분 제한)로 끊음" | tee -a "$LOG"; fi
+            if [ "$OK" = 1 ]; then break; fi
+            echo "시도 $k 실패"; sleep 15
+          done
+          echo "ok=$OK" >> "$GITHUB_OUTPUT"
+          if [ "$OK" != 1 ]; then
+            python deriv/signal_a/sa_pipeline.py fail --track "$TRACK" --part "$PART" --log "$LOG" --out "$RUNNER_TEMP/sa_fail/fail.json"
+            echo "::warning::$TRACK 조각 $PART/$N 계산 실패 — 실패 기록을 올림(판정 작업이 status.json 에 적는다)"
+          fi
+      - name: 조각 결과 올리기
+        if: ${{ steps.calc.outputs.ok == '1' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: sa-${{ matrix.track }}-${{ matrix.part }}
+          path: deriv/signal_a/${{ matrix.track }}/out/parts/
+          if-no-files-found: error
+          retention-days: 14
+          overwrite: true
+      - name: 실패 기록 올리기
+        if: ${{ steps.calc.outputs.ok == '0' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: sa-fail-${{ matrix.track }}-${{ matrix.part }}
+          path: ${{ runner.temp }}/sa_fail/fail.json
+          if-no-files-found: error
+          retention-days: 14
+          overwrite: true
+
+  # ------------------------------------------------------------------ 5. T6 합치기·판정 → 저장 → 카카오톡 — judge1 과 같은 단계
+  judge2:
+    name: 판정 T6
+    needs: [judge1, calc2]
+    if: ${{ !cancelled() && needs.judge1.result == 'success' && needs.judge1.outputs.has == 'yes' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    outputs:
+      done: ${{ steps.judge.outputs.done }}
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: deriv-research}
+      - uses: actions/checkout@v4
+        with: {ref: main, path: _main}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q -r _main/requirements.txt joblib
+      - name: 고정 자료 내려받기
+        env: {GH_TOKEN: '${{ github.token }}'}
+        run: |
+          SA_DATA="$RUNNER_TEMP/sa_data"; mkdir -p "$SA_DATA"; echo "SA_DATA=$SA_DATA" >> "$GITHUB_ENV"
+          echo "PYTHONPATH=$GITHUB_WORKSPACE/deriv/signal_a" >> "$GITHUB_ENV"      # 줄기 코드가 어디서 돌든 sa_common 을 찾게
+          for k in 1 2 3; do gh release download signal-a-data-v1 -p panel.pkl -p lab_feat.pkl -D "$SA_DATA" --clobber && break; sleep 10; done
+          test -s "$SA_DATA/panel.pkl" && test -s "$SA_DATA/lab_feat.pkl"
+      - name: 조각 결과·실패 기록 내려받기(t6 것만)
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          pattern: sa-*t6-*
+          path: ${{ runner.temp }}/sa_art
+      - name: 합치기 → 판정(3번까지)
+        id: judge
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MATRIX: ${{ needs.judge1.outputs.matrix }}
+        run: python deriv/signal_a/sa_pipeline.py judge --matrix "$MATRIX" --art "$RUNNER_TEMP/sa_art"
+      - name: 카카오 글 모으기(새로 생긴 것만)
+        id: kk
+        if: ${{ !cancelled() }}                     # 판정 단계가 중간에 죽어도 그때까지 끝난 줄기는 저장한다
+        run: python deriv/signal_a/sa_pipeline.py kakao
+      - name: 저장
+        if: ${{ !cancelled() }}
+        run: python deriv/signal_a/sa_pipeline.py save --msg "T6 판정"
+      - name: 카카오톡(새로 생긴 글이 있을 때만)
+        if: ${{ !cancelled() && steps.kk.outputs.send == 'yes' }}
+        env:
+          KAKAO_REST_KEY: ${{ secrets.KAKAO_REST_KEY }}
+          KAKAO_REFRESH_TOKEN: ${{ secrets.KAKAO_REFRESH_TOKEN }}
+          KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
+          GH_TOKEN: ${{ github.token }}
+          KAKAO_LAST: deriv/signal_a/notify/last.json
+        run: |
+          cp _main/state/kakao_token.json "$RUNNER_TEMP/main_token.json" 2>/dev/null || true
+          export TOKEN_RENEWED_AT="$(gh api "repos/$GITHUB_REPOSITORY/commits?path=state/kakao_token.json&sha=main&per_page=1" -q '.[0].commit.committer.date' 2>/dev/null || true)"
+          python deriv/lab/kakao_lab.py --file deriv/signal_a/notify/kakao.txt --main-state "$RUNNER_TEMP/main_token.json" --link "https://github.com/$GITHUB_REPOSITORY/blob/deriv-research/deriv/signal_a/REPORT_draft.md" || echo "카카오톡 발송 실패(위 로그 참고)"
+          # 일어나면 안 되는 일(카카오가 토큰을 일찍 연장)이 생기면 새 토큰(암호화됨)을 잃지 않게 이 연구 폴더에 옮겨 둔다 — 다음 '알림 기록 저장'이 커밋한다
+          if [ -n "$(git status --porcelain -- deriv/lab/state/kakao_renewed.json)" ]; then cp deriv/lab/state/kakao_renewed.json deriv/signal_a/state/kakao_renewed.json; echo "::error::카카오 토큰이 연장됨 — deriv/signal_a/state/kakao_renewed.json 에 보관(총괄에게 알릴 것)"; fi
+      - name: 알림 기록 저장(보낸 글을 적어 두 번 보내지 않게)
+        if: ${{ !cancelled() && steps.kk.outputs.send == 'yes' }}
+        continue-on-error: true
+        run: |
+          python deriv/signal_a/sa_pipeline.py kakao --mark
+          python deriv/signal_a/sa_pipeline.py save --msg "카카오톡 기록"
+
+  # ------------------------------------------------------------------ 6. S3 통합(T1~T6 이 모두 끝났고 sa_s3.py 가 있을 때만)
+  s3:
+    name: S3 통합(후보 모으기·겹침·반증 시험·보고서 초안)
+    needs: [plan, judge1, judge2]
+    if: ${{ !cancelled() && needs.plan.result == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    outputs:
+      done: ${{ steps.s3.outputs.done }}
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: deriv-research}                 # 앞 작업들이 push 한 최신 가지 끝을 받는다
+      - uses: actions/checkout@v4
+        with: {ref: main, path: _main}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q -r _main/requirements.txt joblib
+      - name: S3 차례인지 확인
+        id: p3
+        run: echo "go=$(python deriv/signal_a/sa_pipeline.py plan --phase 3)" >> "$GITHUB_OUTPUT"
+      - name: 고정 자료 내려받기
+        if: ${{ steps.p3.outputs.go == 'yes' }}
+        env: {GH_TOKEN: '${{ github.token }}'}
+        run: |
+          SA_DATA="$RUNNER_TEMP/sa_data"; mkdir -p "$SA_DATA"; echo "SA_DATA=$SA_DATA" >> "$GITHUB_ENV"
+          echo "PYTHONPATH=$GITHUB_WORKSPACE/deriv/signal_a" >> "$GITHUB_ENV"      # 줄기 코드가 어디서 돌든 sa_common 을 찾게
+          for k in 1 2 3; do gh release download signal-a-data-v1 -p panel.pkl -p lab_feat.pkl -D "$SA_DATA" --clobber && break; sleep 10; done
+          test -s "$SA_DATA/panel.pkl" && test -s "$SA_DATA/lab_feat.pkl"
+      - name: S3 통합(3번까지 시도 — 다 실패하면 status.json 에 적는다)
+        id: s3
+        if: ${{ steps.p3.outputs.go == 'yes' }}
+        env: {GH_TOKEN: '${{ github.token }}'}
+        run: |
+          LOG="$RUNNER_TEMP/s3.log"; OK=0
+          for k in 1 2 3; do
+            echo "::group::S3 — 시도 $k/3"
+            if python deriv/signal_a/sa_s3.py 2>&1 | tee "$LOG"; then OK=1; fi
+            echo "::endgroup::"
+            if [ "$OK" = 1 ]; then break; fi
+            echo "시도 $k 실패"; sleep 15
+          done
+          if [ "$OK" = 1 ]; then
+            mkdir -p deriv/signal_a/s3/out      # 끝 표시(sa_s3.py 가 만들지 않았을 때만 여기서 만든다)
+            [ -f deriv/signal_a/s3/out/done.json ] || echo "{\"at\": \"$(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')\"}" > deriv/signal_a/s3/out/done.json
+            python deriv/signal_a/sa_pipeline.py log --stage S3 --text "후보 모으기·겹침·반증 시험 표·보고서 초안(REPORT_draft.md)" --verdict "끝 — 최종 심사 차례"
+          else
+            python deriv/signal_a/sa_pipeline.py fail --track s3 --part 0 --log "$LOG"
+          fi
+          echo "done=$OK" >> "$GITHUB_OUTPUT"
+      - name: 상태 맞춤 → 카카오 글 모으기
+        id: kk
+        if: ${{ steps.p3.outputs.go == 'yes' }}
+        run: |
+          python deriv/signal_a/sa_pipeline.py status --harness success > /dev/null
+          python deriv/signal_a/sa_pipeline.py kakao
+      - name: 저장
+        if: ${{ steps.p3.outputs.go == 'yes' }}
+        run: python deriv/signal_a/sa_pipeline.py save --msg "S3 통합"
+      - name: 카카오톡(새로 생긴 글이 있을 때만)
+        if: ${{ !cancelled() && steps.kk.outputs.send == 'yes' }}
+        env:
+          KAKAO_REST_KEY: ${{ secrets.KAKAO_REST_KEY }}
+          KAKAO_REFRESH_TOKEN: ${{ secrets.KAKAO_REFRESH_TOKEN }}
+          KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
+          GH_TOKEN: ${{ github.token }}
+          KAKAO_LAST: deriv/signal_a/notify/last.json
+        run: |
+          cp _main/state/kakao_token.json "$RUNNER_TEMP/main_token.json" 2>/dev/null || true
+          export TOKEN_RENEWED_AT="$(gh api "repos/$GITHUB_REPOSITORY/commits?path=state/kakao_token.json&sha=main&per_page=1" -q '.[0].commit.committer.date' 2>/dev/null || true)"
+          python deriv/lab/kakao_lab.py --file deriv/signal_a/notify/kakao.txt --main-state "$RUNNER_TEMP/main_token.json" --link "https://github.com/$GITHUB_REPOSITORY/blob/deriv-research/deriv/signal_a/REPORT_draft.md" || echo "카카오톡 발송 실패(위 로그 참고)"
+          # 일어나면 안 되는 일(카카오가 토큰을 일찍 연장)이 생기면 새 토큰(암호화됨)을 잃지 않게 이 연구 폴더에 옮겨 둔다 — 다음 '알림 기록 저장'이 커밋한다
+          if [ -n "$(git status --porcelain -- deriv/lab/state/kakao_renewed.json)" ]; then cp deriv/lab/state/kakao_renewed.json deriv/signal_a/state/kakao_renewed.json; echo "::error::카카오 토큰이 연장됨 — deriv/signal_a/state/kakao_renewed.json 에 보관(총괄에게 알릴 것)"; fi
+      - name: 알림 기록 저장(보낸 글을 적어 두 번 보내지 않게)
+        if: ${{ !cancelled() && steps.kk.outputs.send == 'yes' }}
+        continue-on-error: true
+        run: |
+          python deriv/signal_a/sa_pipeline.py kakao --mark
+          python deriv/signal_a/sa_pipeline.py save --msg "카카오톡 기록"
+
+  # ------------------------------------------------------------------ 7. 맨 끝: 상태 파일을 실제 파일 상태로 맞추고, 남은 일이 있으면 스스로 다시 시작
+  wrap:
+    name: 상태 맞춤·다시 시작
+    needs: [plan, calc1, judge1, calc2, judge2, s3]
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: deriv-research}
+      - uses: actions/checkout@v4
+        with: {ref: main, path: _main}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q -r _main/requirements.txt joblib
+      - name: status.json 다시 맞춤(tracks·stage·need_claude·why)
+        id: st
+        env:
+          PLAN: ${{ needs.plan.result }}                # success 일 때만 '시험대 확인됨'으로 적는다
+          D1: ${{ needs.judge1.outputs.done }}
+          D2: ${{ needs.judge2.outputs.done }}
+          D3: ${{ needs.s3.outputs.done }}
+          ROUND: ${{ inputs.round || '0' }}             # push 로 시작하면 입력이 없어 0
+          JOBS: plan=${{ needs.plan.result }},judge1=${{ needs.judge1.result }},judge2=${{ needs.judge2.result }},s3=${{ needs.s3.result }}      # 작업 자체가 실패했으면 status.json 에 적는다
+        run: python deriv/signal_a/sa_pipeline.py status --harness "$PLAN" --jobs "$JOBS" --new-done "$(( ${D1:-0} + ${D2:-0} + ${D3:-0} ))" --round "$ROUND"
+      - name: 저장
+        run: python deriv/signal_a/sa_pipeline.py save --msg "상태 맞춤"
+      - name: 남은 일이 있으면 다시 시작(실패가 없고, 이번에 새로 끝난 것이 있고, 6번째가 아닐 때만)
+        if: ${{ steps.st.outputs.restart == 'yes' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NEXT: ${{ steps.st.outputs.next_round }}
+        run: |
+          if gh workflow run signal-a-pipeline.yml --ref deriv-research -f round="$NEXT"; then
+            echo "다시 시작함(round $NEXT)"
+          else
+            echo "다시 시작 실패(기본 가지에 워크플로 없음) — 다음 총괄 회차가 run.txt 로 띄움"
+            python deriv/signal_a/sa_pipeline.py status --stuck > /dev/null      # need_claude 를 켜 둔다(안 켜면 총괄이 '할 일 없음'으로 지나침)
+            python deriv/signal_a/sa_pipeline.py save --msg "다시 시작 실패 기록"
+          fi
