@@ -7,7 +7,7 @@
 2. 기준은 사용자만 바꾼다. CRITERIA.md 와 sa_judge.py 의 기준 숫자를 고치지 않는다.
 3. 미래 자료 금지: 지표는 t일 장 마감 뒤~다음 개장 전에 알 수 있는 값만, 매수는 다음 날 시가. 조건·문턱·모형은 해마다 그 해 이전 자료로만 고른다. 성적이 갑자기 좋아지면 먼저 누설을 의심해 지표를 하루 늦춰 다시 돌린다.
 4. 시험한 가짓수를 state/ledger.json 에 전부 적는다(묶음·가짓수·날짜). 적지 않은 시험 결과는 보고하지 않는다.
-5. 무거운 계산은 전부 GitHub Actions(워크플로 이름 signal-a-*, deriv-research 가지). 이 세션에서는 문법 확인·아주 작은 시험만. 계산은 매트릭스로 나눠 동시에 돌린다(한 번에 최대 20개).
+5. 무거운 계산은 전부 GitHub Actions(워크플로 이름 signal-a-*, deriv-research 가지). GitHub 계산이 실패하면 원인을 고쳐 성공할 때까지 다시 돌린다(사용자 지시 2026-11-24). 같은 오류로 3번 실패하면 같은 것을 되풀이하지 말고 방법을 바꾸고 log.md 에 적는다. 저장 단계는 git pull --rebase --autostash 를 쓴다(계산이 추적 파일을 바꾸면 그냥 pull 은 실패한다 — S0 에서 겪음). 이 세션에서는 문법 확인·아주 작은 시험만. 계산은 매트릭스로 나눠 동시에 돌린다(한 번에 최대 20개).
 6. 고치는 곳: deriv/signal_a/ 와 .github/workflows/signal-a-*.yml 뿐(워크플로는 deriv-research 가지). 기존 부품(deriv/combo/combo_core.py·combo.c, deriv/turn/*.py, deriv/lab/lab_common.py·a02·a04·a08·a10, deriv/uni/uni_model.py)은 읽고 불러 쓰되 고치지 않는다. main·docs·대시보드·다른 갈래 파일은 건드리지 않는다.
 7. KRX 로그인·수집을 하지 않는다. 비밀값(KRX·DART·Kakao·TwelveData·Tavily)은 읽지도 쓰지도 않는다. deriv/trigger.txt 는 건드리지 않는다.
 8. 원자료가 없으면 추정하지 않고 "확인 불가". 도구가 거부하면 우회하지 않고 멈춘 뒤 log.md 에 이유를 적는다. 사용량 한도에 닿으면 그 자리에서 멈춘다.
