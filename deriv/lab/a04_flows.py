@@ -757,6 +757,14 @@ def main():
                 if 'lt' in ex_: m_ &= col_ < ex_['lt']
                 # 갈래 B 라운드 43(extra 의 out: [lo, hi], 설정 없으면 없음 → 예전 설정·갈래 A·D 같은 결과): 구간 밖(< lo 또는 > hi)만 — '만기 21~40거래일 아님'.
                 if 'out' in ex_: m_ &= (col_ < ex_['out'][0]) | (col_ > ex_['out'][1])
+                # 갈래 B 라운드 44(extra 의 lt_col·ge_col, 설정 없으면 없음): 다른 지표와 비교 — 예: 근월 콜벽 거리 < 분기물 콜벽 거리(가격과 분기물 벽 사이에 근월 벽이 먼저 있음).
+                #   비교 대상이 없거나 빈칸인 날은 빠짐(추정 없음).
+                for k_, op_ in (('lt_col', 'lt'), ('ge_col', 'ge')):
+                    if k_ in ex_:
+                        o_ = X.get(ex_[k_].replace('{tag}', tag))
+                        if o_ is None: return None
+                        o_ = o_.reindex(col_.index)
+                        m_ &= ((col_ < o_) if op_ == 'lt' else (col_ >= o_)) & o_.notna()
                 return m_ & col_.notna()
             for ex in (zc.get('extra') or []):
                 em = _exmask(ex)
