@@ -445,6 +445,31 @@ def main():
                                               ('K2c', k2m & (ncr >= 1), '둘 이상 동시(하나 이상은 값이 옛 벽을 넘어서 생김)'),
                                               ('K2n', k2m & (nro == 0), '둘 이상 동시(만기 교체로 생긴 벽 없음)')):
                             if ok_ in YO.get('kinds', ['K2s', 'K2c', 'K2n']): kinds.append((ok_, om_, ol_)); okinds.add(ok_)
+                        # 라운드 42(kinds 에 K2a·K2u·K2sa 있을 때만): 새 벽 행사가의 콜 미결제가 오늘 늘었나(OW_<시리즈>_wall_oi_chg1% > 0 = 쌓임) —
+                        #   사용자 가설의 '압도적 콜 물량'이 새로 쌓여 자리가 옮겨 갔나, 옛 벽이 풀려(줄어) 다음 행사가가 벽이 됐나. 합산(ALL)은 이 값이 없어 결제월별(F0·F1·F2)만 셈.
+                        #   그날 장 마감 뒤 아는 값(오늘·어제 같은 행사가 미결제). 값 없는 날은 쌓임도 풀림도 아님(추정 안 함).
+                        if any(k_ in YO.get('kinds', []) for k_ in ('K2a', 'K2u', 'K2sa')):
+                            fts = [(i, t) for i, t in enumerate(gtags) if t != 'ALL' and X.get(f'OW_{t}_wall_oi_chg1%') is not None]
+                            if fts:
+                                nfh = sum(hits[i] for i, t in fts)
+                                nac = sum((hits[i].astype(bool) & (X[f'OW_{t}_wall_oi_chg1%'] > 0)).astype(int) for i, t in fts)
+                                nun = sum((hits[i].astype(bool) & (X[f'OW_{t}_wall_oi_chg1%'] <= 0)).astype(int) for i, t in fts)
+                                acc_ = k2m & (nfh >= 1) & (nac == nfh); unw_ = k2m & (nun >= 1)
+                                for ok_, om_, ol_ in (('K2a', acc_, '둘 이상 동시(새 벽 행사가 콜 물량이 오늘 쌓임)'),
+                                                      ('K2u', unw_, '둘 이상 동시(옛 벽이 풀려 생긴 벽 포함)'),
+                                                      ('K2sa', acc_ & (nsh == cnt), '둘 이상 동시(모두 물량 이동 + 새 벽 물량 쌓임)')):
+                                    if ok_ in YO.get('kinds', []): kinds.append((ok_, om_, ol_)); okinds.add(ok_)
+                                for cn, cm in ucond:
+                                    if cn not in YO.get('conds', [cn]): continue
+                                    for ol, om_ in (('새 벽 물량 쌓임', acc_), ('옛 벽 풀림 포함', unw_), ('물량 이동 + 쌓임', acc_ & (nsh == cnt)),
+                                                    ('물량 이동 + 풀림 포함', unw_ & (nsh == cnt))):
+                                        mm_ = om_ & cm.fillna(False)
+                                        r_ = {'묶음': '+'.join(gtags), '폭': blab, '조건': cn, '까닭': ol}
+                                        for pn_, pm_ in (('앞', (td <= L.DEV_END) & (td >= pd.Timestamp('2010-01-01'))), ('뒤', p2)):
+                                            r_[f'{pn_} 날수'] = int((mm_ & pm_).sum())
+                                            for m in YM:
+                                                v_ = yfwd[m][mm_ & pm_].dropna(); r_[f'{pn_} {m}일 상승%'] = round(float((v_ > 0).mean() * 100), 1) if len(v_) else np.nan
+                                        orows.append(r_)
                         # 설명표(날 단위, 겹침 포함, 후보 안 만듦): K2 날을 까닭으로 나눠 앞·뒤 m일 상승%.
                         lab4 = pd.Series('섞임', index=td)
                         lab4[k2m & (nro >= 1) & (ncr == 0)] = '만기 교체 포함'
