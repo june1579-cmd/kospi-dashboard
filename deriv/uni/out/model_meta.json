@@ -1,0 +1,18 @@
+{
+ "made": "2026-11-23 15:48",
+ "quick": false,
+ "years": [
+  2013,
+  2026
+ ],
+ "columns": 75,
+ "set_features": {
+  "base": 83,
+  "fut": 184,
+  "opt": 281,
+  "us": 135,
+  "all": 434
+ },
+ "seconds": 90,
+ "last_pred": "2026-11-20"
+}

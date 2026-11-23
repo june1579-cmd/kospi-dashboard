@@ -1,0 +1,26 @@
+{
+ "made": "2026-11-23 15:49",
+ "data_end": "2026-11-20",
+ "eval": [
+  "2016-01-04",
+  "2026-11-20"
+ ],
+ "candidates": 300,
+ "strategies": 135,
+ "signal_pass": 0,
+ "signal_watch": 0,
+ "signal_held": 0,
+ "signal_num_only": 0,
+ "strat_pass": 0,
+ "strat_watch": 0,
+ "strat_held": 0,
+ "family_chance": {
+  "signal_pass": 0.058,
+  "signal_watch": 0.288,
+  "strat_pass": 0.0
+ },
+ "registered": 0,
+ "new": [],
+ "placebo_draws": 500,
+ "seconds": 78
+}

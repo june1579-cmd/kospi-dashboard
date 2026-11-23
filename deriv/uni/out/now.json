@@ -1,0 +1,12 @@
+{
+ "date": "2026-11-20",
+ "made": "2026-11-23",
+ "signals": {},
+ "probs": {
+  "IDX20|all|ens": 0.883,
+  "IDX10|all|ens": 0.869,
+  "IDX5|all|ens": 0.903,
+  "FUT3|all|ens": 0.678,
+  "FUT1|all|ens": 0.571
+ }
+}
