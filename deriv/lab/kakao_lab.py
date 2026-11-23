@@ -22,7 +22,7 @@ import sys
 import requests
 
 LAB = os.path.dirname(os.path.abspath(__file__))
-LAST = os.path.join(LAB, 'notify', 'last.json')
+LAST = os.environ.get('KAKAO_LAST') or os.path.join(LAB, 'notify', 'last.json')   # 다른 갈래(통합 예측 연구소)는 자기 기록 파일을 따로 쓴다(2026-11-23)
 RENEWED = os.path.join(LAB, 'state', 'kakao_renewed.json')
 KST = dt.timezone(dt.timedelta(hours=9))
 FIRST_ISSUE = dt.datetime(2026, 11, 1, 8, 1, 40, tzinfo=dt.timezone.utc)   # kakao_auth.py 가 main 에 들어온 시각
