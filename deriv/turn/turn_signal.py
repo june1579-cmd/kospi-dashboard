@@ -69,11 +69,20 @@ def main():
     M = [f'# 시작 전 공통점으로 만든 매매 신호 (자료 ~ {td[-1].date()})', '', '- 조건 = 지표의 자리(지난 250일 중 순위, 0~100)가 80 이상 또는 20 이하. 점수 = 그날 켜진 조건 수. 점수가 문턱 이상이면 신호(5거래일 간격으로 솎음).',
          '- 조건과 문턱은 규칙으로 고른다: 시작점 1일 전 자리가 우연과도, 지수가 비슷하게 움직인 다른 날과도 달랐던 지표(겹치는 것은 하나만, 최대 8개), 문턱은 과거 시작점의 40% 이상을 잡는 가장 높은 점수.',
          '- 채점은 보유일 없이: "맞음" = 신호가 시작점 3일 전~당일 안. "먼저 닿음" = 신호일 종가에서 원하는 쪽 5%에 먼저 닿음.', '']
-    daily = pd.DataFrame(index=td[i0:])
+    daily = pd.DataFrame(index=td[i0:]); chart = dict(made=str(td[-1].date()), note='step: -1 = 문턱보다 하나 모자람, 0 = 신호, 1·2 = 문턱보다 1·2개 이상 많음 / hit: 1 = 시작점 3일 전~당일, 0 = 아님, 9 = 아직 모름',
+                                               pivots={t: [str(td[p].date()) for p, tt in piv_all if tt == t and p >= i0] for t in ('L', 'H')}); lastpiv = max(p for p, _ in piv_all)
+
+    def pack(rel, typ, a):
+        es = set(p for p, t in piv_all if t == typ); o_ = []
+        for d in range(a, n):
+            if rel[d] < -1: continue
+            h = 1 if any((d + q) in es for q in range(WIN + 1)) else (9 if d + WIN > lastpiv else 0)
+            o_.append(td[d].strftime('%y%m%d') + str(int(min(rel[d], 2)) + 1) + str(h))
+        return ''.join(o_)
     for key, typ, lab, act in (('buy', 'L', '매수 신호(상승 시작 전)', '+5%'), ('sell', 'H', '매도 신호(하락 시작 전)', '−5%')):
-        fin = build(typ, n, 1); wf = {}; tot = dict(events=0, caught=0, sig=0, hit=0, dec=0, ok=0); bw = bf = 0.0; ex = dict(tot); exw = exf = 0.0; alt = {t: dict(tot, bw=0.0, bf=0.0) for t in (0.2, 0.6)}
+        fin = build(typ, n, 1); relwf = np.full(n, -99); wf = {}; tot = dict(events=0, caught=0, sig=0, hit=0, dec=0, ok=0); bw = bf = 0.0; ex = dict(tot); exw = exf = 0.0; alt = {t: dict(tot, bw=0.0, bf=0.0) for t in (0.2, 0.6)}
         for Y in range(2016, int(yr[-1]) + 1):
-            a = int(np.where(yr == Y)[0][0]); b = int(np.where(yr == Y)[0][-1]) + 1; m = build(typ, a, Y); j = judge(m['score'], m['k'], typ, a, b); j.update(k=m['k'], comps=[[cols[x[0]], x[1]] for x in m['comps']]); wf[Y] = j
+            a = int(np.where(yr == Y)[0][0]); b = int(np.where(yr == Y)[0][-1]) + 1; m = build(typ, a, Y); relwf[a:b] = m['score'][a:b] - m['k']; j = judge(m['score'], m['k'], typ, a, b); j.update(k=m['k'], comps=[[cols[x[0]], x[1]] for x in m['comps']]); wf[Y] = j
             for tg, at in alt.items():      # 문턱을 다르게 잡았다면(과거 시작점의 20% / 60% 이상을 잡는 가장 높은 점수)
                 ka = next((kk for kk, ns, hit, cg, E_ in m['table'] if E_ and cg / E_ >= tg), 2); ja = judge(m['score'], ka, typ, a, b)
                 for q in ('events', 'caught', 'sig', 'hit', 'dec', 'ok'): at[q] += ja[q]
@@ -84,7 +93,7 @@ def main():
             bw += j['sig'] * j['base_in']; bf += j['dec'] * (j['base_ft'] or 0)
             if Y != 2026: exw += j['sig'] * j['base_in']; exf += j['dec'] * (j['base_ft'] or 0)
         ins = judge(fin['score'], fin['k'], typ, lo_, n); sc = fin['score']; cur = [[cols[x[0]], x[1], None if not np.isfinite(R[-1, x[0]]) else round(float(R[-1, x[0]]), 0), bool((R[-1, x[0]] >= HI) if x[1] == 'hi' else (R[-1, x[0]] <= LO))] for x in fin['comps']]
-        daily[key + '_score'] = sc[i0:]; daily[key + '_signal'] = (sc[i0:] >= fin['k']).astype(int)
+        chart[key] = dict(k=fin['k'], ncomp=len(fin['comps']), now=pack(sc - fin['k'], typ, lo_), wf=pack(relwf, typ, lo_)); daily[key + '_score'] = sc[i0:]; daily[key + '_signal'] = (sc[i0:] >= fin['k']).astype(int)
         out['types'][key] = dict(label=lab, comps=[[cols[x[0]], cat[x[0]], x[1], x[2], x[3], x[4], x[5]] for x in fin['comps']], k=fin['k'], table=fin['table'], insample={q: ins[q] for q in ('events', 'caught', 'sig', 'hit', 'dec', 'ok', 'base_in', 'base_ft')},
                                  wf_total=dict(tot, base_in=bw / max(tot['sig'], 1), base_ft=bf / max(tot['dec'], 1)), wf_ex2026=dict(ex, base_in=exw / max(ex['sig'], 1), base_ft=exf / max(ex['dec'], 1)), wf=wf, now=dict(score=int(sc[-1]), on=bool(sc[-1] >= fin['k']), comps=cur), recent=ins['dates'][-8:])
         pc = lambda a_, b_: '—' if not b_ else f'{a_ / b_ * 100:.0f}%'
@@ -102,6 +111,7 @@ def main():
         M += ['', f"(만들 때 본 자료 전체로는: 신호 {ins['sig']}, 맞음 {ins['hit']}({pc(ins['hit'], ins['sig'])}), 시작점 {ins['caught']}/{ins['events']} 잡음, {act} 먼저 닿음 {ins['ok']}/{ins['dec']}({pc(ins['ok'], ins['dec'])}))", '']
     M += ['모두 과거 자료 성적이다. 투자 권유 아님']; od = os.path.join(HERE, 'out'); os.makedirs(od, exist_ok=True)
     open(os.path.join(od, 'signal_report.md'), 'w', encoding='utf-8').write('\n'.join(M) + '\n'); json.dump(out, open(os.path.join(od, 'signal_summary.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
+    json.dump(chart, open(os.path.join(od, 'signal_chart.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
     daily.tail(520).to_csv(os.path.join(od, 'signal_daily.csv'), encoding='utf-8'); print({k: (v['k'], len(v['comps']), v['wf_total']) for k, v in out['types'].items()})
 
 
