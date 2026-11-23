@@ -462,7 +462,7 @@
 
 /* ==== 임시(2026-11-24) 전환 신호 단계 표시 시작 — 사용자가 확인한 뒤 제거할 예정. 이 주석부터 '임시 전환 신호 끝' 주석까지만 지우면 원래대로 돌아간다 ==== */
 (() => {
-  // 자료(고정): 해(두 자리)마다 한 줄. 신호 = 3글자씩(그 해의 몇 번째 날 36진 2글자 + 상태 1글자: 단계×3 + 맞음 1·모름 2), 시작점 = 2글자씩
+  // 자료(고정): 해(두 자리)마다 한 줄. 신호 = 3글자씩(그 해의 몇 번째 날 36진 2글자 + 상태 1글자: 단계×3 + 맞음 1·모름 2), L·H = 맞음 판정에 쓴 저점·고점(그리지 않음, 자료 확인 합계에만 씀) 2글자씩
   const T = {made: '2026-11-20', kb: 6, nb: 8, ks: 5, ns: 8, sum: 43730274,
     L: {15:'6k',16:'0k4w',17:'67',18:'148e',19:'031v4569',20:'0v1n272b4n6h7g8g',21:'0i0t1x7x9a',22:'0r577l',23:'03218g',24:'0h3262738v9k',25:'1r2r8n91',26:'0x111r1w2i3w4f4u535e5l5v636f6t768b8p'},
     H: {15:'358j',16:'34',17:'5p',18:'0t229d',19:'1k2y4y',20:'0m191t284d6a777y',21:'0b0p1b4w92a2',22:'156c8r',23:'0r5x',24:'022l5d6h7i96',25:'1e288j8t',26:'0u0z1l1t253q484t4w545g5o616a6h707e8d8r'},
@@ -471,36 +471,31 @@
     bw: {16:'0k10m00q0',17:'2t02u06716w06x39a09b39g69h69i69l09m69n0a10',18:'1001141241371471761831901e01f31g31h31i31m31n31p31s31t31u01v03603704l04m34p34q04s04z35005335435535635735a05b05c05d35e05h05i05j05k05l05o05p05q06936a06c36d06g07w37x08008108208308408808948a48b48e48f38g38h38l08n08t08u0',19:'6136236336416816a0',20:'1j01k11l41m11n71q61r61s61t31u61x61y61z62062162442542642742812b42c0',21:'3o06e07j07k67l07m67q67r17t47x19619919a49b09c09d39g39u3',22:'0i30j00k00l00o70p70q70r70s00y31201501601961a31c31d01g01h61i31j61k01n31p31q01r01u31v31x61y62162262363763933f03l03m03o63s03u03v03w04034k64l64m64n64o34r34s34t34u05005137h67i47j77k47w37y07z0',23:'8508808b18g1',24:'2v02y32z73073143273533633733833903d03f05q65r95s35v35w65y45z462a6396466566666996a66y18h98i38l38m69t09u3',25:'0y01n12f02i32k02l32m72p72q42r42s02t32w32y0901',26:'1011q41w41x31y01z32032302402502632762a62b62c32d42e42h72i12j02k02l02p34h34u15215o05s15u78108f38i38j68l48m78p18w58x28y58z5905'},
     sw: {16:'0b00j00l00s01c31d01e01h31i01j01k01l01o01q31r31s31v01w01x01y01z32402502i03213b03c03n04a04b04f04h04i04l04s05005105305a05g05s05t05v06236636f06k06y07j08408w09h09i39j09k09o39p39q39r39u09v39w0a20a30',17:'0200360430b30c30d00n00q00w01a01g31h01i01x02002102232302402732802902a02b02f02g02h02l02o02u02v02w02z33003103263333633763833933a33e63g33k33m33n63o33r33s33t33u03v63y03z04004134204504604934c04k05d05e05f35i05j05k15l15m15p15q05r05s05t05w05x05y06a06e06i06y07207907k07v07w37x07y38108208308408508808908a08b08c38f08g38h38i08j08m08n08o38w09109809n09w0a10a20',18:'0260360430530800b00c00g30h00i00j00m00n00o40p10q10t40u00v00w00x01101401701801901e01i01l01t01w32012302602702902d02e02f02g02l02n02r02s02t02u03033103603703833903c03m03n03s03z34104604734864e04t05005435a05c05e05l05p05q05s05v35w35x35z06306406a36d36h06i06j06k06n36q06r07507807907a07b37c07i07j07m07n07q07x38138408a08e08f38g08h68i68n08o08t08v09139209309609709819919d49h09m09n0a00a13a23',19:'0400900f00g00n00o00p00u01702202j02l02u13b03q03x04604a04p04r05b05j06906c06g06h06o06q06v06w07207l07p07v07w08008608h08l08n08u08v09509g09k09l09m09r0a10',20:'0700930a30d30e00f00g30h10k10l10m40n00y00z01131201611741l01q11s11y02102512812c02d02e02i02j02l02p02s02t02w02x32z03033303403533603703a33b03c33h03j03k33l03v04304604904a44b44c14d44g04o04u05405805b05c05f05g05h05i05j05m05n05o05p05q05t35u05v35w05x06006106236306406746816946a16m07617k07r07t17u17y17z08008108208508608708808908c08d08e08f08g08j08k38l38m38n08q08r08s08u08x38y08z09109439539709809c39d39e39f09y0a40a53',21:'0400500840b10c00d30e30f30i00j30k40l40m40p40q30r00x00y00z01001301511a11b11c01d01e01h01i01j01k01l01p01q01r01s01v01w02q32r32u32v32w32x32y33133233303403503833903b03c03f0',22:'0d02w03o03p03t03u03v03w03z34734e05f05g05r06746876c46d06e08p18q18r18u38v08x09409509n09o39q0',23:'0660b00i00j00k40p10q40w30x01261801i01p01q01v02302a02g02s02v62w02z03003103233333603903g03k03t33v04234j05e65f05i35j05l05p05ta6h06j36p68h08i38j08m38q68u68v08w09069109209309409839l09o09v6a01a21',24:'0i00j00x31201301961g01h91i01s02002832962a02d02e02f02u03533633703803933c03d03f33g03r03t04k04p04x05765a15c15d15i05s05x06566606a66d16g46k07107507b08008208708808908o08z39m09r0',25:'0300630f60h30l01831d11e41f01g01j01k01l01s01z32162402642712812b62c02r02t62x02y03433563603k03l03o63p63q03r03s03v03w03x33z04364504b04c04g34h04i04n64u04v65b05f05g05h05i05m06036806i37207737807997d67m07n37v07y68068138208568608708838998c98e48g18j18q48t18u08x38y38z39409s0a30',26:'0230500660960e00l60n00r70s40y10z11131801f61i11j71k71l11w02342i32j02q02r02s02v02w32z63463663b03c63g03i63k63n13p73w33x33y34264444814934b04f64i34m34p74t44v14w15035115705a05f45m75v36017807c18408c18m18p18r1'}};
   const CB = '#00695c', CS = '#ad1457', SZ = [4, 7, 9, 11], STEP = ['문턱에 1개 모자람', '신호(문턱)', '강(문턱+1)', '매우 강(문턱+2 이상)'];
-  const OFF = window.__rvTurnOff || (window.__rvTurnOff = new Set(['bw', 'sw']));   // 처음에는 '지금 조건'과 실제 시작점만 켠다
+  const OFF = window.__rvTurnOff || (window.__rvTurnOff = new Set(['bw', 'sw']));   // 처음에는 '지금 조건'만 켠다
   const iso = (yy, s) => new Date(Date.UTC(2000 + +yy, 0, parseInt(s, 36))).toISOString().slice(0, 10);
   const dec = o => Object.keys(o).sort().flatMap(yy => { const s = o[yy], a = []; for (let i = 0; i + 3 <= s.length; i += 3) { const c = parseInt(s[i + 2], 36); a.push({d: iso(yy, s.slice(i, i + 2)), st: Math.floor(c / 3), h: c % 3 === 1 ? 1 : c % 3 === 2 ? 9 : 0}); } return a; });
-  const decP = o => Object.keys(o).sort().flatMap(yy => { const s = o[yy], a = []; for (let i = 0; i + 2 <= s.length; i += 2) a.push(iso(yy, s.slice(i, i + 2))); return a; });
   let bad = false; { let h = 0; ['L', 'H', 'bn', 'sn', 'bw', 'sw'].forEach(k => Object.keys(T[k]).sort().forEach(yy => { const s = k + yy + T[k][yy]; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 1000000007; })); bad = h !== T.sum; }
-  const PV = {L: decP(T.L), H: decP(T.H)};
   const SETS = [['bn', CB, 1, '전환 매수(지금 조건 ' + T.nb + '개 중 ' + T.kb + '개↑)'], ['sn', CS, -1, '전환 매도(지금 조건 ' + T.ns + '개 중 ' + T.ks + '개↑)'],
     ['bw', CB, 1, '전환 매수(그때 자료로 만든 조건, 2016~)'], ['sw', CS, -1, '전환 매도(그때 자료로 만든 조건, 2016~)']].map(a => ({key: a[0], col: a[1], dir: a[2], lab: a[3], wf: a[0][1] === 'w', pts: dec(T[a[0]])}));
   const redraw = () => { const box = document.getElementById('all-chart'); if (box && box._rvApi && box._rvApi.draw) box._rvApi.draw(); };
   const draw = (svg, xd, P0, mk) => {
     const ks = new Map(mk.filter(r => r.kospi != null && r.kospi !== '' && isFinite(+r.kospi)).map(r => [String(r.date).slice(0, 10), +r.kospi]));
     const gg = svg.append('g').attr('class', 'rv-turnsig'), vis = {};
-    if (!OFF.has('pv')) [['L', CB, 1, '실제 상승 시작점(저점, 그 뒤 5% 이상 오름)'], ['H', CS, -1, '실제 하락 시작점(고점, 그 뒤 5% 이상 내림)']].forEach(([t, c, dir, lab]) =>
-      gg.append('g').selectAll('line').data(PV[t].filter(d => ks.has(d) && isFinite(xd(d)))).join('line').attr('x1', d => xd(d)).attr('x2', d => xd(d)).attr('y1', d => P0.yL(ks.get(d)) + dir * 3).attr('y2', d => P0.yL(ks.get(d)) + dir * 44)
-        .style('stroke', c).style('stroke-width', '1.5px').style('opacity', .75).append('title').text(d => lab + ' ' + d));
     SETS.forEach(S => { const v = vis[S.key] = S.pts.filter(p => ks.has(p.d) && isFinite(xd(p.d))); if (OFF.has(S.key)) return; const off = S.dir * (S.wf ? 32 : 16);
       gg.append('g').selectAll('rect').data(v).join('rect').attr('x', p => xd(p.d) - SZ[p.st] / 2).attr('y', p => P0.yL(ks.get(p.d)) + off - SZ[p.st] / 2).attr('width', p => SZ[p.st]).attr('height', p => SZ[p.st])
         .style('fill', p => p.h === 1 ? S.col : 'transparent').style('stroke', S.col).style('stroke-width', '1.5px').style('stroke-dasharray', p => p.h === 9 ? '2 2' : null).style('opacity', p => p.st === 0 ? .5 : 1)
-        .append('title').text(p => S.lab + ' ' + p.d + ' · ' + STEP[p.st] + ' · ' + (p.h === 1 ? '맞음(3일 안에 실제 시작점)' : p.h === 9 ? '아직 모름' : '아님')); });
+        .append('title').text(p => S.lab + ' ' + p.d + ' · ' + STEP[p.st] + ' · ' + (p.h === 1 ? '맞음(3일 안에 저점·고점이 옴)' : p.h === 9 ? '아직 모름' : '아님')); });
     const lg = document.getElementById('all-legend');
     if (lg) { const ref = Array.from(lg.children).find(e => /^미수 반대매매\(막대\)/.test(e.textContent || '')) || null;
-      SETS.map(S => [S.key, S.lab, S.col]).concat([['pv', '실제 시작점(세로 선: 아래 = 상승 시작, 위 = 하락 시작)', 'var(--color-fg-muted)']]).forEach(([k, lab, col]) => {
+      SETS.map(S => [S.key, S.lab, S.col]).forEach(([k, lab, col]) => {
         const bt = document.createElement('button'); bt.type = 'button'; bt.className = 'rv-lgbtn'; bt.setAttribute('aria-pressed', String(!OFF.has(k)));
-        const sw = document.createElement('i'); sw.className = 'rv-sw'; sw.style.background = col; if (k === 'pv') { sw.style.width = '2px'; sw.style.height = '.8rem'; } else sw.style.borderRadius = '0';
+        const sw = document.createElement('i'); sw.className = 'rv-sw'; sw.style.background = col; sw.style.borderRadius = '0';
         bt.append(sw, document.createTextNode(lab)); bt.addEventListener('click', () => { OFF.has(k) ? OFF.delete(k) : OFF.add(k); redraw(); }); lg.insertBefore(bt, ref); }); }
     const host = document.getElementById('all-labnote') || lg; let nt = document.getElementById('all-turnnote');
     if (host && !nt) { nt = document.createElement('p'); nt.id = 'all-turnnote'; nt.className = 'rv-note'; host.after(nt); }
     if (nt) { const cnt = k => { const a = (vis[k] || []).filter(p => p.st >= 1 && p.h !== 9); return a.filter(p => p.h === 1).length + '/' + a.length; };
       const b = document.createElement('b'); b.textContent = '전환 신호(임시 표시 · 확인 뒤 제거)';
-      nt.replaceChildren(b, document.createTextNode((bad ? ' [자료가 일부 깨져 표시가 정확하지 않을 수 있음] ' : ' ') + '네모 = 신호가 켜진 날: 초록(선 아래) = 매수, 자주(선 위) = 매도. 크기 = 단계(가장 작고 흐린 것 = 문턱에 조건 1개 모자람 → 신호 → 강 → 매우 강). 채운 네모 = 맞음(3일 안에 실제 시작점), 빈 네모 = 아님, 점선 = 아직 모름. 세로 선 = 실제 시작점(5% 이상 움직인 저점·고점). '
+      nt.replaceChildren(b, document.createTextNode((bad ? ' [자료가 일부 깨져 표시가 정확하지 않을 수 있음] ' : ' ') + '네모 = 신호가 켜진 날: 초록(선 아래) = 매수, 자주(선 위) = 매도. 크기 = 단계(가장 작고 흐린 것 = 문턱에 조건 1개 모자람 → 신호 → 강 → 매우 강). 채운 네모 = 맞음(신호 뒤 3일 안에 저점·고점이 왔고 거기서 5% 이상 움직임), 빈 네모 = 아님, 점선 = 아직 모름. '
         + '보이는 기간에 신호 단계 이상인 날 가운데 맞은 날 — 지금 조건: 매수 ' + cnt('bn') + ' · 매도 ' + cnt('sn') + ' / 그때 자료로 만든 조건: 매수 ' + cnt('bw') + ' · 매도 ' + cnt('sw')
         + '. "지금 조건"은 전체 기간을 다 보고 고른 것이라 과거에는 실제보다 잘 맞아 보인다. 자료 ' + T.made + ' 까지(고정).')); }
   };
