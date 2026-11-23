@@ -1047,6 +1047,41 @@ def main():
                                       '5→10일 평균%': round(float(v.mean()), 2) if len(v) else np.nan, '5→10일 하락%': round(float((v < 0).mean() * 100), 1) if len(v) else np.nan,
                                       '외국인 선물 6~10일 합 순매도%': round(float((f2 < 0).mean() * 100), 1) if len(f2) else np.nan})
             pd.DataFrame(srows).to_csv(os.path.join(od, 'path_summary.csv'), index=False, encoding='utf-8')
+            # 갈래 B 라운드 36(path_table.hold_placebo: {n, seed}, 설정 없으면 없음 → 갈래 A·D 영향 없음, 후보 안 만듦): 가설 H3 '3일 82% 는 보유 기간 고르기 몫'.
+            #   같은 구간(앞 2010~2023·뒤 2024~)의 아무 날을 같은 거래 수만큼 n 번 뽑아(진입 다음 날 시가, 같은 선물 가격) 1~10일째 상승 비율을 내고,
+            #   (가) 그중 가장 높은 보유일의 비율(10개 중 최대)이 실제 최대 이상인 비율 = '보유 기간 고르기까지 셈한 p', (나) 3일째만 본 p, (다) 아무 날 최대의 평균.
+            hp = pth.get('hold_placebo')
+            if hp and len(P):
+                cl_ = pxp['close'].reindex(td).values.astype(float); op_ = pxp['open'].reindex(td).values.astype(float)
+                nT = len(td); K_ = 10
+                Rm = np.full((nT, K_), np.nan)
+                ii = np.arange(nT)
+                for k_ in range(1, K_ + 1):
+                    ok_ = ii + k_ < nT
+                    Rm[ok_, k_ - 1] = cl_[ii[ok_] + k_] / op_[np.minimum(ii[ok_] + 1, nT - 1)] - 1
+                full_ = np.isfinite(Rm).all(axis=1)
+                rng = np.random.default_rng(int(hp.get('seed', 34)))
+                nd_ = int(hp.get('n', 2000)); hrows = []
+                for (pid, per), g in P.groupby(['id', '앞뒤']):
+                    real = np.array([float((g[f'{k}일%'].dropna() > 0).mean()) for k in range(1, K_ + 1)])
+                    nsig = int(g['1일%'].notna().sum())
+                    if nsig < 5 or not np.isfinite(real).all(): continue
+                    inper = (td <= L.DEV_END) & (td >= pd.Timestamp('2010-01-01')) if per.startswith('앞') else (td >= L.HOLD_START)
+                    pool = np.where(full_ & np.asarray(inper))[0]
+                    if len(pool) < nsig * 3: continue
+                    mx = np.empty(nd_); k3 = np.empty(nd_); allk = np.empty((nd_, K_))
+                    for b_ in range(nd_):
+                        pick = rng.choice(pool, nsig, replace=False)
+                        up_ = (Rm[pick] > 0).mean(axis=0); allk[b_] = up_; mx[b_] = up_.max(); k3[b_] = up_[2]
+                    hrows.append({'id': pid, '구간': per, '거래': nsig, '표본 주의': '10 미만' if nsig < 10 else '',
+                                  '실제 최고 보유일': int(real.argmax() + 1), '실제 최고 상승%': round(real.max() * 100, 1), '실제 3일 상승%': round(real[2] * 100, 1),
+                                  '아무 날 1~10일 평균 상승%': round(float(allk.mean()) * 100, 1), '아무 날 최대의 평균%': round(float(mx.mean()) * 100, 1),
+                                  '아무 날 최대 95% 점%': round(float(np.quantile(mx, 0.95)) * 100, 1),
+                                  'p(고르기 셈, 최대≥실제 최대)': round(float((mx >= real.max() - 1e-12).mean()), 4),
+                                  'p(3일만, ≥실제 3일)': round(float((k3 >= real[2] - 1e-12).mean()), 4),
+                                  '실제 1~10일 중 아무 날 95% 점 넘는 날 수': int((real > np.quantile(allk, 0.95, axis=0)).sum()), '뽑기': nd_})
+                pd.DataFrame(hrows).to_csv(os.path.join(od, 'path_hold_placebo.csv'), index=False, encoding='utf-8')
+                print('보유 기간 고르기 위약', len(hrows), flush=True)
             print('경로 설명표', len(P), '거래 ·', len(srows), '칸', flush=True)
         except Exception as e:
             print('경로 설명표 실패', repr(e), flush=True)
