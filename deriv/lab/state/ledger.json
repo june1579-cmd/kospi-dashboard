@@ -1,5 +1,5 @@
 {
- "trials_total": 84838,
+ "trials_total": 87783,
  "holdout_peeks": 9,
  "rounds": [
   {
@@ -409,7 +409,19 @@
    "cross_pass": 0,
    "hold_pass": 12,
    "goal_rule": "전체 35거래·85%, 앞·뒤 각 12거래·80%"
+  },
+  {
+   "round": 46,
+   "mode": "cross",
+   "candidates": 2945,
+   "sel_fwd": 83,
+   "sel_rev": 150,
+   "fwd_pass": 2,
+   "rev_pass": 2,
+   "cross_pass": 0,
+   "hold_pass": 12,
+   "goal_rule": "전체 35거래·85%, 앞·뒤 각 12거래·80%"
   }
  ],
- "cross_tests": 2561
+ "cross_tests": 2794
 }
