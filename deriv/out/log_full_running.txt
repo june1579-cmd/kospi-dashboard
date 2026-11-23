@@ -45,3 +45,6 @@
 [07:15:26] 저장 pcr_daily.csv 4658행
 [07:15:28] == chainx
 [07:18:29] 저장 opt_chainx_daily.csv.gz 1571538행
+[07:18:33] == chainwt
+[07:26:02] 위클리 이름 보기 2026: ['코스피위클리 C 2611W4   635.0', '코스피위클리 C 2611W4   637.5', '코스피위클리 C 2611W4   640.0'] / 열 ['날짜', 'ISU_CD', 'ISU_SRT_CD', 'ISU_NM', 'TDD_CLSPRC', 'FLUC_TP_CD', 'CMPPREVDD_PRC', 'TDD_OPNPRC', 'TDD_HGPRC', 'TDD_LWPRC', 'SPOT_PRC', 'SETL_PRC', 'ACC_TRDVOL', 'ACC_TRDVAL', 'ACC_OPNINT_QTY', 'SECUGRP_ID'] / 230행
+[07:26:03] 저장 opt_chainwt_daily.csv.gz 121138행
