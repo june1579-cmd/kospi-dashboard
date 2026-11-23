@@ -1,1 +1,10 @@
-{}
+{
+ "IDX10|dBA|c1|buy|rule": {
+  "grade": "watch",
+  "since": "2026-11-23",
+  "first_grade": "watch",
+  "data_end": "2026-11-20",
+  "now": "watch",
+  "forward": []
+ }
+}

@@ -1,26 +1,33 @@
 {
- "made": "2026-11-23 17:27",
+ "made": "2026-11-23 18:51",
  "data_end": "2026-11-20",
  "eval": [
   "2016-01-04",
   "2026-11-20"
  ],
- "candidates": 300,
+ "candidates": 342,
  "strategies": 135,
  "signal_pass": 0,
- "signal_watch": 0,
- "signal_held": 0,
- "signal_num_only": 0,
+ "signal_watch": 1,
+ "signal_held": 1,
+ "signal_num_only": 3,
  "strat_pass": 0,
  "strat_watch": 0,
  "strat_held": 0,
  "family_chance": {
-  "signal_pass": 0.058,
-  "signal_watch": 0.288,
+  "signal_pass": 0.066,
+  "signal_watch": 0.336,
   "strat_pass": 0.0
  },
- "registered": 0,
- "new": [],
+ "registered": 1,
+ "new": [
+  [
+   "IDX10|dBA|c1|buy|rule",
+   "watch"
+  ]
+ ],
  "placebo_draws": 500,
- "seconds": 54
+ "seconds": 55,
+ "rule_candidates": 42,
+ "rules_note": "규칙 후보 42개 · 바탕 신호: reproduce 정의 그대로(자료 끝 2026-11-23) · 조건 후보 해마다 2106개(지표 351개)"
 }
