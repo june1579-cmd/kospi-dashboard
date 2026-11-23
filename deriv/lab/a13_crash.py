@@ -264,6 +264,29 @@ def main():
                 if fk == '' and bk in ('u85k3R7', 'u85k3', 'u80k3'): continue   # gap2·gap 가족에 이미 같은 조건 있음
                 mm = bm if fm is None else (bm & fm.reindex(td).fillna(False).astype(bool))
                 conds.append((f'gap3_{bk}' + (f'_{fk}' if fk else ''), f'{bd}{fd}(밤사이 미국 급등 뒤 갭 되밀림)', mm))
+        # 라운드 6(갈래 D): 라운드 5 결과 — 콜벽 거르개는 신호가 거의 없음(갭 되밀림 날 지수는 콜벽 0.5% 안에 0~2번, 벽이 먼저 위로 옮겨 감),
+        #   외국인 선물 추격 매수(ffb)·IV 낮음(ivlo)은 기본보다도 낮고, 반대로 그날 외국인 선물 순매도(ffs)·현물 순매수 상위20%(fcb)·IV 높음(ivhi)이 높았다.
+        #   가설 10: 되밀림은 '외국인이 오른 날 선물로 헤지(선물 매도·현물 매수)'하고 '불안이 덜 가신(IV 높은)' 반등에서 강하다 → 둘을 겹치거나 합쳐 거래 수를 지키며 적중을 올린다.
+        #   문턱은 라운드 5 와 같은 미리 정한 값(새 문턱 안 고름), IV 는 50% 선을 하나 더(중간값 — 성적 보고 고른 값 아님).
+        ivq50 = (ivq >= 0.50) if 'ivlo' in filt else pd.Series(False, index=td)
+        ivq70 = (ivq >= 0.70) if 'ivlo' in filt else pd.Series(False, index=td)
+        ffs_m = (fut1 < 0); fcb_m = (q['cash1'] >= 0.80); hedge = (fut1 < 0) & (cash1 > 0)
+        bases4 = dict(bases); bases4.pop('u85k3R7', None)   # 가장 좁은 기반은 라운드 5 에서 이미 봄
+        bases4['u90k3'] = ('S&P·나스닥 상위10% + 코스피200 3일 상위20%', us['u90'][1] & run['k3_80'][1])
+        f4 = {'sorb': (' + 그날 외국인 선물 순매도 또는 현물 순매수 상위20%', ffs_m | fcb_m),
+              'hedge': (' + 그날 외국인 선물 순매도·현물 순매수(헤지)', hedge),
+              'iv50': (' + 대표 IV 3년 백분위 50% 이상', ivq50),
+              'iv50s': (' + IV 백분위 50% 이상 + 외국인 선물 순매도', ivq50 & ffs_m),
+              'iv70s': (' + IV 백분위 70% 이상 + 외국인 선물 순매도', ivq70 & ffs_m),
+              'iv50sorb': (' + IV 백분위 50% 이상 + (외국인 선물 순매도 또는 현물 순매수 상위20%)', ivq50 & (ffs_m | fcb_m)),
+              'iv70sorb': (' + IV 백분위 70% 이상 + (외국인 선물 순매도 또는 현물 순매수 상위20%)', ivq70 & (ffs_m | fcb_m))}
+        if 'u90k3' in bases4:
+            f4u90 = {'ffs': (' + 그날 외국인 선물 순매도', ffs_m), 'ivhi': (' + 대표 IV 3년 백분위 70% 이상', ivq70)}
+        for bk, (bd, bm) in bases4.items():
+            ff = dict(f4, **f4u90) if bk == 'u90k3' else f4
+            for fk, (fd, fm) in ff.items():
+                mm = bm & fm.reindex(td).fillna(False).astype(bool)
+                conds.append((f'gap4_{bk}_{fk}', f'{bd}{fd}(밤사이 미국 급등 뒤 갭 되밀림)', mm))
     except Exception as e:
         print('gap 실패', e, flush=True)
 
@@ -279,13 +302,13 @@ def main():
     for cid, desc, m in conds:
         m = m.reindex(td).fillna(False).astype(bool)
         for tag, tdesc, rg in overlays:
-            if cid.startswith('gap3_') and rg: continue   # gap3 = 장세 조건이 이미 기반에 들어 있음, 겹침 없이 한 번만
+            if cid.startswith(('gap3_', 'gap4_')) and rg: continue   # gap3 = 장세 조건이 이미 기반에 들어 있음, 겹침 없이 한 번만
             mm = m & S[rg] if rg else m
             sig = td[mm.values]
             summ.append({'cond': cid + tag, 'desc': desc + tdesc, 'n_signals': len(sig)})
             if len(sig) < MIN_SIG: continue
             for tid, tname, exs, h in tgts:
-                if cid.startswith(('gap2_', 'gap3_')) and tid != 'h1': continue   # gap2·gap3 = 1일(다음 날 시가→종가)만
+                if cid.startswith(('gap2_', 'gap3_', 'gap4_')) and tid != 'h1': continue   # gap2·gap3·gap4 = 1일(다음 날 시가→종가)만
                 exits = [L.exit_after(td, s, h) for s in sig] if exs is None else [exs.get(s, pd.NaT) for s in sig]
                 tr = pd.DataFrame({'signal': sig, 'exit': exits}).dropna()
                 if len(tr) < MIN_SIG: continue
