@@ -1402,6 +1402,56 @@ def main():
                     print('가족 단위 위약', len(mem), '후보 ·', len(frows), '줄', flush=True)
                 except Exception as e:
                     print('가족 단위 위약 실패', repr(e), flush=True)
+            # 갈래 B 라운드 45(path_table.drop_group_placebo: {base, groups, drop, n, seed}, 설정 없으면 없음 → 갈래 A·D 영향 없음, 후보 안 만듦 → A8 나눗수 그대로):
+            #   가설 H16 '분기물 만기 21~40일 칸을 빼서 앞 적중이 오른 것은 세 칸 중 가장 나쁜 칸을 결과 보고 뺀 몫'. 기준 후보(base)의 구간별 독립 거래를
+            #   칸 후보(groups, 같은 지연·같은 보유일)의 신호일로 칸 표시 → 실제: 'drop' 칸을 뺀 적중. 위약: 칸 표시를 거래끼리 n 번 섞어(칸 크기 그대로)
+            #   '세 칸 중 하나를 빼서 얻는 최고 적중'이 실제 이상인 비율 = 칸 고르기까지 셈한 p. 칸 없는 거래는 '칸 없음'으로 남김(추정 안 함).
+            dg_ = pth.get('drop_group_placebo')
+            if dg_:
+                try:
+                    cb_ = byid.get(dg_.get('base'))
+                    mm_ = __import__('re').search(r'_m(\d+)$', str(dg_.get('base', '')))
+                    if cb_ is None or mm_ is None: raise ValueError('기준 후보 없음')
+                    mh_ = int(mm_.group(1)); dr_ = int(cb_.get('direction', 1) or 1)
+                    gsets = []
+                    for gid in dg_.get('groups', []):
+                        cg_ = byid.get(gid)
+                        gsets.append((gid, set(pd.to_datetime(cg_['trades']['signal']).tolist()) if cg_ is not None else set()))
+                    clq = pxp['close'].reindex(td).values.astype(float); opq = pxp['open'].reindex(td).values.astype(float)
+                    tr = cb_['trades'].assign(signal=lambda d: pd.to_datetime(d['signal']), exit=lambda d: pd.to_datetime(d['exit'])).dropna().sort_values('signal')
+                    keep = []; last = pd.Timestamp('1900-01-01')
+                    for s_, e_ in zip(tr['signal'], tr['exit']):
+                        if s_ >= last: keep.append(s_); last = e_
+                    rows_ = []
+                    for s_ in keep:
+                        i = pos.get(s_)
+                        if i is None or i + mh_ >= len(tdl): continue
+                        rv = clq[i + mh_] / opq[i + 1] - 1
+                        if not np.isfinite(rv): continue
+                        lab = next((k_ for k_, (gid, gs) in enumerate(gsets) if s_ in gs), -1)
+                        rows_.append((s_, lab, bool(rv * dr_ > 0)))
+                    D_ = pd.DataFrame(rows_, columns=['signal', 'g', 'hit'])
+                    rng_ = np.random.default_rng(int(dg_.get('seed', 45))); nb_ = int(dg_.get('n', 5000)); dropk = int(dg_.get('drop', 1)); out_ = []
+                    for per, msk in (('앞 2010~2023', (D_['signal'] >= pd.Timestamp('2010-01-01')) & (D_['signal'] <= L.DEV_END)), ('뒤 2024~', D_['signal'] >= L.HOLD_START)):
+                        d_ = D_[msk]
+                        if len(d_) < 5: continue
+                        g_ = d_['g'].values; h_ = d_['hit'].values.astype(float); G_ = [k_ for k_ in range(len(gsets)) if (g_ == k_).any()]
+                        def _best(gv):
+                            return max(h_[gv != k_].mean() for k_ in G_ if (gv != k_).any()) if G_ else np.nan
+                        obs = h_[g_ != dropk].mean() if (g_ != dropk).any() else np.nan
+                        sims = np.array([_best(rng_.permutation(g_)) for _ in range(nb_)])
+                        r_ = {'구간': per, '기준 독립 거래': len(d_), '기준 적중%': round(h_.mean() * 100, 1), '칸 없음 거래': int((g_ < 0).sum()),
+                              '뺀 칸': gsets[dropk][0] if dropk < len(gsets) else '', '뺀 뒤 거래': int((g_ != dropk).sum()), '뺀 뒤 적중%': round(obs * 100, 1),
+                              '섞음 최고(칸 하나 뺌) 평균%': round(float(np.nanmean(sims)) * 100, 1), '섞음 95% 점%': round(float(np.nanquantile(sims, 0.95)) * 100, 1),
+                              'p(칸 고르기 셈, 섞음 최고 ≥ 실제)': round(float((sims >= obs - 1e-12).mean()), 4), '섞기': nb_}
+                        for k_, (gid, _) in enumerate(gsets):
+                            sel = g_ == k_
+                            r_[f'칸{k_} 거래'] = int(sel.sum()); r_[f'칸{k_} 적중%'] = round(float(h_[sel].mean()) * 100, 1) if sel.any() else np.nan
+                        out_.append(r_)
+                    pd.DataFrame(out_).to_csv(os.path.join(od, 'path_drop_placebo.csv'), index=False, encoding='utf-8')
+                    print('칸 빼기 위약', len(out_), '줄', flush=True)
+                except Exception as e:
+                    print('칸 빼기 위약 실패', repr(e), flush=True)
             # 갈래 B 라운드 38(path_table.regime_table: {hit_day}, 설정 없으면 없음 → 갈래 A·D 영향 없음, 후보 안 만듦 → A8 나눗수 그대로):
             #   가설 H7 '적중은 장세(상승장 해) 덕 — 같은 장세의 아무 날도 그만큼 오름'. 통과·관찰 규칙의 독립 거래를 신호일 장세(60일선 위/아래,
             #   20일 변동성·직전 20일 수익 3분위 — 문턱은 앞 구간 분포로 미리 정함, 그날 마감 뒤 아는 값)로 나눠, 같은 구간·같은 장세 아무 날의
