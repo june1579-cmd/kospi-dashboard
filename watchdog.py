@@ -45,9 +45,10 @@ FRESH = [
     dict(key='stale:kospi', br='main', path='docs/meta.json', label='코스피 대시보드 웹판', rule='trading_am', repair=True),
     dict(key='stale:ai', br='main', path='out/ai_feed.csv', label='AI 경고판 원자료', rule='age', max_h=30, repair=True),
     dict(key='stale:fo', br='main', path='docs/fo/data', label='선물옵션 대시보드 자료', rule='weekday_pm', repair=True),
-    dict(key='stale:lab-a', br='deriv-research', path='deriv/lab/state/latest_status.json', label='연구소 갈래 A(총괄 세션)', rule='age', max_h=15, repair=False, hint='Claude 예약 세션이 돌지 않음(사용량 한도일 수 있음)'),
-    dict(key='stale:lab-b', br='deriv-research', path='deriv/lab/state_b/latest_status.json', label='연구소 갈래 B(총괄 세션)', rule='age', max_h=16, repair=False, hint='Claude 예약 세션이 돌지 않음(사용량 한도일 수 있음)'),
-    dict(key='stale:lab-d', br='deriv-research', path='deriv/lab/state_d/latest_status.json', label='연구소 갈래 D(총괄 세션)', rule='age', max_h=12, repair=False, hint='Claude 예약 세션이 돌지 않음(사용량 한도일 수 있음)'),
+    # 2026-11-24: Signal A 프로젝트 동안 갈래 A·B·D 총괄 예약을 멈춰 두었으므로(사용자 지시) 이 세 줄의 '세션이 돌지 않음' 감시도 끈다. 예약을 다시 켜면 주석을 풀 것
+    # dict(key='stale:lab-a', br='deriv-research', path='deriv/lab/state/latest_status.json', label='연구소 갈래 A(총괄 세션)', rule='age', max_h=15, repair=False, hint='Claude 예약 세션이 돌지 않음(사용량 한도일 수 있음)'),
+    # dict(key='stale:lab-b', br='deriv-research', path='deriv/lab/state_b/latest_status.json', label='연구소 갈래 B(총괄 세션)', rule='age', max_h=16, repair=False, hint='Claude 예약 세션이 돌지 않음(사용량 한도일 수 있음)'),
+    # dict(key='stale:lab-d', br='deriv-research', path='deriv/lab/state_d/latest_status.json', label='연구소 갈래 D(총괄 세션)', rule='age', max_h=12, repair=False, hint='Claude 예약 세션이 돌지 않음(사용량 한도일 수 있음)'),
     dict(key='stale:usk', br='deriv-research', path='deriv/us/out/dash.json', label='미국·한국 연동 자료(웹판 10절)', rule='age', max_h=40, repair=True),
 ]
 
