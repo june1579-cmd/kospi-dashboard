@@ -388,6 +388,21 @@ def main():
         for tcn in (cfg.get('young_trend') or []):
             base_c = dict(ucond).get(tcn)
             if base_c is not None: ucond.append((f'{tcn} + 60일선 위', base_c.fillna(False) & trend_up.fillna(False)))
+        # 갈래 A 라운드 44(a04.young_and: {bases, extras}, 설정 없으면 없음 → 갈래 B·D 영향 없음): 라운드 41~43 에서 앞 구간 '물량 이동' 새 벽 날이
+        #   3·5·7일 70%대로 고르게 낮고 80% 는 5일째 한 점에서만 — 그 날들을 올릴 조건을 미리 정한 값으로 곱함:
+        #   H8 눌림 뒤(직전 5일 하락), H9 외국인 옵션 쪽도 같은 방향(콜 3일 누적 순매수·풋 3일 누적 순매도), H10 조용한 날(20일 σ 가 직전 250일 중 하위 50%).
+        #   모두 그날 장 마감 뒤 아는 값. 자료 빈칸 날은 False(추정 안 함).
+        YA = cfg.get('young_and')
+        if YA:
+            vr_a = sig5.rolling(250, min_periods=120).apply(lambda a: (a <= a[-1]).mean(), raw=True)
+            c3_ = F['call_for'].rolling(3, min_periods=3).sum(); p3_ = F['put_for'].rolling(3, min_periods=3).sum()
+            xmap = {'직전 5일 하락': r5u < 0, '외국인 콜 3일 누적 순매수': c3_ > 0, '외국인 풋 3일 누적 순매도': p3_ < 0,
+                    '외국인 콜 순매수 + 풋 순매도(3일 누적)': (c3_ > 0) & (p3_ < 0), '변동성 하위 50%': vr_a <= 0.5}
+            dct = dict(ucond)
+            for bn in YA.get('bases', []):
+                if bn not in dct: print('young_and 기준 조건 없음', bn); continue
+                for xn in YA.get('extras', list(xmap)):
+                    if xn in xmap: ucond.append((f'{bn} + {xn}', dct[bn].fillna(False) & xmap[xn].reindex(td).fillna(False)))
         ucond = _volcap(ucond)
         # 갈래 A 라운드 41(a04.young_origin: {kinds, sigma, conds}, 설정 없으면 없음 → 갈래 B·D 영향 없음): 통과 계열의 '새 콜벽'이 왜 새로 생겼나로 나눔.
         #   (가) 넘어섬 = 앞 거래일 벽 행사가 ≤ 오늘 종가(값이 옛 벽을 넘어서 다음 행사가가 저절로 벽이 됨 → 돌파 추세의 다른 이름),
