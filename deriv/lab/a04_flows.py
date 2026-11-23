@@ -224,6 +224,20 @@ def main():
                 run = key.ne(key.shift()).cumsum()
                 age_of[name] = g.groupby(run).cumcount().add(1).where(g['K'].notna()).reindex(td)
                 kser_of[name] = g["K"].astype(float).reindex(td)
+    # 갈래 A 라운드 38(a04.young_weekly: ['WT', 'WM'], 설정 없으면 꺼짐 → 갈래 B·D 영향 없음): 통과 계열(여러 결제월 동시 새 콜벽)의 막힘이
+    #   사건 수라서, 위클리 옵션 콜벽(목 2019-09~, 월 2023-08~)을 '동시' 표에 한 표로 더함. 나이는 시리즈가 바뀌어도 같은 행사가면 이어 셈(WTx·WMx)
+    #   — 주마다 새 시리즈라 시리즈별 나이는 매주 1일로 돌아가 '새 벽'이 아닌 날까지 잡힘. 자료 없는 날(위클리 상장 전·월물 만기 주)은 빈칸 → 그날 위클리 표 없음(추정 안 함).
+    if cfg.get('young_weekly') and cfg.get('young_age'):
+        for wk in cfg['young_weekly']:
+            Wk = weekly_walls({'WT': 'wt', 'WM': 'wm'}[wk], k2, td)
+            if Wk is None: print('위클리 자료 없음', wk); continue
+            wvalid = Wk['K'].notna()
+            # 나이는 자료 있는 날끼리만 이어 셈(빈 날 뒤 같은 행사가가 다시 나오면 새 벽으로 치지 않음 — 빈 날은 신호 없음)
+            wkey = Wk['K'][wvalid].round(3).astype(str)
+            age_of[wk + 'x'] = wkey.groupby(wkey.ne(wkey.shift()).cumsum()).cumcount().add(1).reindex(td)
+            kser_of[wk + 'x'] = Wk['K'].astype(float)
+            X[f'OW_{wk}_wall_dist%'] = Wk['dist%'].astype(float)
+            print('위클리 새 벽 표', wk, '날수', int(wvalid.sum()), '나이 1일', int((age_of[wk + 'x'] <= 1).sum()))
     age_flows = [x for x in flow_masks if x[0] in ('외국인 선물', '외국인 콜', '외국인 풋', '외국인 선물·콜 함께', '외국인 선물 대량·콜 함께')]
     if cfg.get('age_table') and age_of:
         # 라운드 16 원인 표(개발 구간만): 벽 나이 구간별 '벽 2% 아래' 날의 5일 하락 비율과 3일 안 벽이 위로 옮겨 간 비율 — 새 벽은 옮겨 가고 오래된 벽만 버티나.
@@ -357,7 +371,8 @@ def main():
         for grp in (cfg.get('young_union') or []):
             gtags = [t for t in grp if t in age_of and X.get(f'OW_{t[:-1] if t.endswith("x") else t}_wall_dist%') is not None]
             if len(gtags) < 2: continue
-            glab = '·'.join({'F0': '근월', 'F1': '차월', 'F2': '차차월', 'F3': '분기 다음', 'ALL': '합산', 'Q': '분기물', 'Q2': '차기 분기물'}.get(t, t) for t in gtags)
+            glab = '·'.join({'F0': '근월', 'F1': '차월', 'F2': '차차월', 'F3': '분기 다음', 'ALL': '합산', 'Q': '분기물', 'Q2': '차기 분기물',
+                             'WTx': '목 위클리', 'WMx': '월 위클리'}.get(t, t) for t in gtags)
             for ny in cfg.get('young_age'):
                 for bkey, blab, band in YBL:
                     hits = [((age_of[t] <= ny) & (X[f'OW_{t[:-1] if t.endswith("x") else t}_wall_dist%'] > 0) &
@@ -369,6 +384,11 @@ def main():
                     if f0hit is not None: kinds.append(('F0K2', (f0hit >= 1) & (cnt >= 2), '근월 포함 둘 이상 동시'))
                     # 라운드 24(young_union_kinds 에 K3 있을 때만): 셋 이상 동시 — 여러 결제월이 함께 새 벽을 쓸수록 더 맞는지(ANY < K2 < K3 용량-반응, 앞·뒤 모두) 확인.
                     if len(gtags) >= 3: kinds.append(('K3', cnt >= 3, '셋 이상 동시'))
+                    # 라운드 38(young_union_kinds 에 K2W 있을 때만, 묶음에 위클리가 있을 때): 월물 둘 이상 동시 새 벽 + 위클리 새 벽도 함께 — 위클리가 같은 자리를 가리키면 더 맞나.
+                    wix = [i for i, t in enumerate(gtags) if t in ('WTx', 'WMx')]
+                    if wix and len(wix) < len(gtags):
+                        mcnt = sum(h for i, h in enumerate(hits) if i not in wix); wcnt = sum(hits[i] for i in wix)
+                        kinds.append(('K2W', (mcnt >= 2) & (wcnt >= 1), '월물 둘 이상 + 위클리 동시'))
                     kinds = [k for k in kinds if k[0] in (cfg.get('young_union_kinds') or ['ANY', 'K2'])]
                     for uk, umask, ulab in kinds:
                         for cn, cm in ucond:
