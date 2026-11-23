@@ -1,0 +1,61 @@
+# 전환점 연구(사용자 지시 2026-11-23): 하락→상승, 상승→하락 전환 때의 공통점과 전환점을 찾아내는 조합. KRX 로그인 없음.
+# 자료표는 combo-probe 1차 실행(45152107255)이 올려 둔 것을 쓴다(3일 보관). 그 뒤에는 PANEL_RUN 을 새 실행 번호로 바꾸거나 prep 을 다시 붙인다.
+name: turn-probe
+on:
+  push:
+    branches: [deriv-research]
+    paths: ['deriv/turn/trigger.txt']
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: turn-probe
+  cancel-in-progress: true
+env:
+  PANEL_RUN: '45152107255'
+jobs:
+  fit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        fit: [FULL, '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026']
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: deriv-research}
+      - uses: actions/checkout@v4
+        with: {ref: main, path: _main, sparse-checkout: requirements.txt, sparse-checkout-cone-mode: false}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q -r _main/requirements.txt
+      - uses: actions/download-artifact@v4
+        with: {name: panel, path: deriv/uni/out, run-id: '${{ env.PANEL_RUN }}', github-token: '${{ github.token }}'}
+      - name: 검산(뻔한 계산과 숫자가 같은지)
+        run: cd deriv/combo && python test_core.py
+      - name: 전환점 계산
+        run: cd deriv/turn && python turn_probe.py --fit ${{ matrix.fit }} --maxlevel 3 --null 4 --out out
+      - uses: actions/upload-artifact@v4
+        with: {name: 'turn-${{ matrix.fit }}', path: 'deriv/turn/out/fit_${{ matrix.fit }}.json', retention-days: 3}
+  report:
+    needs: fit
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: deriv-research}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q numpy
+      - uses: actions/download-artifact@v4
+        with: {pattern: 'turn-*', path: deriv/turn/out, merge-multiple: true}
+      - run: python deriv/turn/turn_report.py
+      - name: 저장
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add deriv/turn/out
+          git diff --cached --quiet && exit 0
+          git commit -q -m "전환점 연구 결과 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
+          for i in 1 2 3 4; do git pull -q --rebase origin deriv-research && git push -q origin HEAD:deriv-research && break; sleep 15; done
