@@ -445,6 +445,28 @@ def main():
         if YBAR:
             try: pxb = L.prices()['K200F']
             except Exception as e: print('선물 가격 못 읽음 — 익절·손절 후보 없음', repr(e))
+            # 라운드 49(young_barrier.base_table: true, 없으면 없음 → 갈래 B·D 영향 없음, 후보 안 만듦 → A8 나눗수 그대로): A8 의 '기본'은 정해진 날 종가 상승 비율이라
+            #   익절·손절(특히 익절 < 손절 비대칭) 후보에는 공정하지 않음 — 같은 규칙을 구간(앞 2010~2023·뒤 2024~)의 아무 날에 걸었을 때 상승으로 끝난 비율을 따로 냄.
+            #   진입 다음 날 시가(연속 선물), 청산일이 자료 밖이면 뺌(추정 안 함). 상승 후보 기준(익절 +k·σ, 손절 −k·sl·σ).
+            if pxb is not None and YBAR.get('base_table'):
+                try:
+                    brows = []; allsig = td[sig5.notna().values]
+                    pxc = pxb['close']; pxo = pxb['open']; tdp_ = pxb.index
+                    for bk in YBAR.get('k', [1.0]):
+                        for mxm in [int(x) for x in (YBAR.get('max_m_list') or [YBAR.get('max_m', 10)])]:
+                            for slm in [float(x) for x in (YBAR.get('sl_mult') or [1.0])]:
+                                ex_ = pd.Series(barrier_exits(pxb, allsig, sig5 * bk, mxm, slm), index=allsig).dropna()
+                                ent_ = [tdp_[tdp_.searchsorted(s_, side='right')] for s_ in ex_.index]
+                                rr_ = pd.Series([float(pxc.loc[e_]) / float(pxo.loc[n_]) - 1 for e_, n_ in zip(ex_.values, ent_)], index=ex_.index)
+                                for pn_, pm_ in (('앞 2010~2023', (rr_.index <= L.DEV_END) & (rr_.index >= pd.Timestamp('2010-01-01'))), ('뒤 2024~', rr_.index >= L.HOLD_START)):
+                                    v_ = rr_[pm_]
+                                    brows.append({'익절σ': bk, '손절σ': bk * slm, '최대 보유일': mxm, '구간': pn_, '아무 날 수': int(len(v_)),
+                                                  '아무 날 상승으로 끝남%': round(float((v_ > 0).mean() * 100), 1) if len(v_) else np.nan,
+                                                  '아무 날 평균%': round(float(v_.mean() * 100), 3) if len(v_) else np.nan})
+                    pd.DataFrame(brows).to_csv(os.path.join(od, 'young_barrier_base.csv'), index=False, encoding='utf-8')
+                    print('익절·손절 아무 날 기준표', len(brows), flush=True)
+                except Exception as e:
+                    print('익절·손절 기준표 실패', repr(e), flush=True)
         for grp in (cfg.get('young_union') or []):
             gtags = [t for t in grp if t in age_of and X.get(f'OW_{t[:-1] if t.endswith("x") else t}_wall_dist%') is not None]
             if len(gtags) < 2: continue
