@@ -32,7 +32,7 @@ def load_starts(out):
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument('--out', default='out'); ap.add_argument('--report', default='report')
-    ap.add_argument('--workbook', default='data/통합_원자료.xlsx'); ap.add_argument('--cuts', default='2025-06-30,2026-06-30'); a = ap.parse_args()
+    ap.add_argument('--workbook', default='data/통합_원자료.xlsx'); ap.add_argument('--cuts', default='2026-04-30,2026-06-30,2026-09-30'); a = ap.parse_args()
     mk = pd.read_csv(os.path.join(a.out, 'market_daily.csv'))[['date', 'kospi']].dropna(); dates = mk['date'].astype(str).tolist(); px = mk['kospi'].astype(float).values
     pos = {d: i for i, d in enumerate(dates)}; N = len(dates)
     S = load_starts(a.out); labels = sorted({l for _, l in S})

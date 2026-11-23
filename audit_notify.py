@@ -11,7 +11,7 @@ if S:
     weak = [r['label'] for r in S.get('eras', []) if r['era'].startswith('고른 뒤') and (r.get('n20') or 0) >= 8 and r.get('hit20') is not None and r.get('base20') is not None and r['hit20'] < r['base20']]
     tr = S.get('truncate', []); bad = [c['cut'] for c in tr if c.get('ok') is False]; unk = [c['cut'] for c in tr if c.get('ok') is None]
     h = S.get('history', {})
-    msgs.append(f"[검증] 대시보드 신호 {S.get('signals')}건 · 자른 자료 시험 " + ('불일치 ' + ','.join(bad) if bad else ('확인 불가' if unk and len(unk) == len(tr) else '통과')) +
+    msgs.append(f"[검증] 대시보드 신호 {S.get('signals')}건 · 자른 자료 시험 " + ('불일치 ' + ','.join(bad) if bad else f"{len(tr) - len(unk)}/{len(tr)}개 시점 통과" + (f"(확인 불가 {len(unk)})" if unk else '')) +
                 f" · 사라진 신호 {len(h.get('vanished', []))}건 · 고른 뒤 20일 성적이 바탕보다 낮음: " + (', '.join(weak) if weak else '없음') + ' · 투자 권유 아님')
 if Lj:
     def cell(nm, key):
