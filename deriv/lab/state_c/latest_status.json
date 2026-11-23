@@ -4,7 +4,7 @@
  "dev_pass": 4,
  "hold_pass": 0,
  "final_pass": 0,
- "trials_total": 10032,
+ "trials_total": 12540,
  "holdout_peeks": 0,
  "best": [
   {
@@ -89,6 +89,6 @@
  "fwd_pass": 0,
  "rev_pass": 0,
  "cross_pass": 0,
- "cross_tests": 16,
+ "cross_tests": 20,
  "goal_rule": "전체 35거래 이상·적중 85% 이상, 앞·뒤 각 12거래 이상·80% 이상, 반증 버팀(2026-11-22 사용자 지정)"
 }
