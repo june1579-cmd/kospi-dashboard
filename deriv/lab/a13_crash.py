@@ -380,6 +380,57 @@ def main():
         except Exception as e:
             print('mir 실패', repr(e), flush=True)
 
+    # --- xmir: 사용자 가설 뒷부분을 돌파 사건으로(라운드 9, 갈래 D — 설정 a13.xmir 있을 때만)
+    #   라운드 8 에서 '벽이 종가 아래' 자리는 0번 — A2 의 콜벽은 늘 현재가 위 행사가라 지수가 넘어서면 벽이 바로 위로 옮겨 감. 그래서 '넘어선 날'을
+    #   전날 벽 기준 돌파 사건(wall_cross_events: 종가 > 전날 같은 결제월 콜벽)으로 잡고, 그날·그 뒤 외국인 선물·현물 함께 순매도를 본다(F0·F1·Q·합산).
+    if MC.get('xmir'):
+        try:
+            Wx = feat['walls']; Wx = Wx.assign(date=pd.to_datetime(Wx['date']))
+            pos = {d: i for i, d in enumerate(td)}
+            fsell3 = (fut3 < 0) & (cash3 < 0); fsell1 = (fut1 < 0) & (cash1 < 0)
+            for tag in ('F0', 'F1', 'Q', 'ALL'):
+                w = Wx[Wx['tag'] == tag].sort_values('date').drop_duplicates('date', keep='last').set_index('date').reindex(td)
+                if w['K'].notna().sum() < 250: print('xmir 벽 자료 부족', tag, flush=True); continue
+                kprev = w['K'].shift(1); ymprev = w['ym'].shift(1)
+                cross = ((close > kprev) & (w['ym'] == ymprev) & kprev.notna()).fillna(False)
+                m0s = cross & fsell1.fillna(False); m0s3 = cross & fsell3.fillna(False)
+                m5 = pd.Series(False, index=td); m5u = m5.copy()
+                for d in td[cross.values]:
+                    i0 = pos[d]; K = float(kprev.loc[d])
+                    seg = td[i0 + 1: i0 + 6]
+                    hit = fsell3.reindex(seg).fillna(False)
+                    if hit.any():
+                        d1 = hit.idxmax(); m5.loc[d1] = True
+                        if close.loc[d1] >= K: m5u.loc[d1] = True
+                lab = {'ALL': '결제월 4개 합산', 'F1': '차월'}.get(tag, tag)
+                conds += [(f'xmir_{tag}_d0s1', f'종가가 전날 {lab} 콜벽 위로 올라선 날 + 그날 외국인 선물·현물 함께 순매도', m0s),
+                          (f'xmir_{tag}_d0s3', f'종가가 전날 {lab} 콜벽 위로 올라선 날 + 외국인 선물·현물 3일 누적 함께 순매도', m0s3),
+                          (f'xmir_{tag}_d5s3', f'{lab} 콜벽 돌파 뒤 5일 안 외국인 선물·현물 3일 누적 함께 순매도가 처음 나온 날', first_day(m5, 5)),
+                          (f'xmir_{tag}_d5s3u', f'{lab} 콜벽 돌파 뒤 5일 안 외국인 선물·현물 3일 함께 순매도 첫날(종가가 아직 옛 벽 위)', first_day(m5u, 5))]
+        except Exception as e:
+            print('xmir 실패', repr(e), flush=True)
+
+    # --- gap6: 갭 되밀림 기반 × 한국 몫 밤사이 재평가(라운드 9, 갈래 D — 설정 a13.gap6 있을 때만)
+    #   가설 17: 미국 급등이 한국 자산(EWY 원화 환산)까지 크게 끌어올린 밤일수록 다음 날 시가 갭이 커서 되밀림이 강함. 가설 18: VIX 급락(안도 랠리)·원화 강세 밤.
+    #   문턱은 미리 정한 3년 백분위 80%·20% 만, 기반은 라운드 4~7 의 것 그대로.
+    if MC.get('gap6'):
+        try:
+            ewr = (A['EWY'].pct_change(fill_method=None) + A['KRW=X'].pct_change(fill_method=None)) * 100
+            vixc = A['^VIX'].pct_change(fill_method=None) * 100
+            krw = A['KRW=X'].pct_change(fill_method=None) * 100
+            f6 = {'ewr80': (' + EWY(원화 환산) 밤사이 등락 상위20%', pct_rank(ewr) >= 0.80),
+                  'ewg80': (' + EWY − 코스피 괴리 상위20%', qew >= 0.80),
+                  'ewg50': (' + EWY − 코스피 괴리 50% 미만(한국 몫 덜 오름, 대조)', qew < 0.50),
+                  'vixdn': (' + VIX 밤사이 변화 하위20%(안도 랠리)', pct_rank(vixc) <= 0.20),
+                  'krwup': (' + 원/달러 밤사이 변화 하위20%(원화 강세)', pct_rank(krw) <= 0.20)}
+            b6 = {'u85k3R7': ('S&P·나스닥 상위15% + 코스피200 3일 상위20% + 5일 급등 뒤', us['u85'][1] & run['k3_80'][1] & S0['R7']),
+                  'u85k3R79': bases['u85k3R79'], 'u85k3': bases['u85k3'], 'u80k3': bases['u80k3']}
+            for bk, (bd, bm) in b6.items():
+                for fk, (fd, fm) in f6.items():
+                    conds.append((f'gap6_{bk}_{fk}', f'{bd}{fd}(밤사이 미국 급등 뒤 갭 되밀림)', bm & fm.reindex(td).fillna(False).astype(bool)))
+        except Exception as e:
+            print('gap6 실패', repr(e), flush=True)
+
     # --- 장세 겹침
     S = L.regime_states().reindex(td).fillna(False).astype(bool)
     overlays = [('', '', None), ('_R3', ' + 하락 추세(60일선 아래)', 'R3'), ('_R8', ' + 60일 고점 −5% 넘게 조정 중', 'R8'),
@@ -396,14 +447,14 @@ def main():
     for cid, desc, m in conds:
         m = m.reindex(td).fillna(False).astype(bool)
         for tag, tdesc, rg in overlays:
-            if cid.startswith(('gap3_', 'gap4_', 'gap5_')) and rg: continue   # gap3 = 장세 조건이 이미 기반에 들어 있음, 겹침 없이 한 번만
-            if cid.startswith('mir_') and rg not in (None, 'R7', 'R8'): continue   # mir = 60일선은 흐름 조건에 이미 있음 — 장세는 5일 급등 뒤·조정 중만 겹침
+            if cid.startswith(('gap3_', 'gap4_', 'gap5_', 'gap6_')) and rg: continue   # gap3 = 장세 조건이 이미 기반에 들어 있음, 겹침 없이 한 번만
+            if cid.startswith(('mir_', 'xmir_')) and rg not in (None, 'R7', 'R8'): continue   # mir = 60일선은 흐름 조건에 이미 있음 — 장세는 5일 급등 뒤·조정 중만 겹침
             mm = m & S[rg] if rg else m
             sig = td[mm.values]
             summ.append({'cond': cid + tag, 'desc': desc + tdesc, 'n_signals': len(sig)})
             if len(sig) < MIN_SIG: continue
             for tid, tname, exs, h in tgts:
-                if cid.startswith(('gap2_', 'gap3_', 'gap4_', 'gap5_')) and tid != 'h1': continue   # gap2~gap5 = 1일(다음 날 시가→종가)만
+                if cid.startswith(('gap2_', 'gap3_', 'gap4_', 'gap5_', 'gap6_')) and tid != 'h1': continue   # gap2~gap5 = 1일(다음 날 시가→종가)만
                 exits = [L.exit_after(td, s, h) for s in sig] if exs is None else [exs.get(s, pd.NaT) for s in sig]
                 tr = pd.DataFrame({'signal': sig, 'exit': exits}).dropna()
                 if len(tr) < MIN_SIG: continue
