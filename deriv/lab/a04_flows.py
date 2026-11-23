@@ -157,7 +157,7 @@ def spot_conds(F, td):
     return [(n, m.reindex(td).fillna(False)) for n, m in out]
 
 
-def barrier_exits(px, sigs, bpct, max_m):
+def barrier_exits(px, sigs, bpct, max_m, sl_mult=1.0):
     """갈래 A 라운드 40(a04.young_barrier): 익절·손절 종가 규칙 — 신호 다음 날 시가(연속 선물) 진입 뒤 1~max_m 일째 종가 누적 수익이
     처음 +b% 이상 또는 −b% 이하가 된 날 청산, 둘 다 없으면 max_m 일째 종가. b = 신호날 1주 σ(직전 20일, 그날 마감까지 아는 값) × k.
     청산일이 자료 밖이면 빈칸(진행 중, 추정 안 함)."""
@@ -169,7 +169,8 @@ def barrier_exits(px, sigs, bpct, max_m):
         for j in range(max_m):
             if i + j >= len(tdp): break
             r = (c[i + j] / o[i] - 1) * 100
-            if r >= b or r <= -b or j == max_m - 1: ex = tdp[i + j]; break
+            # 라운드 48(sl_mult, 기본 1.0 → 라운드 40 그대로): 손절 폭 = 익절 폭 × sl_mult(위쪽 익절·아래쪽 손절, 상승 후보용).
+            if r >= b or r <= -b * sl_mult or j == max_m - 1: ex = tdp[i + j]; break
         out.append(ex)
     return out
 
@@ -594,14 +595,19 @@ def main():
                                 n1 = int((mall & dev).sum()); n2 = int((mall & p2).sum())
                                 if n1 >= 20 or n2 >= 12:
                                     sig_b = td[mall.fillna(False).values]
+                                    # 라운드 48(young_barrier.sl_mult·max_m_list, 없으면 [1.0]·[max_m] → 라운드 40·47 그대로): 손절 폭을 익절의 배수로 따로 두고(상승 후보만),
+                                    #   최대 보유일도 여러 값. sl_mult ≠ 1 이면 id 에 s<배수> 를 붙여 예전 후보 이름은 그대로.
                                     for bk in YBAR.get('k', [1.0]):
-                                        mxm = int(YBAR.get('max_m', 10))
-                                        tb = pd.DataFrame({'signal': sig_b, 'exit': barrier_exits(pxb, sig_b, sig5 * bk, mxm)}).dropna()
-                                        for direction in (-1, 1):
-                                            cands.append({'id': f'A4yb_{uk}_{"+".join(gtags)}_{ny}d_{bkey}_{cn}_b{bk}x{mxm}_{"dn" if direction < 0 else "up"}', 'agent': 'A4',
+                                      for mxm in [int(x) for x in (YBAR.get('max_m_list') or [YBAR.get('max_m', 10)])]:
+                                        for slm in [float(x) for x in (YBAR.get('sl_mult') or [1.0])]:
+                                          tb = pd.DataFrame({'signal': sig_b, 'exit': barrier_exits(pxb, sig_b, sig5 * bk, mxm, slm)}).dropna()
+                                          sls = '' if slm == 1.0 else f's{slm:g}'
+                                          for direction in ((-1, 1) if slm == 1.0 else (1,)):
+                                            cands.append({'id': f'A4yb_{uk}_{"+".join(gtags)}_{ny}d_{bkey}_{cn}_b{bk}{sls}x{mxm}_{"dn" if direction < 0 else "up"}', 'agent': 'A4',
                                                           'family': 'young_barrier',
                                                           'desc': f'{glab} 중 {ulab} 새 콜벽(나이 {ny}일 이하) + 벽 바로 아래(±{blab})' + ('' if cn == '흐름 무관' else f' + {cn}') +
-                                                                  f' → ±{bk}σ 익절·손절(종가, 최대 {mxm}일) {"하락" if direction < 0 else "상승"}', 'direction': direction, 'trades': tb})
+                                                                  (f' → ±{bk}σ 익절·손절' if slm == 1.0 else f' → +{bk}σ 익절·−{bk * slm:g}σ 손절') +
+                                                                  f'(종가, 최대 {mxm}일) {"하락" if direction < 0 else "상승"}', 'direction': direction, 'trades': tb})
                             for m in YM:
                                 v1 = yfwd[m][mall & dev].dropna(); v2 = yfwd[m][mall & p2].dropna()
                                 rows.append({'시리즈': f'{uk}({"+".join(gtags)})', '근처폭%': blab, '구역': f'새 벽(나이 {ny}일 이하) + 벽 바로 아래 — {ulab}',
