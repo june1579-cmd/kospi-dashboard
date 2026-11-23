@@ -15,5 +15,6 @@
 - 실험을 많이 할수록 우연히 통과하는 것이 늘어난다. 누적 실험 수를 log 에 적고, 새 통과는 '등록 뒤 실제 신호 10건'이 쌓이기 전에는 확정이라고 쓰지 않는다.
 - KRX 로그인·수집은 하지 않는다(갈래 A 가 관리). 비밀값(KRX·DART·Kakao·TwelveData·Tavily)은 읽지도 쓰지도 않는다.
 - 연구소 다른 갈래(deriv/lab), 대시보드(main) 파일은 고치지 않는다. 쓰는 곳은 `deriv/uni/` 뿐이다.
+- `uni_model.fit_predict`, `uni_judge` 의 `thr_series`·`thin_pos`·`stat_sig`·`perf`, `uni_common` 의 평가 기간·묶음 이름은 인버스 연구(`deriv/inv`)가 같이 쓴다. 인자와 뜻을 바꾸지 말고, 다른 것이 필요하면 새 함수로 더한다. `deriv/inv/` 는 고치지 않는다(갈래 I 총괄이 맡음).
 - 카카오톡은 직접 보내지 않는다. 새 통과·관찰이 생기면 워크플로가 보낸다.
 - 커밋: git user dashboard-bot, push 전 pull --rebase. 보고는 쉬운 말로, 끝에 "투자 권유 아님".
