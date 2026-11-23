@@ -435,7 +435,9 @@ def main():
                 orig_of[t_] = {'roll': roll_.fillna(False), 'cross': cross_.fillna(False), 'shift': shift_.fillna(False),
                                'shift_up': (shift_ & (kk_ > kp_)).fillna(False),
                                # 라운드 46: 만기 교체가 아닌 새 벽이 옛 벽보다 위로(up)·아래로(down) 옮겨 감 — 넘어섬·물량 이동 모두 포함.
-                               'up': (new_ & ~roll_ & (kk_ > kp_)).fillna(False), 'down': (new_ & ~roll_ & (kk_ < kp_)).fillna(False)}
+                               'up': (new_ & ~roll_ & (kk_ > kp_)).fillna(False), 'down': (new_ & ~roll_ & (kk_ < kp_)).fillna(False),
+                               # 라운드 47: 아래로 옮겨 간 날 옛 벽까지 거리 가운데 얼마를 줄였나((옛 벽 − 새 벽) ÷ (옛 벽 − 종가), 0~1). 아래로 아닌 날·값 없는 날은 빈칸.
+                               'dn_frac': ((kp_ - kk_) / (kp_ - S_)).where(new_ & ~roll_ & (kk_ < kp_) & (kp_ > S_))}
             print('새 벽 생긴 까닭', {t_: {k_: int(v_.sum()) for k_, v_ in d_.items()} for t_, d_ in orig_of.items()}, flush=True)
         orows = []
         YBAR = cfg.get('young_barrier'); pxb = None
@@ -532,6 +534,30 @@ def main():
                             for ok_, om_, ol_ in (('K2up', up_, '둘 이상 동시(모두 옛 벽보다 위로 옮겨 감)'),
                                                   ('K2dn', dn_, '둘 이상 동시(하나 이상 옛 벽보다 아래로 옮겨 감)')):
                                 if ok_ in YO.get('kinds', []): kinds.append((ok_, om_, ol_)); okinds.add(ok_)
+                            # 라운드 47(kinds 에 K2dnF·K2dnR·K2dnH 있을 때만, 없으면 없음 → 갈래 B·D 영향 없음): 라운드 46 에서 앞 구간은 '아래로 포함' 날이 3·5·7일 77~82% 로 고름.
+                            #   H15 목표가 가까워짐 — 옛 벽까지 거리의 절반 이상(dn_half, 미리 정함 0.5)을 줄인 날이 더 맞음(K2dnH). H16 그날 지수가 내려서 기계적으로 생긴
+                            #   이동이면 '눌림 반등' 몫 — 그날 지수 종가 하락(K2dnF)·상승·보합(K2dnR)으로 나눔. 모두 그날 장 마감 뒤 아는 값, 값 없는 날은 어느 쪽도 아님(추정 안 함).
+                            if any(k_ in YO.get('kinds', []) for k_ in ('K2dnF', 'K2dnR', 'K2dnH')):
+                                r1_ = k2['close'].reindex(td).pct_change()
+                                dhf = float(YO.get('dn_half', 0.5))
+                                nbig = sum((hits[i].astype(bool) & orig_of[t]['down'] & (orig_of[t]['dn_frac'] >= dhf).fillna(False)).astype(int)
+                                           for i, t in enumerate(gtags))
+                                dnF_ = dn_ & (r1_ < 0).fillna(False); dnR_ = dn_ & (r1_ >= 0).fillna(False); dnH_ = dn_ & (nbig >= 1)
+                                for ok_, om_, ol_ in (('K2dnF', dnF_, '둘 이상 동시(하나 이상 아래로 옮겨 감 + 그날 지수 하락)'),
+                                                      ('K2dnR', dnR_, '둘 이상 동시(하나 이상 아래로 옮겨 감 + 그날 지수 상승·보합)'),
+                                                      ('K2dnH', dnH_, f'둘 이상 동시(하나 이상 옛 벽까지 거리의 {int(dhf * 100)}% 이상 아래로 옮겨 감)')):
+                                    if ok_ in YO.get('kinds', []): kinds.append((ok_, om_, ol_)); okinds.add(ok_)
+                                for cn, cm in ucond:
+                                    if cn not in YO.get('conds', [cn]): continue
+                                    for ol, om_ in (('아래로 + 그날 하락', dnF_), ('아래로 + 그날 상승·보합', dnR_),
+                                                    (f'아래로 {int(dhf * 100)}% 이상', dnH_), (f'아래로 {int(dhf * 100)}% 미만', dn_ & ~dnH_)):
+                                        mm_ = om_ & cm.fillna(False)
+                                        r_ = {'묶음': '+'.join(gtags), '폭': blab, '조건': cn, '까닭': ol}
+                                        for pn_, pm_ in (('앞', (td <= L.DEV_END) & (td >= pd.Timestamp('2010-01-01'))), ('뒤', p2)):
+                                            r_[f'{pn_} 날수'] = int((mm_ & pm_).sum())
+                                            for m in YM:
+                                                v_ = yfwd[m][mm_ & pm_].dropna(); r_[f'{pn_} {m}일 상승%'] = round(float((v_ > 0).mean() * 100), 1) if len(v_) else np.nan
+                                        orows.append(r_)
                             for cn, cm in ucond:
                                 if cn not in YO.get('conds', [cn]): continue
                                 for ol, om_ in (('모두 위로', up_), ('아래로 포함', dn_), ('그 밖(만기 교체 섞임)', k2m & ~up_ & ~dn_)):
@@ -563,7 +589,8 @@ def main():
                             mall = umask & cm.fillna(False)
                             # 라운드 40(a04.young_barrier: {k, max_m, conds}, 설정 없으면 없음 → 갈래 B·D 영향 없음): 라운드 39 경로표에서 통과 계열의 앞 구간 상승 비율이
                             #   5일째만 85%·4·6일째 63% 로 뾰족 — 정해진 날 종가 대신 보유 기간에 덜 기대는 익절·손절(±k×1주 σ, 종가, 최대 max_m 일) 규칙으로도 맞는지.
-                            if YBAR and pxb is not None and cn in (YBAR.get('conds') or [cn]):
+                            # 라운드 47(young_barrier.kinds, 없으면 모든 종류 — 라운드 40 그대로): 익절·손절 후보를 정한 종류에만.
+                            if YBAR and pxb is not None and cn in (YBAR.get('conds') or [cn]) and uk in (YBAR.get('kinds') or [uk]):
                                 n1 = int((mall & dev).sum()); n2 = int((mall & p2).sum())
                                 if n1 >= 20 or n2 >= 12:
                                     sig_b = td[mall.fillna(False).values]
