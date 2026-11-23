@@ -762,7 +762,7 @@ def main():
                     sig = td[idx]
                     # 갈래 B 라운드 30(first_n.table, 설명용 — 후보 안 만듦): 첫 신호만 변형의 독립 거래(3일)마다 그날 아는 지표 — 손실 거래(앞 구간 약한 해)가 무엇이 다른지
                     #   라운드 31: 같은 파일 이름을 덮어쓰지 않게 기본 n 변형에서만 만듦.
-                    if fcfg.get('table') and cn == f"{cn0} + 첫 신호만({int(fcfg.get('n', 5))}일)" and len(sig):
+                    if fcfg.get('table') and cn == f"{cn0} + 첫 신호만({int(fcfg.get('n', 5))}일)" and cn0 == (fcfg.get('conds') or [cn0])[0] and len(sig):   # 라운드 42: 덧조건 변형이 같은 파일을 덮지 않게 첫 조건만
                         try:
                             mt = int(fcfg.get('table_m', 3))
                             ind_ = L.thin(list(sig), mt, td)
