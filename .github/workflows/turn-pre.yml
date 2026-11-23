@@ -1,0 +1,35 @@
+# 상승·하락이 시작되기 10일 전~1일 전의 변화와 공통점(사용자 지시 2026-11-23). KRX 로그인 없음, 작은 작업 1개.
+name: turn-pre
+on:
+  push:
+    branches: [deriv-research]
+    paths: ['deriv/turn/trigger_pre.txt']
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: turn-pre
+  cancel-in-progress: true
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: deriv-research}
+      - uses: actions/checkout@v4
+        with: {ref: main, path: _main, sparse-checkout: requirements.txt, sparse-checkout-cone-mode: false}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q -r _main/requirements.txt
+      - uses: actions/download-artifact@v4
+        with: {name: panel, path: deriv/uni/out, run-id: '45152107255', github-token: '${{ github.token }}'}
+      - run: cd deriv/turn && python -W ignore turn_pre.py
+      - name: 저장
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add deriv/turn/out/pre_report.md deriv/turn/out/pre_summary.json
+          git diff --cached --quiet && exit 0
+          git commit -q -m "시작 전 10일 조사 결과 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
+          for i in 1 2 3 4; do git pull -q --rebase origin deriv-research && git push -q origin HEAD:deriv-research && break; sleep 15; done
