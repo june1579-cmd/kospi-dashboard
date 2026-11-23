@@ -4,7 +4,7 @@
  "dev_pass": 4,
  "hold_pass": 0,
  "final_pass": 0,
- "trials_total": 7524,
+ "trials_total": 10032,
  "holdout_peeks": 0,
  "best": [
   {
@@ -80,12 +80,15 @@
  ],
  "goal_reached": false,
  "note": "갈래 C(미국·한국 연동) 라운드 1: 미리 정한 미국 지표 47개 × 3년 백분위 문턱 4개 + 절대값 문턱 + 미리 정한 조합 12개, 방향 둘 다, 보유 1·2·3·5·10·20일 — 양방향 교차 검증",
+ "watch_pass": 0,
+ "watch": [],
+ "watch_rule": "관찰 등급: 전체 35거래·80%, 앞·뒤 각 12거래·75%, 반증 버팀 — 매매 없이 전진 기록만(2026-11-23 사용자 지정)",
  "cv_mode": "cross",
  "sel_fwd": 0,
  "sel_rev": 4,
  "fwd_pass": 0,
  "rev_pass": 0,
  "cross_pass": 0,
- "cross_tests": 12,
- "goal_rule": "전체 50거래 이상·적중 85% 이상, 앞·뒤 각 12거래 이상·80% 이상, 반증 버팀(2026-11-22 사용자 지정)"
+ "cross_tests": 16,
+ "goal_rule": "전체 35거래 이상·적중 85% 이상, 앞·뒤 각 12거래 이상·80% 이상, 반증 버팀(2026-11-22 사용자 지정)"
 }
