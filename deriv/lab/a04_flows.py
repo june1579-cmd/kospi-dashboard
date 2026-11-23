@@ -224,7 +224,7 @@ def main():
     #   천장이 옮겨 가지 않을 때(같은 자리 연장)만 나왔는데, 만기일 사건이라 연 1~2번꼴이라 거래 20개를 못 채움. 같은 뜻을 날마다로:
     #   그 시리즈 콜벽 행사가가 N거래일 이상 같은 자리(같은 결제월, ALL 은 결제월 무관)인 날 + 벽 바로 아래 + 외국인 흐름 → m일. 양방향 사전 등록.
     W = feat.get('walls')
-    age_of = {}; kser_of = {}
+    age_of = {}; kser_of = {}; ym_of = {}; s_of = {}
     # 라운드 15(a04.age_tags·age_bands, 없으면 라운드 14 그대로 TAGS·BANDS): 라운드 14 에서 근월물(F0) '같은 벽 5일 + 2% 아래 + 외국인 콜 순매도 → 5일 하락'
     #   12거래 92%(가설 방향, 위약 p 0.000)였지만 거래 20개 미만. 표본을 넓히려고 3·7일, 3% 폭, 차월(F1)도 보고,
     #   'F0x' = 근월물 벽을 결제월이 바뀌어도 같은 행사가면 이어 세는 나이(만기 롤오버로 천장을 그대로 다시 쓰는 '연장' — 라운드 13 의 가설 방향 사건을 날마다로).
@@ -241,6 +241,10 @@ def main():
                 run = key.ne(key.shift()).cumsum()
                 age_of[name] = g.groupby(run).cumcount().add(1).where(g['K'].notna()).reindex(td)
                 kser_of[name] = g["K"].astype(float).reindex(td)
+                # 갈래 A 라운드 41(a04.young_origin 에서만 씀): 새 벽이 왜 새로 생겼나 — 결제월(ym)·그날 종가(S)를 같이 둠. 앞 거래일 자료 없으면 빈칸(추정 안 함).
+                if cfg.get('young_origin') and name == tag:
+                    ym_of[name] = g['ym'].astype(str).reindex(td) if 'ym' in g else None
+                    s_of[name] = g['S'].astype(float).reindex(td) if 'S' in g else None
     # 갈래 A 라운드 38(a04.young_weekly: ['WT', 'WM'], 설정 없으면 꺼짐 → 갈래 B·D 영향 없음): 통과 계열(여러 결제월 동시 새 콜벽)의 막힘이
     #   사건 수라서, 위클리 옵션 콜벽(목 2019-09~, 월 2023-08~)을 '동시' 표에 한 표로 더함. 나이는 시리즈가 바뀌어도 같은 행사가면 이어 셈(WTx·WMx)
     #   — 주마다 새 시리즈라 시리즈별 나이는 매주 1일로 돌아가 '새 벽'이 아닌 날까지 잡힘. 자료 없는 날(위클리 상장 전·월물 만기 주)은 빈칸 → 그날 위클리 표 없음(추정 안 함).
@@ -385,6 +389,25 @@ def main():
             base_c = dict(ucond).get(tcn)
             if base_c is not None: ucond.append((f'{tcn} + 60일선 위', base_c.fillna(False) & trend_up.fillna(False)))
         ucond = _volcap(ucond)
+        # 갈래 A 라운드 41(a04.young_origin: {kinds, sigma, conds}, 설정 없으면 없음 → 갈래 B·D 영향 없음): 통과 계열의 '새 콜벽'이 왜 새로 생겼나로 나눔.
+        #   (가) 넘어섬 = 앞 거래일 벽 행사가 ≤ 오늘 종가(값이 옛 벽을 넘어서 다음 행사가가 저절로 벽이 됨 → 돌파 추세의 다른 이름),
+        #   (나) 물량 이동 = 옛 벽이 아직 오늘 종가 위인데 다른 행사가로 최대 미결제가 옮겨 감(콜 우위 자리가 바뀜 → 사용자 가설의 '포지션' 쪽),
+        #   (다) 만기 교체 = 결제월이 바뀌어 생긴 새 벽(만기 날 착시). 모두 그날 장 마감 뒤 아는 값, 앞 거래일 자료 없으면 어느 쪽도 아님(추정 안 함).
+        YO = cfg.get('young_origin'); orig_of = {}
+        if YO:
+            for t_ in list(age_of):
+                if t_ not in kser_of or t_.endswith('x'): continue
+                kk_ = kser_of[t_]; kp_ = kk_.shift(1)
+                S_ = s_of.get(t_) if s_of.get(t_) is not None else k2['close'].reindex(td)
+                ym_ = ym_of.get(t_)
+                new_ = (age_of[t_] <= 1) & kk_.notna() & kp_.notna()
+                roll_ = (new_ & (ym_ != ym_.shift(1)) & ym_.shift(1).notna()) if ym_ is not None else pd.Series(False, index=td)
+                cross_ = new_ & ~roll_ & (kp_ <= S_)
+                shift_ = new_ & ~roll_ & (kp_ > S_)
+                orig_of[t_] = {'roll': roll_.fillna(False), 'cross': cross_.fillna(False), 'shift': shift_.fillna(False),
+                               'shift_up': (shift_ & (kk_ > kp_)).fillna(False)}
+            print('새 벽 생긴 까닭', {t_: {k_: int(v_.sum()) for k_, v_ in d_.items()} for t_, d_ in orig_of.items()}, flush=True)
+        orows = []
         YBAR = cfg.get('young_barrier'); pxb = None
         if YBAR:
             try: pxb = L.prices()['K200F']
@@ -411,8 +434,35 @@ def main():
                         mcnt = sum(h for i, h in enumerate(hits) if i not in wix); wcnt = sum(hits[i] for i in wix)
                         kinds.append(('K2W', (mcnt >= 2) & (wcnt >= 1), '월물 둘 이상 + 위클리 동시'))
                     kinds = [k for k in kinds if k[0] in (cfg.get('young_union_kinds') or ['ANY', 'K2'])]
+                    # 라운드 41(young_origin): 둘 이상 동시 새 벽을 생긴 까닭으로 나눈 종류 — K2s 모두 물량 이동, K2c 하나 이상 넘어섬, K2n 만기 교체 없음.
+                    okinds = set()
+                    if YO and ny == 1 and all(t in orig_of for t in gtags) and bkey in [f's{k}' for k in YO.get('sigma', [])]:
+                        nsh = sum((hits[i].astype(bool) & orig_of[t]['shift']).astype(int) for i, t in enumerate(gtags))
+                        ncr = sum((hits[i].astype(bool) & orig_of[t]['cross']).astype(int) for i, t in enumerate(gtags))
+                        nro = sum((hits[i].astype(bool) & orig_of[t]['roll']).astype(int) for i, t in enumerate(gtags))
+                        k2m = cnt >= 2
+                        for ok_, om_, ol_ in (('K2s', k2m & (nsh == cnt), '둘 이상 동시(모두 옛 벽이 아직 위인데 물량이 옮겨 감)'),
+                                              ('K2c', k2m & (ncr >= 1), '둘 이상 동시(하나 이상은 값이 옛 벽을 넘어서 생김)'),
+                                              ('K2n', k2m & (nro == 0), '둘 이상 동시(만기 교체로 생긴 벽 없음)')):
+                            if ok_ in YO.get('kinds', ['K2s', 'K2c', 'K2n']): kinds.append((ok_, om_, ol_)); okinds.add(ok_)
+                        # 설명표(날 단위, 겹침 포함, 후보 안 만듦): K2 날을 까닭으로 나눠 앞·뒤 m일 상승%.
+                        lab4 = pd.Series('섞임', index=td)
+                        lab4[k2m & (nro >= 1) & (ncr == 0)] = '만기 교체 포함'
+                        lab4[k2m & (ncr >= 1)] = '넘어섬 포함'
+                        lab4[k2m & (nsh == cnt)] = '모두 물량 이동'
+                        for cn, cm in ucond:
+                            if cn not in YO.get('conds', [cn]): continue
+                            for ol in ('모두 물량 이동', '넘어섬 포함', '만기 교체 포함', '섞임'):
+                                mm_ = k2m & cm.fillna(False) & (lab4 == ol)
+                                r_ = {'묶음': '+'.join(gtags), '폭': blab, '조건': cn, '까닭': ol}
+                                for pn_, pm_ in (('앞', (td <= L.DEV_END) & (td >= pd.Timestamp('2010-01-01'))), ('뒤', p2)):
+                                    r_[f'{pn_} 날수'] = int((mm_ & pm_).sum())
+                                    for m in YM:
+                                        v_ = yfwd[m][mm_ & pm_].dropna(); r_[f'{pn_} {m}일 상승%'] = round(float((v_ > 0).mean() * 100), 1) if len(v_) else np.nan
+                                orows.append(r_)
                     for uk, umask, ulab in kinds:
                         for cn, cm in ucond:
+                            if uk in okinds and cn not in YO.get('conds', [cn]): continue
                             mall = umask & cm.fillna(False)
                             # 라운드 40(a04.young_barrier: {k, max_m, conds}, 설정 없으면 없음 → 갈래 B·D 영향 없음): 라운드 39 경로표에서 통과 계열의 앞 구간 상승 비율이
                             #   5일째만 85%·4·6일째 63% 로 뾰족 — 정해진 날 종가 대신 보유 기간에 덜 기대는 익절·손절(±k×1주 σ, 종가, 최대 max_m 일) 규칙으로도 맞는지.
@@ -443,6 +493,9 @@ def main():
                                                   'family': 'young_union',
                                                   'desc': f'{glab} 중 {ulab} 새 콜벽(나이 {ny}일 이하) + 벽 바로 아래(±{blab})' + ('' if cn == '흐름 무관' else f' + {cn}') +
                                                           f' → {m}일 {"하락" if direction < 0 else "상승"}', 'direction': direction, 'trades': t})
+        if YO:
+            pd.DataFrame(orows).to_csv(os.path.join(od, 'young_origin.csv'), index=False, encoding='utf-8')
+            print('새 벽 까닭 설명표', len(orows), flush=True)
     for tag in TAGS:
         dist = X.get(f'OW_{tag}_wall_dist%'); pdist = X.get(f'OW_{tag}_passed_wall_dist%')
         grow = X.get(f'OW_{tag}_callotm_chg5%')
