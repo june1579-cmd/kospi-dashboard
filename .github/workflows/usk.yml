@@ -42,6 +42,7 @@ jobs:
           python deriv/lab/lab_merge.py || echo '정리 실패 — 건너뜀'
           python deriv/us/us_dash.py
           python deriv/lab/a02_features.py && python deriv/lab/signal_export.py || echo '통과 신호 내보내기 실패 — 건너뜀'   # 코스피 대시보드 표시용(2026-11-22)
+          python deriv/us/vrp_export.py || echo 'VIX 신호 내보내기 실패 — 건너뜀'   # 코스피 대시보드 세로선 표시용(2026-11-24)
           find deriv/lab/out_c -name 'candidates.pkl' -delete || true
           find deriv/lab/out_c -name 'dev_passed.pkl' -delete || true
       - name: 저장

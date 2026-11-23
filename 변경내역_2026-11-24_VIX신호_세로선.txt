@@ -1,0 +1,17 @@
+2026-11-24 한눈에 보기 그래프에 「VIX − 실현 변동성 상위 20%」 신호를 파란 세로선으로 표시(사용자 요청 "이것만 세로 선으로 표시")
+
+신호: 연구소 갈래 C 라운드 1 의 후보(VIX − S&P500 실현 변동성(20일)의 3년 백분위 0.80 이상 → 다음 거래일 시가 매수, 20거래일 보유). 연구소 통과 기준에는 못 미친 신호.
+      세로선 = 조건이 켜진 날(앞 거래의 매도일 이후 첫 조건일만). 실선 = 20일 뒤 수익, 파선 = 손실, 굵은 선 = 진행 중. 수익률은 코스피 지수 기준(비용 없음).
+      2010-01 ~ 2026-11-20: 끝난 거래 111번 · 수익 69번 · 합계 +157.9%. 가장 최근 조건일 11/20(매수 11/23, 매도 12/18 예정).
+
+수정 전 → 수정 후
+- docs/vrp.js: 없음 → 새 파일(코스피 칸 안에만 긋는 파란 세로선, 범례 단추 1개, 설명 한 줄)
+- docs/page.html: <script src="gesture.js"> 다음 줄에 <script src="vrp.js"> 추가, all-chart 의 data-source 끝에 vrp_sig 추가(253,350 → 253,389바이트)
+- docs/data/vrp_sig.csv · pkg/datasets/vrp_sig.csv: 없음 → 새 자료(112줄: cond,buy,sell,status,ret_pct,vrp,pct,rule)
+- build_web.py DATASETS · docs/index.html FILES: vrp_sig 한 항목 추가
+- run_pipeline.py: 5a1 단계 추가 — 연구소 가지의 deriv/lab/signals/vrp_signals.csv 를 받아 out/vrp_sig.csv 로(못 받으면 전 파일 유지)
+- .github/workflows/usk.yml: 지표 계산 뒤 deriv/us/vrp_export.py 실행 한 줄 추가(실패해도 다른 단계는 계속)
+- 연구소 가지(deriv-research): deriv/us/vrp_export.py · deriv/lab/signals/vrp_signals.csv 추가
+- 다른 신호·계산·알림은 고치지 않음.
+
+되돌리기: docs/vrp.js 와 page.html 의 vrp.js 줄을 지우면 표시가 사라진다.
