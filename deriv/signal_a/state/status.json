@@ -1,1 +1,1 @@
-{"stage": "S1", "tracks": {"t1": "준비", "t2": "준비", "t3": "준비", "t4": "준비", "t5": "준비", "t6": "준비"}, "next": "S1 시험대(sa_common.py·sa_judge.py·test_harness.py) → 끝나면 T1~T5 동시에", "updated": "2026-11-24"}
+{"stage": "S1", "tracks": {"t1": "코드 없음", "t2": "코드 없음", "t3": "코드 없음", "t4": "코드 없음", "t5": "코드 없음", "t6": "코드 없음"}, "next": "시험대·파이프라인 만들기 → T1~T6 코드 한꺼번에 쓰기 → 그 뒤는 GitHub 가 끝까지", "updated": "2026-11-24", "need_claude": true, "why": "시험대·파이프라인·줄기 코드가 아직 없음", "wish": [], "fail": null}
