@@ -1503,6 +1503,40 @@ def main():
               print('전진 검증 표', len(F_), '줄 · 전진 끝난 거래', len(done), '· 적중', int((done['결과'] == '적중').sum()) if len(done) else 0, flush=True)
       except Exception as e:   # 전진 표 실패가 후보 저장을 막지 않게
         print('전진 검증 표 실패', repr(e))
+    # 갈래 B 라운드 40(a04.cross_union: [{name, b_id, other_dir, a_id, label?}], 설정 없으면 없음 → 갈래 A·D 영향 없음): 라운드 39 설명표에서
+    #   B 통과 규칙과 A 통과 규칙은 앞 구간에서 대체로 다른 날에 나고(겹침 5~7/33), 함께 쓰면 거래 1.5배·적중 버팀이었다 → 정식 후보로 A8·A10 판정.
+    #   미리 정한 짝 하나만(고르기 줄이려고): B 의 이번 라운드 후보 b_id 거래 + A 결과 폴더(other_dir/a04/candidates.pkl, 읽기만)의 a_id 거래.
+    #   합치기: 신호일 순서로, 같은 날이면 B 먼저, 앞 거래 청산일 전 신호는 건너뜀(A8 의 독립 거래와 같은 규칙) — 각자 자기 보유일(B 3일·A 5일). 원자료 추정 없음.
+    for xu in (cfg.get('cross_union') or []):
+        try:
+            labd = os.path.dirname(os.path.abspath(__file__))
+            byb = {c['id']: c for c in cands}
+            cb = byb.get(xu.get('b_id'))
+            with open(os.path.join(labd, xu.get('other_dir', 'out/round_046'), 'a04', 'candidates.pkl'), 'rb') as fh:
+                ca = {c['id']: c for c in pickle.load(fh)}.get(xu.get('a_id'))
+            if cb is None or ca is None:
+                print('함께 쓰기 후보 구성 없음', xu.get('name'), cb is None, ca is None, flush=True); continue
+            if int(cb.get('direction', 1)) != int(ca.get('direction', 1)):
+                print('함께 쓰기 방향 다름', xu.get('name'), flush=True); continue
+            def _tt(c, src):
+                t = c['trades'][['signal', 'exit']].copy()
+                t['signal'] = pd.to_datetime(t['signal']); t['exit'] = pd.to_datetime(t['exit'])
+                return t.dropna().assign(src=src)
+            T = pd.concat([_tt(cb, 0), _tt(ca, 1)], ignore_index=True).sort_values(['signal', 'src'], kind='mergesort')
+            keep = []; last = pd.Timestamp('1900-01-01')
+            for s_, e_, src in zip(T['signal'], T['exit'], T['src']):
+                if s_ >= last: keep.append((s_, e_, src)); last = e_
+            K = pd.DataFrame(keep, columns=['signal', 'exit', 'src'])
+            K[['signal', 'exit', 'src']].assign(구간=lambda d: np.where(d['signal'] <= L.DEV_END, 'P1', 'P2'),
+                                               출처=lambda d: np.where(d['src'] == 0, 'B', 'A')).drop(columns='src') \
+                .to_csv(os.path.join(od, f"cross_union_{xu.get('name')}.csv"), index=False, encoding='utf-8')
+            uid = f"A4xu_{xu.get('name')}"
+            cands.append({'id': uid, 'agent': 'A4', 'family': 'cross_union', 'direction': int(cb.get('direction', 1)),
+                          'desc': f"함께 쓰기[{xu.get('label', xu.get('name'))}] — 먼저 난 신호부터 각자 보유일, 보유 중 새 신호 건너뜀 → {'상승' if int(cb.get('direction', 1)) > 0 else '하락'}",
+                          'trades': K[['signal', 'exit']].reset_index(drop=True)})
+            print('함께 쓰기 후보', uid, '거래', len(K), '(B', int((K['src'] == 0).sum()), '· A', int((K['src'] == 1).sum()), ')', flush=True)
+        except Exception as e:
+            print('함께 쓰기 후보 실패', xu.get('name'), repr(e), flush=True)
     L.save_candidates('a04', cands)
     print('표', len(rows), '후보', len(cands))
 
