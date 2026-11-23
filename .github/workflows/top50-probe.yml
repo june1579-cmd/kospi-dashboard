@@ -1,0 +1,35 @@
+# 전체 기간 · 거래 50번 이상 · 적중 상위 10개(사용자 요청 2026-11-23). KRX 로그인 없음. 자료표는 combo-probe 실행(45152107255)이 올려 둔 것을 쓴다.
+name: top50-probe
+on:
+  push:
+    branches: [deriv-research]
+    paths: ['deriv/combo/trigger50.txt']
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: top50-probe
+  cancel-in-progress: true
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: deriv-research}
+      - uses: actions/checkout@v4
+        with: {ref: main, path: _main, sparse-checkout: requirements.txt, sparse-checkout-cone-mode: false}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q -r _main/requirements.txt
+      - uses: actions/download-artifact@v4
+        with: {name: panel, path: deriv/uni/out, run-id: '45152107255', github-token: '${{ github.token }}'}
+      - run: cd deriv/combo && python test_core.py && python top50_probe.py
+      - name: 저장
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add deriv/combo/out50
+          git diff --cached --quiet && exit 0
+          git commit -q -m "50거래 이상 상위 10개 결과 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
+          for i in 1 2 3 4; do git pull -q --rebase origin deriv-research && git push -q origin HEAD:deriv-research && break; sleep 15; done
