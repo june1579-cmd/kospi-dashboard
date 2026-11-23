@@ -415,6 +415,19 @@
       .style('fill', 'none').style('stroke', COL).style('stroke-width', '2px').append('title').text(tip);
     gg.selectAll('path').data(pts.filter(p => p.t !== 'c')).join('path').attr('d', p => p.t === 'b' ? `M${-R},0A${R},${R} 0 0 0 ${R},0Z` : `M${-R},0A${R},${R} 0 0 1 ${R},0Z`)
       .attr('transform', p => `translate(${xd(p.d)},${P0.yL(p.k) + (p.t === 'b' ? 4 : -4)})`).style('fill', COL).style('stroke', 'var(--color-panel)').style('stroke-width', '1px').append('title').text(tip);
+    // 2026-11-23: 보이는 기간에 연구소 신호가 없으면 그래프에 아무것도 안 보여 '표시가 안 된다'로 읽힌다 → 범례 아래 한 줄로 알리고(휴대폰에서 범례를 접어도 보임), 가장 최근 신호로 옮겨 가는 단추를 둔다
+    { const host = document.getElementById('all-legend') || document.getElementById('all-chart'); let nt = document.getElementById('all-labnote');
+      if (host && !nt) { nt = document.createElement('p'); nt.id = 'all-labnote'; nt.className = 'rv-note'; if (host.id === 'all-legend') host.after(nt); else host.before(nt); }   // 범례 바로 아래(접히는 설명 상자 밖)
+      if (nt) { const lastR = g.data.slice().sort((p, q) => String(p.cond).localeCompare(String(q.cond))).pop(), lc = String(lastR.cond).slice(0, 10);
+        const nVis = new Set(all.map(p => p.r.cond)).size, yy = d => String(d || '').slice(2, 4) + '년 ';
+        const desc = r => yy(r.cond) + md(r.cond) + ' 조건 → ' + md(r.buy) + ' 매수 → ' + md(r.sell) + ' 매도' + (num(r.ret_pct) != null ? '(선물 ' + (num(r.ret_pct) > 0 ? '+' : '') + f2(num(r.ret_pct)) + '%)' : '(' + (r.status || '') + ')');
+        const dot = document.createElement('b'); dot.textContent = '연구소 신호'; dot.style.color = COL;
+        nt.replaceChildren(dot, document.createTextNode('(보라색 · 원 = 조건일, 아래 반원 = 매수일, 위 반원 = 매도일): ' + (nVis ? '보이는 기간에 ' + nVis + '건' : '보이는 기간에는 없음') + ' · 가장 최근 ' + desc(lastR) + ' '));
+        const box = document.getElementById('all-chart'), api = box && box._rvApi;
+        if (!nVis && api && api.days && api.idx && api.set && api.days().indexOf(lc) >= 0) {
+          const bt = document.createElement('button'); bt.type = 'button'; bt.className = 'rv-lgbtn'; bt.textContent = '그 신호 보기'; bt.style.color = COL; bt.style.textDecoration = 'underline'; bt.style.fontWeight = '600';
+          bt.addEventListener('click', () => { const dd = api.days(), ci = dd.indexOf(lc); if (ci < 0) return; const i1 = api.idx(dd)[1], s = Math.max(0, ci - 10); api.set(s, Math.max(10, i1 - s + 1)); });
+          nt.appendChild(bt); } } }
     // 범례는 그래프 안 글자 대신 그래프 위 다른 신호 범례 줄(#all-legend)에 둔다(11/22 사용자 요청). 누르면 그 표시만 끄고 켠다
     const lgEl = document.getElementById('all-legend');
     if (lgEl) {   // 자료가 있으면 보이는 기간에 신호가 없어도 범례는 늘 둔다(다른 신호와 같게)
