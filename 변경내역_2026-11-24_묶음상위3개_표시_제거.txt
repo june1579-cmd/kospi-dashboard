@@ -1,0 +1,10 @@
+2026-11-24 한눈에 보기 그래프의 「묶음 상위 3개」 표시 제거(사용자 지시 "지워")
+
+이유: 세 묶음이 모두 C2 신호를 품고 있어 거래의 대부분이 같은 날 매수·매도였다(동시에 들고 있던 날 69%).
+
+수정 전 → 수정 후
+- docs/bundle.js, docs/data/bundle_sig.csv, pkg/datasets/bundle_sig.csv, study/bundle_top3.py: 있음 → 삭제
+- docs/page.html: bundle.js 불러오는 줄과 data-source 의 bundle_sig 삭제(253,395 → 253,350바이트, 추가 전과 같음)
+- build_web.py DATASETS · docs/index.html FILES: bundle_sig 항목 삭제(자료 44개로 되돌림)
+- claude.ai 대시보드: 같은 코드·자료·불러오는 줄 삭제
+- 다른 신호·계산·알림은 고치지 않음.
