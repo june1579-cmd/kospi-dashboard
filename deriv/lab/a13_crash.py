@@ -287,6 +287,28 @@ def main():
             for fk, (fd, fm) in ff.items():
                 mm = bm & fm.reindex(td).fillna(False).astype(bool)
                 conds.append((f'gap4_{bk}_{fk}', f'{bd}{fd}(밤사이 미국 급등 뒤 갭 되밀림)', mm))
+        # 라운드 7(갈래 D): 라운드 6 — 거르개를 겹칠수록 뒤 구간(2024~) 적중은 오르지만(85~100%) 앞 구간(2010~2023)은 70~80% 에 머물고 거래가 줄어듦.
+        #   앞 구간 오답이 2016·2020 에 몰림 → 가설 11: 변동성이 극단인 장(20일 변동성 1년 백분위 80% 이상)에서는 되밀림이 안 먹힘.
+        #   가설 12: 미국 급등이 반도체(SOX) 주도면 한국 대형 반도체 갭이 커서 되밀림이 강함(또는 반대). 가설 13: 금요일 미국 급등 → 월요일(주말 정보 더해짐).
+        #   추세(60일선 위·아래)는 대조군. 문턱은 미리 정한 값(80%·90%·요일)만, 기반은 라운드 5·6 의 것 그대로.
+        rg = L.regime_features().reindex(td)
+        sox = A['^SOX'].pct_change(fill_method=None) * 100 if '^SOX' in A else pd.Series(np.nan, index=td)
+        qsox = pct_rank(sox)
+        f5 = {'vlo': (' + 20일 변동성 1년 백분위 80% 미만', rg['rg_volpct'] < 0.80),
+              'vhi': (' + 20일 변동성 1년 백분위 80% 이상', rg['rg_volpct'] >= 0.80),
+              'sox90': (' + 필라델피아 반도체(SOX) 밤사이 상위10%', qsox >= 0.90),
+              'soxlo': (' + SOX 밤사이 상위20% 밖(반도체 아닌 미국 급등)', qsox < 0.80),
+              'mon': (' + 월요일 진입(금요일 미국 급등)', pd.Series(td.dayofweek == 4, index=td)),
+              'nmon': (' + 월요일 아닌 날 진입', pd.Series(td.dayofweek != 4, index=td)),
+              'ma60u': (' + 60일선 위', rg['rg_ma60'] > 0),
+              'ma60d': (' + 60일선 아래', rg['rg_ma60'] <= 0)}
+        bases5 = {'u85k3': bases['u85k3'], 'u85k3R79': bases['u85k3R79'], 'u85k5R7': bases['u85k5R7'],
+                  'u85k3ffs': ('S&P·나스닥 상위15% + 코스피200 3일 상위20% + 그날 외국인 선물 순매도', bases['u85k3'][1] & ffs_m),
+                  'u90k3': bases4['u90k3']}
+        for bk, (bd, bm) in bases5.items():
+            for fk, (fd, fm) in f5.items():
+                mm = bm & fm.reindex(td).fillna(False).astype(bool)
+                conds.append((f'gap5_{bk}_{fk}', f'{bd}{fd}(밤사이 미국 급등 뒤 갭 되밀림)', mm))
     except Exception as e:
         print('gap 실패', e, flush=True)
 
@@ -302,13 +324,13 @@ def main():
     for cid, desc, m in conds:
         m = m.reindex(td).fillna(False).astype(bool)
         for tag, tdesc, rg in overlays:
-            if cid.startswith(('gap3_', 'gap4_')) and rg: continue   # gap3 = 장세 조건이 이미 기반에 들어 있음, 겹침 없이 한 번만
+            if cid.startswith(('gap3_', 'gap4_', 'gap5_')) and rg: continue   # gap3 = 장세 조건이 이미 기반에 들어 있음, 겹침 없이 한 번만
             mm = m & S[rg] if rg else m
             sig = td[mm.values]
             summ.append({'cond': cid + tag, 'desc': desc + tdesc, 'n_signals': len(sig)})
             if len(sig) < MIN_SIG: continue
             for tid, tname, exs, h in tgts:
-                if cid.startswith(('gap2_', 'gap3_', 'gap4_')) and tid != 'h1': continue   # gap2·gap3·gap4 = 1일(다음 날 시가→종가)만
+                if cid.startswith(('gap2_', 'gap3_', 'gap4_', 'gap5_')) and tid != 'h1': continue   # gap2~gap5 = 1일(다음 날 시가→종가)만
                 exits = [L.exit_after(td, s, h) for s in sig] if exs is None else [exs.get(s, pd.NaT) for s in sig]
                 tr = pd.DataFrame({'signal': sig, 'exit': exits}).dropna()
                 if len(tr) < MIN_SIG: continue
