@@ -481,11 +481,15 @@
   const draw = (svg, xd, P0, mk) => {
     const ks = new Map(mk.filter(r => r.kospi != null && r.kospi !== '' && isFinite(+r.kospi)).map(r => [String(r.date).slice(0, 10), +r.kospi]));
     const gg = svg.append('g').attr('class', 'rv-turnsig'), vis = {};
-    // 이미 그려진 신호 화살표(세모)의 자리를 읽어, 네모를 그 화살표 바깥쪽(매수 = 화살표 아래, 매도 = 화살표 위)에 둔다
+    // 이미 그려진 신호 화살표(세모)의 자리를 읽어, 네모를 그 화살표 바깥쪽(매수 = 화살표 아래, 매도 = 화살표 위)에 한 칸(11px) 띄워 둔다. 화살표가 없으면 코스피 선에서 한 칸 띄운다(옆 날의 선도 피한다)
+    const dl = Array.from(ks.keys()).sort(), di = new Map(dl.map((d, i) => [d, i]));
     const TRI = d3.symbol(d3.symbolTriangle, 64)(), AR = [];
     svg.selectAll('path').each(function () { if (this.getAttribute('d') !== TRI) return; const t = this.getAttribute('transform') || '', m = /translate\(([^,]+),([^)]+)\)/.exec(t); if (m) AR.push({x: +m[1], y: +m[2], s: /rotate\(180\)/.test(t)}); });
     SETS.forEach(S => { const v = vis[S.key] = S.pts.filter(p => ks.has(p.d) && isFinite(xd(p.d))); if (OFF.has(S.key)) return; const ex = S.wf && !OFF.has(S.key[0] + 'n') ? 19 : 0;
-      const cy = p => { const z = SZ[p.st], cx = xd(p.d), y0 = P0.yL(ks.get(p.d)); let far = 0; AR.forEach(a => { if (a.s !== (S.dir < 0) || Math.abs(a.x - cx) > z / 2 + 5) return; const o = S.dir * (a.y - y0); if (o > 0 && o < 90 && o > far) far = o; }); return y0 + S.dir * ((far ? far + 7 : 8) + ex + z / 2); };
+      const cy = p => { const z = SZ[p.st], cx = xd(p.d), i = di.get(p.d); let y0 = P0.yL(ks.get(p.d)), far = 0;
+        for (let j = Math.max(0, i - 4); j <= Math.min(dl.length - 1, i + 4); j++) { const xj = xd(dl[j]); if (!isFinite(xj) || Math.abs(xj - cx) > z / 2 + 2) continue; const y = P0.yL(ks.get(dl[j])); if (S.dir * (y - y0) > 0) y0 = y; }
+        AR.forEach(a => { if (a.s !== (S.dir < 0) || Math.abs(a.x - cx) > z / 2 + 8) return; const o = S.dir * (a.y - y0); if (o > 0 && o < 90 && o > far) far = o; });
+        const y = y0 + S.dir * ((far ? far + 18 : 19) + ex + z / 2); return Math.max(P0.top + z / 2 + 1, Math.min(P0.bot - z / 2 - 1, y)); };
       gg.append('g').selectAll('rect').data(v).join('rect').attr('x', p => xd(p.d) - SZ[p.st] / 2).attr('y', p => cy(p) - SZ[p.st] / 2).attr('width', p => SZ[p.st]).attr('height', p => SZ[p.st])
         .style('fill', p => p.h === 1 ? S.col : 'transparent').style('stroke', S.col).style('stroke-width', '2px').style('stroke-dasharray', p => p.h === 9 ? '2 2' : null).style('opacity', p => p.st === 0 ? .5 : 1)
         .append('title').text(p => S.lab + ' ' + p.d + ' · ' + STEP[p.st] + ' · ' + (p.h === 1 ? '맞음(3일 안에 저점·고점이 옴)' : p.h === 9 ? '아직 모름' : '아님')); });
