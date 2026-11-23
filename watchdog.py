@@ -102,12 +102,29 @@ def check_fresh(c):
     return f"{c['label']} 멈춤(마지막 갱신 {last:%m/%d %H:%M}, {age_h:.0f}시간 전){' · ' + c['hint'] if c.get('hint') else ''}" if stale else None
 
 
+def check_content():
+    """수집은 돌았지만 일부 출처를 못 받은 경우(파일 안의 상태 칸) — 기본 가지 checkout 에서 읽는다."""
+    out = {}
+    try:
+        import csv
+        bad = [r.get('name') or r.get('key') for r in csv.DictReader(open('out/ai_feed.csv', encoding='utf-8')) if (r.get('status') or '').strip() not in ('정상', '')]
+        out['src:ai'] = ('AI 경고판 수집 일부 실패', f"AI 경고판 원자료 {len(bad)}개 항목을 못 받음: {', '.join(bad[:3])}{' 외' if len(bad) > 3 else ''}" if bad else None)
+    except Exception as ex: print('AI 경고판 상태 읽기 실패', ex)
+    try:
+        S = json.load(open('fo/data/status.json', encoding='utf-8')); bad = [k for k, v in S.items() if isinstance(v, dict) and v.get('ok') is False]
+        out['src:fo'] = ('선물옵션 대시보드 수집 일부 실패', f"선물옵션 대시보드 미국 자료 {len(bad)}개 출처를 못 받음: {', '.join(bad[:4])}" if bad else None)
+    except Exception as ex: print('선물옵션 대시보드 상태 읽기 실패', ex)
+    return out
+
+
 def main():
     st = json.load(open(STATE, encoding='utf-8')) if os.path.exists(STATE) else {}
     before = json.dumps(st, ensure_ascii=False, sort_keys=True); msgs = []; errs = []
-    for c in RUNS + FRESH:
+    extra = [dict(key=k, label=lab, text=txt, repair=True, content=True) for k, (lab, txt) in check_content().items()]
+    for c in RUNS + FRESH + extra:
         try:
-            if 'wf' in c: txt, _ = check_run(c, st)
+            if c.get('content'): txt = c['text']
+            elif 'wf' in c: txt, _ = check_run(c, st)
             else: txt = check_fresh(c)
         except Exception as ex:
             errs.append(f"{c['label']}: 확인 불가({str(ex)[:80]})"); continue      # 확인 자체가 안 되면 문제로 치지 않고 기록만(다음 시간에 다시 봄)
