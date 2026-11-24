@@ -376,5 +376,14 @@
   "unverified": "없음",
   "proposals": "신용 청산 진행: 신용잔고 정점 대비 −32.9%",
   "by": "GitHub Actions(ai-board)"
+ },
+ {
+  "at": "2026-11-25T06:24:34+09:00",
+  "type": "자동(숫자)",
+  "changed": "미국 10년물 금리 4.92%→4.92%(11.23)",
+  "stages": "변화 없음(경고 3·주의 6·정상 1)",
+  "unverified": "없음",
+  "proposals": "신용 청산 진행: 신용잔고 정점 대비 −32.9%",
+  "by": "GitHub Actions(ai-board)"
  }
 ]
