@@ -32,12 +32,13 @@ for r in sorted(V):
         tr.append(t)
     R = v['res']; assert len(tr) == R['전체']['n'], (r, len(tr), R['전체']['n'])
     hit = sum(t[7] for t in tr) / len(tr)
-    out.append({'key': 'K%03d' % r, 'src': 'K', 'rank': r, 'name': CM[r]['name'], 'short': SHORT[r], 'dir': dirs.pop(), 'members': keys,
+    sigs = sorted({t[0] for k in keys for t in T.get(k, [])})      # 2026-11-24 "조건은 하나고 신호만 표시": 조건이 켜진 날(조합이 신호를 낸 날)만
+    out.append({'signals': sigs, 'n_sig': len(sigs), 'first': sigs[0], 'key': 'K%03d' % r, 'src': 'K', 'rank': r, 'name': CM[r]['name'], 'short': SHORT[r], 'dir': dirs.pop(), 'members': keys,
                 'n': len(tr), 'hit': round(hit, 4), 'p1': [R['앞']['n'], round(R['앞']['hit'], 4)], 'p2': [R['뒤']['n'], round(R['뒤']['hit'], 4)],
                 'base1': round(R['앞']['base'], 4), 'base2': round(R['뒤']['base'], 4), 'lb1': round(R['앞']['lb'], 4), 'lb2': round(R['뒤']['lb'], 4), 'p': R['전체']['p'],
-                'sum': round(sum(t[6] for t in tr), 4), 'last': tr[-1][0], 'trades': tr})
-out.sort(key=lambda x: (-x['hit'], -x['n']))
-meta = {'made': '2026-11-24', 'rule': '그 조건이 든 조합들의 거래를 같은 매수일 한 건으로 합침(맞음 다수결). 대표 거래 = 다수결과 같은 결과의 첫 조합 거래.',
+                'sum': round(sum(t[6] for t in tr), 4), 'last': sigs[-1]})
+out.sort(key=lambda x: (-x['n_sig'], x['rank']))   # 신호 많은 순(적중은 조합의 매도 규칙에 기대므로 웹판에 쓰지 않음)
+meta = {'made': '2026-11-24', 'rule': '신호일 = 그 조건이 든 조합 가운데 하나라도 신호를 낸 날(조합 거래표의 신호일 합집합). 조합이 보유 중이던 날의 신호는 거래표에 없어 빠질 수 있다. n·hit·p1·p2 등 숫자는 조합 매도 규칙 기준의 검증값(웹판에는 표시하지 않음).',
         'excluded': EXCL, 'judge': '앞·뒤 각 20건 이상 · 윌슨 95% 하한 > 같은 해 아무 날(같은 보유일) 맞음 비율 · 전체 이항 p < 0.05/189', 'from': 'combos.json·trades.json(같은 폴더) — 그 파일이 바뀌면 다시 만들 것(deriv/signal_a/x4/build_conds.py)'}
 json.dump({'meta': meta, 'conds': out}, open(os.path.join(LAB, 'conds.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
 for x in out: print(x['key'], x['short'], x['n'], x['hit'], x['p1'], x['p2'], len(x['members']))
