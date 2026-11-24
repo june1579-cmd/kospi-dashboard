@@ -1,0 +1,12 @@
+해,그때까지_저점수,조건수,점수문턱,그해_5일구간,그해_10일구간,지표
+2016,20,8,7,7,12,OW_F0_cp_all(80 이상) · R1_PCR_5d(20 이하) · OW_ALL_pwall_share(80 이상) · OW_F1_otm_cp(80 이상) · US_k_pcr(20 이하) · OW_ALL_ccent_dist%(80 이상) · US_es_dd60(20 이하) · PK_이평괴리_60(20 이하)
+2017,22,8,7,0,0,R1_PCR_5d(20 이하) · OW_ALL_otm_cp(80 이상) · OW_F1_otm_cp(80 이상) · OW_F1_pwall_share(80 이상) · OW_Q_otm_cp(80 이상) · OW_ALL_pwall_share(80 이상) · PF_이평괴리_120(20 이하) · US_pcr_eq(80 이상)
+2018,24,8,7,65,87,OW_ALL_otm_cp(80 이상) · OW_Q_otm_cp(80 이상) · OW_Q_ccent_dist%(80 이상) · US_vix_ts(80 이상) · US_pcr_eq(80 이상) · OW_F1_cp_all(80 이상) · OW_F0_ccent_dist%(80 이상) · PK_등락_60d(20 이하)
+2019,28,8,7,6,11,PK_이평괴리_60(20 이하) · OW_Q_otm_cp(80 이상) · OW_ALL_otm_cp(80 이상) · OW_F1_pwall_share(80 이상) · US_es_r20(20 이하) · OW_ALL_pwall_share(80 이상) · PK_이평괴리_20(20 이하) · US_es_dd60(20 이하)
+2020,31,8,7,36,41,OW_ALL_otm_cp(80 이상) · PK_이평괴리_60(20 이하) · OW_Q_otm_cp(80 이상) · PK_등락_60d(20 이하) · OW_F0_ccent_dist%(80 이상) · US_vix_ts(80 이상) · US_es_r20(20 이하) · OW_F1_otm_cp(80 이상)
+2021,38,8,6,12,17,OW_ALL_otm_cp(80 이상) · US_pcr_eq(80 이상) · OW_F1_pwall_share(80 이상) · OW_F0_ccent_dist%(80 이상) · US_es_dd60(20 이하) · US_vix(80 이상) · US_es_r20(20 이하) · OW_ALL_pwall_share(80 이상)
+2022,41,8,7,89,117,US_vix(80 이상) · US_es_dd60(20 이하) · US_vix_ts(80 이상) · US_es_r20(20 이하) · OW_F0_ccent_dist%(80 이상) · V1_대표IV(80 이상) · OW_ALL_otm_cp(80 이상) · US_vix9_ts(80 이상)
+2023,46,8,7,0,0,US_vix(80 이상) · US_es_dd60(20 이하) · US_es_r20(20 이하) · OW_F0_ccent_dist%(80 이상) · US_vkospi(80 이상) · US_vix_ts(80 이상) · OW_ALL_otm_cp(80 이상) · US_vix9_ts(80 이상)
+2024,49,8,7,40,57,US_vix(80 이상) · V1_대표IV(80 이상) · US_vix_ts(80 이상) · OW_F0_ccent_dist%(80 이상) · US_es_r20(20 이하) · US_es_dd60(20 이하) · BASE_HV20(80 이상) · OW_ALL_otm_cp(80 이상)
+2025,54,8,7,26,41,US_vix(80 이상) · V1_대표IV(80 이상) · US_es_r20(20 이하) · OW_F0_ccent_dist%(80 이상) · US_es_dd60(20 이하) · OW_F1_volwall_dist%(80 이상) · US_vix9_ts(80 이상) · US_vix_ts(80 이상)
+2026,57,8,7,38,58,US_vix(80 이상) · V1_대표IV(80 이상) · US_vix_ts(80 이상) · US_es_r20(20 이하) · US_es_dd60(20 이하) · OW_ALL_otm_cp(80 이상) · US_vix9_ts(80 이상) · BASE_HV20(80 이상)
