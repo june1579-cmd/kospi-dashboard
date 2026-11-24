@@ -1,0 +1,162 @@
+{
+ "종목없이_1_2019": [
+  "F4|ridge|chg|M|tau1"
+ ],
+ "종목없이_1_2020": [
+  "C3|ridge|chg|M|tau1"
+ ],
+ "종목없이_1_2021": [
+  "F4|rob|chg|M|tau1"
+ ],
+ "종목없이_1_2022": [
+  "F4|ridge|chg|M|tau1"
+ ],
+ "종목없이_1_2023": [
+  "F4|rob|chg|M|tau1"
+ ],
+ "종목없이_1_2024": [
+  "F4|rob|chg|M|tau2"
+ ],
+ "종목없이_1_2025": [
+  "C3|ridge|chg|M|tau1"
+ ],
+ "종목없이_1_2026": [
+  "F4|ridge|chg|M|tau1"
+ ],
+ "종목없이_5_2019": [
+  "F4|ridge|chg|M|tau1",
+  "C3|ridge|chg|M|tau1",
+  "F4|rob|chg|M|tau1",
+  "C3|ridge|chg|M|tau4",
+  "C3|rob|chg|M|tau1"
+ ],
+ "종목없이_5_2020": [
+  "C3|ridge|chg|M|tau1",
+  "F4|ridge|chg|M|tau1",
+  "C3|rob|chg|M|tau1",
+  "C3|ridge|chg|M|tau2",
+  "F4|rob|chg|M|tau1"
+ ],
+ "종목없이_5_2021": [
+  "F4|rob|chg|M|tau1",
+  "F4|rob|chg|M|win2",
+  "C3|rob|chg|M|tau2",
+  "F4|ridge|chg|M|tau1",
+  "C3|ridge|chg|M|tau4"
+ ],
+ "종목없이_5_2022": [
+  "F4|ridge|chg|M|tau1",
+  "F4|ridge|chg|M|tau2",
+  "F4|rob|chg|M|win2",
+  "C3|ridge|chg|M|tau4",
+  "F4|rob|chg|M|tau1"
+ ],
+ "종목없이_5_2023": [
+  "F4|rob|chg|M|tau1",
+  "F4|ridge|chg|M|win2",
+  "F4|ridge|chg|M|tau1",
+  "C3|rob|chg|M|tau1",
+  "F4|ridge|chg|M|tau2"
+ ],
+ "종목없이_5_2024": [
+  "F4|rob|chg|M|tau2",
+  "C3|ridge|chg|M|win1",
+  "F4|ridge|chg|M|tau2",
+  "F4|ridge|chg|M|tau1",
+  "C3|rob|chg|M|win1"
+ ],
+ "종목없이_5_2025": [
+  "C3|ridge|chg|M|tau1",
+  "F4|rob|chg|M|win2",
+  "C3|ridge|chg|M|tau4",
+  "C3|rob|chg|M|tau1",
+  "C3|ridge|chg|M|tau2"
+ ],
+ "종목없이_5_2026": [
+  "F4|ridge|chg|M|tau1",
+  "C3|ridge|chg|M|tau1",
+  "F4|ridge|chg|M|tau2",
+  "F4|ridge|chg|M|win2",
+  "C3|ridge|chg|M|win1"
+ ],
+ "전체_1_2019": [
+  "F4|ridge|chg|M|tau1"
+ ],
+ "전체_1_2020": [
+  "C3|ridge|chg|M|tau1"
+ ],
+ "전체_1_2021": [
+  "F4|rob|chg|M|tau1"
+ ],
+ "전체_1_2022": [
+  "F4|ridge|chg|M|tau1"
+ ],
+ "전체_1_2023": [
+  "F4|rob|chg|M|tau1"
+ ],
+ "전체_1_2024": [
+  "F4|rob|chg|M|tau2"
+ ],
+ "전체_1_2025": [
+  "C3|ridge|chg|M|tau1"
+ ],
+ "전체_1_2026": [
+  "F4|ridge|chg|M|tau1"
+ ],
+ "전체_5_2019": [
+  "F4|ridge|chg|M|tau1",
+  "C3|ridge|chg|M|tau1",
+  "C4|ridge|chg|M|tau4",
+  "F4|rob|chg|M|tau1",
+  "C4|ridge|chg|M"
+ ],
+ "전체_5_2020": [
+  "C3|ridge|chg|M|tau1",
+  "F4|ridge|chg|M|tau1",
+  "C3|rob|chg|M|tau1",
+  "C4|ridge|chg|M|tau4",
+  "C3|ridge|chg|M|tau2"
+ ],
+ "전체_5_2021": [
+  "F4|rob|chg|M|tau1",
+  "F4|rob|chg|M|win2",
+  "C3|rob|chg|M|tau2",
+  "F4|ridge|chg|M|tau1",
+  "C3|ridge|chg|M|tau4"
+ ],
+ "전체_5_2022": [
+  "F4|ridge|chg|M|tau1",
+  "F4|ridge|chg|M|tau2",
+  "F4|rob|chg|M|win2",
+  "C3|ridge|chg|M|tau4",
+  "F4|rob|chg|M|tau1"
+ ],
+ "전체_5_2023": [
+  "F4|rob|chg|M|tau1",
+  "F4|ridge|chg|M|win2",
+  "C5|ridge|chg|M|win2",
+  "F4|ridge|chg|M|tau1",
+  "C3|rob|chg|M|tau1"
+ ],
+ "전체_5_2024": [
+  "F4|rob|chg|M|tau2",
+  "C3|ridge|chg|M|win1",
+  "F4|ridge|chg|M|tau2",
+  "F4|ridge|chg|M|tau1",
+  "C3|rob|chg|M|win1"
+ ],
+ "전체_5_2025": [
+  "C3|ridge|chg|M|tau1",
+  "F4|rob|chg|M|win2",
+  "C3|ridge|chg|M|tau4",
+  "C3|rob|chg|M|tau1",
+  "C3|ridge|chg|M|tau2"
+ ],
+ "전체_5_2026": [
+  "F4|ridge|chg|M|tau1",
+  "C3|ridge|chg|M|tau1",
+  "F4|ridge|chg|M|tau2",
+  "F4|ridge|chg|M|win2",
+  "C3|ridge|chg|M|win1"
+ ]
+}

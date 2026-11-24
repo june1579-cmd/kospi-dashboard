@@ -1,0 +1,140 @@
+{
+ "seed": 20261124,
+ "n_configs": 573,
+ "top10_threshold_eok": 304.32,
+ "best_all": "섞기[종목없이 상위 10개 평균]",
+ "best_clean": "섞기[종목없이 상위 10개 평균]",
+ "best_yearly": "F4|rob|chg|Y|tau1",
+ "best_all_parts": [
+  "F4|ridge|chg|M|win2",
+  "F4|ridge|chg|M|tau1",
+  "F4|ridge|chg|M|tau2",
+  "C3|ridge|chg|M|win1",
+  "F4|rob|chg|M|win2",
+  "C3|rob|chg|M|win1",
+  "C3|ridge|chg|M|tau1",
+  "F4|rob|chg|M|tau2",
+  "F4|rob|chg|M|tau1",
+  "F2|ridge|chg|M|win2"
+ ],
+ "best_clean_parts": [
+  "F4|ridge|chg|M|win2",
+  "F4|ridge|chg|M|tau1",
+  "F4|ridge|chg|M|tau2",
+  "C3|ridge|chg|M|win1",
+  "F4|rob|chg|M|win2",
+  "C3|rob|chg|M|win1",
+  "C3|ridge|chg|M|tau1",
+  "F4|rob|chg|M|tau2",
+  "F4|rob|chg|M|tau1",
+  "F2|ridge|chg|M|win2"
+ ],
+ "iv_all": "최근 오차 크기 반영",
+ "iv_clean": "최근 오차 크기 반영",
+ "poison_ok": true,
+ "repro_ok": true,
+ "have": {
+  "kosdaq": true,
+  "breadth": true,
+  "cohort": true,
+  "cohort_vw": true
+ },
+ "jump": {
+  "jump_n": 80,
+  "jump26_n": 34,
+  "base_jump_med": 47.128643794744505,
+  "base_jump_q50": -46.64104502374303,
+  "base_calm_med": 17.13190481674209,
+  "base_calm_q50": -7.303622782937092,
+  "base_jump26_med": 53.29019164623776,
+  "base_jump26_q50": -53.29019164623776,
+  "base_calm26_med": 30.72102476200289,
+  "base_calm26_q50": 3.4338026013444267,
+  "best_jump_med": 41.108126419183996,
+  "best_jump_q50": -41.108126419183996,
+  "best_calm_med": 12.453748425901995,
+  "best_calm_q50": -0.8066808375339019,
+  "best_jump26_med": 29.381244014847457,
+  "best_jump26_q50": -28.05065229332601,
+  "best_calm26_med": 26.15252507053882,
+  "best_calm26_q50": 4.095491608859603,
+  "clean_jump_med": 41.108126419183996,
+  "clean_jump_q50": -41.108126419183996,
+  "clean_calm_med": 12.453748425901995,
+  "clean_calm_q50": -0.8066808375339019,
+  "clean_jump26_med": 29.381244014847457,
+  "clean_jump26_q50": -28.05065229332601,
+  "clean_calm26_med": 26.15252507053882,
+  "clean_calm26_q50": 4.095491608859603,
+  "best_jump_under_hi80": 50.0,
+  "best_jump26_under_hi80": 73.52941176470588,
+  "best_top10_under_hi80": 86.08247422680412,
+  "best_jump_under_hi90": 62.5,
+  "best_jump26_under_hi90": 79.41176470588235,
+  "best_top10_under_hi90": 90.20618556701031,
+  "clean_jump_under_hi80": 50.0,
+  "clean_jump26_under_hi80": 73.52941176470588,
+  "clean_top10_under_hi80": 86.08247422680412,
+  "clean_jump_under_hi90": 62.5,
+  "clean_jump26_under_hi90": 79.41176470588235,
+  "clean_top10_under_hi90": 90.20618556701031
+ },
+ "robust": {
+  "clean_top10_2026_med": [
+   27.135848854390833,
+   28.087665237960287,
+   33.193375943411006
+  ],
+  "clean_top10_2026_p80": [
+   47.73043195656135,
+   51.25022905957,
+   55.44706251641361
+  ],
+  "all_top10_2026_med": [
+   26.868722186266847,
+   27.698786159500255,
+   30.66456526826178
+  ],
+  "all_top10_2026_p80": [
+   47.73043195656135,
+   50.622421676074055,
+   54.71141033474065
+  ]
+ },
+ "live": {
+  "date": "2026-11-23",
+  "best": {
+   "pred": 95.99515754733774,
+   "lo80": 53.73690481305058,
+   "hi80": 177.79653871875396,
+   "lo90": 46.249737152237884,
+   "hi90": 220.55998144207888
+  },
+  "clean": {
+   "pred": 95.99515754733774,
+   "lo80": 53.73690481305058,
+   "hi80": 177.79653871875396,
+   "lo90": 46.249737152237884,
+   "hi90": 220.55998144207888
+  },
+  "base": null,
+  "liq_prev": 53.07,
+  "misu_prev": 9014.95
+ },
+ "oracle_base": "F4|ridge|chg|M|win2",
+ "seconds": 3503,
+ "fetch": {
+  "end": "2026-11-23",
+  "source": "fchart.stock.naver.com (공개, 로그인 없음)",
+  "kosdaq_index": "2014-09-01~2026-11-23 2999일",
+  "list_ks": 937,
+  "list_kq": 1837,
+  "stocks_ok": 2770,
+  "stocks_fail": 0,
+  "stocks_fail_codes": [],
+  "stocks_used": 2770,
+  "selfcheck": "12개 날짜 중 불일치 0개",
+  "stocks_listed_by_2019": 1999,
+  "breadth": "2014-09-01~2026-11-23 2999일"
+ }
+}
