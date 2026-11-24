@@ -1613,12 +1613,9 @@
         if (q && num(q.liq_eok) != null) lines.push([C()[0], '미수 반대매매 ', f1(num(q.liq_eok)) + '억원']);
         if (q && num(q.ratio_pct) != null) lines.push([C()[4], '비중(당일 미수 반대매매 ÷ 전일 미수금) ', f1(num(q.ratio_pct)) + '%']);
         if (q && num(q.misu_eok) != null) lines.push([null, '미수금 ', f0(num(q.misu_eok)) + '억원']);
-        const bq = cb.find(r => r.date === d);
-        if (bq) { const t = v => num(v) === 1 ? '상승' : (num(v) === -1 ? '하락' : '—'); lines.push([SC(bq.leg), '실제 큰 흐름 ', t(bq.leg)]); if (num(bq.fast) != null) lines.push([SC(bq.fast), '빠른 전환 판단 ', t(bq.fast) + (num(bq.leg) === num(bq.fast) ? ' (일치)' : ' (불일치)')]); lines.push([SC(bq.combo), '조합 판단 ', t(bq.combo) + (num(bq.leg) === num(bq.combo) ? ' (일치)' : ' (불일치)')]); lines.push([SC(bq.ema67), '67일선 판단 ', t(bq.ema67) + (num(bq.leg) === num(bq.ema67) ? ' (일치)' : ' (불일치)')]); lines.push([SC(bq.vote3), '3개 다수결 ', t(bq.vote3) + (num(bq.leg) === num(bq.vote3) ? ' (일치)' : ' (불일치)')]); if (num(bq.top26) != null) lines.push([SC(bq.top26), '2026 1위 ', num(bq.top26) === 1 ? '보유' : '현금']); }
-        if (CONS) { const c0 = CONS.get(d); if (c0 && c0.n) { lines.push([c0.pct > 50 ? 'var(--color-ok)' : (c0.pct < 50 ? CRIT : null), '12개 해 합의(맨 아래 줄) ', consTxt(c0)]);
-          if (c0.p1) lines.push([null, '합의 변화 · 전 거래일 ', consChg(c0, c0.p1)]); if (c0.p5) lines.push([null, '합의 변화 · 5거래일 전 ', consChg(c0, c0.p5)]); } }
-        if (CMAP && tChamp) { const cr0 = CMAP.get(d); if (cr0) {
-          const tp = SL[0]; if (tp && tSort !== 'base') { const v0 = stripVal({date: d, ...(cb.find(r => r.date === d) || {})}, tp.k, CMAP); lines.push([SC(v0), '정렬 1위 줄(' + tp.lab + ') ', v0 === 1 ? '상승' : (v0 === -1 ? '하락' : '—')]); } } }
+        if (!q || num(q.liq_eok) == null) { const e = window.rvLiqNowRows ? window.rvLiqNowRows().find(r => r.d === d) : null;   // 반대매매 예정치(확정치가 아직 없는 날만, files/liqnow.js)
+          if (e) lines.push([C()[0], '미수 반대매매 예정치(추정) ', f0(e.p) + '억원' + (e.lo != null ? ' · 80% 범위 ' + f0(e.lo) + '~' + f0(e.hi) + '억' : '') + ' — 확정치는 다음 거래일 15시쯤']); }
+        // 큰 흐름 비교(실제 큰 흐름·조합·12개 해 합의·정렬 1위 줄)는 상세 상자에 넣지 않는다(11/24 사용자 요청: 정보가 너무 많음 — 그래프 줄로만 본다)
         const fq = flAll.find(r => r.date === d);
         if (fq) FL.forEach(s => lines.push([s.c, s.n + ' 순매수 ', d3.format('+,.2f')(num(fq[s.k])) + '조원']));
         const uq = fuAll.find(r => r.date === d);
