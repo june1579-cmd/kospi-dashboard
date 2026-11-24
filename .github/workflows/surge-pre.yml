@@ -1,4 +1,4 @@
-# 3거래일 안 ±4% 급등·급락 직전 10일의 변화와 공통점 + 통과 기준 산정(사용자 지시 2026-11-24). KRX 로그인 없음, 작은 작업 1개.
+# 3거래일 안 ±4% 급등·급락 직전 10일의 변화와 공통점 + 통과 기준 산정 + 조건 수치화 비교표(사용자 지시 2026-11-24). KRX 로그인 없음, 작은 작업 1개.
 name: surge-pre
 on:
   push:
@@ -26,10 +26,11 @@ jobs:
       - uses: actions/download-artifact@v4
         with: {name: panel, path: deriv/uni/out, run-id: '45152107255', github-token: '${{ github.token }}'}
       - run: cd deriv/turn && python -W ignore surge_pre.py
+      - run: cd deriv/turn && python -W ignore surge_quant.py
       - name: 저장
         run: |
           git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
-          git add deriv/turn/out/surge_report.md deriv/turn/out/surge_summary.json
+          git add deriv/turn/out/surge_report.md deriv/turn/out/surge_summary.json deriv/turn/out/surge_quant.md deriv/turn/out/surge_quant.json
           git diff --cached --quiet && exit 0
           git commit -q -m "급등·급락 직전 10일 조사 결과 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
           for i in 1 2 3 4; do git pull -q --rebase origin deriv-research && git push -q origin HEAD:deriv-research && break; sleep 15; done
