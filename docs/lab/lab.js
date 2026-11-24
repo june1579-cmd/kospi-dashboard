@@ -24,7 +24,12 @@
   const sp = (v, d = 1) => v == null ? '–' : (v >= 0 ? '+' : '−') + Math.abs(v * 100).toFixed(d) + '%';
   const f2 = d3.format(',.2f'), f0 = d3.format(',.0f');
   const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
-  const colorOf = k => SLOTS[slot.get(k)];
+  // 신호 색 고르기(2026-11-24 사용자 요청 "신호 색상 선택가능하도록"): 고른 조합마다 범례·상세의 색 칸을 눌러 바꾼다. 이 브라우저에 기억(조합별)
+  const PRESET = ['#2a78d6', '#eb6834', '#1baf7a', '#6250d6', '#e87ba4', '#d62828', '#2e7d32', '#1e3a8a', '#0e7490', '#c026d3', '#8b5e34', '#6b7280'];   // 노랑은 뺐다
+  const custom = new Map();
+  try { Object.entries(JSON.parse(localStorage.getItem('lab_colors') || '{}')).forEach(([k, v]) => { if (/^#[0-9a-f]{6}$/i.test(v)) custom.set(k, v); }); } catch (e) {}
+  const saveColors = () => { try { localStorage.setItem('lab_colors', JSON.stringify(Object.fromEntries(custom))); } catch (e) {} };
+  const colorOf = k => custom.get(k) || SLOTS[slot.get(k)];
 
   // ---------------------------------------------------------------- 자료 읽기
   async function load(){
@@ -223,9 +228,10 @@
   function legend(){
     const lg = $('legend'); lg.replaceChildren();
     sel.forEach(k => {
-      const c = byKey.get(k), b = el('button'); b.type = 'button'; b.title = '그래프에서 끄기';
-      const s = el('span', 'sw'); s.style.background = colorOf(k); b.append(s, document.createTextNode(k + ' · ' + (c.name || c.grade) + (c.has_trades ? ' · ' + c.n + '거래' : ' · 거래 내역 없음') + ' ✕'));
-      b.addEventListener('click', () => pick(k)); lg.appendChild(b);
+      const c = byKey.get(k), chip = el('span', 'chip');
+      chip.append(swBtn(k), el('span', null, k + ' · ' + (c.name || c.grade) + (c.has_trades ? ' · ' + c.n + '거래' : ' · 거래 내역 없음')));
+      const x = el('button', 'x', '✕'); x.type = 'button'; x.title = '그래프에서 끄기'; x.setAttribute('aria-label', k + ' 끄기'); x.addEventListener('click', () => pick(k));
+      chip.appendChild(x); lg.appendChild(chip);
     });
     const ico = (svgTxt, txt) => { const s = el('span'); s.innerHTML = svgTxt; s.appendChild(document.createTextNode(txt)); lg.appendChild(s); };
     ico('<svg width="12" height="12" aria-hidden="true"><path d="M6,2L11,10L1,10Z" fill="currentColor"/></svg>', '매수(신호 다음 날 시가)');
@@ -235,11 +241,41 @@
     if (!sel.length) lg.appendChild(el('span', null, '· 아래 표에서 조합을 고르면 표시됩니다'));
   }
 
+  // ---------------------------------------------------------------- 색 고르기
+  function swBtn(k){
+    const b = el('button', 'swb'); b.type = 'button'; b.title = '색 바꾸기'; b.setAttribute('aria-label', k + ' 색 바꾸기'); b.setAttribute('aria-haspopup', 'true');
+    b.style.background = colorOf(k); b.addEventListener('click', e => { e.stopPropagation(); openPal(k, b); }); return b;
+  }
+  let pal = null;
+  function closePal(){ if (pal) { pal.remove(); pal = null; } }
+  function setColor(k, v){ if (v) custom.set(k, v); else custom.delete(k); saveColors(); fillTable(); fillDetail(); legend(); draw(); }
+  function openPal(k, anchor){
+    const again = pal && pal.dataset.k === k; closePal(); if (again) return;
+    pal = el('div', 'pal'); pal.dataset.k = k; pal.setAttribute('role', 'dialog'); pal.setAttribute('aria-label', k + ' 신호 색');
+    pal.appendChild(el('div', 'pal-h', k + ' 신호 색'));
+    const g = el('div', 'pal-g'), cur = custom.get(k);
+    PRESET.forEach(v => { const b = el('button'); b.type = 'button'; b.style.background = v; b.title = v; b.setAttribute('aria-label', '색 ' + v);
+      if (cur && cur.toLowerCase() === v) b.setAttribute('aria-pressed', 'true'); b.addEventListener('click', () => { closePal(); setColor(k, v); }); g.appendChild(b); });
+    pal.appendChild(g);
+    const row = el('div', 'pal-r'), lab = el('label'), inp = el('input'); inp.type = 'color';
+    inp.value = cur || PRESET[slot.get(k)] || '#2a78d6'; inp.addEventListener('input', () => setColor(k, inp.value)); inp.addEventListener('change', closePal);
+    lab.append(inp, document.createTextNode(' 직접 고르기')); row.appendChild(lab);
+    const rs = el('button', 'pal-reset', '기본색'); rs.type = 'button'; rs.addEventListener('click', () => { closePal(); setColor(k, null); }); row.appendChild(rs);
+    pal.appendChild(row); document.body.appendChild(pal);
+    const r = anchor.getBoundingClientRect(), w = pal.offsetWidth;
+    pal.style.left = Math.max(8, Math.min(window.scrollX + r.left, window.scrollX + document.documentElement.clientWidth - w - 8)) + 'px';
+    pal.style.top = (window.scrollY + r.bottom + 6) + 'px';
+    const first = pal.querySelector('button'); if (first) first.focus({preventScroll: true});
+  }
+  document.addEventListener('click', e => { if (pal && !pal.contains(e.target)) closePal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closePal(); });
+
   // ---------------------------------------------------------------- 고르기
   let toastT = 0;
   function toast(s){ $('toast').textContent = s; clearTimeout(toastT); toastT = setTimeout(() => { $('toast').textContent = ''; }, 3500); }
   function pick(k, quiet){
     const at = sel.indexOf(k);
+    closePal();
     if (at >= 0) { sel.splice(at, 1); slot.delete(k); }
     else {
       if (sel.length >= 5) { toast('최대 5개까지 고를 수 있습니다 — 먼저 고른 것을 끄세요.'); return; }
@@ -347,8 +383,8 @@
     if (!sel.length) { det.appendChild(el('p', 'empty', '표에서 줄을 누르면 조건 전문과 거래 내역이 여기에 나옵니다.')); return; }
     sel.forEach(k => {
       const c = byKey.get(k), d = el('div', 'dcard'); d.style.setProperty('--c', colorOf(k));
-      const h = el('h3'); const sw = el('span', 'sw'); sw.style.background = colorOf(k);
-      h.append(sw, document.createTextNode(k + ' · ' + SRC_NAME[c.src] + (c.src === 'S' ? ' ' + c.rank + '번 ' + c.name : ' ' + c.rank + '위')), el('span', 'tag' + (c.grade === '통과' || c.grade === '관찰 목록' ? ' pass' : ''), c.grade));
+      const h = el('h3');
+      h.append(swBtn(k), document.createTextNode(k + ' · ' + SRC_NAME[c.src] + (c.src === 'S' ? ' ' + c.rank + '번 ' + c.name : ' ' + c.rank + '위')), el('span', 'tag' + (c.grade === '통과' || c.grade === '관찰 목록' ? ' pass' : ''), c.grade));
       const off = el('button'); off.type = 'button'; off.className = 'tag'; off.style.cursor = 'pointer'; off.style.background = 'transparent'; off.style.color = 'inherit'; off.textContent = '끄기 ✕'; off.addEventListener('click', () => pick(k)); h.appendChild(off);
       d.appendChild(h); d.appendChild(el('div', 'code', c.id));
       const cond = el('div', 'cond'); cond.appendChild(el('div', null, c.desc));
