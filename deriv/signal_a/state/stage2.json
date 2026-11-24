@@ -1,5 +1,5 @@
 {
- "stage": "계산 시작(GitHub)",
+ "stage": "계산 중",
  "tracks": {
   "w1": "준비",
   "w2": "준비",
@@ -15,6 +15,7 @@
  "fail": null,
  "fails": [],
  "wish": [],
- "updated": "2026-11-24 10:37",
- "note": "2차(아쉬운 줄기 전부). 계산·판정·네 거름·REPORT2.md·카카오톡은 GitHub(signal-a-stage2.yml)가 한다. 실패하면 need_claude=true 와 fail 에 적힌다."
+ "updated": "2026-11-24 10:38",
+ "note": "2차(아쉬운 줄기 전부). 계산·판정·네 거름·REPORT2.md·카카오톡은 GitHub(signal-a-stage2.yml)가 한다. 실패하면 need_claude=true 와 fail 에 적힌다.",
+ "ledger_total": 264959
 }
