@@ -5874,9 +5874,33 @@
  {
   "date": "2026-11-23",
   "key": "foreign20",
-  "value": -14.33,
-  "text": "−14.3조 원(10.27~11.23, 잠정 포함)",
+  "value": -14.34,
+  "text": "−14.3조 원(10.27~11.23)",
   "unit": "조 원",
   "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-23",
+  "key": "vkospi",
+  "value": 55.83,
+  "text": "55.8(11.23)",
+  "unit": "",
+  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+ },
+ {
+  "date": "2026-11-23",
+  "key": "sox_dd",
+  "value": -34.48,
+  "text": "−34.5%(11.23, 9,588.05)",
+  "unit": "%",
+  "src": "https://indexes.nasdaqomx.com/Index/History/SOX"
+ },
+ {
+  "date": "2026-11-20",
+  "key": "hy_oas",
+  "value": 3.76,
+  "text": "3.76%(11.20)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/BAMLH0A0HYM2"
  }
 ]
