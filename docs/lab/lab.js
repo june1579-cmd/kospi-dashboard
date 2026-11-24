@@ -6,6 +6,7 @@
   'use strict';
   const $ = id => document.getElementById(id);
   const box = $('all-chart');
+  const MAXSEL = 10;   // 한 번에 그래프에 표시하는 조합 수(2026-11-24 상위 20 비교용으로 5 → 10)
   const SRC_NAME = {A: '갈래 A', B: '갈래 B', C: '갈래 C(미국·한국 연동)', D: '갈래 D(하락 전담)', S: 'Signal A 관찰 목록', W: 'Signal A 2차(네 거름 통과)'};
   const SRC_SHORT = {A: 'A', B: 'B', C: 'C', D: 'D', S: 'SA', W: '2차'};
   const SRC_ORD = {S: 0, W: 1, A: 2, B: 3, C: 4, D: 5};
@@ -151,9 +152,9 @@
     $('lede').textContent = '연구소 갈래 A·B·C·D 상위 조합 ' + combos.filter(c => 'ABCD'.includes(c.src)).length + '개(X1 거름 시험 대상), Signal A 관찰 목록 '
       + combos.filter(c => c.src === 'S').length + '개, Signal A 2차 네 거름 통과 ' + combos.filter(c => c.src === 'W').length + '개 — 그래프 표시 가능 ' + nT + '개 · 거래 내역 없음 ' + (combos.length - nT)
       + '개(거래일 기록이 남아 있지 않아 추정하지 않음). 표에서 줄을 누르면 그 조합의 매수일·매도일이 두 그래프에 표시됩니다.';
-    try { const m = /s=([^&]+)/.exec(location.hash); if (m) decodeURIComponent(m[1]).split(',').forEach(k => { if (byKey.has(k) && sel.length < 5) pick(k, true); }); } catch (e) {}
+    try { const m = /s=([^&]+)/.exec(location.hash); if (m) decodeURIComponent(m[1]).split(',').forEach(k => { if (byKey.has(k) && sel.length < MAXSEL) pick(k, true); }); } catch (e) {}
     pickRange(range, true);
-    buildHead(); fillTable(); fillDetail(); legend(); draw();
+    buildTop(); buildHead(); fillTable(); fillDetail(); legend(); draw();
   }
 
   // ---------------------------------------------------------------- 기간
@@ -333,7 +334,50 @@
   let rz = 0; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(draw, 120); });
 
   // ---------------------------------------------------------------- 범례
+  // ---------------------------------------------------------------- 적중률 상위 20(상승) 빠른 고르기 · 고른 조건식 전문 (2026-11-24 사용자 지시)
+  //  "적중률 순 상위 20(상승 신호 251개 중) — 각각 선택해 그래프에서 비교, 색상 선택, 그래프 위 칸에 작은 글씨로, 고른 조건식의 상세 조건도 모두 표시"
+  //  순서는 대화에서 드린 표와 같게: 상승(dir>0) 조합을 적중 큰 순 → 거래 많은 순. 숫자는 표와 같은 코스피 지수 기준.
+  let TOP20 = [], RS = new Map();
+  function buildTop(){
+    const up = combos.filter(c => c.dir > 0 && c.has_trades && c.hit != null);
+    up.slice().sort((a, b) => (b.sum ?? -9) - (a.sum ?? -9)).forEach((c, i) => RS.set(c.key, i + 1));
+    TOP20 = up.slice().sort((a, b) => (b.hit - a.hit) || (b.n - a.n)).slice(0, 20).map(c => c.key);
+  }
+  function fillTop(){
+    const w = $('top20'); if (!w) return; w.replaceChildren();
+    const h = el('div', 't20-h'); h.append(el('b', null, '적중률 상위 20'), el('span', null, ' 상승 신호 ' + RS.size + '개 중 · 누르면 그래프에 표시(최대 ' + MAXSEL + '개) · 색 칸을 누르면 색 바꾸기'));
+    w.appendChild(h);
+    const g = el('div', 't20-g');
+    TOP20.forEach((k, i) => {
+      const c = byKey.get(k), on = sel.includes(k), b = el('button', 't20' + (on ? ' on' : '')); b.type = 'button';
+      b.title = k + ' — ' + c.desc + '\n거래 ' + c.n + ' · 적중 ' + pct1(c.hit, c.n) + ' · 수익 합계 ' + sp(c.sum) + ' (상승 신호 중 수익 ' + RS.get(k) + '위)';
+      b.setAttribute('aria-pressed', String(on));
+      b.append(el('span', 't20-r', String(i + 1)), el('span', 't20-k', k), el('span', 't20-v', pct1(c.hit, c.n)), el('span', 't20-n', c.n + '건'), el('span', 't20-s', sp(c.sum, 0)));
+      b.addEventListener('click', () => pick(k));
+      const cell = el('span', 't20-c'); cell.appendChild(b); if (on) cell.appendChild(swBtn(k)); g.appendChild(cell);
+    });
+    w.appendChild(g);
+  }
+  function fillSelCond(){
+    const w = $('selcond'); if (!w) return; w.replaceChildren();
+    if (!sel.length) { w.hidden = true; return; } w.hidden = false;
+    w.appendChild(el('div', 't20-h', '고른 조건식 전문'));
+    sel.forEach(k => {
+      const c = byKey.get(k), r = el('div', 'sc'); r.style.setProperty('--c', colorOf(k, 'bo'));
+      const top = el('div', 'sc-t'); top.append(swBtn(k), el('b', null, k), el('span', null, ' · ' + SRC_NAME[c.src] + (c.src === 'S' ? ' ' + c.rank + '번' : c.src === 'W' ? ' 수익 ' + c.rank + '위' : ' ' + c.rank + '위') + ' · ' + c.grade
+        + (c.has_trades ? ' · ' + c.n + '거래 · 적중 ' + pct1(c.hit, c.n) + ' · 수익 ' + sp(c.sum) : '')));
+      const x = el('button', 'x', '✕'); x.type = 'button'; x.title = '끄기'; x.setAttribute('aria-label', k + ' 끄기'); x.addEventListener('click', () => pick(k)); top.appendChild(x);
+      r.appendChild(top);
+      const ts = c.toks && c.toks.size ? [...c.toks] : [c.desc], cl = el('div', 'sc-l');   // 조건을 한 줄로 이어 공간을 적게(조각은 원문을 그대로 나눈 것)
+      ts.forEach((t, i) => { if (i) cl.appendChild(el('span', 'sc-sep', ' + ')); cl.appendChild(el('span', 'sc-k', t)); });
+      r.appendChild(cl);
+      r.appendChild(el('div', 'sc-sell', '매수: 신호 다음 거래일 시가' + (/하루 늦/.test(c.desc) ? '(하루 늦춤 조건이면 그다음 날)' : '') + ' · 매도: ' + sellInfo(c).full));
+      if (c.exact) { try { const d = el('details', 'sc-x'); d.appendChild(el('summary', null, '규칙 원문(정확히)')); d.appendChild(exactList(JSON.parse(c.exact))); r.appendChild(d); } catch (e) {} }
+      w.appendChild(r);
+    });
+  }
   function legend(){
+    fillTop(); fillSelCond();
     const lg = $('legend'); lg.replaceChildren();
     sel.forEach(k => {
       const c = byKey.get(k), chip = el('span', 'chip');
@@ -412,7 +456,7 @@
     closePal();
     if (at >= 0) { sel.splice(at, 1); auto.delete(k); }
     else {
-      if (sel.length >= 5) { toast('최대 5개까지 고를 수 있습니다 — 먼저 고른 것을 끄세요.'); return; }
+      if (sel.length >= MAXSEL) { toast('최대 ' + MAXSEL + '개까지 고를 수 있습니다 — 먼저 고른 것을 끄세요.'); return; }
       const prev = sel[sel.length - 1], pc = prev ? colorsOf(prev) : null, start = {};
       ROLES.forEach(({k: r}) => { start[r] = pc ? lower(pc[r]) : DEF[r]; });   // 직전 조합 색에서 2단계 낮게(첫 조합은 기본색)
       auto.set(k, start); sel.push(k);
@@ -545,7 +589,7 @@
     tb.replaceChildren(frag);
     const on = new Set(sorts.filter(x => x.k.startsWith('c:')).map(x => x.k.slice(2)));
     document.querySelectorAll('.ct').forEach(x => x.classList.toggle('on', on.has(x.dataset.k)));
-    $('count').textContent = combos.length + '개 중 ' + L.length + '개 표시 · 고른 것 ' + sel.length + '/5';
+    $('count').textContent = combos.length + '개 중 ' + L.length + '개 표시 · 고른 것 ' + sel.length + '/' + MAXSEL;
   }
   function sortBar(){                          // 정렬 기준 막대: 기준 차례·방향 바꾸기·빼기, 모든 내용에서 더하기
     const bar = $('sortbar'); if (!bar) return; bar.replaceChildren(el('span', 'sb-l', '정렬'));
