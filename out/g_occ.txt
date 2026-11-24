@@ -1,0 +1,93 @@
+시각 2026-11-24 07:58 UTC
+
+== OCC 시리즈 검색 SPY HTTP 200 · 442215바이트 · 8917줄 · type application/octet-stream · last-modified None
+   Series Search Results for SPY
+   
+   Products for this underlying symbol are traded on: 
+   AMEX ARCA BATS BOX C2 CBOE EDGX EMLD GEM IEX ISE MCRY MEMX MIAX MPRL MXTO NOBO NSDQ PHLX SPHR 
+   
+   		Series/contract		Strike			Open Interest			
+   ProductSymbol	year	Month	Day	Integer	Dec	C/P	Call	Put	Position Limit	
+   2SPY  		2026	11	23	0	010	C   	0	0	360000000
+   SPY   		2026	11	23	550	000	C P 	0	3755	360000000
+   SPY   		2026	11	23	555	000	C P 	0	535	360000000
+   SPY   		2026	11	23	560	000	C P 	0	2458	360000000
+   SPY   		2026	11	23	565	000	C P 	0	861	360000000
+   SPY   		2026	11	23	570	000	C P 	0	3659	360000000
+   SPY   		2026	11	23	575	000	C P 	0	7220	360000000
+   2SPY  		2026	11	23	575	460	  P 	0	797	360000000
+   SPY   		2026	11	23	580	000	C P 	0	8999	360000000
+   SPY   		2026	11	23	585	000	C P 	0	3085	360000000
+   SPY   		2026	11	23	590	000	C P 	0	2328	360000000
+   SPY   		2026	11	23	595	000	C P 	0	2873	360000000
+   SPY   		2026	11	23	600	000	C P 	0	9120	360000000
+   SPY   		2026	11	23	605	000	C P 	0	33982	360000000
+   SPY   		2026	11	23	610	000	C P 	0	4215	360000000
+   SPY   		2026	11	23	615	000	C P 	0	2135	360000000
+   SPY   		2026	11	23	620	000	C P 	0	1667	360000000
+   SPY   		2026	11	23	625	000	C P 	0	2163	360000000
+
+== OCC FLEX 미결제 20261123 지수 HTTP 200 · 5489852바이트 · 38878줄 · type application/octet-stream · last-modified None
+                                                                                                                                                   
+    THE OPTIONS CLEARING CORPORATION - CHICAGO, ILLINOIS                             SYSTEM DATE 11/23/26    TIME 20:13:02    PAGE     1           
+    INDEX FLEX OPEN INTEREST REPORT                                                ACTIVITY DATE 11/23/26    PROGRAM ID BV2C0210   V005            
+                                                                                                                                                   
+    MARK PRICES NOTED ON THIS REPORT ARE DERIVED BY THE CORPORATION FROM FACTORS                                                                   
+    AND DATA DEEMED PERTINENT WHENEVER APPROPRIATE CLOSING PRICES IN FLEX                                                                          
+    OPTIONS ARE NOT AVAILABLE.                                                                                                                     
+                                                                                                                                                   
+                      EXPIRATION  STRIKE        MARK     OPEN                                                                                      
+         SYMBOL  P/C  MO DAY  YR  PRICE         PRICE    INTEREST                                                                                  
+                                                                                                                                                   
+    Cboe Bitcoin U.S. ETF Index Op                                                                                                                 
+         2CBTX    C   12 18 2026  01514 000     45.2601         8                                                                                  
+         2CBTX    P   12 18 2026  01514 000    119.3171         8                                                                                  
+                                                                                                                                                   
+                             ***  CLASS TOTALS  ***            16                                                                                  
+                                                                                                                                                   
+    CBOE DOW JONES INDUSTRIAL (EUR                                                                                                                 
+         2DJX     C   12 18 2026  00332 330    164.0919      2350                                                                                  
+         2DJX     P   12 18 2026  00332 330      0.1402      2350                                                                                  
+         2DJX     C   12 18 2026  00333 160    163.2659       986                                                                                  
+         2DJX     P   12 18 2026  00333 160      0.1418       986                                                                                  
+         2DJX     C   12 18 2026  00339 950    156.5084       870                                                                                  
+         2DJX     P   12 18 2026  00339 950      0.1553       870                                                                                  
+         2DJX     C   12 18 2026  00341 950    154.5180      1296                                                                                  
+   … 행사가 750 근처 줄:
+         2DJX     C   12 15 2028  00489 750     71.5288      1404                                                                                  
+         2DJX     P   12 15 2028  00489 750     31.6306      1404                                                                                  
+         2DJX     C   12 21 2029  00521 750     72.0197      1080                                                                                  
+         2DJX     P   12 21 2029  00521 750     45.3365      1080                                                                                  
+         2DJX     C   12 21 2029  00526 710     69.4570       750                                                                                  
+         2DJX     P   12 21 2029  00526 710     47.1032       750                                                                                  
+
+== OCC 거래량 조회 SPY 20261123 HTTP 200 · 5306바이트 · 148줄 · type application/octet-stream · last-modified None
+   quantity,underlying,symbol,actype,porc,exchange,actdate
+   15418,SPY,2SPY,C,C,CBOE,11/23/2026,
+   8,SPY,2SPY,F,C,CBOE,11/23/2026,
+   15410,SPY,2SPY,M,C,CBOE,11/23/2026,
+   15013,SPY,2SPY,C,P,CBOE,11/23/2026,
+   8,SPY,2SPY,F,P,CBOE,11/23/2026,
+   15005,SPY,2SPY,M,P,CBOE,11/23/2026,
+   8000,SPY,2SPY,M,C,AMEX,11/23/2026,
+   8000,SPY,2SPY,M,P,AMEX,11/23/2026,
+   8,SPY,2SPY,C,C,ISE,11/23/2026,
+   8,SPY,2SPY,M,C,ISE,11/23/2026,
+   8,SPY,2SPY,C,P,ISE,11/23/2026,
+   8,SPY,2SPY,M,P,ISE,11/23/2026,
+   26461,SPY,4SPY,C,C,CBOE,11/23/2026,
+   5626,SPY,4SPY,F,C,CBOE,11/23/2026,
+   20835,SPY,4SPY,M,C,CBOE,11/23/2026,
+   74621,SPY,4SPY,C,P,CBOE,11/23/2026,
+   2962,SPY,4SPY,F,P,CBOE,11/23/2026,
+   71659,SPY,4SPY,M,P,CBOE,11/23/2026,
+   20,SPY,4SPY,C,C,AMEX,11/23/2026,
+   20,SPY,4SPY,F,C,AMEX,11/23/2026,
+   738,SPY,4SPY,F,C,ISE,11/23/2026,
+   738,SPY,4SPY,M,C,ISE,11/23/2026,
+   2,SPY,4SPY,C,P,ISE,11/23/2026,
+   692,SPY,4SPY,F,P,ISE,11/23/2026,
+Traceback (most recent call last):
+  File "/home/runner/work/kospi-dashboard/kospi-dashboard/probe.py", line 22, in <module>
+    import yfinance as yf
+ModuleNotFoundError: No module named 'yfinance'
