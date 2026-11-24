@@ -1,0 +1,41 @@
+# 금투협 공표 시각 재기(2026-11-24). 평일 08~16시(KST) 매시 시작해 5분마다 FreeSIS 의 마지막 기준일을 읽고, 새 기준일이 처음 보인 시각을 kofia-watch 가지에 적는다.
+# 자료·대시보드는 고치지 않는다(기록만). 그날 공표를 둘 다 본 뒤에는 바로 끝난다. Claude 를 쓰지 않는다.
+name: kofia-watch
+on:
+  schedule:
+    - cron: '7 23 * * 0-4'    # 08:07 KST
+    - cron: '7 0-7 * * 1-5'   # 09:07 ~ 16:07 KST
+  workflow_dispatch:
+    inputs:
+      loop_min:
+        description: '몇 분 동안 볼지(시험은 1)'
+        default: '55'
+permissions:
+  contents: write
+concurrency:
+  group: kofia-watch
+  cancel-in-progress: false
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 65
+    steps:
+      - uses: actions/checkout@v4
+      - name: 기록 가지 준비
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          if git ls-remote --exit-code --heads origin kofia-watch >/dev/null 2>&1; then
+            git fetch -q --depth 1 origin kofia-watch && git worktree add -q kw FETCH_HEAD -B kofia-watch
+          else
+            git worktree add -q --detach kw && cd kw && git checkout -q --orphan kofia-watch && git rm -rfq . && echo "금투협 공표 시각 기록(kofia_watch.py). kofia_pub_log.csv 를 본다." > README.md && git add README.md && git commit -q -m "기록 가지 시작"
+          fi
+      - name: 확인
+        env:
+          LOOP_MIN: ${{ github.event.inputs.loop_min || '55' }}
+        run: pip -q install requests && python3 kofia_watch.py kw
+      - name: 저장
+        if: always()
+        run: |
+          cd kw; git add -A; git diff --cached --quiet && exit 0
+          git commit -q -m "금투협 공표 확인 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
+          git push -q origin HEAD:kofia-watch
