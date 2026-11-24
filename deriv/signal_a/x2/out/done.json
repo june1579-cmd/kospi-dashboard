@@ -1,0 +1,11 @@
+{
+ "done": "2026-11-24 13:19",
+ "data_end": "2026-11-20",
+ "seconds": 1.0,
+ "rows_a": 116,
+ "rows_b": 96,
+ "check": {
+  "B0_indep_d1_h5_all": 47,
+  "vrank_nan": 0
+ }
+}
