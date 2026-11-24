@@ -45,7 +45,8 @@ def note(name, df=None, err=None, date_col='date'):
 def yf_daily():
     import yfinance as yf
     d = yf.download(list(YF), start='2005-01-01', interval='1d', auto_adjust=False, progress=False, group_by='ticker', threads=True)
-    ny_today = pd.Timestamp.now(tz='America/New_York').normalize().tz_localize(None)
+    ny_now = pd.Timestamp.now(tz='America/New_York'); ny_today = ny_now.normalize().tz_localize(None)
+    closed = ny_now.hour * 60 + ny_now.minute >= 16 * 60 + 30   # 2026-11-24: 뉴욕 16:30 뒤면 오늘 행도 확정 종가로 씀(전에는 07:17 KST 실행이 전날까지만 받아 하루 늦었음)
     rows = []
     for t in YF:
         try:
@@ -53,7 +54,7 @@ def yf_daily():
         except Exception:
             continue
         x.index = pd.to_datetime(x.index).tz_localize(None).normalize()
-        x = x[x.index < ny_today]   # 뉴욕 오늘 행은 장중일 수 있어 뺌(확정 종가만)
+        x = x[(x.index < ny_today) | ((x.index == ny_today) & closed)]   # 뉴욕 오늘 행은 장 마감(16:30) 전이면 장중일 수 있어 뺌(확정 종가만)
         x.columns = ['open', 'high', 'low', 'close', 'volume']; x['ticker'] = t; x.index.name = 'date'
         rows.append(x.reset_index())
     A = pd.concat(rows, ignore_index=True)
@@ -173,40 +174,31 @@ def cftc():
 
 
 def cboe_chain():
-    """Cboe 지연 시세(약 15분) 옵션 전 종목 스냅숏 — 지금 시점만 있고 과거는 없다. 날마다 요약(행사가별 미결제·감마)을 쌓는다."""
+    """옵션 체인 스냅숏(SPY·QQQ, 45일 안 만기) — 야후에서만 받는다. 날마다 요약(행사가별 미결제·감마)을 쌓는다.
+    2026-11-24: Cboe 지연 시세(cdn.cboe.com/api/global/delayed_quotes) 수집을 뺐다. Cboe 가 자동 추출을 금지하고(IP 차단 경고)
+    GitHub 에서도 이미 403 으로 막혀 있었다. 계속 두드리면 같은 Cboe 서버의 풋/콜·VIX 공개 파일까지 막힐 수 있다.
+    SPX·NDX(지수 옵션)는 야후가 주지 않아 받지 않는다."""
+    import yfinance as yf
     out = []
-    for sym, u in (('SPX', '_SPX'), ('SPY', 'SPY'), ('QQQ', 'QQQ'), ('NDX', '_NDX'), ('VIX', '_VIX')):
+    for sym in ('SPY', 'QQQ'):
         try:
-            j = get(f'https://cdn.cboe.com/api/global/delayed_quotes/options/{u}.json').json()
-            d = j['data']; spot = d.get('current_price') or d.get('close'); ts = j.get('timestamp')
-            o = pd.DataFrame(d['options'])
-            # 옵션 기호: 루트 + YYMMDD + C/P + 행사가×1000(8자리)
-            s = o['option'].str.extract(r'^(?P<root>[A-Z]+)(?P<exp>\d{6})(?P<cp>[CP])(?P<k>\d{8})$')
-            o = o.join(s); o['K'] = o['k'].astype(float) / 1000; o['exp'] = pd.to_datetime(o['exp'], format='%y%m%d')
-            o = o[['root', 'exp', 'cp', 'K', 'open_interest', 'volume', 'iv', 'delta', 'gamma', 'bid', 'ask']]
-            o['sym'] = sym; o['spot'] = spot; o['ts'] = ts
+            tk = yf.Ticker(sym); spot = float(tk.history(period='5d')['Close'].iloc[-1]); rows = []
+            lim = pd.Timestamp.now().normalize() + pd.Timedelta(days=45)
+            for e in [e for e in list(tk.options) if pd.Timestamp(e) <= lim][:30]:   # 45일 안 만기 전부
+                ch = tk.option_chain(e)
+                for cp, x in (('C', ch.calls), ('P', ch.puts)):
+                    rows.append(pd.DataFrame({'root': sym, 'exp': pd.Timestamp(e), 'cp': cp, 'K': x['strike'], 'open_interest': x['openInterest'], 'volume': x['volume'],
+                                              'iv': x['impliedVolatility'], 'delta': float('nan'), 'gamma': float('nan'), 'bid': x['bid'], 'ask': x['ask']}))
+                time.sleep(0.5)
+            o = pd.concat(rows, ignore_index=True); o['sym'] = sym; o['spot'] = spot; o['ts'] = pd.Timestamp.now(tz='America/New_York').strftime('%Y-%m-%d %H:%M ET(야후)')
+            oi = pd.to_numeric(o['open_interest'], errors='coerce').fillna(0).sum(); vol = pd.to_numeric(o['volume'], errors='coerce').fillna(0).sum()
+            if oi < max(100000, 0.2 * vol):   # 2026-11-24: 야후는 뉴욕 새벽~아침에 미결제를 0 으로 비운다(01:09 ET 실행에서 합 178) — 그때는 기존 파일을 지킨다
+                raise RuntimeError(f'야후 미결제 합 {oi:,.0f}(거래량 {vol:,.0f}) — 비어 있는 시간대로 보여 저장하지 않음')
             o.to_csv(os.path.join(DATA, f'chain_now_{sym}.csv.gz'), index=False)
-            out.append({'sym': sym, 'rows': int(len(o)), 'spot': spot, 'ts': ts, 'oi': float(o['open_interest'].sum())})
+            out.append({'sym': sym, 'src': 'yahoo', 'rows': int(len(o)), 'spot': spot, 'oi': float(o['open_interest'].sum())})
         except Exception as e:
-            out.append({'sym': sym, 'err': repr(e)[:200]})
-    if not any('rows' in x for x in out):   # Cboe 가 막으면 야후 옵션 체인(SPY·QQQ, 45일 안 만기)으로 대신 — 감마는 us_dash 에서 계산
-        import yfinance as yf
-        for sym in ('SPY', 'QQQ'):
-            try:
-                tk = yf.Ticker(sym); spot = float(tk.history(period='5d')['Close'].iloc[-1]); rows = []
-                lim = pd.Timestamp.now().normalize() + pd.Timedelta(days=45)
-                for e in [e for e in list(tk.options) if pd.Timestamp(e) <= lim][:30]:   # 45일 안 만기 전부
-                    ch = tk.option_chain(e)
-                    for cp, x in (('C', ch.calls), ('P', ch.puts)):
-                        rows.append(pd.DataFrame({'root': sym, 'exp': pd.Timestamp(e), 'cp': cp, 'K': x['strike'], 'open_interest': x['openInterest'], 'volume': x['volume'],
-                                                  'iv': x['impliedVolatility'], 'delta': float('nan'), 'gamma': float('nan'), 'bid': x['bid'], 'ask': x['ask']}))
-                    time.sleep(0.5)
-                o = pd.concat(rows, ignore_index=True); o['sym'] = sym; o['spot'] = spot; o['ts'] = pd.Timestamp.now(tz='America/New_York').strftime('%Y-%m-%d %H:%M ET(야후)')
-                o.to_csv(os.path.join(DATA, f'chain_now_{sym}.csv.gz'), index=False)
-                out.append({'sym': sym, 'src': 'yahoo', 'rows': int(len(o)), 'spot': spot, 'oi': float(o['open_interest'].sum())})
-            except Exception as e:
-                out.append({'sym': sym, 'src': 'yahoo', 'err': repr(e)[:200]})
-    LOG['cboe_chain'] = {'ok': any('rows' in x for x in out), 'items': out}; print('옵션 스냅숏', out, flush=True)
+            out.append({'sym': sym, 'src': 'yahoo', 'err': repr(e)[:200]})
+    LOG['option_chain'] = {'ok': any('rows' in x for x in out), 'items': out}; print('옵션 스냅숏', out, flush=True)
 
 
 STEPS = {'yf': yf_daily, 'yfh': yf_hourly, 'idx': cboe_index, 'pcra': cboe_pcr_archive, 'pcrd': cboe_pcr_daily, 'cftc': cftc, 'chain': cboe_chain}

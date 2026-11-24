@@ -155,7 +155,7 @@ def main():
     # 벽 기록 쌓기(미국은 과거가 없어 오늘부터)
     wp = os.path.join(DATA, 'us_walls_hist.csv')
     rows = [{'date': v['ts'][:10], 'sym': s, 'spot': v['spot'], 'call_wall': v['call_wall'], 'put_wall': v['put_wall'], 'zero_gamma': v['zero_gamma'], 'gex_total': v.get('gex_total'), 'max_pain': v['max_pain']}
-            for s, v in J['us_chain'].items() if isinstance(v, dict) and 'spot' in v]
+            for s, v in J['us_chain'].items() if isinstance(v, dict) and 'spot' in v and v.get('call_wall') is not None]   # 2026-11-24: 미결제가 비어 벽을 못 구한 날은 쌓지 않음
     if rows:
         W = pd.concat([pd.read_csv(wp)] if os.path.exists(wp) else [] + [pd.DataFrame(rows)]) if False else pd.DataFrame(rows)
         if os.path.exists(wp): W = pd.concat([pd.read_csv(wp), W])
