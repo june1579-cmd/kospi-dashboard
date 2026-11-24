@@ -243,8 +243,9 @@
 
   // ---------------------------------------------------------------- 색 고르기
   function swBtn(k){
-    const b = el('button', 'swb'); b.type = 'button'; b.title = '색 바꾸기'; b.setAttribute('aria-label', k + ' 색 바꾸기'); b.setAttribute('aria-haspopup', 'true');
-    b.style.background = colorOf(k); b.addEventListener('click', e => { e.stopPropagation(); openPal(k, b); }); return b;
+    const b = el('button', 'swb'); b.type = 'button'; b.title = '신호 색 바꾸기'; b.setAttribute('aria-label', k + ' 신호 색 바꾸기'); b.setAttribute('aria-haspopup', 'true');
+    const dot = el('span', 'dot'); dot.style.background = colorOf(k); b.append(dot, el('span', null, '색'));
+    b.addEventListener('click', e => { e.stopPropagation(); e.preventDefault(); openPal(k, b); }); return b;
   }
   let pal = null;
   function closePal(){ if (pal) { pal.remove(); pal = null; } }
@@ -338,7 +339,14 @@
       const NUMK = ['hit', 'edge', 'sum', 'avg', 'last'];
       cols().forEach(col => {
         const k = col.k;
-        if (k === 'pick') { const pk = el('span', 'pk'); if (sel.includes(c.key)) { pk.style.background = colorOf(c.key); pk.style.borderColor = colorOf(c.key); } td(null, 'pick').appendChild(pk); }
+        if (k === 'pick') {
+          const cell = td(null, 'pick');
+          if (sel.includes(c.key)) {                // 고른 줄의 색 칸 = 색 바꾸기(줄의 다른 곳을 누르면 끄기)
+            const pk = el('button', 'pk pkb'); pk.type = 'button'; pk.title = '신호 색 바꾸기'; pk.setAttribute('aria-label', c.key + ' 신호 색 바꾸기');
+            pk.style.background = colorOf(c.key); pk.style.borderColor = colorOf(c.key);
+            pk.addEventListener('click', e => { e.stopPropagation(); openPal(c.key, pk); }); cell.appendChild(pk);
+          } else cell.appendChild(el('span', 'pk'));
+        }
         else if (k === 'src') td(SRC_SHORT[c.src], 'src');
         else if (k === 'rank') td(c.src === 'S' ? '#' + c.rank : String(c.rank), 'num');
         else if (k === 'round') td(c.round != null ? c.round + '회' : '–', 'num');

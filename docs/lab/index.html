@@ -46,8 +46,10 @@ h2{font-size:var(--fs-heading);font-weight:var(--fw-medium);margin:0}
 .chip{display:inline-flex;align-items:center;gap:.4rem;border:1px solid var(--color-border-line);background:var(--color-panel);color:var(--color-fg);border-radius:999px;padding:2px 4px 2px 4px}
 .legend .chip button.x{border:0;background:transparent;color:var(--color-fg-muted);padding:2px 6px;border-radius:999px}
 .legend .chip button.x:hover{color:var(--color-fg);background:var(--color-bg)}
-button.swb{width:1.15rem;height:1.15rem;border-radius:50%;border:2px solid var(--color-panel);box-shadow:0 0 0 1px var(--color-border-line);padding:0;cursor:pointer;flex:none}
-.legend .chip button.swb{padding:0;border:2px solid var(--color-panel)}
+button.swb{display:inline-flex;align-items:center;gap:.3rem;font:inherit;font-size:var(--fs-cap);color:var(--color-fg);background:var(--color-bg);border:1px solid var(--color-border-line);border-radius:999px;padding:2px 8px 2px 3px;cursor:pointer;flex:none}
+button.swb .dot{width:1.05rem;height:1.05rem;border-radius:50%;box-shadow:0 0 0 1px var(--color-border-line)}
+button.pkb{cursor:pointer;padding:0;width:1.1rem;height:1.1rem}
+.legend .chip button.swb{padding:2px 8px 2px 3px;border:1px solid var(--color-border-line);background:var(--color-bg)}
 button.swb:hover,button.swb:focus-visible{box-shadow:0 0 0 2px var(--color-fg)}
 .pal{position:absolute;z-index:20;background:var(--pop);border:1px solid var(--color-border-line);border-radius:var(--radius);box-shadow:var(--pop-shadow);padding:10px;font-size:var(--fs-cap);width:max-content;max-width:calc(100vw - 16px)}
 .pal-h{color:var(--color-fg-muted);margin-bottom:6px}
@@ -153,7 +155,7 @@ td.pick{width:1.6rem}
 
   <section class="card" aria-labelledby="tbl-h">
     <div class="head"><h2 id="tbl-h">조합 표</h2><span class="muted" id="count"></span></div>
-    <p class="note">열 제목을 누르면 정렬(한 번 더 누르면 반대로). 숫자는 <b>코스피 지수 기준</b>(신호 다음 날 시가 매수 → 청산일 종가 매도, 앞 거래가 끝난 뒤의 신호만 센 독립 거래). 등급은 연구소 숫자(코스피200 선물 기준)로 매긴 것. 거래 10건 미만은 %로 적지 않습니다. 줄을 누르면 그래프에 표시(최대 5개, 다시 누르면 꺼짐). 신호 색은 그래프 위 범례나 아래 상세의 동그란 색 칸을 눌러 바꿉니다(이 브라우저에 조합별로 기억).</p>
+    <p class="note">열 제목을 누르면 정렬(한 번 더 누르면 반대로). 숫자는 <b>코스피 지수 기준</b>(신호 다음 날 시가 매수 → 청산일 종가 매도, 앞 거래가 끝난 뒤의 신호만 센 독립 거래). 등급은 연구소 숫자(코스피200 선물 기준)로 매긴 것. 거래 10건 미만은 %로 적지 않습니다. 줄을 누르면 그래프에 표시(최대 5개, 다시 누르면 꺼짐). 신호 색은 고른 줄 왼쪽의 색 칸, 그래프 위 범례나 아래 상세의 「● 색」 단추를 눌러 바꿉니다(이 브라우저에 조합별로 기억).</p>
     <div class="fil">
       <div class="seg" id="f-src" role="group" aria-label="갈래">
         <button type="button" data-v="" aria-pressed="true">전체</button><button type="button" data-v="A">A</button><button type="button" data-v="B">B</button><button type="button" data-v="C">C</button><button type="button" data-v="D">D</button><button type="button" data-v="S" title="Signal A 관찰 목록">SA 관찰</button>
@@ -177,7 +179,7 @@ td.pick{width:1.6rem}
 
   <p class="foot">자료 2026-11-20 까지 · 수익률은 코스피 지수 기준(신호 다음 날 시가 → 청산일 종가), 거래별 단순 합계 · 결과를 보고 고른 규칙의 숫자 · 투자 권유 아님</p>
 </div>
-<script src="lab.js"></script>
-<script src="gesture.js"></script>
+<script src="lab.js?v=20261124c"></script>
+<script src="gesture.js?v=20261124c"></script>
 </body>
 </html>
