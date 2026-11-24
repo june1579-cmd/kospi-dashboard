@@ -1,4 +1,4 @@
-# 금투협 공표 시각 재기(2026-11-24). 평일 08~16시(KST) 매시 시작해 5분마다 FreeSIS 의 마지막 기준일을 읽고, 새 기준일이 처음 보인 시각을 kofia-watch 가지에 적는다.
+# 금투협 공표 시각 재기(2026-11-24). 평일 08~16시(KST) 매시 시작해 10분마다 FreeSIS 의 마지막 기준일을 읽고, 새 기준일이 처음 보인 시각을 kofia-watch 가지에 적는다.
 # 자료·대시보드는 고치지 않는다(기록만). 그날 공표를 둘 다 본 뒤에는 바로 끝난다. Claude 를 쓰지 않는다.
 name: kofia-watch
 on:
@@ -19,6 +19,8 @@ jobs:
   watch:
     runs-on: ubuntu-latest
     timeout-minutes: 65
+    outputs:
+      send: ${{ steps.w.outputs.send }}
     steps:
       - uses: actions/checkout@v4
       - name: 기록 가지 준비
@@ -30,6 +32,7 @@ jobs:
             git worktree add -q --detach kw && cd kw && git checkout -q --orphan kofia-watch && git rm -rfq . && echo "금투협 공표 시각 기록(kofia_watch.py). kofia_pub_log.csv 를 본다." > README.md && git add README.md && git commit -q -m "기록 가지 시작"
           fi
       - name: 확인
+        id: w
         env:
           LOOP_MIN: ${{ github.event.inputs.loop_min || '55' }}
         run: pip -q install requests && python3 kofia_watch.py kw
@@ -39,3 +42,26 @@ jobs:
           cd kw; git add -A; git diff --cached --quiet && exit 0
           git commit -q -m "금투협 공표 확인 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
           git push -q origin HEAD:kofia-watch
+  notify:      # 3일치가 쌓인 날 한 번만 카카오톡
+    needs: watch
+    if: ${{ needs.watch.outputs.send == '1' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    concurrency:
+      group: dashboard-update     # 카카오 토큰 연장이 다른 알림과 겹치지 않게 같은 줄에 선다
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q requests cryptography
+      - name: 카카오톡(금투협 공개 시각 통계)
+        env:
+          KAKAO_REST_KEY: ${{ secrets.KAKAO_REST_KEY }}
+          KAKAO_REFRESH_TOKEN: ${{ secrets.KAKAO_REFRESH_TOKEN }}
+          KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
+        run: |
+          git fetch -q --depth 1 origin kofia-watch && git show FETCH_HEAD:notify.txt > /tmp/kofia_notify.txt
+          python kakao_send.py --file /tmp/kofia_notify.txt || echo "카카오톡 발송 실패(위 로그 참고)"
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add -A state && git commit -m "카카오 토큰 연장" -q && git pull -q --rebase && git push -q || true
