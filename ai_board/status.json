@@ -1,5 +1,5 @@
 {
- "built_at": "2026-11-24T20:27:00+09:00",
+ "built_at": "2026-11-25T03:22:12+09:00",
  "trigger": "workflow_run dashboard-update",
  "marker": "2026-11-24T19:38:46+09:00 저녁",
  "request_applied": false,
@@ -10,25 +10,25 @@
  "kr_last_session": "2026-11-24",
  "stale": [],
  "changed": [
-  "VKOSPI 55.83→58.45(11.24)",
-  "외국인 코스피 20거래일 순매수 -14.18→-14.1(11.24)"
+  "미국 하이일드 스프레드 3.76→3.63(11.23)",
+  "미국 하이일드 스프레드 3.76%→3.63%(11.23)"
  ],
  "files_changed": [
   "thresholds",
-  "indicators",
+  "macro",
   "history",
   "runs"
  ],
  "files": {
-  "thresholds": "8dc625def1ca36a41ff83581e1487837a950008267428d46f30eaf484a02d3c2",
+  "thresholds": "fec2e9d0607ffe90c51f175b508e3bbaef90a5f4708daf0db0ea02252750f121",
   "indicators": "6e8eef6a3f3d905263368d89da7cf41994146bd169b97de408f1557b1569b93e",
   "market": "d3a76b3e3c1507011aac313c49291cf8f679ad6aae7b0e57b80afdf886027f88",
   "margin": "9cacd3f2fe6fa8ca65830963cf8247d9de0c9a52ac22df760e15cd094e91ed2c",
   "forced": "faec6c1d739da776ed7ded8fd8b0e188689af205ab6287d36025f2400b02d56c",
-  "macro": "a94896ff67a7efe3c37539f5a4fbbe6e300d0e2577f8d0ff308c6e876653e7f6",
+  "macro": "1b19013bac6fdeaf52a3d0cbb42d195067c476568e557905fe2d9be51a37897d",
   "events": "c40ba530f01abe8d8d068ec4b8397eb42c6dac91d8d9e9a310cc642672ff0cf4",
-  "history": "7b0ce4fc529da481fd6e7fafbf4a1a7a36282469bb46eab655bbee9878c98754",
-  "runs": "da66cb47e323ebd95743e48758cb51b6bfced24fac92ac7eb5c341d11103c5ff",
+  "history": "8b35355c87849b312637056cdc951264be9448961eb546df8b88d16a67aba789",
+  "runs": "aa33b676139eefa2c22ee317ed177577c15db31e9e1973e33717c319380f283e",
   "news": "29d35ecfe46cb8576e59697ec281ac6152ea675185cce33daa9d56aaa071753c",
   "scenarios": "0a76d773ea2dbd406498e38017ce08c0feadd77a001cd6d4ca2392882c2656eb",
   "episodes": "5fc42c60296afdbd24d0b7f7b1d774e337ab66d562bd9442f44a44b613b13e51"
