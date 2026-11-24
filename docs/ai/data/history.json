@@ -5930,9 +5930,17 @@
  {
   "date": "2026-11-24",
   "key": "foreign20",
-  "value": -14.18,
-  "text": "−14.2조 원(10.28~11.24, 잠정 포함)",
+  "value": -14.1,
+  "text": "−14.1조 원(10.28~11.24)",
   "unit": "조 원",
   "src": "https://github.com/june1579-cmd/kospi-dashboard/tree/main/out/flows_daily.csv"
+ },
+ {
+  "date": "2026-11-24",
+  "key": "vkospi",
+  "value": 58.45,
+  "text": "58.5(11.24, KRX)",
+  "unit": "",
+  "src": "https://github.com/june1579-cmd/kospi-dashboard/tree/main/out/market_daily.csv"
  }
 ]

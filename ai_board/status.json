@@ -1,5 +1,5 @@
 {
- "built_at": "2026-11-24T20:08:03+09:00",
+ "built_at": "2026-11-24T20:27:00+09:00",
  "trigger": "workflow_run dashboard-update",
  "marker": "2026-11-24T19:38:46+09:00 저녁",
  "request_applied": false,
@@ -8,28 +8,27 @@
  "notes": [],
  "us_last_session": "2026-11-23",
  "kr_last_session": "2026-11-24",
- "stale": [
-  {
-   "key": "vkospi",
-   "name": "VKOSPI",
-   "as_of": "2026-11-23",
-   "expected": "2026-11-24",
-   "level": "stale",
-   "why": "한국 마지막 거래일 종가(16:10 뒤)"
-  }
+ "stale": [],
+ "changed": [
+  "VKOSPI 55.83→58.45(11.24)",
+  "외국인 코스피 20거래일 순매수 -14.18→-14.1(11.24)"
  ],
- "changed": [],
- "files_changed": [],
+ "files_changed": [
+  "thresholds",
+  "indicators",
+  "history",
+  "runs"
+ ],
  "files": {
-  "thresholds": "67d54b28694b26a70fce5b4f40d2cad2c1f206f5c8aea3c9a3fc6e2191ad5563",
-  "indicators": "4e27aafb2f280a2e07e24fddf2812f85a3eac9b622ef3d7a07426e188f7c3ffa",
+  "thresholds": "8dc625def1ca36a41ff83581e1487837a950008267428d46f30eaf484a02d3c2",
+  "indicators": "6e8eef6a3f3d905263368d89da7cf41994146bd169b97de408f1557b1569b93e",
   "market": "d3a76b3e3c1507011aac313c49291cf8f679ad6aae7b0e57b80afdf886027f88",
   "margin": "9cacd3f2fe6fa8ca65830963cf8247d9de0c9a52ac22df760e15cd094e91ed2c",
   "forced": "faec6c1d739da776ed7ded8fd8b0e188689af205ab6287d36025f2400b02d56c",
   "macro": "a94896ff67a7efe3c37539f5a4fbbe6e300d0e2577f8d0ff308c6e876653e7f6",
   "events": "c40ba530f01abe8d8d068ec4b8397eb42c6dac91d8d9e9a310cc642672ff0cf4",
-  "history": "2007d6c4c2b4991469570dc55c77121ca3f50d02dcb729956f06af7368df24dd",
-  "runs": "8faf2dddc4cfe1aa937cfc59b59b36318fb2d26f2b1559a24b739b0523cad88f",
+  "history": "7b0ce4fc529da481fd6e7fafbf4a1a7a36282469bb46eab655bbee9878c98754",
+  "runs": "da66cb47e323ebd95743e48758cb51b6bfced24fac92ac7eb5c341d11103c5ff",
   "news": "29d35ecfe46cb8576e59697ec281ac6152ea675185cce33daa9d56aaa071753c",
   "scenarios": "0a76d773ea2dbd406498e38017ce08c0feadd77a001cd6d4ca2392882c2656eb",
   "episodes": "5fc42c60296afdbd24d0b7f7b1d774e337ab66d562bd9442f44a44b613b13e51"
