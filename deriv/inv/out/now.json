@@ -1,13 +1,13 @@
 {
- "date": "2026-11-20",
- "made": "2026-11-23",
+ "date": "2026-11-23",
+ "made": "2026-11-24",
  "signals": {},
  "probs": {
-  "DN1|all|ens": 0.418,
-  "DN3|all|ens": 0.317,
-  "DN5|all|ens": 0.117,
-  "DN10|all|ens": 0.125,
-  "DROP5|all|ens": 0.034,
-  "DROP10|all|ens": 0.012
+  "DN1|all|ens": 0.499,
+  "DN3|all|ens": 0.28,
+  "DN5|all|ens": 0.148,
+  "DN10|all|ens": 0.142,
+  "DROP5|all|ens": 0.077,
+  "DROP10|all|ens": 0.01
  }
 }
