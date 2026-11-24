@@ -23,7 +23,8 @@
 3. 계산을 기다리는 동안 화면 코드를 쓴다. Agent 도구가 있으면 '그래프'와 '표·선택' 을 나눠 동시에 쓰게 해도 된다.
 4. 이 세션에서 화면을 실제로 열어 확인한다(로컬 서버 + 헤드리스 브라우저): 오류 없음, 표 정렬·거르기, 줄 선택 시 두 그래프에 표시, 휴대폰 너비. 고칠 것은 고친다.
 5. main 에 push. 코스피 대시보드 웹판(`docs/index.html` 또는 page.html)은 고치지 않는다 — 링크는 다는 것이 한 줄로 안전하게 되면 달고, 아니면 달지 않고 보고한다.
-6. 마지막 메시지: 만든 것·주소(june1579-cmd.github.io/kospi-dashboard/lab/)·확인한 것·못 한 것을 다섯 줄 이내, 끝에 "투자 권유 아님".
+6. **끝나면 카카오톡으로 보고한다(사용자 지시 2026-11-24 "완료되면 카카오톡으로 보고")**: 보내는 방법은 `.github/workflows/signal-a-pipeline.yml`(또는 signal-a-x1.yml)의 카카오톡 단계와 같은 방식 — 비밀값은 워크플로에서 `${{ secrets.이름 }}` 으로만 넘기고 이 세션은 읽지 않는다. `.github/workflows/labweb-notify.yml`(deriv-research 가지, `deriv/labweb/notify.txt` push 로 시작)을 만들어 그 파일의 글을 보내게 하고, 웹판을 main 에 올려 실제로 열리는 것을 확인한 뒤 notify.txt 를 push 한다. 글: 머리말 [연구소 웹판], 200자 이내 — 완성 여부, 주소(june1579-cmd.github.io/kospi-dashboard/lab/), 조합 수(그래프 표시 가능 n개 / 거래 내역 없음 n개), 못 한 것이 있으면 한 줄. 중간에 멈추게 되면(도구 거부·사용량 한도·3번 실패) 그때도 같은 방법으로 "[연구소 웹판] 중단 — <이유>" 를 보낸다. 워크플로 실행이 성공했는지 확인한다.
+7. 마지막 메시지: 만든 것·주소(june1579-cmd.github.io/kospi-dashboard/lab/)·확인한 것·못 한 것을 다섯 줄 이내, 끝에 "투자 권유 아님".
 
 ## 꼭 지킬 것
 - 고치는 곳: main 의 `docs/lab/`, deriv-research 의 `deriv/labweb/`·`.github/workflows/labweb-*.yml` 뿐. 코스피 대시보드(docs/page.html·relief.js·data), deriv/signal_a 결과, deriv/lab, 다른 워크플로는 읽기만 한다.
