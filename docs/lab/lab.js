@@ -13,8 +13,8 @@
   let combos = [], trades = {}, PX = null, meta = {}, days = [], fIdx = new Map(), dIdx = new Map(), byKey = new Map();
   let i0 = 0, i1 = 0, range = 'y2';
   const sel = [];                 // 고른 순서
-  const filt = {src: '', grade: '', has: false, all4: false, q: ''};
-  let sortK = 'default', sortDir = 1;
+  const filt = {src: new Set(), grade: new Set(), has: false, all4: false, q: ''};   // 갈래·등급은 여러 개 고르기(2026-11-24 "복수 선택도 가능하게")
+  const sorts = [];               // 정렬 기준 [{k, dir}] — 앞의 것이 먼저(2026-11-24 "모든 조합의 내용도 정렬할수 있도록 복수 선택도 가능하게")
 
   // ---------------------------------------------------------------- 글자
   const pct1 = (v, n) => (v == null || (n != null && n < 10)) ? '–' : (v * 100).toFixed(1) + '%';
@@ -22,6 +22,33 @@
   const sp = (v, d = 1) => v == null ? '–' : (v >= 0 ? '+' : '−') + Math.abs(v * 100).toFixed(d) + '%';
   const f2 = d3.format(',.2f'), f0 = d3.format(',.0f');
   const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+  // 매도 기준(2026-11-24 "매도 기준도 표시"): 새로 정하지 않고 원문에서만 —
+  //  Signal A 관찰 목록 = exact 의 매수·매도 원문, 연구소 조합 = 조건 설명 끝 「→ N일 상승/하락」(연구소 lab_common.exit_after: 신호 다음 거래일을 1일째로 N거래일째 종가),
+  //  그 꼴이 아니면(익절·손절, 만기까지, 큰 변동 먼저, 규칙별 보유일) 조건 설명의 청산 문구를 그대로. 실제 보유일은 거래 내역(매수일~매도일 거래일 수)에서 센다.
+  const SELL = new Map();
+  function holdDays(t){ const bi = dIdx.get(t[1]), ei = dIdx.get(t[3]); return bi == null || ei == null ? null : ei - bi + 1; }
+  function sellInfo(c){
+    if (SELL.has(c.key)) return SELL.get(c.key);
+    let n = null, short, full;
+    if (c.src === 'S') {
+      let ex = null; try { ex = JSON.parse(c.exact); } catch (e) {}
+      n = ex && Number.isFinite(+ex['보유일']) ? +ex['보유일'] : null;
+      short = n ? n + '거래일째 종가' : '확인 불가';
+      full = ex && ex['매도'] ? '매수 ' + ex['매수'] + ' → 매도 ' + ex['매도'] + '(Signal A 규칙 원문)' : '확인 불가';
+    } else {
+      const at = c.desc.lastIndexOf('→'), tail = at >= 0 ? c.desc.slice(at + 1).trim() : '';
+      const m = /^(\d+)\s*일\s*(상승|하락)$/.exec(tail), ns = [...c.desc.matchAll(/→\s*(\d+)일/g)].map(x => +x[1]);
+      if (m) { n = +m[1]; short = n + '거래일째 종가'; full = '신호 다음 거래일 시가에 사서, 그날을 1일째로 세어 ' + n + '거래일째 종가에 판다(연구소 lab_common.exit_after).'; }
+      else if (/각자 보유일/.test(c.desc) && ns.length > 1) { const u = [...new Set(ns)]; short = '규칙별 ' + u.join('·') + '거래일째'; full = '함께 쓰는 규칙마다 제 보유일(' + u.join('·') + '거래일째 종가)에 판다 — 먼저 난 신호부터, 보유 중 새 신호는 건너뜀(조건 설명 원문).'; }
+      else if (tail) { const t2 = tail.replace(/\s*(상승|하락)$/, ''); short = t2; full = '조건 설명의 청산 규칙: ' + t2 + ' — 정해진 보유일이 아니라 거래마다 다름(조건 설명 원문).'; }
+      else { short = '확인 불가'; full = '확인 불가'; }
+    }
+    const T = trades[c.key], hs = c.has_trades && T ? T.map(holdDays).filter(v => v != null).sort((a, b) => a - b) : [];
+    const act = hs.length ? {min: hs[0], max: hs[hs.length - 1], med: hs.length % 2 ? hs[(hs.length - 1) / 2] : (hs[hs.length / 2 - 1] + hs[hs.length / 2]) / 2, n: hs.length} : null;
+    const o = {n, short, full, act, sortv: n != null ? n : (act ? act.med : null)};
+    SELL.set(c.key, o); return o;
+  }
+  const actTxt = a => !a ? '거래 내역 없음' : (a.min === a.max ? a.min + '거래일(모든 거래 같음)' : '가운뎃값 ' + a.med + ' · 짧게 ' + a.min + ' ~ 길게 ' + a.max + '거래일') + ' · ' + a.n + '건';
   // 신호 색 고르기
   //  2026-11-24 "신호 색상 선택가능하도록" → 조합별 색
   //  2026-11-24 "매수 매도 맞고 틀리고 전부 색상을 따로 선택할수 있도록 조합이 추가되면 선택된 색상에서 2단계 낮은 색상으로 표시 후 선택할수 있도록"
@@ -117,7 +144,7 @@
   document.querySelectorAll('#zoom button').forEach(b => b.addEventListener('click', () => zoomTo(b.dataset.z)));
 
   // ---------------------------------------------------------------- 그래프
-  let tip = null, rule = null, G = null;      // G = 마지막 그림의 좌표 정보(값 보기용)
+  let tip = null, rule = null, G = null, dtags = [];      // G = 마지막 그림의 좌표 정보(값 보기용)
   function events(){                          // 고른 조합별 {날짜 위치 → 사건}
     return sel.filter(k => trades[k] && trades[k].length).map(k => {
       const m = new Map();
@@ -153,7 +180,7 @@
     if (!days.length) return;
     box.querySelectorAll('svg,.tip').forEach(n => n.remove());
     const W = Math.max(300, box.clientWidth), mob = W < 560;
-    const ml = mob ? 46 : 58, mr = mob ? 8 : 14, H1 = mob ? 230 : 290, H2 = mob ? 150 : 190, T1 = 22, T2 = T1 + H1 + 30, B2 = T2 + H2, H = B2 + 26;
+    const ml = mob ? 46 : 58, mr = mob ? 8 : 14, H1 = mob ? 230 : 290, H2 = mob ? 150 : 190, T1 = 22, T2 = T1 + H1 + 46, B2 = T2 + H2, H = B2 + 26;   // 위 칸 아래에도 날짜 줄
     const L = ml, R = W - mr, n = i1 - i0 + 1, step = (R - L) / Math.max(1, n - 1);
     const xf = i => L + (i - i0) * step;
     const pad = Math.ceil(n / 2), a = Math.max(0, i0 - pad), b = Math.min(days.length - 1, i1 + pad);   // 손가락으로 밀 때 빈 곳이 덜 보이게 양옆을 조금 더 그린다(칸 밖은 잘림)
@@ -207,12 +234,14 @@
         });
       });
     });
-    // 날짜 글자(아래)
-    svg.append('g').selectAll('text').data(tks).join('text').attr('class', 'tick').attr('x', d => d[2]).attr('y', B2 + 18).attr('text-anchor', 'middle').text(d => d[1]);
+    // 날짜 글자 — 그래프마다 각각(2026-11-24 "그래프마다 날짜를 각각 표시")
+    [T1 + H1 + 17, B2 + 18].forEach(yy => svg.append('g').selectAll('text').data(tks).join('text').attr('class', 'tick').attr('x', d => d[2]).attr('y', yy).attr('text-anchor', 'middle').text(d => d[1]));
     svg.append('line').attr('x1', L).attr('x2', R).attr('y1', T1 + H1).attr('y2', T1 + H1).style('stroke', 'var(--chart-axis)');
     svg.append('line').attr('x1', L).attr('x2', R).attr('y1', B2).attr('y2', B2).style('stroke', 'var(--chart-axis)');
     // 값 보기
     rule = svg.append('line').attr('y1', T1).attr('y2', B2).style('stroke', 'var(--chart-ref)').style('pointer-events', 'none').attr('opacity', 0);
+    dtags = [T1 + H1, B2].map(yb => { const g = svg.append('g').attr('class', 'dtag').style('pointer-events', 'none').attr('opacity', 0);   // 값 보기 때 두 칸 아래에 그날 날짜
+      g.append('rect').attr('y', yb + 3).attr('height', 19).attr('rx', 4); g.append('text').attr('y', yb + 16.5).attr('text-anchor', 'middle'); return g; });
     const hit = svg.append('rect').attr('x', L).attr('y', T1).attr('width', R - L).attr('height', B2 - T1).style('fill', 'transparent').style('cursor', 'grab');
     tip = el('div', 'tip'); tip.hidden = true; box.appendChild(tip);
     G = {L, R, step, xf, EV, T1, B2};
@@ -224,6 +253,7 @@
     if (!G || !tip) return false;
     const i = Math.max(i0, Math.min(i1, Math.round(i0 + (x - G.L) / G.step))), d = days[i], K = PX.kospi, F = PX.fut, j = fIdx.get(d);
     const xi = G.xf(i); rule.attr('x1', xi).attr('x2', xi).attr('opacity', 1);
+    dtags.forEach(g => { const w = 84, x = Math.max(G.L + w / 2, Math.min(G.R - w / 2, xi)); g.select('rect').attr('x', x - w / 2).attr('width', w); g.select('text').attr('x', x).text(d); g.attr('opacity', 1); });
     tip.replaceChildren(el('div', 'h', d));
     const row = (col, name, val, hollow) => { const r = el('div', 'r'); if (col) { const s = el('span', 'sw'); if (hollow) { s.style.border = '2px solid ' + col; } else s.style.background = col; r.appendChild(s); } r.append(el('span', null, name), el('b', null, val)); tip.appendChild(r); };
     const chg = i > 0 ? K.c[i] / K.c[i - 1] - 1 : null;
@@ -231,16 +261,17 @@
     row(null, '선물', j != null ? f2(F.c[j]) : '확인 불가');
     G.EV.forEach(({key, m}) => {
       const e = m.get(i); if (!e) return; const t = e.t, C = colorsOf(key), bc = t[7] ? C.bo : C.bn;
-      if (e.k === 'buy') row(bc, key + ' 매수', f2(t[2]));
-      else if (e.k === 'sell' || e.k === 'both') row(t[7] ? C.so : C.sn, key + ' 매도', f2(t[4]) + ' · ' + sp(t[6]) + (t[7] ? ' 맞음' : ' 틀림'), !t[7]);
-      else row(bc, key + ' 보유 중', t[1] + ' 매수');
+      const hd = holdDays(t), sv = sellInfo(byKey.get(key));
+      if (e.k === 'buy') { row(bc, key + ' 매수', f2(t[2])); row(null, '　매도 기준', sv.short + ' → ' + t[3] + (hd ? '(' + hd + '거래일째)' : '')); }
+      else if (e.k === 'sell' || e.k === 'both') row(t[7] ? C.so : C.sn, key + ' 매도', f2(t[4]) + ' · ' + sp(t[6]) + (t[7] ? ' 맞음' : ' 틀림') + (hd ? ' · ' + hd + '거래일째' : ''), !t[7]);
+      else { const bi = dIdx.get(t[1]); row(bc, key + ' 보유 중', (bi != null ? (i - bi + 1) + (hd ? '/' + hd : '') + '거래일째 · ' : '') + '매도 ' + t[3]); }
     });
     tip.hidden = false;
     const bw = box.clientWidth, w = tip.offsetWidth; let left = xi + 14; if (left + w > bw) left = Math.max(0, xi - 14 - w);
     tip.style.left = left + 'px'; tip.style.top = Math.max(0, Math.min(y - 12, box.clientHeight - tip.offsetHeight)) + 'px';
     return true;
   }
-  function hide(){ if (tip) tip.hidden = true; if (rule) rule.attr('opacity', 0); }
+  function hide(){ if (tip) tip.hidden = true; if (rule) rule.attr('opacity', 0); dtags.forEach(g => g.attr('opacity', 0)); }
   // 마우스로 끌어 이동
   let drag = null, dragRaf = 0;
   window.addEventListener('mousemove', ev => {
@@ -261,7 +292,7 @@
     const lg = $('legend'); lg.replaceChildren();
     sel.forEach(k => {
       const c = byKey.get(k), chip = el('span', 'chip');
-      chip.append(swBtn(k), el('span', null, k + ' · ' + (c.name || c.grade) + (c.has_trades ? ' · ' + c.n + '거래' : ' · 거래 내역 없음')));
+      chip.append(swBtn(k), el('span', null, k + ' · ' + (c.name || c.grade) + (c.has_trades ? ' · ' + c.n + '거래' : ' · 거래 내역 없음') + ' · 매도 ' + sellInfo(c).short));
       const x = el('button', 'x', '✕'); x.type = 'button'; x.title = '그래프에서 끄기'; x.setAttribute('aria-label', k + ' 끄기'); x.addEventListener('click', () => pick(k));
       chip.appendChild(x); lg.appendChild(chip);
     });
@@ -354,6 +385,7 @@
     {k: 'round', label: '회차', num: true, sort: c => c.round, title: '연구소 회차'},
     {k: 'grade', label: '등급', sort: c => ({'관찰 목록': 0, '통과': 1, '관찰': 2}[c.grade] ?? 3), title: '연구소 등급(코스피200 선물 기준)'},
     {k: 'desc', label: '조건 설명', sort: c => c.desc, cls: 'desc'},
+    {k: 'sell', label: '매도 기준', sort: c => sellInfo(c).sortv, d0: 1, title: '청산 규칙(원문). 정렬은 보유 거래일 수(정해진 보유일, 없으면 실제 보유일 가운뎃값)'},
     {k: 'n', label: '독립 거래', num: true, sort: c => c.n},
     {k: 'hit', label: '적중', num: true, sort: c => (c.n >= 10 ? c.hit : null)},
     {k: 'edge', label: '아무 날과 차이', num: true, sort: c => (c.n >= 10 ? c.edge : null), title: '적중 − 같은 해 아무 날 적중(해 구성 맞춤)'},
@@ -362,6 +394,34 @@
     {k: 'last', label: '최근 신호일', num: true, sort: c => c.last},
     {k: 'f', label: '네 거름', sort: c => (c.has_trades ? c.f.filter(Boolean).length + (c.all4 ? 0.5 : 0) : null), title: '①②③④ 통과 여부'},
   ];
+  // 표에 없는 내용도 정렬 기준으로(상세에 나오는 숫자들)
+  const okN = (n, v) => (n != null && n >= 10 ? v : null);
+  const EXTRA = [
+    {k: 'key', label: '조합 이름', sort: c => c.key, d0: 1},
+    {k: 'family', label: '가족(계열)', sort: c => c.family || null, d0: 1},
+    {k: 'dir', label: '방향(오름 먼저)', sort: c => c.dir, d0: -1},
+    {k: 'n_sig', label: '신호 수', num: true, sort: c => c.n_sig},
+    {k: 'hold', label: '실제 보유일 가운뎃값', num: true, d0: 1, sort: c => { const a = sellInfo(c).act; return a ? a.med : null; }},
+    {k: 'base', label: '같은 해 아무 날 적중', num: true, sort: c => okN(c.n, c.base)},
+    {k: 'p1', label: '앞 구간(2010~2023) 적중', num: true, sort: c => (c.p1 ? okN(c.p1[0], c.p1[1]) : null)},
+    {k: 'p2', label: '뒤 구간(2024~) 적중', num: true, sort: c => (c.p2 ? okN(c.p2[0], c.p2[1]) : null)},
+    {k: 'falsify', label: '반증 시험 버틴 수', num: true, sort: c => (c.falsify ? parseInt(c.falsify, 10) : null)},
+    {k: 'p', label: '가짜 신호 p(작은 것 먼저)', num: true, d0: 1, sort: c => c.p},
+    {k: 'lab_n', label: '연구소 전체 거래 수', num: true, sort: c => (c.lab ? c.lab.all_n : null)},
+    {k: 'lab_hit', label: '연구소 전체 적중', num: true, sort: c => (c.lab ? okN(c.lab.all_n, c.lab.all_hit) : null)},
+    {k: 'lab_lb', label: '연구소 윌슨 하한', num: true, sort: c => (c.lab ? c.lab.all_lb : null)},
+    {k: 'lab_dev', label: '연구소 앞 구간 적중', num: true, sort: c => (c.lab ? okN(c.lab.dev_n, c.lab.dev_hit) : null)},
+    {k: 'lab_p2', label: '연구소 뒤 구간 적중', num: true, sort: c => (c.lab ? okN(c.lab.p2_n, c.lab.p2_hit) : null)},
+  ];
+  const fieldOf = k => COLS.find(c => c.k === k && c.sort) || EXTRA.find(c => c.k === k);
+  const dir0 = f => f.d0 != null ? f.d0 : (f.num || f.k === 'f' ? -1 : 1);
+  const CIRC = '①②③④⑤⑥⑦⑧⑨⑩';
+  const ordTxt = i => CIRC[i] || '(' + (i + 1) + ')';
+  function cycleSort(k){                       // 열 제목: 처음 누름 = 기준 더하기 · 두 번째 = 반대로 · 세 번째 = 빼기
+    const f = fieldOf(k); if (!f) return; const i = sorts.findIndex(x => x.k === k), d0 = dir0(f);
+    if (i < 0) sorts.push({k, dir: d0}); else if (sorts[i].dir === d0) sorts[i].dir = -d0; else sorts.splice(i, 1);
+    fillTable();
+  }
   const NARROW = matchMedia('(max-width:700px)');
   function cols(){                             // 휴대폰: 숫자를 먼저 보이게 조건 설명을 맨 뒤로, 회차는 뺀다(상세에 있음)
     if (!NARROW.matches) return COLS;
@@ -373,7 +433,7 @@
     cols().forEach(c => {
       const th = el('th', (c.num ? 'num ' : '') + (c.sort ? 'sort' : ''), c.label); if (c.title) th.title = c.title;
       if (c.sort) { th.tabIndex = 0; th.setAttribute('role', 'button'); const ar = el('span', 'ar'); th.dataset.k = c.k; th.appendChild(ar);
-        const go = () => { if (sortK === c.k) sortDir = -sortDir; else { sortK = c.k; sortDir = c.num || c.k === 'f' ? -1 : 1; } fillTable(); };
+        const go = () => cycleSort(c.k);
         th.addEventListener('click', go); th.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } }); }
       tr.appendChild(th);
     });
@@ -381,16 +441,22 @@
   }
   function rows(){
     const q = filt.q.trim().toLowerCase();
-    let L = combos.filter(c => (!filt.src || c.src === filt.src) && (!filt.grade || c.grade === filt.grade) && (!filt.has || c.has_trades) && (!filt.all4 || c.all4)
+    let L = combos.filter(c => (!filt.src.size || filt.src.has(c.src)) && (!filt.grade.size || filt.grade.has(c.grade)) && (!filt.has || c.has_trades) && (!filt.all4 || c.all4)
       && (!q || (c.key + ' ' + c.id + ' ' + c.desc + ' ' + (c.name || '') + ' ' + (c.family || '')).toLowerCase().includes(q)));
     const dflt = (a, b) => (SRC_ORD[a.src] - SRC_ORD[b.src]) || (a.rank - b.rank);
-    if (sortK === 'default') return L.sort(dflt);
-    const col = COLS.find(c => c.k === sortK), v = c => { const x = col.sort(c); return (x === undefined || x === null || (typeof x === 'number' && !isFinite(x))) ? null : x; };
-    return L.sort((a, b) => { const va = v(a), vb = v(b); if (va === null && vb === null) return dflt(a, b); if (va === null) return 1; if (vb === null) return -1;
-      const r = typeof va === 'string' ? va.localeCompare(vb, 'ko') : va - vb; return r * sortDir || dflt(a, b); });
+    const act = sorts.map(x => ({f: fieldOf(x.k), dir: x.dir})).filter(x => x.f);
+    if (!act.length) return L.sort(dflt);
+    const v = (f, c) => { const x = f.sort(c); return (x === undefined || x === null || (typeof x === 'number' && !isFinite(x))) ? null : x; };
+    return L.sort((a, b) => {                  // 앞 기준이 같으면 다음 기준으로, 값이 없는 것('–')은 늘 아래
+      for (const {f, dir} of act) { const va = v(f, a), vb = v(f, b); if (va === null && vb === null) continue; if (va === null) return 1; if (vb === null) return -1;
+        const r = typeof va === 'string' ? va.localeCompare(vb, 'ko') : va - vb; if (r) return r * dir; }
+      return dflt(a, b); });
   }
   function fillTable(){
-    document.querySelectorAll('#combo-tbl th.sort').forEach(th => { th.querySelector('.ar').textContent = th.dataset.k === sortK ? (sortDir > 0 ? '▲' : '▼') : ''; th.setAttribute('aria-sort', th.dataset.k === sortK ? (sortDir > 0 ? 'ascending' : 'descending') : 'none'); });
+    document.querySelectorAll('#combo-tbl th.sort').forEach(th => { const i = sorts.findIndex(x => x.k === th.dataset.k);
+      th.querySelector('.ar').textContent = i < 0 ? '' : (sorts.length > 1 ? ordTxt(i) : '') + (sorts[i].dir > 0 ? '▲' : '▼');
+      th.setAttribute('aria-sort', i === 0 ? (sorts[0].dir > 0 ? 'ascending' : 'descending') : 'none'); });
+    sortBar();
     const tb = document.querySelector('#combo-tbl tbody'), L = rows(), frag = document.createDocumentFragment();
     L.forEach(c => {
       const tr = el('tr', (sel.includes(c.key) ? 'on' : '') + (c.has_trades ? '' : ' none')); tr.tabIndex = 0;
@@ -410,6 +476,7 @@
         else if (k === 'rank') td(c.src === 'S' ? '#' + c.rank : String(c.rank), 'num');
         else if (k === 'round') td(c.round != null ? c.round + '회' : '–', 'num');
         else if (k === 'grade') td(null).appendChild(el('span', 'tag' + (c.grade === '통과' || c.grade === '관찰 목록' ? ' pass' : ''), c.grade));
+        else if (k === 'sell') { const sv = sellInfo(c), x = td(sv.short, 'sellc'); x.title = sv.full + '\n실제 보유: ' + actTxt(sv.act); }
         else if (k === 'desc') { const dd = td(null, 'desc'); dd.title = c.desc; dd.appendChild(el('div', null, (c.name ? c.name + ' — ' : '') + c.desc)); }
         else if (!c.has_trades) { if (k === 'n') { const x = td('거래 내역 없음', 'muted'); x.colSpan = 6; } else if (k === 'f') td('–', 'f4'); }
         else if (k === 'n') td(String(c.n), 'num');
@@ -422,8 +489,29 @@
     tb.replaceChildren(frag);
     $('count').textContent = combos.length + '개 중 ' + L.length + '개 표시 · 고른 것 ' + sel.length + '/5';
   }
-  function segFilter(id, k){ document.querySelectorAll('#' + id + ' button').forEach(b => b.addEventListener('click', () => {
-    filt[k] = b.dataset.v; document.querySelectorAll('#' + id + ' button').forEach(x => x.setAttribute('aria-pressed', String(x === b))); fillTable(); })); }
+  function sortBar(){                          // 정렬 기준 막대: 기준 차례·방향 바꾸기·빼기, 모든 내용에서 더하기
+    const bar = $('sortbar'); if (!bar) return; bar.replaceChildren(el('span', 'sb-l', '정렬'));
+    if (!sorts.length) bar.appendChild(el('span', 'muted', '처음 순서(갈래·순위)'));
+    sorts.forEach((x, i) => { const f = fieldOf(x.k); if (!f) return; const chip = el('span', 'sb-c');
+      const b = el('button', null, (sorts.length > 1 ? ordTxt(i) + ' ' : '') + f.label + ' ' + (x.dir > 0 ? '▲' : '▼')); b.type = 'button'; b.title = '눌러서 반대로';
+      b.addEventListener('click', () => { x.dir = -x.dir; fillTable(); });
+      const up = el('button', 'sb-x', '↑'); up.type = 'button'; up.title = '앞 기준으로'; up.setAttribute('aria-label', f.label + ' 앞으로'); up.disabled = i === 0;
+      up.addEventListener('click', () => { sorts.splice(i - 1, 0, sorts.splice(i, 1)[0]); fillTable(); });
+      const rm = el('button', 'sb-x', '✕'); rm.type = 'button'; rm.title = '이 기준 빼기'; rm.setAttribute('aria-label', f.label + ' 기준 빼기');
+      rm.addEventListener('click', () => { sorts.splice(i, 1); fillTable(); });
+      chip.append(b); if (sorts.length > 1) chip.append(up); chip.append(rm); bar.appendChild(chip); });
+    const s = el('select'); s.setAttribute('aria-label', '정렬 기준 더하기');
+    s.appendChild(new Option('+ 기준 더하기', ''));
+    [['표의 열', COLS.filter(c => c.sort)], ['더 많은 내용', EXTRA]].forEach(([g, L]) => { const og = document.createElement('optgroup'); og.label = g;
+      L.filter(f => !sorts.some(x => x.k === f.k)).forEach(f => og.appendChild(new Option(f.label, f.k))); if (og.children.length) s.appendChild(og); });
+    s.addEventListener('change', () => { const f = fieldOf(s.value); if (f) { sorts.push({k: f.k, dir: dir0(f)}); fillTable(); } });
+    bar.appendChild(s);
+    if (sorts.length) { const c = el('button', 'sb-clr', '처음 순서로'); c.type = 'button'; c.addEventListener('click', () => { sorts.length = 0; fillTable(); }); bar.appendChild(c); }
+  }
+  function segFilter(id, k){                   // 여러 개 고르기: 누르면 켜고 끄기, 「전체」는 모두 해제
+    const bs = [...document.querySelectorAll('#' + id + ' button')];
+    const sync = () => bs.forEach(x => x.setAttribute('aria-pressed', String(x.dataset.v === '' ? filt[k].size === 0 : filt[k].has(x.dataset.v))));
+    bs.forEach(b => b.addEventListener('click', () => { const v = b.dataset.v; if (v === '') filt[k].clear(); else if (filt[k].has(v)) filt[k].delete(v); else filt[k].add(v); sync(); fillTable(); })); }
   segFilter('f-src', 'src'); segFilter('f-grade', 'grade');
   $('f-has').addEventListener('change', e => { filt.has = e.target.checked; fillTable(); });
   $('f-all4').addEventListener('change', e => { filt.all4 = e.target.checked; fillTable(); });
@@ -461,6 +549,9 @@
       kv.appendChild(el('h4', null, '출처'));
       put('갈래', SRC_NAME[c.src]); if (c.round != null) put('연구소 회차', c.round + '회'); if (c.family) put('가족', c.family);
       put('방향', c.dir > 0 ? '오름(지수 상승이 맞음)' : '내림(지수 하락이 맞음)'); put('거래일 출처', c.trade_src + (c.trade_note ? ' — ' + c.trade_note : ''));
+      const sv = sellInfo(c);
+      kv.appendChild(el('h4', null, '매도 기준'));
+      put('규칙', sv.full); put('실제 보유(거래일)', actTxt(sv.act));
       if (c.lab) {
         kv.appendChild(el('h4', null, '연구소 숫자(코스피200 선물 기준, 순위·등급을 매긴 숫자)'));
         put('전체', (c.lab.all_n ?? '–') + '건 · ' + pct1(c.lab.all_hit, c.lab.all_n) + ' · 윌슨 하한 ' + pct1(c.lab.all_lb));
@@ -483,12 +574,12 @@
       else {
         d.appendChild(el('div', 'note', '거래 내역 ' + T.length + '건(독립 거래) — 줄을 누르면 그래프가 그 거래로 옮겨 갑니다.' + (c.dir < 0 ? ' 내림 조합이라 수익률은 지수 하락이 +입니다.' : '')));
         const w = el('div', 'trw'), tb = el('table'), th = el('thead'), hr = el('tr');
-        const heads = ['#', '신호일', '매수일', '매수가', '매도일', '매도가'].concat(c.dir < 0 ? ['코스피 등락'] : []).concat(['수익률', '맞음']);
+        const heads = ['#', '신호일', '매수일', '매수가', '매도일', '매도가', '보유일'].concat(c.dir < 0 ? ['코스피 등락'] : []).concat(['수익률', '맞음']);
         heads.forEach((s, i) => hr.appendChild(el('th', i === 0 || i === 3 || i === 5 || i >= 6 ? 'num' : '', s))); th.appendChild(hr); tb.appendChild(th);
         const body = el('tbody');
         T.slice().reverse().forEach((t, j) => {
           const r = el('tr'), cell = (s, cls) => r.appendChild(el('td', cls, s));
-          cell(String(T.length - j), 'num'); cell(t[0]); cell(t[1]); cell(f2(t[2]), 'num'); cell(t[3]); cell(f2(t[4]), 'num');
+          cell(String(T.length - j), 'num'); cell(t[0]); cell(t[1]); cell(f2(t[2]), 'num'); cell(t[3]); cell(f2(t[4]), 'num'); const hd = holdDays(t); cell(hd != null ? hd + '일' : '확인 불가', 'num');
           if (c.dir < 0) cell(sp(t[5], 2), 'num');
           cell(sp(t[6], 2), 'num'); cell(t[7] ? '● 맞음' : '○ 틀림', 'num');
           r.addEventListener('click', () => focusTrade(t)); body.appendChild(r);

@@ -73,6 +73,17 @@ button.swb:hover,button.swb:focus-visible{box-shadow:0 0 0 2px var(--color-fg)}
 #all-chart{position:relative;min-height:440px;margin-top:6px}
 #all-chart svg{display:block;overflow:visible}
 .tick{font-size:var(--fs-cap);fill:var(--color-fg-muted)}
+.sortbar{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:8px 0;font-size:var(--fs-cap)}
+.sortbar .sb-l{color:var(--color-fg-muted);margin-right:2px}
+.sortbar .sb-c{display:inline-flex;align-items:center;border:1px solid var(--color-border-line);border-radius:999px;background:var(--color-bg);overflow:hidden}
+.sortbar .sb-c button{font:inherit;font-size:var(--fs-cap);border:0;background:transparent;color:var(--color-fg);padding:3px 8px;cursor:pointer}
+.sortbar .sb-c button.sb-x{color:var(--color-fg-muted);padding:3px 6px}
+.sortbar .sb-c button.sb-x:hover:not(:disabled){color:var(--color-fg)}
+.sortbar .sb-c button:disabled{opacity:.35;cursor:default}
+.sortbar select,.sortbar .sb-clr{font:inherit;font-size:var(--fs-cap);border:1px solid var(--color-border-line);background:var(--color-panel);color:var(--color-fg);border-radius:999px;padding:3px 8px;cursor:pointer;max-width:13rem}
+td.sellc{min-width:6.5rem;max-width:10rem;white-space:normal;font-size:var(--fs-cap);line-height:1.35}
+.dtag rect{fill:var(--color-fg)}
+.dtag text{fill:var(--color-panel);font-size:var(--fs-cap);font-variant-numeric:tabular-nums}
 .ptitle{font-size:var(--fs-cap);fill:var(--color-fg);font-weight:var(--fw-medium)}
 .tip{position:absolute;z-index:2;background:var(--pop);border:1px solid var(--color-border-line);border-radius:var(--radius);box-shadow:var(--pop-shadow);padding:6px 10px;font-size:var(--fs-cap);pointer-events:none;white-space:nowrap}
 .tip .h{color:var(--color-fg-muted);margin-bottom:2px}
@@ -164,7 +175,7 @@ td.pick{width:1.6rem}
 
   <section class="card" aria-labelledby="tbl-h">
     <div class="head"><h2 id="tbl-h">조합 표</h2><span class="muted" id="count"></span></div>
-    <p class="note">열 제목을 누르면 정렬(한 번 더 누르면 반대로). 숫자는 <b>코스피 지수 기준</b>(신호 다음 날 시가 매수 → 청산일 종가 매도, 앞 거래가 끝난 뒤의 신호만 센 독립 거래). 등급은 연구소 숫자(코스피200 선물 기준)로 매긴 것. 거래 10건 미만은 %로 적지 않습니다. 줄을 누르면 그래프에 표시(최대 5개, 다시 누르면 꺼짐). 신호 색은 고른 줄 왼쪽의 색 칸, 그래프 위 범례나 아래 상세의 「● 색」 단추를 눌러 바꿉니다(이 브라우저에 조합별로 기억).</p>
+    <p class="note">정렬은 여러 기준을 겹칠 수 있습니다 — 열 제목을 누를 때마다 기준이 더해지고(누른 차례 ①②③), 같은 제목을 한 번 더 누르면 반대로, 세 번째는 빼기. 표 위 「+ 기준 더하기」에서 표에 없는 내용(연구소 숫자·앞뒤 구간·반증·p·신호 수 등)도 고를 수 있습니다. 갈래·등급 단추도 여러 개 함께 고를 수 있습니다. 숫자는 <b>코스피 지수 기준</b>(신호 다음 날 시가 매수 → 청산일 종가 매도, 앞 거래가 끝난 뒤의 신호만 센 독립 거래). 등급은 연구소 숫자(코스피200 선물 기준)로 매긴 것. 거래 10건 미만은 %로 적지 않습니다. 줄을 누르면 그래프에 표시(최대 5개, 다시 누르면 꺼짐). 신호 색은 고른 줄 왼쪽의 색 칸, 그래프 위 범례나 아래 상세의 「▲▲●○ 색」 단추를 눌러 바꿉니다(매수·매도 × 맞음·틀림 네 가지, 이 브라우저에 기억). 매도 기준은 원문 그대로(연구소 조합 = 조건 설명 끝 「→ N일」 = 신호 다음 거래일을 1일째로 N거래일째 종가).</p>
     <div class="fil">
       <div class="seg" id="f-src" role="group" aria-label="갈래">
         <button type="button" data-v="" aria-pressed="true">전체</button><button type="button" data-v="A">A</button><button type="button" data-v="B">B</button><button type="button" data-v="C">C</button><button type="button" data-v="D">D</button><button type="button" data-v="S" title="Signal A 관찰 목록">SA 관찰</button>
@@ -177,6 +188,7 @@ td.pick{width:1.6rem}
       <input type="search" id="f-q" placeholder="글자 검색(조건·id)" aria-label="글자 검색">
       <span class="toast" id="toast" role="status"></span>
     </div>
+    <div class="sortbar" id="sortbar" aria-label="정렬 기준"></div>
     <div class="tbl-wrap"><table id="combo-tbl"><thead></thead><tbody></tbody></table></div>
     <p class="note">네 거름(X1, 왼쪽부터): ① 다음 해 기준(2016~2026 거래가 같은 해 아무 날보다 10%p 이상·30건 이상) ② 2026년·큰 변동 해 ③ 반증 시험 8개 모두 버팀 ④ 가짜 신호 2,000번 p &lt; 1%. ● 통과 · ○ 못 넘음. 관찰 목록 3개는 Signal A S3 에서 같은 네 거름을 모두 넘어 남은 것입니다.</p>
   </section>
@@ -188,7 +200,7 @@ td.pick{width:1.6rem}
 
   <p class="foot">자료 2026-11-20 까지 · 수익률은 코스피 지수 기준(신호 다음 날 시가 → 청산일 종가), 거래별 단순 합계 · 결과를 보고 고른 규칙의 숫자 · 투자 권유 아님</p>
 </div>
-<script src="lab.js?v=20261124d"></script>
-<script src="gesture.js?v=20261124d"></script>
+<script src="lab.js?v=20261124e"></script>
+<script src="gesture.js?v=20261124e"></script>
 </body>
 </html>
