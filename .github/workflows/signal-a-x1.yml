@@ -1,6 +1,6 @@
 # Signal A X1(2026-11-24 사용자 지시 "전에 조사한 a b c d 의 각각 상위 100위 전부 거름 테스트"):
 # 연구소 갈래 A·B·C·D 상위 100위를 Signal A 관찰 목록이 넘은 네 거름에 넣는다. 미리 정한 목록은 deriv/signal_a/x1/SPEC.md, 계산은 x1/run.py.
-# 순서: 고정 자료 내려받기 → run.py(순위·거래일·판정·반증·보고서, 3번까지 다시) → 저장 → 카카오톡 1통.
+# 순서: 고정 자료 내려받기 → extract.py(연구소 거래일 파일을 연구소와 같은 환경에서 읽어 옮김) → run.py(순위·거래일·판정·반증·보고서, 3번까지 다시) → 저장 → 카카오톡 1통.
 # KRX 로그인·수집 없음. main 은 읽기만(requirements.txt·카카오 토큰 파일). 고치는 곳은 deriv/signal_a/x1, state/ledger.json, log.md 뿐.
 # 예약(schedule) 없음 — deriv/signal_a/x1/run.txt 를 고쳐 push 하거나 손으로 띄울 때만 돈다. 이 파일은 deriv-research 가지에만 있다.
 name: signal-a-x1
@@ -41,6 +41,17 @@ jobs:
           echo "PYTHONPATH=$GITHUB_WORKSPACE/deriv/signal_a" >> "$GITHUB_ENV"
           for k in 1 2 3; do gh release download signal-a-data-v1 -p panel.pkl -p lab_feat.pkl -D "$SA_DATA" --clobber && break; sleep 10; done
           test -s "$SA_DATA/panel.pkl" && test -s "$SA_DATA/lab_feat.pkl"
+      - name: 연구소 거래일 파일 옮기기(연구소와 같은 환경 = 판다스 최신판에서 읽어 날짜 글자로 — 고정판 판다스로는 연구소 pkl 이 안 읽힘)
+        run: |
+          python -m venv "$RUNNER_TEMP/labenv"
+          "$RUNNER_TEMP/labenv/bin/pip" install -q pandas numpy      # deriv-lab*.yml 과 같게 판을 고정하지 않는다
+          X1_LAB_CACHE="$RUNNER_TEMP/x1_lab"; mkdir -p "$X1_LAB_CACHE"; echo "X1_LAB_CACHE=$X1_LAB_CACHE" >> "$GITHUB_ENV"
+          OK=0
+          for k in 1 2 3; do
+            if "$RUNNER_TEMP/labenv/bin/python" deriv/signal_a/x1/extract.py --out "$X1_LAB_CACHE"; then OK=1; break; fi
+            echo "시도 $k 실패"; sleep 10
+          done
+          if [ "$OK" != 1 ]; then echo "::error::연구소 거래일 파일을 읽지 못함 — 계산하지 않고 멈춤"; exit 1; fi
       - name: 계산·판정·반증·보고서(3번까지 시도)
         env: {GH_TOKEN: '${{ github.token }}'}
         run: |

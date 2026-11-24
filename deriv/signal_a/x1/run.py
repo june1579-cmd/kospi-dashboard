@@ -158,20 +158,40 @@ def recon_c(row, F, Q, td, exit_after):
     return tr, ''
 
 
-def attach_trades(D, g, pool, log):
-    """pool 에 거래일 출처 칸을 붙이고 {순위: 거래표} 를 돌려준다."""
-    TR = {}; src = []; note = []; chk = {k: [] for k in ('lab_dev_ok', 'lab_p2_ok', 'lab_all_ok', 'has_tdev')}
-    ids = set(pool['id']); idx = {}
-    for p in sorted(glob.glob(os.path.join(LAB, BR[g], 'round_*', '*', 'candidates.pkl'))):
+def load_lab(g, ids, log):
+    """연구소 거래일 기록 {id: {회차: [후보, …]}}. 못 읽는 파일이 있으면 멈춘다 — 읽기 실패를 '확인 불가(기록 없음)'로 세면 안 된다.
+    환경 변수 X1_LAB_CACHE 가 있으면 extract.py 가 연구소와 같은 환경(판다스 최신판)에서 옮겨 둔 JSON 을 읽는다(고정판 판다스로는 연구소 pkl 이 안 읽힘)."""
+    idx = {}; cache = os.environ.get('X1_LAB_CACHE', '').strip()
+    files = sorted(glob.glob(os.path.join(LAB, BR[g], 'round_*', '*', 'candidates.pkl')))
+    if cache:
+        p = os.path.join(cache, f'lab_trades_{g}.json')
+        if not os.path.exists(p): raise RuntimeError(f'갈래 {g}: 옮겨 둔 거래일 파일이 없음({p}) — extract.py 를 먼저 돌려야 함')
+        Z = json.load(open(p, encoding='utf-8'))
+        if int(Z.get('files', -1)) != len(files): raise RuntimeError(f"갈래 {g}: 옮겨 둔 기록의 파일 수({Z.get('files')})가 저장소의 candidates.pkl 수({len(files)})와 다름")
+        for c in Z['cands']:
+            if c['id'] not in ids: continue
+            cc = {'id': c['id'], 'desc': c.get('desc'), 'direction': c.get('direction'), 'trades': pd.DataFrame(c['trades'], columns=['signal', 'exit'])}
+            if c.get('trades_dev') is not None: cc['trades_dev'] = pd.DataFrame(c['trades_dev'], columns=['signal', 'exit'])
+            idx.setdefault(c['id'], {}).setdefault(int(c['round']), []).append(cc)
+        if files: log.append(f"{g}: 연구소 거래일 파일 {len(files)}개는 연구소와 같은 환경(판다스 {Z.get('pandas')})에서 날짜 글자로 옮긴 뒤 읽음(extract.py) — 판정은 파이프라인과 같은 고정판 환경")
+        return idx
+    for p in files:
         r = int(re.search(r'round_(\d+)', p).group(1))
         try:
             cs = pd.read_pickle(p)
         except Exception as e:                                       # noqa: BLE001
-            log.append(f'{g}: {os.path.relpath(p, LAB)} 를 못 읽음({type(e).__name__})'); continue
+            raise RuntimeError(f'갈래 {g}: {os.path.relpath(p, LAB)} 를 못 읽음({type(e).__name__}) — 판다스 판이 연구소와 다르면 extract.py 로 옮긴 뒤 X1_LAB_CACHE 를 줄 것') from e
         for c in cs:
             if isinstance(c, dict) and c.get('id') in ids and isinstance(c.get('trades'), pd.DataFrame):
                 idx.setdefault(c['id'], {}).setdefault(r, []).append(c)
         del cs
+    return idx
+
+
+def attach_trades(D, g, pool, log):
+    """pool 에 거래일 출처 칸을 붙이고 {순위: 거래표} 를 돌려준다."""
+    TR = {}; src = []; note = []; chk = {k: [] for k in ('lab_dev_ok', 'lab_p2_ok', 'lab_all_ok', 'has_tdev')}
+    ids = set(pool['id']); idx = load_lab(g, ids, log)
     FQ = None
     if g == 'C':
         try:
@@ -581,6 +601,8 @@ def main():
     a = ap.parse_args(); iters = 50 if a.quick and a.iters == 2000 else a.iters
     base = a.out or HERE; OUT = os.path.join(base, 'out'); os.makedirs(OUT, exist_ok=True); os.makedirs(os.path.join(base, 'notify'), exist_ok=True)
     now = pd.Timestamp.now(tz='Asia/Seoul').strftime('%Y-%m-%d %H:%M'); log = []
+    rp = os.path.join(HERE, 'redo.txt'); redo = open(rp, encoding='utf-8').read().strip() if os.path.exists(rp) else ''   # 다시 돌린 까닭(있으면 보고서·카카오 글에 '정정'으로 적는다)
+    if redo: log.append('다시 돌림(정정): ' + redo.replace('\n', ' '))
     D = C.Data(); B = S3.Base(D); refs = watch_refs(D, log)
     pools = {}; infos = {}; TRS = {}; fx = []; wf = []; frows = []; orows = []; picks = []; lab_tr = {}
     for g in 'ABCD':
@@ -616,6 +638,7 @@ def main():
         C.ledger_add('x1', fam, note=f"연구소 갈래 A·B·C·D 상위 100위 거름 시험 — {verdict}")
         add_log((core, verdict), n_tested, total, now)
     rep = report(now, iters, a.quick, pools, infos, fx, wf, picks, lab_tr, log, n_tested, total)
+    if redo: rep = rep.replace('\n## 1. 결론\n', '\n> **정정본입니다.** ' + redo.replace('\n', ' ') + '\n\n## 1. 결론\n', 1)
     open(os.path.join(base, 'report.md'), 'w', encoding='utf-8').write(rep)
     summ = {'at': now, 'data_end': str(C.END.date()), 'iters': iters, 'quick': bool(a.quick), 'n_tested': n_tested, 'families': fam, 'ledger_total': total, 'lab_trials': lab_tr,
             'branches': {g: {'pool': len(pools[g]), 'with_trades': len(TRS[g]), 'unknown': len(pools[g]) - len(TRS[g]), 'tested': sum(r['갈래'] == g for r in fx),
@@ -625,7 +648,7 @@ def main():
             'passers': [r['key'] for r in fx if r['넷다']], 'wf_passers': [r['key'] for r in wf if r['넷다']], 'log': log}
     json.dump(summ, open(os.path.join(OUT, 'summary.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1, default=_js)
     json.dump({'at': now, 'n_tested': n_tested, 'all4_fixed': int(n_all), 'all4_wf': int(n_wf_all), 'unknown': int(n_unk), 'iters': iters}, open(os.path.join(OUT, 'done.json'), 'w', encoding='utf-8'), ensure_ascii=False)
-    msg = (f"[Signal A X1] 연구소 A·B·C·D 상위 {n_pool}개 중 거래일 있는 {n_pool - n_unk}개 거름 시험 끝. 네 거름 모두 통과: "
+    msg = (f"[Signal A X1] {'(정정) ' if redo else ''}연구소 A·B·C·D 상위 {n_pool}개 중 거래일 있는 {n_pool - n_unk}개 거름 시험 끝. 네 거름 모두 통과: "
            + '·'.join(f"{g} {sum(r['넷다'] for r in fx if r['갈래'] == g)}" for g in 'ABCD') + f"개, 해마다 고르는 절차 {len(wf)}개 중 {n_wf_all}개. {core}. 확인 불가 {n_unk}개. 보고서 x1/report.md. 투자 권유 아님")
     if len(msg) > 198: msg = msg[:186].rstrip() + '… 투자 권유 아님'
     open(os.path.join(base, 'notify', 'kakao.txt'), 'w', encoding='utf-8').write(msg + '\n')
