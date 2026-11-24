@@ -1,3 +1,290 @@
 {
- "last_build": "2026-11-24T15:59:41+09:00"
+ "last_build": "2026-11-24T16:14:04+09:00",
+ "synced": "2026-11-24T16:14:04+09:00",
+ "eval": {
+  "measures": {
+   "metr_level": {
+    "no": 1,
+    "metric": "최고 50% 시간지평",
+    "pos": 2.0025,
+    "eff": 2.0025,
+    "stage": "경고",
+    "band": null,
+    "danger_on": false
+   },
+   "metr_stall": {
+    "no": 1,
+    "metric": "최고 기록 경신 없이 지난 기간",
+    "pos": 0.016666666666666666,
+    "eff": 0.016666666666666666,
+    "stage": "정상",
+    "band": null,
+    "danger_on": false
+   },
+   "capex_cuts": {
+    "no": 2,
+    "metric": "투자 계획을 낮춘 빅테크(4사 중)",
+    "pos": 1.0,
+    "eff": 1.0,
+    "stage": "주의",
+    "band": null,
+    "danger_on": false
+   },
+   "capex_ocf": {
+    "no": 2,
+    "metric": "설비투자 / 영업현금흐름(4사 합산)",
+    "pos": 1.6800000000000002,
+    "eff": 1.6800000000000002,
+    "stage": "주의",
+    "band": null,
+    "danger_on": false
+   },
+   "lab_growth": {
+    "no": 3,
+    "metric": "OpenAI+Anthropic 연환산 매출 분기 성장",
+    "pos": 0.0,
+    "eff": 0.0,
+    "stage": "정상",
+    "band": null,
+    "danger_on": false
+   },
+   "cds_coreweave": {
+    "no": 3,
+    "metric": "코어위브 5년 CDS",
+    "pos": 2.31,
+    "eff": 1.9,
+    "stage": "경고",
+    "band": null,
+    "danger_on": false
+   },
+   "hy_oas": {
+    "no": 3,
+    "metric": "미국 하이일드 스프레드",
+    "pos": 1.5199999999999996,
+    "eff": 1.5199999999999996,
+    "stage": "주의",
+    "band": null,
+    "danger_on": false
+   },
+   "btos": {
+    "no": 4,
+    "metric": "인구조사국 BTOS 사용률",
+    "pos": 0.71,
+    "eff": 0.71,
+    "stage": "정상",
+    "band": null,
+    "danger_on": false
+   },
+   "ramp_q": {
+    "no": 4,
+    "metric": "Ramp 유료 사용률 최근 2개 분기 평균 증가",
+    "pos": 0.55925,
+    "eff": 0.55925,
+    "stage": "정상",
+    "band": null,
+    "danger_on": false
+   },
+   "youth_gap": {
+    "no": 5,
+    "metric": "22~25세 고노출 직군 고용 격차(스탠퍼드)",
+    "pos": 1.6,
+    "eff": 1.6,
+    "stage": "주의",
+    "band": null,
+    "danger_on": false
+   },
+   "us_unemp": {
+    "no": 5,
+    "metric": "미국 실업률",
+    "pos": 0.5999999999999996,
+    "eff": 0.5999999999999996,
+    "stage": "정상",
+    "band": null,
+    "danger_on": false
+   },
+   "kr_youth": {
+    "no": 6,
+    "metric": "15~29세 고용률 전년 대비",
+    "pos": 1.7999999999999998,
+    "eff": 1.7999999999999998,
+    "stage": "주의",
+    "band": null,
+    "danger_on": false
+   },
+   "kr_ei": {
+    "no": 6,
+    "metric": "고용보험 29세 이하 가입자 전년 대비",
+    "pos": 1.54,
+    "eff": 1.54,
+    "stage": "주의",
+    "band": null,
+    "danger_on": false
+   },
+   "kospi_dd": {
+    "no": 7,
+    "metric": "코스피 고점 대비",
+    "pos": 2.8196078431372547,
+    "eff": 2.8196078431372547,
+    "stage": "경고",
+    "band": null,
+    "danger_on": false
+   },
+   "sox_dd": {
+    "no": 7,
+    "metric": "SOX 고점 대비",
+    "pos": 2.7239999999999998,
+    "eff": 2.7239999999999998,
+    "stage": "경고",
+    "band": null,
+    "danger_on": false
+   },
+   "vkospi": {
+    "no": 7,
+    "metric": "VKOSPI",
+    "pos": 3.2915,
+    "eff": 1.9,
+    "stage": "위험",
+    "band": null,
+    "danger_on": false
+   },
+   "forced_liq": {
+    "no": 7,
+    "metric": "미수 반대매매(하루)",
+    "pos": 0.37156666666666666,
+    "eff": 0.37156666666666666,
+    "stage": "정상",
+    "band": null,
+    "danger_on": false
+   },
+   "margin_dd": {
+    "no": 7,
+    "metric": "신용융자 잔고 1년 정점 대비",
+    "pos": 3.19,
+    "eff": 1.9,
+    "stage": "위험",
+    "band": null,
+    "danger_on": false
+   },
+   "foreign20": {
+    "no": 7,
+    "metric": "외국인 코스피 20거래일 순매수",
+    "pos": 1.418,
+    "eff": 1.418,
+    "stage": "주의",
+    "band": null,
+    "danger_on": false
+   },
+   "policy_stage": {
+    "no": 7,
+    "metric": "시장안정 조치 단계",
+    "pos": 2.5,
+    "eff": 1.9,
+    "stage": "경고",
+    "band": "경고",
+    "danger_on": false
+   },
+   "dram_contract": {
+    "no": 8,
+    "metric": "D램 계약가 전분기 대비(트렌드포스)",
+    "pos": 1.1666666666666667,
+    "eff": 1.1666666666666667,
+    "stage": "주의",
+    "band": null,
+    "danger_on": false
+   },
+   "nand_spot": {
+    "no": 8,
+    "metric": "낸드 웨이퍼 현물 1개월 변화",
+    "pos": 3.34,
+    "eff": 1.9,
+    "stage": "위험",
+    "band": null,
+    "danger_on": false
+   },
+   "moratoria": {
+    "no": 9,
+    "metric": "주 단위 신규 데이터센터 중단 시행",
+    "pos": 2.0,
+    "eff": 2.0,
+    "stage": "경고",
+    "band": null,
+    "danger_on": false
+   },
+   "elec_cpi": {
+    "no": 9,
+    "metric": "미국 소비자물가 중 전기요금(전년 대비)",
+    "pos": 1.4566666666666668,
+    "eff": 1.4566666666666668,
+    "stage": "주의",
+    "band": null,
+    "danger_on": false
+   },
+   "ai_incident": {
+    "no": 10,
+    "metric": "최근 3개월 가장 큰 AI 사고",
+    "pos": 1.5,
+    "eff": 1.5,
+    "stage": "주의",
+    "band": "주의",
+    "danger_on": false
+   }
+  },
+  "indicators": {
+   "1": {
+    "pos": 2.002,
+    "stage": "경고"
+   },
+   "2": {
+    "pos": 1.68,
+    "stage": "주의"
+   },
+   "3": {
+    "pos": 1.9,
+    "stage": "주의"
+   },
+   "4": {
+    "pos": 0.71,
+    "stage": "정상"
+   },
+   "5": {
+    "pos": 1.6,
+    "stage": "주의"
+   },
+   "6": {
+    "pos": 1.8,
+    "stage": "주의"
+   },
+   "7": {
+    "pos": 2.82,
+    "stage": "경고"
+   },
+   "8": {
+    "pos": 1.9,
+    "stage": "주의"
+   },
+   "9": {
+    "pos": 2.0,
+    "stage": "경고"
+   },
+   "10": {
+    "pos": 1.5,
+    "stage": "주의"
+   }
+  },
+  "composite": {
+   "pos": 1.791,
+   "stage": "주의",
+   "counts": {
+    "정상": 1,
+    "주의": 6,
+    "경고": 3,
+    "위험": 0
+   }
+  }
+ },
+ "flags": {
+  "신용 청산 진행": "신용잔고 정점 대비 −32.9%"
+ },
+ "alerts_log": [],
+ "last_marker": "2026-11-24T16:13:48+09:00 오후"
 }

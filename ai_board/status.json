@@ -1,44 +1,57 @@
 {
- "built_at": "2026-11-24T15:59:41+09:00",
- "trigger": "workflow_run dashboard-update",
- "marker": "",
- "request_applied": false,
- "waiting_sync": true,
+ "built_at": "2026-11-24T16:14:04+09:00",
+ "trigger": "push ",
+ "marker": "2026-11-24T16:13:48+09:00 오후",
+ "request_applied": true,
  "ok": true,
  "errors": [],
  "notes": [
-  "sox_dd: 하루 +14.0% — Twelve Data SOXX 같은 기간 +13.6%로 확인",
-  "첫 동기화 전 — 계산만 하고 데이터 파일·알림은 쓰지 않음"
+  "대시보드 파일로 기준 맞춤(sync_base) — 이번 실행부터 GitHub 가 데이터 파일을 맡음"
  ],
  "us_last_session": "2026-11-23",
- "kr_last_session": "2026-11-23",
- "stale": [],
+ "kr_last_session": "2026-11-24",
+ "stale": [
+  {
+   "key": "vkospi",
+   "name": "VKOSPI",
+   "as_of": "2026-11-23",
+   "expected": "2026-11-24",
+   "level": "stale",
+   "why": "한국 마지막 거래일 종가(16:10 뒤)"
+  }
+ ],
  "changed": [
-  "미국 하이일드 스프레드 3.52→3.76(11.20)",
   "미국 소비자물가 중 전기요금(전년 대비) 4.4→4.37(9월)",
-  "SOX 고점 대비 -42.54→-34.48(11.23)",
   "코스피 고점 대비 -48.34→-45.08(11.24)",
-  "VKOSPI 53.18→55.83(11.23)",
+  "VKOSPI 55.83→55.83(11.23)",
   "미수 반대매매(하루) 53.07→111.47(11.23)",
   "신용융자 잔고 1년 정점 대비 -32.81→-32.85(11.23)",
-  "외국인 코스피 20거래일 순매수 -14.33→-14.18(11.24)",
+  "외국인 코스피 20거래일 순매수 -14.34→-14.18(11.24)",
   "미국 10년물 금리 5.04%→4.92%(11.20)",
-  "미국 하이일드 스프레드 3.52%→3.76%(11.20)",
-  "WTI 유가 83.27달러→80.17달러(11.23)",
   "투자자 예탁금 83.0조 원→85.3조 원(11.23)"
  ],
- "files_changed": [],
+ "files_changed": [
+  "thresholds",
+  "indicators",
+  "market",
+  "margin",
+  "forced",
+  "macro",
+  "history",
+  "runs",
+  "news"
+ ],
  "files": {
-  "thresholds": "555341169fed518c5a2e581d3a983b3b2643817e5fbba7bd8ee70ca811961578",
-  "indicators": "78c4a959b7f6dcaa9f92bc1401cadb1aba0ea93180312d4bad82c9e5b8d54728",
-  "market": "c87f544eccbee06757c51e2f28ef79a994ac61e2228f68e7f3be5b1754f693bb",
-  "margin": "7b305ee751a3c58c68fcfda30c5e7b9f4e0c2cf824bfbc5257248b58fbdb36da",
-  "forced": "6644da8ad1999b94035ccb33c3060316ece5e8c22f2bbbf3cf7548bd6951cda9",
-  "macro": "921e060b5b6d2aa1e31c5a801c0cc8e621ed771460f15c3beecd5bbf0a8436ef",
-  "events": "14dc8582b4643a9fc315686057dae7f1fd5fd845451f185be004cdc053324677",
-  "history": "f8328fbbe94557320ef81cf2d00f9b9d69c0b3e741d9c50b36829f825f8a3677",
-  "runs": "c8ef8e023be35cceab147d2bb6c0121ac4c76597af50e346fce6116cc13a4a34",
-  "news": "e748f20bedeb4e8fc116ede2b6f1d620c5d7770dcc2fb75ae54b623943a8518f",
+  "thresholds": "67d54b28694b26a70fce5b4f40d2cad2c1f206f5c8aea3c9a3fc6e2191ad5563",
+  "indicators": "4e27aafb2f280a2e07e24fddf2812f85a3eac9b622ef3d7a07426e188f7c3ffa",
+  "market": "d3a76b3e3c1507011aac313c49291cf8f679ad6aae7b0e57b80afdf886027f88",
+  "margin": "9cacd3f2fe6fa8ca65830963cf8247d9de0c9a52ac22df760e15cd094e91ed2c",
+  "forced": "faec6c1d739da776ed7ded8fd8b0e188689af205ab6287d36025f2400b02d56c",
+  "macro": "c1b58d8d0f552333533fef26c75465db87332fb0f1ccf84f938b7c3495a8bc7f",
+  "events": "c40ba530f01abe8d8d068ec4b8397eb42c6dac91d8d9e9a310cc642672ff0cf4",
+  "history": "2007d6c4c2b4991469570dc55c77121ca3f50d02dcb729956f06af7368df24dd",
+  "runs": "5aaa2196436112578b4cc72bd3476d67ba23fa7b8104bf178b60570fdf7a2a74",
+  "news": "fccad0cdc8fe2c583c7a789186be90340a8b09aa9aa7e2c5ee279a2f15880e97",
   "scenarios": "0a76d773ea2dbd406498e38017ce08c0feadd77a001cd6d4ca2392882c2656eb",
   "episodes": "5fc42c60296afdbd24d0b7f7b1d774e337ab66d562bd9442f44a44b613b13e51"
  },
@@ -94,6 +107,7 @@
    "stage": "주의"
   }
  },
+ "near": [],
  "flags": {
   "신용 청산 진행": "신용잔고 정점 대비 −32.9%"
  },

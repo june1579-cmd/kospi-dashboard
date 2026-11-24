@@ -1266,10 +1266,10 @@
  {
   "date": "2026-09",
   "key": "elec_cpi",
-  "value": 4.4,
-  "text": "+4.4%(9월)",
+  "value": 4.37,
+  "text": "+4.4%(9월) — 10월은 전년 같은 달 원자료가 없어 계산 불가",
   "unit": "%",
-  "src": "https://www.dol.gov/newsroom/economicdata/cpi_10142026.pdf"
+  "src": "https://fred.stlouisfed.org/series/CUUR0000SEHF01"
  },
  {
   "date": "2026-09-30",
@@ -5883,9 +5883,9 @@
   "date": "2026-11-23",
   "key": "vkospi",
   "value": 55.83,
-  "text": "55.8(11.23)",
+  "text": "55.8(11.23, KRX)",
   "unit": "",
-  "src": "https://claude.ai/artifact/LREkdE8UfEYhuNn6Jpn67c"
+  "src": "https://github.com/june1579-cmd/kospi-dashboard/tree/main/out/market_daily.csv"
  },
  {
   "date": "2026-11-23",
@@ -5902,5 +5902,37 @@
   "text": "3.76%(11.20)",
   "unit": "%",
   "src": "https://fred.stlouisfed.org/series/BAMLH0A0HYM2"
+ },
+ {
+  "date": "2026-11-24",
+  "key": "kospi_dd",
+  "value": -45.08,
+  "text": "−45.1%(11.24, 5,006.03)",
+  "unit": "%",
+  "src": "https://github.com/june1579-cmd/kospi-dashboard/tree/main/out/market_daily.csv"
+ },
+ {
+  "date": "2026-11-23",
+  "key": "forced_liq",
+  "value": 111.47,
+  "text": "111억 원(11.23, 미수 대비 1.2%)",
+  "unit": "억 원",
+  "src": "https://github.com/june1579-cmd/kospi-dashboard/tree/main/out/liq_daily.csv"
+ },
+ {
+  "date": "2026-11-23",
+  "key": "margin_dd",
+  "value": -32.85,
+  "text": "−32.8%(11.23, 25.94조 원 / 6.24 정점 38.63조 원)",
+  "unit": "%",
+  "src": "https://github.com/june1579-cmd/kospi-dashboard/tree/main/out/credit.csv"
+ },
+ {
+  "date": "2026-11-24",
+  "key": "foreign20",
+  "value": -14.18,
+  "text": "−14.2조 원(10.28~11.24, 잠정 포함)",
+  "unit": "조 원",
+  "src": "https://github.com/june1579-cmd/kospi-dashboard/tree/main/out/flows_daily.csv"
  }
 ]
