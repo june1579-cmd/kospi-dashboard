@@ -135,6 +135,9 @@ def main():
         if b.decode('utf-8').startswith('cond,'): open('out/vrp_sig.csv', 'wb').write(b)
         else: errors.append('5a1 VIX 신호: 파일 형식이 다름')
     except Exception as e: errors.append('5a1 VIX 신호: ' + repr(e))
+    # 5a3 반대매매 당일 예정치(2026-11-24 추가, 사용자 요청): 금투협 공개(다음 거래일 15시쯤) 전까지 그날 반대매매를 예정치·80% 범위로 —
+    #     nowcast/liq_nowcast.py(liq-nowcast 가지 시험에서 고른 방법) → out/liq_nowcast.csv · state/liq_nowcast_live.csv. 확정치가 들어오면 화면은 확정치로 바뀐다.
+    run([sys.executable, 'nowcast/liq_nowcast.py'], '5a3 반대매매 예정치', timeout=600)
     # 5a2 전진 성적표(2026-11-23 추가): 알림으로 나간 신호(report/sent_signals.json)와 연구소의 고정 뒤 신호를 며칠 뒤 자동 채점 → out/fwd.csv · report/forward.md
     run([sys.executable, 'forward_score.py', '--out', 'out', '--report', 'report'], '5a2 전진 성적표', timeout=180)
     # 5b 자료 점검(health_check.py): 수집 항목 실패·자료 멈춤·출처 간 불일치·과거 값 정정을 찾아 out/health.csv · report/health.json 에 적는다(알림 「자료:」 줄과 대시보드 「자료 상태」 칸)

@@ -130,7 +130,7 @@
     const c = last('credit', r => num(r.credit_jo) != null);
     if (c) g.append(tile('신용융자 · 금투협 ' + md(c.date), fmt(num(c.credit_jo), 2), '조원', '전일 대비 ' + sg(num(c.chg_pct), 2) + '% · 예탁금 ' + fmt(num(c.deposit_jo), 1) + '조원', num(c.chg_pct) != null && num(c.chg_pct) <= -2.5));
     const l = last('liq', r => num(r.liq_eok) != null);
-    if (l) g.append(tile('미수 반대매매 비중 · ' + md(l.date), fmt(num(l.ratio_pct), 1), '%', fmt(num(l.liq_eok), 1) + '억원 · 5% 넘으면 패닉 구간', num(l.ratio_pct) != null && num(l.ratio_pct) >= 5));
+    if (l) g.append(tile('미수 반대매매 비중 · ' + md(l.date), fmt(num(l.ratio_pct), 1), '%', fmt(num(l.liq_eok), 1) + '억원 · 5% 넘으면 패닉 구간' + (() => { const e = window.rvLiqNowRows ? window.rvLiqNowRows() : []; const r = e[e.length - 1]; return r ? ` · ${md(r.d)} 예정 ${Math.round(r.p)}억(80% 범위 ${Math.round(r.lo)}~${Math.round(r.hi)}억, 추정 — 확정치 나오면 바뀜)` : ''; })(), num(l.ratio_pct) != null && num(l.ratio_pct) >= 5));
     const f = last('flows_daily', r => num(r.foreign_jo) != null);
     if (f) g.append(tile('외국인 순매수 · ' + md(f.date), sg(num(f.foreign_jo), 2), '조원', (/잠정/.test(f.basis || '') ? '잠정(정규장) · ' : '확정 · ') + '기관 ' + sg(num(f.inst_jo), 2) + ' · 개인 ' + sg(num(f.indiv_jo), 2), num(f.foreign_jo) != null && num(f.foreign_jo) <= -2));
     const q = last('q_daily', r => num(r.p_risk) != null);
