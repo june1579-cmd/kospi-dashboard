@@ -1,0 +1,142 @@
+{
+ "at_kst": "2026-11-24 15:49",
+ "test": false,
+ "status": "seed",
+ "errors": [],
+ "note": "시작 기록 — 첫 정규 계산은 화~토 06:47 KST(카카오톡 07:40).",
+ "syms": {
+  "SPY": {
+   "status": "ok",
+   "session": "2026-11-23",
+   "row": {
+    "session": "2026-11-23",
+    "sym": "SPY",
+    "spot": 722.29,
+    "chg_pct": 4.71,
+    "cw_est": 730.0,
+    "pw_est": 720.0,
+    "cw_off": 730.0,
+    "pw_off": 700.0,
+    "cwoi_est": 775.0,
+    "pwoi_est": 675.0,
+    "pcr_oi": 1.283,
+    "pcr_vol": 0.99,
+    "k_c": null,
+    "k_p": null,
+    "kc_used": 0.35,
+    "kp_used": 0.35,
+    "iv_atm": 0.2193,
+    "acc_cw": null,
+    "acc_pw": null,
+    "new_c": null,
+    "new_p": null,
+    "warn": "시작 기록(기존 스냅숏 · 기본 비율 0.35)",
+    "run_kst": "2026-11-24 15:43"
+   },
+   "trend": {
+    "n": 1,
+    "cw_dir": "기록 쌓는 중",
+    "pw_dir": "기록 쌓는 중",
+    "width": "기록 쌓는 중",
+    "pcr": "",
+    "cw_seq": "730",
+    "pw_seq": "720"
+   }
+  },
+  "QQQ": {
+   "status": "ok",
+   "session": "2026-11-23",
+   "row": {
+    "session": "2026-11-23",
+    "sym": "QQQ",
+    "spot": 651.03,
+    "chg_pct": 7.0,
+    "cw_est": 660.0,
+    "pw_est": 650.0,
+    "cw_off": 680.0,
+    "pw_off": 650.0,
+    "cwoi_est": 700.0,
+    "pwoi_est": 600.0,
+    "pcr_oi": 1.16,
+    "pcr_vol": 0.957,
+    "k_c": null,
+    "k_p": null,
+    "kc_used": 0.35,
+    "kp_used": 0.35,
+    "iv_atm": 0.3276,
+    "acc_cw": null,
+    "acc_pw": null,
+    "new_c": null,
+    "new_p": null,
+    "warn": "시작 기록(기존 스냅숏 · 기본 비율 0.35)",
+    "run_kst": "2026-11-24 15:43"
+   },
+   "trend": {
+    "n": 1,
+    "cw_dir": "기록 쌓는 중",
+    "pw_dir": "기록 쌓는 중",
+    "width": "기록 쌓는 중",
+    "pcr": "",
+    "cw_seq": "660",
+    "pw_seq": "650"
+   }
+  }
+ },
+ "hist": {
+  "SPY": [
+   {
+    "session": "2026-11-23",
+    "sym": "SPY",
+    "spot": 722.29,
+    "chg_pct": 4.71,
+    "cw_est": 730.0,
+    "pw_est": 720.0,
+    "cw_off": 730.0,
+    "pw_off": 700.0,
+    "cwoi_est": 775.0,
+    "pwoi_est": 675.0,
+    "pcr_oi": 1.283,
+    "pcr_vol": 0.99,
+    "k_c": null,
+    "k_p": null,
+    "kc_used": 0.35,
+    "kp_used": 0.35,
+    "iv_atm": 0.2193,
+    "acc_cw": null,
+    "acc_pw": null,
+    "new_c": null,
+    "new_p": null,
+    "warn": "시작 기록(기존 스냅숏 · 기본 비율 0.35)",
+    "run_kst": "2026-11-24 15:43"
+   }
+  ],
+  "QQQ": [
+   {
+    "session": "2026-11-23",
+    "sym": "QQQ",
+    "spot": 651.03,
+    "chg_pct": 7.0,
+    "cw_est": 660.0,
+    "pw_est": 650.0,
+    "cw_off": 680.0,
+    "pw_off": 650.0,
+    "cwoi_est": 700.0,
+    "pwoi_est": 600.0,
+    "pcr_oi": 1.16,
+    "pcr_vol": 0.957,
+    "k_c": null,
+    "k_p": null,
+    "kc_used": 0.35,
+    "kp_used": 0.35,
+    "iv_atm": 0.3276,
+    "acc_cw": null,
+    "acc_pw": null,
+    "new_c": null,
+    "new_p": null,
+    "warn": "시작 기록(기존 스냅숏 · 기본 비율 0.35)",
+    "run_kst": "2026-11-24 15:43"
+   }
+  ]
+ },
+ "msgs": []
+}

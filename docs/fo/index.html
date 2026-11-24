@@ -21,7 +21,7 @@
 <header id="top">
   <h1>미국·한국 선물옵션 대시보드</h1>
   <p data-draw="passlist">—</p>
-  <nav class="fo-nav" aria-label="구역 이동"><button type="button" data-go="s1">한눈에</button><button type="button" data-go="s2">미국 선물</button><button type="button" data-go="s3">미국 옵션</button><button type="button" data-go="s4">한국 선물</button><button type="button" data-go="s5">한국 옵션</button><button type="button" data-go="s6">연관</button><button type="button" data-go="s7">검증</button><button type="button" data-go="s8">최근 흐름</button><button type="button" data-go="s9">자료</button><button type="button" data-go="s10">옵션 구조·검증</button></nav>
+  <nav class="fo-nav" aria-label="구역 이동"><button type="button" data-go="s1">한눈에</button><button type="button" data-go="s2">미국 선물</button><button type="button" data-go="s3">미국 옵션</button><button type="button" data-go="s4">한국 선물</button><button type="button" data-go="s5">한국 옵션</button><button type="button" data-go="s6">연관</button><button type="button" data-go="s7">검증</button><button type="button" data-go="s8">최근 흐름</button><button type="button" data-go="s9">자료</button><button type="button" data-go="s10">옵션 구조·검증</button><button type="button" data-go="s11">아침 추정</button></nav>
 </header>
 
 <section class="fo-sec" id="s1">
@@ -69,7 +69,7 @@
   <div class="fo-box" data-draw="us_vix" style="min-height:240px">—</div>
   <h4>기간구조(만기별 내재변동성 지수)</h4>
   <div class="fo-box" data-draw="us_term" style="min-height:200px">—</div>
-  <p class="fo-note">보통은 먼 만기가 더 높습니다(오른쪽이 올라감). VIX÷VIX3M이 1을 넘으면 가까운 만기가 더 높은, 뒤집힌 상태입니다. 최신 VIX÷VIX3M은 <b data-v="week_sum:vix_ratio:n2"></b>입니다.</p>
+  <p class="fo-note">VIX 계열은 야후(장 마감 직후 반영)를 먼저 쓰고, 야후에 없는 날짜·종목만 Cboe 지수 이력으로 채웁니다(2026-11-24부터 — 전에는 Cboe 파일이 늦게 올라와 아침에 하루씩 밀렸음). 보통은 먼 만기가 더 높습니다(오른쪽이 올라감). VIX÷VIX3M이 1을 넘으면 가까운 만기가 더 높은, 뒤집힌 상태입니다. 최신 VIX÷VIX3M은 <b data-v="week_sum:vix_ratio:n2"></b>입니다.</p>
   <h3>월간 만기 전후 S&amp;P500 움직임</h3>
   <div class="fo-box" data-draw="us_opex" style="min-height:220px">—</div>
   <div data-table="us_opex_stat"></div>
@@ -166,7 +166,7 @@
   <div class="fo-box" id="u-kr" style="min-height:250px">—</div>
   <div class="fo-box" id="u-spy" style="min-height:250px">—</div>
   <div class="fo-box" id="u-qqq" style="min-height:250px">—</div>
-  <p class="fo-note">콜벽·풋벽은 현재가 위·아래에서 미결제약정이 가장 많은 행사가, 최대 고통은 만기에 옵션 매수자가 받는 금액의 합이 가장 작아지는 행사가입니다. 감마 값은 미결제약정과 내재변동성으로 계산한 추정이며(콜은 +, 풋은 −로 가정), 실제 딜러 포지션은 공개되지 않아 확인할 수 없습니다. 미국은 SPY·QQQ ETF 옵션(45일 안 만기)입니다.</p>
+  <p class="fo-note">콜벽·풋벽은 현재가 위·아래에서 미결제약정이 가장 많은 행사가, 최대 고통은 만기에 옵션 매수자가 받는 금액의 합이 가장 작아지는 행사가입니다. 감마 값은 미결제약정과 내재변동성으로 계산한 추정이며(콜은 +, 풋은 −로 가정), 실제 딜러 포지션은 공개되지 않아 확인할 수 없습니다. 미국은 SPY·QQQ ETF 옵션(45일 안 만기, 야후 옵션 체인)입니다. Cboe 지연 시세는 Cboe가 자동 수집을 금지해 쓰지 않습니다(2026-11-24). 야후는 뉴욕 새벽~아침에 미결제를 비워 두므로 그 시간대에 받은 값은 저장하지 않습니다.</p>
   <h3>한국 장 마감 뒤 미국 선물</h3>
   <div id="u-since"></div>
   <div class="fo-box" id="u-es" style="min-height:170px">—</div>
@@ -184,9 +184,24 @@
   <p class="fo-note">이 절의 자료는 GitHub 워크플로 <code>usk</code>가 화~토 07:17, 월~금 19:27(한국 시각)에 계산합니다. 숫자는 저장소 파일을 그대로 읽은 것이며, 받지 못한 값은 "확인 불가"로 둡니다.</p>
 </section>
 
+<section class="fo-sec" id="s11">
+  <h2>11. 미국 옵션 아침 추정(07:40) · 공개 시각</h2>
+  <p class="fo-note" id="w-meta">자료를 읽는 중…</p>
+  <h3>직전 장 마감 뒤 콜벽·풋벽(추정)과 전날 확정치</h3>
+  <div id="w-now"></div>
+  <p class="fo-note" id="w-trend"></p>
+  <p class="fo-note">공식 미결제약정(OCC)은 밤사이 한 번 집계돼 다음 날 공개되므로, 방금 끝난 장의 포지션은 그날 밤에야 확정됩니다. 여기서는 장 마감 직후 받을 수 있는 <b>전날 확정 미결제 + 직전 장 거래량</b>으로 직전 장 마감 뒤 벽을 추정합니다. 추정 미결제 = 확정 미결제 + 거래 반영 비율 × 거래량이고, 비율은 날마다 “전날 거래량 → 오늘 확정 미결제 변화”로 콜·풋 따로 다시 맞춥니다(최근 5번 가운데값, 기록이 없을 때 0.35). 벽은 현재가 위(콜)·아래(풋)에서 감마×미결제가 가장 큰 행사가(현재가 ±10%, 만기 45일 안, 야후 옵션 체인)이고, “전날 확정”은 같은 현재가로 계산해 가격 변화가 아닌 포지션 변화만 보이게 했습니다. 거래량만으로는 신규·청산을 구분할 수 없으므로 추정치입니다. SPX(지수 옵션)는 무료 자료가 없어 싣지 않았습니다.</p>
+  <h4>최근 기록과 어제 추정의 정확도</h4>
+  <div id="w-hist"></div>
+  <h3>미국 옵션 자료 공개 시각(측정 중)</h3>
+  <p class="fo-note" id="w-pubmeta"></p>
+  <div id="w-pub"></div>
+  <p class="fo-note">GitHub 워크플로 <code>pub-watch</code>가 10분마다 각 출처의 기준값을 읽어, 값이 바뀐 첫 시각을 기록합니다(공개 시각은 “마지막 확인”과 “바뀐 시각” 사이). 이 절의 추정은 워크플로 <code>us-walls</code>가 화~토 06:47에 계산해 07:40에 카카오톡으로 보냅니다. 실패하면 실패 알림을 보내고, GitHub 감시가 다시 돌리며, 그래도 안 되면 수리 에이전트가 고칩니다. 투자 권유 아님.</p>
+</section>
+
 <section class="fo-sec" id="s9">
   <h2>9. 자료 설명</h2>
-  <p class="fo-note">이 웹판의 숫자는 전부 GitHub 저장소의 <code>docs/fo/data</code> 파일 6개에서 나오고, 그 파일은 GitHub Actions 워크플로 <code>fo-dashboard</code>가 수집·계산해 올립니다(화~토 07:47 · 월~금 19:17 KST 자동, 위쪽 [지금 다시 계산] 단추로 수동). 페이지는 열 때마다 저장소에 올라온 최신 파일을 읽습니다.</p>
+  <p class="fo-note">이 웹판의 숫자는 전부 GitHub 저장소의 <code>docs/fo/data</code> 파일 6개에서 나오고, 그 파일은 GitHub Actions 워크플로 <code>fo-dashboard</code>가 수집·계산해 올립니다(화~토 07:47 · 10:47 · 월~금 19:17 KST 자동 — 10:47 은 Cboe 풋/콜 파일을 하루 늦지 않게 받으려고 2026-11-24 추가, 위쪽 [지금 다시 계산] 단추로 수동). 페이지는 열 때마다 저장소에 올라온 최신 파일을 읽습니다.</p>
   <div data-table="sources"></div>
   <h3>확인하지 못한 값</h3>
   <div data-table="unknown"></div>
@@ -207,5 +222,6 @@
 <script>document.getElementById('btn-reload').addEventListener('click', function () { location.href = location.pathname + '?r=' + Date.now(); });</script>
 <script src="app.js"></script>
 <script src="usk.js"></script>
+<script src="uswalls.js"></script>
 </body>
 </html>

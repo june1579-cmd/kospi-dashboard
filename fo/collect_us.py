@@ -190,29 +190,45 @@ def cboe_pc():
 
 
 # ------------------------------------------------------------------ VIX 기간구조
+VIX_SYMS = (('vix9d', 'VIX9D'), ('vix', 'VIX'), ('vix3m', 'VIX3M'), ('vix6m', 'VIX6M'), ('vix1y', 'VIX1Y'))
+
+
 def vix():
-    p = os.path.join(DATA, 'vix.csv'); out = None; bad = []
-    for col, sym in (('vix9d', 'VIX9D'), ('vix', 'VIX'), ('vix3m', 'VIX3M'), ('vix6m', 'VIX6M'), ('vix1y', 'VIX1Y')):
+    """2026-11-24: 야후(^VIX 등)를 먼저 받고 Cboe 지수 이력 CSV 는 예비로 쓴다.
+    야후는 장 마감 직후 그날 종가가 들어오지만, Cboe CSV 는 늦게 올라와 아침 실행에서 하루씩 밀렸다.
+    같은 날짜는 야후 값을 쓰고, 야후에 없는 날짜·종목(예: 옛 이력, VIX1Y)은 Cboe 로 채운다."""
+    p = os.path.join(DATA, 'vix.csv'); bad = []; ya = None; cb = None
+    for col, sym in VIX_SYMS:
         try:
-            df = pd.read_csv(io.StringIO(get(f'https://cdn.cboe.com/api/global/us_indices/daily_prices/{sym}_History.csv').text))
+            d = yahoo('^' + sym, col)[['date', 'close']].rename(columns={'close': col}); time.sleep(0.4)
+            ya = d if ya is None else ya.merge(d, on='date', how='outer')
+        except Exception as e: bad.append('야후 ' + sym); log(f'  야후 {sym} 실패 {e!r}'[:140])
+        try:
+            df = pd.read_csv(io.StringIO(get(f'https://cdn.cboe.com/api/global/us_indices/daily_prices/{sym}_History.csv', tries=2).text))
             df.columns = [c.strip().upper() for c in df.columns]
             vc = 'CLOSE' if 'CLOSE' in df.columns else df.columns[-1]
             d = pd.DataFrame({'date': pd.to_datetime(df['DATE'], errors='coerce').dt.strftime('%Y-%m-%d'), col: pd.to_numeric(df[vc], errors='coerce')}).dropna()
-            out = d if out is None else out.merge(d, on='date', how='outer')
-        except Exception as e: bad.append(sym); log(f'  {sym} 실패 {e!r}'[:140])
-    if out is None or 'vix' not in out: return mark('vix', False, note='Cboe 지수 이력 실패 — 기존 파일 유지')
+            cb = d if cb is None else cb.merge(d, on='date', how='outer')
+        except Exception as e: bad.append('Cboe ' + sym); log(f'  Cboe {sym} 실패 {e!r}'[:140])
+    if ya is None and cb is None: return mark('vix', False, note='야후·Cboe 모두 실패 — 기존 파일 유지')
+    if ya is not None and cb is not None: out = ya.set_index('date').combine_first(cb.set_index('date')).reset_index()   # 야후 먼저, 빈칸은 Cboe
+    else: out = ya if ya is not None else cb
+    if 'vix' not in out: return mark('vix', False, note='VIX(30일) 값을 받지 못함 — 기존 파일 유지')
     if os.path.exists(p):
         old = pd.read_csv(p); out = pd.concat([old[~old['date'].isin(out['date'])], out], ignore_index=True)
     out = out.sort_values('date'); out.to_csv(p, index=False)
-    mark('vix', True, out['date'].max(), f'{len(out)}일' + (f' · 못 받음 {",".join(bad)}' if bad else ''))
+    last = out.dropna(subset=['vix'])['date'].max()
+    ylast = ya.dropna(subset=['vix'])['date'].max() if ya is not None and 'vix' in ya else '없음'
+    clast = cb.dropna(subset=['vix'])['date'].max() if cb is not None and 'vix' in cb else '없음'
+    mark('vix', 'vix' in out, last, f'{len(out)}일 · 마지막 {last}(야후 {ylast} · Cboe {clast})' + (f' · 못 받음 {",".join(bad)}' if bad else ''))
 
 
 # ------------------------------------------------------------------ 야후 일봉
 YH = {'^GSPC': 'spx', '^NDX': 'ndx', 'QQQ': 'qqq', 'DIA': 'dia', 'ES=F': 'es', 'NQ=F': 'nq', '^KS200': 'k200y', '^KS11': 'kospiy', 'KRW=X': 'usdkrw'}
-CUT = {'America/New_York': (16, 30), 'Asia/Seoul': (15, 50)}
+CUT = {'America/New_York': (16, 30), 'America/Chicago': (15, 30), 'Asia/Seoul': (15, 50)}   # 시카고 = Cboe 지수(VIX 계열) 시간대
 
 
-def yahoo(sym):
+def yahoo(sym, name=None):
     r = get(f'https://query1.finance.yahoo.com/v8/finance/chart/{requests.utils.quote(sym)}', params={'period1': 0, 'period2': int(time.time()) + 86400, 'interval': '1d'})
     res = r.json()['chart']['result'][0]; tz = ZoneInfo(res['meta'].get('exchangeTimezoneName') or 'America/New_York')
     now = dt.datetime.now(tz); today = now.strftime('%Y-%m-%d'); cut = CUT.get(str(tz), (23, 59))
@@ -225,7 +241,7 @@ def yahoo(sym):
         if d > today or (d == today and not closed): continue      # 끝나지 않은 날의 값은 종가로 쓰지 않는다
         if d in rows: continue                                      # 같은 날짜에 장중 봉이 하나 더 붙는 경우 첫 일봉만
         rows[d] = (q['open'][i], q['high'][i], q['low'][i], c)
-    return pd.DataFrame([(d, YH[sym], *v) for d, v in rows.items()], columns=['date', 'sym', 'open', 'high', 'low', 'close'])
+    return pd.DataFrame([(d, name or YH[sym], *v) for d, v in rows.items()], columns=['date', 'sym', 'open', 'high', 'low', 'close'])
 
 
 def px():

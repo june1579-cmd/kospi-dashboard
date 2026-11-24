@@ -1,0 +1,108 @@
+# 미국 옵션 아침 추정(SPY·QQQ) — 화~토 07:40 KST 카카오톡(2026-11-24). 수집·계산·발송 전부 GitHub 가 한다. Claude 를 쓰지 않는다.
+#  calc  : 06:47 KST 시작 → 야후 옵션 체인으로 직전 장 마감 뒤 콜벽·풋벽 추정(uswalls/walls.py) → uswalls/ 저장 → 07:40 까지 기다림
+#  notify: 계산이 되면 전날 비교·흐름 글을, 실패하면 실패 알림을 카카오톡으로 보낸다
+#  실패하면 watchdog(한 시간마다)이 실패한 작업만 다시 돌리고, 그래도 안 되면 수리 요청 → 수리 에이전트(Claude 예약 작업)가 고친다.
+# 손으로 돌리기: Actions → us-walls → Run workflow (test=true 면 글 앞에 '시험', wait=true 면 07:40 까지 기다림)
+name: us-walls
+on:
+  schedule:
+    - cron: '47 21 * * 1-5'   # 06:47 KST 화~토 (뉴욕 16:47 — 장 마감 뒤 거래량 확정)
+  workflow_dispatch:
+    inputs:
+      test:
+        description: '시험 발송(true / false)'
+        default: 'true'
+      wait:
+        description: '07:40 KST 까지 기다렸다 보내기(true / false)'
+        default: 'false'
+permissions:
+  contents: write
+concurrency:
+  group: us-walls
+  cancel-in-progress: false
+jobs:
+  calc:
+    runs-on: ubuntu-latest
+    timeout-minutes: 80
+    outputs:
+      result: ${{ steps.r.outputs.result }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -q pandas numpy scipy yfinance requests
+      - name: 수집·계산(실패하면 2분 간격 3번까지)
+        id: calc
+        env:
+          USW_TEST: ${{ github.event.inputs.test == 'true' && '1' || '0' }}
+        run: |
+          for i in 1 2 3; do
+            [ $i = 3 ] && export USW_LAST=1
+            python uswalls/walls.py && exit 0
+            echo "시도 $i 실패(종료 코드 $?) — 2분 뒤 다시"; [ $i = 3 ] && exit 1; sleep 120
+          done
+      - name: 저장
+        id: save
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add -A uswalls
+          git commit -q -m "미국 옵션 아침 추정 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || { echo "변경 없음"; exit 0; }
+          for i in 1 2 3 4; do git pull -q --rebase && git push -q && exit 0; sleep 10; done; exit 1
+      - name: 07:40 KST 까지 기다리기
+        if: ${{ success() && (github.event_name == 'schedule' || github.event.inputs.wait == 'true') }}
+        run: |
+          python3 - <<'EOF'
+          import datetime as dt, time
+          KST = dt.timezone(dt.timedelta(hours=9)); now = dt.datetime.now(KST)
+          t = now.replace(hour=7, minute=40, second=0, microsecond=0)
+          if 5 <= now.hour and now < t:
+              print(f'{now:%H:%M:%S} → 07:40 까지 {(t - now).seconds}초 기다림', flush=True); time.sleep((t - now).total_seconds())
+          else:
+              print(f'{now:%H:%M} — 07:40 이 지났거나 아침 시간대가 아니라 바로 보냄')
+          EOF
+      - name: 결과
+        id: r
+        if: always()
+        run: echo "result=${{ steps.calc.outcome }}/${{ steps.save.outcome }}" >> "$GITHUB_OUTPUT"
+  notify:
+    needs: calc
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    concurrency:
+      group: dashboard-update     # 카카오 토큰 연장이 다른 알림과 겹치지 않게 같은 줄에 선다
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q requests cryptography
+      - name: 보낼 글 고르기(성공 = 전날 비교·흐름 / 실패 = 실패 알림)
+        run: |
+          git pull -q --rebase || true
+          R="${{ needs.calc.outputs.result }}"
+          if [ "${{ needs.calc.result }}" = "success" ] && [ -s uswalls/kakao.txt ]; then
+            cp uswalls/kakao.txt /tmp/msg.txt
+          else
+            case "$R" in
+              failure/*|/*|"") STEP="수집·계산(야후 옵션 체인)";;
+              success/failure) STEP="저장(GitHub push)";;
+              *) STEP="작업 시작 전/기타";;
+            esac
+            T=""; [ "${{ github.event.inputs.test }}" = "true" ] && T=" 시험"
+            printf '[미국옵션 07:40 실패%s] %s · 멈춘 단계: %s · 실행 %s · GitHub 감시가 한 시간 안에 다시 돌리고, 안 풀리면 수리 에이전트가 고칩니다\n' "$T" "$(TZ=Asia/Seoul date '+%m/%d %H:%M')" "$STEP" "${{ github.run_id }}" > /tmp/msg.txt
+          fi
+          cat /tmp/msg.txt
+      - name: 카카오톡
+        id: send
+        env:
+          KAKAO_REST_KEY: ${{ secrets.KAKAO_REST_KEY }}
+          KAKAO_REFRESH_TOKEN: ${{ secrets.KAKAO_REFRESH_TOKEN }}
+          KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
+        run: python kakao_send.py --file /tmp/msg.txt --link https://june1579-cmd.github.io/kospi-dashboard/fo/#s11
+      - name: 카카오 토큰 연장 저장
+        if: always()
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add -A state && git commit -m "카카오 토큰 연장" -q && git pull -q --rebase && git push -q || true

@@ -39,8 +39,12 @@ RUNS = [
     dict(key='run:uni-push', wf='uni-lab.yml', br='deriv-research', label='통합 예측 연구소 계산(실험)', need=1, grace_h=0, rerun=True, repair=True),
     dict(key='run:collect', wf='deriv-research.yml', br='deriv-research', label='선물·옵션 원자료 수집(KRX)', need=1, grace_h=3, rerun=False, repair=False),
     dict(key='run:lab-notify', wf='deriv-notify.yml', br='deriv-research', label='연구소 카카오 알림', need=1, grace_h=0, rerun=False, repair=True),
+    # 2026-11-24: 미국 옵션 아침 추정(화~토 07:40 카톡)과 공개 시각 측정
+    dict(key='run:uswalls', wf='us-walls.yml', br='main', label='미국 옵션 아침 추정(07:40 카톡)', need=1, grace_h=0, rerun=True, repair=True, event='schedule'),
+    dict(key='run:pubwatch', wf='pub-watch.yml', br='main', label='미국 옵션 공개 시각 측정', need=2, grace_h=0, rerun=False, repair=True, why='한 시간마다 도는 다음 실행이 재시도 역할'),
 ]
 # 자료 멈춤 감시: rule = age(max_h 시간 넘게 그대로면 멈춤) | trading_am(거래일 11:30 뒤인데 오늘 갱신 없음) | weekday_pm(평일 21:30 뒤인데 오늘 19시 뒤 갱신 없음)
+#                | us_am(화~토 08:40 뒤인데 오늘 06:30 뒤 갱신 없음 — 미국 장 다음 날 아침 자료)
 FRESH = [
     dict(key='stale:kospi', br='main', path='docs/meta.json', label='코스피 대시보드 웹판', rule='trading_am', repair=True),
     dict(key='stale:ai', br='main', path='out/ai_feed.csv', label='AI 경고판 원자료', rule='age', max_h=30, repair=True),
@@ -51,6 +55,7 @@ FRESH = [
     # dict(key='stale:lab-b', br='deriv-research', path='deriv/lab/state_b/latest_status.json', label='연구소 갈래 B(총괄 세션)', rule='age', max_h=16, repair=False, hint='Claude 예약 세션이 돌지 않음(사용량 한도일 수 있음)'),
     # dict(key='stale:lab-d', br='deriv-research', path='deriv/lab/state_d/latest_status.json', label='연구소 갈래 D(총괄 세션)', rule='age', max_h=12, repair=False, hint='Claude 예약 세션이 돌지 않음(사용량 한도일 수 있음)'),
     dict(key='stale:usk', br='deriv-research', path='deriv/us/out/dash.json', label='미국·한국 연동 자료(웹판 10절)', rule='age', max_h=40, repair=True),
+    dict(key='stale:uswalls', br='main', path='uswalls/latest.json', label='미국 옵션 아침 추정(웹판 11절)', rule='us_am', repair=True),
 ]
 
 
@@ -72,7 +77,8 @@ def trading_day(d):
 
 def check_run(c, st):
     """돌려주는 값: (문제 글 or None, 방금 다시 돌렸는지)"""
-    rs = gh('api', f'repos/{REPO}/actions/workflows/{c["wf"]}/runs?branch={c["br"]}&per_page=6').get('workflow_runs', [])
+    ev = f'&event={c["event"]}' if c.get('event') else ''   # event 가 있으면 그 실행만 본다(예: 손으로 돌린 시험 실행은 빼기)
+    rs = gh('api', f'repos/{REPO}/actions/workflows/{c["wf"]}/runs?branch={c["br"]}&per_page=6{ev}').get('workflow_runs', [])
     if not rs: return None, False
     if rs[0]['status'] != 'completed': return ('__keep__' if c['key'] in st else None), False     # 지금 도는 중(재시도 포함) — 판단 미룸
     done = [r for r in rs if r['status'] == 'completed' and r['conclusion'] != 'cancelled'][:c['need']]
@@ -104,6 +110,7 @@ def check_fresh(c):
     if c['rule'] == 'age': stale = age_h > c['max_h']
     elif c['rule'] == 'trading_am': stale = trading_day(NOW.date()) and (NOW.hour, NOW.minute) >= (11, 30) and last.date() < NOW.date()
     elif c['rule'] == 'weekday_pm': stale = NOW.weekday() < 5 and (NOW.hour, NOW.minute) >= (21, 30) and last < NOW.replace(hour=19, minute=0, second=0, microsecond=0)
+    elif c['rule'] == 'us_am': stale = 1 <= NOW.weekday() <= 5 and (NOW.hour, NOW.minute) >= (8, 40) and last < NOW.replace(hour=6, minute=30, second=0, microsecond=0)
     return f"{c['label']} 멈춤(마지막 갱신 {last:%m/%d %H:%M}, {age_h:.0f}시간 전){' · ' + c['hint'] if c.get('hint') else ''}" if stale else None
 
 
@@ -119,6 +126,12 @@ def check_content():
         S = json.load(open('fo/data/status.json', encoding='utf-8')); bad = [k for k, v in S.items() if isinstance(v, dict) and v.get('ok') is False]
         out['src:fo'] = ('선물옵션 대시보드 수집 일부 실패', f"선물옵션 대시보드 미국 자료 {len(bad)}개 출처를 못 받음: {', '.join(bad[:4])}" if bad else None)
     except Exception as ex: print('선물옵션 대시보드 상태 읽기 실패', ex)
+    try:   # 2026-11-24: 미국 옵션 아침 추정 — 오늘 실행이 일부/전부 실패로 끝났는지
+        U = json.load(open('uswalls/latest.json', encoding='utf-8'))
+        fresh = str(U.get('at_kst', ''))[:10] == NOW.strftime('%Y-%m-%d') and not U.get('test')
+        bad = fresh and U.get('status') in ('partial', 'fail')
+        out['src:uswalls'] = ('미국 옵션 아침 추정 일부 실패', f"미국 옵션 아침 추정 {U.get('status')}: {' / '.join(U.get('errors') or [])[:120]}" if bad else None)
+    except Exception as ex: print('미국 옵션 아침 추정 상태 읽기 실패', ex)
     return out
 
 

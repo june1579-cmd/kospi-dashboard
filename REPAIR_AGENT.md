@@ -22,3 +22,9 @@
 - 원자료를 추정으로 채우지 않습니다("확인 불가"). 노랑 신호를 만들지 않습니다. 도구가 거부하면 우회하지 않고 멈춘 뒤 이유를 보고합니다.
 - 커밋은 git user dashboard-bot(dashboard-bot@users.noreply.github.com), push 전 `git pull --rebase`.
 - 요청과 상관없는 개선·정리는 하지 않습니다. 사용량 한도에 닿으면 그 자리에서 멈춥니다.
+
+## 미국 옵션 아침 추정(`us-walls`)·공개 시각 측정(`pub-watch`) — 2026-11-24 추가
+- 설명: `uswalls/README.md`. 코드 `uswalls/walls.py`·`uswalls/pubwatch.py`, 결과 `uswalls/latest.json`(status·errors), 기록 가지 `pub-watch`.
+- 흔한 원인: ① 야후 미결제가 비어 있는 시간대(뉴욕 새벽~아침)에 돈 실행 — 다음 정규 실행이 정상이면 고칠 것 없음. ② yfinance 가 바뀌어 체인을 못 받음 — `pip install -U yfinance` 로 시험(워크플로는 버전을 고정하지 않음). ③ 카카오 토큰 — "비밀값 확인 필요"로만 보고.
+- 실패한 아침 글은 다시 돌리면(`gh run rerun <번호> --failed`) 바로 보낸다(07:40 이 지났으면 기다리지 않음). 같은 날 다시 돌려도 기록이 겹치지 않는다.
+- 추정 방법(비율 k·벽 정의)은 사용자 결정 없이 바꾸지 않는다. 실행이 죽는 버그만 고친다.

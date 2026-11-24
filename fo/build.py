@@ -72,7 +72,7 @@ def build_us():
     for c in ('spx', 'ndx', 'qqq', 'dia', 'es', 'nq'): us[c] = cl[c] if c in cl else np.nan
     v = rd(os.path.join(FD, 'vix.csv'))
     if v is not None: us = us.join(v.set_index('date'))
-    else: unk('VIX 기간구조', 'Cboe 지수 이력을 받지 못함')
+    else: unk('VIX 기간구조', '야후·Cboe 지수 이력을 받지 못함')
     for c in ('vix9d', 'vix', 'vix3m', 'vix6m', 'vix1y'):
         if c not in us: us[c] = np.nan
     us['vix_ratio'] = us['vix'] / us['vix3m']
@@ -488,7 +488,7 @@ def t_sources(us, kr, cf):
          ('CFTC 주체별 포지션(ES·NQ, 선물만)', 'CFTC Traders in Financial Futures', cf['date'].max() if cf is not None else '없음', (cf['date'].min()[:7] + '~') if cf is not None else '', '매주 금요일 공표(화요일 기준)', st.get('cftc', {}).get('note', '')),
          ('Cboe 풋/콜(전체·지수·개별주식·SPX)', 'Cboe 일별 시장 통계', lv(us, 'pc_total'), fv(us, 'pc_total') + '~', '거래일마다', 'SPX는 ' + fv(us, 'pc_spx') + '~'),
          ('Cboe 미결제약정 풋÷콜', 'Cboe 일별 시장 통계', lv(us, 'oi_pc'), fv(us, 'oi_pc') + '~', '거래일마다', ''),
-         ('VIX 기간구조(9일~1년)', 'Cboe 지수 이력', lv(us, 'vix'), fv(us, 'vix') + '~', '거래일마다', st.get('vix', {}).get('note', '')),
+         ('VIX 기간구조(9일~1년)', '야후(먼저) · Cboe 지수 이력(예비)', lv(us, 'vix'), fv(us, 'vix') + '~', '거래일마다', st.get('vix', {}).get('note', '')),
          ('코스피200 지수', 'KRX(pykrx·대시보드 수집), 없으면 야후', kr.index[-1], kr.index[0][:7] + '~', '거래일마다', '마지막 값 출처: ' + str(kr['src'].iloc[-1])),
          ('코스피200 선물 근월물 종가·미결제', 'KRX 정보데이터시스템(로그인)', lv(kr, 'fut_oi_front'), fv(kr, 'fut_oi_front') + '~', '월~금 19:17(KRX 이어받기)', ''),
          ('선물 투자자별 순매수 금액(정규장)', 'KRX 정보데이터시스템(로그인)', lv(kr, 'foreign_amt'), fv(kr, 'foreign_amt') + '~', '월~금 19:17', ''),
