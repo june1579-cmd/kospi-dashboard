@@ -41,10 +41,11 @@ RUNS = [
     dict(key='run:lab-notify', wf='deriv-notify.yml', br='deriv-research', label='연구소 카카오 알림', need=1, grace_h=0, rerun=False, repair=True),
     # 2026-11-24: 미국 옵션 아침 추정(화~토 07:40 카톡)과 공개 시각 측정
     dict(key='run:uswalls', wf='us-walls.yml', br='main', label='미국 옵션 아침 추정(07:40 카톡)', need=1, grace_h=0, rerun=True, repair=True, event='schedule'),
+    dict(key='run:occwalls', wf='occ-walls.yml', br='main', label='미국 옵션 공식 확정(OCC, 낮 카톡)', need=1, grace_h=0, rerun=True, repair=True, event='schedule'),
     dict(key='run:pubwatch', wf='pub-watch.yml', br='main', label='미국 옵션 공개 시각 측정', need=2, grace_h=0, rerun=False, repair=True, why='한 시간마다 도는 다음 실행이 재시도 역할'),
 ]
 # 자료 멈춤 감시: rule = age(max_h 시간 넘게 그대로면 멈춤) | trading_am(거래일 11:30 뒤인데 오늘 갱신 없음) | weekday_pm(평일 21:30 뒤인데 오늘 19시 뒤 갱신 없음)
-#                | us_am(화~토 08:40 뒤인데 오늘 06:30 뒤 갱신 없음 — 미국 장 다음 날 아침 자료)
+#                | us_am(화~토 08:40 뒤인데 오늘 06:30 뒤 갱신 없음 — 미국 장 다음 날 아침 자료) | us_pm(화~토 16:30 뒤인데 오늘 09:00 뒤 갱신 없음 — OCC 확정)
 FRESH = [
     dict(key='stale:kospi', br='main', path='docs/meta.json', label='코스피 대시보드 웹판', rule='trading_am', repair=True),
     dict(key='stale:ai', br='main', path='out/ai_feed.csv', label='AI 경고판 원자료', rule='age', max_h=30, repair=True),
@@ -56,6 +57,7 @@ FRESH = [
     # dict(key='stale:lab-d', br='deriv-research', path='deriv/lab/state_d/latest_status.json', label='연구소 갈래 D(총괄 세션)', rule='age', max_h=12, repair=False, hint='Claude 예약 세션이 돌지 않음(사용량 한도일 수 있음)'),
     dict(key='stale:usk', br='deriv-research', path='deriv/us/out/dash.json', label='미국·한국 연동 자료(웹판 10절)', rule='age', max_h=40, repair=True),
     dict(key='stale:uswalls', br='main', path='uswalls/latest.json', label='미국 옵션 아침 추정(웹판 11절)', rule='us_am', repair=True),
+    dict(key='stale:occwalls', br='main', path='uswalls/occ_latest.json', label='미국 옵션 공식 확정(웹판 11절)', rule='us_pm', repair=True),
 ]
 
 
@@ -110,6 +112,7 @@ def check_fresh(c):
     if c['rule'] == 'age': stale = age_h > c['max_h']
     elif c['rule'] == 'trading_am': stale = trading_day(NOW.date()) and (NOW.hour, NOW.minute) >= (11, 30) and last.date() < NOW.date()
     elif c['rule'] == 'weekday_pm': stale = NOW.weekday() < 5 and (NOW.hour, NOW.minute) >= (21, 30) and last < NOW.replace(hour=19, minute=0, second=0, microsecond=0)
+    elif c['rule'] == 'us_pm': stale = 1 <= NOW.weekday() <= 5 and (NOW.hour, NOW.minute) >= (16, 30) and last < NOW.replace(hour=9, minute=0, second=0, microsecond=0)
     elif c['rule'] == 'us_am': stale = 1 <= NOW.weekday() <= 5 and (NOW.hour, NOW.minute) >= (8, 40) and last < NOW.replace(hour=6, minute=30, second=0, microsecond=0)
     return f"{c['label']} 멈춤(마지막 갱신 {last:%m/%d %H:%M}, {age_h:.0f}시간 전){' · ' + c['hint'] if c.get('hint') else ''}" if stale else None
 
@@ -132,6 +135,12 @@ def check_content():
         bad = fresh and U.get('status') in ('partial', 'fail')
         out['src:uswalls'] = ('미국 옵션 아침 추정 일부 실패', f"미국 옵션 아침 추정 {U.get('status')}: {' / '.join(U.get('errors') or [])[:120]}" if bad else None)
     except Exception as ex: print('미국 옵션 아침 추정 상태 읽기 실패', ex)
+    try:   # 2026-11-24: 미국 옵션 공식 확정(OCC) — 오늘 실행이 시간 초과·실패로 끝났는지
+        O = json.load(open('uswalls/occ_latest.json', encoding='utf-8'))
+        fresh = str(O.get('at_kst', ''))[:10] == NOW.strftime('%Y-%m-%d') and not O.get('test')
+        bad = fresh and O.get('status') in ('partial', 'fail', 'timeout')
+        out['src:occwalls'] = ('미국 옵션 공식 확정 문제', f"미국 옵션 공식 확정(OCC) {O.get('status')}: {(O.get('note') or ' / '.join(O.get('errors') or []))[:120]}" if bad else None)
+    except Exception as ex: print('미국 옵션 공식 확정 상태 읽기 실패', ex)
     return out
 
 

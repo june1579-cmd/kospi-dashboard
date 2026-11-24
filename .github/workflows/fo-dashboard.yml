@@ -6,9 +6,12 @@ name: fo-dashboard
 # 손으로 돌리기: Actions 탭 → fo-dashboard → Run workflow (krx 를 false 로 두면 KRX 로그인 없이 계산만 다시 한다)
 on:
   schedule:
-    - cron: '47 22 * * 1-5'   # 07:47 KST 화~토 — 뉴욕 장 마감·CFTC 금요일 공표 뒤, 한국 개장 전
+    - cron: '37 21 * * 1-5'   # 06:37 KST 화~토 — 뉴욕 장 마감(06:00) 직후·CFTC 금요일 공표(토 05:30) 뒤 (2026-11-24: 07:47 → 06:37 로 당김)
     - cron: '17 10 * * 1-5'   # 19:17 KST 월~금 — KRX 당일 확정치(18시 이후) 반영
     - cron: '47 1 * * 2-6'    # 10:47 KST 화~토 — Cboe 풋/콜 날짜별 파일이 아침 07:47 에는 아직 없어 한 번 더 받음(2026-11-24 추가, KRX 로그인 없음)
+  workflow_run:              # 2026-11-24: 코스피 대시보드 갱신(15:43 잠정 투자자별·VKOSPI, 08:23 야간선물 등)이 끝나면 바로 웹판도 다시 계산(KRX 로그인 없음)
+    workflows: [dashboard-update]
+    types: [completed]
   workflow_dispatch:
     inputs:
       krx:
@@ -61,7 +64,7 @@ jobs:
           for i in 1 2 3; do git pull --rebase -q origin deriv-research && git push -q origin HEAD:deriv-research && break || sleep 10; done
   build:
     needs: krx
-    if: ${{ always() }}
+    if: ${{ always() && (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success') }}
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     concurrency:
@@ -87,6 +90,7 @@ jobs:
           cache: pip
       - run: pip install -q pandas==2.3.3 numpy==2.5.3 scipy==1.18.1 scikit-learn==1.9.1 requests==2.34.2
       - name: 미국 공개 자료 수집(CFTC·Cboe 풋/콜·VIX·야후 일봉)
+        if: ${{ github.event_name != 'workflow_run' }}   # 코스피 대시보드 갱신 직후 계산은 한국 자료만 새로 반영(미국 출처는 다시 두드리지 않음)
         run: python fo/collect_us.py
       - name: 지표·방향 확률 계산 → 웹판 자료(docs/fo/data)
         run: if [ -f fo/build.py ]; then python fo/build.py --deriv _deriv/deriv/data; else echo "build.py 없음 — 수집만"; fi

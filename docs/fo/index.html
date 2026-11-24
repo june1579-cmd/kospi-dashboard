@@ -192,6 +192,11 @@
   <div id="w-now"></div>
   <p class="fo-note" id="w-trend"></p>
   <p class="fo-note">공식 미결제약정(OCC)은 밤사이 한 번 집계돼 다음 날 공개되므로, 방금 끝난 장의 포지션은 그날 밤에야 확정됩니다. 여기서는 장 마감 직후 받을 수 있는 <b>전날 확정 미결제 + 직전 장 거래량</b>으로 직전 장 마감 뒤 벽을 추정합니다. 추정 미결제 = 확정 미결제 + 거래 반영 비율 × 거래량이고, 비율은 날마다 “전날 거래량 → 오늘 확정 미결제 변화”로 콜·풋 따로 다시 맞춥니다(최근 5번 가운데값, 기록이 없을 때 0.35). 벽은 현재가 위(콜)·아래(풋)에서 감마×미결제가 가장 큰 행사가(현재가 ±10%, 만기 45일 안, 야후 옵션 체인)이고, “전날 확정”은 같은 현재가로 계산해 가격 변화가 아닌 포지션 변화만 보이게 했습니다. 거래량만으로는 신규·청산을 구분할 수 없으므로 추정치입니다. SPX(지수 옵션)는 무료 자료가 없어 싣지 않았습니다.</p>
+  <h3>공식 확정(OCC) — 아침 추정과 비교</h3>
+  <p class="fo-note" id="o-meta">자료를 읽는 중…</p>
+  <div id="o-now"></div>
+  <p class="fo-note">OCC(미국 옵션청산소)의 시리즈 검색에서 만기·행사가별 공식 미결제를 받아 같은 방법(감마×미결제)으로 계산합니다. 화~토 09:13부터 10분마다 확인해 직전 장이 반영되면 바로 계산하고 카카오톡으로 보냅니다(지금까지 확인된 반영 시각은 한국 오전 11시 무렵). SPX 는 아침 추정 없이 공식값만 있고, 변동성은 같은 만기의 SPY 값을 빌려 씁니다.</p>
+  <div id="o-hist"></div>
   <h4>최근 기록과 어제 추정의 정확도</h4>
   <div id="w-hist"></div>
   <h3>미국 옵션 자료 공개 시각(측정 중)</h3>
@@ -202,7 +207,7 @@
 
 <section class="fo-sec" id="s9">
   <h2>9. 자료 설명</h2>
-  <p class="fo-note">이 웹판의 숫자는 전부 GitHub 저장소의 <code>docs/fo/data</code> 파일 6개에서 나오고, 그 파일은 GitHub Actions 워크플로 <code>fo-dashboard</code>가 수집·계산해 올립니다(화~토 07:47 · 10:47 · 월~금 19:17 KST 자동 — 10:47 은 Cboe 풋/콜 파일을 하루 늦지 않게 받으려고 2026-11-24 추가, 위쪽 [지금 다시 계산] 단추로 수동). 페이지는 열 때마다 저장소에 올라온 최신 파일을 읽습니다.</p>
+  <p class="fo-note">이 웹판의 숫자는 전부 GitHub 저장소의 <code>docs/fo/data</code> 파일 6개에서 나오고, 그 파일은 GitHub Actions 워크플로 <code>fo-dashboard</code>가 수집·계산해 올립니다(화~토 06:37 · 10:47 · 월~금 19:17 KST 자동, 코스피 대시보드 갱신이 끝날 때마다 한 번 더 — 위쪽 [지금 다시 계산] 단추로 수동). 페이지는 열 때마다 저장소에 올라온 최신 파일을 읽습니다.</p>
   <div data-table="sources"></div>
   <h3>확인하지 못한 값</h3>
   <div data-table="unknown"></div>
@@ -223,7 +228,7 @@
 <script>document.getElementById('btn-reload').addEventListener('click', function () { location.href = location.pathname + '?r=' + Date.now(); });</script>
 <script src="app.js"></script>
 <script src="usk.js"></script>
-<script src="uswalls.js?v=20261124b"></script>
-<script src="health.js?v=20261124b"></script>
+<script src="uswalls.js?v=20261124c"></script>
+<script src="health.js?v=20261124c"></script>
 </body>
 </html>

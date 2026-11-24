@@ -46,7 +46,21 @@
     $('w-pubmeta').innerHTML = `측정 시작 ${esc(P.started || '—')} · 마지막 정리 ${esc(P.updated || '—')}` + (P.done ? ` · <b>측정 끝(${esc(P.done)})</b>` : ' · 측정 중(5거래일치가 모이면 카카오톡으로 요약하고 멈춤)');
   }
 
+  function drawOcc(O) {
+    const stx = {ok: '정상', partial: '<span style="color:var(--up)">일부 실패</span>', fail: '<span style="color:var(--up)">실패</span>', timeout: '<span style="color:var(--up)">OCC 반영 안 됨(시간 초과)</span>', skip: '새 장 없음'}[O.status] || esc(O.status);
+    $('o-meta').innerHTML = `계산 ${esc(O.at_kst)} KST · 대상 장 ${esc(O.session || '—')} · 상태 ${stx}` + (O.found_kst ? ` · OCC 반영 확인 <b>${esc(O.found_kst.slice(11))}</b>` : '') + (O.test ? ' · <b>시험</b>' : '') + (O.note ? ' · ' + esc(O.note) : '');
+    const S = O.syms || {}, rows = [];
+    ['SPY', 'QQQ', 'SPX'].forEach(s => { const v = (S[s] || {}).row; if (!v) return;
+      const d = x => no(x) ? '—' : (Math.abs(x) <= 1 ? '맞음' : sg(x, 0));
+      rows.push([s, v.session, f(v.spot), {h: '<b>' + k(v.cw_occ) + '</b>'}, k(v.cw_est), d(v.d_cw), {h: '<b>' + k(v.pw_occ) + '</b>'}, k(v.pw_est), d(v.d_pw), k(v.cwoi_occ) + ' / ' + k(v.pwoi_occ), f(v.pcr_occ)]); });
+    $('o-now').innerHTML = rows.length ? table([['대상'], ['장'], ['종가', 1], ['공식 콜벽', 1], ['아침 추정', 1], ['차이', 1], ['공식 풋벽', 1], ['아침 추정', 1], ['차이', 1], ['물량 최대 콜/풋', 1], ['풋÷콜 미결제', 1]], rows) : '<p class="fo-note">아직 확정한 장이 없습니다.</p>';
+    const H = (O.hist || []).slice().reverse().slice(0, 30);
+    $('o-hist').innerHTML = H.length ? table([['장'], ['대상'], ['공식 콜벽', 1], ['추정', 1], ['공식 풋벽', 1], ['추정', 1], ['풋÷콜', 1], ['거래 반영 비율 콜/풋', 1], ['OCC 반영 확인']],
+      H.map(r => [r.session, r.sym, k(r.cw_occ), k(r.cw_est), k(r.pw_occ), k(r.pw_est), f(r.pcr_occ), (no(r.k_c_occ) ? '—' : f(r.k_c_occ)) + ' / ' + (no(r.k_p_occ) ? '—' : f(r.k_p_occ)), (r.found_kst || '').slice(5)])) : '';
+  }
+
   const get = u => fetch(u + '?v=' + Date.now(), {cache: 'no-store'}).then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); });
   get(RAW + 'main/uswalls/latest.json').then(drawWalls).catch(e => { const m = $('w-meta'); if (m) m.innerHTML = '<span style="color:var(--up)">자료를 읽지 못했습니다(확인 불가): ' + esc(String(e)) + '</span>'; });
+  get(RAW + 'main/uswalls/occ_latest.json').then(drawOcc).catch(() => { const m = $('o-meta'); if (m) m.textContent = '아직 공식 확정 기록이 없습니다(화~토 09:13부터 OCC 반영을 기다려 계산).'; });
   get(RAW + 'pub-watch/summary.json').then(drawPub).catch(() => { const m = $('w-pubmeta'); if (m) m.textContent = '측정 기록이 아직 없습니다(첫 정리는 시작 뒤 한 시간 안).'; });
 })();

@@ -1,0 +1,84 @@
+# 미국 옵션 공식 확정(OCC) — 화~토 09:13 KST 시작, OCC 가 직전 장 마감 뒤 미결제를 반영할 때까지 10분마다 확인(최대 15시 무렵까지),
+# 반영되면 SPY·QQQ·SPX 공식 콜벽·풋벽을 계산해 07:40 아침 추정과 비교한 글을 카카오톡으로 보낸다(2026-11-24). Claude 를 쓰지 않는다.
+# 실패하면 실패 알림을 보내고, watchdog 이 다시 돌리며, 안 풀리면 수리 에이전트가 고친다.
+name: occ-walls
+on:
+  schedule:
+    - cron: '13 0 * * 2-6'    # 09:13 KST 화~토
+  workflow_dispatch:
+    inputs:
+      test:
+        description: '시험(true 면 기록을 남기지 않고 글 앞에 시험)'
+        default: 'false'
+      force:
+        description: '이미 확정한 장도 다시 계산(true / false)'
+        default: 'false'
+      loop_min:
+        description: 'OCC 반영을 기다릴 최대 분'
+        default: '330'
+permissions:
+  contents: write
+concurrency:
+  group: occ-walls
+  cancel-in-progress: false
+jobs:
+  calc:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    outputs:
+      result: ${{ steps.c.outcome }}
+      send: ${{ steps.c.outputs.send }}
+      status: ${{ steps.c.outputs.status }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q pandas numpy scipy yfinance requests
+      - name: OCC 반영 기다리기 → 공식 벽 계산
+        id: c
+        env:
+          USW_TEST: ${{ github.event.inputs.test == 'true' && '1' || '0' }}
+          OCC_FORCE: ${{ github.event.inputs.force == 'true' && '1' || '' }}
+          OCC_LOOP_MIN: ${{ github.event.inputs.loop_min || '330' }}
+        run: python uswalls/occ.py
+      - name: 저장
+        if: always()
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add -A uswalls
+          git commit -q -m "미국 옵션 공식 확정(OCC) $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || { echo "변경 없음"; exit 0; }
+          for i in 1 2 3 4; do git pull -q --rebase && git push -q && exit 0; sleep 10; done; exit 1
+  notify:
+    needs: calc
+    if: ${{ always() && (needs.calc.outputs.send == '1' || needs.calc.result != 'success') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    concurrency:
+      group: dashboard-update     # 카카오 토큰 연장이 다른 알림과 겹치지 않게 같은 줄에 선다
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q requests cryptography
+      - name: 보낼 글
+        run: |
+          git pull -q --rebase || true
+          if [ "${{ needs.calc.result }}" = "success" ] && [ -s uswalls/occ_kakao.txt ]; then cp uswalls/occ_kakao.txt /tmp/msg.txt
+          else
+            T=""; [ "${{ github.event.inputs.test }}" = "true" ] && T=" 시험"
+            E=$(python3 -c "import json,re;e=(json.load(open('uswalls/occ_latest.json',encoding='utf-8')).get('errors') or [''])[0];print(re.sub(r'[^0-9A-Za-z가-힣 :./,_()-]','',e)[:100])" 2>/dev/null || true)
+            printf '[미국옵션 확정 실패%s] %s · 원인: %s · 실행 %s · GitHub 감시가 다시 돌리고, 안 풀리면 수리 에이전트가 고칩니다\n' "$T" "$(TZ=Asia/Seoul date '+%m/%d %H:%M')" "${E:-계산 단계 오류(로그 확인)}" "${{ github.run_id }}" > /tmp/msg.txt
+          fi
+          cat /tmp/msg.txt
+      - name: 카카오톡
+        env:
+          KAKAO_REST_KEY: ${{ secrets.KAKAO_REST_KEY }}
+          KAKAO_REFRESH_TOKEN: ${{ secrets.KAKAO_REFRESH_TOKEN }}
+          KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
+        run: python kakao_send.py --file /tmp/msg.txt --link https://june1579-cmd.github.io/kospi-dashboard/fo/#s11
+      - name: 카카오 토큰 연장 저장
+        if: always()
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add -A state && git commit -m "카카오 토큰 연장" -q && git pull -q --rebase && git push -q || true

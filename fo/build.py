@@ -483,7 +483,7 @@ def t_sources(us, kr, cf):
     st = json.load(open(os.path.join(FD, 'status.json'), encoding='utf-8')) if os.path.exists(os.path.join(FD, 'status.json')) else {}
     lv = lambda df, c: (df[c].last_valid_index() or '') if c in df and df[c].notna().any() else '없음'
     fv = lambda df, c: (df[c].first_valid_index() or '')[:7] if c in df and df[c].notna().any() else ''
-    R = [('S&P500·나스닥100·QQQ·DIA 종가', '야후 일봉', lv(us, 'spx'), fv(us, 'spx') + '~', '화~토 07:47 · 월~금 19:17', st.get('px', {}).get('note', '')),
+    R = [('S&P500·나스닥100·QQQ·DIA 종가', '야후 일봉', lv(us, 'spx'), fv(us, 'spx') + '~', '화~토 06:37·10:47 · 월~금 19:17 · 코스피 대시보드 갱신 직후', st.get('px', {}).get('note', '')),
          ('ES·NQ 선물(근월물 연속)', '야후 일봉', lv(us, 'es'), fv(us, 'es') + '~', '위와 같음', ''),
          ('CFTC 주체별 포지션(ES·NQ, 선물만)', 'CFTC Traders in Financial Futures', cf['date'].max() if cf is not None else '없음', (cf['date'].min()[:7] + '~') if cf is not None else '', '매주 금요일 공표(화요일 기준)', st.get('cftc', {}).get('note', '')),
          ('Cboe 풋/콜(전체·지수·개별주식·SPX)', 'Cboe 일별 시장 통계', lv(us, 'pc_total'), fv(us, 'pc_total') + '~', '거래일마다', 'SPX는 ' + fv(us, 'pc_spx') + '~'),

@@ -35,8 +35,8 @@
   // 자료 종류별 '정해진 갱신'까지 여유(거래일 마감 뒤 몇 시간 안에 웹판에 들어와 있어야 하나)
   // 판정 기준 시각은 '마지막으로 돌았어야 할 웹판 계산 시각'이다(웹판은 그 시각에 받은 자료까지만 담으므로).
   const LAG = {
-    us_y: [1.5, '미국 장 마감 뒤 07:47 계산(야후)'], us_c: [13, 'Cboe 날짜별 파일 — 19:17 계산까지는 들어와야 함'],
-    kr_idx: [1.5, '한국 장 마감 뒤 19:17 계산'], kr_krx: [3.5, '19:17 KRX 이어받기 뒤'], kr_dash: [6, '코스피 대시보드 20:37 갱신 → 다음 계산'], kr_night: [19, '야간 06:00 마감 → 다음 날 19:17 계산']
+    us_y: [0.5, '미국 장 마감 뒤 06:37 계산(야후)'], us_c: [13, 'Cboe 날짜별 파일 — 19:17 계산까지는 들어와야 함'],
+    kr_idx: [1.5, '한국 장 마감 뒤 19:17 계산'], kr_krx: [3.5, '19:17 KRX 이어받기 뒤'], kr_dash: [1, '코스피 대시보드 15:43 갱신 직후 계산'], kr_night: [18.5, '야간 06:00 마감 → 코스피 대시보드 08:23 갱신 직후 계산']
   };
   function kind(r) {
     const n = r['지표'] || '', src = r['출처'] || '';
@@ -49,12 +49,12 @@
     if (/코스피 대시보드 수집/.test(src)) return 'kr_dash';
     return null;
   }
-  // 웹판 계산(fo-dashboard) 예정 시각: 화~토 07:47·10:47, 월~금 19:17 (KST) — 90분 넘게 지났는데 그 뒤 계산이 없으면 늦음
+  // 웹판 계산(fo-dashboard) 예정 시각: 화~토 06:37·10:47, 월~금 19:17 (KST, 코스피 대시보드 갱신 직후 계산은 덤) — 90분 넘게 지났는데 그 뒤 계산이 없으면 늦음
   function lastBuildSlot(now) {
     let s = ymd(parts(new Date(now), 'Asia/Seoul')), best = null;
     for (let i = 0; i < 5; i++, s = addDays(s, -1)) {
       const w = wd(s), slots = [];
-      if (w >= 2 && w <= 6) slots.push([7, 47], [10, 47]);
+      if (w >= 2 && w <= 6) slots.push([6, 37], [10, 47]);
       if (w >= 1 && w <= 5) slots.push([19, 17]);
       slots.forEach(([h, m]) => { const t = kstOf(s, h, m); if (t + 90 * 60e3 <= now && (best === null || t > best)) best = t; });
       if (best !== null) return best;
@@ -64,14 +64,14 @@
   const parseKst = s => s ? Date.parse(s.replace(' KST', '').replace(' ', 'T') + ':00+09:00') : NaN;
   const fmtKst = t => { const p = parts(new Date(t), 'Asia/Seoul'); return `${p.month}/${p.day} ${p.hour}:${p.minute}`; };
 
-  function draw(T, ST, WD, DASH, UW, HOL) {
+  function draw(T, ST, WD, DASH, UW, HOL, OC) {
     const now = Date.now(), probs = [], rows = [];
     const hol = new Set((HOL && HOL.holidays) || []);
     const meta = ((T && T.meta) || [])[0] || {};
     // 1) 웹판 계산 자체
     const built = parseKst(meta.built), slot = lastBuildSlot(now);
     const bLate = !isNaN(built) && slot !== null && built < slot;
-    rows.push(['웹판 계산(fo-dashboard)', meta.built ? meta.built.replace(' KST', '') : '확인 불가', slot ? fmtKst(slot) + ' 계산 뒤' : '—', bLate ? 'late' : (isNaN(built) ? 'bad' : 'ok'), '화~토 07:47·10:47 · 월~금 19:17']);
+    rows.push(['웹판 계산(fo-dashboard)', meta.built ? meta.built.replace(' KST', '') : '확인 불가', slot ? fmtKst(slot) + ' 계산 뒤' : '—', bLate ? 'late' : (isNaN(built) ? 'bad' : 'ok'), '화~토 06:37·10:47 · 월~금 19:17']);
     if (isNaN(built)) probs.push('웹판 계산 결과(data/tables.json)를 읽지 못했습니다');
     else if (bLate) probs.push(`웹판 계산이 늦어짐 — 마지막 계산 ${fmtKst(built)}, ${fmtKst(slot)} 예정 계산이 아직 반영되지 않음`);
     const ref = isNaN(built) ? now : (bLate ? built : (slot === null ? now : Math.max(slot, Math.min(built, now))));   // 계산이 늦으면 실제 마지막 계산 시각 기준으로 자료를 본다
@@ -114,9 +114,17 @@
       else if (due && atD < today && UW.status !== 'seed') { st = 'late'; probs.push(`미국 옵션 아침 추정(11절) 늦어짐 — 마지막 계산 ${UW.at_kst}, 오늘 07:40 계산이 없음`); }
       rows.push(['미국 옵션 아침 추정(11절)', (sess ? sess + ' 장' : '—') + ' · 계산 ' + (UW.at_kst || '?'), '화~토 07:40', st, UW.status === 'seed' ? '시작 기록(첫 정규 계산 전)' : (UW.status === 'holiday' ? '미국 휴장 — 새 거래 없음' : 'us-walls')]);
     }
+    // 4-2) 11절 — 공식 확정(OCC)
+    if (OC) {
+      const kp = parts(new Date(now), 'Asia/Seoul'), today = ymd(kp), w = wd(today), hm = +kp.hour * 60 + +kp.minute;
+      const atD = String(OC.at_kst || '').slice(0, 10); let st = 'ok';
+      if (atD === today && ['fail', 'partial', 'timeout'].includes(OC.status) && !OC.test) { st = 'bad'; probs.push(`미국 옵션 공식 확정(OCC) ${OC.status === 'timeout' ? 'OCC 반영 안 됨' : '실패'}: ${(OC.note || (OC.errors || []).join(' / ')).slice(0, 120)}`); }
+      else if (w >= 2 && w <= 6 && hm >= 16 * 60 + 30 && atD < today) { st = 'late'; probs.push(`미국 옵션 공식 확정(OCC) 늦어짐 — 마지막 ${OC.at_kst}, 오늘 계산 없음`); }
+      rows.push(['미국 옵션 공식 확정(OCC, 11절)', (OC.session ? OC.session + ' 장' : '—') + ' · 계산 ' + (OC.at_kst || '?'), '화~토 OCC 반영 뒤(오전 11시 무렵)', st, OC.found_kst ? 'OCC 반영 확인 ' + OC.found_kst.slice(11) : 'occ-walls']);
+    }
     // 5) 미국 수집 상태 파일·GitHub 감시가 연 문제
     Object.entries(ST || {}).forEach(([kk, v]) => { if (v && v.ok === false) probs.push(`미국 수집 실패: ${kk} — ${String(v.note || '').slice(0, 100)}`); });
-    const KEYS = ['run:fo', 'stale:fo', 'src:fo', 'run:usk', 'stale:usk', 'run:uswalls', 'stale:uswalls', 'src:uswalls', 'run:pubwatch', 'run:collect'];
+    const KEYS = ['run:fo', 'stale:fo', 'src:fo', 'run:usk', 'stale:usk', 'run:uswalls', 'stale:uswalls', 'src:uswalls', 'run:occwalls', 'stale:occwalls', 'src:occwalls', 'run:pubwatch', 'run:collect'];
     Object.entries(WD || {}).forEach(([kk, v]) => { if (KEYS.includes(kk) && v && v.open) probs.push(`GitHub 감시: ${v.text || v.label}`); });
     const unk = ((T && T.unknown) || []).length;
 
@@ -140,6 +148,6 @@
   }
 
   Promise.all([opt(get('data/tables.json')), opt(get(RAW + 'main/fo/data/status.json')), opt(get(RAW + 'main/state/watchdog.json')),
-    opt(get(RAW + 'deriv-research/deriv/us/out/dash.json')), opt(get(RAW + 'main/uswalls/latest.json')), opt(get(RAW + 'main/pkg/holidays_kr.json'))])
+    opt(get(RAW + 'deriv-research/deriv/us/out/dash.json')), opt(get(RAW + 'main/uswalls/latest.json')), opt(get(RAW + 'main/pkg/holidays_kr.json')), opt(get(RAW + 'main/uswalls/occ_latest.json'))])
     .then(a => { try { draw(...a); } catch (e) { box.hidden = false; box.innerHTML = '<div class="fo-hl-head fo-up">자료 상태를 확인하지 못했습니다: ' + esc(String(e)) + '</div>'; } });
 })();

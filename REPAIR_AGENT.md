@@ -27,4 +27,5 @@
 - 설명: `uswalls/README.md`. 코드 `uswalls/walls.py`·`uswalls/pubwatch.py`, 결과 `uswalls/latest.json`(status·errors), 기록 가지 `pub-watch`.
 - 흔한 원인: ① 야후 미결제가 비어 있는 시간대(뉴욕 새벽~아침)에 돈 실행 — 다음 정규 실행이 정상이면 고칠 것 없음. ② yfinance 가 바뀌어 체인을 못 받음 — `pip install -U yfinance` 로 시험(워크플로는 버전을 고정하지 않음). ③ 카카오 토큰 — "비밀값 확인 필요"로만 보고.
 - 실패한 아침 글은 다시 돌리면(`gh run rerun <번호> --failed`) 바로 보낸다(07:40 이 지났으면 기다리지 않음). 같은 날 다시 돌려도 기록이 겹치지 않는다.
+- 낮 공식 확정(`occ-walls`, `uswalls/occ.py`): OCC 시리즈 검색 형식이 바뀌면 `occ_chain()` 의 줄 나누기만 고친다. 시간 초과(OCC 반영 안 됨)는 실패가 아니다.
 - 추정 방법(비율 k·벽 정의)은 사용자 결정 없이 바꾸지 않는다. 실행이 죽는 버그만 고친다.
