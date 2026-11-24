@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>연구소 조합 매매 확인</title>
+<meta name="description" content="연구소에서 거름 시험을 거친 조합들의 매매 날짜를 코스피·코스피200 선물 그래프에 겹쳐 보는 확인용 웹판">
+<meta name="robots" content="noindex">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<style>
+/* 색·글자 토큰은 코스피 대시보드(docs/index.html)와 같다 */
+:root{--font-sans:-apple-system,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",system-ui,sans-serif;--font-serif:"Noto Serif KR","Apple SD Gothic Neo",Georgia,serif;
+--color-bg:#f6f7f9;--color-panel:#ffffff;--color-fg:#1b1f24;--color-fg-muted:#6b7280;--color-border-line:#e5e7eb;
+--fs-title:22px;--fs-heading:17px;--fs-body:15px;--fs-cap:12.5px;--fw-medium:600;--radius:12px;
+--chart-grid:#e5e7eb;--chart-axis:#9aa3ad;--chart-ref:#9aa3ad;--chart-line:#1b1f24;--pop:#ffffff;--pop-shadow:0 4px 16px rgba(0,0,0,.15);--sel-row:#eef4fd;
+--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#6250d6;--s5:#e87ba4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--color-bg:#0f1216;--color-panel:#171b21;--color-fg:#e6e8eb;--color-fg-muted:#9aa3ad;--color-border-line:#2a3038;
+--chart-grid:#2a3038;--chart-axis:#8a93a0;--chart-ref:#8a93a0;--chart-line:#e6e8eb;--pop:#1e232b;--pop-shadow:0 4px 16px rgba(0,0,0,.5);--sel-row:#1c2633;
+--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#9085e9;--s5:#d55181}}
+:root[data-theme="dark"]{--color-bg:#0f1216;--color-panel:#171b21;--color-fg:#e6e8eb;--color-fg-muted:#9aa3ad;--color-border-line:#2a3038;
+--chart-grid:#2a3038;--chart-axis:#8a93a0;--chart-ref:#8a93a0;--chart-line:#e6e8eb;--pop:#1e232b;--pop-shadow:0 4px 16px rgba(0,0,0,.5);--sel-row:#1c2633;
+--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#9085e9;--s5:#d55181}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--color-bg);color:var(--color-fg);font-family:var(--font-sans);font-size:var(--fs-body);line-height:1.5;overflow-x:hidden}
+@supports (overflow:clip){html,body{overflow-x:clip}}
+.lab{max-width:1180px;margin:0 auto;padding:12px 16px 40px;display:flex;flex-direction:column;gap:14px;font-variant-numeric:tabular-nums}
+.bar{font-size:var(--fs-cap);color:var(--color-fg-muted);display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
+.bar a{color:inherit}
+h1{font-family:var(--font-serif);font-weight:400;font-size:var(--fs-title);margin:0}
+h2{font-size:var(--fs-heading);font-weight:var(--fw-medium);margin:0}
+.lede{margin:6px 0 0;max-width:62rem;line-height:1.55}
+.muted,.note{color:var(--color-fg-muted);font-size:var(--fs-cap)}
+.note{margin:4px 0 8px;line-height:1.5}
+.card{background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:var(--radius);padding:16px;min-width:0}
+.head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:10px}
+.ctl{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.seg{display:inline-flex;border:1px solid var(--color-border-line);border-radius:var(--radius);overflow:hidden;flex:none}
+.seg button{font:inherit;font-size:var(--fs-cap);background:transparent;color:var(--color-fg-muted);border:0;padding:6px 10px;cursor:pointer}
+.seg button+button{border-left:1px solid var(--color-border-line)}
+.seg button[aria-pressed=true]{background:var(--color-bg);color:var(--color-fg);font-weight:var(--fw-medium)}
+.seg.zoom button{min-width:2.1rem;font-size:var(--fs-body);color:var(--color-fg)}
+.win{font-size:var(--fs-cap);color:var(--color-fg-muted)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:var(--fs-cap);color:var(--color-fg-muted);margin:8px 0 2px;align-items:center}
+.legend span{display:inline-flex;align-items:center;gap:.35rem}
+.legend button{font:inherit;font-size:var(--fs-cap);border:1px solid var(--color-border-line);background:var(--color-panel);color:var(--color-fg);border-radius:999px;padding:2px 8px 2px 6px;cursor:pointer;display:inline-flex;align-items:center;gap:.35rem}
+.sw{display:inline-block;width:.65rem;height:.65rem;border-radius:2px;flex:none}
+#all-chart{position:relative;min-height:440px;margin-top:6px}
+#all-chart svg{display:block;overflow:visible}
+.tick{font-size:var(--fs-cap);fill:var(--color-fg-muted)}
+.ptitle{font-size:var(--fs-cap);fill:var(--color-fg);font-weight:var(--fw-medium)}
+.tip{position:absolute;z-index:2;background:var(--pop);border:1px solid var(--color-border-line);border-radius:var(--radius);box-shadow:var(--pop-shadow);padding:6px 10px;font-size:var(--fs-cap);pointer-events:none;white-space:nowrap}
+.tip .h{color:var(--color-fg-muted);margin-bottom:2px}
+.tip .r{display:flex;align-items:center;gap:.35rem}
+.tip .r b{font-weight:var(--fw-medium);margin-left:auto;padding-left:10px}
+.fil{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.fil input[type=search]{font:inherit;font-size:var(--fs-cap);padding:6px 10px;border:1px solid var(--color-border-line);border-radius:var(--radius);background:var(--color-panel);color:var(--color-fg);min-width:12rem;flex:1 1 12rem;max-width:22rem}
+.fil label{font-size:var(--fs-cap);color:var(--color-fg-muted);display:inline-flex;gap:.3rem;align-items:center}
+.tbl-wrap{overflow:auto;max-height:34rem;border-top:1px solid var(--color-border-line)}
+table{width:100%;border-collapse:collapse;font-size:var(--fs-cap)}
+th{text-align:left;font-weight:var(--fw-medium);color:var(--color-fg-muted);padding:6px 8px;border-bottom:1px solid var(--color-border-line);position:sticky;top:0;background:var(--color-panel);white-space:nowrap;z-index:1}
+th.sort{cursor:pointer;user-select:none}
+th.sort:hover{color:var(--color-fg)}
+th .ar{display:inline-block;width:.8em;color:var(--color-fg)}
+td{padding:6px 8px;border-bottom:1px solid var(--color-border-line);vertical-align:top}
+.num{text-align:right;white-space:nowrap}
+th.num{text-align:right}
+#combo-tbl tbody tr{cursor:pointer}
+#combo-tbl tbody tr:hover{background:var(--color-bg)}
+#combo-tbl tbody tr.on{background:var(--sel-row)}
+#combo-tbl tbody tr.none td{color:var(--color-fg-muted)}
+td.desc{min-width:15rem;max-width:30rem}
+td.desc div{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+td.pick{width:1.6rem}
+.pk{display:inline-block;width:.9rem;height:.9rem;border-radius:3px;border:1.5px solid var(--color-border-line);vertical-align:middle}
+.f4{letter-spacing:1px;white-space:nowrap}
+.tag{display:inline-block;font-size:11.5px;padding:0 6px;border-radius:999px;border:1px solid var(--color-border-line);white-space:nowrap}
+.tag.pass{border-color:var(--color-fg);color:var(--color-fg);font-weight:var(--fw-medium)}
+.det{display:flex;flex-direction:column;gap:14px}
+.dcard{border-left:4px solid var(--c);padding-left:14px;min-width:0}
+.trw td,.trw th{white-space:nowrap}
+.dcard h3{font-size:var(--fs-body);font-weight:var(--fw-medium);margin:0;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;color:var(--color-fg-muted);word-break:break-all}
+.cond{margin:6px 0;line-height:1.55}
+.cond ul{margin:4px 0 0;padding-left:1.1rem}
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:4px 18px;font-size:var(--fs-cap);margin:8px 0}
+.kv div{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dashed var(--color-border-line);padding:2px 0}
+.kv div span:first-child{color:var(--color-fg-muted)}
+.kv h4{grid-column:1/-1;margin:6px 0 0;font-size:var(--fs-cap);font-weight:var(--fw-medium)}
+.trw{overflow:auto;max-height:22rem;margin-top:8px}
+.trw tbody tr{cursor:pointer}
+.trw tbody tr:hover{background:var(--color-bg)}
+.empty{color:var(--color-fg-muted);font-size:var(--fs-cap);padding:10px 0}
+.foot{font-size:var(--fs-cap);color:var(--color-fg-muted);text-align:center;margin-top:6px}
+.err{color:var(--color-fg);border:1px solid var(--color-border-line);background:var(--color-panel);border-radius:var(--radius);padding:10px}
+.toast{font-size:var(--fs-cap);color:var(--color-fg)}
+@media (max-width:700px){
+  .lab{padding:10px 12px 32px}
+  .card{padding:12px}
+  #all-chart{margin-left:-12px;margin-right:-12px}
+  td.desc{min-width:12rem}
+  td.src,.tag{white-space:nowrap}
+}
+</style>
+</head>
+<body>
+<div class="lab">
+  <div class="bar"><a href="../">코스피 대시보드</a><a href="../fo/">선물옵션 대시보드</a>
+    <a href="https://github.com/june1579-cmd/kospi-dashboard/tree/main/docs/lab/data" target="_blank" rel="noopener">자료 파일</a>
+    <a href="https://github.com/june1579-cmd/kospi-dashboard/blob/deriv-research/deriv/signal_a/x1/report.md" target="_blank" rel="noopener">X1 보고서</a>
+    <span id="asof">자료 읽는 중…</span></div>
+  <header>
+    <h1>연구소 조합 매매 확인</h1>
+    <p class="lede" id="lede">연구소 갈래 A·B·C·D 상위 조합(X1 거름 시험 대상)과 Signal A 관찰 목록. 표에서 줄을 누르면 그 조합의 매수일·매도일이 위 두 그래프에 표시됩니다.</p>
+  </header>
+  <p class="err" id="err" hidden></p>
+
+  <section class="card" aria-labelledby="chart-h">
+    <div class="head">
+      <div><h2 id="chart-h">코스피 · 코스피200 선물</h2>
+        <p class="note">일봉 종가 선. 위 칸 코스피 지수, 아래 칸 코스피200 연속 선물(같은 날짜 축). 주말·휴일은 칸을 차지하지 않습니다.</p></div>
+      <div class="ctl">
+        <div class="seg" id="range" role="group" aria-label="기간">
+          <button type="button" data-r="all">전체</button><button type="button" data-r="y5">5년</button><button type="button" data-r="y2">2년</button><button type="button" data-r="y1">1년</button><button type="button" data-r="m6">6달</button><button type="button" data-r="m3">3달</button>
+        </div>
+        <div class="seg zoom" id="zoom" role="group" aria-label="확대·축소·이동">
+          <button type="button" data-z="out" aria-label="축소(기간 넓게)" title="축소(기간 넓게)">−</button>
+          <button type="button" data-z="in" aria-label="확대(기간 좁게)" title="확대(기간 좁게)">+</button>
+          <button type="button" data-z="left" aria-label="과거로 이동" title="과거로 이동">◀</button>
+          <button type="button" data-z="right" aria-label="최근으로 이동" title="최근으로 이동">▶</button>
+        </div>
+        <span class="win" id="win"></span>
+      </div>
+    </div>
+    <div class="legend" id="legend"></div>
+    <div id="all-chart" aria-label="코스피와 코스피200 선물 그래프"></div>
+    <p class="note">마우스: 그래프를 끌면 기간 이동, 올려 두면 그날 값. 휴대폰: 두 손가락으로 벌리면 확대·오므리면 축소, 한 손가락으로 좌우로 밀면 이동, 한 번 터치하면 그날 값(다시 터치하면 닫힘).</p>
+  </section>
+
+  <section class="card" aria-labelledby="tbl-h">
+    <div class="head"><h2 id="tbl-h">조합 표</h2><span class="muted" id="count"></span></div>
+    <p class="note">열 제목을 누르면 정렬(한 번 더 누르면 반대로). 숫자는 <b>코스피 지수 기준</b>(신호 다음 날 시가 매수 → 청산일 종가 매도, 앞 거래가 끝난 뒤의 신호만 센 독립 거래). 등급은 연구소 숫자(코스피200 선물 기준)로 매긴 것. 거래 10건 미만은 %로 적지 않습니다. 줄을 누르면 그래프에 표시(최대 5개, 다시 누르면 꺼짐).</p>
+    <div class="fil">
+      <div class="seg" id="f-src" role="group" aria-label="갈래">
+        <button type="button" data-v="" aria-pressed="true">전체</button><button type="button" data-v="A">A</button><button type="button" data-v="B">B</button><button type="button" data-v="C">C</button><button type="button" data-v="D">D</button><button type="button" data-v="S" title="Signal A 관찰 목록">SA 관찰</button>
+      </div>
+      <div class="seg" id="f-grade" role="group" aria-label="등급">
+        <button type="button" data-v="" aria-pressed="true">전 등급</button><button type="button" data-v="통과">통과</button><button type="button" data-v="관찰">관찰</button><button type="button" data-v="–">–</button>
+      </div>
+      <label><input type="checkbox" id="f-has"> 거래 내역 있는 것만</label>
+      <label><input type="checkbox" id="f-all4"> 네 거름 모두 통과만</label>
+      <input type="search" id="f-q" placeholder="글자 검색(조건·id)" aria-label="글자 검색">
+      <span class="toast" id="toast" role="status"></span>
+    </div>
+    <div class="tbl-wrap"><table id="combo-tbl"><thead></thead><tbody></tbody></table></div>
+    <p class="note">네 거름(X1, 왼쪽부터): ① 다음 해 기준(2016~2026 거래가 같은 해 아무 날보다 10%p 이상·30건 이상) ② 2026년·큰 변동 해 ③ 반증 시험 8개 모두 버팀 ④ 가짜 신호 2,000번 p &lt; 1%. ● 통과 · ○ 못 넘음. 관찰 목록 3개는 Signal A S3 에서 같은 네 거름을 모두 넘어 남은 것입니다.</p>
+  </section>
+
+  <section class="card" aria-labelledby="det-h">
+    <h2 id="det-h">고른 조합</h2>
+    <div class="det" id="det"><p class="empty">표에서 줄을 누르면 조건 전문과 거래 내역이 여기에 나옵니다.</p></div>
+  </section>
+
+  <p class="foot">자료 2026-11-20 까지 · 수익률은 코스피 지수 기준(신호 다음 날 시가 → 청산일 종가), 거래별 단순 합계 · 결과를 보고 고른 규칙의 숫자 · 투자 권유 아님</p>
+</div>
+<script src="lab.js"></script>
+<script src="gesture.js"></script>
+</body>
+</html>
