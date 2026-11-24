@@ -4,7 +4,8 @@
 새로 계산하는 것은 '조합별 매매 날짜' 하나뿐이다. 그것도 X1(deriv/signal_a/x1/run.py)이 쓰는 함수를 그대로 불러
 (rank_pool → attach_trades → sa_common.score) 같은 거래를 파일로 옮길 뿐이다. 판정·수익·거름 숫자는 x1/out 의 결과를 그대로 읽는다.
 
-  combos.json  조합 표(갈래 A·B·C·D 상위 251개 = x1/out/pool.csv + fixed.csv, Signal A 관찰 목록 3개 = signals/final_v1.json)
+  combos.json  조합 표(갈래 A·B·C·D 상위 251개 = x1/out/pool.csv + fixed.csv, Signal A 관찰 목록 3개 = signals/final_v1.json,
+               Signal A 2차 네 거름 45개 = s2/out/pool.csv·candidates.json + wN/out/cands.pkl)
   trades.json  조합별 독립 거래(신호일·매수일·매수가·매도일·매도가·코스피 등락·방향 반영 수익·맞음)
   prices.json  코스피 지수·코스피200 연속 선물 일봉(릴리스 signal-a-data-v1 고정 자료 — 거래 수익을 잰 바로 그 가격), 2026-11-20 까지
   meta.json    만든 때·확인 결과(내보낸 거래가 x1/out/fixed.csv 의 독립거래·수익합계와 같은지)
@@ -123,6 +124,43 @@ def main():
                        'p1': [((S.get('앞_2010_2023') or S.get('앞_2016_2023') or {}).get('독립거래')), num((S.get('앞_2010_2023') or S.get('앞_2016_2023') or {}).get('적중'))],
                        'p2': [((S.get('뒤_2024_') or {}).get('독립거래')), num((S.get('뒤_2024_') or {}).get('적중'))],
                        'overlap': '', 'caution': w.get('조심할_점') or []})
+    # Signal A 2차에서 네 거름을 모두 넘은 45개(2026-11-24 사용자 지시 "45개 조합 연구소 조합 매매 확인 웹판에 추가해")
+    #  목록·숫자 = s2/out/pool.csv(넷다) + s2/out/candidates.json, 거래 = 그 줄기의 wN/out/cands.pkl(판정한 바로 그 거래). 순서·번호 = 수익 합계 큰 순.
+    S2 = os.path.join(SA, 's2', 'out')
+    p2 = pd.read_csv(os.path.join(S2, 'pool.csv')); p2 = p2[p2['넷다'].map(yes)].copy()
+    if len(p2) != 45: raise RuntimeError(f'2차 네 거름 통과 수가 45 가 아님({len(p2)}) — 내보내지 않음')
+    CJ = {c['key']: c for c in json.load(open(os.path.join(S2, 'candidates.json'), encoding='utf-8'))['candidates']}
+    p2 = p2.sort_values('수익합계', ascending=False, kind='mergesort').reset_index(drop=True)
+    cache = {}
+    for i, r in p2.iterrows():
+        k2 = r['key']; tk, cid = k2.split(':', 1); cj = CJ.get(k2)
+        if cj is None: raise RuntimeError(f'{k2}: candidates.json 에 없음')
+        if tk not in cache: cache[tk] = {x['id']: x for x in C.load_result(tk)[0]}
+        c = cache[tk].get(cid)
+        if c is None: raise RuntimeError(f'{k2}: {tk}/out/cands.pkl 에 거래 기록 없음 — 내보내지 않음')
+        d = int(cj['direction']); sc = C.score(c['trades'], d, D.K); t = sc['t']; rows = trade_rows(D, t, d); key = f'W{i + 1:02d}'
+        n = int(cj['all_n']); s = float(cj['all_sum'])
+        same = len(rows) == n and abs(sc['sum'] - s) < 1e-3
+        if same: checks['same'] += 1
+        else: checks['diff'].append({'key': key, 'src_key': k2, 'n': len(rows), 'fixed_n': n, 'sum': round(sc['sum'], 5), 'fixed_sum': round(s, 5)})
+        trades[key] = rows
+        touch = 'hit' in c['trades'].columns
+        hold = int(cj['hold']) if cj.get('hold') is not None else None
+        if touch: sell_n, sell_full = None, '보유일 없음 — 매수 뒤 시가 기준 ±5% 가운데 먼저 닿는 쪽으로 맞음·틀림을 정하고 그날 판다(조건 설명 원문)'
+        elif cj.get('hold_fixed') and hold: sell_n, sell_full = hold, f'신호 다음 거래일 시가에 사서, 그날을 1일째로 세어 {hold}거래일째 종가에 판다.'
+        else: sell_n, sell_full = None, f'고른 규칙마다 제 보유일(가운뎃값 {hold}일) — 먼저 난 신호부터, 보유 중 새 신호는 건너뜀(조건 설명 원문)'
+        f = cj.get('filters') or {}; fz = cj.get('falsify') or {}; w = cj.get('watch') or {}
+        combos.append({'key': key, 'src': 'W', 'rank': i + 1, 'round': None, 'grade': '2차 네 거름', 'id': k2, 'desc': cj['desc'],
+                       'name': f"{tk.upper()} 묶음 {cj.get('cluster')}" + (' ★' if cj.get('cluster_rep') else ''), 'family': cj.get('root') or cj.get('family'),
+                       'dir': d, 'trade_src': f'{tk}/out/cands.pkl', 'trade_note': '2016~2026 해마다 그 전 자료로 고른 절차의 숫자(다음 해 성적)',
+                       'lab': None, 'has_trades': True, 'check': bool(same), 'sell_n': sell_n, 'sell_full': sell_full,
+                       'n': n, 'hit': num(cj['all_hit']), 'base': num(cj['base']), 'edge': num(cj['edge']), 'sum': num(s, 5), 'avg': num(s / n, 5) if n else None,
+                       'last': cj.get('last_signal'), 'n_sig': int(len(c['trades'])), 'hold': hold,
+                       'f': [bool(f.get('f1_next_year')), bool(f.get('f2_2026_big')), bool(f.get('f3_falsify8')), bool(f.get('f4_p_raw_lt_1pct'))], 'all4': True,
+                       'falsify': f"{sum(1 for v in (fz.get('tests') or {}).values() if v)}/8", 'p': num(cj.get('fake_p')), 'p_adj': num(cj.get('fake_p_adj')), 'big_na': False,
+                       'p1': [cj.get('p1_n'), num(cj.get('p1_hit'))], 'p2': [cj.get('p2_n'), num(cj.get('p2_hit'))],
+                       'overlap': (w.get('label', '') + (' — ' + w['closest'] if w.get('closest') else '')) if w else '',
+                       'cluster': cj.get('cluster'), 'cluster_rep': bool(cj.get('cluster_rep'))})
     prices = {'kospi': px_json(D.K, pd.Timestamp('2009-07-01')), 'fut': px_json(D.F, pd.Timestamp('2009-07-01'))}
     now = pd.Timestamp.now(tz='Asia/Seoul').strftime('%Y-%m-%d %H:%M')
     meta = {'at': now, 'data_end': str(C.END.date()), 'combos': len(combos), 'with_trades': sum(1 for x in combos if x['has_trades']),
