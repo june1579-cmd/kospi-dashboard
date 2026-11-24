@@ -1,0 +1,381 @@
+후보,종류,갈래,순위,관찰목록,관찰_key,겹침_후보기준,겹침_관찰기준,말
+x1:WF_A_goal_n35_top1_any,(나) 절차,A,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_A_goal_n35_top1_any,(나) 절차,A,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_A_goal_n35_top1_any,(나) 절차,A,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_A_goal_n35_top1_any,(나) 절차,A,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_A_goal_n35_top5_any,(나) 절차,A,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_A_goal_n35_top5_any,(나) 절차,A,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_A_goal_n35_top5_any,(나) 절차,A,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_A_goal_n35_top5_any,(나) 절차,A,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_A_goal_n35_top5_cons,(나) 절차,A,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_A_goal_n35_top5_cons,(나) 절차,A,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_A_goal_n35_top5_cons,(나) 절차,A,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_A_goal_n35_top5_cons,(나) 절차,A,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_A_goal_n35_top20_any,(나) 절차,A,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_A_goal_n35_top20_any,(나) 절차,A,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_A_goal_n35_top20_any,(나) 절차,A,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_A_goal_n35_top20_any,(나) 절차,A,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_A_goal_n35_top20_cons,(나) 절차,A,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_A_goal_n35_top20_cons,(나) 절차,A,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_A_goal_n35_top20_cons,(나) 절차,A,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_A_goal_n35_top20_cons,(나) 절차,A,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_A_goal_nT1_top1_any,(나) 절차,A,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_A_goal_nT1_top1_any,(나) 절차,A,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_A_goal_nT1_top1_any,(나) 절차,A,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_A_goal_nT1_top1_any,(나) 절차,A,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_A_goal_nT1_top5_any,(나) 절차,A,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_A_goal_nT1_top5_any,(나) 절차,A,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_A_goal_nT1_top5_any,(나) 절차,A,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_A_goal_nT1_top5_any,(나) 절차,A,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_A_goal_nT1_top5_cons,(나) 절차,A,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_A_goal_nT1_top5_cons,(나) 절차,A,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_A_goal_nT1_top5_cons,(나) 절차,A,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_A_goal_nT1_top5_cons,(나) 절차,A,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_A_goal_nT1_top20_any,(나) 절차,A,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_A_goal_nT1_top20_any,(나) 절차,A,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_A_goal_nT1_top20_any,(나) 절차,A,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_A_goal_nT1_top20_any,(나) 절차,A,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_A_goal_nT1_top20_cons,(나) 절차,A,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_A_goal_nT1_top20_cons,(나) 절차,A,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_A_goal_nT1_top20_cons,(나) 절차,A,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_A_goal_nT1_top20_cons,(나) 절차,A,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_A_watch_n35_top1_any,(나) 절차,A,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_A_watch_n35_top1_any,(나) 절차,A,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_A_watch_n35_top1_any,(나) 절차,A,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_A_watch_n35_top1_any,(나) 절차,A,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_A_watch_n35_top5_any,(나) 절차,A,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_A_watch_n35_top5_any,(나) 절차,A,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_A_watch_n35_top5_any,(나) 절차,A,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_A_watch_n35_top5_any,(나) 절차,A,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_A_watch_n35_top5_cons,(나) 절차,A,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_A_watch_n35_top5_cons,(나) 절차,A,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_A_watch_n35_top5_cons,(나) 절차,A,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_A_watch_n35_top5_cons,(나) 절차,A,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_A_watch_n35_top20_any,(나) 절차,A,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_A_watch_n35_top20_any,(나) 절차,A,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_A_watch_n35_top20_any,(나) 절차,A,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_A_watch_n35_top20_any,(나) 절차,A,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_A_watch_n35_top20_cons,(나) 절차,A,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_A_watch_n35_top20_cons,(나) 절차,A,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_A_watch_n35_top20_cons,(나) 절차,A,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_A_watch_n35_top20_cons,(나) 절차,A,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_A_watch_nT1_top1_any,(나) 절차,A,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_A_watch_nT1_top1_any,(나) 절차,A,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_A_watch_nT1_top1_any,(나) 절차,A,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_A_watch_nT1_top1_any,(나) 절차,A,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_A_watch_nT1_top5_any,(나) 절차,A,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_A_watch_nT1_top5_any,(나) 절차,A,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_A_watch_nT1_top5_any,(나) 절차,A,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_A_watch_nT1_top5_any,(나) 절차,A,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_A_watch_nT1_top5_cons,(나) 절차,A,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_A_watch_nT1_top5_cons,(나) 절차,A,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_A_watch_nT1_top5_cons,(나) 절차,A,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_A_watch_nT1_top5_cons,(나) 절차,A,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_A_watch_nT1_top20_any,(나) 절차,A,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_A_watch_nT1_top20_any,(나) 절차,A,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_A_watch_nT1_top20_any,(나) 절차,A,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_A_watch_nT1_top20_any,(나) 절차,A,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_A_watch_nT1_top20_cons,(나) 절차,A,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_A_watch_nT1_top20_cons,(나) 절차,A,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_A_watch_nT1_top20_cons,(나) 절차,A,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_A_watch_nT1_top20_cons,(나) 절차,A,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_B_goal_n35_top1_any,(나) 절차,B,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_B_goal_n35_top1_any,(나) 절차,B,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_B_goal_n35_top1_any,(나) 절차,B,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_B_goal_n35_top1_any,(나) 절차,B,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_B_goal_n35_top5_any,(나) 절차,B,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_B_goal_n35_top5_any,(나) 절차,B,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_B_goal_n35_top5_any,(나) 절차,B,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_B_goal_n35_top5_any,(나) 절차,B,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_B_goal_n35_top5_cons,(나) 절차,B,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_B_goal_n35_top5_cons,(나) 절차,B,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_B_goal_n35_top5_cons,(나) 절차,B,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_B_goal_n35_top5_cons,(나) 절차,B,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_B_goal_n35_top20_any,(나) 절차,B,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_B_goal_n35_top20_any,(나) 절차,B,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_B_goal_n35_top20_any,(나) 절차,B,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_B_goal_n35_top20_any,(나) 절차,B,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_B_goal_n35_top20_cons,(나) 절차,B,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_B_goal_n35_top20_cons,(나) 절차,B,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_B_goal_n35_top20_cons,(나) 절차,B,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_B_goal_n35_top20_cons,(나) 절차,B,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_B_goal_nT1_top1_any,(나) 절차,B,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_B_goal_nT1_top1_any,(나) 절차,B,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_B_goal_nT1_top1_any,(나) 절차,B,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_B_goal_nT1_top1_any,(나) 절차,B,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_B_goal_nT1_top5_any,(나) 절차,B,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_B_goal_nT1_top5_any,(나) 절차,B,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_B_goal_nT1_top5_any,(나) 절차,B,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_B_goal_nT1_top5_any,(나) 절차,B,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_B_goal_nT1_top5_cons,(나) 절차,B,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_B_goal_nT1_top5_cons,(나) 절차,B,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_B_goal_nT1_top5_cons,(나) 절차,B,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_B_goal_nT1_top5_cons,(나) 절차,B,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_B_goal_nT1_top20_any,(나) 절차,B,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_B_goal_nT1_top20_any,(나) 절차,B,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_B_goal_nT1_top20_any,(나) 절차,B,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_B_goal_nT1_top20_any,(나) 절차,B,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_B_goal_nT1_top20_cons,(나) 절차,B,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_B_goal_nT1_top20_cons,(나) 절차,B,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_B_goal_nT1_top20_cons,(나) 절차,B,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_B_goal_nT1_top20_cons,(나) 절차,B,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_B_watch_n35_top1_any,(나) 절차,B,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_B_watch_n35_top1_any,(나) 절차,B,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_B_watch_n35_top1_any,(나) 절차,B,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_B_watch_n35_top1_any,(나) 절차,B,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_B_watch_n35_top5_any,(나) 절차,B,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_B_watch_n35_top5_any,(나) 절차,B,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_B_watch_n35_top5_any,(나) 절차,B,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_B_watch_n35_top5_any,(나) 절차,B,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_B_watch_n35_top5_cons,(나) 절차,B,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_B_watch_n35_top5_cons,(나) 절차,B,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_B_watch_n35_top5_cons,(나) 절차,B,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_B_watch_n35_top5_cons,(나) 절차,B,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_B_watch_n35_top20_any,(나) 절차,B,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_B_watch_n35_top20_any,(나) 절차,B,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_B_watch_n35_top20_any,(나) 절차,B,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_B_watch_n35_top20_any,(나) 절차,B,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_B_watch_n35_top20_cons,(나) 절차,B,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_B_watch_n35_top20_cons,(나) 절차,B,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_B_watch_n35_top20_cons,(나) 절차,B,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_B_watch_n35_top20_cons,(나) 절차,B,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_B_watch_nT1_top1_any,(나) 절차,B,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_B_watch_nT1_top1_any,(나) 절차,B,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_B_watch_nT1_top1_any,(나) 절차,B,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_B_watch_nT1_top1_any,(나) 절차,B,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_B_watch_nT1_top5_any,(나) 절차,B,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_B_watch_nT1_top5_any,(나) 절차,B,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_B_watch_nT1_top5_any,(나) 절차,B,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_B_watch_nT1_top5_any,(나) 절차,B,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_B_watch_nT1_top5_cons,(나) 절차,B,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_B_watch_nT1_top5_cons,(나) 절차,B,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_B_watch_nT1_top5_cons,(나) 절차,B,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_B_watch_nT1_top5_cons,(나) 절차,B,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_B_watch_nT1_top20_any,(나) 절차,B,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_B_watch_nT1_top20_any,(나) 절차,B,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_B_watch_nT1_top20_any,(나) 절차,B,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_B_watch_nT1_top20_any,(나) 절차,B,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_B_watch_nT1_top20_cons,(나) 절차,B,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_B_watch_nT1_top20_cons,(나) 절차,B,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_B_watch_nT1_top20_cons,(나) 절차,B,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_B_watch_nT1_top20_cons,(나) 절차,B,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:C001,(가) 고정 규칙,C,1.0,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.098,0.247,다른 신호
+x1:C001,(가) 고정 규칙,C,1.0,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.128,0.295,다른 신호
+x1:C001,(가) 고정 규칙,C,1.0,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.126,0.105,다른 신호
+x1:C001,(가) 고정 규칙,C,1.0,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.07,0.107,다른 신호
+x1:C002,(가) 고정 규칙,C,2.0,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.091,0.758,많이 겹침
+x1:C002,(가) 고정 규칙,C,2.0,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.093,0.71,많이 겹침
+x1:C002,(가) 고정 규칙,C,2.0,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.218,0.598,많이 겹침
+x1:C002,(가) 고정 규칙,C,2.0,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.148,0.75,많이 겹침
+x1:C003,(가) 고정 규칙,C,3.0,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.07,0.549,많이 겹침
+x1:C003,(가) 고정 규칙,C,3.0,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.099,0.705,많이 겹침
+x1:C003,(가) 고정 규칙,C,3.0,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.199,0.51,많이 겹침
+x1:C003,(가) 고정 규칙,C,3.0,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.154,0.727,많이 겹침
+x1:C004,(가) 고정 규칙,C,4.0,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.059,0.275,다른 신호
+x1:C004,(가) 고정 규칙,C,4.0,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.068,0.29,다른 신호
+x1:C004,(가) 고정 규칙,C,4.0,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.322,0.494,다른 신호
+x1:C004,(가) 고정 규칙,C,4.0,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.216,0.613,많이 겹침
+x1:C005,(가) 고정 규칙,C,5.0,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.06,0.132,다른 신호
+x1:C005,(가) 고정 규칙,C,5.0,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.03,0.06,다른 신호
+x1:C005,(가) 고정 규칙,C,5.0,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.522,0.377,많이 겹침
+x1:C005,(가) 고정 규칙,C,5.0,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.362,0.483,다른 신호
+x1:C006,(가) 고정 규칙,C,6.0,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.066,0.599,많이 겹침
+x1:C006,(가) 고정 규칙,C,6.0,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.07,0.57,많이 겹침
+x1:C006,(가) 고정 규칙,C,6.0,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.24,0.708,많이 겹침
+x1:C006,(가) 고정 규칙,C,6.0,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.143,0.78,많이 겹침
+x1:C007,(가) 고정 규칙,C,7.0,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.086,0.302,다른 신호
+x1:C007,(가) 고정 규칙,C,7.0,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.085,0.27,다른 신호
+x1:C007,(가) 고정 규칙,C,7.0,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.377,0.434,다른 신호
+x1:C007,(가) 고정 규칙,C,7.0,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.293,0.623,많이 겹침
+x1:C008,(가) 고정 규칙,C,8.0,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.085,0.17,다른 신호
+x1:C008,(가) 고정 규칙,C,8.0,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.057,0.105,다른 신호
+x1:C008,(가) 고정 규칙,C,8.0,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.208,0.137,다른 신호
+x1:C008,(가) 고정 규칙,C,8.0,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.104,0.127,다른 신호
+x1:C009,(가) 고정 규칙,C,9.0,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.059,0.06,다른 신호
+x1:C009,(가) 고정 규칙,C,9.0,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.032,0.03,다른 신호
+x1:C009,(가) 고정 규칙,C,9.0,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.446,0.15,다른 신호
+x1:C009,(가) 고정 규칙,C,9.0,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.199,0.123,다른 신호
+x1:C010,(가) 고정 규칙,C,10.0,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.064,0.143,다른 신호
+x1:C010,(가) 고정 규칙,C,10.0,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.059,0.12,다른 신호
+x1:C010,(가) 고정 규칙,C,10.0,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.454,0.332,다른 신호
+x1:C010,(가) 고정 규칙,C,10.0,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.242,0.327,다른 신호
+x1:C011,(가) 고정 규칙,C,11.0,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.091,0.165,다른 신호
+x1:C011,(가) 고정 규칙,C,11.0,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.058,0.095,다른 신호
+x1:C011,(가) 고정 규칙,C,11.0,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.436,0.259,다른 신호
+x1:C011,(가) 고정 규칙,C,11.0,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.294,0.323,다른 신호
+x1:C012,(가) 고정 규칙,C,12.0,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.063,0.352,다른 신호
+x1:C012,(가) 고정 규칙,C,12.0,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.064,0.325,다른 신호
+x1:C012,(가) 고정 규칙,C,12.0,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.335,0.616,많이 겹침
+x1:C012,(가) 고정 규칙,C,12.0,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.242,0.823,한쪽이 다른 쪽에 포함
+x1:C013,(가) 고정 규칙,C,13.0,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.056,0.093,다른 신호
+x1:C013,(가) 고정 규칙,C,13.0,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.033,0.05,다른 신호
+x1:C013,(가) 고정 규칙,C,13.0,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.49,0.27,다른 신호
+x1:C013,(가) 고정 규칙,C,13.0,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.454,0.463,다른 신호
+x1:C014,(가) 고정 규칙,C,14.0,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.089,0.148,다른 신호
+x1:C014,(가) 고정 규칙,C,14.0,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.069,0.105,다른 신호
+x1:C014,(가) 고정 규칙,C,14.0,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.327,0.178,다른 신호
+x1:C014,(가) 고정 규칙,C,14.0,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.152,0.153,다른 신호
+x1:C015,(가) 고정 규칙,C,15.0,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.042,0.077,방향이 달라 견줄 수 없음
+x1:C015,(가) 고정 규칙,C,15.0,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.015,0.025,방향이 달라 견줄 수 없음
+x1:C015,(가) 고정 규칙,C,15.0,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.352,0.209,방향이 달라 견줄 수 없음
+x1:C015,(가) 고정 규칙,C,15.0,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.206,0.227,방향이 달라 견줄 수 없음
+x1:WF_C_goal_n35_top1_any,(나) 절차,C,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_C_goal_n35_top1_any,(나) 절차,C,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_C_goal_n35_top1_any,(나) 절차,C,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_C_goal_n35_top1_any,(나) 절차,C,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_C_goal_n35_top5_any,(나) 절차,C,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_C_goal_n35_top5_any,(나) 절차,C,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_C_goal_n35_top5_any,(나) 절차,C,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_C_goal_n35_top5_any,(나) 절차,C,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_C_goal_n35_top5_cons,(나) 절차,C,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_C_goal_n35_top5_cons,(나) 절차,C,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_C_goal_n35_top5_cons,(나) 절차,C,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_C_goal_n35_top5_cons,(나) 절차,C,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_C_goal_n35_top20_any,(나) 절차,C,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_C_goal_n35_top20_any,(나) 절차,C,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_C_goal_n35_top20_any,(나) 절차,C,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_C_goal_n35_top20_any,(나) 절차,C,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_C_goal_n35_top20_cons,(나) 절차,C,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_C_goal_n35_top20_cons,(나) 절차,C,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_C_goal_n35_top20_cons,(나) 절차,C,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_C_goal_n35_top20_cons,(나) 절차,C,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_C_goal_nT1_top1_any,(나) 절차,C,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_C_goal_nT1_top1_any,(나) 절차,C,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_C_goal_nT1_top1_any,(나) 절차,C,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_C_goal_nT1_top1_any,(나) 절차,C,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_C_goal_nT1_top5_any,(나) 절차,C,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_C_goal_nT1_top5_any,(나) 절차,C,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_C_goal_nT1_top5_any,(나) 절차,C,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_C_goal_nT1_top5_any,(나) 절차,C,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_C_goal_nT1_top5_cons,(나) 절차,C,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_C_goal_nT1_top5_cons,(나) 절차,C,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_C_goal_nT1_top5_cons,(나) 절차,C,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_C_goal_nT1_top5_cons,(나) 절차,C,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_C_goal_nT1_top20_any,(나) 절차,C,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_C_goal_nT1_top20_any,(나) 절차,C,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_C_goal_nT1_top20_any,(나) 절차,C,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_C_goal_nT1_top20_any,(나) 절차,C,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_C_goal_nT1_top20_cons,(나) 절차,C,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_C_goal_nT1_top20_cons,(나) 절차,C,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_C_goal_nT1_top20_cons,(나) 절차,C,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_C_goal_nT1_top20_cons,(나) 절차,C,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_C_watch_n35_top1_any,(나) 절차,C,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_C_watch_n35_top1_any,(나) 절차,C,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_C_watch_n35_top1_any,(나) 절차,C,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_C_watch_n35_top1_any,(나) 절차,C,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_C_watch_n35_top5_any,(나) 절차,C,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_C_watch_n35_top5_any,(나) 절차,C,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_C_watch_n35_top5_any,(나) 절차,C,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_C_watch_n35_top5_any,(나) 절차,C,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_C_watch_n35_top5_cons,(나) 절차,C,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_C_watch_n35_top5_cons,(나) 절차,C,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_C_watch_n35_top5_cons,(나) 절차,C,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_C_watch_n35_top5_cons,(나) 절차,C,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_C_watch_n35_top20_any,(나) 절차,C,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_C_watch_n35_top20_any,(나) 절차,C,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_C_watch_n35_top20_any,(나) 절차,C,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_C_watch_n35_top20_any,(나) 절차,C,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_C_watch_n35_top20_cons,(나) 절차,C,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_C_watch_n35_top20_cons,(나) 절차,C,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_C_watch_n35_top20_cons,(나) 절차,C,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_C_watch_n35_top20_cons,(나) 절차,C,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_C_watch_nT1_top1_any,(나) 절차,C,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_C_watch_nT1_top1_any,(나) 절차,C,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_C_watch_nT1_top1_any,(나) 절차,C,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_C_watch_nT1_top1_any,(나) 절차,C,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_C_watch_nT1_top5_any,(나) 절차,C,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_C_watch_nT1_top5_any,(나) 절차,C,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_C_watch_nT1_top5_any,(나) 절차,C,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_C_watch_nT1_top5_any,(나) 절차,C,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_C_watch_nT1_top5_cons,(나) 절차,C,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_C_watch_nT1_top5_cons,(나) 절차,C,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_C_watch_nT1_top5_cons,(나) 절차,C,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_C_watch_nT1_top5_cons,(나) 절차,C,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_C_watch_nT1_top20_any,(나) 절차,C,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_C_watch_nT1_top20_any,(나) 절차,C,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_C_watch_nT1_top20_any,(나) 절차,C,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_C_watch_nT1_top20_any,(나) 절차,C,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_C_watch_nT1_top20_cons,(나) 절차,C,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+x1:WF_C_watch_nT1_top20_cons,(나) 절차,C,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,다른 신호
+x1:WF_C_watch_nT1_top20_cons,(나) 절차,C,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,다른 신호
+x1:WF_C_watch_nT1_top20_cons,(나) 절차,C,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+x1:WF_D_goal_n35_top1_any,(나) 절차,D,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_n35_top1_any,(나) 절차,D,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_n35_top1_any,(나) 절차,D,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_n35_top1_any,(나) 절차,D,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_n35_top5_any,(나) 절차,D,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_n35_top5_any,(나) 절차,D,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_n35_top5_any,(나) 절차,D,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_n35_top5_any,(나) 절차,D,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_n35_top5_cons,(나) 절차,D,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_n35_top5_cons,(나) 절차,D,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_n35_top5_cons,(나) 절차,D,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_n35_top5_cons,(나) 절차,D,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_n35_top20_any,(나) 절차,D,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_n35_top20_any,(나) 절차,D,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_n35_top20_any,(나) 절차,D,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_n35_top20_any,(나) 절차,D,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_n35_top20_cons,(나) 절차,D,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_n35_top20_cons,(나) 절차,D,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_n35_top20_cons,(나) 절차,D,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_n35_top20_cons,(나) 절차,D,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_nT1_top1_any,(나) 절차,D,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_nT1_top1_any,(나) 절차,D,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_nT1_top1_any,(나) 절차,D,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_nT1_top1_any,(나) 절차,D,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_nT1_top5_any,(나) 절차,D,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_nT1_top5_any,(나) 절차,D,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_nT1_top5_any,(나) 절차,D,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_nT1_top5_any,(나) 절차,D,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_nT1_top5_cons,(나) 절차,D,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_nT1_top5_cons,(나) 절차,D,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_nT1_top5_cons,(나) 절차,D,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_nT1_top5_cons,(나) 절차,D,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_nT1_top20_any,(나) 절차,D,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_nT1_top20_any,(나) 절차,D,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_nT1_top20_any,(나) 절차,D,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_nT1_top20_any,(나) 절차,D,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_nT1_top20_cons,(나) 절차,D,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_nT1_top20_cons,(나) 절차,D,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_nT1_top20_cons,(나) 절차,D,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_goal_nT1_top20_cons,(나) 절차,D,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_n35_top1_any,(나) 절차,D,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_n35_top1_any,(나) 절차,D,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_n35_top1_any,(나) 절차,D,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_n35_top1_any,(나) 절차,D,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_n35_top5_any,(나) 절차,D,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_n35_top5_any,(나) 절차,D,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_n35_top5_any,(나) 절차,D,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_n35_top5_any,(나) 절차,D,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_n35_top5_cons,(나) 절차,D,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_n35_top5_cons,(나) 절차,D,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_n35_top5_cons,(나) 절차,D,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_n35_top5_cons,(나) 절차,D,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_n35_top20_any,(나) 절차,D,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_n35_top20_any,(나) 절차,D,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_n35_top20_any,(나) 절차,D,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_n35_top20_any,(나) 절차,D,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_n35_top20_cons,(나) 절차,D,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_n35_top20_cons,(나) 절차,D,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_n35_top20_cons,(나) 절차,D,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_n35_top20_cons,(나) 절차,D,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_nT1_top1_any,(나) 절차,D,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_nT1_top1_any,(나) 절차,D,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_nT1_top1_any,(나) 절차,D,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_nT1_top1_any,(나) 절차,D,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_nT1_top5_any,(나) 절차,D,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_nT1_top5_any,(나) 절차,D,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_nT1_top5_any,(나) 절차,D,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_nT1_top5_any,(나) 절차,D,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_nT1_top5_cons,(나) 절차,D,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_nT1_top5_cons,(나) 절차,D,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_nT1_top5_cons,(나) 절차,D,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_nT1_top5_cons,(나) 절차,D,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_nT1_top20_any,(나) 절차,D,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_nT1_top20_any,(나) 절차,D,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_nT1_top20_any,(나) 절차,D,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_nT1_top20_any,(나) 절차,D,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_nT1_top20_cons,(나) 절차,D,,① 분기물 콜벽(절차),t1:WF_watch_top1_any_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_nT1_top20_cons,(나) 절차,D,,① 분기물 콜벽(고정 규칙),t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_nT1_top20_cons,(나) 절차,D,,② 오를 확률 모형,t3:P_h5_allev_gb_q90,0.0,0.0,방향이 달라 견줄 수 없음
+x1:WF_D_watch_nT1_top20_cons,(나) 절차,D,,③ 바닥 전 상태+변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,방향이 달라 견줄 수 없음
