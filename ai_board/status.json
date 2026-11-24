@@ -1,13 +1,11 @@
 {
- "built_at": "2026-11-24T16:14:04+09:00",
- "trigger": "push ",
+ "built_at": "2026-11-24T19:11:42+09:00",
+ "trigger": "workflow_run dashboard-update",
  "marker": "2026-11-24T16:13:48+09:00 오후",
- "request_applied": true,
+ "request_applied": false,
  "ok": true,
  "errors": [],
- "notes": [
-  "대시보드 파일로 기준 맞춤(sync_base) — 이번 실행부터 GitHub 가 데이터 파일을 맡음"
- ],
+ "notes": [],
  "us_last_session": "2026-11-23",
  "kr_last_session": "2026-11-24",
  "stale": [
@@ -20,27 +18,8 @@
    "why": "한국 마지막 거래일 종가(16:10 뒤)"
   }
  ],
- "changed": [
-  "미국 소비자물가 중 전기요금(전년 대비) 4.4→4.37(9월)",
-  "코스피 고점 대비 -48.34→-45.08(11.24)",
-  "VKOSPI 55.83→55.83(11.23)",
-  "미수 반대매매(하루) 53.07→111.47(11.23)",
-  "신용융자 잔고 1년 정점 대비 -32.81→-32.85(11.23)",
-  "외국인 코스피 20거래일 순매수 -14.34→-14.18(11.24)",
-  "미국 10년물 금리 5.04%→4.92%(11.20)",
-  "투자자 예탁금 83.0조 원→85.3조 원(11.23)"
- ],
- "files_changed": [
-  "thresholds",
-  "indicators",
-  "market",
-  "margin",
-  "forced",
-  "macro",
-  "history",
-  "runs",
-  "news"
- ],
+ "changed": [],
+ "files_changed": [],
  "files": {
   "thresholds": "67d54b28694b26a70fce5b4f40d2cad2c1f206f5c8aea3c9a3fc6e2191ad5563",
   "indicators": "4e27aafb2f280a2e07e24fddf2812f85a3eac9b622ef3d7a07426e188f7c3ffa",
