@@ -26,6 +26,7 @@ jobs:
     timeout-minutes: 80
     outputs:
       result: ${{ steps.r.outputs.result }}
+      err: ${{ steps.r.outputs.err }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -64,7 +65,10 @@ jobs:
       - name: 결과
         id: r
         if: always()
-        run: echo "result=${{ steps.calc.outcome }}/${{ steps.save.outcome }}" >> "$GITHUB_OUTPUT"
+        run: |
+          echo "result=${{ steps.calc.outcome }}/${{ steps.save.outcome }}" >> "$GITHUB_OUTPUT"
+          E=$(python3 uswalls/fail_reason.py 2>/dev/null || true)
+          echo "err=$E" >> "$GITHUB_OUTPUT"
   notify:
     needs: calc
     if: ${{ always() }}
@@ -90,8 +94,10 @@ jobs:
               success/failure) STEP="저장(GitHub push)";;
               *) STEP="작업 시작 전/기타";;
             esac
-            T=""; [ "${{ github.event.inputs.test }}" = "true" ] && T=" 시험"
-            printf '[미국옵션 07:40 실패%s] %s · 멈춘 단계: %s · 실행 %s · GitHub 감시가 한 시간 안에 다시 돌리고, 안 풀리면 수리 에이전트가 고칩니다\n' "$T" "$(TZ=Asia/Seoul date '+%m/%d %H:%M')" "$STEP" "${{ github.run_id }}" > /tmp/msg.txt
+            T=""; NEXT="GitHub 감시가 한 시간 안에 다시 돌리고, 안 풀리면 수리 에이전트가 고칩니다"
+            [ "${{ github.event.inputs.test }}" = "true" ] && { T=" 시험"; NEXT="시험 실행이라 다시 돌리지 않습니다"; }
+            ERR="${{ needs.calc.outputs.err }}"; [ -n "$ERR" ] && ERR=" · 원인: $ERR"
+            printf '[미국옵션 07:40 실패%s] %s · 멈춘 단계: %s%s · 실행 %s · %s\n' "$T" "$(TZ=Asia/Seoul date '+%m/%d %H:%M')" "$STEP" "$ERR" "${{ github.run_id }}" "$NEXT" > /tmp/msg.txt
           fi
           cat /tmp/msg.txt
       - name: 카카오톡

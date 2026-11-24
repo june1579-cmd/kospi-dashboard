@@ -7,7 +7,7 @@
   yahoo       : 야후 SPY 12월 월물 미결제 합 — 비워지는 시각과 다시 채워지는 시각
   optioncharts: OptionCharts SPY 'as of' 날짜
   spotgamma   : SpotGamma 무료 레벨 페이지 수정 시각
-  cme         : CME ES 옵션 일일 보고서(PDF) Last-Modified — 잠정·확정 두 번
+  (CME ES 옵션 일일 보고서는 GitHub 에서 403 으로 막혀 측정하지 않는다)
   cboe_pc     : Cboe 일별 시장 통계(풋/콜) 날짜별 파일이 처음 보인 날짜
   cboe_vix    : Cboe VIX 이력 CSV 의 마지막 날짜
 가볍게 읽는다(출처마다 10분에 한 번, 작은 요청). 5거래일치가 모이거나 시작 뒤 8일이 지나면 카카오톡으로 한 번 요약하고 스스로 멈춘다.
@@ -109,7 +109,7 @@ def cboe_vix():
 
 
 SRC = {'occ_flex': ('OCC FLEX 미결제 보고서', occ_flex), 'occ_series': ('OCC 시리즈 검색(SPY)', occ_series), 'yahoo': ('야후 SPY 월물 미결제 합', yahoo),
-       'optioncharts': ('OptionCharts 기준일', optioncharts), 'spotgamma': ('SpotGamma 레벨 페이지', spotgamma), 'cme': ('CME ES 옵션 일일 보고서', cme),
+       'optioncharts': ('OptionCharts 기준일', optioncharts), 'spotgamma': ('SpotGamma 레벨 페이지', spotgamma),   # CME 는 GitHub 에서 403(차단)이라 뺐다(2026-11-24 시험)
        'cboe_pc': ('Cboe 풋/콜 날짜별 파일', cboe_pc), 'cboe_vix': ('Cboe VIX 이력 CSV', cboe_vix)}
 
 
@@ -170,7 +170,7 @@ def main():
         for k in ('occ_flex', 'yahoo', 'optioncharts', 'spotgamma'):
             v = S['sources'][k]; L1.append(f"{v['name']}: " + (f"보통 {v['median_kst']}({v['range_kst']})" if v['median_kst'] else '확인 못 함'))
         L2 = ['[미국옵션 공개 시각 2]']
-        for k in ('cme', 'cboe_pc', 'cboe_vix', 'occ_series'):
+        for k in ('cboe_pc', 'cboe_vix', 'occ_series'):
             v = S['sources'][k]; L2.append(f"{v['name']}: " + (f"보통 {v['median_kst']}({v['range_kst']})" if v['median_kst'] else '확인 못 함'))
         L2.append('측정 끝 — 기록은 pub-watch 가지')
         open(os.path.join(OUT, 'notify.txt'), 'w', encoding='utf-8').write('\n'.join(L1)[:195] + '\n=====\n' + '\n'.join(L2)[:195] + '\n')

@@ -70,7 +70,7 @@ def fetch(sym):
         if closed and now.weekday() < 5:   # 평일 장 마감 뒤인데 오늘 봉이 없음 = 미국 휴장
             return str(sess.date()), spot, prev, bars, None
         # 뉴욕 자정~장 마감 전: 야후 미결제가 비었거나 이미 다음 날 값으로 바뀌어 있어 직전 장 추정이 틀어진다 — 계산하지 않는다
-        raise RuntimeError(f'계산 시간대 아님(뉴욕 {now:%m/%d %H:%M}) — 뉴욕 장 마감 뒤~자정 전(한국 06:20~13:59)에만 계산')
+        raise RuntimeError(f'계산 시간대 아님(뉴욕 {now:%m/%d %H:%M}) — 뉴욕 장 마감 뒤~자정 전에만 계산')
     lim = sess + pd.Timedelta(days=DAYS); rows = []
     exps = [e for e in tk.options if sess <= pd.Timestamp(e) <= lim]
     if not exps: raise RuntimeError(f'{sym} 만기 목록 없음')
@@ -341,7 +341,7 @@ def main():
     msgs = [msg_sym(r) for r in ok]
     if ok: msgs.append(msg_tail(ok))
     if hol and not ok: msgs.append(msg_holiday(hol))
-    if errs: msgs.append(cut(f"[미국옵션{' 시험' if TEST else ''}] 일부 실패 — " + ' / '.join(errs) + ' · GitHub 감시가 다시 돌립니다'))
+    if errs: msgs.append(cut(f"[미국옵션{' 시험' if TEST else ''}] {'일부 실패' if res else '실패'} — " + ' / '.join(e.replace('RuntimeError(', '').rstrip(')') for e in errs)))
     status = 'fail' if not res else ('ok' if ok and not errs else 'holiday' if hol and not ok and not errs else 'partial')
     J = {'at_kst': f'{now:%Y-%m-%d %H:%M}', 'test': TEST, 'status': status, 'errors': errs,
          'note': '추정치: 공식 미결제(직전 장 전 마감) + 거래 반영 비율 × 직전 장 거래량. 벽 = 감마×미결제가 가장 큰 행사가(현재가 ±10%, 만기 45일 안).',
