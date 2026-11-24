@@ -6,9 +6,9 @@
   'use strict';
   const $ = id => document.getElementById(id);
   const box = $('all-chart');
-  const SRC_NAME = {A: '갈래 A', B: '갈래 B', C: '갈래 C(미국·한국 연동)', D: '갈래 D(하락 전담)', S: 'Signal A 관찰 목록'};
-  const SRC_SHORT = {A: 'A', B: 'B', C: 'C', D: 'D', S: 'SA'};
-  const SRC_ORD = {S: 0, A: 1, B: 2, C: 3, D: 4};
+  const SRC_NAME = {A: '갈래 A', B: '갈래 B', C: '갈래 C(미국·한국 연동)', D: '갈래 D(하락 전담)', S: 'Signal A 관찰 목록', W: 'Signal A 2차(네 거름 통과)'};
+  const SRC_SHORT = {A: 'A', B: 'B', C: 'C', D: 'D', S: 'SA', W: '2차'};
+  const SRC_ORD = {S: 0, W: 1, A: 2, B: 3, C: 4, D: 5};
   const F_NAME = ['① 다음 해 기준', '② 2026년·큰 변동 해', '③ 반증 8개 모두', '④ 가짜 p < 1%'];
   let combos = [], trades = {}, PX = null, meta = {}, days = [], fIdx = new Map(), dIdx = new Map(), byKey = new Map();
   let i0 = 0, i1 = 0, range = 'y2';
@@ -30,7 +30,9 @@
   function sellInfo(c){
     if (SELL.has(c.key)) return SELL.get(c.key);
     let n = null, short, full;
-    if (c.src === 'S') {
+    if (c.src === 'W') {   // 2차 45개: 내보낼 때 원문에서 정한 매도 기준(sell_n·sell_full)을 그대로
+      n = c.sell_n != null ? c.sell_n : null; short = n ? n + '거래일째 종가' : (/±5%/.test(c.sell_full || '') ? '±5% 먼저 닿는 날' : '규칙별 보유일'); full = c.sell_full || '확인 불가';
+    } else if (c.src === 'S') {
       let ex = null; try { ex = JSON.parse(c.exact); } catch (e) {}
       n = ex && Number.isFinite(+ex['보유일']) ? +ex['보유일'] : null;
       short = n ? n + '거래일째 종가' : '확인 불가';
@@ -146,8 +148,8 @@
     combos.forEach(c => { byKey.set(c.key, c); const pd = parseDesc(c); c.segs = pd.segs; c.toks = pd.toks; pd.toks.forEach(k => TOKN.set(k, (TOKN.get(k) || 0) + 1)); });
     const nT = combos.filter(c => c.has_trades).length;
     $('asof').textContent = '자료 끝 ' + (meta.data_end || '–') + ' · 내보낸 때 ' + (meta.at || '–');
-    $('lede').textContent = '연구소 갈래 A·B·C·D 상위 조합 ' + combos.filter(c => c.src !== 'S').length + '개(X1 거름 시험 대상)와 Signal A 관찰 목록 '
-      + combos.filter(c => c.src === 'S').length + '개 — 그래프 표시 가능 ' + nT + '개 · 거래 내역 없음 ' + (combos.length - nT)
+    $('lede').textContent = '연구소 갈래 A·B·C·D 상위 조합 ' + combos.filter(c => 'ABCD'.includes(c.src)).length + '개(X1 거름 시험 대상), Signal A 관찰 목록 '
+      + combos.filter(c => c.src === 'S').length + '개, Signal A 2차 네 거름 통과 ' + combos.filter(c => c.src === 'W').length + '개 — 그래프 표시 가능 ' + nT + '개 · 거래 내역 없음 ' + (combos.length - nT)
       + '개(거래일 기록이 남아 있지 않아 추정하지 않음). 표에서 줄을 누르면 그 조합의 매수일·매도일이 두 그래프에 표시됩니다.';
     try { const m = /s=([^&]+)/.exec(location.hash); if (m) decodeURIComponent(m[1]).split(',').forEach(k => { if (byKey.has(k) && sel.length < 5) pick(k, true); }); } catch (e) {}
     pickRange(range, true);
@@ -426,7 +428,7 @@
     {k: 'src', label: '갈래', sort: c => SRC_ORD[c.src] * 1000 + c.rank, title: '출처: 연구소 갈래 A·B·C·D 또는 Signal A 관찰 목록'},
     {k: 'rank', label: '순위', num: true, sort: c => c.rank, title: '그 갈래 안의 X1 순위(연구소 숫자 기준)'},
     {k: 'round', label: '회차', num: true, sort: c => c.round, title: '연구소 회차'},
-    {k: 'grade', label: '등급', sort: c => ({'관찰 목록': 0, '통과': 1, '관찰': 2}[c.grade] ?? 3), title: '연구소 등급(코스피200 선물 기준)'},
+    {k: 'grade', label: '등급', sort: c => ({'관찰 목록': 0, '2차 네 거름': 0.5, '통과': 1, '관찰': 2}[c.grade] ?? 3), title: '연구소 등급(코스피200 선물 기준)'},
     {k: 'desc', label: '조건 설명', sort: c => c.desc, cls: 'desc'},
     {k: 'sell', label: '매도 기준', sort: c => sellInfo(c).sortv, d0: 1, title: '청산 규칙(원문). 정렬은 보유 거래일 수(정해진 보유일, 없으면 실제 보유일 가운뎃값)'},
     {k: 'n', label: '독립 거래', num: true, sort: c => c.n},
@@ -527,9 +529,9 @@
           } else cell.appendChild(el('span', 'pk'));
         }
         else if (k === 'src') td(SRC_SHORT[c.src], 'src');
-        else if (k === 'rank') td(c.src === 'S' ? '#' + c.rank : String(c.rank), 'num');
+        else if (k === 'rank') td(c.src === 'S' || c.src === 'W' ? '#' + c.rank : String(c.rank), 'num');
         else if (k === 'round') td(c.round != null ? c.round + '회' : '–', 'num');
-        else if (k === 'grade') td(null).appendChild(el('span', 'tag' + (c.grade === '통과' || c.grade === '관찰 목록' ? ' pass' : ''), c.grade));
+        else if (k === 'grade') td(null).appendChild(el('span', 'tag' + (c.grade === '통과' || c.grade === '관찰 목록' || c.grade === '2차 네 거름' ? ' pass' : ''), c.grade));
         else if (k === 'sell') { const sv = sellInfo(c), x = td(sv.short, 'sellc'); x.title = sv.full + '\n실제 보유: ' + actTxt(sv.act); }
         else if (k === 'desc') { const dd = td(null, 'desc'); dd.title = c.desc; dd.appendChild(condSegs(c)); }
         else if (!c.has_trades) { if (k === 'n') { const x = td('거래 내역 없음', 'muted'); x.colSpan = 6; } else if (k === 'f') td('–', 'f4'); }
@@ -603,7 +605,7 @@
     sel.forEach(k => {
       const c = byKey.get(k), d = el('div', 'dcard'); d.style.setProperty('--c', colorOf(k, 'bo'));
       const h = el('h3');
-      h.append(swBtn(k), document.createTextNode(k + ' · ' + SRC_NAME[c.src] + (c.src === 'S' ? ' ' + c.rank + '번 ' + c.name : ' ' + c.rank + '위')), el('span', 'tag' + (c.grade === '통과' || c.grade === '관찰 목록' ? ' pass' : ''), c.grade));
+      h.append(swBtn(k), document.createTextNode(k + ' · ' + SRC_NAME[c.src] + (c.src === 'S' ? ' ' + c.rank + '번 ' + c.name : c.src === 'W' ? ' 수익 ' + c.rank + '위 · ' + c.name : ' ' + c.rank + '위')), el('span', 'tag' + (c.grade === '통과' || c.grade === '관찰 목록' || c.grade === '2차 네 거름' ? ' pass' : ''), c.grade));
       const off = el('button'); off.type = 'button'; off.className = 'tag'; off.style.cursor = 'pointer'; off.style.background = 'transparent'; off.style.color = 'inherit'; off.textContent = '끄기 ✕'; off.addEventListener('click', () => pick(k)); h.appendChild(off);
       d.appendChild(h); d.appendChild(el('div', 'code', c.id));
       const cond = el('div', 'cond'); cond.appendChild(condSegs(c));
@@ -622,13 +624,13 @@
         put('앞 구간 2010~2023', (c.lab.dev_n ?? '–') + '건 · ' + pct1(c.lab.dev_hit, c.lab.dev_n)); put('뒤 구간 2024~', (c.lab.p2_n ?? '–') + '건 · ' + pct1(c.lab.p2_hit, c.lab.p2_n));
       }
       if (c.has_trades) {
-        kv.appendChild(el('h4', null, '코스피 지수 기준(' + (c.src === 'S' && c.rank > 1 ? '2016~2026 해마다 그 전 자료로 고른 절차' : '2010~2026-11-20 독립 거래') + ')'));
+        kv.appendChild(el('h4', null, '코스피 지수 기준(' + ((c.src === 'S' && c.rank > 1) || c.src === 'W' ? '2016~2026 해마다 그 전 자료로 고른 절차' : '2010~2026-11-20 독립 거래') + ')'));
         put('독립 거래 · 적중', c.n + '건 · ' + pct1(c.hit, c.n)); put('같은 해 아무 날 · 차이', pct1(c.base, c.n) + ' · ' + spp(c.edge, c.n));
         put('수익 합계 · 1회 평균', sp(c.sum) + ' · ' + sp(c.avg, 2));
         put('앞 · 뒤 구간', (c.p1[0] ?? '–') + '건 ' + pct1(c.p1[1], c.p1[0]) + ' · ' + (c.p2[0] ?? '–') + '건 ' + pct1(c.p2[1], c.p2[0]));
         put('신호 수 · 보유일 가운뎃값', c.n_sig + '번 · ' + (c.hold ?? '–') + '일'); put('최근 신호일', c.last || '–');
-        kv.appendChild(el('h4', null, '네 거름' + (c.src === 'S' ? '(Signal A S3 판정)' : '(X1 판정)')));
-        c.f.forEach((x, i) => put(F_NAME[i], (x ? '● 통과' : '○ 못 넘음') + (i === 1 && c.big_na ? '(큰 변동 해 판정 불가)' : '') + (i === 2 && c.falsify ? ' · 버틴 수 ' + c.falsify : '') + (i === 3 && c.p != null ? ' · p ' + c.p.toFixed(4) : '')));
+        kv.appendChild(el('h4', null, '네 거름' + (c.src === 'S' ? '(Signal A S3 판정)' : c.src === 'W' ? '(Signal A 2차 판정)' : '(X1 판정)')));
+        c.f.forEach((x, i) => put(F_NAME[i], (x ? '● 통과' : '○ 못 넘음') + (i === 1 && c.big_na ? '(큰 변동 해 판정 불가)' : '') + (i === 2 && c.falsify ? ' · 버틴 수 ' + c.falsify : '') + (i === 3 && c.p != null ? ' · p ' + c.p.toFixed(4) + (c.p_adj != null ? '(가짓수 보정 뒤 ' + c.p_adj.toFixed(3) + ')' : '') : '')));
         if (c.overlap) put('관찰 목록과 겹침', c.overlap);
       }
       d.appendChild(kv);
