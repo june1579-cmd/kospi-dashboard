@@ -1,0 +1,111 @@
+{
+ "built_at": "2026-11-24T10:46:44+09:00",
+ "trigger": "workflow_dispatch ",
+ "marker": "",
+ "request_applied": false,
+ "waiting_sync": true,
+ "ok": true,
+ "errors": [],
+ "notes": [
+  "sox_dd: SOX 하루 +14.0%(2026-11-20→2026-11-23) — Twelve Data SOXX에 2026-11-20·2026-11-23 값 없음, 대조 전 보류",
+  "첫 동기화 전 — 계산만 하고 데이터 파일·알림은 쓰지 않음"
+ ],
+ "us_last_session": "2026-11-23",
+ "kr_last_session": "2026-11-23",
+ "stale": [
+  {
+   "key": "sox_dd",
+   "name": "SOX 고점 대비",
+   "as_of": "2026-11-20",
+   "expected": "2026-11-23",
+   "level": "check",
+   "why": "SOX 하루 +14.0%(2026-11-20→2026-11-23) — Twelve Data SOXX에 2026-11-20·2026-11-23 값 없음, 대조 전 보류",
+   "value": -34.48,
+   "text": "−34.5%(11.23, 9,588.05)"
+  }
+ ],
+ "changed": [
+  "미국 하이일드 스프레드 3.52→3.76(11.20)",
+  "미국 소비자물가 중 전기요금(전년 대비) 4.4→4.37(9월)",
+  "VKOSPI 53.18→55.83(11.23)",
+  "외국인 코스피 20거래일 순매수 -14.33→-14.34(11.23)",
+  "미국 10년물 금리 5.04%→4.92%(11.20)",
+  "미국 하이일드 스프레드 3.52%→3.76%(11.20)",
+  "WTI 유가 83.27달러→79.99달러(11.23)"
+ ],
+ "files_changed": [],
+ "files": {
+  "thresholds": "555341169fed518c5a2e581d3a983b3b2643817e5fbba7bd8ee70ca811961578",
+  "indicators": "78c4a959b7f6dcaa9f92bc1401cadb1aba0ea93180312d4bad82c9e5b8d54728",
+  "market": "c87f544eccbee06757c51e2f28ef79a994ac61e2228f68e7f3be5b1754f693bb",
+  "margin": "7b305ee751a3c58c68fcfda30c5e7b9f4e0c2cf824bfbc5257248b58fbdb36da",
+  "forced": "6644da8ad1999b94035ccb33c3060316ece5e8c22f2bbbf3cf7548bd6951cda9",
+  "macro": "921e060b5b6d2aa1e31c5a801c0cc8e621ed771460f15c3beecd5bbf0a8436ef",
+  "events": "14dc8582b4643a9fc315686057dae7f1fd5fd845451f185be004cdc053324677",
+  "history": "f8328fbbe94557320ef81cf2d00f9b9d69c0b3e741d9c50b36829f825f8a3677",
+  "runs": "c8ef8e023be35cceab147d2bb6c0121ac4c76597af50e346fce6116cc13a4a34",
+  "news": "e748f20bedeb4e8fc116ede2b6f1d620c5d7770dcc2fb75ae54b623943a8518f",
+  "scenarios": "0a76d773ea2dbd406498e38017ce08c0feadd77a001cd6d4ca2392882c2656eb",
+  "episodes": "5fc42c60296afdbd24d0b7f7b1d774e337ab66d562bd9442f44a44b613b13e51"
+ },
+ "composite": {
+  "pos": 1.835,
+  "stage": "주의",
+  "counts": {
+   "정상": 1,
+   "주의": 6,
+   "경고": 2,
+   "위험": 1
+  }
+ },
+ "indicators": {
+  "1": {
+   "pos": 2.002,
+   "stage": "경고"
+  },
+  "2": {
+   "pos": 1.68,
+   "stage": "주의"
+  },
+  "3": {
+   "pos": 1.9,
+   "stage": "주의"
+  },
+  "4": {
+   "pos": 0.71,
+   "stage": "정상"
+  },
+  "5": {
+   "pos": 1.6,
+   "stage": "주의"
+  },
+  "6": {
+   "pos": 1.8,
+   "stage": "주의"
+  },
+  "7": {
+   "pos": 3.254,
+   "stage": "위험"
+  },
+  "8": {
+   "pos": 1.9,
+   "stage": "주의"
+  },
+  "9": {
+   "pos": 2.0,
+   "stage": "경고"
+  },
+  "10": {
+   "pos": 1.5,
+   "stage": "주의"
+  }
+ },
+ "flags": {
+  "신용 청산 진행": "신용잔고 정점 대비 −32.8%",
+  "A+5 조건(7번 위험)": "7번 SOX·코스피 위험 → 제안 25/34/25/16"
+ },
+ "alert": {
+  "text": "",
+  "kakao": "none"
+ }
+}
