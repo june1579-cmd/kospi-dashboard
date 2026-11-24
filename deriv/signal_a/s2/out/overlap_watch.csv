@@ -1,0 +1,1425 @@
+후보,관찰 목록,기준 신호,겹침_후보기준,겹침_관찰기준,판정
+w5:S5_T1xT8_D0_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.045,0.038,다른 신호
+w5:S5_T1xT8_D0_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.045,0.035,다른 신호
+w5:S5_T1xT8_D0_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.465,0.13,다른 신호
+w5:S5_T1xT8_D0_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.832,0.43,한쪽이 다른 쪽에 포함
+w7:WF7V_D_watch_nT1_top20_cons,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.065,0.011,방향이 달라 견줄 수 없음
+w7:WF7V_D_watch_nT1_top20_cons,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.032,0.005,방향이 달라 견줄 수 없음
+w7:WF7V_D_watch_nT1_top20_cons,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.161,0.009,방향이 달라 견줄 수 없음
+w7:WF7V_D_watch_nT1_top20_cons,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.387,0.04,방향이 달라 견줄 수 없음
+w6:T3x_DN_P_h10_allev_ens_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.097,0.203,방향이 달라 견줄 수 없음
+w6:T3x_DN_P_h10_allev_ens_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.105,0.2,방향이 달라 견줄 수 없음
+w6:T3x_DN_P_h10_allev_ens_q95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.113,0.077,방향이 달라 견줄 수 없음
+w6:T3x_DN_P_h10_allev_ens_q95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.042,0.053,방향이 달라 견줄 수 없음
+w7:WF7V_D_watch_nT1_top20_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.104,0.027,방향이 달라 견줄 수 없음
+w7:WF7V_D_watch_nT1_top20_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.062,0.015,방향이 달라 견줄 수 없음
+w7:WF7V_D_watch_nT1_top20_any,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.188,0.016,방향이 달라 견줄 수 없음
+w7:WF7V_D_watch_nT1_top20_any,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.333,0.053,방향이 달라 견줄 수 없음
+w7:WF7V_B_watch_n35_top20_cons,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.349,0.242,다른 신호
+w7:WF7V_B_watch_n35_top20_cons,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.341,0.215,다른 신호
+w7:WF7V_B_watch_n35_top20_cons,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.238,0.054,다른 신호
+w7:WF7V_B_watch_n35_top20_cons,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.063,0.027,다른 신호
+w7:WF7P_B_watch_nT1_top1_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.241,0.291,다른 신호
+w7:WF7P_B_watch_nT1_top1_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.377,0.415,다른 신호
+w7:WF7P_B_watch_nT1_top1_any,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.182,0.072,다른 신호
+w7:WF7P_B_watch_nT1_top1_any,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.05,0.037,다른 신호
+w7:WF7V_B_watch_nT1_top1_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.241,0.291,다른 신호
+w7:WF7V_B_watch_nT1_top1_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.377,0.415,다른 신호
+w7:WF7V_B_watch_nT1_top1_any,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.182,0.072,다른 신호
+w7:WF7V_B_watch_nT1_top1_any,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.05,0.037,다른 신호
+w7:WF7P_B_watch_n35_top20_cons,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.333,0.209,다른 신호
+w7:WF7P_B_watch_n35_top20_cons,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.325,0.185,다른 신호
+w7:WF7P_B_watch_n35_top20_cons,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.211,0.043,다른 신호
+w7:WF7P_B_watch_n35_top20_cons,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.07,0.027,다른 신호
+w7:WF7P_B_watch_n35_top5_cons,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.333,0.209,다른 신호
+w7:WF7P_B_watch_n35_top5_cons,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.325,0.185,다른 신호
+w7:WF7P_B_watch_n35_top5_cons,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.211,0.043,다른 신호
+w7:WF7P_B_watch_n35_top5_cons,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.07,0.027,다른 신호
+w7:WF7V_B_watch_n35_top5_cons,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.33,0.209,다른 신호
+w7:WF7V_B_watch_n35_top5_cons,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.322,0.185,다른 신호
+w7:WF7V_B_watch_n35_top5_cons,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.209,0.043,다른 신호
+w7:WF7V_B_watch_n35_top5_cons,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.07,0.027,다른 신호
+w1:WF_watch_top5_cons_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.579,0.681,많이 겹침
+w1:WF_watch_top5_cons_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.743,0.795,많이 겹침
+w1:WF_watch_top5_cons_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.318,0.123,다른 신호
+w1:WF_watch_top5_cons_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.089,0.063,다른 신호
+w5:S10_T1xT8_D3_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.03,0.049,다른 신호
+w5:S10_T1xT8_D3_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.03,0.045,다른 신호
+w5:S10_T1xT8_D3_h10,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.44,0.238,다른 신호
+w5:S10_T1xT8_D3_h10,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.623,0.623,많이 겹침
+w7:WF7V_B_watch_nT1_top5_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.288,0.396,다른 신호
+w7:WF7V_B_watch_nT1_top5_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.404,0.505,많이 겹침
+w7:WF7V_B_watch_nT1_top5_any,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.212,0.095,다른 신호
+w7:WF7V_B_watch_nT1_top5_any,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.048,0.04,다른 신호
+w6:T2x_catch20_S10_T1_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.063,0.06,다른 신호
+w6:T2x_catch20_S10_T1_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.04,0.035,다른 신호
+w6:T2x_catch20_S10_T1_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.52,0.164,많이 겹침
+w6:T2x_catch20_S10_T1_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.526,0.307,많이 겹침
+w7:WF7P_B_watch_nT1_top5_cons,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.289,0.363,다른 신호
+w7:WF7P_B_watch_nT1_top5_cons,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.421,0.48,다른 신호
+w7:WF7P_B_watch_nT1_top5_cons,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.18,0.074,다른 신호
+w7:WF7P_B_watch_nT1_top5_cons,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.048,0.037,다른 신호
+w7:WF7V_B_watch_nT1_top5_cons,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.288,0.363,다른 신호
+w7:WF7V_B_watch_nT1_top5_cons,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.419,0.48,다른 신호
+w7:WF7V_B_watch_nT1_top5_cons,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.179,0.074,다른 신호
+w7:WF7V_B_watch_nT1_top5_cons,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.048,0.037,다른 신호
+w6:T4x_T2V_w20_k10_S5_T7_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.062,0.044,다른 신호
+w6:T4x_T2V_w20_k10_S5_T7_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.023,0.015,다른 신호
+w6:T4x_T2V_w20_k10_S5_T7_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.38,0.088,다른 신호
+w6:T4x_T2V_w20_k10_S5_T7_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.527,0.227,많이 겹침
+w7:WF7P_B_watch_n35_top1_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.317,0.214,다른 신호
+w7:WF7P_B_watch_n35_top1_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.309,0.19,다른 신호
+w7:WF7P_B_watch_n35_top1_any,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.22,0.049,다른 신호
+w7:WF7P_B_watch_n35_top1_any,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.089,0.037,다른 신호
+w7:WF7V_B_watch_n35_top1_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.317,0.214,다른 신호
+w7:WF7V_B_watch_n35_top1_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.309,0.19,다른 신호
+w7:WF7V_B_watch_n35_top1_any,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.22,0.049,다른 신호
+w7:WF7V_B_watch_n35_top1_any,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.089,0.037,다른 신호
+w6:T3x_DN_P_h10_all_ens_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.085,0.159,방향이 달라 견줄 수 없음
+w6:T3x_DN_P_h10_all_ens_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.112,0.19,방향이 달라 견줄 수 없음
+w6:T3x_DN_P_h10_all_ens_q95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.082,0.05,방향이 달라 견줄 수 없음
+w6:T3x_DN_P_h10_all_ens_q95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.044,0.05,방향이 달라 견줄 수 없음
+w7:WF7V_B_watch_n35_top20_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.355,0.275,다른 신호
+w7:WF7V_B_watch_n35_top20_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.348,0.245,다른 신호
+w7:WF7V_B_watch_n35_top20_any,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.241,0.061,다른 신호
+w7:WF7V_B_watch_n35_top20_any,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.085,0.04,다른 신호
+w7:WF7V_B_watch_n35_top5_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.355,0.275,다른 신호
+w7:WF7V_B_watch_n35_top5_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.348,0.245,다른 신호
+w7:WF7V_B_watch_n35_top5_any,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.241,0.061,다른 신호
+w7:WF7V_B_watch_n35_top5_any,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.085,0.04,다른 신호
+w7:WF7P_B_watch_nT1_top20_cons,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.291,0.374,다른 신호
+w7:WF7P_B_watch_nT1_top20_cons,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.419,0.49,다른 신호
+w7:WF7P_B_watch_nT1_top20_cons,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.201,0.085,다른 신호
+w7:WF7P_B_watch_nT1_top20_cons,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.047,0.037,다른 신호
+w7:WF7V_B_watch_nT1_top20_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.274,0.418,다른 신호
+w7:WF7V_B_watch_nT1_top20_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.397,0.55,많이 겹침
+w7:WF7V_B_watch_nT1_top20_any,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.202,0.101,다른 신호
+w7:WF7V_B_watch_nT1_top20_any,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.043,0.04,다른 신호
+w6:T4x_T2V_w20_k10_S5_T8_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.055,0.066,다른 신호
+w6:T4x_T2V_w20_k10_S5_T8_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.032,0.035,다른 신호
+w6:T4x_T2V_w20_k10_S5_T8_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.423,0.168,다른 신호
+w6:T4x_T2V_w20_k10_S5_T8_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.836,0.613,한쪽이 다른 쪽에 포함
+w6:T2x_win_S3_T8_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.056,0.049,다른 신호
+w6:T2x_win_S3_T8_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.056,0.045,다른 신호
+w6:T2x_win_S3_T8_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.475,0.137,다른 신호
+w6:T2x_win_S3_T8_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.931,0.497,한쪽이 다른 쪽에 포함
+w7:WF7V_B_watch_nT1_top20_cons,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.29,0.396,다른 신호
+w7:WF7V_B_watch_nT1_top20_cons,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.407,0.505,많이 겹침
+w7:WF7V_B_watch_nT1_top20_cons,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.198,0.088,다른 신호
+w7:WF7V_B_watch_nT1_top20_cons,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.044,0.037,다른 신호
+w7:WF7P_B_watch_nT1_top20_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.248,0.352,다른 신호
+w7:WF7P_B_watch_nT1_top20_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.372,0.48,다른 신호
+w7:WF7P_B_watch_nT1_top20_any,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.182,0.085,다른 신호
+w7:WF7P_B_watch_nT1_top20_any,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.043,0.037,다른 신호
+w6:T2x_mv8_S10_T0_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.152,0.11,다른 신호
+w6:T2x_mv8_S10_T0_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.076,0.05,다른 신호
+w6:T2x_mv8_S10_T0_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.492,0.117,다른 신호
+w6:T2x_mv8_S10_T0_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.417,0.183,다른 신호
+w1:WF_watch_top1_any_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.574,0.599,많이 겹침
+w1:WF_watch_top1_any_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.874,0.83,사실상 같은 신호
+w1:WF_watch_top1_any_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.316,0.108,다른 신호
+w1:WF_watch_top1_any_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.105,0.067,다른 신호
+w7:WF7P_B_watch_n35_top20_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.333,0.231,다른 신호
+w7:WF7P_B_watch_n35_top20_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.325,0.205,다른 신호
+w7:WF7P_B_watch_n35_top20_any,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.214,0.049,다른 신호
+w7:WF7P_B_watch_n35_top20_any,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.087,0.037,다른 신호
+w7:WF7P_B_watch_n35_top5_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.333,0.231,다른 신호
+w7:WF7P_B_watch_n35_top5_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.325,0.205,다른 신호
+w7:WF7P_B_watch_n35_top5_any,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.214,0.049,다른 신호
+w7:WF7P_B_watch_n35_top5_any,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.087,0.037,다른 신호
+w3:ALT_h75_top1_any_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,1.0,1.0,사실상 같은 신호
+w3:ALT_h75_top1_any_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.676,0.615,많이 겹침
+w3:ALT_h75_top1_any_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.374,0.123,다른 신호
+w3:ALT_h75_top1_any_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.121,0.073,다른 신호
+w3:ALT_lb60_top1_any_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,1.0,1.0,사실상 같은 신호
+w3:ALT_lb60_top1_any_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.676,0.615,많이 겹침
+w3:ALT_lb60_top1_any_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.374,0.123,다른 신호
+w3:ALT_lb60_top1_any_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.121,0.073,다른 신호
+w7:WF7P_B_watch_nT1_top5_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.256,0.352,다른 신호
+w7:WF7P_B_watch_nT1_top5_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.372,0.465,다른 신호
+w7:WF7P_B_watch_nT1_top5_any,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.184,0.083,다른 신호
+w7:WF7P_B_watch_nT1_top5_any,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.044,0.037,다른 신호
+w5:S10_T1xT8_D0_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.037,0.038,다른 신호
+w5:S10_T1xT8_D0_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.037,0.035,다른 신호
+w5:S10_T1xT8_D0_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.432,0.148,다른 신호
+w5:S10_T1xT8_D0_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.763,0.483,많이 겹침
+w6:T4x_T2V_w20_k10_S10_T7_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.06,0.055,다른 신호
+w6:T4x_T2V_w20_k10_S10_T7_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.018,0.015,다른 신호
+w6:T4x_T2V_w20_k10_S10_T7_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.327,0.099,다른 신호
+w6:T4x_T2V_w20_k10_S10_T7_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.482,0.27,다른 신호
+w6:T4x_T2V_w60_k05_S5_T7_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.056,0.06,다른 신호
+w6:T4x_T2V_w60_k05_S5_T7_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.01,0.01,다른 신호
+w6:T4x_T2V_w60_k05_S5_T7_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.308,0.108,다른 신호
+w6:T4x_T2V_w60_k05_S5_T7_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.313,0.203,다른 신호
+w6:T4x_VC_P_h5_hi,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.059,0.071,다른 신호
+w6:T4x_VC_P_h5_hi,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.045,0.05,다른 신호
+w6:T4x_VC_P_h5_hi,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.786,0.312,많이 겹침
+w6:T4x_VC_P_h5_hi,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.441,0.323,다른 신호
+w3:ALT_lb70_top1_any_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,1.0,0.989,사실상 같은 신호
+w3:ALT_lb70_top1_any_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.683,0.615,많이 겹침
+w3:ALT_lb70_top1_any_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.378,0.123,다른 신호
+w3:ALT_lb70_top1_any_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.122,0.073,다른 신호
+w6:T4x_T2V_w20_k10_S10_T8_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.066,0.11,다른 신호
+w6:T4x_T2V_w20_k10_S10_T8_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.046,0.07,다른 신호
+w6:T4x_T2V_w20_k10_S10_T8_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.42,0.231,다른 신호
+w6:T4x_T2V_w20_k10_S10_T8_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.83,0.843,사실상 같은 신호
+w6:T3x_PAIR_h10_ps60_f20,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.042,0.082,다른 신호
+w6:T3x_PAIR_h10_ps60_f20,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.033,0.06,다른 신호
+w6:T3x_PAIR_h10_ps60_f20,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.411,0.267,다른 신호
+w6:T3x_PAIR_h10_ps60_f20,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.375,0.45,다른 신호
+w3:ALT_h75_top5_cons_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.747,0.89,한쪽이 다른 쪽에 포함
+w3:ALT_h75_top5_cons_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.654,0.71,많이 겹침
+w3:ALT_h75_top5_cons_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.382,0.15,다른 신호
+w3:ALT_h75_top5_cons_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.088,0.063,다른 신호
+w3:ALT_lb60_top5_cons_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.747,0.89,한쪽이 다른 쪽에 포함
+w3:ALT_lb60_top5_cons_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.654,0.71,많이 겹침
+w3:ALT_lb60_top5_cons_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.382,0.15,다른 신호
+w3:ALT_lb60_top5_cons_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.088,0.063,다른 신호
+w6:T3x_CG_base_h3_s70_f20,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.299,0.335,다른 신호
+w6:T3x_CG_base_h3_s70_f20,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.319,0.325,다른 신호
+w6:T3x_CG_base_h3_s70_f20,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.343,0.126,다른 신호
+w6:T3x_CG_base_h3_s70_f20,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.23,0.157,다른 신호
+w6:T3x_CG_base_h3_s70_p95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.299,0.335,다른 신호
+w6:T3x_CG_base_h3_s70_p95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.319,0.325,다른 신호
+w6:T3x_CG_base_h3_s70_p95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.343,0.126,다른 신호
+w6:T3x_CG_base_h3_s70_p95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.23,0.157,다른 신호
+w6:T2x_catch60_S5_T8_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.032,0.071,다른 신호
+w6:T2x_catch60_S5_T8_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.032,0.065,다른 신호
+w6:T2x_catch60_S5_T8_h10,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.407,0.301,다른 신호
+w6:T2x_catch60_S5_T8_h10,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.544,0.743,많이 겹침
+w6:T2x_nop_S5_T8_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.054,0.055,다른 신호
+w6:T2x_nop_S5_T8_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.049,0.045,다른 신호
+w6:T2x_nop_S5_T8_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.546,0.182,많이 겹침
+w6:T2x_nop_S5_T8_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.946,0.583,한쪽이 다른 쪽에 포함
+w6:T2x_t6_r70_S10_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.057,0.093,다른 신호
+w6:T2x_t6_r70_S10_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.04,0.06,다른 신호
+w6:T2x_t6_r70_S10_h10,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.417,0.225,다른 신호
+w6:T2x_t6_r70_S10_h10,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.527,0.527,많이 겹침
+w6:T3x_DN_P_h10_all_gb_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.046,0.115,방향이 달라 견줄 수 없음
+w6:T3x_DN_P_h10_all_gb_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.063,0.145,방향이 달라 견줄 수 없음
+w6:T3x_DN_P_h10_all_gb_q90,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.052,0.043,방향이 달라 견줄 수 없음
+w6:T3x_DN_P_h10_all_gb_q90,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.013,0.02,방향이 달라 견줄 수 없음
+w6:T3x_DN_P_h5_all_ens_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.062,0.082,방향이 달라 견줄 수 없음
+w6:T3x_DN_P_h5_all_ens_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.075,0.09,방향이 달라 견줄 수 없음
+w6:T3x_DN_P_h5_all_ens_q95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.037,0.016,방향이 달라 견줄 수 없음
+w6:T3x_DN_P_h5_all_ens_q95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.05,0.04,방향이 달라 견줄 수 없음
+w6:T3x_DN_P_h5_allev_ens_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.052,0.066,방향이 달라 견줄 수 없음
+w6:T3x_DN_P_h5_allev_ens_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.048,0.055,방향이 달라 견줄 수 없음
+w6:T3x_DN_P_h5_allev_ens_q95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.052,0.022,방향이 달라 견줄 수 없음
+w6:T3x_DN_P_h5_allev_ens_q95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.065,0.05,방향이 달라 견줄 수 없음
+w6:T2x_delay_TO_T8_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.066,0.396,다른 신호
+w6:T2x_delay_TO_T8_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.072,0.395,다른 신호
+w6:T2x_delay_TO_T8_touch,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.217,0.427,다른 신호
+w6:T2x_delay_TO_T8_touch,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.227,0.827,한쪽이 다른 쪽에 포함
+w1:WF_watch_all_cons_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.486,0.659,많이 겹침
+w1:WF_watch_all_cons_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.603,0.745,많이 겹침
+w1:WF_watch_all_cons_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.287,0.128,다른 신호
+w1:WF_watch_all_cons_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.085,0.07,다른 신호
+w1:WF_watch_top20_cons_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.486,0.659,많이 겹침
+w1:WF_watch_top20_cons_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.603,0.745,많이 겹침
+w1:WF_watch_top20_cons_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.287,0.128,다른 신호
+w1:WF_watch_top20_cons_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.085,0.07,다른 신호
+w6:T2x_win_S20_T8_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.051,0.137,다른 신호
+w6:T2x_win_S20_T8_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.034,0.085,다른 신호
+w6:T2x_win_S20_T8_touch,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.414,0.368,다른 신호
+w6:T2x_win_S20_T8_touch,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.398,0.653,많이 겹침
+w6:T4x_T2V_w20_k10_S5_T7_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.084,0.088,다른 신호
+w6:T4x_T2V_w20_k10_S5_T7_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.047,0.045,다른 신호
+w6:T4x_T2V_w20_k10_S5_T7_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.337,0.115,다른 신호
+w6:T4x_T2V_w20_k10_S5_T7_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.5,0.317,많이 겹침
+w3:BOTH_watch_top1_any_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.983,0.978,사실상 같은 신호
+w3:BOTH_watch_top1_any_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.663,0.6,많이 겹침
+w3:BOTH_watch_top1_any_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.392,0.128,다른 신호
+w3:BOTH_watch_top1_any_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.122,0.073,다른 신호
+w3:BOTH_watch_top5_cons_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.739,0.857,한쪽이 다른 쪽에 포함
+w3:BOTH_watch_top5_cons_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.649,0.685,많이 겹침
+w3:BOTH_watch_top5_cons_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.37,0.141,다른 신호
+w3:BOTH_watch_top5_cons_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.09,0.063,다른 신호
+w6:T3x_DN_P_h10_allev_gb_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.047,0.115,방향이 달라 견줄 수 없음
+w6:T3x_DN_P_h10_allev_gb_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.053,0.12,방향이 달라 견줄 수 없음
+w6:T3x_DN_P_h10_allev_gb_q90,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.053,0.043,방향이 달라 견줄 수 없음
+w6:T3x_DN_P_h10_allev_gb_q90,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.013,0.02,방향이 달라 견줄 수 없음
+w6:T2x_delay_S5_T8_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.051,0.055,다른 신호
+w6:T2x_delay_S5_T8_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.041,0.04,다른 신호
+w6:T2x_delay_S5_T8_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.513,0.18,많이 겹침
+w6:T2x_delay_S5_T8_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.79,0.513,많이 겹침
+w6:T2x_catch60_S5_T8_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.046,0.071,다른 신호
+w6:T2x_catch60_S5_T8_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.042,0.06,다른 신호
+w6:T2x_catch60_S5_T8_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.474,0.243,다른 신호
+w6:T2x_catch60_S5_T8_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.811,0.77,한쪽이 다른 쪽에 포함
+w5:S10_T2xT8_D3_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.023,0.038,다른 신호
+w5:S10_T2xT8_D3_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.023,0.035,다른 신호
+w5:S10_T2xT8_D3_h10,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.383,0.207,다른 신호
+w5:S10_T2xT8_D3_h10,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.59,0.59,많이 겹침
+w6:T4x_T2V_w20_k10_S10_T8_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.037,0.088,다른 신호
+w6:T4x_T2V_w20_k10_S10_T8_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.026,0.055,다른 신호
+w6:T4x_T2V_w20_k10_S10_T8_h10,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.34,0.263,다른 신호
+w6:T4x_T2V_w20_k10_S10_T8_h10,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.558,0.8,한쪽이 다른 쪽에 포함
+w6:T4x_T2V_w60_k05_S5_T8_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.053,0.071,다른 신호
+w6:T4x_T2V_w60_k05_S5_T8_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.037,0.045,다른 신호
+w6:T4x_T2V_w60_k05_S5_T8_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.335,0.148,다른 신호
+w6:T4x_T2V_w60_k05_S5_T8_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.714,0.583,많이 겹침
+w6:T4x_T2V_w60_k05_S5_T7_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.044,0.093,다른 신호
+w6:T4x_T2V_w60_k05_S5_T7_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.034,0.065,다른 신호
+w6:T4x_T2V_w60_k05_S5_T7_touch,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.274,0.189,다른 신호
+w6:T4x_T2V_w60_k05_S5_T7_touch,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.24,0.307,다른 신호
+w5:S10_T2xT8_D5_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.02,0.038,다른 신호
+w5:S10_T2xT8_D5_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.02,0.035,다른 신호
+w5:S10_T2xT8_D5_h10,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.417,0.263,다른 신호
+w5:S10_T2xT8_D5_h10,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.54,0.63,많이 겹침
+w6:T2x_catch60_S5_T7_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.033,0.038,다른 신호
+w6:T2x_catch60_S5_T7_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.033,0.035,다른 신호
+w6:T2x_catch60_S5_T7_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.305,0.115,다른 신호
+w6:T2x_catch60_S5_T7_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.462,0.323,다른 신호
+w6:T3x_EV_P_h10_allev2_lr_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.067,0.132,다른 신호
+w6:T3x_EV_P_h10_allev2_lr_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.083,0.15,다른 신호
+w6:T3x_EV_P_h10_allev2_lr_q95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.353,0.229,다른 신호
+w6:T3x_EV_P_h10_allev2_lr_q95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.194,0.233,다른 신호
+w6:T4x_T2V_w20_k10_S5_T8_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.036,0.077,다른 신호
+w6:T4x_T2V_w20_k10_S5_T8_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.023,0.045,다른 신호
+w6:T4x_T2V_w20_k10_S5_T8_h10,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.349,0.245,다른 신호
+w6:T4x_T2V_w20_k10_S5_T8_h10,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.564,0.733,많이 겹침
+w6:T5x_delay_B_any2_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.08,0.198,방향이 달라 견줄 수 없음
+w6:T5x_delay_B_any2_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.089,0.2,방향이 달라 견줄 수 없음
+w6:T5x_delay_B_any2_h10,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.176,0.142,방향이 달라 견줄 수 없음
+w6:T5x_delay_B_any2_h10,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.116,0.173,방향이 달라 견줄 수 없음
+w6:T2x_win_S3_T3_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.065,0.033,다른 신호
+w6:T2x_win_S3_T3_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.032,0.015,다른 신호
+w6:T2x_win_S3_T3_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.43,0.072,다른 신호
+w6:T2x_win_S3_T3_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.613,0.19,많이 겹침
+w6:T2x_delay_S10_T8_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.031,0.055,다른 신호
+w6:T2x_delay_S10_T8_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.028,0.045,다른 신호
+w6:T2x_delay_S10_T8_h10,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.425,0.245,다른 신호
+w6:T2x_delay_S10_T8_h10,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.569,0.607,많이 겹침
+w6:T4x_T2V_w120_k10_S5_T8_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.053,0.066,다른 신호
+w6:T4x_T2V_w120_k10_S5_T8_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.053,0.06,다른 신호
+w6:T4x_T2V_w120_k10_S5_T8_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.422,0.171,다른 신호
+w6:T4x_T2V_w120_k10_S5_T8_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.827,0.62,한쪽이 다른 쪽에 포함
+w6:T3x_EV_P_h5_allev2_ens_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.135,0.231,다른 신호
+w6:T3x_EV_P_h5_allev2_ens_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.119,0.185,다른 신호
+w6:T3x_EV_P_h5_allev2_ens_q95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.823,0.459,한쪽이 다른 쪽에 포함
+w6:T3x_EV_P_h5_allev2_ens_q95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.265,0.273,다른 신호
+w5:S5_T3xT8_D5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.041,0.027,다른 신호
+w5:S5_T3xT8_D5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.041,0.025,다른 신호
+w5:S5_T3xT8_D5_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.447,0.099,다른 신호
+w5:S5_T3xT8_D5_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.829,0.34,한쪽이 다른 쪽에 포함
+w6:T2x_catch60_S5_T8_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.041,0.049,다른 신호
+w6:T2x_catch60_S5_T8_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.041,0.045,다른 신호
+w6:T2x_catch60_S5_T8_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.464,0.186,다른 신호
+w6:T2x_catch60_S5_T8_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.77,0.57,많이 겹침
+w6:T2x_catch60_S10_T8_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.041,0.071,다른 신호
+w6:T2x_catch60_S10_T8_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.037,0.06,다른 신호
+w6:T2x_catch60_S10_T8_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.459,0.265,다른 신호
+w6:T2x_catch60_S10_T8_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.759,0.81,한쪽이 다른 쪽에 포함
+w6:T3x_CIN_h5_allevc_ens_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.141,0.225,다른 신호
+w6:T3x_CIN_h5_allevc_ens_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.145,0.21,다른 신호
+w6:T3x_CIN_h5_allevc_ens_q95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.817,0.427,한쪽이 다른 쪽에 포함
+w6:T3x_CIN_h5_allevc_ens_q95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.314,0.303,다른 신호
+w7:WF7V_A_watch_nT1_top1_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.202,0.225,다른 신호
+w7:WF7V_A_watch_nT1_top1_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.153,0.155,다른 신호
+w7:WF7V_A_watch_nT1_top1_any,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.153,0.056,다른 신호
+w7:WF7V_A_watch_nT1_top1_any,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.025,0.017,다른 신호
+w5:S10_T7xT8_D5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.048,0.027,다른 신호
+w5:S10_T7xT8_D5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.048,0.025,다른 신호
+w5:S10_T7xT8_D5_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.371,0.07,다른 신호
+w5:S10_T7xT8_D5_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.838,0.293,한쪽이 다른 쪽에 포함
+w6:T4x_T2V_w60_k05_S10_T8_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.065,0.121,다른 신호
+w6:T4x_T2V_w60_k05_S10_T8_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.05,0.085,다른 신호
+w6:T4x_T2V_w60_k05_S10_T8_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.35,0.214,다른 신호
+w6:T4x_T2V_w60_k05_S10_T8_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.741,0.84,한쪽이 다른 쪽에 포함
+w5:S5_T1xT2_D5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.044,0.055,다른 신호
+w5:S5_T1xT2_D5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.031,0.035,다른 신호
+w5:S5_T1xT2_D5_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.427,0.173,다른 신호
+w5:S5_T1xT2_D5_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.56,0.42,많이 겹침
+w5:S5_T2xT8_D5_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.04,0.044,다른 신호
+w5:S5_T2xT8_D5_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.035,0.035,다른 신호
+w5:S5_T2xT8_D5_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.43,0.155,다른 신호
+w5:S5_T2xT8_D5_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.775,0.517,많이 겹침
+w6:T2x_catch60_S10_T8_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.03,0.071,다른 신호
+w6:T2x_catch60_S10_T8_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.03,0.065,다른 신호
+w6:T2x_catch60_S10_T8_h10,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.405,0.321,다른 신호
+w6:T2x_catch60_S10_T8_h10,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.523,0.767,많이 겹침
+w5:S10_T1xT8_D5_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.026,0.049,다른 신호
+w5:S10_T1xT8_D5_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.026,0.045,다른 신호
+w5:S10_T1xT8_D5_h10,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.432,0.265,다른 신호
+w5:S10_T1xT8_D5_h10,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.582,0.66,많이 겹침
+w7:WF7V_A_watch_nT1_top20_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.188,0.28,다른 신호
+w7:WF7V_A_watch_nT1_top20_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.173,0.235,다른 신호
+w7:WF7V_A_watch_nT1_top20_any,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.176,0.086,다른 신호
+w7:WF7V_A_watch_nT1_top20_any,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.04,0.037,다른 신호
+w7:WF7V_A_watch_nT1_top5_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.188,0.28,다른 신호
+w7:WF7V_A_watch_nT1_top5_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.173,0.235,다른 신호
+w7:WF7V_A_watch_nT1_top5_any,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.176,0.086,다른 신호
+w7:WF7V_A_watch_nT1_top5_any,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.04,0.037,다른 신호
+w6:T2x_nop_S10_T8_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.045,0.055,다른 신호
+w6:T2x_nop_S10_T8_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.041,0.045,다른 신호
+w6:T2x_nop_S10_T8_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.505,0.2,많이 겹침
+w6:T2x_nop_S10_T8_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.886,0.65,한쪽이 다른 쪽에 포함
+w6:T4x_T3V_w120_k050_P_h5_allev_gb_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.0,0.0,다른 신호
+w6:T4x_T3V_w120_k050_P_h5_allev_gb_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.013,0.005,다른 신호
+w6:T4x_T3V_w120_k050_P_h5_allev_gb_q95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.7,0.101,많이 겹침
+w6:T4x_T3V_w120_k050_P_h5_allev_gb_q95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.287,0.077,다른 신호
+w6:T3x_CIN_h5_allevc_gb_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.132,0.258,다른 신호
+w6:T3x_CIN_h5_allevc_gb_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.101,0.18,다른 신호
+w6:T3x_CIN_h5_allevc_gb_q95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.887,0.568,한쪽이 다른 쪽에 포함
+w6:T3x_CIN_h5_allevc_gb_q95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.276,0.327,다른 신호
+w6:T4x_T2V_w60_k05_S5_T7_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.064,0.104,다른 신호
+w6:T4x_T2V_w60_k05_S5_T7_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.031,0.045,다른 신호
+w6:T4x_T2V_w60_k05_S5_T7_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.295,0.157,다른 신호
+w6:T4x_T2V_w60_k05_S5_T7_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.322,0.317,다른 신호
+w6:T2x_delay_S10_T8_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.043,0.055,다른 신호
+w6:T2x_delay_S10_T8_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.034,0.04,다른 신호
+w6:T2x_delay_S10_T8_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.481,0.204,다른 신호
+w6:T2x_delay_S10_T8_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.74,0.58,많이 겹침
+w6:T2x_win_S20_T8_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.024,0.049,다른 신호
+w6:T2x_win_S20_T8_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.024,0.045,다른 신호
+w6:T2x_win_S20_T8_h10,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.408,0.279,다른 신호
+w6:T2x_win_S20_T8_h10,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.537,0.68,많이 겹침
+w6:T3x_EV_P_h5_allev2_ens_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.11,0.308,다른 신호
+w6:T3x_EV_P_h5_allev2_ens_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.112,0.285,다른 신호
+w6:T3x_EV_P_h5_allev2_ens_q90,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.661,0.607,많이 겹침
+w6:T3x_EV_P_h5_allev2_ens_q90,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.216,0.367,다른 신호
+w6:T3x_EV_P_h5_allev2_gb_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.113,0.352,다른 신호
+w6:T3x_EV_P_h5_allev2_gb_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.085,0.24,다른 신호
+w6:T3x_EV_P_h5_allev2_gb_q90,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.949,0.966,사실상 같은 신호
+w6:T3x_EV_P_h5_allev2_gb_q90,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.237,0.447,다른 신호
+w5:S10_T2xT4_D3_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.042,0.104,다른 신호
+w5:S10_T2xT4_D3_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.031,0.07,다른 신호
+w5:S10_T2xT4_D3_touch,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.336,0.272,다른 신호
+w5:S10_T2xT4_D3_touch,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.298,0.447,다른 신호
+w6:T3x_H_P_h1_all_gb_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.031,0.005,다른 신호
+w6:T3x_H_P_h1_all_gb_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.031,0.005,다른 신호
+w6:T3x_H_P_h1_all_gb_q95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.562,0.032,많이 겹침
+w6:T3x_H_P_h1_all_gb_q95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.25,0.027,다른 신호
+w6:T3x_H_P_h1_allev_gb_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.031,0.005,다른 신호
+w6:T3x_H_P_h1_allev_gb_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.031,0.005,다른 신호
+w6:T3x_H_P_h1_allev_gb_q95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.562,0.032,많이 겹침
+w6:T3x_H_P_h1_allev_gb_q95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.25,0.027,다른 신호
+w6:T4x_T2V_w60_k05_S5_T8_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.054,0.055,다른 신호
+w6:T4x_T2V_w60_k05_S5_T8_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.038,0.035,다른 신호
+w6:T4x_T2V_w60_k05_S5_T8_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.382,0.128,다른 신호
+w6:T4x_T2V_w60_k05_S5_T8_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.71,0.44,많이 겹침
+w3:ALT_watch_all_cons30_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.351,0.473,다른 신호
+w3:ALT_watch_all_cons30_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.404,0.495,다른 신호
+w3:ALT_watch_all_cons30_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.147,0.065,다른 신호
+w3:ALT_watch_all_cons30_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.041,0.033,다른 신호
+w6:T2x_catch20_S10_T2_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.062,0.055,다른 신호
+w6:T2x_catch20_S10_T2_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.037,0.03,다른 신호
+w6:T2x_catch20_S10_T2_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.463,0.133,다른 신호
+w6:T2x_catch20_S10_T2_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.537,0.287,많이 겹침
+w6:T3x_DN_P_h10_all_ens_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.076,0.302,방향이 달라 견줄 수 없음
+w6:T3x_DN_P_h10_all_ens_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.086,0.31,방향이 달라 견줄 수 없음
+w6:T3x_DN_P_h10_all_ens_q90,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.071,0.092,방향이 달라 견줄 수 없음
+w6:T3x_DN_P_h10_all_ens_q90,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.037,0.09,방향이 달라 견줄 수 없음
+w3:ALT_lb70_top5_cons_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.732,0.599,많이 겹침
+w3:ALT_lb70_top5_cons_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.557,0.415,많이 겹침
+w3:ALT_lb70_top5_cons_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.362,0.097,다른 신호
+w3:ALT_lb70_top5_cons_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.027,0.013,다른 신호
+w5:S10_T2xT8_D5_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.031,0.044,다른 신호
+w5:S10_T2xT8_D5_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.027,0.035,다른 신호
+w5:S10_T2xT8_D5_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.404,0.189,다른 신호
+w5:S10_T2xT8_D5_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.692,0.6,많이 겹침
+w6:T4x_T3V_w60_k100_P_h5_all_gb_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.144,0.088,다른 신호
+w6:T4x_T3V_w60_k100_P_h5_all_gb_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.018,0.01,다른 신호
+w6:T4x_T3V_w60_k100_P_h5_all_gb_q95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.658,0.132,많이 겹침
+w6:T4x_T3V_w60_k100_P_h5_all_gb_q95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.243,0.09,다른 신호
+w6:T2x_catch60_S10_T7_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.033,0.038,다른 신호
+w6:T2x_catch60_S10_T7_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.033,0.035,다른 신호
+w6:T2x_catch60_S10_T7_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.298,0.115,다른 신호
+w6:T2x_catch60_S10_T7_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.451,0.323,다른 신호
+w5:S5_T1xT2_D3_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.055,0.055,다른 신호
+w5:S5_T1xT2_D3_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.038,0.035,다른 신호
+w5:S5_T1xT2_D3_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.404,0.133,다른 신호
+w5:S5_T1xT2_D3_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.541,0.33,많이 겹침
+w5:S10_T1xT6_D5_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.035,0.06,다른 신호
+w5:S10_T1xT6_D5_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.032,0.05,다른 신호
+w5:S10_T1xT6_D5_h10,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.452,0.252,다른 신호
+w5:S10_T1xT6_D5_h10,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.526,0.543,많이 겹침
+w7:WF7P_A_watch_nT1_top20_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.08,0.077,다른 신호
+w7:WF7P_A_watch_nT1_top20_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.097,0.085,다른 신호
+w7:WF7P_A_watch_nT1_top20_any,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.194,0.061,다른 신호
+w7:WF7P_A_watch_nT1_top20_any,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.12,0.07,다른 신호
+w7:WF7P_A_watch_nT1_top5_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.08,0.077,다른 신호
+w7:WF7P_A_watch_nT1_top5_any,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.097,0.085,다른 신호
+w7:WF7P_A_watch_nT1_top5_any,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.194,0.061,다른 신호
+w7:WF7P_A_watch_nT1_top5_any,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.12,0.07,다른 신호
+w6:T4x_T3V_w120_k050_P_h3_all_ens_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.067,0.044,다른 신호
+w6:T4x_T3V_w120_k050_P_h3_all_ens_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.067,0.04,다른 신호
+w6:T4x_T3V_w120_k050_P_h3_all_ens_q95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.433,0.094,다른 신호
+w6:T4x_T3V_w120_k050_P_h3_all_ens_q95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.15,0.06,다른 신호
+w6:T2x_win_S3_T2_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.045,0.077,다른 신호
+w6:T2x_win_S3_T2_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.032,0.05,다른 신호
+w6:T2x_win_S3_T2_h10,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.423,0.236,다른 신호
+w6:T2x_win_S3_T2_h10,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.571,0.59,많이 겹침
+w6:T3x_H_P_h1_allev_ens_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.073,0.016,다른 신호
+w6:T3x_H_P_h1_allev_ens_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.122,0.025,다른 신호
+w6:T3x_H_P_h1_allev_ens_q95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.293,0.022,다른 신호
+w6:T3x_H_P_h1_allev_ens_q95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.268,0.037,다른 신호
+w5:S5_T7xT8_D5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.051,0.027,다른 신호
+w5:S5_T7xT8_D5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.051,0.025,다른 신호
+w5:S5_T7xT8_D5_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.394,0.07,다른 신호
+w5:S5_T7xT8_D5_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.828,0.273,한쪽이 다른 쪽에 포함
+w6:T3x_CIN_h5_allevc_gb_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.094,0.28,다른 신호
+w6:T3x_CIN_h5_allevc_gb_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.075,0.205,다른 신호
+w6:T3x_CIN_h5_allevc_gb_q90,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.866,0.85,사실상 같은 신호
+w6:T3x_CIN_h5_allevc_gb_q90,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.255,0.463,다른 신호
+w6:T4x_T2V_w120_k10_S5_T8_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.026,0.049,다른 신호
+w6:T4x_T2V_w120_k10_S5_T8_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.026,0.045,다른 신호
+w6:T4x_T2V_w120_k10_S5_T8_h10,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.341,0.209,다른 신호
+w6:T4x_T2V_w120_k10_S5_T8_h10,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.615,0.697,많이 겹침
+w6:T3x_CAL_h5_allev_gb_c60,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.072,0.159,다른 신호
+w6:T3x_CAL_h5_allev_gb_c60,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.07,0.14,다른 신호
+w6:T3x_CAL_h5_allev_gb_c60,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.677,0.488,많이 겹침
+w6:T3x_CAL_h5_allev_gb_c60,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.215,0.287,다른 신호
+w6:T3x_TH_h5_allev_ens_r3q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.103,0.22,다른 신호
+w6:T3x_TH_h5_allev_ens_r3q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.103,0.2,다른 신호
+w6:T3x_TH_h5_allev_ens_r3q95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.779,0.548,많이 겹침
+w6:T3x_TH_h5_allev_ens_r3q95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.249,0.323,다른 신호
+w5:S10_T1xT8_D3_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.048,0.044,다른 신호
+w5:S10_T1xT8_D3_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.048,0.04,다른 신호
+w5:S10_T1xT8_D3_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.479,0.142,다른 신호
+w5:S10_T1xT8_D3_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.836,0.46,한쪽이 다른 쪽에 포함
+w5:S5_T1xT2_D3_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.042,0.077,다른 신호
+w5:S5_T1xT2_D3_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.03,0.05,다른 신호
+w5:S5_T1xT2_D3_h10,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.418,0.249,다른 신호
+w5:S5_T1xT2_D3_h10,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.53,0.583,많이 겹침
+w6:T4x_T3V_w120_k050_P_h3_allev_ens_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.081,0.06,다른 신호
+w6:T4x_T3V_w120_k050_P_h3_allev_ens_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.103,0.07,다른 신호
+w6:T4x_T3V_w120_k050_P_h3_allev_ens_q95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.404,0.099,다른 신호
+w6:T4x_T3V_w120_k050_P_h3_allev_ens_q95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.169,0.077,다른 신호
+w5:S10_T1xT8_D3_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.053,0.132,다른 신호
+w5:S10_T1xT8_D3_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.035,0.08,다른 신호
+w5:S10_T1xT8_D3_touch,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.413,0.337,다른 신호
+w5:S10_T1xT8_D3_touch,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.404,0.61,많이 겹침
+w6:T4x_T2V_w20_k10_S5_T8_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.053,0.049,다른 신호
+w6:T4x_T2V_w20_k10_S5_T8_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.035,0.03,다른 신호
+w6:T4x_T2V_w20_k10_S5_T8_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.48,0.148,다른 신호
+w6:T4x_T2V_w20_k10_S5_T8_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.813,0.463,한쪽이 다른 쪽에 포함
+w5:S5_T1xT8_D5_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.045,0.055,다른 신호
+w5:S5_T1xT8_D5_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.041,0.045,다른 신호
+w5:S5_T1xT8_D5_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.495,0.196,다른 신호
+w5:S5_T1xT8_D5_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.786,0.577,많이 겹침
+w6:T4x_T2V_w120_k10_S10_T8_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.03,0.06,다른 신호
+w6:T4x_T2V_w120_k10_S10_T8_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.03,0.055,다른 신호
+w6:T4x_T2V_w120_k10_S10_T8_h10,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.351,0.234,다른 신호
+w6:T4x_T2V_w120_k10_S10_T8_h10,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.597,0.737,많이 겹침
+w6:T4x_T3V_w60_k100_P_h3_allev_gb_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.065,0.071,다른 신호
+w6:T4x_T3V_w60_k100_P_h3_allev_gb_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.05,0.05,다른 신호
+w6:T4x_T3V_w60_k100_P_h3_allev_gb_q95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.465,0.168,다른 신호
+w6:T4x_T3V_w60_k100_P_h3_allev_gb_q95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.22,0.147,다른 신호
+w5:S10_T1xT8_D3_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.044,0.055,다른 신호
+w5:S10_T1xT8_D3_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.04,0.045,다른 신호
+w5:S10_T1xT8_D3_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.484,0.196,다른 신호
+w5:S10_T1xT8_D3_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.813,0.61,한쪽이 다른 쪽에 포함
+w5:S10_T1xT8_D5_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.05,0.132,다른 신호
+w5:S10_T1xT8_D5_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.034,0.08,다른 신호
+w5:S10_T1xT8_D5_touch,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.409,0.351,다른 신호
+w5:S10_T1xT8_D5_touch,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.398,0.633,많이 겹침
+w6:T4x_T2V_w60_k20_S5_T0_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.049,0.038,다른 신호
+w6:T4x_T2V_w60_k20_S5_T0_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.049,0.035,다른 신호
+w6:T4x_T2V_w60_k20_S5_T0_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.549,0.142,많이 겹침
+w6:T4x_T2V_w60_k20_S5_T0_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.417,0.2,다른 신호
+w6:T2x_catch60_S10_T8_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.037,0.049,다른 신호
+w6:T2x_catch60_S10_T8_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.037,0.045,다른 신호
+w6:T2x_catch60_S10_T8_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.461,0.202,다른 신호
+w6:T2x_catch60_S10_T8_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.737,0.597,많이 겹침
+w5:S10_T1xT7_D3_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.02,0.011,다른 신호
+w5:S10_T1xT7_D3_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.02,0.01,다른 신호
+w5:S10_T1xT7_D3_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.354,0.063,다른 신호
+w5:S10_T1xT7_D3_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.596,0.197,많이 겹침
+w6:T2x_nop_S10_T7_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.022,0.011,다른 신호
+w6:T2x_nop_S10_T7_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.022,0.01,다른 신호
+w6:T2x_nop_S10_T7_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.389,0.063,다른 신호
+w6:T2x_nop_S10_T7_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.633,0.19,많이 겹침
+w6:T3x_EV_P_h5_allev2_gb_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.148,0.247,다른 신호
+w6:T3x_EV_P_h5_allev2_gb_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.092,0.14,다른 신호
+w6:T3x_EV_P_h5_allev2_gb_q95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.915,0.503,한쪽이 다른 쪽에 포함
+w6:T3x_EV_P_h5_allev2_gb_q95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.256,0.26,다른 신호
+w6:T2x_win_S20_T8_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.045,0.071,다른 신호
+w6:T2x_win_S20_T8_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.041,0.06,다른 신호
+w6:T2x_win_S20_T8_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.469,0.245,다른 신호
+w6:T2x_win_S20_T8_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.755,0.73,많이 겹침
+w5:S10_T1xT2_D3_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.037,0.082,다른 신호
+w5:S10_T1xT2_D3_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.028,0.055,다른 신호
+w5:S10_T1xT2_D3_h10,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.415,0.299,다른 신호
+w5:S10_T1xT2_D3_h10,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.453,0.603,많이 겹침
+w6:T2x_t6_s20_S5_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.045,0.038,다른 신호
+w6:T2x_t6_s20_S5_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.045,0.035,다른 신호
+w6:T2x_t6_s20_S5_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.49,0.137,다른 신호
+w6:T2x_t6_s20_S5_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.645,0.333,많이 겹침
+w5:S5_T5xT8_D5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.041,0.027,다른 신호
+w5:S5_T5xT8_D5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.041,0.025,다른 신호
+w5:S5_T5xT8_D5_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.423,0.094,다른 신호
+w5:S5_T5xT8_D5_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.821,0.337,한쪽이 다른 쪽에 포함
+w6:T4x_T2V_w60_k05_S10_T7_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.054,0.071,다른 신호
+w6:T4x_T2V_w60_k05_S10_T7_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.025,0.03,다른 신호
+w6:T4x_T2V_w60_k05_S10_T7_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.292,0.126,다른 신호
+w6:T4x_T2V_w60_k05_S10_T7_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.333,0.267,다른 신호
+w6:T3x_CAL_h5_all_gb_c60,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.072,0.154,다른 신호
+w6:T3x_CAL_h5_all_gb_c60,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.069,0.135,다른 신호
+w6:T3x_CAL_h5_all_gb_c60,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.695,0.488,많이 겹침
+w6:T3x_CAL_h5_all_gb_c60,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.215,0.28,다른 신호
+w3:BOTH_goal_top1_any_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.806,0.687,한쪽이 다른 쪽에 포함
+w3:BOTH_goal_top1_any_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.49,0.38,다른 신호
+w3:BOTH_goal_top1_any_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.29,0.081,다른 신호
+w3:BOTH_goal_top1_any_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.065,0.033,다른 신호
+w5:S10_T1xT2_D5_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.043,0.099,다른 신호
+w5:S10_T1xT2_D5_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.026,0.055,다른 신호
+w5:S10_T1xT2_D5_h10,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.419,0.317,다른 신호
+w5:S10_T1xT2_D5_h10,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.462,0.647,많이 겹침
+w5:S5_T1xT8_D3_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.057,0.044,다른 신호
+w5:S5_T1xT8_D3_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.057,0.04,다른 신호
+w5:S5_T1xT8_D3_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.461,0.117,다른 신호
+w5:S5_T1xT8_D3_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.865,0.407,한쪽이 다른 쪽에 포함
+w6:T3x_H_P_h1_all_ens_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.025,0.016,다른 신호
+w6:T3x_H_P_h1_all_ens_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.05,0.03,다른 신호
+w6:T3x_H_P_h1_all_ens_q90,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.395,0.085,다른 신호
+w6:T3x_H_P_h1_all_ens_q90,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.193,0.077,다른 신호
+w3:ALT_lb70_all_cons_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.634,0.599,많이 겹침
+w3:ALT_lb70_all_cons_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.512,0.44,많이 겹침
+w3:ALT_lb70_all_cons_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.337,0.105,다른 신호
+w3:ALT_lb70_all_cons_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.029,0.017,다른 신호
+w3:ALT_lb70_top20_cons_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.634,0.599,많이 겹침
+w3:ALT_lb70_top20_cons_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.512,0.44,많이 겹침
+w3:ALT_lb70_top20_cons_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.337,0.105,다른 신호
+w3:ALT_lb70_top20_cons_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.029,0.017,다른 신호
+w6:T3x_EV_P_h10_allev2_ens_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.054,0.154,다른 신호
+w6:T3x_EV_P_h10_allev2_ens_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.042,0.11,다른 신호
+w6:T3x_EV_P_h10_allev2_ens_q90,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.413,0.387,다른 신호
+w6:T3x_EV_P_h10_allev2_ens_q90,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.24,0.417,다른 신호
+w6:T2x_nop_S5_T1_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.049,0.066,다른 신호
+w6:T2x_nop_S5_T1_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.033,0.04,다른 신호
+w6:T2x_nop_S5_T1_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.49,0.216,다른 신호
+w6:T2x_nop_S5_T1_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.514,0.42,많이 겹침
+w5:S10_T1xT2_D0_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.022,0.038,다른 신호
+w5:S10_T1xT2_D0_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.016,0.025,다른 신호
+w5:S10_T1xT2_D0_h10,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.366,0.211,다른 신호
+w5:S10_T1xT2_D0_h10,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.459,0.49,다른 신호
+w6:T5x_R9_A_all3_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.117,0.258,방향이 달라 견줄 수 없음
+w6:T5x_R9_A_all3_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.135,0.27,방향이 달라 견줄 수 없음
+w6:T5x_R9_A_all3_h10,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.12,0.086,방향이 달라 견줄 수 없음
+w6:T5x_R9_A_all3_h10,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.045,0.06,방향이 달라 견줄 수 없음
+w6:T4x_T3V_w20_k050_C_h3_w50_p95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.1,0.137,다른 신호
+w6:T4x_T3V_w20_k050_C_h3_w50_p95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.076,0.095,다른 신호
+w6:T4x_T3V_w20_k050_C_h3_w50_p95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.404,0.182,다른 신호
+w6:T4x_T3V_w20_k050_C_h3_w50_p95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.38,0.317,다른 신호
+w6:T3x_DN_P_h10_allev_ens_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.062,0.247,방향이 달라 견줄 수 없음
+w6:T3x_DN_P_h10_allev_ens_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.075,0.27,방향이 달라 견줄 수 없음
+w6:T3x_DN_P_h10_allev_ens_q90,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.075,0.097,방향이 달라 견줄 수 없음
+w6:T3x_DN_P_h10_allev_ens_q90,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.049,0.117,방향이 달라 견줄 수 없음
+w5:S10_T1xT8_D5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.038,0.044,다른 신호
+w5:S10_T1xT8_D5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.038,0.04,다른 신호
+w5:S10_T1xT8_D5_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.46,0.177,다른 신호
+w5:S10_T1xT8_D5_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.732,0.52,많이 겹침
+w6:T4x_T2V_w60_k20_S10_T8_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.089,0.044,다른 신호
+w6:T4x_T2V_w60_k20_S10_T8_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.089,0.04,다른 신호
+w6:T4x_T2V_w60_k20_S10_T8_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.5,0.081,많이 겹침
+w6:T4x_T2V_w60_k20_S10_T8_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.733,0.22,많이 겹침
+w6:T2x_delay_S5_T6_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.054,0.027,다른 신호
+w6:T2x_delay_S5_T6_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.054,0.025,다른 신호
+w6:T2x_delay_S5_T6_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.43,0.072,다른 신호
+w6:T2x_delay_S5_T6_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.688,0.213,많이 겹침
+w6:T4x_T2V_w20_k10_S10_T7_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.08,0.11,다른 신호
+w6:T4x_T2V_w20_k10_S10_T7_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.036,0.045,다른 신호
+w6:T4x_T2V_w20_k10_S10_T7_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.3,0.135,다른 신호
+w6:T4x_T2V_w20_k10_S10_T7_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.436,0.363,다른 신호
+w5:S5_T2xT5_D3_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.065,0.044,다른 신호
+w5:S5_T2xT5_D3_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.041,0.025,다른 신호
+w5:S5_T2xT5_D3_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.455,0.101,다른 신호
+w5:S5_T2xT5_D3_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.593,0.243,많이 겹침
+w5:S10_T2xT6_D5_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.047,0.077,다른 신호
+w5:S10_T2xT6_D5_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.043,0.065,다른 신호
+w5:S10_T2xT6_D5_h10,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.467,0.252,다른 신호
+w5:S10_T2xT6_D5_h10,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.517,0.517,많이 겹침
+w5:S10_T3xT8_D5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.031,0.027,다른 신호
+w5:S10_T3xT8_D5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.031,0.025,다른 신호
+w5:S10_T3xT8_D5_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.447,0.128,다른 신호
+w5:S10_T3xT8_D5_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.742,0.393,많이 겹침
+w6:T5x_win3y_B_any2_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.048,0.027,방향이 달라 견줄 수 없음
+w6:T5x_win3y_B_any2_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.057,0.03,방향이 달라 견줄 수 없음
+w6:T5x_win3y_B_any2_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.21,0.04,방향이 달라 견줄 수 없음
+w6:T5x_win3y_B_any2_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.114,0.04,방향이 달라 견줄 수 없음
+w5:S10_T2xT4_D5_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.038,0.104,다른 신호
+w5:S10_T2xT4_D5_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.028,0.07,다른 신호
+w5:S10_T2xT4_D5_touch,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.36,0.323,다른 신호
+w5:S10_T2xT4_D5_touch,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.31,0.513,많이 겹침
+w6:T3x_TH_h5_all_ens_r3q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.109,0.236,다른 신호
+w6:T3x_TH_h5_all_ens_r3q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.101,0.2,다른 신호
+w6:T3x_TH_h5_all_ens_r3q95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.744,0.53,많이 겹침
+w6:T3x_TH_h5_all_ens_r3q95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.243,0.32,다른 신호
+w6:T2x_catch60_S10_T8_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.045,0.132,다른 신호
+w6:T2x_catch60_S10_T8_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.03,0.08,다른 신호
+w6:T2x_catch60_S10_T8_touch,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.412,0.395,다른 신호
+w6:T2x_catch60_S10_T8_touch,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.407,0.72,많이 겹침
+w6:T4x_VC_T8_hi_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.062,0.165,다른 신호
+w6:T4x_VC_T8_hi_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.079,0.19,다른 신호
+w6:T4x_VC_T8_hi_h10,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.358,0.31,다른 신호
+w6:T4x_VC_T8_hi_h10,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.473,0.757,많이 겹침
+w5:S5_T1xT3_D3_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.058,0.044,다른 신호
+w5:S5_T1xT3_D3_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.036,0.025,다른 신호
+w5:S5_T1xT3_D3_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.428,0.106,다른 신호
+w5:S5_T1xT3_D3_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.601,0.277,많이 겹침
+w1:WF_watch_top5_any_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.429,0.698,많이 겹침
+w1:WF_watch_top5_any_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.574,0.85,한쪽이 다른 쪽에 포함
+w1:WF_watch_top5_any_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.28,0.15,다른 신호
+w1:WF_watch_top5_any_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.084,0.083,다른 신호
+w6:T4x_VC_T1_hi_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.052,0.203,다른 신호
+w6:T4x_VC_T1_hi_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.066,0.235,다른 신호
+w6:T4x_VC_T1_hi_h10,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.311,0.398,다른 신호
+w6:T4x_VC_T1_hi_h10,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.301,0.713,많이 겹침
+w4:WF_lb_top1_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.038,0.038,다른 신호
+w4:WF_lb_top1_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.075,0.07,다른 신호
+w4:WF_lb_top1_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.387,0.13,다른 신호
+w4:WF_lb_top1_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.538,0.333,많이 겹침
+w6:T2x_catch60_S5_T1_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.028,0.066,다른 신호
+w6:T2x_catch60_S5_T1_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.028,0.06,다른 신호
+w6:T2x_catch60_S5_T1_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.409,0.317,다른 신호
+w6:T2x_catch60_S5_T1_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.405,0.58,많이 겹침
+w6:T3x_PAIR_h3_ps60_f20,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.111,0.093,다른 신호
+w6:T3x_PAIR_h3_ps60_f20,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.131,0.1,다른 신호
+w6:T3x_PAIR_h3_ps60_f20,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.366,0.101,다른 신호
+w6:T3x_PAIR_h3_ps60_f20,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.418,0.213,다른 신호
+w6:T2x_delay_TO_T8_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.057,0.165,다른 신호
+w6:T2x_delay_TO_T8_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.078,0.205,다른 신호
+w6:T2x_delay_TO_T8_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.328,0.31,다른 신호
+w6:T2x_delay_TO_T8_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.476,0.833,한쪽이 다른 쪽에 포함
+w6:T2x_catch60_S5_T7_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.02,0.016,다른 신호
+w6:T2x_catch60_S5_T7_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.02,0.015,다른 신호
+w6:T2x_catch60_S5_T7_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.32,0.086,다른 신호
+w6:T2x_catch60_S5_T7_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.453,0.227,다른 신호
+w6:T3x_CG_win500_h10_w50_p95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.128,0.56,많이 겹침
+w6:T3x_CG_win500_h10_w50_p95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.13,0.52,많이 겹침
+w6:T3x_CG_win500_h10_w50_p95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.311,0.449,다른 신호
+w6:T3x_CG_win500_h10_w50_p95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.235,0.627,많이 겹침
+w5:S5_T1xT8_D3_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.054,0.055,다른 신호
+w5:S5_T1xT8_D3_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.049,0.045,다른 신호
+w5:S5_T1xT8_D3_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.486,0.162,다른 신호
+w5:S5_T1xT8_D3_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.854,0.527,한쪽이 다른 쪽에 포함
+w5:S10_T1xT8_D5_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.038,0.055,다른 신호
+w5:S10_T1xT8_D5_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.035,0.045,다른 신호
+w5:S10_T1xT8_D5_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.481,0.225,다른 신호
+w5:S10_T1xT8_D5_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.762,0.66,많이 겹침
+w6:T3x_PAIR_h5_ps60_f20,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.056,0.099,다른 신호
+w6:T3x_PAIR_h5_ps60_f20,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.028,0.045,다른 신호
+w6:T3x_PAIR_h5_ps60_f20,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.497,0.286,다른 신호
+w6:T3x_PAIR_h5_ps60_f20,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.394,0.42,다른 신호
+w6:T4x_T2V_w120_k10_S10_T8_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.054,0.082,다른 신호
+w6:T4x_T2V_w120_k10_S10_T8_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.05,0.07,다른 신호
+w6:T4x_T2V_w120_k10_S10_T8_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.414,0.209,다른 신호
+w6:T4x_T2V_w120_k10_S10_T8_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.814,0.76,한쪽이 다른 쪽에 포함
+w5:S5_T1xT2_D5_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.041,0.077,다른 신호
+w5:S5_T1xT2_D5_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.029,0.05,다른 신호
+w5:S5_T1xT2_D5_h10,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.432,0.265,다른 신호
+w5:S5_T1xT2_D5_h10,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.535,0.607,많이 겹침
+w6:T4x_T3V_w60_k025_C_h10_w50_p95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.197,0.352,다른 신호
+w6:T4x_T3V_w60_k025_C_h10_w50_p95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.182,0.295,다른 신호
+w6:T4x_T3V_w60_k025_C_h10_w50_p95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.262,0.153,다른 신호
+w6:T4x_T3V_w60_k025_C_h10_w50_p95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.129,0.14,다른 신호
+w6:T4x_T3V_w60_k100_P_h3_all_gb_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.048,0.049,다른 신호
+w6:T4x_T3V_w60_k100_P_h3_all_gb_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.042,0.04,다른 신호
+w6:T4x_T3V_w60_k100_P_h3_all_gb_q95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.476,0.162,다른 신호
+w6:T4x_T3V_w60_k100_P_h3_all_gb_q95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.238,0.15,다른 신호
+w5:S10_T5xT8_D5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.034,0.027,다른 신호
+w5:S10_T5xT8_D5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.034,0.025,다른 신호
+w5:S10_T5xT8_D5_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.408,0.108,다른 신호
+w5:S10_T5xT8_D5_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.769,0.377,많이 겹침
+w6:T4x_T3V_w120_k050_C_h3_w50_p95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.146,0.181,다른 신호
+w6:T4x_T3V_w120_k050_C_h3_w50_p95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.111,0.125,다른 신호
+w6:T4x_T3V_w120_k050_C_h3_w50_p95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.323,0.132,다른 신호
+w6:T4x_T3V_w120_k050_C_h3_w50_p95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.252,0.19,다른 신호
+w5:S10_T5xT7_D5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.021,0.011,다른 신호
+w5:S10_T5xT7_D5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.021,0.01,다른 신호
+w5:S10_T5xT7_D5_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.344,0.059,다른 신호
+w5:S10_T5xT7_D5_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.594,0.19,많이 겹침
+w6:T3x_EV_P_h3_allev2_gb_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.067,0.11,다른 신호
+w6:T3x_EV_P_h3_allev2_gb_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.067,0.1,다른 신호
+w6:T3x_EV_P_h3_allev2_gb_q90,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.617,0.333,많이 겹침
+w6:T3x_EV_P_h3_allev2_gb_q90,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.237,0.237,다른 신호
+w6:T2x_catch60_S10_T7_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.019,0.016,다른 신호
+w6:T2x_catch60_S10_T7_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.019,0.015,다른 신호
+w6:T2x_catch60_S10_T7_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.302,0.086,다른 신호
+w6:T2x_catch60_S10_T7_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.447,0.237,다른 신호
+w6:T2x_nop_S10_T1_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.037,0.066,다른 신호
+w6:T2x_nop_S10_T1_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.025,0.04,다른 신호
+w6:T2x_nop_S10_T1_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.428,0.25,다른 신호
+w6:T2x_nop_S10_T1_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.446,0.483,다른 신호
+w6:T4x_T2V_w120_k10_S5_T7_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.026,0.016,다른 신호
+w6:T4x_T2V_w120_k10_S5_T7_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.026,0.015,다른 신호
+w6:T4x_T2V_w120_k10_S5_T7_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.289,0.059,다른 신호
+w6:T4x_T2V_w120_k10_S5_T7_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.57,0.217,많이 겹침
+w5:S10_T1xT4_D3_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.043,0.104,다른 신호
+w5:S10_T1xT4_D3_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.032,0.07,다른 신호
+w5:S10_T1xT4_D3_touch,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.35,0.279,다른 신호
+w5:S10_T1xT4_D3_touch,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.305,0.45,다른 신호
+w6:T4x_T2V_w60_k05_S5_T8_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.059,0.115,다른 신호
+w6:T4x_T2V_w60_k05_S5_T8_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.04,0.07,다른 신호
+w6:T4x_T2V_w60_k05_S5_T8_touch,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.319,0.204,다른 신호
+w6:T4x_T2V_w60_k05_S5_T8_touch,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.503,0.593,많이 겹침
+w6:T2x_delay_S10_T6_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.047,0.049,다른 신호
+w6:T2x_delay_S10_T6_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.047,0.045,다른 신호
+w6:T2x_delay_S10_T6_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.437,0.15,다른 신호
+w6:T2x_delay_S10_T6_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.532,0.337,많이 겹침
+w6:T2x_win_S20_T0_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.046,0.17,다른 신호
+w6:T2x_win_S20_T0_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.032,0.11,다른 신호
+w6:T2x_win_S20_T0_h10,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.394,0.483,다른 신호
+w6:T2x_win_S20_T0_h10,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.326,0.74,많이 겹침
+w6:T3x_CFG_h3_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.043,0.077,다른 신호
+w6:T3x_CFG_h3_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.062,0.1,다른 신호
+w6:T3x_CFG_h3_q90,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.565,0.33,많이 겹침
+w6:T3x_CFG_h3_q90,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.204,0.22,다른 신호
+w6:T3x_PAIR_h3_pw50_f20,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.287,0.17,다른 신호
+w6:T3x_PAIR_h3_pw50_f20,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.278,0.15,다른 신호
+w6:T3x_PAIR_h3_pw50_f20,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.278,0.054,다른 신호
+w6:T3x_PAIR_h3_pw50_f20,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.25,0.09,다른 신호
+w3:ALT_h75_top5_any_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.394,0.907,한쪽이 다른 쪽에 포함
+w3:ALT_h75_top5_any_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.391,0.82,한쪽이 다른 쪽에 포함
+w3:ALT_h75_top5_any_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.253,0.191,다른 신호
+w3:ALT_h75_top5_any_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.091,0.127,다른 신호
+w3:ALT_lb60_top5_any_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.394,0.907,한쪽이 다른 쪽에 포함
+w3:ALT_lb60_top5_any_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.391,0.82,한쪽이 다른 쪽에 포함
+w3:ALT_lb60_top5_any_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.253,0.191,다른 신호
+w3:ALT_lb60_top5_any_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.091,0.127,다른 신호
+w5:S10_T3xT6_D5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.035,0.027,다른 신호
+w5:S10_T3xT6_D5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.035,0.025,다른 신호
+w5:S10_T3xT6_D5_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.376,0.095,다른 신호
+w5:S10_T3xT6_D5_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.596,0.28,많이 겹침
+w6:T3x_PAIR_h10_ps60_p95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.059,0.159,다른 신호
+w6:T3x_PAIR_h10_ps60_p95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.039,0.095,다른 신호
+w6:T3x_PAIR_h10_ps60_p95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.369,0.326,다른 신호
+w6:T3x_PAIR_h10_ps60_p95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.339,0.553,많이 겹침
+w6:T2x_win_S20_T8_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.04,0.049,다른 신호
+w6:T2x_win_S20_T8_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.04,0.045,다른 신호
+w6:T2x_win_S20_T8_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.444,0.18,다른 신호
+w6:T2x_win_S20_T8_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.702,0.527,많이 겹침
+w4:WF_hit_top1_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.039,0.038,다른 신호
+w4:WF_hit_top1_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.078,0.07,다른 신호
+w4:WF_hit_top1_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.383,0.124,다른 신호
+w4:WF_hit_top1_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.539,0.323,많이 겹침
+w6:T3x_DN_P_h5_all_ens_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.075,0.187,방향이 달라 견줄 수 없음
+w6:T3x_DN_P_h5_all_ens_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.081,0.185,방향이 달라 견줄 수 없음
+w6:T3x_DN_P_h5_all_ens_q90,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.055,0.045,방향이 달라 견줄 수 없음
+w6:T3x_DN_P_h5_all_ens_q90,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.075,0.113,방향이 달라 견줄 수 없음
+w4:WF_hit_top3_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.032,0.066,다른 신호
+w4:WF_hit_top3_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.07,0.13,다른 신호
+w4:WF_hit_top3_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.273,0.182,다른 신호
+w4:WF_hit_top3_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.408,0.503,많이 겹침
+w6:T4x_VC_T2_lo_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.082,0.203,다른 신호
+w6:T4x_VC_T2_lo_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.089,0.2,다른 신호
+w6:T4x_VC_T2_lo_h10,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.129,0.105,다른 신호
+w6:T4x_VC_T2_lo_h10,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+w5:S5_T3xT8_D3_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.049,0.027,다른 신호
+w5:S5_T3xT8_D3_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.049,0.025,다른 신호
+w5:S5_T3xT8_D3_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.471,0.086,다른 신호
+w5:S5_T3xT8_D3_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.833,0.283,한쪽이 다른 쪽에 포함
+w6:T2x_delay_S5_T8_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.053,0.044,다른 신호
+w6:T2x_delay_S5_T8_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.053,0.04,다른 신호
+w6:T2x_delay_S5_T8_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.467,0.126,다른 신호
+w6:T2x_delay_S5_T8_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.833,0.417,한쪽이 다른 쪽에 포함
+w5:S5_T1xT7_D5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.017,0.011,다른 신호
+w5:S5_T1xT7_D5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.017,0.01,다른 신호
+w5:S5_T1xT7_D5_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.41,0.086,다른 신호
+w5:S5_T1xT7_D5_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.607,0.237,많이 겹침
+w6:T5x_model_q95_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.067,0.11,방향이 달라 견줄 수 없음
+w6:T5x_model_q95_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.06,0.09,방향이 달라 견줄 수 없음
+w6:T5x_model_q95_h10,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.107,0.058,방향이 달라 견줄 수 없음
+w6:T5x_model_q95_h10,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.057,0.057,방향이 달라 견줄 수 없음
+w6:T5x_model_q90_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.069,0.209,방향이 달라 견줄 수 없음
+w6:T5x_model_q90_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.056,0.155,방향이 달라 견줄 수 없음
+w6:T5x_model_q90_h10,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.075,0.074,방향이 달라 견줄 수 없음
+w6:T5x_model_q90_h10,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.025,0.047,방향이 달라 견줄 수 없음
+w6:T2x_win_S3_T5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.051,0.027,다른 신호
+w6:T2x_win_S3_T5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.02,0.01,다른 신호
+w6:T2x_win_S3_T5_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.475,0.085,다른 신호
+w6:T2x_win_S3_T5_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.657,0.217,많이 겹침
+w5:S5_T1xT5_D5_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.039,0.071,다른 신호
+w5:S5_T1xT5_D5_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.027,0.045,다른 신호
+w5:S5_T1xT5_D5_h10,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.418,0.249,다른 신호
+w5:S5_T1xT5_D5_h10,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.479,0.527,많이 겹침
+w6:T4x_T3V_w20_k050_P_h3_all_gb_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.062,0.055,다른 신호
+w6:T4x_T3V_w20_k050_P_h3_all_gb_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.037,0.03,다른 신호
+w6:T4x_T3V_w20_k050_P_h3_all_gb_q95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.478,0.139,다른 신호
+w6:T4x_T3V_w20_k050_P_h3_all_gb_q95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.311,0.167,다른 신호
+w5:S5_T1xT8_D5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.046,0.044,다른 신호
+w5:S5_T1xT8_D5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.046,0.04,다른 신호
+w5:S5_T1xT8_D5_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.483,0.151,다른 신호
+w5:S5_T1xT8_D5_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.753,0.437,많이 겹침
+w6:T2x_dn_TO_D8_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.065,0.082,방향이 달라 견줄 수 없음
+w6:T2x_dn_TO_D8_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.1,0.115,방향이 달라 견줄 수 없음
+w6:T2x_dn_TO_D8_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.23,0.095,방향이 달라 견줄 수 없음
+w6:T2x_dn_TO_D8_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,방향이 달라 견줄 수 없음
+w6:T3x_CG_win500_h5_w50_p95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.053,0.154,다른 신호
+w6:T3x_CG_win500_h5_w50_p95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.044,0.115,다른 신호
+w6:T3x_CG_win500_h5_w50_p95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.44,0.416,다른 신호
+w6:T3x_CG_win500_h5_w50_p95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.305,0.533,많이 겹침
+w3:ALT_watch_all_cons10_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.262,0.896,한쪽이 다른 쪽에 포함
+w3:ALT_watch_all_cons10_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.252,0.785,많이 겹침
+w3:ALT_watch_all_cons10_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.183,0.205,다른 신호
+w3:ALT_watch_all_cons10_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.063,0.13,다른 신호
+w6:T4x_T2V_w60_k20_TO_T8_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.091,0.484,다른 신호
+w6:T4x_T2V_w60_k20_TO_T8_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.091,0.44,다른 신호
+w6:T4x_T2V_w60_k20_TO_T8_touch,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.197,0.344,다른 신호
+w6:T4x_T2V_w60_k20_TO_T8_touch,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.181,0.583,많이 겹침
+w6:T3x_TH_h10_all_gb_r3q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.039,0.093,다른 신호
+w6:T3x_TH_h10_all_gb_r3q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.023,0.05,다른 신호
+w6:T3x_TH_h10_all_gb_r3q95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.502,0.398,많이 겹침
+w6:T3x_TH_h10_all_gb_r3q95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.243,0.357,다른 신호
+w6:T3x_TH_h10_allev_gb_r3q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.039,0.093,다른 신호
+w6:T3x_TH_h10_allev_gb_r3q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.023,0.05,다른 신호
+w6:T3x_TH_h10_allev_gb_r3q95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.502,0.398,많이 겹침
+w6:T3x_TH_h10_allev_gb_r3q95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.243,0.357,다른 신호
+w6:T4x_T2V_w20_k10_S10_T8_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.06,0.077,다른 신호
+w6:T4x_T2V_w20_k10_S10_T8_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.047,0.055,다른 신호
+w6:T4x_T2V_w20_k10_S10_T8_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.427,0.18,다른 신호
+w6:T4x_T2V_w20_k10_S10_T8_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.791,0.617,많이 겹침
+w5:S10_T5xT6_D5_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.024,0.022,다른 신호
+w5:S10_T5xT6_D5_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.024,0.02,다른 신호
+w5:S10_T5xT6_D5_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.465,0.142,다른 신호
+w5:S10_T5xT6_D5_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.594,0.337,많이 겹침
+w4:WF_lb_top1_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.039,0.066,다른 신호
+w4:WF_lb_top1_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.084,0.13,다른 신호
+w4:WF_lb_top1_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.313,0.175,다른 신호
+w4:WF_lb_top1_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.49,0.507,많이 겹침
+w6:T3x_H_P_h20_allev_lr_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.07,0.308,다른 신호
+w6:T3x_H_P_h20_allev_lr_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.069,0.275,다른 신호
+w6:T3x_H_P_h20_allev_lr_q90,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.343,0.494,다른 신호
+w6:T3x_H_P_h20_allev_lr_q90,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.195,0.52,많이 겹침
+w3:ALT_lb70_top5_any_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.51,0.874,한쪽이 다른 쪽에 포함
+w3:ALT_lb70_top5_any_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.452,0.705,많이 겹침
+w3:ALT_lb70_top5_any_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.333,0.187,다른 신호
+w3:ALT_lb70_top5_any_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.112,0.117,다른 신호
+w6:T4x_T2V_w60_k05_S10_T7_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.036,0.093,다른 신호
+w6:T4x_T2V_w60_k05_S10_T7_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.032,0.075,다른 신호
+w6:T4x_T2V_w60_k05_S10_T7_touch,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.288,0.245,다른 신호
+w6:T4x_T2V_w60_k05_S10_T7_touch,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.243,0.383,다른 신호
+w6:T2x_win_S3_T1_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.027,0.049,다른 신호
+w6:T2x_win_S3_T1_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.015,0.025,다른 신호
+w6:T2x_win_S3_T1_h10,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.436,0.259,다른 신호
+w6:T2x_win_S3_T1_h10,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.548,0.603,많이 겹침
+w5:S5_T1xT3_D5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.047,0.044,다른 신호
+w5:S5_T1xT3_D5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.029,0.025,다른 신호
+w5:S5_T1xT3_D5_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.456,0.141,다른 신호
+w5:S5_T1xT3_D5_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.602,0.343,많이 겹침
+w5:S10_T3xT6_D3_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.027,0.016,다른 신호
+w5:S10_T3xT6_D3_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.027,0.015,다른 신호
+w5:S10_T3xT6_D3_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.405,0.081,다른 신호
+w5:S10_T3xT6_D3_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.613,0.227,많이 겹침
+w6:T4x_T3V_w60_k025_P_h5_all_gb_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.086,0.104,다른 신호
+w6:T4x_T3V_w60_k025_P_h5_all_gb_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.081,0.09,다른 신호
+w6:T4x_T3V_w60_k025_P_h5_all_gb_q95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.365,0.146,다른 신호
+w6:T4x_T3V_w60_k025_P_h5_all_gb_q95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.153,0.113,다른 신호
+w6:T4x_T2V_w60_k05_S10_T7_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.055,0.104,다른 신호
+w6:T4x_T2V_w60_k05_S10_T7_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.032,0.055,다른 신호
+w6:T4x_T2V_w60_k05_S10_T7_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.267,0.166,다른 신호
+w6:T4x_T2V_w60_k05_S10_T7_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.319,0.367,다른 신호
+w5:S5_T3xT6_D5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.052,0.027,다른 신호
+w5:S5_T3xT6_D5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.052,0.025,다른 신호
+w5:S5_T3xT6_D5_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.448,0.077,다른 신호
+w5:S5_T3xT6_D5_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.698,0.223,많이 겹침
+w6:T4x_T3V_w120_k050_P_h10_all_gb_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.078,0.176,다른 신호
+w6:T4x_T3V_w120_k050_P_h10_all_gb_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.049,0.1,다른 신호
+w6:T4x_T3V_w120_k050_P_h10_all_gb_q90,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.554,0.409,많이 겹침
+w6:T4x_T3V_w120_k050_P_h10_all_gb_q90,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.161,0.22,다른 신호
+w5:S5_T5xT8_D5_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.042,0.038,다른 신호
+w5:S5_T5xT8_D5_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.042,0.035,다른 신호
+w5:S5_T5xT8_D5_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.455,0.135,다른 신호
+w5:S5_T5xT8_D5_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.758,0.417,많이 겹침
+w5:S5_T1xT8_D0_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.07,0.044,다른 신호
+w5:S5_T1xT8_D0_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.07,0.04,다른 신호
+w5:S5_T1xT8_D0_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.465,0.095,다른 신호
+w5:S5_T1xT8_D0_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.868,0.33,한쪽이 다른 쪽에 포함
+w6:T3x_CIN_h10_allevc_gb_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.039,0.099,다른 신호
+w6:T3x_CIN_h10_allevc_gb_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.024,0.055,다른 신호
+w6:T3x_CIN_h10_allevc_gb_q90,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.478,0.396,다른 신호
+w6:T3x_CIN_h10_allevc_gb_q90,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.239,0.367,다른 신호
+w4:WF_hit_top1_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.044,0.066,다른 신호
+w4:WF_hit_top1_h5,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.069,0.095,다른 신호
+w4:WF_hit_top1_h5,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.353,0.175,다른 신호
+w4:WF_hit_top1_h5,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.553,0.507,많이 겹침
+w6:T4x_T2V_w60_k05_TO_T8_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.059,0.22,다른 신호
+w6:T4x_T2V_w60_k05_TO_T8_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.063,0.215,다른 신호
+w6:T4x_T2V_w60_k05_TO_T8_touch,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.317,0.389,다른 신호
+w6:T4x_T2V_w60_k05_TO_T8_touch,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.37,0.84,한쪽이 다른 쪽에 포함
+w6:T3x_EV_P_h3_allev2_ens_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.067,0.06,다른 신호
+w6:T3x_EV_P_h3_allev2_ens_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.061,0.05,다른 신호
+w6:T3x_EV_P_h3_allev2_ens_q95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.63,0.187,많이 겹침
+w6:T3x_EV_P_h3_allev2_ens_q95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.279,0.153,다른 신호
+w5:S5_T1xT4_D5_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.034,0.077,다른 신호
+w5:S5_T1xT4_D5_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.022,0.045,다른 신호
+w5:S5_T1xT4_D5_touch,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.407,0.303,다른 신호
+w5:S5_T1xT4_D5_touch,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.361,0.497,다른 신호
+w3:WF_G1_watch_top20_any_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.188,0.335,다른 신호
+w3:WF_G1_watch_top20_any_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.191,0.31,다른 신호
+w3:WF_G1_watch_top20_any_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.191,0.112,다른 신호
+w3:WF_G1_watch_top20_any_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.077,0.083,다른 신호
+w6:T2x_catch60_S5_T1_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.035,0.066,다른 신호
+w6:T2x_catch60_S5_T1_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.035,0.06,다른 신호
+w6:T2x_catch60_S5_T1_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.417,0.259,다른 신호
+w6:T2x_catch60_S5_T1_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.441,0.507,많이 겹침
+w6:T4x_T3V_w20_k050_P_h3_allev_gb_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.08,0.137,다른 신호
+w6:T4x_T3V_w20_k050_P_h3_allev_gb_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.058,0.09,다른 신호
+w6:T4x_T3V_w20_k050_P_h3_allev_gb_q90,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.444,0.249,다른 신호
+w6:T4x_T3V_w20_k050_P_h3_allev_gb_q90,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.26,0.27,다른 신호
+w6:T2x_delay_S10_T4_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.046,0.093,다른 신호
+w6:T2x_delay_S10_T4_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.022,0.04,다른 신호
+w6:T2x_delay_S10_T4_touch,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.365,0.243,다른 신호
+w6:T2x_delay_S10_T4_touch,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.349,0.43,다른 신호
+w6:T4x_T3V_w60_k025_P_h5_allev_gb_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.087,0.11,다른 신호
+w6:T4x_T3V_w60_k025_P_h5_allev_gb_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.083,0.095,다른 신호
+w6:T4x_T3V_w60_k025_P_h5_allev_gb_q95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.336,0.139,다른 신호
+w6:T4x_T3V_w60_k025_P_h5_allev_gb_q95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.135,0.103,다른 신호
+w5:S5_T2xT8_D5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.043,0.038,다른 신호
+w5:S5_T2xT8_D5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.043,0.035,다른 신호
+w5:S5_T2xT8_D5_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.401,0.117,다른 신호
+w5:S5_T2xT8_D5_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.796,0.43,많이 겹침
+w3:ALT_h75_top20_cons_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.318,0.874,한쪽이 다른 쪽에 포함
+w3:ALT_h75_top20_cons_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.288,0.72,많이 겹침
+w3:ALT_h75_top20_cons_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.22,0.198,다른 신호
+w3:ALT_h75_top20_cons_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.058,0.097,다른 신호
+w3:ALT_lb60_top20_cons_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.318,0.874,한쪽이 다른 쪽에 포함
+w3:ALT_lb60_top20_cons_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.288,0.72,많이 겹침
+w3:ALT_lb60_top20_cons_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.22,0.198,다른 신호
+w3:ALT_lb60_top20_cons_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.058,0.097,다른 신호
+w6:T2x_win_S3_T0_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.041,0.126,다른 신호
+w6:T2x_win_S3_T0_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.023,0.065,다른 신호
+w6:T2x_win_S3_T0_touch,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.403,0.405,다른 신호
+w6:T2x_win_S3_T0_touch,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.361,0.673,많이 겹침
+w6:T4x_T2V_w120_k10_S10_T8_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.053,0.06,다른 신호
+w6:T4x_T2V_w120_k10_S10_T8_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.053,0.055,다른 신호
+w6:T4x_T2V_w120_k10_S10_T8_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.411,0.153,다른 신호
+w6:T4x_T2V_w120_k10_S10_T8_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.792,0.547,많이 겹침
+w6:T4x_T3V_w20_k050_P_h3_all_gb_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.076,0.132,다른 신호
+w6:T4x_T3V_w20_k050_P_h3_all_gb_q90,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.054,0.085,다른 신호
+w6:T4x_T3V_w20_k050_P_h3_all_gb_q90,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.44,0.25,다른 신호
+w6:T4x_T3V_w20_k050_P_h3_all_gb_q90,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.256,0.27,다른 신호
+w6:T3x_GRP_h5_fut_gb_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.118,0.181,다른 신호
+w6:T3x_GRP_h5_fut_gb_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.086,0.12,다른 신호
+w6:T3x_GRP_h5_fut_gb_q95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.532,0.268,많이 겹침
+w6:T3x_GRP_h5_fut_gb_q95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.168,0.157,다른 신호
+w6:T4x_T2V_w120_k10_S5_T2_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.05,0.11,다른 신호
+w6:T4x_T2V_w120_k10_S5_T2_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.037,0.075,다른 신호
+w6:T4x_T2V_w120_k10_S5_T2_h10,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.34,0.245,다른 신호
+w6:T4x_T2V_w120_k10_S5_T2_h10,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.458,0.61,많이 겹침
+w6:T4x_T3V_w20_k050_P_h3_allev_gb_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.062,0.055,다른 신호
+w6:T4x_T3V_w20_k050_P_h3_allev_gb_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.037,0.03,다른 신호
+w6:T4x_T3V_w20_k050_P_h3_allev_gb_q95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.475,0.137,다른 신호
+w6:T4x_T3V_w20_k050_P_h3_allev_gb_q95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.312,0.167,다른 신호
+w5:WF_lb_top1_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.066,0.28,다른 신호
+w5:WF_lb_top1_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.063,0.245,다른 신호
+w5:WF_lb_top1_touch,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.246,0.344,다른 신호
+w5:WF_lb_top1_touch,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.21,0.543,많이 겹침
+w5:S5_T2xT7_D5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.044,0.027,다른 신호
+w5:S5_T2xT7_D5_h3,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.044,0.025,다른 신호
+w5:S5_T2xT7_D5_h3,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.36,0.074,다른 신호
+w5:S5_T2xT7_D5_h3,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.623,0.237,많이 겹침
+w6:T3x_GRP_h5_opt_gb_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.139,0.236,다른 신호
+w6:T3x_GRP_h5_opt_gb_q95,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.106,0.165,다른 신호
+w6:T3x_GRP_h5_opt_gb_q95,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.539,0.301,많이 겹침
+w6:T3x_GRP_h5_opt_gb_q95,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.252,0.26,다른 신호
+w6:T4x_T2V_w60_k05_S5_T8_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.042,0.104,다른 신호
+w6:T4x_T2V_w60_k05_S5_T8_h10,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.042,0.095,다른 신호
+w6:T4x_T2V_w60_k05_S5_T8_h10,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.289,0.234,다른 신호
+w6:T4x_T2V_w60_k05_S5_T8_h10,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.498,0.747,많이 겹침
+w5:S10_T1xT2_D3_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.049,0.148,다른 신호
+w5:S10_T1xT2_D3_touch,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.035,0.095,다른 신호
+w5:S10_T1xT2_D3_touch,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.349,0.344,다른 신호
+w5:S10_T1xT2_D3_touch,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.298,0.543,많이 겹침
+w1:R_Q_p15_any_old_up5_none_any_d1_f1_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.437,0.209,다른 신호
+w1:R_Q_p15_any_old_up5_none_any_d1_f1_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.598,0.26,많이 겹침
+w1:R_Q_p15_any_old_up5_none_any_d1_f1_h3_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.207,0.032,다른 신호
+w1:R_Q_p15_any_old_up5_none_any_d1_f1_h3_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.069,0.02,다른 신호
+w1:R_Q_p15_any_old_up5_none_any_d0_f1_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.322,0.154,다른 신호
+w1:R_Q_p15_any_old_up5_none_any_d0_f1_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.437,0.19,다른 신호
+w1:R_Q_p15_any_old_up5_none_any_d0_f1_h3_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.195,0.031,다른 신호
+w1:R_Q_p15_any_old_up5_none_any_d0_f1_h3_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.069,0.02,다른 신호
+w7:X1_B009,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.364,0.264,다른 신호
+w7:X1_B009,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.606,0.4,많이 겹침
+w7:X1_B009,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.212,0.05,다른 신호
+w7:X1_B009,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.083,0.037,다른 신호
+w7:R_B014,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.389,0.231,다른 신호
+w7:R_B014,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.63,0.34,많이 겹침
+w7:R_B014,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.25,0.049,다른 신호
+w7:R_B014,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.056,0.02,다른 신호
+w7:R_B015,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.389,0.231,다른 신호
+w7:R_B015,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.63,0.34,많이 겹침
+w7:R_B015,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.25,0.049,다른 신호
+w7:R_B015,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.056,0.02,다른 신호
+w3:FL_K2_b10_new_pfut3_any_f1_d1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.35,0.308,다른 신호
+w3:FL_K2_b10_new_pfut3_any_f1_d1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.325,0.26,다른 신호
+w3:FL_K2_b10_new_pfut3_any_f1_d1_h5_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.231,0.067,다른 신호
+w3:FL_K2_b10_new_pfut3_any_f1_d1_h5_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.138,0.073,다른 신호
+w7:R_B016,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.4,0.231,다른 신호
+w7:R_B016,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.648,0.34,많이 겹침
+w7:R_B016,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.248,0.047,다른 신호
+w7:R_B016,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.029,0.01,다른 신호
+w7:V_B016,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.4,0.231,다른 신호
+w7:V_B016,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.648,0.34,많이 겹침
+w7:V_B016,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.248,0.047,다른 신호
+w7:V_B016,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.029,0.01,다른 신호
+w1:R_Q_p15_any_any_up1_none_any_d1_f1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.615,0.676,많이 겹침
+w1:R_Q_p15_any_any_up1_none_any_d1_f1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,1.0,1.0,사실상 같은 신호
+w1:R_Q_p15_any_any_up1_none_any_d1_f1_h5_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.26,0.094,다른 신호
+w1:R_Q_p15_any_any_up1_none_any_d1_f1_h5_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.08,0.053,다른 신호
+w1:R_Q_p15_any_any_up1_none_above_d1_f1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.646,0.621,많이 겹침
+w1:R_Q_p15_any_any_up1_none_above_d1_f1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,1.0,0.875,사실상 같은 신호
+w1:R_Q_p15_any_any_up1_none_above_d1_f1_h5_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.217,0.068,다른 신호
+w1:R_Q_p15_any_any_up1_none_above_d1_f1_h5_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.04,0.023,다른 신호
+w7:V_D001,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.294,0.055,방향이 달라 견줄 수 없음
+w7:V_D001,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.235,0.04,방향이 달라 견줄 수 없음
+w7:V_D001,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.059,0.004,방향이 달라 견줄 수 없음
+w7:V_D001,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.206,0.023,방향이 달라 견줄 수 없음
+w7:V_D002,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.294,0.055,방향이 달라 견줄 수 없음
+w7:V_D002,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.235,0.04,방향이 달라 견줄 수 없음
+w7:V_D002,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.059,0.004,방향이 달라 견줄 수 없음
+w7:V_D002,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.206,0.023,방향이 달라 견줄 수 없음
+w7:V_D003,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.294,0.055,방향이 달라 견줄 수 없음
+w7:V_D003,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.235,0.04,방향이 달라 견줄 수 없음
+w7:V_D003,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.059,0.004,방향이 달라 견줄 수 없음
+w7:V_D003,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.206,0.023,방향이 달라 견줄 수 없음
+w7:V_D005,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.278,0.055,방향이 달라 견줄 수 없음
+w7:V_D005,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.194,0.035,방향이 달라 견줄 수 없음
+w7:V_D005,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.056,0.004,방향이 달라 견줄 수 없음
+w7:V_D005,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.222,0.027,방향이 달라 견줄 수 없음
+w7:V_D004,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.278,0.055,방향이 달라 견줄 수 없음
+w7:V_D004,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.222,0.04,방향이 달라 견줄 수 없음
+w7:V_D004,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.083,0.005,방향이 달라 견줄 수 없음
+w7:V_D004,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.194,0.023,방향이 달라 견줄 수 없음
+w7:V_D006,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.27,0.055,방향이 달라 견줄 수 없음
+w7:V_D006,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.216,0.04,방향이 달라 견줄 수 없음
+w7:V_D006,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.081,0.005,방향이 달라 견줄 수 없음
+w7:V_D006,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.189,0.023,방향이 달라 견줄 수 없음
+w7:V_D007,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.27,0.055,방향이 달라 견줄 수 없음
+w7:V_D007,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.216,0.04,방향이 달라 견줄 수 없음
+w7:V_D007,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.081,0.005,방향이 달라 견줄 수 없음
+w7:V_D007,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.189,0.023,방향이 달라 견줄 수 없음
+w7:V_D008,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.27,0.055,방향이 달라 견줄 수 없음
+w7:V_D008,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.216,0.04,방향이 달라 견줄 수 없음
+w7:V_D008,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.081,0.005,방향이 달라 견줄 수 없음
+w7:V_D008,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.189,0.023,방향이 달라 견줄 수 없음
+w7:V_D009,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.27,0.055,방향이 달라 견줄 수 없음
+w7:V_D009,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.216,0.04,방향이 달라 견줄 수 없음
+w7:V_D009,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.081,0.005,방향이 달라 견줄 수 없음
+w7:V_D009,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.189,0.023,방향이 달라 견줄 수 없음
+w7:V_D010,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.27,0.055,방향이 달라 견줄 수 없음
+w7:V_D010,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.216,0.04,방향이 달라 견줄 수 없음
+w7:V_D010,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.081,0.005,방향이 달라 견줄 수 없음
+w7:V_D010,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.189,0.023,방향이 달라 견줄 수 없음
+w7:V_D011,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.27,0.055,방향이 달라 견줄 수 없음
+w7:V_D011,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.216,0.04,방향이 달라 견줄 수 없음
+w7:V_D011,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.081,0.005,방향이 달라 견줄 수 없음
+w7:V_D011,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.189,0.023,방향이 달라 견줄 수 없음
+w7:V_D012,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.27,0.055,방향이 달라 견줄 수 없음
+w7:V_D012,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.216,0.04,방향이 달라 견줄 수 없음
+w7:V_D012,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.081,0.005,방향이 달라 견줄 수 없음
+w7:V_D012,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.189,0.023,방향이 달라 견줄 수 없음
+w7:V_D013,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.27,0.055,방향이 달라 견줄 수 없음
+w7:V_D013,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.216,0.04,방향이 달라 견줄 수 없음
+w7:V_D013,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.081,0.005,방향이 달라 견줄 수 없음
+w7:V_D013,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.189,0.023,방향이 달라 견줄 수 없음
+w7:R_A017,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.189,0.181,다른 신호
+w7:R_A017,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.229,0.2,다른 신호
+w7:R_A017,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.211,0.067,다른 신호
+w7:R_A017,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.0,0.0,다른 신호
+w1:R_Q_p20_out_new_any_none_any_d1_f0_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.302,0.159,다른 신호
+w1:R_Q_p20_out_new_any_none_any_d1_f0_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.562,0.27,많이 겹침
+w1:R_Q_p20_out_new_any_none_any_d1_f0_h3_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.271,0.047,다른 신호
+w1:R_Q_p20_out_new_any_none_any_d1_f0_h3_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.094,0.03,다른 신호
+w1:R_Q_p15_out_any_up5_none_any_d1_f1_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.269,0.137,다른 신호
+w1:R_Q_p15_out_any_up5_none_any_d1_f1_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.613,0.285,많이 겹침
+w1:R_Q_p15_out_any_up5_none_any_d1_f1_h3_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.29,0.049,다른 신호
+w1:R_Q_p15_out_any_up5_none_any_d1_f1_h3_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.086,0.027,다른 신호
+w7:X1_B003,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.269,0.137,다른 신호
+w7:X1_B003,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.613,0.285,많이 겹침
+w7:X1_B003,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.29,0.049,다른 신호
+w7:X1_B003,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.086,0.027,다른 신호
+w7:V_A037,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.177,0.225,다른 신호
+w7:V_A037,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.195,0.225,다른 신호
+w7:V_A037,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.199,0.083,다른 신호
+w7:V_A037,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.048,0.037,다른 신호
+w1:R_Q_p15_any_any_up5_none_any_d1_f1_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.426,0.302,다른 신호
+w1:R_Q_p15_any_any_up5_none_any_d1_f1_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.721,0.465,많이 겹침
+w1:R_Q_p15_any_any_up5_none_any_d1_f1_h3_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.24,0.056,다른 신호
+w1:R_Q_p15_any_any_up5_none_any_d1_f1_h3_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.085,0.037,다른 신호
+w7:X1_B007,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.426,0.302,다른 신호
+w7:X1_B007,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.721,0.465,많이 겹침
+w7:X1_B007,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.24,0.056,다른 신호
+w7:X1_B007,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.085,0.037,다른 신호
+w7:V_A068,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.127,0.115,다른 신호
+w7:V_A068,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.158,0.13,다른 신호
+w7:V_A068,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.085,0.025,다른 신호
+w7:V_A068,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.03,0.017,다른 신호
+w7:R_A036,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.2,0.176,다른 신호
+w7:R_A036,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.231,0.185,다른 신호
+w7:R_A036,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.163,0.047,다른 신호
+w7:R_A036,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.037,0.02,다른 신호
+w1:R_Q_p15_any_any_up5_none_above_d1_f1_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.468,0.286,다른 신호
+w1:R_Q_p15_any_any_up5_none_above_d1_f1_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.784,0.435,많이 겹침
+w1:R_Q_p15_any_any_up5_none_above_d1_f1_h3_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.243,0.049,다른 신호
+w1:R_Q_p15_any_any_up5_none_above_d1_f1_h3_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.054,0.02,다른 신호
+w7:R_B012,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.36,0.22,다른 신호
+w7:R_B012,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.703,0.39,많이 겹침
+w7:R_B012,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.27,0.054,다른 신호
+w7:R_B012,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.099,0.037,다른 신호
+w7:R_B011,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.425,0.203,다른 신호
+w7:R_B011,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.713,0.31,많이 겹침
+w7:R_B011,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.299,0.047,다른 신호
+w7:R_B011,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.069,0.02,다른 신호
+w3:FL_K2_b10_new_pfut3_any_f0_d1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.339,0.308,다른 신호
+w3:FL_K2_b10_new_pfut3_any_f0_d1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.315,0.26,다른 신호
+w3:FL_K2_b10_new_pfut3_any_f0_d1_h5_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.248,0.074,다른 신호
+w3:FL_K2_b10_new_pfut3_any_f0_d1_h5_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.133,0.073,다른 신호
+w7:R_B013,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.44,0.203,다른 신호
+w7:R_B013,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.738,0.31,많이 겹침
+w7:R_B013,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.298,0.045,다른 신호
+w7:R_B013,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.036,0.01,다른 신호
+w1:R_Q_p20_out_any_up1_none_any_d1_f1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.373,0.379,다른 신호
+w1:R_Q_p20_out_any_up1_none_any_d1_f1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.681,0.63,많이 겹침
+w1:R_Q_p20_out_any_up1_none_any_d1_f1_h5_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.238,0.079,다른 신호
+w1:R_Q_p20_out_any_up1_none_any_d1_f1_h5_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.038,0.023,다른 신호
+w3:AGE_Q_b15_a3_up5_none_any_f0_d1_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.417,0.22,다른 신호
+w3:AGE_Q_b15_a3_up5_none_any_f0_d1_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.552,0.265,많이 겹침
+w3:AGE_Q_b15_a3_up5_none_any_f0_d1_h3_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.229,0.04,다른 신호
+w3:AGE_Q_b15_a3_up5_none_any_f0_d1_h3_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.062,0.02,다른 신호
+w1:R_Q_p15_out_any_up5_spot_any_d1_f0_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.436,0.187,다른 신호
+w1:R_Q_p15_out_any_up5_spot_any_d1_f0_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.667,0.26,많이 겹침
+w1:R_Q_p15_out_any_up5_spot_any_d1_f0_h3_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.295,0.041,다른 신호
+w1:R_Q_p15_out_any_up5_spot_any_d1_f0_h3_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.038,0.01,다른 신호
+w3:FL_Q_b30_new_fc3_any_f0_d0_h10_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.2,0.341,다른 신호
+w3:FL_Q_b30_new_fc3_any_f0_d0_h10_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.265,0.41,다른 신호
+w3:FL_Q_b30_new_fc3_any_f0_d0_h10_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.158,0.088,다른 신호
+w3:FL_Q_b30_new_fc3_any_f0_d0_h10_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.032,0.033,다른 신호
+w3:FL_Q_b30_new_fc3_any_f1_d0_h10_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.2,0.341,다른 신호
+w3:FL_Q_b30_new_fc3_any_f1_d0_h10_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.265,0.41,다른 신호
+w3:FL_Q_b30_new_fc3_any_f1_d0_h10_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.158,0.088,다른 신호
+w3:FL_Q_b30_new_fc3_any_f1_d0_h10_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.032,0.033,다른 신호
+w7:R_B020,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.533,0.308,많이 겹침
+w7:R_B020,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.762,0.4,많이 겹침
+w7:R_B020,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.267,0.05,다른 신호
+w7:R_B020,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.076,0.027,다른 신호
+w3:FL_F2_b15_old_spot5_any_f1_d0_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.347,0.286,다른 신호
+w3:FL_F2_b15_old_spot5_any_f1_d0_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.273,0.205,다른 신호
+w3:FL_F2_b15_old_spot5_any_f1_d0_h5_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.34,0.092,다른 신호
+w3:FL_F2_b15_old_spot5_any_f1_d0_h5_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.08,0.04,다른 신호
+w3:FL_Q_b30_new_fc3_any_f1_d0_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.255,0.231,다른 신호
+w3:FL_Q_b30_new_fc3_any_f1_d0_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.339,0.28,다른 신호
+w3:FL_Q_b30_new_fc3_any_f1_d0_h5_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.152,0.045,다른 신호
+w3:FL_Q_b30_new_fc3_any_f1_d0_h5_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.055,0.03,다른 신호
+w3:FL_K2_b15_new_pfut3_any_f1_d1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.302,0.374,다른 신호
+w3:FL_K2_b15_new_pfut3_any_f1_d1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.316,0.355,다른 신호
+w3:FL_K2_b15_new_pfut3_any_f1_d1_h5_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.284,0.115,다른 신호
+w3:FL_K2_b15_new_pfut3_any_f1_d1_h5_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.107,0.08,다른 신호
+w3:R_Q_b30_new_up5_spot_above_d0_f0_h7_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.304,0.363,다른 신호
+w3:R_Q_b30_new_up5_spot_above_d0_f0_h7_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.396,0.43,다른 신호
+w3:R_Q_b30_new_up5_spot_above_d0_f0_h7_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.161,0.063,다른 신호
+w3:R_Q_b30_new_up5_spot_above_d0_f0_h7_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.018,0.013,다른 신호
+w1:R_Q_p15_any_old_up5_none_any_d1_f0_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.433,0.286,다른 신호
+w1:R_Q_p15_any_old_up5_none_any_d1_f0_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.542,0.325,많이 겹침
+w1:R_Q_p15_any_old_up5_none_any_d1_f0_h3_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.233,0.05,다른 신호
+w1:R_Q_p15_any_old_up5_none_any_d1_f0_h3_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.05,0.02,다른 신호
+w1:R_Q_p15_any_any_up5_spot_any_d1_f1_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.444,0.22,다른 신호
+w1:R_Q_p15_any_any_up5_spot_any_d1_f1_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.711,0.32,많이 겹침
+w1:R_Q_p15_any_any_up5_spot_any_d1_f1_h3_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.222,0.036,다른 신호
+w1:R_Q_p15_any_any_up5_spot_any_d1_f1_h3_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.033,0.01,다른 신호
+w3:R_Q_b15_any_any_spot_above_d0_f1_h7_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.382,0.456,다른 신호
+w3:R_Q_b15_any_any_spot_above_d0_f1_h7_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.558,0.605,많이 겹침
+w3:R_Q_b15_any_any_spot_above_d0_f1_h7_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.189,0.074,다른 신호
+w3:R_Q_b15_any_any_spot_above_d0_f1_h7_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.055,0.04,다른 신호
+w1:R_Q_p15_any_old_up5_none_above_d1_f0_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.495,0.286,다른 신호
+w1:R_Q_p15_any_old_up5_none_above_d1_f0_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.59,0.31,많이 겹침
+w1:R_Q_p15_any_old_up5_none_above_d1_f0_h3_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.257,0.049,다른 신호
+w1:R_Q_p15_any_old_up5_none_above_d1_f0_h3_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.029,0.01,다른 신호
+w7:V_B034,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.338,0.401,다른 신호
+w7:V_B034,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.523,0.565,많이 겹침
+w7:V_B034,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.25,0.097,다른 신호
+w7:V_B034,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.06,0.043,다른 신호
+w3:R_Q_b30_new_up5_spot_above_d0_f1_h7_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.304,0.363,다른 신호
+w3:R_Q_b30_new_up5_spot_above_d0_f1_h7_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.396,0.43,다른 신호
+w3:R_Q_b30_new_up5_spot_above_d0_f1_h7_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.161,0.063,다른 신호
+w3:R_Q_b30_new_up5_spot_above_d0_f1_h7_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.018,0.013,다른 신호
+w1:R_Q_p15_any_any_up5_spot_above_d1_f1_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.46,0.22,다른 신호
+w1:R_Q_p15_any_any_up5_spot_above_d1_f1_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.736,0.32,많이 겹침
+w1:R_Q_p15_any_any_up5_spot_above_d1_f1_h3_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.23,0.036,다른 신호
+w1:R_Q_p15_any_any_up5_spot_above_d1_f1_h3_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.034,0.01,다른 신호
+w1:R_Q_s075_any_old_up1_none_any_d1_f1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.497,0.423,다른 신호
+w1:R_Q_s075_any_old_up1_none_any_d1_f1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.613,0.475,많이 겹침
+w1:R_Q_s075_any_old_up1_none_any_d1_f1_h5_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.29,0.081,다른 신호
+w1:R_Q_s075_any_old_up1_none_any_d1_f1_h5_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.103,0.053,다른 신호
+w3:FL_Q_b30_new_fc3_any_f0_d0_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.255,0.231,다른 신호
+w3:FL_Q_b30_new_fc3_any_f0_d0_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.339,0.28,다른 신호
+w3:FL_Q_b30_new_fc3_any_f0_d0_h5_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.152,0.045,다른 신호
+w3:FL_Q_b30_new_fc3_any_f0_d0_h5_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.055,0.03,다른 신호
+w1:R_Q_p15_any_any_any_spot_any_d0_f1_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.333,0.187,다른 신호
+w1:R_Q_p15_any_any_any_spot_any_d0_f1_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.451,0.23,다른 신호
+w1:R_Q_p15_any_any_any_spot_any_d0_f1_h3_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.167,0.031,다른 신호
+w1:R_Q_p15_any_any_any_spot_any_d0_f1_h3_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.039,0.013,다른 신호
+w1:R_Q_p15_any_any_any_spot_any_d1_f1_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.422,0.236,다른 신호
+w1:R_Q_p15_any_any_any_spot_any_d1_f1_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.657,0.335,많이 겹침
+w1:R_Q_p15_any_any_any_spot_any_d1_f1_h3_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.196,0.036,다른 신호
+w1:R_Q_p15_any_any_any_spot_any_d1_f1_h3_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.049,0.017,다른 신호
+w7:V_B042,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.372,0.385,다른 신호
+w7:V_B042,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.559,0.525,많이 겹침
+w7:V_B042,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.25,0.085,다른 신호
+w7:V_B042,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.037,0.023,다른 신호
+w1:R_Q_p20_any_any_up1_none_any_d1_f1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.435,0.621,많이 겹침
+w1:R_Q_p20_any_any_up1_none_any_d1_f1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.692,0.9,한쪽이 다른 쪽에 포함
+w1:R_Q_p20_any_any_up1_none_any_d1_f1_h5_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.219,0.103,다른 신호
+w1:R_Q_p20_any_any_up1_none_any_d1_f1_h5_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.077,0.067,다른 신호
+w2:R_G4n1_p25_fut1_above_d0_f0_h7_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.18,0.214,다른 신호
+w2:R_G4n1_p25_fut1_above_d0_f0_h7_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.244,0.265,다른 신호
+w2:R_G4n1_p25_fut1_above_d0_f0_h7_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.134,0.052,다른 신호
+w2:R_G4n1_p25_fut1_above_d0_f0_h7_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.014,0.01,다른 신호
+w2:R_G4n1_p25_fut1_above_d0_f1_h7_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.18,0.214,다른 신호
+w2:R_G4n1_p25_fut1_above_d0_f1_h7_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.244,0.265,다른 신호
+w2:R_G4n1_p25_fut1_above_d0_f1_h7_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.134,0.052,다른 신호
+w2:R_G4n1_p25_fut1_above_d0_f1_h7_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.014,0.01,다른 신호
+w2:XU_B2xA1,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.228,0.297,다른 신호
+w2:XU_B2xA1,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.329,0.39,다른 신호
+w2:XU_B2xA1,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.198,0.085,다른 신호
+w2:XU_B2xA1,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.055,0.043,다른 신호
+w7:X1_B002,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.228,0.297,다른 신호
+w7:X1_B002,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.329,0.39,다른 신호
+w7:X1_B002,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.198,0.085,다른 신호
+w7:X1_B002,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.055,0.043,다른 신호
+w3:R_Q_b30_new_any_spot_above_d0_f0_h7_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.316,0.401,다른 신호
+w3:R_Q_b30_new_any_spot_above_d0_f0_h7_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.394,0.455,다른 신호
+w3:R_Q_b30_new_any_spot_above_d0_f0_h7_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.152,0.063,다른 신호
+w3:R_Q_b30_new_any_spot_above_d0_f0_h7_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.017,0.013,다른 신호
+w3:FL_K2_b15_new_pfut3_any_f0_d1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.296,0.374,다른 신호
+w3:FL_K2_b15_new_pfut3_any_f0_d1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.309,0.355,다른 신호
+w3:FL_K2_b15_new_pfut3_any_f0_d1_h5_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.296,0.123,다른 신호
+w3:FL_K2_b15_new_pfut3_any_f0_d1_h5_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.104,0.08,다른 신호
+w7:X1_B006,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.404,0.22,다른 신호
+w7:X1_B006,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.687,0.34,많이 겹침
+w7:X1_B006,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.293,0.052,다른 신호
+w7:X1_B006,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.061,0.02,다른 신호
+w1:R_Q_s075_any_any_up1_none_any_d1_f1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.45,0.544,많이 겹침
+w1:R_Q_s075_any_any_up1_none_any_d1_f1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.664,0.73,많이 겹침
+w1:R_Q_s075_any_any_up1_none_any_d1_f1_h5_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.318,0.126,다른 신호
+w1:R_Q_s075_any_any_up1_none_any_d1_f1_h5_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.086,0.063,다른 신호
+w1:R_Q_p20_any_old_up1_none_any_d1_f1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.5,0.495,많이 겹침
+w1:R_Q_p20_any_old_up1_none_any_d1_f1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.672,0.605,많이 겹침
+w1:R_Q_p20_any_old_up1_none_any_d1_f1_h5_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.189,0.061,다른 신호
+w1:R_Q_p20_any_old_up1_none_any_d1_f1_h5_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.039,0.023,다른 신호
+w1:R_Q_p15_out_any_up5_none_any_d1_f0_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.366,0.247,다른 신호
+w1:R_Q_p15_out_any_up5_none_any_d1_f0_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.642,0.395,많이 겹침
+w1:R_Q_p15_out_any_up5_none_any_d1_f0_h3_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.325,0.072,다른 신호
+w1:R_Q_p15_out_any_up5_none_any_d1_f0_h3_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.065,0.027,다른 신호
+w7:X1_B008,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.366,0.247,다른 신호
+w7:X1_B008,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.642,0.395,많이 겹침
+w7:X1_B008,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.325,0.072,다른 신호
+w7:X1_B008,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.065,0.027,다른 신호
+w2:R_G3n1_s150_both3_above_d0_f1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.244,0.214,다른 신호
+w2:R_G3n1_s150_both3_above_d0_f1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.231,0.185,다른 신호
+w2:R_G3n1_s150_both3_above_d0_f1_h5_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.163,0.047,다른 신호
+w2:R_G3n1_s150_both3_above_d0_f1_h5_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.031,0.017,다른 신호
+w3:FL_K2_b10_new_pfut3_any_f0_d0_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.345,0.313,다른 신호
+w3:FL_K2_b10_new_pfut3_any_f0_d0_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.345,0.285,다른 신호
+w3:FL_K2_b10_new_pfut3_any_f0_d0_h5_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.261,0.077,다른 신호
+w3:FL_K2_b10_new_pfut3_any_f0_d0_h5_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.121,0.067,다른 신호
+w3:R_Q_b30_new_up1_spot_above_d0_f0_h7_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.32,0.357,다른 신호
+w3:R_Q_b30_new_up1_spot_above_d0_f0_h7_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.458,0.465,다른 신호
+w3:R_Q_b30_new_up1_spot_above_d0_f0_h7_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.167,0.061,다른 신호
+w3:R_Q_b30_new_up1_spot_above_d0_f0_h7_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.02,0.013,다른 신호
+w3:R_Q_b30_new_up1_spot_above_d0_f1_h7_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.32,0.357,다른 신호
+w3:R_Q_b30_new_up1_spot_above_d0_f1_h7_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.458,0.465,다른 신호
+w3:R_Q_b30_new_up1_spot_above_d0_f1_h7_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.167,0.061,다른 신호
+w3:R_Q_b30_new_up1_spot_above_d0_f1_h7_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.02,0.013,다른 신호
+w3:R_Q_b30_new_any_spot_above_d0_f1_h7_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.316,0.401,다른 신호
+w3:R_Q_b30_new_any_spot_above_d0_f1_h7_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.394,0.455,다른 신호
+w3:R_Q_b30_new_any_spot_above_d0_f1_h7_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.152,0.063,다른 신호
+w3:R_Q_b30_new_any_spot_above_d0_f1_h7_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.017,0.013,다른 신호
+w7:R_B010,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.53,0.341,많이 겹침
+w7:R_B010,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.65,0.38,많이 겹침
+w7:R_B010,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.239,0.05,다른 신호
+w7:R_B010,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.085,0.033,다른 신호
+w3:R_Q_b20_old_up1_none_above_d1_f1_h7_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.406,0.484,다른 신호
+w3:R_Q_b20_old_up1_none_above_d1_f1_h7_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.539,0.585,많이 겹침
+w3:R_Q_b20_old_up1_none_above_d1_f1_h7_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.147,0.058,다른 신호
+w3:R_Q_b20_old_up1_none_above_d1_f1_h7_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.018,0.013,다른 신호
+w7:X1_B001,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.222,0.264,다른 신호
+w7:X1_B001,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.306,0.33,다른 신호
+w7:X1_B001,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.19,0.074,다른 신호
+w7:X1_B001,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.051,0.037,다른 신호
+w3:FL_F2_b15_any_fp3b_above_f1_d1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.318,0.297,다른 신호
+w3:FL_F2_b15_any_fp3b_above_f1_d1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.341,0.29,다른 신호
+w3:FL_F2_b15_any_fp3b_above_f1_d1_h5_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.247,0.076,다른 신호
+w3:FL_F2_b15_any_fp3b_above_f1_d1_h5_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.059,0.033,다른 신호
+w7:V_B046,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.445,0.582,많이 겹침
+w7:V_B046,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.626,0.745,많이 겹침
+w7:V_B046,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.265,0.114,다른 신호
+w7:V_B046,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.071,0.057,다른 신호
+w3:FL_Q_b30_new_ifut3_any_f0_d1_h10_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.177,0.291,다른 신호
+w3:FL_Q_b30_new_ifut3_any_f0_d1_h10_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.27,0.405,다른 신호
+w3:FL_Q_b30_new_ifut3_any_f0_d1_h10_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.21,0.114,다른 신호
+w3:FL_Q_b30_new_ifut3_any_f0_d1_h10_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.117,0.117,다른 신호
+w3:FL_Q_b30_new_ifut3_any_f1_d1_h10_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.177,0.291,다른 신호
+w3:FL_Q_b30_new_ifut3_any_f1_d1_h10_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.27,0.405,다른 신호
+w3:FL_Q_b30_new_ifut3_any_f1_d1_h10_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.21,0.114,다른 신호
+w3:FL_Q_b30_new_ifut3_any_f1_d1_h10_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.117,0.117,다른 신호
+w3:FL_K2_b10_new_pfut3_any_f1_d0_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.356,0.313,다른 신호
+w3:FL_K2_b10_new_pfut3_any_f1_d0_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.356,0.285,다른 신호
+w3:FL_K2_b10_new_pfut3_any_f1_d0_h5_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.237,0.068,다른 신호
+w3:FL_K2_b10_new_pfut3_any_f1_d0_h5_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.125,0.067,다른 신호
+w2:R_G4n1_s150_both3_above_d0_f1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.229,0.214,다른 신호
+w2:R_G4n1_s150_both3_above_d0_f1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.218,0.185,다른 신호
+w2:R_G4n1_s150_both3_above_d0_f1_h5_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.176,0.054,다른 신호
+w2:R_G4n1_s150_both3_above_d0_f1_h5_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.029,0.017,다른 신호
+w1:R_Q_p15_any_any_any_spot_above_d0_f1_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.343,0.187,다른 신호
+w1:R_Q_p15_any_any_any_spot_above_d0_f1_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.475,0.235,다른 신호
+w1:R_Q_p15_any_any_any_spot_above_d0_f1_h3_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.172,0.031,다른 신호
+w1:R_Q_p15_any_any_any_spot_above_d0_f1_h3_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.04,0.013,다른 신호
+w1:R_Q_p15_any_any_any_spot_above_d1_f1_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.434,0.236,다른 신호
+w1:R_Q_p15_any_any_any_spot_above_d1_f1_h3_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.677,0.335,많이 겹침
+w1:R_Q_p15_any_any_any_spot_above_d1_f1_h3_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.202,0.036,다른 신호
+w1:R_Q_p15_any_any_any_spot_above_d1_f1_h3_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.051,0.017,다른 신호
+w3:R_F2_b10_any_any_spot_above_d1_f1_h7_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.269,0.258,다른 신호
+w3:R_F2_b10_any_any_spot_above_d1_f1_h7_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.251,0.22,다른 신호
+w3:R_F2_b10_any_any_spot_above_d1_f1_h7_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.217,0.068,다른 신호
+w3:R_F2_b10_any_any_spot_above_d1_f1_h7_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.051,0.03,다른 신호
+w7:V_B051,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.303,0.22,다른 신호
+w7:V_B051,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.515,0.34,많이 겹침
+w7:V_B051,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.235,0.056,다른 신호
+w7:V_B051,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.061,0.027,다른 신호
+w7:V_B052,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.303,0.22,다른 신호
+w7:V_B052,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.515,0.34,많이 겹침
+w7:V_B052,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.235,0.056,다른 신호
+w7:V_B052,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.061,0.027,다른 신호
+w2:R_G3n1_s175_both3_above_d0_f1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.243,0.247,다른 신호
+w2:R_G3n1_s175_both3_above_d0_f1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.211,0.195,다른 신호
+w2:R_G3n1_s175_both3_above_d0_f1_h5_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.146,0.049,다른 신호
+w2:R_G3n1_s175_both3_above_d0_f1_h5_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.027,0.017,다른 신호
+w1:R_Q_s075_any_old_up1_none_above_d1_f1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.57,0.423,많이 겹침
+w1:R_Q_s075_any_old_up1_none_above_d1_f1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.667,0.45,많이 겹침
+w1:R_Q_s075_any_old_up1_none_above_d1_f1_h5_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.274,0.067,다른 신호
+w1:R_Q_s075_any_old_up1_none_above_d1_f1_h5_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.044,0.02,다른 신호
+w7:V_B026,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.45,0.445,다른 신호
+w7:V_B026,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.722,0.65,많이 겹침
+w7:V_B026,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.222,0.072,다른 신호
+w7:V_B026,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.044,0.027,다른 신호
+w3:R_Q_b15_any_any_spot_any_d0_f1_h7_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.359,0.456,다른 신호
+w3:R_Q_b15_any_any_spot_any_d0_f1_h7_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.524,0.605,많이 겹침
+w3:R_Q_b15_any_any_spot_any_d0_f1_h7_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.177,0.074,다른 신호
+w3:R_Q_b15_any_any_spot_any_d0_f1_h7_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.052,0.04,다른 신호
+w1:R_Q_p15_any_any_up1_none_any_d0_f1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.5,0.549,많이 겹침
+w1:R_Q_p15_any_any_up1_none_any_d0_f1_h5_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.8,0.8,사실상 같은 신호
+w1:R_Q_p15_any_any_up1_none_any_d0_f1_h5_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.25,0.09,다른 신호
+w1:R_Q_p15_any_any_up1_none_any_d0_f1_h5_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.07,0.047,다른 신호
+w3:R_Q_b15_old_up5_none_any_d0_f1_h7_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.374,0.418,다른 신호
+w3:R_Q_b15_old_up5_none_any_d0_f1_h7_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.488,0.495,다른 신호
+w3:R_Q_b15_old_up5_none_any_d0_f1_h7_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.222,0.081,다른 신호
+w3:R_Q_b15_old_up5_none_any_d0_f1_h7_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.054,0.037,다른 신호
+w7:V_B053,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.472,0.467,다른 신호
+w7:V_B053,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.733,0.66,많이 겹침
+w7:V_B053,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.217,0.07,다른 신호
+w7:V_B053,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.05,0.03,다른 신호
+w3:R_Q_b15_any_any_spot_above_d0_f0_h7_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.359,0.456,다른 신호
+w3:R_Q_b15_any_any_spot_above_d0_f0_h7_up,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.528,0.61,많이 겹침
+w3:R_Q_b15_any_any_spot_above_d0_f0_h7_up,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.19,0.079,다른 신호
+w3:R_Q_b15_any_any_spot_above_d0_f0_h7_up,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.052,0.04,다른 신호
+w7:R_B033,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.413,0.445,다른 신호
+w7:R_B033,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.653,0.64,많이 겹침
+w7:R_B033,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.214,0.076,다른 신호
+w7:R_B033,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.041,0.027,다른 신호
+w7:V_B036,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:WF_watch_top1_any_up,0.403,0.681,많이 겹침
+w7:V_B036,① 분기물 콜벽 바로 아래 + 벽 물량 늘어남,t1:R_Q_b15_any_up1_none_any_d1_f1_h5_up,0.643,0.99,한쪽이 다른 쪽에 포함
+w7:V_B036,② 오를 확률 모형 상위 10%,t3:P_h5_allev_gb_q90,0.244,0.135,다른 신호
+w7:V_B036,③ 바닥 전 상태 + 변동성 꺾임,t4:t2_V_S10_T8_h5,0.068,0.07,다른 신호

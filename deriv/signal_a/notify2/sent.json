@@ -1,5 +1,7 @@
 {
  "sent": {},
- "pending": {},
- "pending_at": "2026-11-24 11:06"
+ "pending": {
+  "kakao_final.txt": "4a713cd9101d6355"
+ },
+ "pending_at": "2026-11-24 11:23"
 }
