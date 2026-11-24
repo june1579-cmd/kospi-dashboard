@@ -6,8 +6,8 @@
   'use strict';
   const $ = id => document.getElementById(id);
   const box = $('all-chart');
-  const MAXSEL = 10;   // 한 번에 그래프에 표시하는 조합 수(2026-11-24 상위 20 비교용으로 5 → 10)
-  const SRC_NAME = {A: '갈래 A', B: '갈래 B', C: '갈래 C(미국·한국 연동)', D: '갈래 D(하락 전담)', S: 'Signal A 관찰 목록', W: 'Signal A 2차(네 거름 통과)'};
+  const MAXSEL = 10;   // 한 번에 그래프에 표시하는 조합 수(2026-11-24 빠른 고르기 비교용으로 5 → 10)
+  const SRC_NAME = {A: '갈래 A', B: '갈래 B', C: '갈래 C(미국·한국 연동)', D: '갈래 D(하락 전담)', S: 'Signal A 관찰 목록', W: 'Signal A 2차(네 거름 통과)', K: '신뢰 가능 조건'};
   const SRC_SHORT = {A: 'A', B: 'B', C: 'C', D: 'D', S: 'SA', W: '2차'};
   const SRC_ORD = {S: 0, W: 1, A: 2, B: 3, C: 4, D: 5};
   const F_NAME = ['① 다음 해 기준', '② 2026년·큰 변동 해', '③ 반증 8개 모두', '④ 가짜 p < 1%'];
@@ -31,7 +31,8 @@
   function sellInfo(c){
     if (SELL.has(c.key)) return SELL.get(c.key);
     let n = null, short, full;
-    if (c.src === 'W') {   // 2차 45개: 내보낼 때 원문에서 정한 매도 기준(sell_n·sell_full)을 그대로
+    if (c.src === 'K') { short = '조합마다 다름'; full = '이 조건이 든 조합들의 대표 거래 — 매도는 그 거래를 낸 조합의 규칙대로'; }
+    else if (c.src === 'W') {   // 2차 45개: 내보낼 때 원문에서 정한 매도 기준(sell_n·sell_full)을 그대로
       n = c.sell_n != null ? c.sell_n : null; short = n ? n + '거래일째 종가' : (/±5%/.test(c.sell_full || '') ? '±5% 먼저 닿는 날' : '규칙별 보유일'); full = c.sell_full || '확인 불가';
     } else if (c.src === 'S') {
       let ex = null; try { ex = JSON.parse(c.exact); } catch (e) {}
@@ -141,6 +142,7 @@
     try {
       const get = f => fetch('data/' + f, {cache: 'no-cache'}).then(r => { if (!r.ok) throw new Error(f + ' ' + r.status); return r.json(); });
       [combos, trades, PX, meta] = await Promise.all([get('combos.json'), get('trades.json'), get('prices.json'), get('meta.json')]);
+      try { CONDS = (await get('conds.json')).conds || []; } catch (e) { CONDS = []; }   // 신뢰 가능 조건(없어도 나머지는 그대로)
     } catch (e) {
       $('err').hidden = false; $('err').textContent = '자료를 읽지 못했습니다(' + e.message + '). 잠시 뒤 다시 열어 주세요.'; $('asof').textContent = '';
       return;
@@ -334,29 +336,53 @@
   let rz = 0; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(draw, 120); });
 
   // ---------------------------------------------------------------- 범례
-  // ---------------------------------------------------------------- 적중률 상위 20(상승) 빠른 고르기 · 고른 조건식 전문 (2026-11-24 사용자 지시)
+  // ---------------------------------------------------------------- 그래프 위 빠른 고르기 · 고른 조건식 전문 (2026-11-24 사용자 지시)
   //  "적중률 순 상위 20(상승 신호 251개 중) — 각각 선택해 그래프에서 비교, 색상 선택, 그래프 위 칸에 작은 글씨로, 고른 조건식의 상세 조건도 모두 표시"
   //  순서는 대화에서 드린 표와 같게: 상승(dir>0) 조합을 적중 큰 순 → 거래 많은 순. 숫자는 표와 같은 코스피 지수 기준.
-  let TOP20 = [], RS = new Map();
+  // 2026-11-24 사용자 지시로 '적중률 상위 20'을 빼고 이 자리에 신뢰 가능 조건 18개(21개 − 하루 늦춰 진입 · 첫 신호만 5일·3일)를 같은 기능으로.
+  //  자료 = data/conds.json(deriv/signal_a/x4/build_conds.py): 그 조건이 든 조합들의 거래를 같은 매수일 한 건으로 합친 것.
+  let CONDS = [];
   function buildTop(){
-    const up = combos.filter(c => c.dir > 0 && c.has_trades && c.hit != null);
-    up.slice().sort((a, b) => (b.sum ?? -9) - (a.sum ?? -9)).forEach((c, i) => RS.set(c.key, i + 1));
-    TOP20 = up.slice().sort((a, b) => (b.hit - a.hit) || (b.n - a.n)).slice(0, 20).map(c => c.key);
+    CONDS.forEach(c => { c.segs = [{t: c.name}]; c.toks = new Set([c.name]); c.desc = c.name; c.has_trades = true; c.grade = '신뢰 가능 조건';
+      byKey.set(c.key, c); trades[c.key] = c.trades; });
   }
   function fillTop(){
     const w = $('top20'); if (!w) return; w.replaceChildren();
-    const h = el('div', 't20-h'); h.append(el('b', null, '적중률 상위 20'), el('span', null, ' 상승 신호 ' + RS.size + '개 중 · 누르면 그래프에 표시(최대 ' + MAXSEL + '개) · 색 칸을 누르면 색 바꾸기'));
+    const h = el('div', 't20-h'); h.append(el('b', null, '신뢰 가능 조건 ' + (CONDS.length || '')), el('span', null, CONDS.length
+      ? ' 적중 순 · 그 조건이 든 조합들의 거래(같은 매수일 한 건) · 누르면 그래프에 표시(최대 ' + MAXSEL + '개) · 색 칸을 누르면 색 바꾸기'
+      : ' 자료(conds.json)를 읽지 못했습니다'));
     w.appendChild(h);
     const g = el('div', 't20-g');
-    TOP20.forEach((k, i) => {
-      const c = byKey.get(k), on = sel.includes(k), b = el('button', 't20' + (on ? ' on' : '')); b.type = 'button';
-      b.title = k + ' — ' + c.desc + '\n거래 ' + c.n + ' · 적중 ' + pct1(c.hit, c.n) + ' · 수익 합계 ' + sp(c.sum) + ' (상승 신호 중 수익 ' + RS.get(k) + '위)';
+    CONDS.forEach((c, i) => {
+      const k = c.key, on = sel.includes(k), b = el('button', 't20' + (on ? ' on' : '')); b.type = 'button';
+      b.title = c.name + (c.dir < 0 ? ' (하락 신호)' : '') + '\n쓴 조합 ' + c.members.length + '개 · 거래 ' + c.n + ' · 적중 ' + pct1(c.hit, c.n)
+        + '\n앞 2010~2023: ' + c.p1[0] + '건 ' + pct1(c.p1[1], c.p1[0]) + ' (아무 날 ' + pct1(c.base1) + ') · 뒤 2024~: ' + c.p2[0] + '건 ' + pct1(c.p2[1], c.p2[0]) + ' (아무 날 ' + pct1(c.base2) + ')';
       b.setAttribute('aria-pressed', String(on));
-      b.append(el('span', 't20-r', String(i + 1)), el('span', 't20-k', k), el('span', 't20-v', pct1(c.hit, c.n)), el('span', 't20-n', c.n + '건'), el('span', 't20-s', sp(c.sum, 0)));
+      b.append(el('span', 't20-r', String(i + 1)), el('span', 't20-k', c.short), el('span', 't20-v', pct1(c.hit, c.n)), el('span', 't20-n', c.n + '건'),
+        el('span', 't20-s', '앞 ' + pct1(c.p1[1], c.p1[0]) + ' · 뒤 ' + pct1(c.p2[1], c.p2[0])));
       b.addEventListener('click', () => pick(k));
       const cell = el('span', 't20-c'); cell.appendChild(b); if (on) cell.appendChild(swBtn(k)); g.appendChild(cell);
     });
     w.appendChild(g);
+  }
+  function condHead(c, d, k){                    // 조건 카드 머리·숫자(아래 거래 내역 표는 조합 카드와 같은 것을 씀)
+    const h = el('h3');
+    h.append(swBtn(k), document.createTextNode('조건 · ' + c.short + (c.dir < 0 ? ' (하락 신호)' : '')), el('span', 'tag pass', '신뢰 가능'));
+    const off = el('button'); off.type = 'button'; off.className = 'tag'; off.style.cursor = 'pointer'; off.style.background = 'transparent'; off.style.color = 'inherit'; off.textContent = '끄기 ✕'; off.addEventListener('click', () => pick(k)); h.appendChild(off);
+    d.appendChild(h); d.appendChild(el('div', 'cond', c.name));
+    const kv = el('div', 'kv'), put = (a, b) => { const r = el('div'); r.append(el('span', null, a), el('span', null, b)); kv.appendChild(r); };
+    kv.appendChild(el('h4', null, '어떻게 만들었나'));
+    put('쓴 조합', c.members.length + '개 — ' + c.members.join(', '));
+    put('거래 합치기', '같은 매수일은 한 건, 맞음은 그날 거래들의 다수결. 그래프·표의 거래는 다수결과 같은 결과를 낸 첫 조합의 거래(매도는 그 조합 규칙대로)');
+    put('방향', c.dir > 0 ? '오름(지수 상승이 맞음)' : '내림(지수 하락이 맞음)');
+    kv.appendChild(el('h4', null, '검증(코스피 지수 기준)'));
+    put('전체', c.n + '건 · 적중 ' + pct1(c.hit, c.n) + ' · 수익 합계 ' + sp(c.sum));
+    put('앞 2010~2023', c.p1[0] + '건 · 적중 ' + pct1(c.p1[1], c.p1[0]) + ' · 아무 날 ' + pct1(c.base1) + ' · 하한 ' + pct1(c.lb1));
+    put('뒤 2024~2026-11-20', c.p2[0] + '건 · 적중 ' + pct1(c.p2[1], c.p2[0]) + ' · 아무 날 ' + pct1(c.base2) + ' · 하한 ' + pct1(c.lb2));
+    put('우연일 확률(전체)', (c.p != null ? c.p.toExponential(1) : '–') + ' (189개 시험 보정 문턱 0.00026)');
+    put('판정 기준', '앞·뒤 각 20건 이상 · 윌슨 95% 하한이 같은 해 아무 날(같은 보유일) 맞음 비율보다 높음 · 보정 문턱 통과');
+    put('최근 신호일', c.last || '–');
+    d.appendChild(kv);
   }
   function fillSelCond(){
     const w = $('selcond'); if (!w) return; w.replaceChildren();
@@ -364,7 +390,7 @@
     w.appendChild(el('div', 't20-h', '고른 조건식 전문'));
     sel.forEach(k => {
       const c = byKey.get(k), r = el('div', 'sc'); r.style.setProperty('--c', colorOf(k, 'bo'));
-      const top = el('div', 'sc-t'); top.append(swBtn(k), el('b', null, k), el('span', null, ' · ' + SRC_NAME[c.src] + (c.src === 'S' ? ' ' + c.rank + '번' : c.src === 'W' ? ' 수익 ' + c.rank + '위' : ' ' + c.rank + '위') + ' · ' + c.grade
+      const top = el('div', 'sc-t'); top.append(swBtn(k), el('b', null, c.src === 'K' ? c.short : k), el('span', null, ' · ' + SRC_NAME[c.src] + (c.src === 'K' ? '(쓴 조합 ' + c.members.length + '개)' : c.src === 'S' ? ' ' + c.rank + '번' : c.src === 'W' ? ' 수익 ' + c.rank + '위' : ' ' + c.rank + '위') + (c.src === 'K' ? '' : ' · ' + c.grade)
         + (c.has_trades ? ' · ' + c.n + '거래 · 적중 ' + pct1(c.hit, c.n) + ' · 수익 ' + sp(c.sum) : '')));
       const x = el('button', 'x', '✕'); x.type = 'button'; x.title = '끄기'; x.setAttribute('aria-label', k + ' 끄기'); x.addEventListener('click', () => pick(k)); top.appendChild(x);
       r.appendChild(top);
@@ -381,7 +407,7 @@
     const lg = $('legend'); lg.replaceChildren();
     sel.forEach(k => {
       const c = byKey.get(k), chip = el('span', 'chip');
-      chip.append(swBtn(k), el('span', null, k + ' · ' + (c.name || c.grade) + (c.has_trades ? ' · ' + c.n + '거래' : ' · 거래 내역 없음') + ' · 매도 ' + sellInfo(c).short));
+      chip.append(swBtn(k), el('span', null, (c.src === 'K' ? '조건' : k) + ' · ' + (c.short || c.name || c.grade) + (c.has_trades ? ' · ' + c.n + '거래' : ' · 거래 내역 없음') + ' · 매도 ' + sellInfo(c).short));
       const x = el('button', 'x', '✕'); x.type = 'button'; x.title = '그래프에서 끄기'; x.setAttribute('aria-label', k + ' 끄기'); x.addEventListener('click', () => pick(k));
       chip.appendChild(x); lg.appendChild(chip);
     });
@@ -648,6 +674,7 @@
     if (!sel.length) { det.appendChild(el('p', 'empty', '표에서 줄을 누르면 조건 전문과 거래 내역이 여기에 나옵니다.')); return; }
     sel.forEach(k => {
       const c = byKey.get(k), d = el('div', 'dcard'); d.style.setProperty('--c', colorOf(k, 'bo'));
+      if (c.src === 'K') condHead(c, d, k); else {
       const h = el('h3');
       h.append(swBtn(k), document.createTextNode(k + ' · ' + SRC_NAME[c.src] + (c.src === 'S' ? ' ' + c.rank + '번 ' + c.name : c.src === 'W' ? ' 수익 ' + c.rank + '위 · ' + c.name : ' ' + c.rank + '위')), el('span', 'tag' + (c.grade === '통과' || c.grade === '관찰 목록' || c.grade === '2차 네 거름' ? ' pass' : ''), c.grade));
       const off = el('button'); off.type = 'button'; off.className = 'tag'; off.style.cursor = 'pointer'; off.style.background = 'transparent'; off.style.color = 'inherit'; off.textContent = '끄기 ✕'; off.addEventListener('click', () => pick(k)); h.appendChild(off);
@@ -679,10 +706,11 @@
       }
       d.appendChild(kv);
       if (c.caution && c.caution.length) { const ul = el('ul', 'note'); c.caution.forEach(s => ul.appendChild(el('li', null, s))); d.appendChild(el('div', 'note', '조심할 점')); d.appendChild(ul); }
+      }
       const T = trades[k];
       if (!c.has_trades || !T || !T.length) d.appendChild(el('p', 'empty', '거래 내역 없음 — 이 조합은 거래일 기록이 남아 있지 않아 그래프에 표시하지 않습니다(추정하지 않음).' + (c.trade_note ? ' ' + c.trade_note : '')));
       else {
-        d.appendChild(el('div', 'note', '거래 내역 ' + T.length + '건(독립 거래) — 줄을 누르면 그래프가 그 거래로 옮겨 갑니다.' + (c.dir < 0 ? ' 내림 조합이라 수익률은 지수 하락이 +입니다.' : '')));
+        d.appendChild(el('div', 'note', '거래 내역 ' + T.length + (c.src === 'K' ? '건(같은 매수일 한 건으로 합친 거래)' : '건(독립 거래)') + ' — 줄을 누르면 그래프가 그 거래로 옮겨 갑니다.' + (c.dir < 0 ? ' 내림 조합이라 수익률은 지수 하락이 +입니다.' : '')));
         const w = el('div', 'trw'), tb = el('table'), th = el('thead'), hr = el('tr');
         const heads = ['#', '신호일', '매수일', '매수가', '매도일', '매도가', '보유일'].concat(c.dir < 0 ? ['코스피 등락'] : []).concat(['수익률', '맞음']);
         heads.forEach((s, i) => hr.appendChild(el('th', i === 0 || i === 3 || i === 5 || i >= 6 ? 'num' : '', s))); th.appendChild(hr); tb.appendChild(th);
