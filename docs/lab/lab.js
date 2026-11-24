@@ -6,7 +6,6 @@
   'use strict';
   const $ = id => document.getElementById(id);
   const box = $('all-chart');
-  const SLOTS = ['var(--s1)', 'var(--s2)', 'var(--s3)', 'var(--s4)', 'var(--s5)'];
   const SRC_NAME = {A: '갈래 A', B: '갈래 B', C: '갈래 C(미국·한국 연동)', D: '갈래 D(하락 전담)', S: 'Signal A 관찰 목록'};
   const SRC_SHORT = {A: 'A', B: 'B', C: 'C', D: 'D', S: 'SA'};
   const SRC_ORD = {S: 0, A: 1, B: 2, C: 3, D: 4};
@@ -14,7 +13,6 @@
   let combos = [], trades = {}, PX = null, meta = {}, days = [], fIdx = new Map(), dIdx = new Map(), byKey = new Map();
   let i0 = 0, i1 = 0, range = 'y2';
   const sel = [];                 // 고른 순서
-  const slot = new Map();         // key → 색 칸(고른 동안 그대로)
   const filt = {src: '', grade: '', has: false, all4: false, q: ''};
   let sortK = 'default', sortDir = 1;
 
@@ -24,12 +22,46 @@
   const sp = (v, d = 1) => v == null ? '–' : (v >= 0 ? '+' : '−') + Math.abs(v * 100).toFixed(d) + '%';
   const f2 = d3.format(',.2f'), f0 = d3.format(',.0f');
   const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
-  // 신호 색 고르기(2026-11-24 사용자 요청 "신호 색상 선택가능하도록"): 고른 조합마다 범례·상세의 색 칸을 눌러 바꾼다. 이 브라우저에 기억(조합별)
-  const PRESET = ['#2a78d6', '#eb6834', '#1baf7a', '#6250d6', '#e87ba4', '#d62828', '#2e7d32', '#1e3a8a', '#0e7490', '#c026d3', '#8b5e34', '#6b7280'];   // 노랑은 뺐다
-  const custom = new Map();
-  try { Object.entries(JSON.parse(localStorage.getItem('lab_colors') || '{}')).forEach(([k, v]) => { if (/^#[0-9a-f]{6}$/i.test(v)) custom.set(k, v); }); } catch (e) {}
-  const saveColors = () => { try { localStorage.setItem('lab_colors', JSON.stringify(Object.fromEntries(custom))); } catch (e) {} };
-  const colorOf = k => custom.get(k) || SLOTS[slot.get(k)];
+  // 신호 색 고르기
+  //  2026-11-24 "신호 색상 선택가능하도록" → 조합별 색
+  //  2026-11-24 "매수 매도 맞고 틀리고 전부 색상을 따로 선택할수 있도록 조합이 추가되면 선택된 색상에서 2단계 낮은 색상으로 표시 후 선택할수 있도록"
+  //   → 조합마다 네 가지 색(매수·맞은 거래 / 매수·틀린 거래 / 매도·맞음 / 매도·틀림). 색표는 색깔별 밝기 7단계(진함 → 연함).
+  //     조합을 더 고르면 직전에 고른 조합의 네 가지 색에서 각각 2단계 낮은(연한) 색으로 시작하고(가장 연한 단계를 넘으면 가장 진한 쪽으로 돌아감), 그 뒤 따로 바꿀 수 있다.
+  //     직접 바꾼 색만 이 브라우저에 기억(조합·칸별). 노랑은 색표에 넣지 않았다.
+  const ROLES = [
+    {k: 'bo', name: '매수 · 맞은 거래', ico: 'tri'}, {k: 'bn', name: '매수 · 틀린 거래', ico: 'tri'},
+    {k: 'so', name: '매도 · 맞음', ico: 'dot'}, {k: 'sn', name: '매도 · 틀림', ico: 'ring'}];
+  const LV = [28, 35, 42, 49, 56, 63, 70];          // 밝기 단계(%) 진함 → 연함
+  const STEP = 2;                                   // 조합이 늘 때 낮추는 단계 수
+  const HUES = [[212, 68, '파랑'], [248, 60, '남보라'], [285, 52, '보라'], [334, 62, '분홍'], [2, 66, '빨강'], [18, 80, '주황'], [150, 58, '초록'], [188, 70, '청록'], [22, 38, '갈색'], [215, 10, '회색']];
+  const hsl2hex = (h, s, l) => { s /= 100; l /= 100; const a = s * Math.min(l, 1 - l), f = n => { const k = (n + h / 30) % 12; return Math.round(255 * (l - a * Math.max(-1, Math.min(k - 3, 9 - k, 1)))).toString(16).padStart(2, '0'); }; return '#' + f(0) + f(8) + f(4); };
+  const hex2hsl = hex => { const v = [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16) / 255), mx = Math.max(...v), mn = Math.min(...v), l = (mx + mn) / 2, d = mx - mn;
+    let h = 0, s = 0; if (d) { s = d / (1 - Math.abs(2 * l - 1)); h = mx === v[0] ? ((v[1] - v[2]) / d) % 6 : mx === v[1] ? (v[2] - v[0]) / d + 2 : (v[0] - v[1]) / d + 4; h = (h * 60 + 360) % 360; } return [h, s * 100, l * 100]; };
+  const GRID = HUES.map(([h, s]) => LV.map(l => hsl2hex(h, s, l)));
+  const GPOS = new Map(); GRID.forEach((row, r) => row.forEach((v, c) => GPOS.set(v, [r, c])));
+  const DEF = {bo: GRID[0][2], bn: GRID[2][3], so: GRID[4][2], sn: GRID[5][3]};   // 첫 조합: 파랑 · 보라 · 빨강 · 주황
+  function lower(hex, n = STEP){                   // 같은 색깔에서 n단계 낮은(연한) 색
+    hex = String(hex).toLowerCase();
+    const g = GPOS.get(hex); if (g) return GRID[g[0]][(g[1] + n) % LV.length];
+    const [h, s, l] = hex2hsl(hex); let i = 0, best = 1e9; LV.forEach((v, j) => { const dd = Math.abs(v - l); if (dd < best) { best = dd; i = j; } });
+    return hsl2hex(h, s, LV[(i + n) % LV.length]);
+  }
+  const isHex = v => /^#[0-9a-f]{6}$/i.test(v);
+  const saved = new Map();   // key → {bo,bn,so,sn 중 직접 바꾼 것}
+  const auto = new Map();    // key → 고를 때 정해진 시작 색(이번에 연 동안)
+  try { Object.entries(JSON.parse(localStorage.getItem('lab_colors4') || '{}')).forEach(([k, o]) => { const c = {}; ROLES.forEach(({k: r}) => { if (o && isHex(o[r])) c[r] = o[r].toLowerCase(); }); if (Object.keys(c).length) saved.set(k, c); }); } catch (e) {}
+  const saveColors = () => { try { localStorage.setItem('lab_colors4', JSON.stringify(Object.fromEntries(saved))); } catch (e) {} };
+  const colorsOf = k => Object.assign({}, auto.get(k) || DEF, saved.get(k) || {});
+  const colorOf = (k, role = 'bo') => colorsOf(k)[role];
+  const SVGNS = 'http://www.w3.org/2000/svg';
+  function shapeSvg(ico, col, sz = 12){             // ▲ 매수 · ● 맞은 매도 · ○ 틀린 매도
+    const s = document.createElementNS(SVGNS, 'svg'); s.setAttribute('width', sz); s.setAttribute('height', sz); s.setAttribute('viewBox', '0 0 12 12'); s.setAttribute('aria-hidden', 'true');
+    const p = document.createElementNS(SVGNS, ico === 'tri' ? 'path' : 'circle');
+    if (ico === 'tri') { p.setAttribute('d', 'M6,1.5L11,10.5L1,10.5Z'); p.setAttribute('fill', col); }
+    else { p.setAttribute('cx', 6); p.setAttribute('cy', 6); p.setAttribute('r', ico === 'dot' ? 4.6 : 3.9); p.setAttribute('fill', ico === 'dot' ? col : 'none'); if (ico === 'ring') { p.setAttribute('stroke', col); p.setAttribute('stroke-width', 2.2); } }
+    s.appendChild(p); return s;
+  }
+  function mini(k){ const c = colorsOf(k), w = el('span', 'mini'); ROLES.forEach(r => w.appendChild(shapeSvg(r.ico, c[r.k], 11))); return w; }
 
   // ---------------------------------------------------------------- 자료 읽기
   async function load(){
@@ -150,10 +182,10 @@
     // 보유 기간 띠
     const EV = events();
     EV.forEach(({key}) => {
-      const col = colorOf(key), g = plot.append('g');
+      const C = colorsOf(key), g = plot.append('g');
       trades[key].forEach(t => {
         const bi = dIdx.get(t[1]), ei = dIdx.get(t[3]); if (bi == null || ei == null || ei < a || bi > b) return;
-        const x0 = xf(bi) - step / 2, w = Math.max(2, xf(ei) - xf(bi) + step);
+        const x0 = xf(bi) - step / 2, w = Math.max(2, xf(ei) - xf(bi) + step), col = t[7] === 1 ? C.bo : C.bn;   // 띠 = 그 거래의 매수 색
         [[T1, H1], [T2, H2]].forEach(([top, h]) => g.append('rect').attr('x', x0).attr('y', top).attr('width', w).attr('height', h).style('fill', col).style('opacity', 0.13));
       });
     });
@@ -164,14 +196,14 @@
     // 매수 ▲(다음 날 시가) · 매도 ●맞음 ○틀림(청산일 종가)
     const big = n <= 1300, r = big ? 4.5 : 3.2, tri = big ? 9 : 7;
     EV.forEach(({key}) => {
-      const col = colorOf(key), g = plot.append('g');
+      const C = colorsOf(key), g = plot.append('g');
       trades[key].forEach(t => {
         const bi = dIdx.get(t[1]), ei = dIdx.get(t[3]); if (bi == null || ei == null || ei < a || bi > b) return;
-        const ok = t[7] === 1;
+        const ok = t[7] === 1, bc = ok ? C.bo : C.bn, scol = ok ? C.so : C.sn;
         const pts = [[y1, t[2], t[4]], [y2, fv(F.o, bi), fv(F.c, ei)]];
         pts.forEach(([y, bp, spx]) => {
-          if (bp != null) { const x = xf(bi), yy = y(bp) + tri * 0.9; g.append('path').attr('d', `M${x},${yy - tri * 0.55}L${x + tri * 0.6},${yy + tri * 0.5}L${x - tri * 0.6},${yy + tri * 0.5}Z`).style('fill', col).style('stroke', 'var(--color-panel)').style('stroke-width', 1.2); }
-          if (spx != null) g.append('circle').attr('cx', xf(ei)).attr('cy', y(spx)).attr('r', r).style('fill', ok ? col : 'var(--color-panel)').style('stroke', ok ? 'var(--color-panel)' : col).style('stroke-width', ok ? 1.2 : 2);
+          if (bp != null) { const x = xf(bi), yy = y(bp) + tri * 0.9; g.append('path').attr('d', `M${x},${yy - tri * 0.55}L${x + tri * 0.6},${yy + tri * 0.5}L${x - tri * 0.6},${yy + tri * 0.5}Z`).style('fill', bc).style('stroke', 'var(--color-panel)').style('stroke-width', 1.2); }
+          if (spx != null) g.append('circle').attr('cx', xf(ei)).attr('cy', y(spx)).attr('r', r).style('fill', ok ? scol : 'var(--color-panel)').style('stroke', ok ? 'var(--color-panel)' : scol).style('stroke-width', ok ? 1.2 : 2);
         });
       });
     });
@@ -198,10 +230,10 @@
     row(null, '코스피', f2(K.c[i]) + (chg != null ? ' (' + sp(chg, 2) + ')' : ''));
     row(null, '선물', j != null ? f2(F.c[j]) : '확인 불가');
     G.EV.forEach(({key, m}) => {
-      const e = m.get(i); if (!e) return; const t = e.t, col = colorOf(key);
-      if (e.k === 'buy') row(col, key + ' 매수', f2(t[2]));
-      else if (e.k === 'sell' || e.k === 'both') row(col, key + ' 매도', f2(t[4]) + ' · ' + sp(t[6]) + (t[7] ? ' 맞음' : ' 틀림'), !t[7]);
-      else row(col, key + ' 보유 중', t[1] + ' 매수');
+      const e = m.get(i); if (!e) return; const t = e.t, C = colorsOf(key), bc = t[7] ? C.bo : C.bn;
+      if (e.k === 'buy') row(bc, key + ' 매수', f2(t[2]));
+      else if (e.k === 'sell' || e.k === 'both') row(t[7] ? C.so : C.sn, key + ' 매도', f2(t[4]) + ' · ' + sp(t[6]) + (t[7] ? ' 맞음' : ' 틀림'), !t[7]);
+      else row(bc, key + ' 보유 중', t[1] + ' 매수');
     });
     tip.hidden = false;
     const bw = box.clientWidth, w = tip.offsetWidth; let left = xi + 14; if (left + w > bw) left = Math.max(0, xi - 14 - w);
@@ -234,7 +266,7 @@
       chip.appendChild(x); lg.appendChild(chip);
     });
     const ico = (svgTxt, txt) => { const s = el('span'); s.innerHTML = svgTxt; s.appendChild(document.createTextNode(txt)); lg.appendChild(s); };
-    ico('<svg width="12" height="12" aria-hidden="true"><path d="M6,2L11,10L1,10Z" fill="currentColor"/></svg>', '매수(신호 다음 날 시가)');
+    ico('<svg width="12" height="12" aria-hidden="true"><path d="M6,2L11,10L1,10Z" fill="currentColor"/></svg>', '매수(신호 다음 날 시가 · 맞은/틀린 거래 색 따로)');
     ico('<svg width="12" height="12" aria-hidden="true"><circle cx="6" cy="6" r="4.5" fill="currentColor"/></svg>', '맞은 매도');
     ico('<svg width="12" height="12" aria-hidden="true"><circle cx="6" cy="6" r="4" fill="none" stroke="currentColor" stroke-width="2"/></svg>', '틀린 매도(청산일 종가)');
     ico('<svg width="14" height="12" aria-hidden="true"><rect x="0" y="1" width="14" height="10" fill="currentColor" opacity=".25"/></svg>', '보유 기간');
@@ -243,32 +275,57 @@
 
   // ---------------------------------------------------------------- 색 고르기
   function swBtn(k){
-    const b = el('button', 'swb'); b.type = 'button'; b.title = '신호 색 바꾸기'; b.setAttribute('aria-label', k + ' 신호 색 바꾸기'); b.setAttribute('aria-haspopup', 'true');
-    const dot = el('span', 'dot'); dot.style.background = colorOf(k); b.append(dot, el('span', null, '색'));
+    const b = el('button', 'swb'); b.type = 'button'; b.title = '신호 색 바꾸기(매수·매도 · 맞음·틀림)'; b.setAttribute('aria-label', k + ' 신호 색 바꾸기'); b.setAttribute('aria-haspopup', 'true');
+    b.append(mini(k), el('span', null, '색'));
     b.addEventListener('click', e => { e.stopPropagation(); e.preventDefault(); openPal(k, b); }); return b;
   }
-  let pal = null;
+  let pal = null, palRole = 'bo';
   function closePal(){ if (pal) { pal.remove(); pal = null; } }
-  function setColor(k, v){ if (v) custom.set(k, v); else custom.delete(k); saveColors(); fillTable(); fillDetail(); legend(); draw(); }
+  function rerender(){ fillTable(); fillDetail(); legend(); draw(); if (pal) palUpdate(); }
+  function setColor(k, role, v){
+    const o = Object.assign({}, saved.get(k) || {});
+    if (v) o[role] = v.toLowerCase(); else delete o[role];
+    if (Object.keys(o).length) saved.set(k, o); else saved.delete(k);
+    saveColors(); rerender();
+  }
+  function palUpdate(){                            // 열린 색표의 표시만 다시(직접 고르기 칸은 그대로 두어 끌기가 끊기지 않게)
+    const k = pal.dataset.k, C = colorsOf(k), cur = C[palRole], own = (saved.get(k) || {})[palRole];
+    pal.querySelectorAll('.pal-t button').forEach(b => { const r = b.dataset.r; b.setAttribute('aria-pressed', String(r === palRole)); b.querySelector('svg').replaceWith(shapeSvg(ROLES.find(x => x.k === r).ico, C[r], 13)); });
+    pal.querySelectorAll('.pal-g button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === cur)));
+    const inp = pal.querySelector('input[type=color]'); if (inp && document.activeElement !== inp) inp.value = cur;
+    pal.querySelector('.pal-now').textContent = ROLES.find(x => x.k === palRole).name + ' ' + cur + (own ? ' · 직접 고름' : ' · 시작 색');
+  }
   function openPal(k, anchor){
     const again = pal && pal.dataset.k === k; closePal(); if (again) return;
+    palRole = 'bo';
     pal = el('div', 'pal'); pal.dataset.k = k; pal.setAttribute('role', 'dialog'); pal.setAttribute('aria-label', k + ' 신호 색');
-    pal.appendChild(el('div', 'pal-h', k + ' 신호 색'));
-    const g = el('div', 'pal-g'), cur = custom.get(k);
-    PRESET.forEach(v => { const b = el('button'); b.type = 'button'; b.style.background = v; b.title = v; b.setAttribute('aria-label', '색 ' + v);
-      if (cur && cur.toLowerCase() === v) b.setAttribute('aria-pressed', 'true'); b.addEventListener('click', () => { closePal(); setColor(k, v); }); g.appendChild(b); });
+    pal.appendChild(el('div', 'pal-h', k + ' 신호 색 — 바꿀 칸을 고른 뒤 색을 누르세요'));
+    const tabs = el('div', 'pal-t');
+    ROLES.forEach(r => { const b = el('button'); b.type = 'button'; b.dataset.r = r.k; b.append(shapeSvg(r.ico, '#000', 13), el('span', null, r.name));
+      b.addEventListener('click', () => { palRole = r.k; palUpdate(); }); tabs.appendChild(b); });
+    pal.appendChild(tabs);
+    const scale = el('div', 'pal-s'); scale.append(el('span', null, '진하게'), el('span', null, '← 밝기 7단계 →'), el('span', null, '연하게')); pal.appendChild(scale);
+    const g = el('div', 'pal-g');
+    GRID.forEach((row, ri) => row.forEach((v, ci) => { const b = el('button'); b.type = 'button'; b.dataset.v = v; b.style.background = v;
+      b.title = HUES[ri][2] + ' ' + (ci + 1) + '단계 ' + v; b.setAttribute('aria-label', HUES[ri][2] + ' ' + (ci + 1) + '단계');
+      b.addEventListener('click', () => setColor(k, palRole, v)); g.appendChild(b); }));
     pal.appendChild(g);
+    pal.appendChild(el('div', 'pal-now'));
     const row = el('div', 'pal-r'), lab = el('label'), inp = el('input'); inp.type = 'color';
-    inp.value = cur || PRESET[slot.get(k)] || '#2a78d6'; inp.addEventListener('input', () => setColor(k, inp.value)); inp.addEventListener('change', closePal);
+    inp.addEventListener('input', () => setColor(k, palRole, inp.value));
     lab.append(inp, document.createTextNode(' 직접 고르기')); row.appendChild(lab);
-    const rs = el('button', 'pal-reset', '기본색'); rs.type = 'button'; rs.addEventListener('click', () => { closePal(); setColor(k, null); }); row.appendChild(rs);
-    pal.appendChild(row); document.body.appendChild(pal);
+    const btns = el('div', 'pal-bs');
+    const rs = el('button', 'pal-reset', '이 칸 처음 색'); rs.type = 'button'; rs.title = '조합을 고를 때 정해진 시작 색으로'; rs.addEventListener('click', () => setColor(k, palRole, null));
+    const ra = el('button', 'pal-reset', '네 칸 모두'); ra.type = 'button'; ra.title = '네 칸 모두 시작 색으로'; ra.addEventListener('click', () => { saved.delete(k); saveColors(); rerender(); });
+    btns.append(rs, ra); row.appendChild(btns); pal.appendChild(row);
+    pal.appendChild(el('div', 'pal-n', '조합을 더 고르면 직전에 고른 조합의 색에서 ' + STEP + '단계 연한 색으로 시작합니다(가장 연한 단계를 넘으면 진한 쪽으로 돌아감). 직접 고른 색은 이 브라우저에 기억합니다.'));
+    document.body.appendChild(pal); palUpdate();
     const r = anchor.getBoundingClientRect(), w = pal.offsetWidth;
     pal.style.left = Math.max(8, Math.min(window.scrollX + r.left, window.scrollX + document.documentElement.clientWidth - w - 8)) + 'px';
     pal.style.top = (window.scrollY + r.bottom + 6) + 'px';
-    const first = pal.querySelector('button'); if (first) first.focus({preventScroll: true});
+    const first = pal.querySelector('.pal-t button'); if (first) first.focus({preventScroll: true});
   }
-  document.addEventListener('click', e => { if (pal && !pal.contains(e.target)) closePal(); });
+  document.addEventListener('click', e => { if (pal && e.target.isConnected && !pal.contains(e.target)) closePal(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closePal(); });
 
   // ---------------------------------------------------------------- 고르기
@@ -277,10 +334,12 @@
   function pick(k, quiet){
     const at = sel.indexOf(k);
     closePal();
-    if (at >= 0) { sel.splice(at, 1); slot.delete(k); }
+    if (at >= 0) { sel.splice(at, 1); auto.delete(k); }
     else {
       if (sel.length >= 5) { toast('최대 5개까지 고를 수 있습니다 — 먼저 고른 것을 끄세요.'); return; }
-      const used = new Set(slot.values()); let s = 0; while (used.has(s)) s++; slot.set(k, s); sel.push(k);
+      const prev = sel[sel.length - 1], pc = prev ? colorsOf(prev) : null, start = {};
+      ROLES.forEach(({k: r}) => { start[r] = pc ? lower(pc[r]) : DEF[r]; });   // 직전 조합 색에서 2단계 낮게(첫 조합은 기본색)
+      auto.set(k, start); sel.push(k);
     }
     try { history.replaceState(null, '', sel.length ? '#s=' + encodeURIComponent(sel.join(',')) : location.pathname + location.search); } catch (e) {}
     if (quiet) return;
@@ -342,8 +401,8 @@
         if (k === 'pick') {
           const cell = td(null, 'pick');
           if (sel.includes(c.key)) {                // 고른 줄의 색 칸 = 색 바꾸기(줄의 다른 곳을 누르면 끄기)
-            const pk = el('button', 'pk pkb'); pk.type = 'button'; pk.title = '신호 색 바꾸기'; pk.setAttribute('aria-label', c.key + ' 신호 색 바꾸기');
-            pk.style.background = colorOf(c.key); pk.style.borderColor = colorOf(c.key);
+            const pk = el('button', 'pkb'); pk.type = 'button'; pk.title = '신호 색 바꾸기'; pk.setAttribute('aria-label', c.key + ' 신호 색 바꾸기');
+            pk.appendChild(mini(c.key));
             pk.addEventListener('click', e => { e.stopPropagation(); openPal(c.key, pk); }); cell.appendChild(pk);
           } else cell.appendChild(el('span', 'pk'));
         }
@@ -390,7 +449,7 @@
     const det = $('det'); det.replaceChildren();
     if (!sel.length) { det.appendChild(el('p', 'empty', '표에서 줄을 누르면 조건 전문과 거래 내역이 여기에 나옵니다.')); return; }
     sel.forEach(k => {
-      const c = byKey.get(k), d = el('div', 'dcard'); d.style.setProperty('--c', colorOf(k));
+      const c = byKey.get(k), d = el('div', 'dcard'); d.style.setProperty('--c', colorOf(k, 'bo'));
       const h = el('h3');
       h.append(swBtn(k), document.createTextNode(k + ' · ' + SRC_NAME[c.src] + (c.src === 'S' ? ' ' + c.rank + '번 ' + c.name : ' ' + c.rank + '위')), el('span', 'tag' + (c.grade === '통과' || c.grade === '관찰 목록' ? ' pass' : ''), c.grade));
       const off = el('button'); off.type = 'button'; off.className = 'tag'; off.style.cursor = 'pointer'; off.style.background = 'transparent'; off.style.color = 'inherit'; off.textContent = '끄기 ✕'; off.addEventListener('click', () => pick(k)); h.appendChild(off);

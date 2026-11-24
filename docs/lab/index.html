@@ -47,16 +47,25 @@ h2{font-size:var(--fs-heading);font-weight:var(--fw-medium);margin:0}
 .legend .chip button.x{border:0;background:transparent;color:var(--color-fg-muted);padding:2px 6px;border-radius:999px}
 .legend .chip button.x:hover{color:var(--color-fg);background:var(--color-bg)}
 button.swb{display:inline-flex;align-items:center;gap:.3rem;font:inherit;font-size:var(--fs-cap);color:var(--color-fg);background:var(--color-bg);border:1px solid var(--color-border-line);border-radius:999px;padding:2px 8px 2px 3px;cursor:pointer;flex:none}
-button.swb .dot{width:1.05rem;height:1.05rem;border-radius:50%;box-shadow:0 0 0 1px var(--color-border-line)}
-button.pkb{cursor:pointer;padding:0;width:1.1rem;height:1.1rem}
+.mini{display:inline-flex;align-items:center;gap:1px;line-height:0}
+.mini svg{flex:none}
+button.pkb{cursor:pointer;padding:2px 4px;border:1px solid var(--color-border-line);border-radius:6px;background:var(--color-bg);line-height:0}
+button.pkb:hover,button.pkb:focus-visible{box-shadow:0 0 0 2px var(--color-fg)}
 .legend .chip button.swb{padding:2px 8px 2px 3px;border:1px solid var(--color-border-line);background:var(--color-bg)}
 button.swb:hover,button.swb:focus-visible{box-shadow:0 0 0 2px var(--color-fg)}
 .pal{position:absolute;z-index:20;background:var(--pop);border:1px solid var(--color-border-line);border-radius:var(--radius);box-shadow:var(--pop-shadow);padding:10px;font-size:var(--fs-cap);width:max-content;max-width:calc(100vw - 16px)}
 .pal-h{color:var(--color-fg-muted);margin-bottom:6px}
-.pal-g{display:grid;grid-template-columns:repeat(6,1.9rem);gap:6px}
-.pal-g button{width:1.9rem;height:1.9rem;border-radius:50%;border:2px solid var(--pop);box-shadow:0 0 0 1px var(--color-border-line);cursor:pointer;padding:0}
+.pal-t{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;margin-bottom:8px}
+.pal-t button{display:flex;align-items:center;gap:.35rem;font:inherit;font-size:var(--fs-cap);text-align:left;border:1px solid var(--color-border-line);background:transparent;color:var(--color-fg);border-radius:8px;padding:4px 8px;cursor:pointer}
+.pal-t button[aria-pressed=true]{border-color:var(--color-fg);box-shadow:inset 0 0 0 1px var(--color-fg);font-weight:var(--fw-medium)}
+.pal-s{display:flex;justify-content:space-between;color:var(--color-fg-muted);margin:0 0 4px}
+.pal-g{display:grid;grid-template-columns:repeat(7,1.6rem);gap:4px;justify-content:center}
+.pal-g button{width:1.6rem;height:1.6rem;border-radius:50%;border:2px solid var(--pop);box-shadow:0 0 0 1px var(--color-border-line);cursor:pointer;padding:0}
+.pal-now{margin-top:6px;color:var(--color-fg-muted);font-variant-numeric:tabular-nums}
+.pal-bs{display:flex;gap:6px}
+.pal-n{margin-top:8px;color:var(--color-fg-muted);max-width:15.5rem;line-height:1.45}
 .pal-g button[aria-pressed=true],.pal-g button:focus-visible{box-shadow:0 0 0 2px var(--color-fg)}
-.pal-r{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:8px}
+.pal-r{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-top:8px}
 .pal-r label{display:inline-flex;align-items:center;gap:.3rem;color:var(--color-fg);cursor:pointer}
 .pal-r input[type=color]{width:1.9rem;height:1.6rem;border:1px solid var(--color-border-line);border-radius:6px;padding:0;background:transparent;cursor:pointer}
 .pal-reset{font:inherit;font-size:var(--fs-cap);border:1px solid var(--color-border-line);background:transparent;color:var(--color-fg);border-radius:999px;padding:3px 10px;cursor:pointer}
@@ -179,7 +188,7 @@ td.pick{width:1.6rem}
 
   <p class="foot">자료 2026-11-20 까지 · 수익률은 코스피 지수 기준(신호 다음 날 시가 → 청산일 종가), 거래별 단순 합계 · 결과를 보고 고른 규칙의 숫자 · 투자 권유 아님</p>
 </div>
-<script src="lab.js?v=20261124c"></script>
-<script src="gesture.js?v=20261124c"></script>
+<script src="lab.js?v=20261124d"></script>
+<script src="gesture.js?v=20261124d"></script>
 </body>
 </html>
