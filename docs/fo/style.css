@@ -67,3 +67,17 @@ html,body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-s
 .fo .fo-list li{margin-bottom:4px}
 .fo .fo-disc{margin-top:20px;padding:10px 14px;border:1px solid var(--line);border-radius:12px;font-weight:600}
 @media print{.fo .fo-nav,.fo .fo-ctls,.fo-bar{display:none}.fo .fo-tw{overflow:visible}}
+/* 맨 위 자료 상태(2026-11-24) — 문제 = 빨강, 정상 = 초록(노랑 안 씀) */
+.fo-health{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:0 0 12px;font-size:13px}
+.fo-health .fo-hl-head{font-size:13.5px}
+.fo-health .fo-hl-list{margin:6px 0 4px;padding-left:18px;color:var(--up)}
+.fo-health .fo-hl-list li{margin:2px 0}
+.fo-health .fo-hl-dates{color:var(--mut);font-size:12.5px;margin-top:4px}
+.fo-health .fo-hl-det summary{cursor:pointer;color:var(--mut);font-size:12.5px;margin-top:6px}
+.fo-health tr.fo-hl-bad td{background:rgba(217,58,64,.08)}
+.fo-health .fo-up{color:var(--up)}.fo-health .fo-okc{color:var(--ok)}.fo-health .fo-mut{color:var(--mut)}
+.fo-health .fo-tw{overflow-x:auto;margin:6px 0 4px;border:1px solid var(--line);border-radius:10px}
+.fo-health table.fo-t{border-collapse:collapse;width:100%;font-size:12.5px}
+.fo-health table.fo-t th,.fo-health table.fo-t td{padding:5px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.fo-health table.fo-t th{color:var(--mut);font-weight:600;white-space:nowrap}
+.fo-health table.fo-t td.fo-num{white-space:nowrap;font-variant-numeric:tabular-nums}
