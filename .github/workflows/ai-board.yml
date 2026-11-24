@@ -1,0 +1,66 @@
+name: ai-board
+# AI 선행지표 경고판 — 숫자 수집·기준일 점검·단계 계산·웹판·카카오톡 알림(2026-11-24, ai-feed 를 대신함)
+#  · 원자료 수집(ai_feed.py)과 계산(ai_board.py)을 한 번에 돈다. 코스피 대시보드 갱신(dashboard-update)과 다른 줄에 서서
+#    그쪽이 KRX 를 기다리며 밀려도 이 작업은 밀리지 않는다(06:41 수집이 10시 넘어 끝나던 문제, 2026-11-24 확인).
+#  · 언제 도나: ① Claude 예약 작업이 ai_board/request.json 을 올릴 때(뉴스·보도형 측정값을 합치고 결과를 받아 감)
+#               ② dashboard-update 가 끝날 때(코스피·신용·반대매매·외국인 새 값) ③ 아침 06:41·07:07·07:23(뉴욕 마감 값)
+#  · 데이터 파일(docs/ai/data/*.json)은 이 작업만 쓴다. 변동이 있으면 alerts/ai_board.txt 를 쓰고 ai-board-alert 를 부른다
+#    (GITHUB_TOKEN 으로 올린 커밋은 push 이벤트를 만들지 않으므로 직접 부름).
+on:
+  push:
+    branches: [main]
+    paths: ['ai_board/request.json']
+  workflow_run:
+    workflows: [dashboard-update]
+    types: [completed]
+  schedule:
+    - cron: '41 21 * * *'   # 06:41 KST
+    - cron: '7 22 * * *'    # 07:07 KST
+    - cron: '23 22 * * *'   # 07:23 KST(앞 두 번이 GitHub 쪽에서 밀렸을 때의 예비)
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: ai-board
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -q requests holidays
+      - name: 원자료 수집(FRED·야후·Twelve Data → out/ai_feed.csv)
+        continue-on-error: true
+        timeout-minutes: 5
+        env:
+          TWELVEDATA_API_KEY: ${{ secrets.TWELVEDATA_API_KEY }}
+        run: python ai_feed.py
+      - name: 경고판 계산(숫자 갱신·기준일 점검·단계·알림 글)
+        run: python ai_board.py --trigger "${{ github.event_name }} ${{ github.event.schedule }}${{ github.event.workflow_run.name }}"
+      - name: 결과 저장(commit & push)
+        id: save
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          for f in out/ai_feed.csv out/ai_feed_hist.csv; do [ -f "$f" ] && git add "$f"; done
+          git add docs/ai ai_board
+          [ -f alerts/ai_board.txt ] && git add alerts/ai_board.txt
+          git commit -q -m "AI 경고판 계산 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M') (${{ github.event_name }})" || { echo "변경 없음"; exit 0; }
+          ok=0
+          for i in 1 2 3 4 5; do
+            if git pull --rebase -q && git push -q; then ok=1; break; fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((i * 5))
+          done
+          [ "$ok" = 1 ] || { echo "push 실패"; exit 1; }
+      - name: 카카오톡 알림 부르기(변동이 있을 때만)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          k=$(python3 -I -c "import json;print(json.load(open('ai_board/status.json'))['alert']['kakao'])")
+          echo "알림 상태: $k"
+          if [ "$k" = "written" ]; then gh workflow run ai-board-alert.yml --ref main; fi

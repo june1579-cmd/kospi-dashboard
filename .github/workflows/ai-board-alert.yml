@@ -1,6 +1,6 @@
 name: ai-board-alert
-# AI 선행지표 경고판(claude.ai)에 변화가 생기면 Claude 예약 작업(매일 07:30)이 alerts/ai_board.txt 를 고쳐 push 한다.
-# 이 워크플로는 그 push 를 받아 같은 카카오톡 '나에게 보내기'로 글만 보낸다(메시지는 ===== 로 구분, 각 200자 이내).
+# AI 선행지표 경고판에 변화가 생기면 ai-board 워크플로가 alerts/ai_board.txt 를 쓰고 이 워크플로를 부른다(2026-11-24 부터).
+# 같은 카카오톡 '나에게 보내기'로 글만 보낸다(메시지는 ===== 로 구분, 각 200자 이내).
 on:
   push:
     branches: [main]
@@ -9,7 +9,7 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: dashboard-update     # 대시보드 갱신과 같은 줄에 세워 카카오 토큰 연장이 겹치지 않게 한다
+  group: ai-board-alert       # 2026-11-24: dashboard-update 줄에 서면 몇 시간씩 밀려 따로 선다(토큰은 보내기 직전 git pull 로 최신을 읽음)
   cancel-in-progress: false
 jobs:
   send:

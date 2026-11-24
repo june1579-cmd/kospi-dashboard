@@ -27,7 +27,7 @@ STATE, REQ, MD, KAKAO = 'state/watchdog.json', 'state/repair_request.json', 'rep
 RUNS = [
     dict(key='run:update', wf='update.yml', br='main', label='코스피 대시보드 갱신', need=2, grace_h=0, rerun=False, repair=True, why='하루 3번씩 예약된 다음 실행이 재시도 역할'),
     dict(key='run:fo', wf='fo-dashboard.yml', br='main', label='선물옵션 대시보드 갱신', need=1, grace_h=0, rerun=True, safe_jobs=['build'], repair=True),
-    dict(key='run:ai-feed', wf='ai-feed.yml', br='main', label='AI 경고판 원자료 수집', need=1, grace_h=0, rerun=True, repair=True),
+    dict(key='run:ai-board', wf='ai-board.yml', br='main', label='AI 경고판 계산(원자료 수집 포함)', need=2, grace_h=0, rerun=True, repair=True, why='하루 여러 번 도는 다음 실행이 재시도 역할'),
     dict(key='run:audit', wf='audit.yml', br='main', label='신호·종목 명단 검증', need=1, grace_h=0, rerun=True, repair=True),
     dict(key='run:short', wf='short-backfill.yml', br='main', label='공매도 수집', need=1, grace_h=0, rerun=False, repair=True),
     dict(key='run:lab-a', wf='deriv-lab.yml', br='deriv-research', label='연구소 갈래 A 라운드', need=1, grace_h=3, rerun=False, repair=True),
@@ -44,6 +44,7 @@ RUNS = [
 FRESH = [
     dict(key='stale:kospi', br='main', path='docs/meta.json', label='코스피 대시보드 웹판', rule='trading_am', repair=True),
     dict(key='stale:ai', br='main', path='out/ai_feed.csv', label='AI 경고판 원자료', rule='age', max_h=30, repair=True),
+    dict(key='stale:ai-board', br='main', path='ai_board/status.json', label='AI 경고판 계산 결과', rule='age', max_h=30, repair=True),
     dict(key='stale:fo', br='main', path='docs/fo/data', label='선물옵션 대시보드 자료', rule='weekday_pm', repair=True),
     # 2026-11-24: Signal A 프로젝트 동안 갈래 A·B·D 총괄 예약을 멈춰 두었으므로(사용자 지시) 이 세 줄의 '세션이 돌지 않음' 감시도 끈다. 예약을 다시 켜면 주석을 풀 것
     # dict(key='stale:lab-a', br='deriv-research', path='deriv/lab/state/latest_status.json', label='연구소 갈래 A(총괄 세션)', rule='age', max_h=15, repair=False, hint='Claude 예약 세션이 돌지 않음(사용량 한도일 수 있음)'),
