@@ -48,6 +48,49 @@
     const o = {n, short, full, act, sortv: n != null ? n : (act ? act.med : null)};
     SELL.set(c.key, o); return o;
   }
+  // 조건 나누기(2026-11-24 "같은 조건들을 정렬해서 보기 위함, 조건 설명에서 조건을 선택하면 정렬기준으로 정렬창 범례로 표시")
+  //  조건 설명을 글자 그대로 조각낸다(새 뜻을 붙이지 않음): 맨 앞 [꼬리표] · 맨 위 단계의 「+」「, 」로 나눈 조건 · 끝의 「→ …」(목표).
+  //  B 갈래 「함께 쓰기[B: …→3일 | A: …→5일]」는 안쪽 조건을 「+」로 나눈다. Signal A 관찰 목록은 이름을 「 + 」로 나눈다. 조각을 이으면 원문과 같다.
+  const TOKN = new Map();   // 조건 → 쓰인 조합 수
+  const normT = t => t.replace(/\s+/g, ' ').trim();
+  function parseDesc(c){
+    const segs = [], toks = new Set();
+    const txt = t => { if (t) segs.push({t}); };
+    const tok = (t, k) => { const m = /^(\s*)([\s\S]*?)(\s*)$/.exec(t); txt(m[1]); k = normT(k != null ? k : m[2]); if (k) { segs.push({t: m[2], k}); toks.add(k); } else txt(m[2]); txt(m[3]); };
+    const split = (str, comma) => { let dep = 0, buf = ''; for (let i = 0; i < str.length; i++) { const ch = str[i];
+        if (ch === '(' || ch === '[') dep++; else if (ch === ')' || ch === ']') dep--;
+        if (dep === 0 && (ch === '+' || (comma && ch === ',' && str[i + 1] === ' '))) { tok(buf); txt(ch); buf = ''; } else buf += ch; }
+      tok(buf); };
+    if (c.src === 'S') { (c.name || '').split(' + ').forEach((q, i) => { if (i) txt(' + '); tok(q); }); txt(' — ' + c.desc); return {segs, toks}; }
+    const d = c.desc; let dep = 0, at = -1;
+    for (let i = 0; i < d.length; i++) { const ch = d[i]; if (ch === '(' || ch === '[') dep++; else if (ch === ')' || ch === ']') dep--; else if (ch === '→' && dep === 0) at = i; }
+    let head = at >= 0 ? d.slice(0, at) : d; const tail = at >= 0 ? d.slice(at) : '';
+    let m; while ((m = /^(\s*)\[([^\[\]]*)\]/.exec(head))) { txt(m[1]); segs.push({t: '[' + m[2] + ']', k: normT(m[2])}); toks.add(normT(m[2])); head = head.slice(m[0].length); }
+    const u = /^(\s*)(함께 쓰기)\[([\s\S]*)\]([\s\S]*)$/.exec(head);
+    if (u) {
+      txt(u[1]); tok(u[2]); txt('[');
+      u[3].split('|').forEach((part, i) => { if (i) txt('|'); const pm = /^(\s*[A-Z]:\s*)?([\s\S]*?)(→\s*\d+일\s*)?$/.exec(part); txt(pm[1]); split(pm[2], false); txt(pm[3]); });
+      txt(']'); txt(u[4]);
+    } else split(head, true);
+    if (tail) tok(tail, tail.replace(/^→\s*/, '→ '));
+    return {segs, toks};
+  }
+  function condSegs(c){                         // 조건 설명을 누를 수 있는 조각으로
+    const w = el('div', 'cdesc');
+    c.segs.forEach(g => { if (!g.k) { w.appendChild(document.createTextNode(g.t)); return; }
+      const x = el('span', 'ct', g.t); x.dataset.k = g.k; x.tabIndex = 0; x.setAttribute('role', 'button');
+      x.title = '「' + g.k + '」 같은 조건끼리 모아 정렬(' + (TOKN.get(g.k) || 0) + '개 조합) — 다시 누르면 빼기';
+      const go = e => { e.stopPropagation(); e.preventDefault(); toggleCond(g.k); };
+      x.addEventListener('click', go); x.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') go(e); });
+      w.appendChild(x); });
+    return w;
+  }
+  function toggleCond(k){
+    const i = sorts.findIndex(x => x.k === 'c:' + k);
+    if (i < 0) { sorts.push({k: 'c:' + k, dir: -1}); toast('「' + k + '」 을 정렬 기준에 넣었습니다 — 들어간 조합 ' + (TOKN.get(k) || 0) + '개가 위로'); }
+    else sorts.splice(i, 1);
+    fillTable();
+  }
   const actTxt = a => !a ? '거래 내역 없음' : (a.min === a.max ? a.min + '거래일(모든 거래 같음)' : '가운뎃값 ' + a.med + ' · 짧게 ' + a.min + ' ~ 길게 ' + a.max + '거래일') + ' · ' + a.n + '건';
   // 신호 색 고르기
   //  2026-11-24 "신호 색상 선택가능하도록" → 조합별 색
@@ -100,7 +143,7 @@
       return;
     }
     days = PX.kospi.d; days.forEach((d, i) => dIdx.set(d, i)); PX.fut.d.forEach((d, i) => fIdx.set(d, i));
-    combos.forEach(c => byKey.set(c.key, c));
+    combos.forEach(c => { byKey.set(c.key, c); const pd = parseDesc(c); c.segs = pd.segs; c.toks = pd.toks; pd.toks.forEach(k => TOKN.set(k, (TOKN.get(k) || 0) + 1)); });
     const nT = combos.filter(c => c.has_trades).length;
     $('asof').textContent = '자료 끝 ' + (meta.data_end || '–') + ' · 내보낸 때 ' + (meta.at || '–');
     $('lede').textContent = '연구소 갈래 A·B·C·D 상위 조합 ' + combos.filter(c => c.src !== 'S').length + '개(X1 거름 시험 대상)와 Signal A 관찰 목록 '
@@ -413,7 +456,9 @@
     {k: 'lab_dev', label: '연구소 앞 구간 적중', num: true, sort: c => (c.lab ? okN(c.lab.dev_n, c.lab.dev_hit) : null)},
     {k: 'lab_p2', label: '연구소 뒤 구간 적중', num: true, sort: c => (c.lab ? okN(c.lab.p2_n, c.lab.p2_hit) : null)},
   ];
-  const fieldOf = k => COLS.find(c => c.k === k && c.sort) || EXTRA.find(c => c.k === k);
+  const fieldOf = k => {
+    if (k.startsWith('c:')) { const t = k.slice(2); return {k, cond: t, label: '조건 「' + t + '」', num: true, d0: -1, sort: c => (c.toks.has(t) ? 1 : 0)}; }
+    return COLS.find(c => c.k === k && c.sort) || EXTRA.find(c => c.k === k); };
   const dir0 = f => f.d0 != null ? f.d0 : (f.num || f.k === 'f' ? -1 : 1);
   const CIRC = '①②③④⑤⑥⑦⑧⑨⑩';
   const ordTxt = i => CIRC[i] || '(' + (i + 1) + ')';
@@ -458,7 +503,16 @@
       th.setAttribute('aria-sort', i === 0 ? (sorts[0].dir > 0 ? 'ascending' : 'descending') : 'none'); });
     sortBar();
     const tb = document.querySelector('#combo-tbl tbody'), L = rows(), frag = document.createDocumentFragment();
+    // 맨 앞 정렬 기준이 조건이면 같은 조건끼리 묶음 머리줄
+    const lead = []; for (const x of sorts) { if (!x.k.startsWith('c:')) break; lead.push(x.k.slice(2)); }
+    const sig = c => lead.map(t => (c.toks.has(t) ? 1 : 0)).join('');
+    const gcount = new Map(); if (lead.length) L.forEach(c => gcount.set(sig(c), (gcount.get(sig(c)) || 0) + 1));
+    let prevSig = null; const ncol = cols().length;
     L.forEach(c => {
+      if (lead.length) { const g = sig(c); if (g !== prevSig) { prevSig = g; const gr = el('tr', 'grp'), gd = el('td'); gd.colSpan = ncol;
+        const has = lead.filter((t, i) => g[i] === '1'), not = lead.filter((t, i) => g[i] === '0');
+        gd.textContent = (has.length ? '있음 ' + has.map(t => '「' + t + '」').join(' ') : '') + (has.length && not.length ? ' · ' : '') + (not.length ? '없음 ' + not.map(t => '「' + t + '」').join(' ') : '') + ' — ' + gcount.get(g) + '개';
+        gr.appendChild(gd); frag.appendChild(gr); } }
       const tr = el('tr', (sel.includes(c.key) ? 'on' : '') + (c.has_trades ? '' : ' none')); tr.tabIndex = 0;
       const td = (t, cls) => { const x = el('td', cls, t); tr.appendChild(x); return x; };
       const NUMK = ['hit', 'edge', 'sum', 'avg', 'last'];
@@ -477,7 +531,7 @@
         else if (k === 'round') td(c.round != null ? c.round + '회' : '–', 'num');
         else if (k === 'grade') td(null).appendChild(el('span', 'tag' + (c.grade === '통과' || c.grade === '관찰 목록' ? ' pass' : ''), c.grade));
         else if (k === 'sell') { const sv = sellInfo(c), x = td(sv.short, 'sellc'); x.title = sv.full + '\n실제 보유: ' + actTxt(sv.act); }
-        else if (k === 'desc') { const dd = td(null, 'desc'); dd.title = c.desc; dd.appendChild(el('div', null, (c.name ? c.name + ' — ' : '') + c.desc)); }
+        else if (k === 'desc') { const dd = td(null, 'desc'); dd.title = c.desc; dd.appendChild(condSegs(c)); }
         else if (!c.has_trades) { if (k === 'n') { const x = td('거래 내역 없음', 'muted'); x.colSpan = 6; } else if (k === 'f') td('–', 'f4'); }
         else if (k === 'n') td(String(c.n), 'num');
         else if (NUMK.includes(k)) td({hit: pct1(c.hit, c.n), edge: spp(c.edge, c.n), sum: sp(c.sum), avg: sp(c.avg, 2), last: c.last || '–'}[k], 'num');
@@ -487,13 +541,17 @@
       frag.appendChild(tr);
     });
     tb.replaceChildren(frag);
+    const on = new Set(sorts.filter(x => x.k.startsWith('c:')).map(x => x.k.slice(2)));
+    document.querySelectorAll('.ct').forEach(x => x.classList.toggle('on', on.has(x.dataset.k)));
     $('count').textContent = combos.length + '개 중 ' + L.length + '개 표시 · 고른 것 ' + sel.length + '/5';
   }
   function sortBar(){                          // 정렬 기준 막대: 기준 차례·방향 바꾸기·빼기, 모든 내용에서 더하기
     const bar = $('sortbar'); if (!bar) return; bar.replaceChildren(el('span', 'sb-l', '정렬'));
     if (!sorts.length) bar.appendChild(el('span', 'muted', '처음 순서(갈래·순위)'));
     sorts.forEach((x, i) => { const f = fieldOf(x.k); if (!f) return; const chip = el('span', 'sb-c');
-      const b = el('button', null, (sorts.length > 1 ? ordTxt(i) + ' ' : '') + f.label + ' ' + (x.dir > 0 ? '▲' : '▼')); b.type = 'button'; b.title = '눌러서 반대로';
+      if (f.cond) chip.classList.add('cond');
+      const b = el('button', null, (sorts.length > 1 ? ordTxt(i) + ' ' : '') + f.label + ' ' + (f.cond ? (x.dir < 0 ? '있는 것 먼저' : '없는 것 먼저') + ' · ' + (TOKN.get(f.cond) || 0) + '개' : (x.dir > 0 ? '▲' : '▼')));
+      b.type = 'button'; b.title = '눌러서 반대로';
       b.addEventListener('click', () => { x.dir = -x.dir; fillTable(); });
       const up = el('button', 'sb-x', '↑'); up.type = 'button'; up.title = '앞 기준으로'; up.setAttribute('aria-label', f.label + ' 앞으로'); up.disabled = i === 0;
       up.addEventListener('click', () => { sorts.splice(i - 1, 0, sorts.splice(i, 1)[0]); fillTable(); });
@@ -506,6 +564,12 @@
       L.filter(f => !sorts.some(x => x.k === f.k)).forEach(f => og.appendChild(new Option(f.label, f.k))); if (og.children.length) s.appendChild(og); });
     s.addEventListener('change', () => { const f = fieldOf(s.value); if (f) { sorts.push({k: f.k, dir: dir0(f)}); fillTable(); } });
     bar.appendChild(s);
+    const cs = el('select', 'sb-cond'); cs.setAttribute('aria-label', '조건으로 정렬');
+    cs.appendChild(new Option('+ 조건으로 정렬(같은 조건끼리)', ''));
+    [...TOKN.entries()].filter(([k]) => !sorts.some(x => x.k === 'c:' + k)).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'ko'))
+      .forEach(([k, n]) => cs.appendChild(new Option(k + ' (' + n + ')', k)));
+    cs.addEventListener('change', () => { if (cs.value) toggleCond(cs.value); });
+    bar.appendChild(cs);
     if (sorts.length) { const c = el('button', 'sb-clr', '처음 순서로'); c.type = 'button'; c.addEventListener('click', () => { sorts.length = 0; fillTable(); }); bar.appendChild(c); }
   }
   function segFilter(id, k){                   // 여러 개 고르기: 누르면 켜고 끄기, 「전체」는 모두 해제
@@ -542,7 +606,7 @@
       h.append(swBtn(k), document.createTextNode(k + ' · ' + SRC_NAME[c.src] + (c.src === 'S' ? ' ' + c.rank + '번 ' + c.name : ' ' + c.rank + '위')), el('span', 'tag' + (c.grade === '통과' || c.grade === '관찰 목록' ? ' pass' : ''), c.grade));
       const off = el('button'); off.type = 'button'; off.className = 'tag'; off.style.cursor = 'pointer'; off.style.background = 'transparent'; off.style.color = 'inherit'; off.textContent = '끄기 ✕'; off.addEventListener('click', () => pick(k)); h.appendChild(off);
       d.appendChild(h); d.appendChild(el('div', 'code', c.id));
-      const cond = el('div', 'cond'); cond.appendChild(el('div', null, c.desc));
+      const cond = el('div', 'cond'); cond.appendChild(condSegs(c));
       if (c.exact) { try { cond.appendChild(exactList(JSON.parse(c.exact))); } catch (e) {} }
       d.appendChild(cond);
       const kv = el('div', 'kv'), put = (a, b) => { const r = el('div'); r.append(el('span', null, a), el('span', null, b)); kv.appendChild(r); };
