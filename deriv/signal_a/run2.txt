@@ -1,0 +1,1 @@
+2026-11-24 10:37 2차 첫 실행 (W1~W8 코드·SPEC, sa_stage2.py, signal-a-stage2.yml 준비됨)

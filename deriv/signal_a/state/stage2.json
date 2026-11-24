@@ -1,0 +1,20 @@
+{
+ "stage": "계산 시작(GitHub)",
+ "tracks": {
+  "w1": "준비",
+  "w2": "준비",
+  "w3": "준비",
+  "w4": "준비",
+  "w5": "준비",
+  "w6": "준비",
+  "w7": "준비",
+  "w8": "준비",
+  "w9": "돌리지 않음(목록만 REPORT2 에)"
+ },
+ "need_claude": false,
+ "fail": null,
+ "fails": [],
+ "wish": [],
+ "updated": "2026-11-24 10:37",
+ "note": "2차(아쉬운 줄기 전부). 계산·판정·네 거름·REPORT2.md·카카오톡은 GitHub(signal-a-stage2.yml)가 한다. 실패하면 need_claude=true 와 fail 에 적힌다."
+}
