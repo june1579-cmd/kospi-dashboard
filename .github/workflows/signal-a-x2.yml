@@ -1,0 +1,66 @@
+# Signal A X2(2026-11-24 사용자 지시 "15가지 조건으로 앞 뒤 1~5일 안에 시작지점에서 3% 이상 상승할 확률 계산", 앞 2010~2023 · 뒤 2024~2026-11-20):
+# 정의는 deriv/signal_a/x2/SPEC.md, 계산은 x2/run.py. 고정 자료(릴리스 signal-a-data-v1)만 쓴다.
+# 순서: 고정 자료 내려받기 → run.py(3번까지 다시) → 저장(x2 폴더만). 카카오톡 없음.
+# KRX 로그인·수집 없음. main 은 읽기만(requirements.txt). 고치는 곳은 deriv/signal_a/x2 뿐.
+# 예약(schedule) 없음 — deriv/signal_a/x2/run.txt 를 고쳐 push 하거나 손으로 띄울 때만 돈다. 이 파일은 deriv-research 가지에만 있다.
+name: signal-a-x2
+on:
+  push:
+    branches: [deriv-research]
+    paths: ['deriv/signal_a/x2/run.txt']      # 이 파일을 고쳐 push 하면 시작
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: signal-a-x2
+  cancel-in-progress: false
+defaults:
+  run:
+    shell: bash                               # bash -eo pipefail
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+  PYTHONUNBUFFERED: '1'
+
+jobs:
+  x2:
+    name: X2 15가지 조건 +3% 닿을 확률
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: deriv-research}
+      - uses: actions/checkout@v4
+        with: {ref: main, path: _main}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q -r _main/requirements.txt joblib
+      - name: 고정 자료 내려받기(릴리스 signal-a-data-v1 — sa_common.fetch 가 sha256 을 확인)
+        env: {GH_TOKEN: '${{ github.token }}'}
+        run: |
+          SA_DATA="$RUNNER_TEMP/sa_data"; mkdir -p "$SA_DATA"; echo "SA_DATA=$SA_DATA" >> "$GITHUB_ENV"
+          echo "PYTHONPATH=$GITHUB_WORKSPACE/deriv/signal_a" >> "$GITHUB_ENV"
+          for k in 1 2 3; do gh release download signal-a-data-v1 -p panel.pkl -p lab_feat.pkl -p raw_deriv.tgz -D "$SA_DATA" --clobber && break; sleep 10; done
+          test -s "$SA_DATA/panel.pkl" && test -s "$SA_DATA/lab_feat.pkl" && test -s "$SA_DATA/raw_deriv.tgz"
+      - name: 계산·보고서(3번까지 시도)
+        env: {GH_TOKEN: '${{ github.token }}'}
+        run: |
+          LOG="$RUNNER_TEMP/x2.log"; OK=0
+          for k in 1 2 3; do
+            echo "::group::X2 — 시도 $k/3"
+            RC=0; timeout -k 30s 40m python deriv/signal_a/x2/run.py 2>&1 | tee "$LOG" || RC=$?
+            echo "::endgroup::"
+            if [ "$RC" = 0 ] && [ -s deriv/signal_a/x2/report.md ] && [ -s deriv/signal_a/x2/out/done.json ]; then OK=1; break; fi
+            echo "시도 $k 실패(종료 코드 $RC)"; tail -n 30 "$LOG" || true; sleep 15
+          done
+          if [ "$OK" != 1 ]; then echo "::error::X2 계산이 3번 모두 실패"; exit 1; fi
+      - name: 저장(deriv/signal_a/x2 만)
+        run: |
+          git config user.name dashboard-bot; git config user.email dashboard-bot@users.noreply.github.com
+          git add deriv/signal_a/x2/report.md deriv/signal_a/x2/out
+          if git diff --cached --quiet; then echo "저장: 바뀐 것 없음"; exit 0; fi
+          git commit -q -m "Signal A X2: 15가지 조건 +3% 닿을 확률 결과 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
+          for i in 1 2 3 4; do
+            if git pull -q --rebase --autostash origin deriv-research && git push -q origin HEAD:deriv-research; then echo "저장: push 끝"; exit 0; fi
+            git rebase --abort 2>/dev/null || true; sleep 15
+          done
+          echo "::error::저장 실패 — 4번 시도했지만 push 하지 못함"; exit 1
