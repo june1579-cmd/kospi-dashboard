@@ -41,6 +41,8 @@ jobs:
           TWELVEDATA_API_KEY: ${{ secrets.TWELVEDATA_API_KEY }}
         run: python ai_feed.py
       - name: 경고판 계산(숫자 갱신·기준일 점검·단계·알림 글)
+        env:
+          TWELVEDATA_API_KEY: ${{ secrets.TWELVEDATA_API_KEY }}   # 하루 ±10% 변동 대조(SOXX)
         run: python ai_board.py --trigger "${{ github.event_name }} ${{ github.event.schedule }}${{ github.event.workflow_run.name }}"
       - name: 결과 저장(commit & push)
         id: save
