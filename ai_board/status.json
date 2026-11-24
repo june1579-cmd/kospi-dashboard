@@ -1,28 +1,16 @@
 {
- "built_at": "2026-11-25T07:39:18+09:00",
- "trigger": "push ",
+ "built_at": "2026-11-25T07:40:12+09:00",
+ "trigger": "workflow_run dashboard-update",
  "marker": "2026-11-25T07:38:56+09:00 아침",
- "request_applied": true,
+ "request_applied": false,
  "ok": true,
  "errors": [],
  "notes": [],
  "us_last_session": "2026-11-24",
  "kr_last_session": "2026-11-24",
  "stale": [],
- "changed": [
-  "SOX 고점 대비 -34.48→-39.65(11.24)",
-  "WTI 유가 80.17달러→81.69달러(11.24)"
- ],
- "files_changed": [
-  "thresholds",
-  "indicators",
-  "market",
-  "macro",
-  "events",
-  "history",
-  "runs",
-  "news"
- ],
+ "changed": [],
+ "files_changed": [],
  "files": {
   "thresholds": "4188117d233e9c52aa8d27904a4935f87d75894429a162206dece664c65c1b45",
   "indicators": "df67b024b3471fdeffc2c32cec6e128a619dc4dac5f572eea8bf8de2ab6e9db3",
