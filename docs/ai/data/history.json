@@ -5950,5 +5950,13 @@
   "text": "3.63%(11.23)",
   "unit": "%",
   "src": "https://fred.stlouisfed.org/series/BAMLH0A0HYM2"
+ },
+ {
+  "date": "2026-11-24",
+  "key": "sox_dd",
+  "value": -39.65,
+  "text": "−39.6%(11.24, 8,832.50)",
+  "unit": "%",
+  "src": "https://finance.yahoo.com/quote/%5ESOX/history/"
  }
 ]

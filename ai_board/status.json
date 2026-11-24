@@ -1,37 +1,44 @@
 {
- "built_at": "2026-11-25T06:24:34+09:00",
- "trigger": "workflow_run dashboard-update",
- "marker": "2026-11-24T19:38:46+09:00 저녁",
- "request_applied": false,
+ "built_at": "2026-11-25T07:39:18+09:00",
+ "trigger": "push ",
+ "marker": "2026-11-25T07:38:56+09:00 아침",
+ "request_applied": true,
  "ok": true,
  "errors": [],
  "notes": [],
- "us_last_session": "2026-11-23",
+ "us_last_session": "2026-11-24",
  "kr_last_session": "2026-11-24",
  "stale": [],
  "changed": [
-  "미국 10년물 금리 4.92%→4.92%(11.23)"
+  "SOX 고점 대비 -34.48→-39.65(11.24)",
+  "WTI 유가 80.17달러→81.69달러(11.24)"
  ],
  "files_changed": [
+  "thresholds",
+  "indicators",
+  "market",
   "macro",
-  "runs"
+  "events",
+  "history",
+  "runs",
+  "news"
  ],
  "files": {
-  "thresholds": "fec2e9d0607ffe90c51f175b508e3bbaef90a5f4708daf0db0ea02252750f121",
-  "indicators": "6e8eef6a3f3d905263368d89da7cf41994146bd169b97de408f1557b1569b93e",
-  "market": "d3a76b3e3c1507011aac313c49291cf8f679ad6aae7b0e57b80afdf886027f88",
+  "thresholds": "4188117d233e9c52aa8d27904a4935f87d75894429a162206dece664c65c1b45",
+  "indicators": "df67b024b3471fdeffc2c32cec6e128a619dc4dac5f572eea8bf8de2ab6e9db3",
+  "market": "c8de4f90ed2d234ec47834a4d7c5ea0e33c1670d29fcbc2e522fcaf0788ccae8",
   "margin": "9cacd3f2fe6fa8ca65830963cf8247d9de0c9a52ac22df760e15cd094e91ed2c",
   "forced": "faec6c1d739da776ed7ded8fd8b0e188689af205ab6287d36025f2400b02d56c",
-  "macro": "46dd3130a8409ad496f038cbe489229981d31c8e29f3dd3b16f98267cce2c2a7",
-  "events": "c40ba530f01abe8d8d068ec4b8397eb42c6dac91d8d9e9a310cc642672ff0cf4",
-  "history": "8b35355c87849b312637056cdc951264be9448961eb546df8b88d16a67aba789",
-  "runs": "b9736162bb21e6d8ce0e1a448ba077ee418c71e99949eec4c5febf959f6b3a9f",
-  "news": "29d35ecfe46cb8576e59697ec281ac6152ea675185cce33daa9d56aaa071753c",
+  "macro": "8f8bc8c1771ce5b2ccfbb5cb799664ad5a5eeb6057bb0e2200e6105d98aa9437",
+  "events": "2da1c3f061b0d8a30305e319101b6cc72e77c8bbe1a8d8aa2e806b0006a2c160",
+  "history": "944ce495790ee47a9c191605e7c1989f1f80f9ff9cf1c1a36ae9d5b0698c00fd",
+  "runs": "1dad77e9dcd87053519ee21f5b5d1e4554ba5760055fdf48880b4ad52fc2bada",
+  "news": "3b526ac3d00ce06dfb2f0d86ed6bdd0c2d991bf3414485fef7198bd05f9edc7a",
   "scenarios": "0a76d773ea2dbd406498e38017ce08c0feadd77a001cd6d4ca2392882c2656eb",
   "episodes": "5fc42c60296afdbd24d0b7f7b1d774e337ab66d562bd9442f44a44b613b13e51"
  },
  "composite": {
-  "pos": 1.791,
+  "pos": 1.807,
   "stage": "주의",
   "counts": {
    "정상": 1,
@@ -66,7 +73,7 @@
    "stage": "주의"
   },
   "7": {
-   "pos": 2.82,
+   "pos": 2.982,
    "stage": "경고"
   },
   "8": {
@@ -82,7 +89,9 @@
    "stage": "주의"
   }
  },
- "near": [],
+ "near": [
+  "sox_dd"
+ ],
  "flags": {
   "신용 청산 진행": "신용잔고 정점 대비 −32.9%"
  },
