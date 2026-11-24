@@ -1,0 +1,14 @@
+{
+ "end": "2026-11-23",
+ "source": "fchart.stock.naver.com (공개, 로그인 없음)",
+ "kosdaq_index": "2014-09-01~2026-11-23 2999일",
+ "list_ks": 937,
+ "list_kq": 1837,
+ "stocks_ok": 2772,
+ "stocks_fail": 0,
+ "stocks_fail_codes": [],
+ "stocks_used": 2772,
+ "selfcheck": "12개 날짜 중 불일치 0개",
+ "stocks_listed_by_2019": 2001,
+ "breadth": "2014-09-01~2026-11-23 2999일"
+}
