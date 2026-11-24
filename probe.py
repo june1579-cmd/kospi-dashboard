@@ -1,39 +1,26 @@
 # -*- coding: utf-8 -*-
-"""자료 출처 시험 4차 — KRX 파생상품 화면의 시장구분(aggBasTpCd: ''=전체, 0=정규, 2=야간)로 야간선물 받기. 비밀값은 출력하지 않는다."""
-import json, os, time, traceback
-SECRETS = [v for k, v in os.environ.items() if k in ('KRX_API_KEY', 'KRX_ID', 'KRX_PW') and v]
+"""자료 출처 시험 5차(2026-11-24) — 미국 옵션 미결제를 더 빨리 받을 수 있는지: OCC 시리즈 검색·FLEX 미결제 파일 내용, 야후 미결제 상태. KRX 로그인 안 씀."""
+import os, time, traceback, datetime as dt
+import requests
 os.makedirs('out', exist_ok=True)
-def red(s):
-    s = str(s)
-    for v in SECRETS:
-        if v and len(v) >= 4: s = s.replace(v, '***')
-    return s
-def w(name, text): open(os.path.join('out', name), 'w', encoding='utf-8').write(red(text))
-def rd(bld, **p):
-    from pykrx.website.krx.krxio import KrxWebIo
-    class Any(KrxWebIo):
-        @property
-        def bld(self): return bld
-    return Any().read(**p)
-out = []
-def tryit(label, bld, **p):
+UA = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/126.0 Safari/537.36'}
+out = [f'시각 {dt.datetime.utcnow():%Y-%m-%d %H:%M} UTC']
+def head(label, url, **p):
     try:
-        js = rd(bld, **p); rs = js.get('output', []) if isinstance(js, dict) else []
-        out.append(f'\n== {label} {p} → {len(rs)}행 keys={list(rs[0].keys()) if rs else list(js.keys())}')
-        for r in rs[:40]: out.append('   ' + json.dumps(r, ensure_ascii=False))
-    except Exception as e: out.append(f'\n== {label} {p} → 오류 {e!r}')
-    time.sleep(1.2)
+        r = requests.get(url, headers=UA, params=p, timeout=60)
+        t = r.text; lines = t.splitlines()
+        out.append(f'\n== {label} HTTP {r.status_code} · {len(r.content)}바이트 · {len(lines)}줄 · type {r.headers.get("content-type")} · last-modified {r.headers.get("last-modified")}')
+        out.extend('   ' + l[:220] for l in lines[:25])
+        hit = [l for l in lines if ' 750 ' in l or '750.000' in l or '00750' in l][:6]
+        if hit: out.append('   … 행사가 750 근처 줄:'); out.extend('   ' + l[:220] for l in hit)
+    except Exception as e: out.append(f'\n== {label} 오류 {e!r}')
+    time.sleep(1)
 try:
-    B = 'dbms/MDC/STAT/standard/'
-    tryit('12701 야간', B + 'MDCSTAT12701', prodId='KRDRVFUK2I', strtDd='20261020', endDd='20261116', aggBasTpCd='2')
-    tryit('12701 전체', B + 'MDCSTAT12701', prodId='KRDRVFUK2I', strtDd='20261109', endDd='20261116', aggBasTpCd='')
-    tryit('12701 정규', B + 'MDCSTAT12701', prodId='KRDRVFUK2I', strtDd='20261111', endDd='20261116', aggBasTpCd='0')
-    tryit('12701 야간+subProd', B + 'MDCSTAT12701', prodId='KRDRVFUK2I', subProdId='KRDRVFUK2I', strtDd='20261109', endDd='20261116', aggBasTpCd='2')
-    tryit('12501 야간 1113', B + 'MDCSTAT12501', trdDd='20261113', prodId='KRDRVFUK2I', aggBasTpCd='2', rghtTpCd='T', mktTpCd='T')
-    tryit('12501 야간 1116', B + 'MDCSTAT12501', trdDd='20261116', prodId='KRDRVFUK2I', aggBasTpCd='2', rghtTpCd='T', mktTpCd='T')
-    tryit('12501 야간 1114', B + 'MDCSTAT12501', trdDd='20261114', prodId='KRDRVFUK2I', aggBasTpCd='2', rghtTpCd='T', mktTpCd='T')
-    tryit('12501 전체 1113', B + 'MDCSTAT12501', trdDd='20261113', prodId='KRDRVFUK2I', aggBasTpCd='', rghtTpCd='T', mktTpCd='T')
-    tryit('12601 야간', B + 'MDCSTAT12601', isuCd='KR4A016C0004', isuCd2='KR4A016C0004', strtDd='20261109', endDd='20261116', aggBasTpCd='2', rghtTpCd='T')
-    tryit('01201 VKOSPI', B + 'MDCSTAT01201', indTpCd='1', idxIndCd='300', idxCd='1', idxCd2='300', strtDd='20261109', endDd='20261116')
+    head('OCC 시리즈 검색 SPY', 'https://marketdata.theocc.com/series-search', symbolType='U', symbol='SPY')
+    head('OCC FLEX 미결제 20261123 지수', 'https://marketdata.theocc.com/flex-reports', reportType='OI', optionType='I', reportDate='20261123')
+    head('OCC 거래량 조회 SPY 20261123', 'https://marketdata.theocc.com/volume-query', reportDate='20261123', format='csv', volumeQueryType='O', symbolType='U', symbol='SPY', reportType='D', accountType='ALL', productKind='ALL', porc='BOTH')
+    import yfinance as yf
+    tk = yf.Ticker('SPY'); ch = tk.option_chain('2026-12-18')
+    out.append(f"\n== 야후 SPY 12/18 미결제 합 콜 {int(ch.calls['openInterest'].fillna(0).sum())} 풋 {int(ch.puts['openInterest'].fillna(0).sum())} · 거래량 콜 {int(ch.calls['volume'].fillna(0).sum())}")
 except Exception: out.append(traceback.format_exc())
-w('t_night.txt', '\n'.join(out))
+open('out/g_occ.txt', 'w', encoding='utf-8').write('\n'.join(out))
