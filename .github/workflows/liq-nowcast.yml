@@ -1,0 +1,63 @@
+name: liq-nowcast
+# 반대매매 당일 예정치 — 오차 줄이기 시험(연구용, 2026-11-24). liq-nowcast 가지에서만 돈다.
+# main·대시보드(docs/, 아티팩트)는 건드리지 않는다. KRX 로그인·비밀값을 쓰지 않는다(공개 자료 = 네이버 금융 일봉 차트).
+# 실행: ① research/liq_nowcast/trigger.txt 를 고쳐 이 가지에 push  ② 이 파일이 기본 가지에도 있으면 Actions 화면의 수동 실행(workflow_dispatch).
+# trigger.txt 첫 줄: all(수집+시험) / run(시험만 — 이미 받은 research/liq_nowcast/data 사용) / fetch(수집만)
+on:
+  workflow_dispatch:
+    inputs:
+      stage:
+        description: 'all / run / fetch'
+        default: ''
+  push:
+    branches: [liq-nowcast]
+    paths: ['research/liq_nowcast/trigger.txt']
+permissions:
+  contents: write
+concurrency:
+  group: liq-nowcast
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    env:
+      PYTHONWARNINGS: ignore
+      OMP_NUM_THREADS: '1'
+      PYTHONHASHSEED: '0'
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: liq-nowcast}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q pandas==2.3.3 numpy==2.5.3 scipy==1.18.1 scikit-learn==1.9.1 openpyxl==3.1.5 requests==2.34.2 joblib
+      - name: 단계·자료 끝 날짜
+        id: t
+        run: |
+          S="${{ github.event.inputs.stage }}"; [ -z "$S" ] && S=$(sed -n 1p research/liq_nowcast/trigger.txt | tr -d '\r ' )
+          END=$(tail -n 1 out/market_daily.csv | cut -d, -f1)
+          echo "stage=${S:-all}" >> "$GITHUB_OUTPUT"; echo "end=$END" >> "$GITHUB_OUTPUT"; echo "단계 ${S:-all} · 자료 끝 $END · CPU $(nproc)"
+      - name: 종목 일봉 임시 보관(다음 실행에서 다시 받지 않게 — 저장소에는 올리지 않음)
+        if: steps.t.outputs.stage != 'run'
+        uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}/liqraw
+          key: liqraw-v1-${{ steps.t.outputs.end }}
+      - name: 공개 자료 수집(네이버 금융 — 코스닥 지수, 현재 상장 종목 일봉 → 하루 단위 집계)
+        if: steps.t.outputs.stage != 'run'
+        run: |
+          mkdir -p "$RUNNER_TEMP/liqraw"
+          python research/liq_nowcast/fetch_public.py --end "${{ steps.t.outputs.end }}" --raw "$RUNNER_TEMP/liqraw/panel.pkl" --workers 6 || echo "수집 일부 실패 — 받은 것만으로 진행(없는 묶음은 '확인 불가')"
+      - name: 미래 자료 섞임 점검(입력)
+        if: steps.t.outputs.stage != 'fetch'
+        run: cd research/liq_nowcast && python leak_check.py || echo "점검 실패 — 결과 무효로 표시됨"
+      - name: 시험(걷기 검증)
+        if: steps.t.outputs.stage != 'fetch'
+        run: cd research/liq_nowcast && python run_experiments.py
+      - name: 저장(이 가지에만)
+        if: always()
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add -A research/liq_nowcast
+          git commit -q -m "liq-nowcast 시험 결과 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M') (${{ steps.t.outputs.stage }})" -m "Co-Authored-By: Claude Fable 5.2 <noreply@anthropic.com>" || echo "변경 없음"
+          for i in 1 2 3; do git pull -q --rebase origin liq-nowcast && git push -q origin HEAD:liq-nowcast && break || sleep 5; done
