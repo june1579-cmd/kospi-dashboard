@@ -94,8 +94,9 @@ def plan(mode, days, st, start):
     out = [('trade', d) for d in days if d >= gap] + [('balance', d) for d in month_end]
     out += [('balance', d) for d in days if d not in month_end] + [('trade', d) for d in days if d < gap]
     seen = set(); res = []
+    tail = set(days[-RECENT:])      # 최근 3거래일은 매일 확정 실행(4c, daily)이 받는다 — backfill 은 묻지도 세지도 않는다(남은 것 0 이 되어야 10년치로 넘어감)
     for k, d in out:
-        if (k, d) in seen or not want(k, d): continue
+        if d in tail or (k, d) in seen or not want(k, d): continue
         seen.add((k, d)); res.append((k, d))
     return res
 
