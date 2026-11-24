@@ -1,0 +1,58 @@
+# 연구소용 웹판 카카오톡 보고(2026-11-24 사용자 지시 "완료되면 카카오톡으로 보고", deriv/labweb/AGENT.md 6번).
+# deriv/labweb/notify.txt 의 글을 카카오톡 '나에게 보내기'로 1통 보낸다. 보내는 법은 signal-a-x1.yml 의 카카오톡 단계와 같다(deriv/lab/kakao_lab.py).
+# 비밀값은 여기서 ${{ secrets.이름 }} 으로만 넘긴다. 토큰은 읽기만(main 의 state/kakao_token.json 사본). 예약(schedule) 없음.
+# 고치는 곳: deriv/labweb/notify/ (보낸 기록) 뿐.
+name: labweb-notify
+on:
+  push:
+    branches: [deriv-research]
+    paths: ['deriv/labweb/notify.txt']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: labweb-notify
+  cancel-in-progress: false
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  notify:
+    name: 연구소 웹판 카카오톡 1통
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: deriv-research}
+      - uses: actions/checkout@v4
+        with: {ref: main, path: _main, sparse-checkout: state, sparse-checkout-cone-mode: true}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q requests cryptography
+      - name: 카카오톡 1통(signal-a-x1 과 같은 방식 — 토큰은 읽기만)
+        env:
+          KAKAO_REST_KEY: ${{ secrets.KAKAO_REST_KEY }}
+          KAKAO_REFRESH_TOKEN: ${{ secrets.KAKAO_REFRESH_TOKEN }}
+          KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
+          GH_TOKEN: ${{ github.token }}
+          KAKAO_LAST: deriv/labweb/notify/last.json
+        run: |
+          mkdir -p deriv/labweb/notify
+          cp _main/state/kakao_token.json "$RUNNER_TEMP/main_token.json" 2>/dev/null || true
+          export TOKEN_RENEWED_AT="$(gh api "repos/$GITHUB_REPOSITORY/commits?path=state/kakao_token.json&sha=main&per_page=1" -q '.[0].commit.committer.date' 2>/dev/null || true)"
+          python deriv/lab/kakao_lab.py --file deriv/labweb/notify.txt --main-state "$RUNNER_TEMP/main_token.json" --link "https://june1579-cmd.github.io/kospi-dashboard/lab/" || echo "카카오톡 발송 실패(위 로그 참고)"
+          if [ -n "$(git status --porcelain -- deriv/lab/state/kakao_renewed.json)" ]; then cp deriv/lab/state/kakao_renewed.json deriv/labweb/notify/kakao_renewed.json; git checkout -- deriv/lab/state 2>/dev/null || true; echo "::error::카카오 토큰이 연장됨 — deriv/labweb/notify/kakao_renewed.json 에 보관(총괄에게 알릴 것)"; fi
+          cat deriv/labweb/notify/last.json 2>/dev/null || echo "기록 없음"
+      - name: 보낸 기록 저장(deriv/labweb/notify 만)
+        continue-on-error: true
+        run: |
+          git config user.name dashboard-bot; git config user.email dashboard-bot@users.noreply.github.com
+          git add deriv/labweb/notify
+          if git diff --cached --quiet; then echo "저장: 바뀐 것 없음"; exit 0; fi
+          git commit -q -m "연구소 웹판: 카카오톡 기록 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
+          for i in 1 2 3; do
+            if git pull -q --rebase --autostash origin deriv-research && git push -q origin HEAD:deriv-research; then echo "저장: push 끝"; exit 0; fi
+            git rebase --abort 2>/dev/null || true; sleep 15
+          done
+          echo "::warning::기록 저장 실패"
