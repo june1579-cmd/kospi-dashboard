@@ -1,6 +1,6 @@
 name: short-backfill
 # 공매도 과거 자료 받기(2026-11-18 추가, 같은 날 03:17·05:17 두 번으로 바꾸고 10년치 이어받기 추가)
-# 하루 최대 네 번(2시간마다 깨워 겹침 확인이 고름 — GitHub 예약이 몇 시간씩 늦어 시각을 정할 수 없음). 대시보드 정시 갱신(08:23·15:43·20:23 KST) 앞뒤는 피함. 한 번에 최대 210번 조회(조회 사이 4~6초, 약 20분).
+# 하루 최대 여섯 번(1시간마다 깨워 겹침 확인이 고름 — GitHub 예약이 몇 시간씩 늦어 시각을 정할 수 없음). 대시보드 정시 갱신(08:23·15:43·20:23 KST) 앞뒤는 피함. 한 번에 최대 210번 조회(조회 사이 4~6초, 약 20분).
 #  1) 2026-01-02 이후 빈 날짜(main 가지 data/short)
 #  2) 1)이 다 채워졌고 문제(접속 제한·오류)가 없었으면 남은 조회 수로 2016~2025 10년치(short-history 가지 data/short, 최신 날짜부터)
 #     — 10년치는 파일이 많아(약 130MB) 대시보드가 매번 받는 main 이 무거워지지 않게 따로 둔다.
@@ -8,8 +8,8 @@ name: short-backfill
 on:
   schedule:
     # GitHub 예약이 이 저장소에서 5~8시간씩 늦게 돈다(11/19~22 확인: 11:17 예약이 18:50~19:20, 03:17 예약이 09:00~10:40 에 돎).
-    # 그래서 시각을 고정하지 않고 2시간마다 깨워, 겹침 확인 단계가 '90분 간격·24시간 네 번·대시보드 갱신 시간 피하기'로 실제 실행을 고른다.
-    - cron: '17 */2 * * *'
+    # 그래서 시각을 고정하지 않고 1시간마다 깨워(빠지는 예약이 많아 2시간마다로는 하루 세 번 남짓만 돎 — 11/24 1시간마다로 바꿈), 겹침 확인 단계가 '90분 간격·24시간 여섯 번·대시보드 갱신 시간 피하기'로 실제 실행을 고른다.
+    - cron: '17 * * * *'
   workflow_dispatch:
     inputs:
       max_calls:
@@ -44,7 +44,7 @@ jobs:
       - run: pip install -r requirements.txt
       - name: git 사용자
         run: git config --global user.name "dashboard-bot"; git config --global user.email "dashboard-bot@users.noreply.github.com"
-      - name: 겹침 확인(90분 간격·하루 네 번·대시보드 갱신 시간 피하기)
+      - name: 겹침 확인(90분 간격·하루 여섯 번·대시보드 갱신 시간 피하기)
         id: guard
         run: |
           # GitHub 예약이 빠지는 일이 있어(11/19 새벽 두 번 모두 안 돎) 03:47·05:47 예비 예약을 둔다.
@@ -61,7 +61,7 @@ jobs:
           auto = os.environ['MODE'] == 'auto' and os.environ.get('FORCE') != 'true'
           why = ''
           if auto and last and (now - last).total_seconds() < 90 * 60: why = f'90분 안에 이미 돎({last:%m-%d %H:%M} UTC)'
-          elif auto and len(day) >= 4: why = f'24시간 안에 이미 {len(day)}번 돎'
+          elif auto and len(day) >= 6: why = f'24시간 안에 이미 {len(day)}번 돎'
           # 대시보드 정시 갱신(08:23·15:43·20:23 KST, 평일) 앞뒤 — 갱신이 같은 줄에서 밀리지 않게
           elif os.environ.get('EVENT') == 'schedule' and kst.weekday() < 5 and any(a <= hm < b for a, b in [(8*60+5, 8*60+50), (15*60+25, 16*60+15), (20*60+5, 20*60+50)]):
               why = f'대시보드 갱신 시간(KST {kst:%H:%M})'
