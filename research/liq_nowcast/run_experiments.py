@@ -212,7 +212,7 @@ def main():
         if tree is not None: r = [x for x in r if ('hgb' in P[x['name']][0]['model']) == tree]
         out = []
         for x in sorted(r, key=lambda x: x['score']):          # 예측이 사실상 같은 설정은 한 번만(섞을 때 같은 것이 여러 번 들어가지 않게)
-            p = P[x['name']][1]; ok = masks['all']
+            p = P[x['name']][1]; ok = masks['sel']
             if any(np.allclose(p[ok], P[cname(c)][1][ok], rtol=0, atol=1e-6) for c in out): continue
             out.append(P[x['name']][0])
             if len(out) >= k: break
@@ -244,6 +244,20 @@ def main():
             nm = f"{x['name']}|치우침보정{n}"
             if nm not in P: p = bias_correct(P[x['name']][1], y, n); P[nm] = (dict(P[x['name']][0], bc=n, base=x['name']), p); rows.append(row(nm, p, df, masks, {'stage': 4, 'fs': x['fs']}))
     say(f'3단계 끝 {time.time() - t00:.0f}초')
+    # ---- 고르기까지 걷기 검증(겹쳐 고르기): Y 해의 설정을 Y 이전 해(2017~Y-1)의 성적만으로 고른다 → 2019~2025 숫자가 "고른 뒤의 성적"으로 부풀지 않는다
+    yrs_ = df['date'].dt.year.values; has_y = ~np.isnan(liq); pool_all = [x['name'] for x in rows if x['name'] in P and 'parts' not in P[x['name']][0] and 'bc' not in P[x['name']][0]]; nested_pick = {}
+    def nested(pool, k, tag):
+        out = np.full(len(df), np.nan); PP = np.array([P[n][1] for n in pool])
+        for Y in range(EVAL0, int(yrs_.max()) + 1):
+            prior = has_y & (yrs_ >= START) & (yrs_ < Y); E_ = np.abs(np.exp(PP[:, prior]) / liq[prior] - 1) * 100; okc = ~np.isnan(E_).any(1)
+            sc = np.where(okc, np.nanmedian(E_, 1) + 0.5 * np.nanquantile(E_, 0.8, axis=1), np.inf); order = np.argsort(sc, kind='stable')[:k]; te = yrs_ == Y
+            out[te] = PP[order][:, te].mean(0); nested_pick[f'{tag}_{k}_{Y}'] = [pool[i] for i in order]
+        return out
+    for tag, pool in (('종목없이', [n for n in pool_all if str(P[n][0]['fs']) in clean_fs or (not isinstance(P[n][0]['fs'], str))]), ('전체', pool_all)):
+        pool = [n for n in pool if isinstance(P[n][0]['fs'], str)]
+        if tag == '종목없이': pool = [n for n in pool if P[n][0]['fs'] in clean_fs]
+        for k in (1, 5): rows.append(row(f'겹쳐 고르기[{tag} · 해마다 그 전 성적 상위 {k}개{" 평균" if k > 1 else ""}]', nested(pool, k, tag), df, masks, {'stage': 8, 'fs': 'F4' if tag == '종목없이' else 'F7'}))
+    json.dump(nested_pick, open(os.path.join(OUT, 'nested_picks.json'), 'w'), ensure_ascii=False, indent=1)
     res = pd.DataFrame(rows); res['clean'] = res['fs'].astype(str).isin(clean_fs); res.sort_values('score').to_csv(os.path.join(OUT, 'results_point.csv'), index=False, float_format='%.3f')
     def is_yearly(name):          # 1차와 같은 규칙(해마다 한 번만 학습, 사후 보정 없음)만으로 된 설정인가
         c = P[name][0]; ps = c['parts'] if 'parts' in c else [c]; return 'bc' not in c and all(x.get('refit', 'Y') == 'Y' for x in ps)
@@ -333,7 +347,7 @@ def write_md(res, ivt, abl, py, S, orow, orow0):
         return f"| {nm} | {f('all')} | {f('y2026')} | {f('top10')} | {r['top10_q05']:.0f} / {r['top10_q50']:+.0f} | {f('sel')} |"
     g = lambda n: res[res['name'] == n].iloc[0]
     L += ['## 점 예측: 절대 오차 중앙값 / 80% / 90% (단위 %)', '', '| 방법 | 2019~ 전체 | 2026년 | 상위 10% 날 | 상위 10% 날 5% 지점 / 중앙(부호) | 2019~2025(고르는 구간) |', '|---|---|---|---|---|---|']
-    L += [line(g('기준(1차)'), '기준(1차)'), line(g('어제 값 그대로'), '어제 값 그대로'), line(g(S['best_yearly']), '해마다 학습만(1차와 같은 규칙, 종목 자료 없이) 중 가장 좋은 것'), line(g(S['best_clean']), '가장 좋은 것(종목 자료 없이)'), line(g(S['best_all']), '가장 좋은 것(전체)'), line(pd.Series(orow0), f"참고: {orow0['name']}"), line(pd.Series(orow), '참고(실전 불가): 위 모형 + 당일 미수금 변화'), '']
+    L += [line(g('기준(1차)'), '기준(1차)'), line(g('어제 값 그대로'), '어제 값 그대로'), line(g(S['best_yearly']), '해마다 학습만(1차와 같은 규칙, 종목 자료 없이) 중 가장 좋은 것'), line(g(S['best_clean']), '가장 좋은 것(종목 자료 없이)'), line(g(S['best_all']), '가장 좋은 것(전체)'), *[line(r, r['name']) for _, r in res[res['name'].str.startswith('겹쳐 고르기')].iterrows()], line(pd.Series(orow0), f"참고: {orow0['name']}"), line(pd.Series(orow), '참고(실전 불가): 위 모형 + 당일 미수금 변화'), '']
     L += [f"- 해마다 학습만 중 가장 좋은 것: `{S['best_yearly']}`", f"- 가장 좋은 것(종목 자료 없이): `{S['best_clean']}` = {S['best_clean_parts']}", f"- 가장 좋은 것(전체): `{S['best_all']}` = {S['best_all_parts']}", '']
     rb = S['robust']; L += [f"- 고르기의 흔들림(2019~2025 점수 상위 10개 설정의 2026 성적, 최소/중앙/최대): 종목 자료 없이 — 중앙 오차 {rb['clean_top10_2026_med'][0]:.1f}/{rb['clean_top10_2026_med'][1]:.1f}/{rb['clean_top10_2026_med'][2]:.1f}, 80% 지점 {rb['clean_top10_2026_p80'][0]:.1f}/{rb['clean_top10_2026_p80'][1]:.1f}/{rb['clean_top10_2026_p80'][2]:.1f} · 전체 — 중앙 오차 {rb['all_top10_2026_med'][0]:.1f}/{rb['all_top10_2026_med'][1]:.1f}/{rb['all_top10_2026_med'][2]:.1f}, 80% 지점 {rb['all_top10_2026_p80'][0]:.1f}/{rb['all_top10_2026_p80'][1]:.1f}/{rb['all_top10_2026_p80'][2]:.1f}", '']
     L += ['## 입력 묶음을 하나씩 더했을 때(같은 모형)', '', '| 종류 | 묶음 | 내용 | 2019~2025 중앙/80% | 2026 중앙/80% | 상위10% 중앙 / 5% 지점 |', '|---|---|---|---|---|---|']

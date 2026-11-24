@@ -97,7 +97,7 @@ def aggregate(panel, cal):
         medv_b = sh(medv, 4)                                                  # T-4 까지의 중앙값(매수일 이전)
         ok = ~np.isnan(r21)
         with np.errstate(all='ignore'):
-            hot = ok & ((r3 >= 0.10) | (vol3 >= 5 * medv_b)) & (vol3 > 0)
+            hot = ok & ((r3 >= 0.10) | ((medv_b > 0) & (vol3 >= 5 * medv_b))) & (vol3 > 0)     # medv_b>0: 갓 상장·거래 재개 종목이 저절로 '달아오른 종목'이 되지 않게
             res[f'{mk}_c_n10'] = np.where(ok, r21 <= -0.10, False).sum(1).astype(float); res[f'{mk}_c_n20'] = np.where(ok, r21 <= -0.20, False).sum(1).astype(float)
             res[f'{mk}_c_p10'] = np.nanpercentile(np.where(ok, r21, np.nan), 10, axis=1) * 100; res[f'{mk}_c_med'] = np.nanmedian(np.where(ok, r21, np.nan), 1) * 100
             res[f'{mk}_c_hot_n'] = hot.sum(1).astype(float)
