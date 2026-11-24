@@ -22,3 +22,5 @@
 [05:45:12] 저장 inv_daily.csv.gz 39965행
 [05:45:33] inv OPWKM P : 807행
 [05:45:34] 저장 inv_daily.csv.gz 40772행
+[05:45:37] inv FUMKI ALL : 1행
+[05:45:37] 저장 inv_daily.csv.gz 40773행
