@@ -74,6 +74,9 @@ def main():
     pool = pd.read_csv(os.path.join(X1, 'out', 'pool.csv')); fixed = pd.read_csv(os.path.join(X1, 'out', 'fixed.csv'))
     FX = {(r['갈래'], int(r['순위'])): r for _, r in fixed.iterrows()}
     combos = []; trades = {}
+    # 2차 W7 이 git 옛 기록에서 되살린 거래(X1 에서 '거래 내역 없음'이던 122개, 2026-11-24 사용자 지시 "전부 채워") — w7/out/cands.pkl 의 R_<key> + w7/out/fixed_all.csv 의 w7:R_<key>
+    W7C = {x['id']: x for x in C.load_result('w7')[0] if x.get('kind') == 'fixed'}
+    W7F = {r['key']: r for _, r in pd.read_csv(os.path.join(SA, 'w7', 'out', 'fixed_all.csv')).iterrows()}
     for g in 'ABCD':
         P, _ = R.rank_pool(g); P, TR = R.attach_trades(D, g, P, log)
         old = pool[pool['갈래'] == g]
@@ -99,6 +102,24 @@ def main():
                             'f': [yes(fx['거름1']), yes(fx['거름2']), yes(fx['거름3']), yes(fx['거름4'])], 'all4': yes(fx['넷다']),
                             'falsify': f"{int(fx['반증버틴수'])}/8", 'p': num(fx['가짜p']), 'big_na': yes(fx['거름2_큰변동해_판정불가']),
                             'p1': [num(fx['앞n'], 0), num(fx['앞적중'])], 'p2': [num(fx['뒤n'], 0), num(fx['뒤적중'])], 'overlap': fx['관찰목록과'] if isinstance(fx['관찰목록과'], str) else ''})
+            elif ('R_' + key) in W7C and ('w7:R_' + key) in W7F:
+                c7 = W7C['R_' + key]; f7 = W7F['w7:R_' + key]
+                if f7['id'] != po['id']: raise RuntimeError(f'{key}: W7 되살린 기록의 id 가 X1 과 다름 — 내보내지 않음')
+                sc = C.score(c7['trades'], d, D.K); t = sc['t']; rows = trade_rows(D, t, d)
+                n = int(f7['독립거래']); s7 = float(f7['수익합계'])
+                same = len(rows) == n and abs(sc['sum'] - s7) < 1e-4
+                if same: checks['same'] += 1
+                else: checks['diff'].append({'key': key, 'src': 'w7', 'n': len(rows), 'fixed_n': n, 'sum': round(sc['sum'], 5), 'fixed_sum': s7})
+                trades[key] = rows
+                g7 = lambda k, dv=None: (f7[k] if k in f7 and not (isinstance(f7[k], float) and math.isnan(f7[k])) else dv)
+                row.update({'has_trades': True, 'check': bool(same), 'n': n, 'hit': num(f7['적중']), 'base': num(f7['아무날']), 'edge': num(f7['차이']), 'sum': num(s7, 5),
+                            'avg': (num(s7 / n, 5) if n else None), 'last': (str(pd.Timestamp(pd.to_datetime(c7['trades']['signal']).max()).date()) if len(c7['trades']) else None),
+                            'n_sig': int(len(c7['trades'])), 'hold': num(g7('보유일_가운뎃값'), 0),
+                            'f': [yes(f7['거름1']), yes(f7['거름2']), yes(f7['거름3']), yes(f7['거름4'])], 'all4': yes(f7['넷다']),
+                            'falsify': (f"{int(g7('반증버틴수'))}/8" if g7('반증버틴수') is not None else None), 'p': num(g7('가짜p')), 'big_na': yes(g7('거름2_큰변동해_판정불가', False)),
+                            'p1': [num(g7('앞n'), 0), num(g7('앞적중'))], 'p2': [num(g7('뒤n'), 0), num(g7('뒤적중'))],
+                            'overlap': g7('관찰목록과', '') if isinstance(g7('관찰목록과', ''), str) else '',
+                            'trade_src': 'git 옛 기록에서 되살림(Signal A 2차 W7)', 'trade_note': '오래된 회차의 연구소 거래일 파일이 지워져 X1 에서 확인 불가였던 것을 2차가 되살림'})
             else:
                 checks['no_trades'] += 1
             combos.append(row)
