@@ -132,7 +132,7 @@
     box.innerHTML = `<div class="fo-hl-head">${head} · 지금 ${fmtKst(now)} KST · 웹판 계산 ${meta.built ? esc(meta.built.replace(' KST', '')) : '확인 불가'}</div>` +
       (uniq.length ? '<ul class="fo-hl-list">' + uniq.map(p => `<li>${esc(p)}</li>`).join('') + '</ul>' : '') +
       `<div class="fo-hl-dates">자료 기준일: ${esc(keyDates())}${unk ? ` · 확인하지 못한 값 ${unk}개(9절)` : ''}</div>` +
-      `<details class="fo-hl-det"${uniq.length ? ' open' : ''}><summary>쓰는 자료 ${rows.length}개의 기준일 전체 보기</summary>` +
+      `<details class="fo-hl-det"><summary>쓰는 자료 ${rows.length}개의 기준일 전체 보기</summary>` +
       '<div class="fo-tw"><table class="fo-t"><thead><tr><th>자료</th><th>지금 기준</th><th>와 있어야 할 기준</th><th>상태</th><th>갱신</th></tr></thead><tbody>' +
       rows.map(r => `<tr${r[3] !== 'ok' ? ' class="fo-hl-bad"' : ''}><td>${esc(r[0])}</td><td class="fo-num">${esc(r[1])}</td><td class="fo-num">${esc(r[2])}</td><td>${lab[r[3]] || esc(r[3])}</td><td class="fo-mut">${esc(r[4])}</td></tr>`).join('') +
       '</tbody></table></div><p class="fo-note">"와 있어야 할 기준"은 지금 시각과 각 자료의 정해진 갱신 시각(미국·한국 휴장일 반영)으로 계산한 날짜입니다. 지금 기준이 그보다 이르면 늦음으로 표시합니다. CFTC 는 공표가 휴일로 밀리는 주가 있어 11일 넘게 그대로일 때만 늦음으로 봅니다.</p></details>';
