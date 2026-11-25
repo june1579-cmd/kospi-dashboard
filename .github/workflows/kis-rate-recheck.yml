@@ -1,0 +1,39 @@
+# KIS 초당 호출 한도 매일 재측정(2026-11-25, 사용자 요청). 초당 2.5건부터 40건까지 10초씩 올려 보고 카카오톡으로 보고.
+# 매일 09:07 KST. 한 단계에서 거절이 30%를 넘으면 그 위는 돌리지 않는다. PC 분봉 수집기는 09:05~09:15 에 쉬어 측정과 겹치지 않게 한다.
+# 수집·자료·웹판은 건드리지 않는다.
+name: kis-rate-recheck
+on:
+  schedule:
+    - cron: '7 0 * * *'   # 매일 09:07 KST
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: kis-api
+  cancel-in-progress: false
+jobs:
+  rate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q requests cryptography
+      - name: 한도 측정
+        env:
+          TZ: Asia/Seoul
+          KIS_REAL_APP_KEY: ${{ secrets.KIS_REAL_APP_KEY }}
+          KIS_REAL_APP_SECRET: ${{ secrets.KIS_REAL_APP_SECRET }}
+        run: python kis/minute_range_probe.py --out /tmp/kis_probe --only rate || true
+      - name: 카카오톡
+        if: always()
+        env:
+          KAKAO_REST_KEY: ${{ secrets.KAKAO_REST_KEY }}
+          KAKAO_REFRESH_TOKEN: ${{ secrets.KAKAO_REFRESH_TOKEN }}
+          KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
+        run: |
+          mkdir -p /tmp/kis_probe; [ -s /tmp/kis_probe/notify.txt ] || echo "[KIS 호출 한도 재측정] 중간에 멈춤 — Actions 로그 확인" > /tmp/kis_probe/notify.txt
+          python kakao_send.py --file /tmp/kis_probe/notify.txt || echo "카카오톡 발송 실패"
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add -A state && git commit -m "카카오 토큰 연장" -q && git pull -q --rebase && git push -q || true
