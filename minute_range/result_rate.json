@@ -1,0 +1,28 @@
+{
+ "run_at": "2026-11-25T20:37:17",
+ "checks": {
+  "rate": [
+   {
+    "target_rps": 3,
+    "sent": 30,
+    "ok": 26,
+    "over_EGW00201": 4,
+    "other": {},
+    "ok_per_sec": 2.6,
+    "latency_p50": 0.387
+   },
+   {
+    "target_rps": 5,
+    "sent": 50,
+    "ok": 31,
+    "over_EGW00201": 19,
+    "other": {},
+    "ok_per_sec": 2.9,
+    "latency_p50": 0.583
+   }
+  ],
+  "max_clean_rps": null
+ },
+ "notes": [],
+ "api_calls": 80
+}
