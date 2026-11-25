@@ -29,8 +29,11 @@ class K:
         return bool(self.key and self.secret)
 
     def auth(self):
-        r = requests.post(f"{self.base}/oauth2/tokenP", json={
-            "grant_type": "client_credentials", "appkey": self.key, "appsecret": self.secret}, timeout=15).json()
+        try:
+            r = requests.post(f"{self.base}/oauth2/tokenP", json={
+                "grant_type": "client_credentials", "appkey": self.key, "appsecret": self.secret}, timeout=15).json()
+        except Exception as e:      # 모의 서버는 운영시간 밖에 JSON 이 아닌 응답을 줄 때가 있음
+            return False, repr(e)[:120]
         self.token = r.get("access_token")
         return self.token is not None, r.get("error_description") or r.get("msg1") or ""
 
