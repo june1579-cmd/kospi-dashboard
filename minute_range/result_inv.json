@@ -1,0 +1,642 @@
+{
+ "run_at": "2026-11-25T21:01:02",
+ "checks": {
+  "종목투자자_최근(FHKST01010900)": {
+   "msg": "0 MCA00000 정상처리 되었습니다.",
+   "output": {
+    "rows": 30,
+    "date_field": [
+     "stck_bsop_date"
+    ],
+    "dates": [
+     "20261015",
+     "20261125"
+    ],
+    "time_field": [],
+    "times": null,
+    "fields": [
+     "stck_bsop_date",
+     "stck_clpr",
+     "prdy_vrss",
+     "prdy_vrss_sign",
+     "prsn_ntby_qty",
+     "frgn_ntby_qty",
+     "orgn_ntby_qty",
+     "prsn_ntby_tr_pbmn",
+     "frgn_ntby_tr_pbmn",
+     "orgn_ntby_tr_pbmn",
+     "prsn_shnu_vol",
+     "frgn_shnu_vol",
+     "orgn_shnu_vol",
+     "prsn_shnu_tr_pbmn",
+     "frgn_shnu_tr_pbmn",
+     "orgn_shnu_tr_pbmn",
+     "prsn_seln_vol",
+     "frgn_seln_vol",
+     "orgn_seln_vol",
+     "prsn_seln_tr_pbmn",
+     "frgn_seln_tr_pbmn",
+     "orgn_seln_tr_pbmn"
+    ]
+   }
+  },
+  "시장투자자_시간별(FHPTJ04030000)": {
+   "msg": "0 MCA00000 정상처리 되었습니다.",
+   "output": {
+    "rows": 1,
+    "date_field": [],
+    "dates": null,
+    "time_field": [],
+    "times": null,
+    "fields": [
+     "frgn_seln_vol",
+     "frgn_shnu_vol",
+     "frgn_ntby_qty",
+     "frgn_seln_tr_pbmn",
+     "frgn_shnu_tr_pbmn",
+     "frgn_ntby_tr_pbmn",
+     "prsn_seln_vol",
+     "prsn_shnu_vol",
+     "prsn_ntby_qty",
+     "prsn_seln_tr_pbmn",
+     "prsn_shnu_tr_pbmn",
+     "prsn_ntby_tr_pbmn",
+     "orgn_seln_vol",
+     "orgn_shnu_vol",
+     "orgn_ntby_qty",
+     "orgn_seln_tr_pbmn",
+     "orgn_shnu_tr_pbmn",
+     "orgn_ntby_tr_pbmn",
+     "scrt_seln_vol",
+     "scrt_shnu_vol",
+     "scrt_ntby_qty",
+     "scrt_seln_tr_pbmn",
+     "scrt_shnu_tr_pbmn",
+     "scrt_ntby_tr_pbmn",
+     "ivtr_seln_vol",
+     "ivtr_shnu_vol",
+     "ivtr_ntby_qty",
+     "ivtr_seln_tr_pbmn",
+     "ivtr_shnu_tr_pbmn",
+     "ivtr_ntby_tr_pbmn",
+     "pe_fund_seln_tr_pbmn",
+     "pe_fund_seln_vol",
+     "pe_fund_ntby_vol",
+     "pe_fund_shnu_tr_pbmn",
+     "pe_fund_shnu_vol",
+     "pe_fund_ntby_tr_pbmn",
+     "bank_seln_vol",
+     "bank_shnu_vol",
+     "bank_ntby_qty",
+     "bank_seln_tr_pbmn"
+    ]
+   }
+  },
+  "외인기관_추정가집계(HHPTJ04160200)": {
+   "msg": "0 MCA00000 정상처리 되었습니다.",
+   "output2": {
+    "rows": 5,
+    "date_field": [
+     "bsop_hour_gb"
+    ],
+    "dates": [
+     "1",
+     "5"
+    ],
+    "time_field": [
+     "bsop_hour_gb"
+    ],
+    "times": [
+     "1",
+     "5"
+    ],
+    "fields": [
+     "bsop_hour_gb",
+     "frgn_fake_ntby_qty",
+     "orgn_fake_ntby_qty",
+     "sum_fake_ntby_qty"
+    ]
+   }
+  },
+  "종목프로그램_체결(FHPPG04650101)": {
+   "msg": "0 MCA00000 정상처리 되었습니다.",
+   "output": {
+    "rows": 30,
+    "date_field": [
+     "bsop_hour"
+    ],
+    "dates": [
+     "194801",
+     "200004"
+    ],
+    "time_field": [
+     "bsop_hour"
+    ],
+    "times": [
+     "194801",
+     "200004"
+    ],
+    "fields": [
+     "bsop_hour",
+     "stck_prpr",
+     "prdy_vrss",
+     "prdy_vrss_sign",
+     "prdy_ctrt",
+     "acml_vol",
+     "whol_smtn_seln_vol",
+     "whol_smtn_shnu_vol",
+     "whol_smtn_ntby_qty",
+     "whol_smtn_seln_tr_pbmn",
+     "whol_smtn_shnu_tr_pbmn",
+     "whol_smtn_ntby_tr_pbmn",
+     "whol_ntby_vol_icdc",
+     "whol_ntby_tr_pbmn_icdc"
+    ]
+   }
+  },
+  "종목투자자_일별(FHPTJ04160001)": {
+   "points": [
+    {
+     "days_back": 1,
+     "asked": "20261124",
+     "rows": 30,
+     "dates": [
+      "20261014",
+      "20261124"
+     ],
+     "msg": "0 MCA00000 정상처리 되었습니다."
+    },
+    {
+     "days_back": 30,
+     "asked": "20261026",
+     "rows": 30,
+     "dates": [
+      "20260909",
+      "20261026"
+     ],
+     "msg": "0 MCA00000 정상처리 되었습니다."
+    },
+    {
+     "days_back": 182,
+     "asked": "20260527",
+     "rows": 30,
+     "dates": [
+      "20260413",
+      "20260527"
+     ],
+     "msg": "0 MCA00000 정상처리 되었습니다."
+    },
+    {
+     "days_back": 365,
+     "asked": "20251125",
+     "rows": 30,
+     "dates": [
+      "20251015",
+      "20251125"
+     ],
+     "msg": "0 MCA00000 정상처리 되었습니다."
+    },
+    {
+     "days_back": 730,
+     "asked": "20241125",
+     "rows": 30,
+     "dates": [
+      "20241015",
+      "20241125"
+     ],
+     "msg": "0 MCA00000 정상처리 되었습니다."
+    },
+    {
+     "days_back": 1095,
+     "asked": "20231124",
+     "rows": 30,
+     "dates": [
+      "20231016",
+      "20231124"
+     ],
+     "msg": "0 MCA00000 정상처리 되었습니다."
+    },
+    {
+     "days_back": 1825,
+     "asked": "20211126",
+     "rows": 30,
+     "dates": [
+      "20211018",
+      "20211126"
+     ],
+     "msg": "0 MCA00000 정상처리 되었습니다."
+    },
+    {
+     "days_back": 3650,
+     "asked": "20161125",
+     "rows": 30,
+     "dates": [
+      "20161017",
+      "20161125"
+     ],
+     "msg": "0 MCA00000 정상처리 되었습니다."
+    }
+   ],
+   "earliest_seen": "20161017",
+   "fields": [
+    "stck_bsop_date",
+    "stck_clpr",
+    "prdy_vrss",
+    "prdy_vrss_sign",
+    "prdy_ctrt",
+    "acml_vol",
+    "acml_tr_pbmn",
+    "stck_oprc",
+    "stck_hgpr",
+    "stck_lwpr",
+    "frgn_ntby_qty",
+    "frgn_reg_ntby_qty",
+    "frgn_nreg_ntby_qty",
+    "prsn_ntby_qty",
+    "orgn_ntby_qty",
+    "scrt_ntby_qty",
+    "ivtr_ntby_qty",
+    "pe_fund_ntby_vol",
+    "bank_ntby_qty",
+    "insu_ntby_qty",
+    "mrbn_ntby_qty",
+    "fund_ntby_qty",
+    "etc_ntby_qty",
+    "etc_corp_ntby_vol",
+    "etc_orgt_ntby_vol",
+    "frgn_reg_ntby_pbmn",
+    "frgn_ntby_tr_pbmn",
+    "frgn_nreg_ntby_pbmn",
+    "prsn_ntby_tr_pbmn",
+    "orgn_ntby_tr_pbmn",
+    "scrt_ntby_tr_pbmn",
+    "pe_fund_ntby_tr_pbmn",
+    "ivtr_ntby_tr_pbmn",
+    "bank_ntby_tr_pbmn",
+    "insu_ntby_tr_pbmn",
+    "mrbn_ntby_tr_pbmn",
+    "fund_ntby_tr_pbmn",
+    "etc_ntby_tr_pbmn",
+    "etc_corp_ntby_tr_pbmn",
+    "etc_orgt_ntby_tr_pbmn"
+   ]
+  },
+  "시장투자자_일별(FHPTJ04040000)": {
+   "points": [
+    {
+     "days_back": 1,
+     "asked": "20261124",
+     "rows": 300,
+     "dates": [
+      "20250901",
+      "20261124"
+     ],
+     "msg": "0 MCA00000 정상처리 되었습니다."
+    },
+    {
+     "days_back": 30,
+     "asked": "20261026",
+     "rows": 300,
+     "dates": [
+      "20250731",
+      "20261026"
+     ],
+     "msg": "0 MCA00000 정상처리 되었습니다."
+    },
+    {
+     "days_back": 182,
+     "asked": "20260527",
+     "rows": 300,
+     "dates": [
+      "20250305",
+      "20260527"
+     ],
+     "msg": "0 MCA00000 정상처리 되었습니다."
+    },
+    {
+     "days_back": 365,
+     "asked": "20251125",
+     "rows": 300,
+     "dates": [
+      "20240828",
+      "20251125"
+     ],
+     "msg": "0 MCA00000 정상처리 되었습니다."
+    },
+    {
+     "days_back": 730,
+     "asked": "20241125",
+     "rows": 300,
+     "dates": [
+      "20230831",
+      "20241125"
+     ],
+     "msg": "0 MCA00000 정상처리 되었습니다."
+    },
+    {
+     "days_back": 1095,
+     "asked": "20231124",
+     "rows": 300,
+     "dates": [
+      "20220907",
+      "20231124"
+     ],
+     "msg": "0 MCA00000 정상처리 되었습니다."
+    },
+    {
+     "days_back": 1825,
+     "asked": "20211126",
+     "rows": 300,
+     "dates": [
+      "20200909",
+      "20211126"
+     ],
+     "msg": "0 MCA00000 정상처리 되었습니다."
+    },
+    {
+     "days_back": 3650,
+     "asked": "20161125",
+     "rows": 300,
+     "dates": [
+      "20150908",
+      "20161125"
+     ],
+     "msg": "0 MCA00000 정상처리 되었습니다."
+    }
+   ],
+   "earliest_seen": "20150908",
+   "fields": [
+    "stck_bsop_date",
+    "bstp_nmix_prpr",
+    "bstp_nmix_prdy_vrss",
+    "prdy_vrss_sign",
+    "bstp_nmix_prdy_ctrt",
+    "bstp_nmix_oprc",
+    "bstp_nmix_hgpr",
+    "bstp_nmix_lwpr",
+    "stck_prdy_clpr",
+    "frgn_ntby_qty",
+    "frgn_reg_ntby_qty",
+    "frgn_nreg_ntby_qty",
+    "prsn_ntby_qty",
+    "orgn_ntby_qty",
+    "scrt_ntby_qty",
+    "ivtr_ntby_qty",
+    "pe_fund_ntby_vol",
+    "bank_ntby_qty",
+    "insu_ntby_qty",
+    "mrbn_ntby_qty",
+    "fund_ntby_qty",
+    "etc_ntby_qty",
+    "etc_orgt_ntby_vol",
+    "etc_corp_ntby_vol",
+    "frgn_ntby_tr_pbmn",
+    "frgn_reg_ntby_pbmn",
+    "frgn_nreg_ntby_pbmn",
+    "prsn_ntby_tr_pbmn",
+    "orgn_ntby_tr_pbmn",
+    "scrt_ntby_tr_pbmn",
+    "ivtr_ntby_tr_pbmn",
+    "pe_fund_ntby_tr_pbmn",
+    "bank_ntby_tr_pbmn",
+    "insu_ntby_tr_pbmn",
+    "mrbn_ntby_tr_pbmn",
+    "fund_ntby_tr_pbmn",
+    "etc_ntby_tr_pbmn",
+    "etc_orgt_ntby_tr_pbmn",
+    "etc_corp_ntby_tr_pbmn"
+   ]
+  },
+  "종목프로그램_일별(FHPPG04650201)": {
+   "points": [
+    {
+     "days_back": 1,
+     "asked": "20261124",
+     "rows": 30,
+     "dates": [
+      "20261014",
+      "20261124"
+     ],
+     "msg": "0 MCA00000 정상처리 되었습니다."
+    },
+    {
+     "days_back": 30,
+     "asked": "20261026",
+     "rows": 30,
+     "dates": [
+      "20260909",
+      "20261026"
+     ],
+     "msg": "0 MCA00000 정상처리 되었습니다."
+    },
+    {
+     "days_back": 182,
+     "asked": "20260527",
+     "rows": 30,
+     "dates": [
+      "20260413",
+      "20260527"
+     ],
+     "msg": "0 MCA00000 정상처리 되었습니다."
+    },
+    {
+     "days_back": 365,
+     "asked": "20251125",
+     "rows": 30,
+     "dates": [
+      "20251015",
+      "20251125"
+     ],
+     "msg": "0 MCA00000 정상처리 되었습니다."
+    },
+    {
+     "days_back": 730,
+     "asked": "20241125",
+     "rows": 30,
+     "dates": [
+      "20241015",
+      "20241125"
+     ],
+     "msg": "0 MCA00000 정상처리 되었습니다."
+    },
+    {
+     "days_back": 1095,
+     "asked": "20231124",
+     "rows": 30,
+     "dates": [
+      "20231016",
+      "20231124"
+     ],
+     "msg": "0 MCA00000 정상처리 되었습니다."
+    },
+    {
+     "days_back": 1825,
+     "asked": "20211126",
+     "rows": 30,
+     "dates": [
+      "20211018",
+      "20211126"
+     ],
+     "msg": "0 MCA00000 정상처리 되었습니다."
+    },
+    {
+     "days_back": 3650,
+     "asked": "20161125",
+     "rows": 30,
+     "dates": [
+      "20161017",
+      "20161125"
+     ],
+     "msg": "0 MCA00000 정상처리 되었습니다."
+    }
+   ],
+   "earliest_seen": "20161017",
+   "fields": [
+    "stck_bsop_date",
+    "stck_clpr",
+    "prdy_vrss",
+    "prdy_vrss_sign",
+    "prdy_ctrt",
+    "acml_vol",
+    "acml_tr_pbmn",
+    "whol_smtn_seln_vol",
+    "whol_smtn_shnu_vol",
+    "whol_smtn_ntby_qty",
+    "whol_smtn_seln_tr_pbmn",
+    "whol_smtn_shnu_tr_pbmn",
+    "whol_smtn_ntby_tr_pbmn",
+    "whol_ntby_vol_icdc",
+    "whol_ntby_tr_pbmn_icdc2"
+   ]
+  },
+  "프로그램종합_일별(FHPPG04600001)": {
+   "points": [
+    {
+     "days_back": 1,
+     "asked": "20261124",
+     "rows": 1,
+     "dates": [
+      "20261124",
+      "20261124"
+     ],
+     "msg": "0 MCA00000 정상처리 되었습니다."
+    },
+    {
+     "days_back": 30,
+     "asked": "20261026",
+     "rows": 1,
+     "dates": [
+      "20261026",
+      "20261026"
+     ],
+     "msg": "0 MCA00000 정상처리 되었습니다."
+    },
+    {
+     "days_back": 182,
+     "asked": "20260527",
+     "rows": 1,
+     "dates": [
+      "20260527",
+      "20260527"
+     ],
+     "msg": "0 MCA00000 정상처리 되었습니다."
+    },
+    {
+     "days_back": 365,
+     "asked": "20251125",
+     "rows": 1,
+     "dates": [
+      "20251125",
+      "20251125"
+     ],
+     "msg": "0 MCA00000 정상처리 되었습니다."
+    },
+    {
+     "days_back": 730,
+     "asked": "20241125",
+     "rows": 1,
+     "dates": [
+      "20241125",
+      "20241125"
+     ],
+     "msg": "0 MCA00000 정상처리 되었습니다."
+    },
+    {
+     "days_back": 1095,
+     "asked": "20231124",
+     "rows": 1,
+     "dates": [
+      "20231124",
+      "20231124"
+     ],
+     "msg": "0 MCA00000 정상처리 되었습니다."
+    },
+    {
+     "days_back": 1825,
+     "asked": "20211126",
+     "rows": 1,
+     "dates": [
+      "20211126",
+      "20211126"
+     ],
+     "msg": "0 MCA00000 정상처리 되었습니다."
+    },
+    {
+     "days_back": 3650,
+     "asked": "20161125",
+     "rows": 1,
+     "dates": [
+      "20161125",
+      "20161125"
+     ],
+     "msg": "0 MCA00000 정상처리 되었습니다."
+    }
+   ],
+   "earliest_seen": "20161125",
+   "fields": [
+    "stck_bsop_date",
+    "arbt_entm_seln_vol",
+    "arbt_entm_seln_vol_rate",
+    "arbt_entm_seln_tr_pbmn",
+    "arbt_entm_seln_tr_pbmn_rate",
+    "arbt_onsl_seln_tr_pbmn",
+    "arbt_onsl_seln_tr_pbmn_rate",
+    "arbt_onsl_seln_vol",
+    "arbt_onsl_seln_vol_rate",
+    "arbt_smtn_seln_vol",
+    "arbt_smtm_seln_vol_rate",
+    "arbt_smtn_seln_tr_pbmn",
+    "arbt_smtm_seln_tr_pbmn_rate",
+    "nabt_entm_seln_vol",
+    "nabt_entm_seln_tr_pbmn",
+    "nabt_entm_seln_vol_rate",
+    "nabt_entm_seln_tr_pbmn_rate",
+    "nabt_onsl_seln_vol",
+    "nabt_onsl_seln_vol_rate",
+    "nabt_onsl_seln_tr_pbmn",
+    "nabt_onsl_seln_tr_pbmn_rate",
+    "nabt_smtn_seln_vol",
+    "nabt_smtm_seln_vol_rate",
+    "nabt_smtn_seln_tr_pbmn",
+    "nabt_smtm_seln_tr_pbmn_rate",
+    "whol_entm_seln_vol",
+    "whol_entm_seln_tr_pbmn",
+    "whol_entm_seln_vol_rate",
+    "whol_entm_seln_tr_pbmn_rate",
+    "whol_onsl_seln_vol",
+    "whol_onsl_seln_vol_rate",
+    "whol_onsl_seln_tr_pbmn",
+    "whol_onsl_seln_tr_pbmn_rate",
+    "whol_smtn_seln_vol",
+    "whol_seln_vol_rate",
+    "whol_smtn_seln_tr_pbmn",
+    "whol_seln_tr_pbmn_rate",
+    "arbt_entm_shnu_vol",
+    "arbt_entm_shnu_vol_rate",
+    "arbt_entm_shnu_tr_pbmn"
+   ]
+  }
+ },
+ "notes": [],
+ "api_calls": 36
+}
