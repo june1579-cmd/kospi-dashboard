@@ -420,8 +420,16 @@ def main():
         return float(np.cov(rs, ri)[0, 1] / np.var(ri, ddof=1)) if len(rs) > 100 else None
 
     # 0) 전체 종목 재선별
-    stU = SCR.stable_list(CAPd, NAMES, W, V, IW, wend, static)
-    A = SCR.universe_A(CAPd, NAMES, V, wend, wdays, static)
+    # 새 점수식 특성(주간 자료)을 먼저 만들어, 2024-11-15 뒤 상장 종목도 대상에 넣는다(2026-11-25 사용자 지시)
+    LIVE = QL.Live(log) if MODE != 'screen-keep' else None
+    if LIVE is not None:
+        _F = LIVE.F
+        CRASH_OK = set(_F.index[_F.crash_n >= 5]); YOUNG = set(_F.index[_F.nobs52 >= 40]) - set(static.cap0)
+    else:
+        CRASH_OK, YOUNG = set(), set()
+    stU = SCR.stable_list(CAPd, NAMES, W, V, IW, wend, static, extra_rec=CRASH_OK)
+    A = SCR.universe_A(CAPd, NAMES, V, wend, wdays, static, extra_listed=YOUNG)
+    log('상장 1~2년 종목: 52주 이상 거래', len(YOUNG), '· 안정 대상에 든 것', len(set(stU.index) & YOUNG), '· 분석 대상에 든 것', len(set(A.index) & YOUNG))
     shares = pd.concat([S[('CAP', m)]['상장주식수'].astype(float) for m in MK]); shares = shares[~shares.index.duplicated()]
     V52 = pd.concat([V[m].reindex(columns=c52).sum(axis=1) for m in MK]); V52 = V52[~V52.index.duplicated()]
     FR_END = pd.concat([pd.to_numeric(S[('FR', m)]['지분율'], errors='coerce') for m in MK if S[('FR', m)] is not None]); FR_END = FR_END[~FR_END.index.duplicated()]
@@ -436,7 +444,6 @@ def main():
     A['sc_big7'] = FL['big7'].reindex(A.index).round(2)
     A = A.sort_values(['sc_mix', 'sc_flow'], ascending=False, kind='stable'); A['sc_rank'] = range(1, len(A) + 1)
     # 0-1) 새 점수식(검증 통과분, ref/qv_formula.json) — 대상은 그대로, 점수·순위만 바꿈(2026-11-25 사용자 지시)
-    LIVE = QL.Live(log) if MODE != 'screen-keep' else None
     if LIVE and QF.get('st', {}).get('adopt'):
         f_ = QF['st']; s_, _ = LIVE.score(f_['keys'], list(stU.index), list(stU.index), f_.get('sector_neutral'))
         stU['st_score'] = pd.Series(s_).reindex(stU.index)
@@ -453,7 +460,10 @@ def main():
     GW = {}
     for c in A.index:
         r2, r25, r26 = r2_of(c), yr25.get(c), ytd_of(c)
-        why = [t for t, ok in (('2년 +30% 미만', r2 is not None and r2 >= 30), ('2025년 하락', r25 is not None and r25 > 0), (END[:4] + '년 하락', r26 is not None and r26 > 0)) if not ok]
+        if r2 is None and c in YOUNG:                     # 2024-11-15 뒤 상장: 상장 뒤(있는 기간) 수익률로 판정
+            cl = CL.get(c); fv = cl.first_valid_index() if cl is not None else None
+            r2 = float((cl.iloc[-1] / cl[fv] - 1) * 100) if (fv is not None and cl.index[-1] == END and cl[fv] > 0) else None
+        why = [t for t, ok in (('2년(상장 1~2년이면 상장 뒤) +30% 미만', r2 is not None and r2 >= 30), ('2025년 하락', r25 is not None and r25 > 0), (END[:4] + '년 하락', r26 is not None and r26 > 0)) if not ok]
         GW[c] = why
     G0 = [c for c in A.index if not GW[c]]
     CMP = {c: dict(name=str(NAMES.get(c, c)), market='코스피' if mk[c] == 'KOSPI' else '코스닥', sector=static.wics.get(c),
@@ -491,6 +501,7 @@ def main():
     log('방어1 계산 가능: 성장 조건', len(G), '/', len(G0), '· 다른 명단', sum(1 for c in X if c not in CMP))
     if len(G) < 100:
         raise RuntimeError(f'방어1 성장 종목 분포가 너무 적음({len(G)})')
+    GY = [c for c in G0 if c not in X and LIVE is not None and c in LIVE.F.index and QF.get('d1', {}).get('adopt')]   # 이전 식 입력이 없는 상장 1~2년 종목: 새 식으로만
     n = len(G)
 
     def pct(vals, hi=True):
@@ -523,9 +534,11 @@ def main():
                     d1_total=round(0.30 * d + 0.20 * h + 0.20 * g + 0.15 * fl + 0.15 * cm, 1))
     SC = {c: score(X[c]) for c in X}
     if LIVE and QF.get('d1', {}).get('adopt'):
-        f_ = QF['d1']; s_, _ = LIVE.score(f_['keys'], G, list(X), f_.get('sector_neutral'))
+        f_ = QF['d1']; s_, _ = LIVE.score(f_['keys'], G + GY, list(X) + GY, f_.get('sector_neutral'))
         for c in X: SC[c]['d1_total'] = s_[c]
-        log('방어1: 새 식', f_['keys'])
+        for c in GY: SC[c] = dict(d1_def=None, d1_hold=None, d1_grow=None, d1_flow=None, d1_com=None, d1_total=s_[c])
+        G = G + GY
+        log('방어1: 새 식', f_['keys'], '· 상장 1~2년(이전 식 입력 없음)', len(GY))
     order = sorted(G, key=lambda c: -SC[c]['d1_total'])
     RANK = {c: i + 1 for i, c in enumerate(order)}
     d1100 = order[:100]
@@ -674,6 +687,8 @@ def main():
             if c in CMP: r['d1_rank'] = None; nn['d1_rank'] = f'{asof} 입력 자료 부족'
             continue
         r.update(SC[c])
+        if c in GY:
+            for k in ('d1_def', 'd1_hold', 'd1_grow', 'd1_flow', 'd1_com'): nn[k] = '상장 1~2년 — 이전 식 입력 부족'
         if c in CMP:
             r['d1_rank'] = RANK[c]; nn.pop('d1_rank', None)
         else:

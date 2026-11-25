@@ -195,7 +195,7 @@ def flow_score(FL, A):
     return (num / den).round(1)
 
 
-def stable_list(CAP, NAMES, W, V, IW, wend, static):
+def stable_list(CAP, NAMES, W, V, IW, wend, static, extra_rec=()):
     """안정 관찰 순위(watch.py 와 같은 식). CAP·W·V·IW 는 시장별 dict."""
     c104, c52, c13 = wend[-104:], wend[-52:], wend[-13:]
     out = []
@@ -218,14 +218,14 @@ def stable_list(CAP, NAMES, W, V, IW, wend, static):
     U = pd.concat(out)
     U = U[U.turnover >= U.turnover.quantile(0.2)]
     U = U.join(static.rec)
-    U = U[U.n_rec >= 10]
+    U = U[(U.n_rec >= 10) | U.index.isin(list(extra_rec))]   # 급락 기록 10번 미만이어도 최근 2년 급락 주 5번 이상이면 넣음(2026-11-25, 새 점수식 검증 대상과 같게)
     U['s_vol'] = (-U.vol1y).rank(pct=True) * 100; U['s_beta'] = (-U.beta2y).rank(pct=True) * 100; U['s_rec'] = U.rec_rate.rank(pct=True) * 100
     U['st_score'] = (U.s_vol + U.s_beta + U.s_rec) / 3
     U = U.sort_values('st_score', ascending=False); U['st_rank'] = range(1, len(U) + 1)
     return U
 
 
-def universe_A(CAP, NAMES, V, wend, wdays, static):
+def universe_A(CAP, NAMES, V, wend, wdays, static, extra_listed=()):
     """분석 대상: 2024-11-15 이전 상장, 시총 500억 원 이상, 최근 20거래일 하루 평균 거래대금 1억 원 이상, 스팩·ETF·리츠 등 제외."""
     c4, nd = [], 0                       # 최근 거래일 20일 이상이 되도록 주를 거꾸로 모음
     for wb in reversed(wend):
@@ -237,6 +237,6 @@ def universe_A(CAP, NAMES, V, wend, wdays, static):
         U['name'] = NAMES.reindex(U.index); U['mcap'] = cap['시가총액'].astype(float); U['market'] = m
         U['tv20'] = V[m].reindex(U.index)[c4].sum(axis=1) / nd
         nm = U.name.astype(str)
-        U = U[U.name.notna() & ~nm.str.contains(EXCL) & (U.mcap >= 5e10) & (U.tv20 >= 1e8) & U.index.isin(static.cap0)]
+        U = U[U.name.notna() & ~nm.str.contains(EXCL) & (U.mcap >= 5e10) & (U.tv20 >= 1e8) & (U.index.isin(static.cap0) | U.index.isin(list(extra_listed)))]   # 2024-11-15 뒤 상장도 52주 중 40주 이상 거래면 넣음(2026-11-25)
         out.append(U)
     return pd.concat(out)
