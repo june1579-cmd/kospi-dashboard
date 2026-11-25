@@ -422,7 +422,7 @@ def load_universe(force=False):
         if (datetime.now() - datetime.fromisoformat(u["at"])).days < 7:
             return u
     stocks, groups = [], {}
-    for name, tail, specs, i_list, i_cap in (("kospi", 228, KOSPI_SPECS, 49, 65), ("kosdaq", 222, KOSDAQ_SPECS, 44, 60)):
+    for name, tail, specs, i_list, i_cap in (("kospi", 227, KOSPI_SPECS, 49, 65), ("kosdaq", 221, KOSDAQ_SPECS, 44, 60)):   # 공식 예제의 228/222 는 줄바꿈 포함
         raw = requests.get(f"https://new.real.download.dws.co.kr/common/master/{name}_code.mst.zip", timeout=60).content
         with zipfile.ZipFile(io.BytesIO(raw)) as z:
             text = z.read(z.namelist()[0]).decode("cp949", errors="replace")

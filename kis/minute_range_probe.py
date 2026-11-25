@@ -422,18 +422,34 @@ def run_inv(k, res, out):
     return 0
 
 
+def run_night(k, res, out):
+    """야간 선물 새벽 구간(24~30시)을 거슬러 받는 요청 방식 비교"""
+    C = res["checks"]; d = date(2026, 11, 24); n = date(2026, 11, 25)
+    for qd, hh in ((d, "300000"), (d, "280800"), (d, "260000"), (n, "060000"), (n, "040800"), (n, "020000"), (n, "000100")):
+        r = k.get("/uapi/domestic-futureoption/v1/quotations/inquire-time-fuopchartprice", "FHKIF03020200", {
+            "FID_COND_MRKT_DIV_CODE": "CM", "FID_INPUT_ISCD": "A01612", "FID_HOUR_CLS_CODE": "60",
+            "FID_PW_DATA_INCU_YN": "Y", "FID_FAKE_TICK_INCU_YN": "N",
+            "FID_INPUT_DATE_1": qd.strftime("%Y%m%d"), "FID_INPUT_HOUR_1": hh})
+        rows = rows_of(r)
+        keys = sorted((x.get("stck_bsop_date"), x.get("stck_cntg_hour")) for x in rows if x.get("stck_cntg_hour"))
+        v = {"rows": len(keys), "from": keys[0] if keys else None, "to": keys[-1] if keys else None, "msg": r.get("msg1")}
+        C[f"{qd}_{hh}"] = v; print(f"  요청 {qd} {hh}: {v}")
+    (out / "notify.txt").write_text("[KIS 야간선물 요청방식 시험 완료]", encoding="utf-8")
+    return 0
+
+
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--out", default="kis_probe")
     ap.add_argument("--only", default="", help="after = 애프터마켓 분봉만 시험")
     a = ap.parse_args()
     out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
-    if a.only in ("after", "un", "rate", "fut", "inv"):
+    if a.only in ("after", "un", "rate", "fut", "inv", "night"):
         res = {"run_at": datetime.now().isoformat(timespec="seconds"), "checks": {}, "notes": []}
         k = K("real")
         ok, msg = k.auth() if k.ok() else (False, "실전 키 없음")
         if not ok:
             (out / "notify.txt").write_text(f"[KIS 애프터마켓 분봉] 토큰 실패 {msg}"[:200], encoding="utf-8"); return 1
-        return {"after": run_after, "un": run_un, "rate": run_rate, "fut": run_fut, "inv": run_inv}[a.only](k, res, out)
+        return {"after": run_after, "un": run_un, "rate": run_rate, "fut": run_fut, "inv": run_inv, "night": run_night}[a.only](k, res, out)
     res = {"run_at": datetime.now().isoformat(timespec="seconds"), "checks": {}, "notes": []}
 
     real, mock = K("real"), K("mock")
