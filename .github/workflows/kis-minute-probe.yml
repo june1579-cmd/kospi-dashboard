@@ -1,0 +1,50 @@
+# KIS 과거 분봉 '받을 수 있는 범위'만 재는 시험(2026-11-25). 수동 실행만 — 예약 없음. 전체 수집 아님.
+# 시세 원자료는 저장하지 않고 날짜·건수·응답코드만 kis-probe 가지에 남긴다. main·웹판·자료는 건드리지 않는다.
+name: kis-minute-probe
+on:
+  workflow_dispatch:
+  push:
+    branches: [kis-probe-run]
+permissions:
+  contents: write
+concurrency:
+  group: kis-api
+  cancel-in-progress: false
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q requests cryptography
+      - name: 분봉 범위 시험
+        env:
+          TZ: Asia/Seoul
+          KIS_REAL_APP_KEY: ${{ secrets.KIS_REAL_APP_KEY }}
+          KIS_REAL_APP_SECRET: ${{ secrets.KIS_REAL_APP_SECRET }}
+          KIS_MOCK_APP_KEY: ${{ secrets.KIS_MOCK_APP_KEY }}
+          KIS_MOCK_APP_SECRET: ${{ secrets.KIS_MOCK_APP_SECRET }}
+        run: python kis/minute_range_probe.py --out /tmp/kis_probe || true
+      - name: 결과 저장(kis-probe 가지)
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          if git ls-remote --exit-code --heads origin kis-probe >/dev/null 2>&1; then
+            git fetch -q --depth 1 origin kis-probe && git worktree add -q kp FETCH_HEAD -B kis-probe
+          else
+            git worktree add -q --orphan -b kis-probe kp
+          fi
+          mkdir -p kp/minute_range && cp /tmp/kis_probe/* kp/minute_range/ 2>/dev/null || echo "결과 없음"
+          cd kp && git add -A && git commit -q -m "KIS 분봉 범위 시험 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" && git push -q origin kis-probe || echo "변경 없음"
+      - name: 카카오톡(요약)
+        if: always()
+        env:
+          KAKAO_REST_KEY: ${{ secrets.KAKAO_REST_KEY }}
+          KAKAO_REFRESH_TOKEN: ${{ secrets.KAKAO_REFRESH_TOKEN }}
+          KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
+        run: |
+          mkdir -p /tmp/kis_probe; [ -s /tmp/kis_probe/notify.txt ] || echo "[KIS 분봉 범위] 시험이 중간에 멈춤 — Actions 로그 확인" > /tmp/kis_probe/notify.txt
+          python kakao_send.py --file /tmp/kis_probe/notify.txt || echo "카카오톡 발송 실패"
+          git add -A state && git commit -m "카카오 토큰 연장" -q && git pull -q --rebase && git push -q || true
