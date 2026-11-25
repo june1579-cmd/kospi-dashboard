@@ -1,10 +1,10 @@
 {
- "run": "2026-11-24 20:23",
- "tag": "1840",
+ "run": "2026-11-25 14:50",
+ "tag": "0831",
  "kospi_last": "2026-11-24",
  "kofia_last": "2026-11-23",
  "vkospi_last": "2026-11-24",
- "night_last": "2026-11-24",
+ "night_last": "2026-11-25",
  "errors": [],
  "data_line": "정상",
  "health": {
@@ -16,14 +16,14 @@
  },
  "files": {
   "ai_feed": {
-   "sha256": "3d2d66b980c999fd42cf36a5387986343095feb31847ebf583e62ecf5faa6635",
-   "bytes": 2026,
+   "sha256": "cdef5c6ad37cf4db8f141de47e28d697f16c2db7f1f33a7c42e88a8c50e47f61",
+   "bytes": 2029,
    "last_date": "crwv_px"
   },
   "ai_feed_hist": {
-   "sha256": "b7fed3e7eda3b5c700eb040c77ac42dadb400f798d603936e59a62ba9b16e182",
-   "bytes": 1444,
-   "last_date": "2026-11-23"
+   "sha256": "8231941bea0373ce4214b203d9836d3dbc56975e35d682d51c546608a6ba8915",
+   "bytes": 1816,
+   "last_date": "2026-11-24"
   },
   "alarms": {
    "sha256": "d717a47ec1bef2a7daae7e12b381a3c6bb8ac7a05c9ba9c9d825508f2a3e78b5",
@@ -36,17 +36,17 @@
    "last_date": "전체"
   },
   "am_daily": {
-   "sha256": "5e719f22f67d33847236320bd7774350d903ea9130adfaa26e14cad34bdcc2d5",
-   "bytes": 237423,
+   "sha256": "2909df7af6511a27b97acce13fd206023ad5630916409cbab54bb8d37f60e411",
+   "bytes": 237430,
    "last_date": "2026-11-24"
   },
   "am_now": {
-   "sha256": "25e13a66824c9dcb5739925a62091c58afcff09e1fcc649239b32b2879cf09cd",
-   "bytes": 634,
+   "sha256": "372c8a83fa76b27808b15603ab247febc438ad2a34f858104a7410a48c19405b",
+   "bytes": 652,
    "last_date": "2026-11-24"
   },
   "am_stats": {
-   "sha256": "d5b347d2e2b5e2e214e30d0a7e61ba2997321a5b4640cadebd12de945c1ef7f2",
+   "sha256": "abd364d11411afe8f13d9714ed3f6312768584bd177b36f7c2e5bc0270d6fa01",
    "bytes": 1263,
    "last_date": "기준일"
   },
@@ -56,7 +56,7 @@
    "last_date": "2026-11-24"
   },
   "buy3": {
-   "sha256": "565768f5e0f60711a743f1439349cce6bf8e66c8a3943c41a3c76a4ad5881d57",
+   "sha256": "6f61ed1c47093185676dbb9ababe025a0290ded215740248a42d93e8c529a04b",
    "bytes": 147071,
    "last_date": "2026-10-16"
   },
@@ -136,9 +136,9 @@
    "last_date": "row"
   },
   "fx_daily": {
-   "sha256": "459fa1d23a94dcd27d70d713660cff036eade2169bdbba48e5d4b276ae8139c1",
-   "bytes": 572196,
-   "last_date": "2026-11-23"
+   "sha256": "741039d748a6963941133d69c62c6d18caa410a315761dc0a5194c4b408b0ecb",
+   "bytes": 572397,
+   "last_date": "2026-11-24"
   },
   "gap_table": {
    "sha256": "a765ac71269e9bb2cc40ebfe1c90fb1f1000587daa08acb1cc38a722744715b4",
@@ -146,7 +146,7 @@
    "last_date": "전체"
   },
   "health": {
-   "sha256": "8fd477d99dffd60e05cc4aaf200323e349edc0691bc852f457dbef081da4f11a",
+   "sha256": "167b35c3aa4f4e0925a0d2d658125b4ffe6eccfaf59f1410fb3c7962be33e860",
    "bytes": 1995,
    "last_date": "web_cards"
   },
@@ -186,14 +186,14 @@
    "last_date": "2026-11"
   },
   "night_fut": {
-   "sha256": "31066c2f575989110b2fc5c2cc0450281590b9baed36c1b7cfa3a0618fa4584e",
-   "bytes": 50255,
-   "last_date": "2026-11-23"
+   "sha256": "f0dcf635731a8e33fee092d52e0d39e313be782de1276c123661838ab142272b",
+   "bytes": 50477,
+   "last_date": "2026-11-24"
   },
   "overnight": {
-   "sha256": "f55c8313f2ebd3ad14c03eeac86e71a0e3bdb5c4a72d07f198b15c24a1a73418",
-   "bytes": 1173058,
-   "last_date": "2026-11-23"
+   "sha256": "6a951d29a798dd80930046321ef9ccd1262b243c7b8003b613930f057fcd62f9",
+   "bytes": 1173518,
+   "last_date": "2026-11-24"
   },
   "overnight_stats": {
    "sha256": "4263fb63b2236639d5c9330c0a64ef4b4d693d362eb9ea49c8422b2fc2b30791",
@@ -246,7 +246,7 @@
    "last_date": "2026-11-05"
   },
   "sell3": {
-   "sha256": "90fd9939bd03daeb1e36ad3ce038a00692b654749abe3acf9d35235e6a2dec4c",
+   "sha256": "a6fd6b20c86c30ab76c109027a11bf3a127718a159cb256d90898b6e67f17b44",
    "bytes": 748397,
    "last_date": "2026-11-24"
   },
@@ -256,7 +256,7 @@
    "last_date": "2026-11-24"
   },
   "trend_champ_rules": {
-   "sha256": "a70f7704ba10a66e1b74afa9f37ff4e1b6d516b111f8f032ab15a9946d5ee45c",
+   "sha256": "619b9f9c4bfa41a02982c3daeca0ea1c4b2d997fa8578629ca0486c97c734e03",
    "bytes": 5037,
    "last_date": "2026"
   },
