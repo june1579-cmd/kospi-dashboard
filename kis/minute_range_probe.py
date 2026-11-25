@@ -242,12 +242,12 @@ def run_un(k, res, out):
     return 0
 
 
-def run_rate(k, res, out):
+def run_rate(k, res, out, levels=None):
     """초당 호출 한도 실측: 단계별 속도로 10초씩 과거분봉 조회를 병렬로 보내고 성공·초과(EGW00201) 비율을 잰다.
        한 단계에서 초과 비율이 30%를 넘으면 그 위 단계는 돌리지 않는다."""
     from concurrent.futures import ThreadPoolExecutor
     import threading
-    levels = [2.5, 3, 4, 5, 6, 8, 10, 13, 16, 20, 25, 30, 40]
+    levels = levels or [2.5, 3, 4, 5, 6, 8, 10, 13, 16, 20, 25, 30, 40]
     sess = requests.Session()
     hdr = {"content-type": "application/json; charset=utf-8", "authorization": f"Bearer {k.token}",
            "appkey": k.key, "appsecret": k.secret, "tr_id": "FHKST03010230", "custtype": "P"}
@@ -293,7 +293,7 @@ def run_rate(k, res, out):
     res["api_calls"] = sum(r["sent"] for r in rows)
     (out / "result_rate.json").write_text(json.dumps(res, ensure_ascii=False, indent=1), encoding="utf-8")
     eff = max((r["ok_per_sec"] for r in rows), default=0)
-    msg = (f"[KIS 호출 한도 {datetime.now():%m/%d}]\n오류없는 최고 {best or '-'}건/초 · 실제 최대 성공 {eff}건/초\n"
+    msg = (f"[KIS {k.mode} 호출 한도 {datetime.now():%m/%d}]\n오류없는 최고 {best or '-'}건/초 · 실제 최대 성공 {eff}건/초\n"
            + " ".join(f"{r['target_rps']}:{r['ok']}/{r['sent']}" for r in rows))
     (out / "notify.txt").write_text(msg[:200], encoding="utf-8")
     print("\n" + msg)
@@ -443,6 +443,20 @@ def main():
     ap.add_argument("--only", default="", help="after = 애프터마켓 분봉만 시험")
     a = ap.parse_args()
     out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
+    if a.only == "ratemock":                # 모의투자 키: 같은 과거분봉이 나오는지 + 초당 한도
+        res = {"run_at": datetime.now().isoformat(timespec="seconds"), "checks": {}, "notes": []}
+        k = K("mock")
+        ok, msg = k.auth() if k.ok() else (False, "모의 키 없음")
+        print("모의 토큰:", ok, msg)
+        if not ok:
+            (out / "notify.txt").write_text(f"[KIS 모의서버 시험] 토큰 실패 {msg}"[:200], encoding="utf-8"); return 1
+        d = date(2026, 11, 24)
+        bars, calls, m = full_day(k, "005930", d, "J")
+        last = bars.get("153000")
+        print(f"모의 서버 삼성전자 {d} KRX 1분봉 {len(bars)}개 (실전은 621개), 15:30 종가 {last}, {m}")
+        res["checks"]["mock_bars"] = {"n": len(bars), "close1530": last}
+        time.sleep(3)
+        return run_rate(k, res, out, levels=[0.5, 1, 1.5, 2, 3, 4, 5, 6, 8])
     if a.only in ("after", "un", "rate", "fut", "inv", "night"):
         res = {"run_at": datetime.now().isoformat(timespec="seconds"), "checks": {}, "notes": []}
         k = K("real")
