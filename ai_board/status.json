@@ -1,33 +1,31 @@
 {
- "built_at": "2026-11-25T15:54:02+09:00",
- "trigger": "workflow_run dashboard-update",
- "marker": "2026-11-25T07:38:56+09:00 아침",
- "request_applied": false,
+ "built_at": "2026-11-25T16:13:11+09:00",
+ "trigger": "push ",
+ "marker": "2026-11-25T16:12:54+09:00 오후",
+ "request_applied": true,
  "ok": true,
  "errors": [],
  "notes": [],
  "us_last_session": "2026-11-24",
- "kr_last_session": "2026-11-24",
- "stale": [],
- "changed": [
-  "코스피 고점 대비 -45.08→-48.46(11.25)",
-  "미수 반대매매(하루) 111.47→136.75(11.24)",
-  "신용융자 잔고 1년 정점 대비 -32.85→-33.02(11.24)",
-  "외국인 코스피 20거래일 순매수 -14.1→-16.77(11.25)",
-  "투자자 예탁금 85.3조 원→82.0조 원(11.24)"
+ "kr_last_session": "2026-11-25",
+ "stale": [
+  {
+   "key": "vkospi",
+   "name": "VKOSPI",
+   "as_of": "2026-11-24",
+   "expected": "2026-11-25",
+   "level": "stale",
+   "why": "한국 마지막 거래일 종가(16:10 뒤)"
+  }
  ],
+ "changed": [],
  "files_changed": [
   "thresholds",
-  "indicators",
-  "market",
-  "margin",
-  "forced",
-  "macro",
-  "history",
-  "runs"
+  "runs",
+  "news"
  ],
  "files": {
-  "thresholds": "e295a7e39a5a75bda39e4adbae3d5edee9dd075c5dc5f3b94d079ab7765914ed",
+  "thresholds": "fb57ec718f01b5222525e21c9e24e472597bf1e6c8a34ea87df71bff4d849665",
   "indicators": "ef3e4425a17fbcaf3278ef1ad2011f5ecb61041542055132eec14bb9158d5f9b",
   "market": "940d20c0d2e541a58a0177e961f325651fca32e0efaf5c216fd823d25939a409",
   "margin": "fb0b2d8af6b11f9b65f14b90c68e4f0d477976800460defd575e190b9bd1ddf9",
@@ -35,8 +33,8 @@
   "macro": "8cef6cb51808f4b1606efe151bf3b4550286daf116e88746c225a15c762f3880",
   "events": "2da1c3f061b0d8a30305e319101b6cc72e77c8bbe1a8d8aa2e806b0006a2c160",
   "history": "c4e9f194b9ae15b23841e95db6c91af1924fffeec052c70bb767111ac3ea03f9",
-  "runs": "5571034545228b2d7b937385ef9feacc66c055c1cbd838274ace0a6ce237dcdc",
-  "news": "3b526ac3d00ce06dfb2f0d86ed6bdd0c2d991bf3414485fef7198bd05f9edc7a",
+  "runs": "b39f0ab6b0aeaf98792880eaf41a6226c0fab2b61fffaa6de736a47e70c4f9f8",
+  "news": "d00d47aa38687b94b0820e363c029975abbf3c5ec0f955556f9e00fc23067118",
   "scenarios": "0a76d773ea2dbd406498e38017ce08c0feadd77a001cd6d4ca2392882c2656eb",
   "episodes": "5fc42c60296afdbd24d0b7f7b1d774e337ab66d562bd9442f44a44b613b13e51"
  },
