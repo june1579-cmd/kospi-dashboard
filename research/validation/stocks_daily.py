@@ -186,7 +186,7 @@ def main():
     pf = os.path.join(OUT, 'meta.json')
     if os.path.exists(pf):
         prev = json.load(open(pf))
-    if not LOCAL and prev.get('asof_ymd') == END and prev.get('ok') and prev.get('mode') == 'screen' and '--force' not in sys.argv:
+    if not LOCAL and prev.get('asof_ymd') == END and prev.get('ok') and prev.get('mode') == 'screen-keep' and '--force' not in sys.argv:
         log('이미 같은 기준일로 만들어 둠 — 건너뜀')
         prev['checked_at'] = now.isoformat(timespec='seconds'); prev['skipped'] = True
         prev['marker'] = open(os.path.join(ROOT, 'stocks_run.txt')).read().strip() if os.path.exists(os.path.join(ROOT, 'stocks_run.txt')) else ''
@@ -442,11 +442,23 @@ def main():
     CMP = {c: dict(name=str(NAMES.get(c, c)), market='코스피' if mk[c] == 'KOSPI' else '코스닥', sector=static.wics.get(c),
                    profit_years=static.profit(c)[0], ret25=yr25.get(c)) for c in G0}
     st100, sc100 = list(stU.index[:100]), list(A.index[:100])
+    # 한 번 명단에 들어온 종목은 문제(상장폐지·거래정지)가 없으면 계속 남긴다(2026-11-25 사용자 지시)
+    hp = os.path.join(OUT, 'membership.json')
+    hist = json.load(open(hp)) if os.path.exists(hp) else {}
+    base0 = [r['code'] for r in json.load(open(os.path.join(REFD, 'stocks_base.json')))]   # 원래 명단(11/16)
+    pool = [c for c in dict.fromkeys(list(hist) + prev_codes + base0) if not hist.get(c, {}).get('dropped')]
+    c13 = wend[-13:]
+    def problem(c):
+        m = mk.get(c)
+        if m is None or c not in S[('CAP', m)].index: return '상장폐지·거래정지(KRX 시세 단면에 없음)'
+        w = W[m].reindex(columns=c13).loc[c] if c in W[m].index else None
+        if w is None or int((w == 0).sum()) >= 4: return '거래정지 의심(최근 13주 중 4주 이상 등락 없음)'
+        return None
     log('재선별: 안정 관찰 대상', len(stU), '· 분석 대상', len(A), '· 성장 조건', len(G0))
 
     # 1) 방어1 세부 점수(원래 식): 성장 조건 종목으로 분포를 만들고, 다른 명단 종목도 같은 기준으로
     X = {}
-    for c in dict.fromkeys(G0 + st100 + sc100):
+    for c in dict.fromkeys(G0 + st100 + sc100 + [c for c in pool if c in mk]):
         m = mk[c]; f = d1feat(c, m)
         shd = S[('SHORT', m)]
         x = dict(beta=f.get('beta'), mdd=f.get('mdd'), crash_day_beat=f.get('crash_day_beat'), beats=f.get('beats'), excess_avg=f.get('excess_avg'),
@@ -555,7 +567,11 @@ def main():
             eps_ = fundv(b or c, 'EPS'); nn['per'] = '적자' if (eps_ is not None and eps_ < 0) else '적자·없음'
         r['_n'] = nn
         return r
-    members = list(dict.fromkeys(st100 + sc100 + d1100))
+    today = list(dict.fromkeys(st100 + sc100 + d1100))
+    probs = {c: problem(c) for c in pool if c not in set(today)}
+    kept = [c for c in pool if c not in set(today) and not probs[c]]
+    dropped = [(c, probs[c]) for c in pool if c not in set(today) and probs[c]]
+    members = today + kept
     D = [make_row(c) for c in members]
     D.sort(key=lambda r: (-r['n_lists'], r['st_rank'] if r['st_rank'] is not None else 1e9))
     MDDC = []
@@ -646,30 +662,44 @@ def main():
     mdd_sum = dict(window=f'{mdd_base}~{END}', n=int(mc.mdd2y_daily.notna().sum()), deeper_5=int((mc['diff'] < -5).sum()), deeper_10=int((mc['diff'] < -10).sum()),
                    median_diff=round(float(mc['diff'].median()), 2))
     top = [(BY[c]['name'] if c in BY else CMP[c]['name'], SC[c]['d1_total']) for c in order[:5]]
-    # 들어오고 나간 종목 기록
-    hp = os.path.join(OUT, 'membership.json')
-    hist = json.load(open(hp)) if os.path.exists(hp) else {}
+    # 들어오고 나간 종목 기록(나가는 것은 문제가 생긴 종목뿐)
     prev = set(prev_codes); now_c = set(BY)
-    added = [c for c in members if c not in prev] if prev else []
-    removed = sorted(prev - now_c)
-    first_run = not hist
-    for c in now_c:   # 처음 돌 때(기록 없음) 이미 명단에 있던 종목은 11/16(원래 명단 날짜)부터로
-        if c in added or c not in hist:
-            hist[c] = dict(since=asof if (c in added or not prev or not first_run) else '2026-11-16', name=BY[c]['name'])
-    for c in removed: hist.pop(c, None)
-    for r in D: r['since'] = hist.get(r['code'], {}).get('since')
+    prev_lists = {r['code']: r.get('n_lists', 0) for r in _prev}
+    added = [c for c in members if c not in prev and c not in hist and c not in base0] if prev else []
+    restored = [c for c in members if c not in prev and c in base0 and c not in hist]   # 원래 명단에 있다가 재선별 첫날 빠졌던 종목 되살림
+    removed = [(c, why) for c, why in dropped if c in prev or c in hist]
+    left = [c for c in members if BY[c]['n_lists'] == 0 and prev_lists.get(c, 0) > 0]     # 오늘 세 명단 밖으로 밀렸지만 유지
+    back = [c for c in members if BY[c]['n_lists'] > 0 and c in prev_lists and prev_lists[c] == 0]
+    for c in members:
+        if c not in hist:
+            hist[c] = dict(since=('2026-11-16' if (c in base0 or not prev) else asof), name=BY[c]['name'])
+        hist[c]['name'] = BY[c]['name']; hist[c].pop('dropped', None)
+        if BY[c]['n_lists'] == 0: hist[c].setdefault('out_since', asof)
+        else: hist[c].pop('out_since', None)
+    for c, why in removed:
+        hist.setdefault(c, {})['dropped'] = f'{asof} {why}'
+    for r in D:
+        h = hist.get(r['code'], {})
+        r['since'] = h.get('since'); r['out_since'] = h.get('out_since')
+        if r['n_lists'] == 0:
+            r.setdefault('_n', {})['n_lists'] = f"{r['out_since']}부터 세 명단 1~100위 밖(전에 들어온 종목이라 유지)"
     json.dump(D, open(os.path.join(OUT, 'stocks.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
     json.dump(hist, open(hp, 'w'), ensure_ascii=False, indent=0)
     pm = dict(prev_names)
     if os.path.exists(os.path.join(OUT, 'prev_names.json')): pm.update(json.load(open(os.path.join(OUT, 'prev_names.json'))))
-    changes = dict(asof=asof, added=[[c, BY[c]['name'], ''.join(k for k, f in (('안', 'in_st'), ('점', 'in_sc'), ('방', 'in_d1')) if BY[c][f])] for c in added],
-                   removed=[[c, pm.get(c, c)] for c in removed])
+    lab = lambda c: ''.join(k for k, f in (('안', 'in_st'), ('점', 'in_sc'), ('방', 'in_d1')) if BY[c][f])
+    changes = dict(asof=asof, added=[[c, BY[c]['name'], lab(c)] for c in added],
+                   removed=[[c, pm.get(c, hist.get(c, {}).get('name', c)), why] for c, why in removed],
+                   left_lists=[[c, BY[c]['name']] for c in left], back_lists=[[c, BY[c]['name'], lab(c)] for c in back],
+                   restored=[[c, BY[c]['name']] for c in restored], n_today=len(today), n_kept=len(kept))
     json.dump({r['code']: r['name'] for r in D}, open(os.path.join(OUT, 'prev_names.json'), 'w'), ensure_ascii=False)
     with open(os.path.join(OUT, 'changes.csv'), 'a', encoding='utf-8') as fh:
         for c, nm_, ls in changes['added']: fh.write(f'{asof},들어옴,{c},{nm_},{ls}\n')
-        for c, nm_ in changes['removed']: fh.write(f'{asof},빠짐,{c},{nm_},\n')
-    log('들어온 종목', len(added), '· 빠진 종목', len(removed))
-    meta = dict(ok=True, mode='screen', asof=asof, asof_ymd=END, asof_short=D[0]['asof_short'], asof_fund=d_fund, run_at=now.isoformat(timespec='seconds'),
+        for c, nm_, why in changes['removed']: fh.write(f'{asof},빠짐,{c},{nm_},{why}\n')
+        for c, nm_ in changes['left_lists']: fh.write(f'{asof},명단 밖(유지),{c},{nm_},\n')
+        for c, nm_, ls in changes['back_lists']: fh.write(f'{asof},명단 복귀,{c},{nm_},{ls}\n')
+    log('오늘 세 명단', len(today), '· 유지', len(kept), '· 들어옴', len(added), '· 빠짐(문제)', len(removed), [x[:2] for x in removed][:5], '· 명단 밖으로', len(left), '· 복귀', len(back), '· 되살림', len(restored))
+    meta = dict(ok=True, mode='screen-keep', asof=asof, asof_ymd=END, asof_short=D[0]['asof_short'], asof_fund=d_fund, run_at=now.isoformat(timespec='seconds'),
                 marker=open(os.path.join(ROOT, 'stocks_run.txt')).read().strip() if os.path.exists(os.path.join(ROOT, 'stocks_run.txt')) else '',
                 n=len(D), d1_growth_n=len(G), universe=dict(stable=len(stU), analysis=len(A), growth=len(G0)), changes=changes, mdd_check=mdd_sum, d1_top5=top, warnings=WARN, minutes=round((time.time() - t0) / 60, 1), local=LOCAL)
     json.dump(meta, open(pf, 'w'), ensure_ascii=False, indent=1)
