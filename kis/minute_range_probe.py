@@ -187,18 +187,73 @@ def run_after(k, res, out):
     return 0
 
 
+def full_day(k, code, d, mkt):
+    """20:00 부터 08:00 까지 거슬러 하루치 전부 → {시각: (시가,고가,저가,종가,거래량)}"""
+    hh, bars, calls, msg = "200000", {}, 0, ""
+    while calls < 9:
+        r = k.get("/uapi/domestic-stock/v1/quotations/inquire-time-dailychartprice", "FHKST03010230", {
+            "FID_COND_MRKT_DIV_CODE": mkt, "FID_INPUT_ISCD": code, "FID_INPUT_HOUR_1": hh,
+            "FID_INPUT_DATE_1": d.strftime("%Y%m%d"), "FID_PW_DATA_INCU_YN": "N", "FID_FAKE_TICK_INCU_YN": ""})
+        calls += 1; msg = f"{r.get('rt_cd')} {r.get('msg1','')}".strip()
+        rows = [x for x in rows_of(r) if x.get("stck_bsop_date") == d.strftime("%Y%m%d")]
+        if not rows: break
+        for x in rows:
+            bars[x["stck_cntg_hour"]] = tuple(x.get(f) for f in ("stck_oprc", "stck_hgpr", "stck_lwpr", "stck_prpr", "cntg_vol"))
+        first = min(x["stck_cntg_hour"] for x in rows)
+        if first <= "080000": break
+        hh = (datetime.strptime(first, "%H%M%S") - timedelta(minutes=1)).strftime("%H%M%S")
+    return bars, calls, msg
+
+
+def span(bars, lo, hi):
+    ts = sorted(t for t in bars if lo <= t < hi)
+    return {"bars": len(ts), "first": ts[0] if ts else None, "last": ts[-1] if ts else None,
+            "vol": sum(int(bars[t][4] or 0) for t in ts)}
+
+
+def run_un(k, res, out):
+    d = prev_weekday(date.today() - timedelta(days=1))
+    C = res["checks"]; lines = []
+    codes = {"005930": "삼성전자", "069500": "KODEX200(ETF)", "950130": "엑세스바이오",
+             "033170": "시그네틱스", "001520": "동양", "900140": "엘브이엠씨"}
+    print(f"\n통합 vs KRX vs NXT — {d}")
+    for code, name in codes.items():
+        got = {m: full_day(k, code, d, m) for m in ["J", "UN", "NX"]}
+        row = {"name": name}
+        for m, (bars, calls, msg) in got.items():
+            row[m] = {"total": len(bars), "pre_0800_0900": span(bars, "080000", "090000"),
+                      "regular_0900_1530": span(bars, "090000", "153100"),
+                      "after_1530_2000": span(bars, "153100", "200100"), "calls": calls, "msg": msg}
+        # 정규장 같은 시각 봉끼리 가격·거래량 비교 (통합 vs KRX)
+        J, U = got["J"][0], got["UN"][0]
+        common = [t for t in J if t in U and "090000" <= t <= "153000"]
+        row["regular_close_diff_bars"] = sum(1 for t in common if J[t][3] != U[t][3])
+        row["regular_high_low_diff_bars"] = sum(1 for t in common if (J[t][1], J[t][2]) != (U[t][1], U[t][2]))
+        row["regular_common_bars"] = len(common)
+        row["regular_only_in_J"] = len([t for t in J if "090000" <= t <= "153000" and t not in U])
+        C[f"un_{code}"] = row
+        print(f"  {name} {code}: " + " | ".join(
+            f"{m} 전체{row[m]['total']} 장전{row[m]['pre_0800_0900']['bars']} 정규{row[m]['regular_0900_1530']['bars']} 장후{row[m]['after_1530_2000']['bars']}"
+            for m in ["J", "UN", "NX"]) + f" | 정규장 종가 다른 봉 {row['regular_close_diff_bars']}/{len(common)}")
+        lines.append(f"{name[:6]} J{row['J']['total']} UN{row['UN']['total']} NX{row['NX']['total']}")
+    res["api_calls"] = CALLS
+    (out / "result_un.json").write_text(json.dumps(res, ensure_ascii=False, indent=1), encoding="utf-8")
+    (out / "notify.txt").write_text(("[KIS 통합 vs KRX]\n" + "\n".join(lines))[:200], encoding="utf-8")
+    return 0
+
+
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--out", default="kis_probe")
     ap.add_argument("--only", default="", help="after = 애프터마켓 분봉만 시험")
     a = ap.parse_args()
     out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
-    if a.only == "after":
+    if a.only in ("after", "un"):
         res = {"run_at": datetime.now().isoformat(timespec="seconds"), "checks": {}, "notes": []}
         k = K("real")
         ok, msg = k.auth() if k.ok() else (False, "실전 키 없음")
         if not ok:
             (out / "notify.txt").write_text(f"[KIS 애프터마켓 분봉] 토큰 실패 {msg}"[:200], encoding="utf-8"); return 1
-        return run_after(k, res, out)
+        return run_after(k, res, out) if a.only == "after" else run_un(k, res, out)
     res = {"run_at": datetime.now().isoformat(timespec="seconds"), "checks": {}, "notes": []}
 
     real, mock = K("real"), K("mock")
