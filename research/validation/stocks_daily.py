@@ -30,7 +30,7 @@ KST = dt.timezone(dt.timedelta(hours=9))
 LOCAL = '--local' in sys.argv
 LOG, WARN = [], []
 SECRETS = [v for k, v in os.environ.items() if k in ('KRX_API_KEY', 'KRX_ID', 'KRX_PW') and v]
-D_START = '20241001'      # 일별 수정 종가 시작(방어1 창 2024-11-15 시작·급락 1구간 2024-10-29 포함)
+D_START = '20211101'      # 일별 수정 종가 시작(최대 낙폭 5년까지, 2026-11-25. 처음은 2024-10-01 — 방어1 창 2024-11-15·급락 1구간 2024-10-29 포함)
 W0 = '20241115'           # 방어1 베타·최대 낙폭·급락일 창 시작
 PREF = {'005935': '005930', '010955': '010950', '02826K': '028260', '03473K': '034730', '078935': '078930'}
 
@@ -294,6 +294,13 @@ def main():
     log('일별 수정 종가 ↔ KRX 주간 등락률 대조(최근 8주, 0.6%p 초과)', len(bad), '건')
     if len(bad) > 20: warn(f'일별·주간 등락률 불일치 {len(bad)}건 (예: {bad[:3]})')
     mdd_base = days[days < weeks[0][0]][-1]   # 조사 기간 시작 직전 종가(전고점 후보에 포함)
+    _e = dt.datetime.strptime(END, '%Y%m%d')
+    MDD_BASE = {}                              # 최대 낙폭 1·3·4·5년: 기준일에서 그 햇수만큼 앞선 날 직전 종가부터(2026-11-25 사용자 지시)
+    for _n in (1, 3, 4, 5):
+        _st = _e.replace(year=_e.year - _n) if not (_e.month == 2 and _e.day == 29) else _e.replace(year=_e.year - _n, day=28)
+        _b = days[days < _st.strftime('%Y%m%d')]
+        MDD_BASE[_n] = _b[-1] if len(_b) else None
+    log('최대 낙폭 창 시작', MDD_BASE, '· 2년', mdd_base)
     c104, c52 = wend[-104:], wend[-52:]
     IW = {}
     for m in ('KOSPI', 'KOSDAQ'):
@@ -330,6 +337,15 @@ def main():
             dd_ = s_ / s_.cummax() - 1; t = dd_.idxmin()
             f['mdd2y'] = float(dd_.min() * 100)
             f['mdd2y_peak'] = s_[:t].idxmax(); f['mdd2y_trough'] = t
+            fv = cl.first_valid_index()
+            if fv > mdd_base: f['mdd2y_since'] = fv
+            for n_, b_ in MDD_BASE.items():
+                if b_ is None: continue
+                s_ = cl[cl.index >= max(b_, fv)].dropna()
+                if len(s_) < 20: continue
+                dd_ = s_ / s_.cummax() - 1; t = dd_.idxmin()
+                f[f'mdd{n_}y'] = float(dd_.min() * 100); f[f'mdd{n_}y_peak'] = s_[:t].idxmax(); f[f'mdd{n_}y_trough'] = t
+                if fv > b_: f[f'mdd{n_}y_since'] = fv
         f['ret2y'] = float((g.iloc[-1] - 1) * 100) if r104.notna().sum() >= 90 else None
         f['ret1y'] = float(((1 + r52.fillna(0)).prod() - 1) * 100)
         f['ret_ytd'] = float(YTD[m][c]) if c in YTD[m].index else None
@@ -654,8 +670,10 @@ def main():
         if f:
             for k, v in f.items():
                 if k == 'mdd2y_weekly': continue
-                if k in ('mdd2y_peak', 'mdd2y_trough'):
+                if k.endswith('_peak') or k.endswith('_trough'):
                     r[k] = f'{v[:4]}-{v[4:6]}-{v[6:]}'; continue
+                if k.endswith('_since'):
+                    nn[k.replace('_since', '_x')] = f'상장 뒤({v[:4]}-{v[4:6]}-{v[6:]}~) 기준 — {k[3]}년이 안 됨'; continue
                 r[k] = round(v, 3) if v is not None else None
             MDDC.append(dict(code=c, name=r['name'], mdd2y_daily=round(f.get('mdd2y'), 2) if f.get('mdd2y') is not None else None,
                              mdd2y_weekly=round(f['mdd2y_weekly'], 2), peak=r.get('mdd2y_peak'), trough=r.get('mdd2y_trough')))
