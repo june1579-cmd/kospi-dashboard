@@ -1,0 +1,50 @@
+name: quality-validation
+# 새 평점 규칙(안전·수익률·덜 휘둘림·일관성) 검증. validation 가지에서 qv_run.txt 를 push 하면 돈다.
+# KRX 로그인 없음(이미 받은 주간 시세·단면 자료만 씀). OpenDART 주요 재무만 새로 받는다.
+on:
+  push:
+    branches: [validation]
+    paths:
+      - 'research/validation/qv_run.txt'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: quality-validation
+  cancel-in-progress: false
+jobs:
+  qv:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: validation
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -q requests pandas numpy scipy
+      - name: DART 주요 재무 수집
+        env:
+          DKEY__DART_API_KEY: ${{ secrets.DART_API_KEY }}
+          DKEY__OPENDART_API_KEY: ${{ secrets.OPENDART_API_KEY }}
+          DKEY__OPEN_DART_API_KEY: ${{ secrets.OPEN_DART_API_KEY }}
+          DKEY__DART_KEY: ${{ secrets.DART_KEY }}
+          DKEY__OPENDART_KEY: ${{ secrets.OPENDART_KEY }}
+          DKEY__OPEN_DART_KEY: ${{ secrets.OPEN_DART_KEY }}
+          DKEY__DART_CRTFC_KEY: ${{ secrets.DART_CRTFC_KEY }}
+          DKEY__CRTFC_KEY: ${{ secrets.CRTFC_KEY }}
+          DKEY__OPENDART: ${{ secrets.OPENDART }}
+          DKEY__DART: ${{ secrets.DART }}
+          DKEY__DART_TOKEN: ${{ secrets.DART_TOKEN }}
+          DKEY__OPENDART_TOKEN: ${{ secrets.OPENDART_TOKEN }}
+        run: python research/validation/qv_collect.py || true
+      - name: 검증 계산
+        run: python research/validation/qv.py
+      - name: 결과 저장
+        if: always()
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add research/validation/qv_out research/validation/raw/dart_main_*.csv.gz || true
+          git commit -q -m "새 평점 규칙 검증 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || echo "변경 없음"
+          for i in 1 2 3; do git pull --rebase -q origin validation && git push -q origin HEAD:validation && break; sleep 5; done
