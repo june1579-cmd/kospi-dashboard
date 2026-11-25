@@ -1,23 +1,20 @@
 {
- "built_at": "2026-11-26T07:41:29+09:00",
- "trigger": "push ",
+ "built_at": "2026-11-26T08:26:47+09:00",
+ "trigger": "workflow_run dashboard-update",
  "marker": "2026-11-26T07:41:05+09:00 아침",
- "request_applied": true,
+ "request_applied": false,
  "ok": true,
  "errors": [],
  "notes": [],
  "us_last_session": "2026-11-25",
  "kr_last_session": "2026-11-25",
  "stale": [],
- "changed": [],
+ "changed": [
+  "WTI 유가 84.15달러→83.90달러(11.25)"
+ ],
  "files_changed": [
-  "thresholds",
-  "indicators",
   "macro",
-  "events",
-  "history",
-  "runs",
-  "news"
+  "runs"
  ],
  "files": {
   "thresholds": "50d8b0d0010f5ab4584dcc7b045f7aa464573c09311b32eae31c590cc6e74bb0",
@@ -25,10 +22,10 @@
   "market": "fb25f098d6458d3a84e09738beeca12292bafd62d79a83d660ccebd728a1d97a",
   "margin": "fb0b2d8af6b11f9b65f14b90c68e4f0d477976800460defd575e190b9bd1ddf9",
   "forced": "108d3efadca2c88cb1d1266dec9f80ac4ba7fa3c04e46f2b6ccc66b31a754cb0",
-  "macro": "d70e13c3222f9eff1bc5b35e017e22ca953661d9393481c9b4a8b1005f846f78",
+  "macro": "48e01865f7736322eb299c8bb6dfc87efc5516b3a7c0269d624206be1d3dadb3",
   "events": "78a10938b90b0b18a210fec3cb09276c37c6d20feb9fe493ac727a2eadef46d0",
   "history": "994c283453a90baa71cc3acc6c82c765a08f55e06512e62a0b1a530e2b74fedd",
-  "runs": "eea010456354ab06a29cbe31fee6bf79ca1362bd1798dacef5e4671fe2313bd6",
+  "runs": "946bba5e4ae1369e02299072dc69c770a9d481b24af0b8df57e7c05c642cdeda",
   "news": "77531a917baa9b74145966201ecd135397d7f14e60c68102c2d0379430fd6e3b",
   "scenarios": "0a76d773ea2dbd406498e38017ce08c0feadd77a001cd6d4ca2392882c2656eb",
   "episodes": "5fc42c60296afdbd24d0b7f7b1d774e337ab66d562bd9442f44a44b613b13e51"
