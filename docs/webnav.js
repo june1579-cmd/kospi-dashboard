@@ -11,6 +11,7 @@
     + '.webnav .wn-l{color:#9aa3ad;font-weight:500;font-size:12px;flex:none;margin-right:2px}'
     + '.webnav a{flex:none;color:#e6e8eb;text-decoration:none;border:1px solid #3a414b;border-radius:999px;padding:4px 11px;white-space:nowrap}'
     + '.webnav a:hover{border-color:#8a93a0}'
+    + '.webnav a:not([aria-current])::after{content:"\\2197";margin-left:4px;font-size:11px;opacity:.75}'
     + '.webnav a[aria-current="page"]{background:#e6e8eb;color:#1b1f24;border-color:#e6e8eb}'
     + 'html.has-webnav .webnav-page{display:none!important}';
   var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
@@ -20,7 +21,7 @@
   var nav = document.createElement('nav'); nav.id = 'webnav'; nav.className = 'webnav'; nav.setAttribute('aria-label', '웹판 바로가기');
   var lab = document.createElement('span'); lab.className = 'wn-l'; lab.textContent = '웹판'; nav.appendChild(lab);
   LINKS.forEach(function (l) {
-    var a = document.createElement('a'); a.href = BASE + l[0]; a.textContent = l[1];
+    var a = document.createElement('a'); a.href = BASE + l[0]; a.textContent = l[1]; a.title = l[1] + ' 웹판 열기 — ' + BASE + l[0];
     if (l[0] === cur) a.setAttribute('aria-current', 'page');
     nav.appendChild(a);
   });
