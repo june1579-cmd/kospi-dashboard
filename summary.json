@@ -1,12 +1,12 @@
 {
- "updated": "2026-11-25 12:54",
+ "updated": "2026-11-25 22:50",
  "started": "2026-11-24 15:50",
  "done": null,
  "sources": {
   "occ_flex": {
    "name": "OCC FLEX 미결제 보고서",
    "last": "2026-11-24",
-   "checked": "2026-11-25 12:53",
+   "checked": "2026-11-25 22:49",
    "err": null,
    "n": 1,
    "median_kst": "12:02",
@@ -22,7 +22,7 @@
   "occ_series": {
    "name": "OCC 시리즈 검색(SPY)",
    "last": "b7d773c1f742",
-   "checked": "2026-11-25 12:53",
+   "checked": "2026-11-25 22:49",
    "err": null,
    "n": 1,
    "median_kst": "12:02",
@@ -37,12 +37,12 @@
   },
   "yahoo": {
    "name": "야후 SPY 월물 미결제 합",
-   "last": "2026-12-18:3861950",
-   "checked": "2026-11-25 12:53",
+   "last": "2026-12-18:3655144",
+   "checked": "2026-11-25 22:49",
    "err": null,
-   "n": 2,
+   "n": 3,
    "median_kst": "12:02",
-   "range_kst": "03:54~12:02",
+   "range_kst": "03:54~21:58",
    "events": [
     {
      "value": "2026-12-18:3861258",
@@ -53,13 +53,18 @@
      "value": "2026-12-18:3861950",
      "first_seen": "2026-11-25 12:02",
      "prev_check": "2026-11-25 04:45"
+    },
+    {
+     "value": "2026-12-18:3655144",
+     "first_seen": "2026-11-25 21:58",
+     "prev_check": "2026-11-25 12:53"
     }
    ]
   },
   "optioncharts": {
    "name": "OptionCharts 기준일",
    "last": "Nov 24, 2026",
-   "checked": "2026-11-25 12:53",
+   "checked": "2026-11-25 22:49",
    "err": null,
    "n": 1,
    "median_kst": "12:02",
@@ -75,7 +80,7 @@
   "spotgamma": {
    "name": "SpotGamma 레벨 페이지",
    "last": "2026-11-24T14:45:05+00:00",
-   "checked": "2026-11-25 12:53",
+   "checked": "2026-11-25 22:49",
    "err": null,
    "n": 1,
    "median_kst": "03:54",
@@ -91,7 +96,7 @@
   "cboe_pc": {
    "name": "Cboe 풋/콜 날짜별 파일",
    "last": "2026-11-24",
-   "checked": "2026-11-25 12:53",
+   "checked": "2026-11-25 22:49",
    "err": null,
    "n": 1,
    "median_kst": "12:02",
@@ -107,7 +112,7 @@
   "cboe_vix": {
    "name": "Cboe VIX 이력 CSV",
    "last": "11/24/2026",
-   "checked": "2026-11-25 12:53",
+   "checked": "2026-11-25 22:49",
    "err": null,
    "n": 1,
    "median_kst": "12:02",
