@@ -5,7 +5,7 @@
  "asof_short": "2026-11-20",
  "asof_fund": "20261124",
  "run_at": "2026-11-24T20:26:24+09:00",
- "marker": "2026-11-24T20:25:52+09:00 예약 작업",
+ "marker": "2026-11-25T11:49:15+09:00 전체 종목 재선별 첫 실행",
  "n": 250,
  "d1_growth_n": 250,
  "mdd_check": {
@@ -46,5 +46,7 @@
  ],
  "warnings": [],
  "minutes": 1.1,
- "local": false
+ "local": false,
+ "checked_at": "2026-11-25T11:49:59+09:00",
+ "skipped": true
 }
