@@ -4,7 +4,7 @@
   "name": "KODEX 인버스",
   "times": 1.0,
   "note": "새로 받음",
-  "real_days": 4230,
+  "real_days": 4231,
   "unit_changes": 1,
   "real_from": "2009-09-17",
   "corr_with_futures": 0.988,
@@ -15,10 +15,10 @@
   "name": "KODEX 200선물인버스2X",
   "times": 2.0,
   "note": "새로 받음",
-  "real_days": 2493,
+  "real_days": 2494,
   "unit_changes": 3,
   "real_from": "2016-09-23",
-  "corr_with_futures": 0.9914,
+  "corr_with_futures": 0.9915,
   "eval_real_share": 0.934
  }
 }

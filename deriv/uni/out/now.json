@@ -1,14 +1,14 @@
 {
- "date": "2026-11-23",
- "made": "2026-11-24",
+ "date": "2026-11-24",
+ "made": "2026-11-25",
  "signals": {
   "IDX10|dBA|c1|buy|rule": false
  },
  "probs": {
-  "IDX20|all|ens": 0.86,
-  "IDX10|all|ens": 0.899,
-  "IDX5|all|ens": 0.879,
-  "FUT3|all|ens": 0.701,
-  "FUT1|all|ens": 0.579
+  "IDX20|all|ens": 0.923,
+  "IDX10|all|ens": 0.904,
+  "IDX5|all|ens": 0.902,
+  "FUT3|all|ens": 0.795,
+  "FUT1|all|ens": 0.655
  }
 }
