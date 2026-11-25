@@ -1,5 +1,5 @@
 {
- "built_at": "2026-11-26T06:53:36+09:00",
+ "built_at": "2026-11-26T07:38:38+09:00",
  "trigger": "workflow_run dashboard-update",
  "marker": "2026-11-25T19:38:49+09:00 저녁",
  "request_applied": false,
@@ -10,28 +10,23 @@
  "kr_last_session": "2026-11-25",
  "stale": [],
  "changed": [
-  "SOX 고점 대비 -39.65→-40.04(11.25)",
-  "미국 10년물 금리 4.92%→4.91%(11.24)",
-  "WTI 유가 82.05달러→84.08달러(11.25)"
+  "WTI 유가 84.08달러→84.15달러(11.25)"
  ],
  "files_changed": [
   "thresholds",
-  "indicators",
-  "market",
   "macro",
-  "history",
   "runs"
  ],
  "files": {
-  "thresholds": "4a9a05ea22d936ec292ff342b52490789c4e5b602192e031ca372584c06d21db",
+  "thresholds": "54c7b265990019b45432e0f4e46a5690f6618784c8fee63baa3b348f07c2eb54",
   "indicators": "e96724d91f5cd3cdd74a3342b404c36ea0c7fa6395e7d65378388272e7cb5fae",
   "market": "fb25f098d6458d3a84e09738beeca12292bafd62d79a83d660ccebd728a1d97a",
   "margin": "fb0b2d8af6b11f9b65f14b90c68e4f0d477976800460defd575e190b9bd1ddf9",
   "forced": "108d3efadca2c88cb1d1266dec9f80ac4ba7fa3c04e46f2b6ccc66b31a754cb0",
-  "macro": "8b6d90300084bd35678a256854c8c77abbf5fbf83d6a0b5055cb66d580f3cf99",
+  "macro": "19d5c57bbf66edcc4505bac3da820a6ac8bffde1f9111acddde70092e7a5e398",
   "events": "2da1c3f061b0d8a30305e319101b6cc72e77c8bbe1a8d8aa2e806b0006a2c160",
   "history": "6eb81e4f2b1623220b217409c8f472fdef5f98cf51b189356fa9c2c44123894e",
-  "runs": "912af617c3a72d58ff40f98cf47f609a4c5eb39d96408bb7433365c20f565edd",
+  "runs": "980be97f7e70dfd07178094e2cded8947f6e9fdf7abb8c8e9d40d715ad4285fa",
   "news": "c1bd2aee2571ee61353b5f201cb852a3d533180c3d694008ab9ad3321ade51da",
   "scenarios": "0a76d773ea2dbd406498e38017ce08c0feadd77a001cd6d4ca2392882c2656eb",
   "episodes": "5fc42c60296afdbd24d0b7f7b1d774e337ab66d562bd9442f44a44b613b13e51"
@@ -96,7 +91,7 @@
   "A+5 조건(7번 위험)": "7번 SOX·코스피 위험 → 제안 25/34/25/16"
  },
  "alert": {
-  "text": "[AI 경고판 11/26 06:53] 종합 1.81 주의 (위험 1·경고 2·주의 6·정상 1)\n단계: 7번 SOX·코스피 경고→위험\n측정값: SOX 고점 대비 경고→위험(−40.0%)\n조건: A+5 조건(7번 위험) 새로 생김: 7번 SOX·코스피 위험 → 제안 25/34/25/16\n원인: SOX 고점 대비 -39.65→-40.04(11.25)",
-  "kakao": "written"
+  "text": "",
+  "kakao": "none"
  }
 }
