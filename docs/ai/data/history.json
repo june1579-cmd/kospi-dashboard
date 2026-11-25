@@ -6014,5 +6014,21 @@
   "text": "−40.0%(11.25, 8,774.86)",
   "unit": "%",
   "src": "https://finance.yahoo.com/quote/%5ESOX/history/"
+ },
+ {
+  "date": "2026-11-25",
+  "key": "cds_coreweave",
+  "value": 1314,
+  "text": "1,314bp(11.25, 사상 최고 — 로이터 인용 2곳)",
+  "unit": "bp",
+  "src": "https://finance.yahoo.com/markets/stocks/articles/oracle-coreweave-face-stark-warning-162922864.html"
+ },
+ {
+  "date": "2026-11-25",
+  "key": "x_cds_oracle",
+  "value": 356,
+  "text": "오라클 5년 CDS 356bp(11.25, 사상 최고 — 로이터 인용 슈퍼파워 데일리 1곳; 야후 파이낸스는 '사상 최고'만)",
+  "unit": "bp",
+  "src": "https://superpowerdaily.com/posts/investors-push-ai-debt-insurance-costs-to-records-as-cash-flow-doubts-deepen"
  }
 ]
