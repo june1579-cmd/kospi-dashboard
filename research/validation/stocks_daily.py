@@ -186,7 +186,7 @@ def main():
     pf = os.path.join(OUT, 'meta.json')
     if os.path.exists(pf):
         prev = json.load(open(pf))
-    if not LOCAL and prev.get('asof_ymd') == END and prev.get('ok') and '--force' not in sys.argv:
+    if not LOCAL and prev.get('asof_ymd') == END and prev.get('ok') and prev.get('mode') == 'screen' and '--force' not in sys.argv:
         log('이미 같은 기준일로 만들어 둠 — 건너뜀')
         prev['checked_at'] = now.isoformat(timespec='seconds'); prev['skipped'] = True
         prev['marker'] = open(os.path.join(ROOT, 'stocks_run.txt')).read().strip() if os.path.exists(os.path.join(ROOT, 'stocks_run.txt')) else ''
@@ -667,7 +667,7 @@ def main():
         for c, nm_, ls in changes['added']: fh.write(f'{asof},들어옴,{c},{nm_},{ls}\n')
         for c, nm_ in changes['removed']: fh.write(f'{asof},빠짐,{c},{nm_},\n')
     log('들어온 종목', len(added), '· 빠진 종목', len(removed))
-    meta = dict(ok=True, asof=asof, asof_ymd=END, asof_short=D[0]['asof_short'], asof_fund=d_fund, run_at=now.isoformat(timespec='seconds'),
+    meta = dict(ok=True, mode='screen', asof=asof, asof_ymd=END, asof_short=D[0]['asof_short'], asof_fund=d_fund, run_at=now.isoformat(timespec='seconds'),
                 marker=open(os.path.join(ROOT, 'stocks_run.txt')).read().strip() if os.path.exists(os.path.join(ROOT, 'stocks_run.txt')) else '',
                 n=len(D), d1_growth_n=len(G), universe=dict(stable=len(stU), analysis=len(A), growth=len(G0)), changes=changes, mdd_check=mdd_sum, d1_top5=top, warnings=WARN, minutes=round((time.time() - t0) / 60, 1), local=LOCAL)
     json.dump(meta, open(pf, 'w'), ensure_ascii=False, indent=1)
