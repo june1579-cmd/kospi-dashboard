@@ -699,14 +699,18 @@ def main():
         c = r['code']; nn = r.setdefault('_n', {})
         for k in [k for k in nn if k.startswith('d1_') and k != 'd1_rank']:
             nn.pop(k)
+        if c not in SC and LIVE is not None and QF.get('d1', {}).get('adopt') and c in LIVE.F.index:
+            # 이전 식 입력이 모자란 종목(상장 기간이 짧음 등)도 새 식은 계산 가능 — 그날 성장 조건 종목 분포 기준
+            s_, _ = LIVE.score(QF['d1']['keys'], G, [c], QF['d1'].get('sector_neutral'))
+            SC[c] = dict(d1_def=None, d1_hold=None, d1_grow=None, d1_flow=None, d1_com=None, d1_total=s_[c]); GY = GY + [c]
         if c not in SC:
             for k in ('d1_total', 'd1_def', 'd1_hold', 'd1_grow', 'd1_flow', 'd1_com'):
-                r[k] = None; nn[k] = f'{asof} 입력 자료 부족'
-            if c in CMP: r['d1_rank'] = None; nn['d1_rank'] = f'{asof} 입력 자료 부족'
+                r[k] = None; nn[k] = f'자료 부족({asof} 방어1 계산 입력이 모자람)'
+            if c in CMP: r['d1_rank'] = None; nn['d1_rank'] = f'자료 부족({asof} 방어1 계산 입력이 모자람)'
             continue
         r.update(SC[c])
         if c in GY:
-            for k in ('d1_def', 'd1_hold', 'd1_grow', 'd1_flow', 'd1_com'): nn[k] = '상장 1~2년 — 이전 식 입력 부족'
+            for k in ('d1_def', 'd1_hold', 'd1_grow', 'd1_flow', 'd1_com'): nn[k] = '자료 부족(상장 기간이 짧아 이전 식 입력이 모자람)'
         if c in CMP:
             r['d1_rank'] = RANK[c]; nn.pop('d1_rank', None)
         else:
