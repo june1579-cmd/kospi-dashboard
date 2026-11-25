@@ -1,28 +1,38 @@
 {
- "run_at": "2026-11-25T20:37:17",
+ "run_at": "2026-11-25T21:26:30",
  "checks": {
+  "mock_bars": {
+   "n": 621,
+   "close1530": [
+    "189400",
+    "189400",
+    "189400",
+    "189400",
+    "1364367"
+   ]
+  },
   "rate": [
    {
-    "target_rps": 3,
-    "sent": 30,
-    "ok": 26,
-    "over_EGW00201": 4,
+    "target_rps": 0.5,
+    "sent": 5,
+    "ok": 5,
+    "over_EGW00201": 0,
     "other": {},
-    "ok_per_sec": 2.6,
-    "latency_p50": 0.387
+    "ok_per_sec": 0.6,
+    "latency_p50": 0.346
    },
    {
-    "target_rps": 5,
-    "sent": 50,
-    "ok": 31,
-    "over_EGW00201": 19,
+    "target_rps": 1,
+    "sent": 10,
+    "ok": 5,
+    "over_EGW00201": 5,
     "other": {},
-    "ok_per_sec": 2.9,
-    "latency_p50": 0.583
+    "ok_per_sec": 0.5,
+    "latency_p50": 0.751
    }
   ],
-  "max_clean_rps": null
+  "max_clean_rps": 0.5
  },
  "notes": [],
- "api_calls": 80
+ "api_calls": 15
 }
