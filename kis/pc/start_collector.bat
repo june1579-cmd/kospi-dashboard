@@ -9,9 +9,9 @@ echo ==========================================================
 if not exist state mkdir state
 if not exist logs mkdir logs
 
-rem ---- 0. .env must have keys ----
-if not exist ".env" (
-  echo [ERROR] .env file not found in this folder.
+rem ---- 0. settings.txt must have keys ----
+if not exist "settings.txt" if not exist ".env" (
+  echo [ERROR] settings.txt not found in this folder.
   pause
   exit /b 1
 )
@@ -53,7 +53,7 @@ rem ---- 3. check settings and connection (sends a KakaoTalk test) ----
 echo [3/5] Checking KIS connection and KakaoTalk alert ...
 ".venv\Scripts\python.exe" collector.py --check
 if errorlevel 1 (
-  echo [ERROR] Check failed. Open .env and fill KIS_REAL_APP_KEY / KIS_REAL_APP_SECRET / GITHUB_TOKEN.
+  echo [ERROR] Check failed. Open settings.txt and fill KIS_REAL_APP_KEY / KIS_REAL_APP_SECRET / GITHUB_TOKEN.
   pause
   exit /b 1
 )

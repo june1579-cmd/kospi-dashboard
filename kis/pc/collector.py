@@ -54,8 +54,8 @@ def setup_logging(console=True):
 
 def load_env():
     env = dict(os.environ)
-    f = BASE / ".env"
-    if f.exists():
+    for f in (BASE / "settings.txt", BASE / ".env"):          # 설정 파일: settings.txt (또는 .env)
+        if not f.exists(): continue
         for line in f.read_text(encoding="utf-8-sig").splitlines():
             line = line.strip()
             if line and not line.startswith("#") and "=" in line:
@@ -705,7 +705,7 @@ def main():
     env = load_env()
     miss = [k for k in ("KIS_REAL_APP_KEY", "KIS_REAL_APP_SECRET") if not env.get(k)]
     if miss:
-        print("[오류] .env 에 값이 없습니다:", ", ".join(miss)); return 2
+        print("[오류] settings.txt 에 값이 없습니다:", ", ".join(miss)); return 2
     if (STATE / "completed.txt").exists() and not (a.check or a.selftest):
         log.info("이미 수집 완료됨 — 종료"); return 0
 
