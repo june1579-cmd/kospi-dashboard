@@ -463,7 +463,7 @@ def main():
         if r2 is None and c in YOUNG:                     # 2024-11-15 뒤 상장: 상장 뒤(있는 기간) 수익률로 판정
             cl = CL.get(c); fv = cl.first_valid_index() if cl is not None else None
             r2 = float((cl.iloc[-1] / cl[fv] - 1) * 100) if (fv is not None and cl.index[-1] == END and cl[fv] > 0) else None
-        why = [t for t, ok in (('2년(상장 1~2년이면 상장 뒤) +30% 미만', r2 is not None and r2 >= 30), ('2025년 하락', r25 is not None and r25 > 0), (END[:4] + '년 하락', r26 is not None and r26 > 0)) if not ok]
+        why = [t for t, ok in (('2년(상장 1~2년이면 상장 뒤) +30% 미만', r2 is not None and r2 >= 30), ('2025년 하락', (r25 is not None and r25 > 0) or (r25 is None and c in YOUNG)), (END[:4] + '년 하락', r26 is not None and r26 > 0)) if not ok]
         GW[c] = why
     G0 = [c for c in A.index if not GW[c]]
     CMP = {c: dict(name=str(NAMES.get(c, c)), market='코스피' if mk[c] == 'KOSPI' else '코스닥', sector=static.wics.get(c),
