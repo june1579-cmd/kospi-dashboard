@@ -352,18 +352,88 @@ def run_fut(k, res, out):
     return 0
 
 
+def summarize(r):
+    """응답의 모든 output 묶음에서 행 수·날짜 범위·시각 범위·필드 이름을 뽑는다"""
+    out = {"msg": f"{r.get('rt_cd')} {r.get('msg_cd','')} {r.get('msg1','')}".strip()}
+    for key in ("output", "output1", "output2"):
+        v = r.get(key)
+        if v is None: continue
+        rows = v if isinstance(v, list) else [v]
+        rows = [x for x in rows if isinstance(x, dict)]
+        if not rows: out[key] = {"rows": 0}; continue
+        f = list(rows[0].keys())
+        dk = [k for k in f if "date" in k or "bsop" in k]
+        tk = [k for k in f if "hour" in k or "time" in k]
+        ds = sorted({x[dk[0]] for x in rows if dk and x.get(dk[0])})
+        ts = sorted({x[tk[0]] for x in rows if tk and x.get(tk[0])})
+        out[key] = {"rows": len(rows), "date_field": dk[:1], "dates": [ds[0], ds[-1]] if ds else None,
+                    "time_field": tk[:1], "times": [ts[0], ts[-1]] if ts else None, "fields": f[:40]}
+    return out
+
+
+def run_inv(k, res, out):
+    """투자자별·프로그램 매매 자료가 몇 분 단위로, 며칠 전까지 나오는지"""
+    C = res["checks"]; lines = []
+    y = prev_weekday(date.today() - timedelta(days=1))
+    Q = "/uapi/domestic-stock/v1/quotations/"
+    # 1) 날짜 없이 '오늘/최근'만 주는 것
+    for name, path, tr, params in [
+        ("종목투자자_최근(FHKST01010900)", "inquire-investor", "FHKST01010900",
+         {"FID_COND_MRKT_DIV_CODE": "J", "FID_INPUT_ISCD": "005930"}),
+        ("시장투자자_시간별(FHPTJ04030000)", "inquire-investor-time-by-market", "FHPTJ04030000",
+         {"FID_INPUT_ISCD": "999", "FID_INPUT_ISCD_2": "S001"}),
+        ("외인기관_추정가집계(HHPTJ04160200)", "investor-trend-estimate", "HHPTJ04160200",
+         {"MKSC_SHRN_ISCD": "005930"}),
+        ("종목프로그램_체결(FHPPG04650101)", "program-trade-by-stock", "FHPPG04650101",
+         {"FID_COND_MRKT_DIV_CODE": "J", "FID_INPUT_ISCD": "005930"}),
+    ]:
+        s = summarize(k.get(Q + path, tr, params)); C[name] = s; print(f"  {name}: {s}")
+        o = s.get("output2") or s.get("output") or s.get("output1") or {}
+        lines.append(f"{name.split('(')[0]} {o.get('rows','-')}행 {o.get('dates') or ''} {o.get('times') or ''}")
+    # 2) 날짜를 넣어 거슬러 볼 수 있는 것 — 1일·1달·반년·1·2·3·5·10년 전
+    offs = [1, 30, 182, 365, 730, 1095, 1825, 3650]
+    dated = [
+        ("종목투자자_일별(FHPTJ04160001)", "investor-trade-by-stock-daily", "FHPTJ04160001",
+         lambda d: {"FID_COND_MRKT_DIV_CODE": "J", "FID_INPUT_ISCD": "005930", "FID_INPUT_DATE_1": d,
+                    "FID_ORG_ADJ_PRC": "", "FID_ETC_CLS_CODE": ""}),
+        ("시장투자자_일별(FHPTJ04040000)", "inquire-investor-daily-by-market", "FHPTJ04040000",
+         lambda d: {"FID_COND_MRKT_DIV_CODE": "U", "FID_INPUT_ISCD": "0001", "FID_INPUT_DATE_1": d,
+                    "FID_INPUT_ISCD_1": "KSP", "FID_INPUT_DATE_2": d, "FID_INPUT_ISCD_2": "0001"}),
+        ("종목프로그램_일별(FHPPG04650201)", "program-trade-by-stock-daily", "FHPPG04650201",
+         lambda d: {"FID_COND_MRKT_DIV_CODE": "J", "FID_INPUT_ISCD": "005930", "FID_INPUT_DATE_1": d}),
+        ("프로그램종합_일별(FHPPG04600001)", "comp-program-trade-daily", "FHPPG04600001",
+         lambda d: {"FID_COND_MRKT_DIV_CODE": "J", "FID_MRKT_CLS_CODE": "K", "FID_INPUT_DATE_1": d,
+                    "FID_INPUT_DATE_2": d}),
+    ]
+    for name, path, tr, pf in dated:
+        pts = []; earliest = None
+        for off in offs:
+            d = prev_weekday(date.today() - timedelta(days=off)).strftime("%Y%m%d")
+            s = summarize(k.get(Q + path, tr, pf(d)))
+            o = s.get("output2") or s.get("output1") or s.get("output") or {}
+            pts.append({"days_back": off, "asked": d, "rows": o.get("rows"), "dates": o.get("dates"), "msg": s["msg"][:60]})
+            if o.get("dates"): earliest = min(earliest or "99999999", o["dates"][0])
+            print(f"  {name} {off}일 전 {d}: {o.get('rows')}행 {o.get('dates')} {s['msg'][:40]}")
+        C[name] = {"points": pts, "earliest_seen": earliest, "fields": (s.get('output2') or s.get('output1') or s.get('output') or {}).get("fields")}
+        lines.append(f"{name.split('(')[0]} 최초 {earliest}")
+    res["api_calls"] = CALLS
+    (out / "result_inv.json").write_text(json.dumps(res, ensure_ascii=False, indent=1), encoding="utf-8")
+    (out / "notify.txt").write_text(("[KIS 투자자·프로그램 자료 범위]\n" + "\n".join(lines))[:200], encoding="utf-8")
+    return 0
+
+
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--out", default="kis_probe")
     ap.add_argument("--only", default="", help="after = 애프터마켓 분봉만 시험")
     a = ap.parse_args()
     out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
-    if a.only in ("after", "un", "rate", "fut"):
+    if a.only in ("after", "un", "rate", "fut", "inv"):
         res = {"run_at": datetime.now().isoformat(timespec="seconds"), "checks": {}, "notes": []}
         k = K("real")
         ok, msg = k.auth() if k.ok() else (False, "실전 키 없음")
         if not ok:
             (out / "notify.txt").write_text(f"[KIS 애프터마켓 분봉] 토큰 실패 {msg}"[:200], encoding="utf-8"); return 1
-        return {"after": run_after, "un": run_un, "rate": run_rate, "fut": run_fut}[a.only](k, res, out)
+        return {"after": run_after, "un": run_un, "rate": run_rate, "fut": run_fut, "inv": run_inv}[a.only](k, res, out)
     res = {"run_at": datetime.now().isoformat(timespec="seconds"), "checks": {}, "notes": []}
 
     real, mock = K("real"), K("mock")
