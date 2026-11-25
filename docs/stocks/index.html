@@ -102,6 +102,11 @@ tr.wl td { background: var(--wl); }
 tr.grp td { background: var(--bg); color: var(--muted); font-size: 0.85em; font-weight: 600; text-align: left; padding: 0.35em 0.6em; }
 tr.grp td span { position: sticky; left: 0.6em; }
 tr.grp:hover td { background: var(--bg); }
+td.pin { position: sticky; z-index: 2; }
+td.pin.stick { z-index: 3; }
+tr.pin-last td { box-shadow: inset 0 -2px 0 var(--star); }
+thead th { z-index: 4; }
+thead .stick { z-index: 5; }
 td.nt { font-size: 0.85em; }
 td sup { color: var(--muted); font-size: 0.75em; margin-left: 1px; }
 .cols { display: flex; flex-wrap: wrap; gap: 5px; }
@@ -184,7 +189,7 @@ td sup { color: var(--muted); font-size: 0.75em; margin-left: 1px; }
       <li><b>*</b> 표시: 다른 기준으로 채운 값(우선주 PBR·PER은 보통주 주당 값 기준, 외국 기업 PBR·PER·배당은 OpenDART 자본·주당순이익·주당배당금 기준). 글자 위에 올리면 기준이 보입니다. 금융사의 흑자 연수·영업이익은 OpenDART 회사별 전체 재무제표로 채웠습니다.</li>
       <li><b>2022~2025년·2026년</b>: 각 해 첫 거래일부터 마지막 거래일까지 KRX 수정 등락률(2026년은 기준일까지). 그해 중간에 상장한 종목은 상장 뒤부터, 상장 전 해는 비어 있습니다.</li>
       <li><b>6/22~7/30·9/23~11/9</b>: 2026년 두 급락 구간 수익률. 안정 관찰 순위를 매길 때 쓴 기록에 들어 있는 값입니다.</li>
-      <li><b>관심목록</b>: 종목 이름 앞 ☆를 누르면 ★로 바뀌고 표 맨 위 '관심목록' 묶음에 들어갑니다. 어떤 칸으로 정렬해도 관심목록은 맨 위에 있고(묶음 안에서는 같은 기준으로 정렬), 명단·시장·업종·검색 조건과 상관없이 늘 보입니다. 아래 전체 명단의 원래 자리에도 그대로 남습니다. ★를 다시 누르면 빠집니다. 관심목록은 이 브라우저에 저장되어(웹판과 대시보드, 휴대폰과 컴퓨터는 따로) '처음 상태로'를 눌러도 지워지지 않습니다.</li>
+      <li><b>관심목록</b>: 종목 이름 앞 ☆를 누르면 ★로 바뀌고 표 맨 위 '관심목록' 묶음에 들어갑니다. 어떤 칸으로 정렬해도 관심목록은 맨 위에 있고(묶음 안에서는 같은 기준으로 정렬), 표를 아래로 내려도 제목 줄 바로 밑에 붙어 계속 보입니다(관심목록이 표 높이의 절반을 넘으면 같이 스크롤), 명단·시장·업종·검색 조건과 상관없이 늘 보입니다. 아래 전체 명단의 원래 자리에도 그대로 남습니다. ★를 다시 누르면 빠집니다. 관심목록은 이 브라우저에 저장되어(웹판과 대시보드, 휴대폰과 컴퓨터는 따로) '처음 상태로'를 눌러도 지워지지 않습니다.</li>
       <li>'좋은 쪽부터' 정렬은 순위는 작은 값, 점수·덜 빠짐·배당·수익률은 큰 값, 변동성·베타·PBR·공매도는 작은 값부터 놓습니다. 빈 값(—)은 항상 맨 아래로 갑니다.</li>
     </ul>
   </div>
@@ -332,6 +337,19 @@ td sup { color: var(--muted); font-size: 0.75em; margin-left: 1px; }
     const h = head.getBoundingClientRect().height + r.getBoundingClientRect().height * 20 + 2;
     const vh = window.innerHeight > 200 ? window.innerHeight * 0.92 : h;
     if (h > 40) tw.style.maxHeight = Math.max(240, Math.min(h, vh)) + 'px';
+    pinWL();
+  }
+  // 관심목록 줄을 표 제목 바로 아래에 붙여 둠(표를 내려도 보이게). 관심목록이 표 높이의 절반을 넘으면 같이 스크롤
+  function pinWL() {
+    const tw = $('tw'), rs = [...$('tbody').querySelectorAll('tr.wg, tr.wl')];
+    $('tbody').querySelectorAll('td.pin').forEach((td) => { td.classList.remove('pin'); td.style.top = ''; });
+    $('tbody').querySelectorAll('tr.pin-last').forEach((tr) => tr.classList.remove('pin-last'));
+    if (!rs.length) return;
+    const hh = rs.reduce((a, tr) => a + tr.getBoundingClientRect().height, 0);
+    if (tw.clientHeight && hh > tw.clientHeight * 0.5) return;
+    let top = $('thead').getBoundingClientRect().height;
+    rs.forEach((tr) => { tr.querySelectorAll('td').forEach((td) => { td.classList.add('pin'); td.style.top = top + 'px'; }); top += tr.getBoundingClientRect().height; });
+    rs[rs.length - 1].classList.add('pin-last');
   }
   // 글자 크기를 줄여 표 좌우가 한 화면에 들어오게(최소 8.5px, 그래도 넘치면 가로 스크롤)
   function fitWidth() {
@@ -418,9 +436,9 @@ td sup { color: var(--muted); font-size: 0.75em; margin-left: 1px; }
   function renderBody(keep) {
     const all = rows(), wr = watchRows(), vc = visible();
     const frag = document.createDocumentFragment();
-    const grp = (t) => { const tr = document.createElement('tr'); tr.className = 'grp'; const td = document.createElement('td'); td.colSpan = vc.length + 2; const sp = document.createElement('span'); sp.textContent = t; td.append(sp); tr.append(td); return tr; };
+    const grp = (t, wg) => { const tr = document.createElement('tr'); tr.className = 'grp' + (wg ? ' wg' : ''); const td = document.createElement('td'); td.colSpan = vc.length + 2; const sp = document.createElement('span'); sp.textContent = t; td.append(sp); tr.append(td); return tr; };
     if (wr.length) {
-      frag.append(grp('★ 관심목록 ' + wr.length + '종목 · 정렬해도 맨 위에 고정, 아래 명단에도 그대로 있음'));
+      frag.append(grp('★ 관심목록 ' + wr.length + '종목 · 정렬해도 맨 위에 고정, 표를 내려도 보임, 아래 명단에도 그대로 있음', true));
       wr.forEach((r, i) => frag.append(rowEl(r, i, vc, true)));
       frag.append(grp('전체 명단 ' + all.length + '종목'));
     }
