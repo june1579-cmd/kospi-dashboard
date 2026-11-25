@@ -1,5 +1,5 @@
 name: stocks-daily
-# 통합 명단(웹판 docs/stocks/stocks.json) 매일 갱신. validation 가지에 있고, research/validation/stocks_run.txt 가 push 되면 돈다
+# 통합 명단(웹판 docs/stocks/stocks.json) 매일 갱신 — 세 명단을 매일 전체 종목에서 다시 뽑음. validation 가지에 있고, research/validation/stocks_run.txt 가 push 되면 돈다
 # (Claude 예약 작업이 평일 20:25 KST 에 이 파일을 고쳐 올림). 결과는 validation 의 research/validation/stocks_out/ 와 main 의 docs/stocks/stocks.json.
 on:
   push:
@@ -34,6 +34,13 @@ jobs:
           git clone -q --depth 1 -b krx-lock "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}" "$RUNNER_TEMP/krxlock" || echo "KRX 줄: 받지 못함 — 줄 없이 진행"
           rc=0; if [ -f "$RUNNER_TEMP/krxlock/krx_lock.py" ]; then python3 "$RUNNER_TEMP/krxlock/krx_lock.py" acquire || rc=$?; fi
           if [ "$rc" = "3" ]; then echo "KRX 줄이 비지 않아 이번 실행은 로그인하지 않고 멈춤"; exit 1; fi
+      - name: 재선별 원자료(투자자별 일별 순매수·월말 외국인 보유율·업종)
+        env:
+          KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
+          KRX_ID: ${{ secrets.KRX_ID }}
+          KRX_PW: ${{ secrets.KRX_PW }}
+          COLLECT_MINUTES: '25'
+        run: python research/validation/screen_collect.py
       - name: 계산
         id: run
         env:
@@ -48,7 +55,7 @@ jobs:
         if: always()
         run: |
           git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
-          git add research/validation/stocks_out research/validation/raw/weekly research/validation/raw/dailyall
+          git add research/validation/stocks_out research/validation/raw/weekly research/validation/raw/dailyall research/validation/raw/nbday research/validation/raw/frm research/validation/raw/snap research/validation/screen_out
           git commit -q -m "통합 명단 매일 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || echo "변경 없음"
           for i in 1 2 3; do git pull --rebase -q origin validation && git push -q origin HEAD:validation && break; sleep 5; done
       - name: 웹판(main) 반영

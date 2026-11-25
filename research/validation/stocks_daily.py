@@ -15,6 +15,8 @@
 """
 import os, sys, json, time, traceback, datetime as dt
 import numpy as np, pandas as pd
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import screen as SCR
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 RAW = os.path.join(ROOT, 'raw'); REFD = os.path.join(ROOT, 'ref'); OUT = os.path.join(ROOT, 'stocks_out')
@@ -26,6 +28,13 @@ SECRETS = [v for k, v in os.environ.items() if k in ('KRX_API_KEY', 'KRX_ID', 'K
 D_START = '20241001'      # 일별 수정 종가 시작(방어1 창 2024-11-15 시작·급락 1구간 2024-10-29 포함)
 W0 = '20241115'           # 방어1 베타·최대 낙폭·급락일 창 시작
 PREF = {'005935': '005930', '010955': '010950', '02826K': '028260', '03473K': '034730', '078935': '078930'}
+
+
+def pref_base(c, name):
+    """우선주면 보통주 코드(끝자리를 0으로)."""
+    if c in PREF: return PREF[c]
+    if name and __import__('re').search(SCR.PREF_RE, str(name)): return c[:5] + '0'
+    return None
 
 
 def log(*a):
@@ -116,7 +125,8 @@ class Src:
             f = os.path.join(RAW, sub, f'{kind}_{m}_{day}.csv.gz')
             return self._codes(pd.read_csv(f, compression='gzip', index_col=0)) if os.path.exists(f) else None
         fn = {'CAP': self.stock.get_market_cap_by_ticker, 'FUND': self.stock.get_market_fundamental_by_ticker,
-              'FR': self.stock.get_exhaustion_rates_of_foreign_investment_by_ticker, 'SHORT': self.stock.get_shorting_balance_by_ticker}[kind]
+              'FR': self.stock.get_exhaustion_rates_of_foreign_investment_by_ticker, 'SHORT': self.stock.get_shorting_balance_by_ticker,
+              'SECT': self.stock.get_market_sector_classifications}[kind]
         return self._codes(self._get(f'{kind}_{m}_{day}', lambda: fn(day, m)))
 
     def netbuy(self, m, who, a, end):
@@ -156,8 +166,7 @@ def latest_ok(src, kind, m, days, end, col, back=6):
 # ------------------------------------------------------------------ 계산
 def main():
     t0 = time.time()
-    base = json.load(open(os.path.join(REFD, 'stocks_base.json')))
-    comp = json.load(open(os.path.join(REFD, 'composite.json'))); CMP = {r['code']: r for r in comp}
+    static = SCR.Static()
     sec = {r['sector']: r['lift'] for r in json.load(open(os.path.join(REFD, 'sectors.json')))}
     eps = json.load(open(os.path.join(REFD, 'episodes.json')))
     src = Src()
@@ -184,12 +193,6 @@ def main():
         json.dump(prev, open(pf, 'w'), ensure_ascii=False, indent=1)
         return
 
-    mk = {r['code']: ('KOSPI' if r['market'] == '코스피' else 'KOSDAQ') for r in base}
-    for c, r in CMP.items():
-        mk.setdefault(c, 'KOSPI' if r['market'] == '코스피' else 'KOSDAQ')
-    codes = list(dict.fromkeys([r['code'] for r in base] + list(CMP)))
-    log('종목', len(codes), '(통합 명단', len(base), '+ 방어1 성장 종목 중 명단 밖', len(codes) - len(base), ')')
-
     # 단면
     S = {}
     for m in ('KOSPI', 'KOSDAQ'):
@@ -199,6 +202,7 @@ def main():
         S[('SHORT', m)], dsh = latest_ok(src, 'SHORT', m, days, END, '비중', back=6)
         S[('dates', m)] = dict(cap=dcap, fund=dfund, fr=dfr, short=dsh)
         S[('FR0', m)] = src.static_fr(m, '20250102')
+        S[('SECT', m)] = src.snap('SECT', m, END)
         for who, a in (('기관합계', '20250102'), ('외국인', '20250102'), ('기관합계', '20260623')):
             S[('NB', m, who, a)] = src.netbuy(m, who, a, END)
         log(m, '단면 날짜', S[('dates', m)])
@@ -209,6 +213,10 @@ def main():
             elif v != END and k != 'short': warn(f'{m} {k} 단면은 {v} 값')
     d_short = max(v for v in (S[('dates', 'KOSPI')]['short'], S[('dates', 'KOSDAQ')]['short']) if v) if any(S[('dates', m)]['short'] for m in ('KOSPI', 'KOSDAQ')) else None
     d_fund = S[('dates', 'KOSPI')]['fund']
+    MK = ('KOSPI', 'KOSDAQ')
+    mk = {}
+    for m in MK:
+        for c in S[('CAP', m)].index: mk.setdefault(c, m)
 
     # 일별 수정 종가: KRX 전종목 일별 등락률을 이어 곱하고 기준일 종가에 맞춤
     dlist = [d for d in days if d >= D_START]
@@ -225,18 +233,24 @@ def main():
         if miss:
             raise RuntimeError(f'{m} 일별 전종목 시세 {len(miss)}일 못 받음: {miss[:5]}')
         RT[m] = pd.DataFrame(cols)
-    CL = {}
-    for c in codes:
-        m = mk[c]; R = RT[m]
-        if c not in R.index: continue
-        r = R.loc[c]; fv = r.first_valid_index()
-        if fv is None: continue
-        r = r[r.index >= fv].fillna(0) / 100
-        p = (1 + r).cumprod()
-        ce = CLOSE_END.get(m)
-        close_end = float(ce[c]) if (ce is not None and c in ce.index and ce[c] > 0) else None
-        CL[c] = p * (close_end / p.iloc[-1]) if close_end else p
-    log('일별 수정 종가(KRX)', len(CL), '/', len(codes), '·', dlist[0], '~', dlist[-1])
+    class LazyCL(dict):
+        """종목별 일별 수정 종가(KRX 전종목 일별 등락률을 이어 곱하고 기준일 종가에 맞춤). 처음 물을 때 만든다."""
+        def get(self, c, default=None):
+            if c not in self:
+                m = mk.get(c); R = RT.get(m) if m else None; v = None
+                if R is not None and c in R.index:
+                    r = R.loc[c]; fv = r.first_valid_index()
+                    if fv is not None:
+                        r = r[r.index >= fv].fillna(0) / 100
+                        p = (1 + r).cumprod()
+                        ce = CLOSE_END.get(m)
+                        close_end = float(ce[c]) if (ce is not None and c in ce.index and ce[c] > 0) else None
+                        v = p * (close_end / p.iloc[-1]) if close_end else p
+                self[c] = v
+            v = dict.get(self, c)
+            return default if v is None else v
+    CL = LazyCL()
+    log('일별 전종목 시세(KRX)', {m: RT[m].shape for m in MK}, '·', dlist[0], '~', dlist[-1])
 
     # 주간 전종목 수정 등락률(ISO 주, 원래 연구와 같은 파일) — 끝난 주는 raw/weekly 에 남기고, 기준일이 든 주는 그날 값만
     dd = pd.to_datetime(pd.Series(days))
@@ -245,19 +259,25 @@ def main():
     weeks = allw[-104:]
     wend = [b for _, b in weeks]
     wend_ix = [b for _, b in allw[-105:]]   # 지수 주간 수익률은 한 주 앞 종가부터
-    W = {}
+    W, V, NM = {}, {}, {}
+    wdays = {b: int(((days >= a) & (days <= b)).sum()) for a, b in weeks}
     for m in ('KOSPI', 'KOSDAQ'):
-        cols = {}
+        cols, cols_v = {}, {}
         for a, b in weeks:
             last = b == END
             x = src.pc(a, b, m, keep=None if last else f'weekly/W_{m}_{b}.csv.gz') if not (LOCAL and last) else src.pc(a, b, m, keep=f'weekly/W_{m}_{b}.csv.gz')
             if x is None or x.empty:
                 raise RuntimeError(f'{m} 주간 등락률 {a}~{b} 못 받음')
             cols[b] = x['등락률'].astype(float) / 100
-        W[m] = pd.DataFrame(cols)
+            if '거래대금' in x: cols_v[b] = pd.to_numeric(x['거래대금'], errors='coerce')
+            if '종목명' in x: NM.update(x['종목명'].astype(str).to_dict())
+        W[m] = pd.DataFrame(cols); V[m] = pd.DataFrame(cols_v)
     log('주간 등락률', len(wend), '주', wend[0], '~', wend[-1])
     bad = []
-    for c, cl in CL.items():
+    prev_codes = [r['code'] for r in json.load(open(os.path.join(OUT, 'stocks.json')))] if os.path.exists(os.path.join(OUT, 'stocks.json')) else []
+    for c in prev_codes:
+        cl = CL.get(c)
+        if cl is None or c not in mk: continue
         m = mk[c]
         if c not in W[m].index: continue
         s_ = cl.reindex(days).ffill()
@@ -283,8 +303,9 @@ def main():
         YTD[m] = y['등락률'].astype(float)
     # 방어1 2년 수익률(2024-11-15 종가 대비): KRX 기간 등락률은 2년 넘는 구간을 거부하므로 KRX 일별 수정 종가로 계산
     b0 = days[days < '20241118'][-1]
-    for m in ('KOSPI', 'KOSDAQ'):
-        R2[m] = pd.Series({c: (cl.iloc[-1] / cl[b0] - 1) * 100 for c, cl in CL.items() if mk[c] == m and b0 in cl.index and cl.index[-1] == END}, dtype=float)
+    def r2_of(c):
+        cl = CL.get(c)
+        return float((cl.iloc[-1] / cl[b0] - 1) * 100) if (cl is not None and b0 in cl.index and cl.index[-1] == END) else None
 
     def common(c, m):
         f = {}
@@ -329,8 +350,7 @@ def main():
                 b.append((c1.iloc[-1] / c0.iloc[-1] - 1) * 100 - (e['med_kospi'] if m == 'KOSPI' else e['med_kosdaq']))
         if b:
             f['beats'] = int(sum(x > 0 for x in b)); f['excess_avg'] = float(np.mean(b))
-        if c in R2[m].index:
-            f['ret2y_d1'] = float(R2[m][c])
+        f['ret2y_d1'] = r2_of(c)
         cap = S[('CAP', m)]
         sh = float(cap.at[c, '상장주식수']) if cap is not None and c in cap.index else None
         def nb(who, a):
@@ -343,9 +363,201 @@ def main():
         return f
 
     os.makedirs(OUT, exist_ok=True)
-    # 1) 통합 명단 공통 지표
-    D = json.loads(json.dumps(base)); MDDC = []
     asof = f'{END[:4]}-{END[4:6]}-{END[6:]}'
+    NAMES = pd.Series(NM)
+    CAPd = {m: S[('CAP', m)] for m in MK}
+    fu_all = pd.concat([S[('FUND', m)] for m in MK if S[('FUND', m)] is not None])
+    fu_all = fu_all[~fu_all.index.duplicated()]
+    alot = static.alot
+
+    def fundv(c, col):
+        return num(fu_all.at[c, col]) if c in fu_all.index and col in fu_all else None
+
+    def close_of(c):
+        cap = S[('CAP', mk[c])] if c in mk else None
+        return float(cap.at[c, '종가']) if cap is not None and c in cap.index else None
+
+    def val_pbr(c):
+        """PBR: KRX 단면 → 우선주는 보통주 BPS → 외국 기업은 OpenDART 지배주주 자본. (값, 기준 설명)"""
+        v = fundv(c, 'PBR')
+        if v: return v, None
+        b = pref_base(c, NAMES.get(c))
+        if b:
+            bps = fundv(b, 'BPS'); cl = close_of(c)
+            if bps and bps > 0 and cl: return round(cl / bps, 2), '보통주 BPS 기준'
+        eq = static.eq.get(c, {}).get(2025)
+        cap = S[('CAP', mk[c])] if c in mk else None
+        if eq and eq > 0 and cap is not None and c in cap.index:
+            return round(float(cap.at[c, '시가총액']) / eq, 2), '2025년 말 지배주주 자본 기준'
+        return None, None
+
+    def val_div(c):
+        """배당수익률: KRX 단면 → 없으면 OpenDART 2025 결산 주당배당금 ÷ 종가. (값, 기준 설명)"""
+        if c in fu_all.index and fundv(c, 'DIV') is not None: return fundv(c, 'DIV'), None
+        if alot is not None:
+            cl = close_of(c)
+            a = alot[(alot.code == c) & alot.se.fillna('').str.contains('주당 현금배당금') & alot.stock_knd.fillna('').str.contains('보통')]
+            a2 = alot[(alot.code == c) & alot.se.fillna('').str.contains('주당 현금배당금')]
+            if len(a) and cl:
+                dps = SCR.amt(a.thstrm.iloc[0])
+                if not np.isnan(dps): return (round(dps / cl * 100, 2) if dps > 0 else 0.0), '2025 결산 주당배당금 ÷ 기준일 종가(OpenDART)'
+            elif len(a2) and a2.thstrm.fillna('-').str.strip().eq('-').all():
+                return 0.0, '2025 결산 현금배당 없음(OpenDART)'
+        return None, None
+
+    def beta_daily(c):
+        cl = CL.get(c); m = mk.get(c)
+        if cl is None or m is None: return None
+        s_ = ix[m.lower()]; s_ = s_[s_.index >= W0]
+        cw = cl[cl.index >= W0]; j = cw.index.intersection(s_.index)
+        rs, ri = cw[j].pct_change().dropna(), s_[j].pct_change().dropna()
+        return float(np.cov(rs, ri)[0, 1] / np.var(ri, ddof=1)) if len(rs) > 100 else None
+
+    # 0) 전체 종목 재선별
+    stU = SCR.stable_list(CAPd, NAMES, W, V, IW, wend, static)
+    A = SCR.universe_A(CAPd, NAMES, V, wend, wdays, static)
+    shares = pd.concat([S[('CAP', m)]['상장주식수'].astype(float) for m in MK]); shares = shares[~shares.index.duplicated()]
+    V52 = pd.concat([V[m].reindex(columns=c52).sum(axis=1) for m in MK]); V52 = V52[~V52.index.duplicated()]
+    FR_END = pd.concat([pd.to_numeric(S[('FR', m)]['지분율'], errors='coerce') for m in MK if S[('FR', m)] is not None]); FR_END = FR_END[~FR_END.index.duplicated()]
+    FL = SCR.load_flows(END, list(days), {m: [c for c in A.index if A.at[c, 'market'] == m] for m in MK}, shares, ix, V52, FR_END, log)
+    A['sc_flow'] = SCR.flow_score(FL, A.index)
+    chk = []
+    for c in A.index:
+        b = beta_daily(c); dv = val_div(c)[0]; pb = val_pbr(c)[0]; py = static.profit(c)[0]
+        chk.append(int(b is not None and b < 0.6) + int(dv is not None and dv >= 2) + int(py == 4) + int(pb is not None and pb < 1.2))
+    A['sc_chk'] = chk
+    A['sc_mix'] = ((5 * A.sc_flow.fillna(0) + 5 * A.sc_chk * 25) / 10).round(2)
+    A['sc_big7'] = FL['big7'].reindex(A.index).round(2)
+    A = A.sort_values(['sc_mix', 'sc_flow'], ascending=False, kind='stable'); A['sc_rank'] = range(1, len(A) + 1)
+    yr25 = static.yr[2025]
+    def ytd_of(c):
+        m = mk.get(c); return float(YTD[m][c]) if (m and c in YTD[m].index) else None
+    GW = {}
+    for c in A.index:
+        r2, r25, r26 = r2_of(c), yr25.get(c), ytd_of(c)
+        why = [t for t, ok in (('2년 +30% 미만', r2 is not None and r2 >= 30), ('2025년 하락', r25 is not None and r25 > 0), (END[:4] + '년 하락', r26 is not None and r26 > 0)) if not ok]
+        GW[c] = why
+    G0 = [c for c in A.index if not GW[c]]
+    CMP = {c: dict(name=str(NAMES.get(c, c)), market='코스피' if mk[c] == 'KOSPI' else '코스닥', sector=static.wics.get(c),
+                   profit_years=static.profit(c)[0], ret25=yr25.get(c)) for c in G0}
+    st100, sc100 = list(stU.index[:100]), list(A.index[:100])
+    log('재선별: 안정 관찰 대상', len(stU), '· 분석 대상', len(A), '· 성장 조건', len(G0))
+
+    # 1) 방어1 세부 점수(원래 식): 성장 조건 종목으로 분포를 만들고, 다른 명단 종목도 같은 기준으로
+    X = {}
+    for c in dict.fromkeys(G0 + st100 + sc100):
+        m = mk[c]; f = d1feat(c, m)
+        shd = S[('SHORT', m)]
+        x = dict(beta=f.get('beta'), mdd=f.get('mdd'), crash_day_beat=f.get('crash_day_beat'), beats=f.get('beats'), excess_avg=f.get('excess_avg'),
+                 inst=f.get('inst'), frgn=f.get('frgn'), inst_crash=f.get('inst_crash'), frgn_ratio=f.get('frgn_ratio'), frc=f.get('frc'), ret2y=f.get('ret2y_d1'),
+                 div=(val_div(c)[0] or 0.0), pbr=val_pbr(c)[0], profit_years=static.profit(c)[0], ret25=yr25.get(c), ret26=ytd_of(c),
+                 short=float(shd.at[c, '비중']) if (shd is not None and c in shd.index and num(shd.at[c, '비중']) is not None) else None,
+                 kospi=m == 'KOSPI', sector=static.wics.get(c))
+        need = ('beta', 'mdd', 'crash_day_beat', 'beats', 'excess_avg', 'inst', 'frgn', 'inst_crash', 'frgn_ratio', 'frc', 'ret2y', 'ret25', 'ret26')
+        if any(x.get(k) is None for k in need):
+            continue
+        X[c] = x
+    G = [c for c in G0 if c in X]
+    log('방어1 계산 가능: 성장 조건', len(G), '/', len(G0), '· 다른 명단', sum(1 for c in X if c not in CMP))
+    if len(G) < 100:
+        raise RuntimeError(f'방어1 성장 종목 분포가 너무 적음({len(G)})')
+    n = len(G)
+
+    def pct(vals, hi=True):
+        vals = sorted(vals)
+        def P(v):
+            lo = int(np.searchsorted(vals, v, 'left')); up = int(np.searchsorted(vals, v, 'right'))
+            p = ((lo + max(up, lo + 1) - 1) / 2) / (n - 1) * 100
+            return p if hi else 100 - p
+        return P
+    R = [X[c] for c in G]
+    P = dict(beta=pct([x['beta'] for x in R], False), div=pct([x['div'] for x in R]), pbr=pct([x['pbr'] if x['pbr'] is not None else 99 for x in R], False),
+             r2=pct([x['ret2y'] for x in R]), r25=pct([x['ret25'] for x in R]), r26=pct([x['ret26'] for x in R]),
+             beats=pct([x['beats'] for x in R]), exc=pct([x['excess_avg'] for x in R]), mdd=pct([x['mdd'] for x in R]), cdb=pct([x['crash_day_beat'] for x in R]),
+             ic=pct([x['inst_crash'] for x in R]), cum=pct([x['inst'] + x['frgn'] for x in R]), frc=pct([x['frc'] for x in R]), fr=pct([x['frgn_ratio'] for x in R]))
+    ksh = sorted(x['short'] for x in R if x['kospi'] and x['short'] is not None)
+
+    def shscore(v, kospi):
+        if not kospi or v is None or len(ksh) < 2: return 50
+        below = int(np.searchsorted(ksh, v, 'left')); eq = int(np.searchsorted(ksh, v, 'right')) - below
+        return 100 - ((below + (max(eq, 1) - 1) / 2) / (len(ksh) - 1) * 100)
+
+    def score(x):
+        d = (P['beta'](x['beta']) + P['div'](x['div']) + P['pbr'](x['pbr'] if x['pbr'] is not None else 99) + (100 if x['profit_years'] == 4 else (x['profit_years'] or 0) * 25 * 0.6)) / 4
+        h = (P['beats'](x['beats']) + P['exc'](x['excess_avg']) + P['mdd'](x['mdd']) + P['cdb'](x['crash_day_beat'])) / 4
+        g = (P['r2'](x['ret2y']) + P['r25'](x['ret25']) + P['r26'](x['ret26'])) / 3
+        fl = (P['ic'](x['inst_crash']) * 2 + P['cum'](x['inst'] + x['frgn']) + P['frc'](x['frc'])) / 4
+        lift = sec.get(x['sector'])
+        cm = (P['fr'](x['frgn_ratio']) + shscore(x['short'], x['kospi']) + (50 if lift is None else min(100, lift / 3 * 100))) / 3
+        return dict(d1_def=round(d, 1), d1_hold=round(h, 1), d1_grow=round(g, 1), d1_flow=round(fl, 1), d1_com=round(cm, 1),
+                    d1_total=round(0.30 * d + 0.20 * h + 0.20 * g + 0.15 * fl + 0.15 * cm, 1))
+    SC = {c: score(X[c]) for c in X}
+    order = sorted(G, key=lambda c: -SC[c]['d1_total'])
+    RANK = {c: i + 1 for i, c in enumerate(order)}
+    d1100 = order[:100]
+
+    # 2) 통합 명단(세 명단 1~100위 합침)
+    rec, last2 = static.rec, static.last2
+    def st_reason(c):
+        nm = str(NAMES.get(c, '')); cap = S[('CAP', mk[c])]; mc = float(cap.at[c, '시가총액']) if c in cap.index else 0
+        t = []
+        if __import__('re').search(SCR.PREF_RE, nm): t.append('우선주')
+        if mc < 1e11: t.append('시총 1,000억 미만')
+        if not t and (c not in rec.index or rec.at[c, 'n_rec'] < 10): t.append('급락 기록 10번 미만')
+        return '·'.join(t) if t else '회전율 하위 20%·거래 부족'
+    def make_row(c):
+        m = mk[c]; nn = {}
+        r = dict(code=c, name=str(NAMES.get(c, c)), market='코스피' if m == 'KOSPI' else '코스닥')
+        sect = S[('SECT', m)]
+        r['sector'] = str(sect.at[c, '업종명']) if (sect is not None and c in sect.index and '업종명' in sect) else None
+        if c in stU.index:
+            r['st_rank'] = int(stU.at[c, 'st_rank']); r['st_score'] = round(float(stU.at[c, 'st_score']), 1)
+        else:
+            r['st_rank'] = None; r['st_score'] = None; nn['st_rank'] = f'{len(stU)}개 밖({st_reason(c)})'; nn['st_score'] = '—'
+        if c in A.index and A.at[c, 'sc_rank'] <= 300:
+            r['sc_rank'] = int(A.at[c, 'sc_rank'])
+            for k in ('sc_mix', 'sc_flow', 'sc_chk', 'sc_big7'):
+                v = A.at[c, k]; r[k] = None if pd.isna(v) else float(v)
+        else:
+            t = '300위 밖' if c in A.index else '분석 대상 밖'
+            for k in ('sc_rank', 'sc_mix', 'sc_flow', 'sc_chk', 'sc_big7'): r[k] = None; nn[k] = t
+        r['d1_rank'] = RANK.get(c)
+        if r['d1_rank'] is None:
+            nn['d1_rank'] = '성장 조건 밖' + (f"({'·'.join(GW[c])})" if GW.get(c) else ('(분석 대상 밖)' if c not in A.index else ''))
+        r['in_st'] = c in st100; r['in_sc'] = c in sc100; r['in_d1'] = c in d1100
+        r['n_lists'] = int(r['in_st']) + int(r['in_sc']) + int(r['in_d1']); r['st_top100'] = r['in_st']
+        if c in rec.index:
+            r['n_rec'] = float(rec.at[c, 'n_rec']); r['rec_rate'] = round(float(rec.at[c, 'rec_rate']) * 100, 3)
+        else:
+            r['n_rec'] = None; r['rec_rate'] = None; nn['rec_rate'] = '확인 불가'; nn['n_rec'] = '확인 불가'
+        for k, col in (('ret_0622', 'ret_0622'), ('ret_0923', 'ret_0923')):
+            v = last2.at[c, col] if (c in last2.index and col in last2) else np.nan
+            r[k] = None if pd.isna(v) else round(float(v) * 100, 2)
+        for y in (2022, 2023, 2024, 2025):
+            v = static.yr[y].get(c); r[f'ret_{y}'] = None if v is None or pd.isna(v) else float(v)
+            if r[f'ret_{y}'] is None and y < 2025: nn[f'ret_{y}'] = '상장 전'
+        base_c = pref_base(c, r['name']) or c
+        py, pnote = static.profit(base_c); r['profit_years'] = py
+        if py is None: nn['profit_years'] = pnote
+        r['op2025'] = static.op2025(base_c)
+        if r['op2025'] is None: nn['op2025'] = '확인 불가'
+        pb, pbn = val_pbr(c); r['pbr'] = pb
+        if pbn: nn['pbr_x'] = pbn
+        dv, dvn = val_div(c); r['div'] = dv
+        if dvn: nn['div_x'] = dvn
+        e = fundv(c, 'PER'); r['per'] = e if e else None
+        b = pref_base(c, r['name'])
+        if not r['per'] and b:
+            eps_ = fundv(b, 'EPS'); cl = close_of(c)
+            if eps_ and eps_ > 0 and cl: r['per'] = round(cl / eps_, 1); nn['per_x'] = '보통주 EPS 기준'
+        if not r['per']:
+            eps_ = fundv(b or c, 'EPS'); nn['per'] = '적자' if (eps_ is not None and eps_ < 0) else '적자·없음'
+        r['_n'] = nn
+        return r
+    members = list(dict.fromkeys(st100 + sc100 + d1100))
+    D = [make_row(c) for c in members]
+    D.sort(key=lambda r: (-r['n_lists'], r['st_rank'] if r['st_rank'] is not None else 1e9))
+    MDDC = []
     for r in D:
         c = r['code']; m = mk[c]; nn = r.setdefault('_n', {})
         cap, fu, fr, shd = S[('CAP', m)], S[('FUND', m)], S[('FR', m)], S[('SHORT', m)]
@@ -398,83 +610,9 @@ def main():
             warn(f'{r["name"]} 일별 종가 없음 — 수익률·변동성 이전 값')
         r['asof'] = asof; r['asof_short'] = f'{d_short[:4]}-{d_short[4:6]}-{d_short[6:]}' if d_short else None
 
-    # 2) 방어1 세부 점수: 성장 조건 250종목 + 명단 밖 종목, 원래 식(comp.py)
+
+    # 3) 방어1 칸
     BY = {r['code']: r for r in D}
-    X = {}
-    fallback = 0
-    for c in codes:
-        m = mk[c]; f = d1feat(c, m)
-        r = BY.get(c); o = CMP.get(c)
-        fu = S[('FUND', m)]
-        if r is not None:
-            div, pbr, py, r25, r26, short = r.get('div'), r.get('pbr'), r.get('profit_years'), r.get('ret_2025'), r.get('ret_ytd'), r.get('short')
-        else:
-            frow = fu.loc[c] if (fu is not None and c in fu.index) else None
-            div = num(frow['DIV']) if frow is not None else None
-            pbr = (num(frow['PBR']) or None) if frow is not None else None
-            py, r25 = o.get('profit_years'), o.get('ret25')
-            cf = common(c, m); r26 = cf.get('ret_ytd')
-            shd = S[('SHORT', m)]; short = float(shd.at[c, '비중']) if (shd is not None and c in shd.index and num(shd.at[c, '비중']) is not None) else None
-        x = dict(beta=f.get('beta'), mdd=f.get('mdd'), crash_day_beat=f.get('crash_day_beat'), beats=f.get('beats'), excess_avg=f.get('excess_avg'),
-                 inst=f.get('inst'), frgn=f.get('frgn'), inst_crash=f.get('inst_crash'), frgn_ratio=f.get('frgn_ratio'), frc=f.get('frc'), ret2y=f.get('ret2y_d1'),
-                 div=div if div is not None else 0.0, pbr=pbr, profit_years=py, ret25=r25, ret26=r26, short=short, kospi=m == 'KOSPI',
-                 sector=o['sector'] if o else None)
-        if LOCAL and o is not None and r is None and not f:
-            # 점검용: 원자료가 없는 성장 종목은 원래 입력값으로 분포를 채운다(운영에서는 쓰지 않음)
-            x.update(beta=o['beta'], mdd=o['mdd'], crash_day_beat=o['crash_day_beat'], beats=o['beats'], excess_avg=o['excess_avg'], inst=o['inst'], frgn=o['frgn'],
-                     inst_crash=o['inst_crash'], frgn_ratio=o['frgn_ratio'], frc=o['frgn_ratio_chg'], ret2y=o['ret2y'], ret26=o['ret26'], div=o['div'], pbr=o['pbr'], short=o.get('short'))
-            fallback += 1
-        need = ('beta', 'mdd', 'crash_day_beat', 'beats', 'excess_avg', 'inst', 'frgn', 'inst_crash', 'frgn_ratio', 'frc', 'ret2y', 'ret25', 'ret26')
-        miss = [k for k in need if x.get(k) is None]
-        if miss:
-            if o is not None or r is not None:
-                warn(f'방어1 입력 부족 {c} {(r or o).get("name")}: {",".join(miss)}')
-            continue
-        X[c] = x
-    G = [c for c in CMP if c in X]
-    # 점검: 방어1 최대 낙폭(2024-11-15 이후 일별, KRX)과 원래 분석 값(다음 금융 일별, 11/12 무렵까지) 대조
-    gc = pd.DataFrame([dict(code=c, name=CMP[c]['name'], mdd_krx=round(X[c]['mdd'], 2), mdd_orig=CMP[c]['mdd']) for c in G])
-    gc['diff'] = gc.mdd_krx - gc.mdd_orig
-    gc.sort_values('diff').to_csv(os.path.join(OUT, 'mdd_growth_check.csv'), index=False, encoding='utf-8-sig')
-    MDD_G = dict(n=len(gc), corr=round(float(gc.mdd_krx.corr(gc.mdd_orig)), 4), median_abs=round(float(gc['diff'].abs().median()), 2),
-                 over2=int((gc['diff'].abs() > 2).sum()), deeper_since=int((gc['diff'] < -2).sum()))
-    log('방어1 최대 낙폭 KRX ↔ 원래 값', MDD_G)
-    log('방어1 계산 가능: 성장 종목', len(G), '/ 250 · 명단 밖', sum(1 for c in X if c not in CMP), ('· 점검용 원래 값 대체 ' + str(fallback)) if fallback else '')
-    if len(G) < 200:
-        raise RuntimeError(f'방어1 성장 종목 분포가 너무 적음({len(G)})')
-    n = len(G)
-
-    def pct(vals, hi=True):
-        vals = sorted(vals)
-        def P(v):
-            lo = int(np.searchsorted(vals, v, 'left')); up = int(np.searchsorted(vals, v, 'right'))
-            p = ((lo + max(up, lo + 1) - 1) / 2) / (n - 1) * 100
-            return p if hi else 100 - p
-        return P
-    R = [X[c] for c in G]
-    P = dict(beta=pct([x['beta'] for x in R], False), div=pct([x['div'] for x in R]), pbr=pct([x['pbr'] if x['pbr'] is not None else 99 for x in R], False),
-             r2=pct([x['ret2y'] for x in R]), r25=pct([x['ret25'] for x in R]), r26=pct([x['ret26'] for x in R]),
-             beats=pct([x['beats'] for x in R]), exc=pct([x['excess_avg'] for x in R]), mdd=pct([x['mdd'] for x in R]), cdb=pct([x['crash_day_beat'] for x in R]),
-             ic=pct([x['inst_crash'] for x in R]), cum=pct([x['inst'] + x['frgn'] for x in R]), frc=pct([x['frc'] for x in R]), fr=pct([x['frgn_ratio'] for x in R]))
-    ksh = sorted(x['short'] for x in R if x['kospi'] and x['short'] is not None)
-
-    def shscore(v, kospi):
-        if not kospi or v is None or len(ksh) < 2: return 50
-        below = int(np.searchsorted(ksh, v, 'left')); eq = int(np.searchsorted(ksh, v, 'right')) - below
-        return 100 - ((below + (max(eq, 1) - 1) / 2) / (len(ksh) - 1) * 100)
-
-    def score(x):
-        d = (P['beta'](x['beta']) + P['div'](x['div']) + P['pbr'](x['pbr'] if x['pbr'] is not None else 99) + (100 if x['profit_years'] == 4 else (x['profit_years'] or 0) * 25 * 0.6)) / 4
-        h = (P['beats'](x['beats']) + P['exc'](x['excess_avg']) + P['mdd'](x['mdd']) + P['cdb'](x['crash_day_beat'])) / 4
-        g = (P['r2'](x['ret2y']) + P['r25'](x['ret25']) + P['r26'](x['ret26'])) / 3
-        fl = (P['ic'](x['inst_crash']) * 2 + P['cum'](x['inst'] + x['frgn']) + P['frc'](x['frc'])) / 4
-        lift = sec.get(x['sector'])
-        cm = (P['fr'](x['frgn_ratio']) + shscore(x['short'], x['kospi']) + (50 if lift is None else min(100, lift / 3 * 100))) / 3
-        return dict(d1_def=round(d, 1), d1_hold=round(h, 1), d1_grow=round(g, 1), d1_flow=round(fl, 1), d1_com=round(cm, 1),
-                    d1_total=round(0.30 * d + 0.20 * h + 0.20 * g + 0.15 * fl + 0.15 * cm, 1))
-    SC = {c: score(X[c]) for c in X}
-    order = sorted(G, key=lambda c: -SC[c]['d1_total'])
-    RANK = {c: i + 1 for i, c in enumerate(order)}
     tot = sorted((SC[c]['d1_total'] for c in G), reverse=True)
     for r in D:
         c = r['code']; nn = r.setdefault('_n', {})
@@ -490,7 +628,7 @@ def main():
             r['d1_rank'] = RANK[c]; nn.pop('d1_rank', None)
         else:
             pos = 1 + sum(1 for t in tot if t > SC[c]['d1_total'])
-            bnote = '성장 조건 밖 종목이라 같은 식·같은 기준(그날 성장 종목 250개 분포)으로 KRX 자료에서 계산'
+            bnote = '성장 조건 밖 종목이라 같은 식·같은 기준(그날 성장 조건 종목 분포)으로 KRX 자료에서 계산'
             nn['d1_total_x'] = f'{bnote}. 성장 종목 사이에 넣으면 {pos}위 수준'
             for k in ('d1_def', 'd1_hold', 'd1_grow', 'd1_flow'): nn[k + '_x'] = bnote
             nn['d1_com_x'] = bnote + '. 업종 배율은 원래 업종 분류(WICS)가 없어 원래 규칙대로 중립 50' + ('' if r['market'] == '코스피' else ', 코스닥 공매도 잔고도 원래 규칙대로 중립 50')
@@ -507,9 +645,31 @@ def main():
     mdd_sum = dict(window=f'{mdd_base}~{END}', n=int(mc.mdd2y_daily.notna().sum()), deeper_5=int((mc['diff'] < -5).sum()), deeper_10=int((mc['diff'] < -10).sum()),
                    median_diff=round(float(mc['diff'].median()), 2))
     top = [(BY[c]['name'] if c in BY else CMP[c]['name'], SC[c]['d1_total']) for c in order[:5]]
+    # 들어오고 나간 종목 기록
+    hp = os.path.join(OUT, 'membership.json')
+    hist = json.load(open(hp)) if os.path.exists(hp) else {}
+    prev = set(prev_codes); now_c = set(BY)
+    added = [c for c in members if c not in prev] if prev else []
+    removed = sorted(prev - now_c)
+    for c in now_c:   # 처음 돌 때(기록 없음) 이미 명단에 있던 종목은 11/16(원래 명단 날짜)부터로
+        if c in added or c not in hist:
+            hist[c] = dict(since=asof if (c in added or not prev) else ('2026-11-16' if not hist else asof), name=BY[c]['name'])
+    for c in removed: hist.pop(c, None)
+    for r in D: r['since'] = hist.get(r['code'], {}).get('since')
+    json.dump(D, open(os.path.join(OUT, 'stocks.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
+    json.dump(hist, open(hp, 'w'), ensure_ascii=False, indent=0)
+    pm = {}
+    if os.path.exists(os.path.join(OUT, 'prev_names.json')): pm = json.load(open(os.path.join(OUT, 'prev_names.json')))
+    changes = dict(asof=asof, added=[[c, BY[c]['name'], ''.join(k for k, f in (('안', 'in_st'), ('점', 'in_sc'), ('방', 'in_d1')) if BY[c][f])] for c in added],
+                   removed=[[c, pm.get(c, c)] for c in removed])
+    json.dump({r['code']: r['name'] for r in D}, open(os.path.join(OUT, 'prev_names.json'), 'w'), ensure_ascii=False)
+    with open(os.path.join(OUT, 'changes.csv'), 'a', encoding='utf-8') as fh:
+        for c, nm_, ls in changes['added']: fh.write(f'{asof},들어옴,{c},{nm_},{ls}\n')
+        for c, nm_ in changes['removed']: fh.write(f'{asof},빠짐,{c},{nm_},\n')
+    log('들어온 종목', len(added), '· 빠진 종목', len(removed))
     meta = dict(ok=True, asof=asof, asof_ymd=END, asof_short=D[0]['asof_short'], asof_fund=d_fund, run_at=now.isoformat(timespec='seconds'),
                 marker=open(os.path.join(ROOT, 'stocks_run.txt')).read().strip() if os.path.exists(os.path.join(ROOT, 'stocks_run.txt')) else '',
-                n=len(D), d1_growth_n=len(G), mdd_check=mdd_sum, mdd_growth_check=MDD_G, d1_top5=top, warnings=WARN, minutes=round((time.time() - t0) / 60, 1), local=LOCAL)
+                n=len(D), d1_growth_n=len(G), universe=dict(stable=len(stU), analysis=len(A), growth=len(G0)), changes=changes, mdd_check=mdd_sum, d1_top5=top, warnings=WARN, minutes=round((time.time() - t0) / 60, 1), local=LOCAL)
     json.dump(meta, open(pf, 'w'), ensure_ascii=False, indent=1)
     log('저장', len(D), '종목 · 방어1 1~5위', top, f'· {meta["minutes"]}분')
 
