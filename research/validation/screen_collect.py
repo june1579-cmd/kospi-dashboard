@@ -84,6 +84,27 @@ def main():
     left = len(todo) - done
     log('받음', done, '· 남음', left, f'· {(time.time() - t0) / 60:.1f}분')
     open(os.path.join(OUT, 'collect_status.txt'), 'w').write(f'{END} left={left}\n')
+    # 일별 전종목 시세 거슬러 채우기(최대 낙폭 3·4·5년용, 2026-11-25). DA_BACKFILL=1 일 때만(매일 실행에서는 하지 않음)
+    if os.environ.get('DA_BACKFILL') == '1':
+        a, b = os.environ.get('DA_START', '20211101'), os.environ.get('DA_END', '20240930')
+        ixd = krx.get_index_ohlcv_by_date(a, b, '1001')
+        ddays = list(pd.to_datetime(ixd.index).strftime('%Y%m%d'))
+        todo2 = [(d, m) for d in ddays for m in ('KOSPI', 'KOSDAQ') if not os.path.exists(os.path.join(RAW, 'dailyall', f'{m}_{d}.csv.gz'))]
+        log('일별 전종목 시세 거슬러 받을 것', len(todo2), '건', a, '~', b)
+        n2 = 0
+        for d, m in todo2:
+            if (time.time() - t0) / 60 > CAP_MIN:
+                log(f'시간 제한 {CAP_MIN}분 — 다음 실행에서 이어 받음'); break
+            x = get(lambda d=d, m=m: stock.get_market_ohlcv_by_ticker(d, m), '등락률')
+            if x is None:
+                log('  건너뜀', d, m); continue
+            x.index = x.index.astype(str).str.zfill(6)
+            save(os.path.join(RAW, 'dailyall', f'{m}_{d}.csv.gz'), x[['종가', '등락률']])
+            n2 += 1
+            if n2 % 100 == 0: log(f'  일별 {n2}/{len(todo2)} ({(time.time() - t0) / 60:.1f}분)')
+        left2 = len(todo2) - n2
+        log('일별 받음', n2, '· 남음', left2)
+        open(os.path.join(OUT, 'backfill_status.txt'), 'w').write(f'{a}~{b} left={left2}\n')
 
 
 if __name__ == '__main__':

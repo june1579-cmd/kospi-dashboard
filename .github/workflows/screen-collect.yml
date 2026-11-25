@@ -23,17 +23,31 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install -q pykrx==1.2.9 requests pandas numpy
+      - name: KRX 줄 서기(같은 계정으로 동시에 로그인하면 서로 끊긴다 — 한 번에 하나만)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          KRX_LOCK_WAIT_MIN: '60'
+          KRX_LOCK_TTL_MIN: '110'
+          KRX_LOCK_ON_TIMEOUT: fail
+        run: |
+          git clone -q --depth 1 -b krx-lock "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}" "$RUNNER_TEMP/krxlock" || echo "KRX 줄: 받지 못함 — 줄 없이 진행"
+          rc=0; if [ -f "$RUNNER_TEMP/krxlock/krx_lock.py" ]; then python3 "$RUNNER_TEMP/krxlock/krx_lock.py" acquire || rc=$?; fi
+          if [ "$rc" = "3" ]; then echo "KRX 줄이 비지 않아 이번 실행은 로그인하지 않고 멈춤"; exit 1; fi
       - name: 모으기
         env:
+          DA_BACKFILL: '1'
           KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
           KRX_ID: ${{ secrets.KRX_ID }}
           KRX_PW: ${{ secrets.KRX_PW }}
           COLLECT_MINUTES: '90'
         run: python research/validation/screen_collect.py
+      - name: KRX 줄 비우기
+        if: always()
+        run: if [ -f "$RUNNER_TEMP/krxlock/krx_lock.py" ]; then python3 "$RUNNER_TEMP/krxlock/krx_lock.py" release || true; fi
       - name: 저장
         if: always()
         run: |
           git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
-          git add research/validation/raw/nbday research/validation/raw/frm research/validation/raw/snap research/validation/screen_out
+          git add research/validation/raw/dailyall research/validation/raw/nbday research/validation/raw/frm research/validation/raw/snap research/validation/screen_out
           git commit -q -m "재선별 원자료 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || echo "변경 없음"
           for i in 1 2 3; do git pull --rebase -q origin validation && git push -q origin HEAD:validation && break; sleep 5; done
