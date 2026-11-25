@@ -1,0 +1,39 @@
+name: screen-collect
+# 전체 종목 재선별용 원자료(투자자별 일별 순매수·월말 외국인 보유율·업종) 모으기. research/validation/screen_run.txt 가 push 되면 돈다.
+on:
+  push:
+    branches: [validation]
+    paths:
+      - 'research/validation/screen_run.txt'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: stocks-daily
+  cancel-in-progress: false
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 110
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: validation
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -q pykrx==1.2.9 requests pandas numpy
+      - name: 모으기
+        env:
+          KRX_API_KEY: ${{ secrets.KRX_API_KEY }}
+          KRX_ID: ${{ secrets.KRX_ID }}
+          KRX_PW: ${{ secrets.KRX_PW }}
+          COLLECT_MINUTES: '90'
+        run: python research/validation/screen_collect.py
+      - name: 저장
+        if: always()
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add research/validation/raw/nbday research/validation/raw/frm research/validation/raw/snap research/validation/screen_out
+          git commit -q -m "재선별 원자료 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || echo "변경 없음"
+          for i in 1 2 3; do git pull --rebase -q origin validation && git push -q origin HEAD:validation && break; sleep 5; done
