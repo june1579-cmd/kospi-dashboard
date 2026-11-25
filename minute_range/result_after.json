@@ -1,0 +1,73 @@
+{
+ "run_at": "2026-11-25T20:04:50",
+ "checks": {
+  "after_005930_J": {
+   "code": "005930",
+   "market": "J",
+   "after_bars": 240,
+   "first": "160000",
+   "last": "195900",
+   "after_vol": 1379544,
+   "gap_1530_1600": 0,
+   "calls": 3,
+   "msg": "0 정상처리 되었습니다."
+  },
+  "after_005930_UN": {
+   "code": "005930",
+   "market": "UN",
+   "after_bars": 260,
+   "first": "154000",
+   "last": "195900",
+   "after_vol": 4127877,
+   "gap_1530_1600": 20,
+   "calls": 3,
+   "msg": "0 정상처리 되었습니다."
+  },
+  "after_005930_NX": {
+   "code": "005930",
+   "market": "NX",
+   "after_bars": 260,
+   "first": "154000",
+   "last": "195900",
+   "after_vol": 2748333,
+   "gap_1530_1600": 20,
+   "calls": 3,
+   "msg": "0 정상처리 되었습니다."
+  },
+  "after_000660_J": {
+   "code": "000660",
+   "market": "J",
+   "after_bars": 240,
+   "first": "160000",
+   "last": "195900",
+   "after_vol": 304057,
+   "gap_1530_1600": 0,
+   "calls": 3,
+   "msg": "0 정상처리 되었습니다."
+  },
+  "after_000660_UN": {
+   "code": "000660",
+   "market": "UN",
+   "after_bars": 260,
+   "first": "154000",
+   "last": "195900",
+   "after_vol": 890709,
+   "gap_1530_1600": 20,
+   "calls": 3,
+   "msg": "0 정상처리 되었습니다."
+  },
+  "after_000660_NX": {
+   "code": "000660",
+   "market": "NX",
+   "after_bars": 260,
+   "first": "154000",
+   "last": "195900",
+   "after_vol": 586652,
+   "gap_1530_1600": 20,
+   "calls": 3,
+   "msg": "0 정상처리 되었습니다."
+  }
+ },
+ "notes": [],
+ "api_calls": 18
+}
