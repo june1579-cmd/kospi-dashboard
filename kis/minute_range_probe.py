@@ -242,18 +242,75 @@ def run_un(k, res, out):
     return 0
 
 
+def run_rate(k, res, out):
+    """초당 호출 한도 실측: 단계별 속도로 10초씩 과거분봉 조회를 병렬로 보내고 성공·초과(EGW00201) 비율을 잰다.
+       한 단계에서 초과 비율이 30%를 넘으면 그 위 단계는 돌리지 않는다."""
+    from concurrent.futures import ThreadPoolExecutor
+    import threading
+    levels = [3, 5, 8, 10, 13, 16, 20, 25, 30, 40]
+    sess = requests.Session()
+    hdr = {"content-type": "application/json; charset=utf-8", "authorization": f"Bearer {k.token}",
+           "appkey": k.key, "appsecret": k.secret, "tr_id": "FHKST03010230", "custtype": "P"}
+    days = [prev_weekday(date.today() - timedelta(days=i)) for i in range(1, 60)]
+    lock = threading.Lock()
+
+    def one(i):
+        d = days[i % len(days)]
+        t0 = time.time()
+        try:
+            r = sess.get(k.base + "/uapi/domestic-stock/v1/quotations/inquire-time-dailychartprice", timeout=20,
+                         headers=hdr, params={"FID_COND_MRKT_DIV_CODE": "J", "FID_INPUT_ISCD": "005930",
+                                              "FID_INPUT_HOUR_1": "153000", "FID_INPUT_DATE_1": d.strftime("%Y%m%d"),
+                                              "FID_PW_DATA_INCU_YN": "N", "FID_FAKE_TICK_INCU_YN": ""}).json()
+            code = "OK" if r.get("rt_cd") == "0" else (r.get("msg_cd") or "ERR")
+        except Exception as e:
+            code = "EXC"
+        return code, time.time() - t0
+
+    C = res["checks"]; rows = []; best = None
+    with ThreadPoolExecutor(max_workers=64) as ex:
+        for rps in levels:
+            n, futs, start = rps * 10, [], time.time()
+            for i in range(n):                         # 일정 간격으로 요청을 흘려보냄
+                wait = start + i / rps - time.time()
+                if wait > 0: time.sleep(wait)
+                futs.append(ex.submit(one, i))
+            got = [f.result() for f in futs]
+            elapsed = time.time() - start
+            cnt = {}
+            for c, _ in got: cnt[c] = cnt.get(c, 0) + 1
+            ok = cnt.get("OK", 0); over = cnt.get("EGW00201", 0)
+            lat = sorted(l for _, l in got); p50 = lat[len(lat) // 2]
+            row = {"target_rps": rps, "sent": n, "ok": ok, "over_EGW00201": over,
+                   "other": {c: v for c, v in cnt.items() if c not in ("OK", "EGW00201")},
+                   "ok_per_sec": round(ok / elapsed, 1), "latency_p50": round(p50, 3)}
+            rows.append(row); print("  ", row)
+            if over == 0 and ok == n: best = rps
+            if (n - ok) / n > 0.3:
+                print("   → 거절 30% 초과, 여기서 중단"); break
+            time.sleep(5)
+    C["rate"] = rows; C["max_clean_rps"] = best
+    res["api_calls"] = sum(r["sent"] for r in rows)
+    (out / "result_rate.json").write_text(json.dumps(res, ensure_ascii=False, indent=1), encoding="utf-8")
+    msg = "[KIS 호출 한도 실측]\n" + "\n".join(
+        f"{r['target_rps']}건/초: 성공{r['ok']}/{r['sent']} 초과{r['over_EGW00201']}" for r in rows) + f"\n오류없는 최고 {best}건/초"
+    (out / "notify.txt").write_text(msg[:200], encoding="utf-8")
+    print("\n" + msg)
+    return 0
+
+
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--out", default="kis_probe")
     ap.add_argument("--only", default="", help="after = 애프터마켓 분봉만 시험")
     a = ap.parse_args()
     out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
-    if a.only in ("after", "un"):
+    if a.only in ("after", "un", "rate"):
         res = {"run_at": datetime.now().isoformat(timespec="seconds"), "checks": {}, "notes": []}
         k = K("real")
         ok, msg = k.auth() if k.ok() else (False, "실전 키 없음")
         if not ok:
             (out / "notify.txt").write_text(f"[KIS 애프터마켓 분봉] 토큰 실패 {msg}"[:200], encoding="utf-8"); return 1
-        return run_after(k, res, out) if a.only == "after" else run_un(k, res, out)
+        return {"after": run_after, "un": run_un, "rate": run_rate}[a.only](k, res, out)
     res = {"run_at": datetime.now().isoformat(timespec="seconds"), "checks": {}, "notes": []}
 
     real, mock = K("real"), K("mock")
