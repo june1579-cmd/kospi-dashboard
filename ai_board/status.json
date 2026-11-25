@@ -1,6 +1,6 @@
 {
- "built_at": "2026-11-25T13:51:27+09:00",
- "trigger": "schedule 7 22 * * *",
+ "built_at": "2026-11-25T13:57:16+09:00",
+ "trigger": "schedule 23 22 * * *",
  "marker": "2026-11-25T07:38:56+09:00 아침",
  "request_applied": false,
  "ok": true,
