@@ -1,0 +1,5 @@
+2026-11-25 모든 대시보드 최상단에 웹판 바로가기 줄 추가
+- docs/webnav.js(새 파일): 코스피·선물옵션·연구소·방어종목 명단·AI 경고판 웹판 링크 줄을 화면 맨 위에 붙임(지금 보는 웹판은 흰색 표시)
+- 웹판 5곳 index.html(/, /fo/, /lab/, /stocks/, /ai/) <head> 에 webnav.js 연결
+- docs/page.html · docs/ai/page.html(= Claude 대시보드 files/index.html): 같은 줄을 글로 넣음(.webnav-page) — Claude 대시보드에서는 이 줄이 보이고, 웹판에서는 webnav.js 줄만 보이게 숨김
+- Claude 대시보드 3곳(코스피·AI 경고판·방어·안정 종목 통합 명단)에도 같은 줄 추가
