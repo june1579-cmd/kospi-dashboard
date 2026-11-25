@@ -274,7 +274,8 @@ def main():
         W[m] = pd.DataFrame(cols); V[m] = pd.DataFrame(cols_v)
     log('주간 등락률', len(wend), '주', wend[0], '~', wend[-1])
     bad = []
-    prev_codes = [r['code'] for r in json.load(open(os.path.join(OUT, 'stocks.json')))] if os.path.exists(os.path.join(OUT, 'stocks.json')) else []
+    _prev = json.load(open(os.path.join(OUT, 'stocks.json'))) if os.path.exists(os.path.join(OUT, 'stocks.json')) else []
+    prev_codes = [r['code'] for r in _prev]; prev_names = {r['code']: r.get('name', r['code']) for r in _prev}
     for c in prev_codes:
         cl = CL.get(c)
         if cl is None or c not in mk: continue
@@ -651,15 +652,16 @@ def main():
     prev = set(prev_codes); now_c = set(BY)
     added = [c for c in members if c not in prev] if prev else []
     removed = sorted(prev - now_c)
+    first_run = not hist
     for c in now_c:   # 처음 돌 때(기록 없음) 이미 명단에 있던 종목은 11/16(원래 명단 날짜)부터로
         if c in added or c not in hist:
-            hist[c] = dict(since=asof if (c in added or not prev) else ('2026-11-16' if not hist else asof), name=BY[c]['name'])
+            hist[c] = dict(since=asof if (c in added or not prev or not first_run) else '2026-11-16', name=BY[c]['name'])
     for c in removed: hist.pop(c, None)
     for r in D: r['since'] = hist.get(r['code'], {}).get('since')
     json.dump(D, open(os.path.join(OUT, 'stocks.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
     json.dump(hist, open(hp, 'w'), ensure_ascii=False, indent=0)
-    pm = {}
-    if os.path.exists(os.path.join(OUT, 'prev_names.json')): pm = json.load(open(os.path.join(OUT, 'prev_names.json')))
+    pm = dict(prev_names)
+    if os.path.exists(os.path.join(OUT, 'prev_names.json')): pm.update(json.load(open(os.path.join(OUT, 'prev_names.json'))))
     changes = dict(asof=asof, added=[[c, BY[c]['name'], ''.join(k for k, f in (('안', 'in_st'), ('점', 'in_sc'), ('방', 'in_d1')) if BY[c][f])] for c in added],
                    removed=[[c, pm.get(c, c)] for c in removed])
     json.dump({r['code']: r['name'] for r in D}, open(os.path.join(OUT, 'prev_names.json'), 'w'), ensure_ascii=False)
