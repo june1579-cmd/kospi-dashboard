@@ -39,3 +39,5 @@
 [05:03:38] 저장 fut_front_daily.csv 7339행
 [05:03:39] == basis
 [05:04:35] 저장 basis_daily.csv.gz 27643행
+[05:04:36] == iv
+[05:04:50] 저장 iv_daily.csv 4660행
