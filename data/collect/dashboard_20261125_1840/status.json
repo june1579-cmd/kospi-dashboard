@@ -1,5 +1,5 @@
 {
- "run": "2026-11-23 20:23",
+ "run": "2026-11-25 20:23",
  "tag": "1840",
  "allow_today": false,
  "krx_today_ok": null,
@@ -17,12 +17,16 @@
   "10b_VKOSPI_KRX화면",
   "07_금투협_증시자금추이",
   "08_금투협_신용공여잔고추이",
-  "13_VIX_일별(뉴욕 기준 2026-11-22까지 확정분, 출처 3곳)",
+  "13_VIX_일별(뉴욕 기준 2026-11-24까지 확정분, 출처 3곳)",
   "14_유가_일별"
  ],
  "fail": [],
  "warn": [],
  "info": [
+  [
+   "15_지수_대조 kospi_daum",
+   "ConnectTimeout(MaxRetryError(\"HTTPSConnectionPool(host='finance.daum.net', port=443): Max retries exceeded with url: /ap"
+  ],
   [
    "13_VIX FRED",
    "ReadTimeout(ReadTimeoutError(\"HTTPSConnectionPool(host='fred.stlouisfed.org', po"
