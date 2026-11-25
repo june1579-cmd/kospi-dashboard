@@ -13,7 +13,7 @@ import requests
 
 SERVERS = {"real": "https://openapi.koreainvestment.com:9443",
            "mock": "https://openapivts.koreainvestment.com:29443"}
-GAP = {"real": 0.12, "mock": 1.1}
+GAP = {"real": 0.4, "mock": 1.1}   # 신규 신청 직후 실측 한도 약 초당 2.5~3건
 OFFSETS = [1, 7, 30, 90, 180, 270, 330, 360, 380, 400, 450, 548, 730, 1095, 1825]
 CALLS = 0
 
@@ -300,18 +300,70 @@ def run_rate(k, res, out):
     return 0
 
 
+def fut_day(k, code, mkt, d, start_hour):
+    """선물 분봉: start_hour 부터 거슬러 최대 10번 → 받은 봉의 날짜·시각 범위"""
+    hh, seen, calls, msg = start_hour, {}, 0, ""
+    while calls < 10:
+        r = k.get("/uapi/domestic-futureoption/v1/quotations/inquire-time-fuopchartprice", "FHKIF03020200", {
+            "FID_COND_MRKT_DIV_CODE": mkt, "FID_INPUT_ISCD": code, "FID_HOUR_CLS_CODE": "60",
+            "FID_PW_DATA_INCU_YN": "Y", "FID_FAKE_TICK_INCU_YN": "N",
+            "FID_INPUT_DATE_1": d.strftime("%Y%m%d"), "FID_INPUT_HOUR_1": hh})
+        calls += 1; msg = f"{r.get('rt_cd')} {r.get('msg_cd','')} {r.get('msg1','')}".strip()
+        rows = rows_of(r)
+        if not rows: break
+        new = 0
+        for x in rows:
+            key = (x.get("stck_bsop_date"), x.get("stck_cntg_hour"))
+            if key not in seen: seen[key] = 1; new += 1
+        if not new: break
+        oldest = min(rows, key=lambda x: (x.get("stck_bsop_date"), x.get("stck_cntg_hour")))
+        if oldest.get("stck_bsop_date") != d.strftime("%Y%m%d"): break
+        t = oldest.get("stck_cntg_hour")
+        if t <= "000100": break
+        hh = (datetime.strptime(t, "%H%M%S") - timedelta(minutes=1)).strftime("%H%M%S")
+    keys = sorted(seen)
+    by_date = {}
+    for dd, tt in keys: by_date.setdefault(dd, []).append(tt)
+    return {"code": code, "mkt": mkt, "date": d.isoformat(), "start": start_hour, "bars": len(keys), "calls": calls,
+            "by_date": {dd: {"n": len(v), "from": min(v), "to": max(v)} for dd, v in by_date.items()}, "msg": msg}
+
+
+def run_fut(k, res, out):
+    """코스피200 선물 주간(F)·야간(CM) 분봉: 월물별·코드 체계별로 어디까지 나오는지"""
+    C = res["checks"]; lines = []
+    cases = [  # (코드, 그 월물이 최근월이던 날)
+        ("A01612", date(2026, 11, 24)), ("A01609", date(2026, 9, 1)), ("A01606", date(2026, 6, 2)),
+        ("A01603", date(2026, 3, 3)), ("A01512", date(2025, 12, 2)), ("101W12", date(2025, 12, 2)),
+        ("A01703", date(2026, 11, 24)),
+    ]
+    for code, d in cases:
+        for mkt, start in (("F", "235959"), ("CM", "235959"), ("CM", "060000")):
+            if mkt == "CM" and start == "060000":
+                v = fut_day(k, code, mkt, d + timedelta(days=1), start)   # 야간장 새벽 구간
+            else:
+                v = fut_day(k, code, mkt, d, start)
+            C[f"fut_{code}_{mkt}_{start}"] = v
+            print("  ", {x: v[x] for x in ("code", "mkt", "date", "start", "bars", "calls", "by_date", "msg")})
+        f = C[f"fut_{code}_F_235959"]; n1 = C[f"fut_{code}_CM_235959"]; n2 = C[f"fut_{code}_CM_060000"]
+        lines.append(f"{code} 주{f['bars']} 야{n1['bars']}+{n2['bars']}")
+    res["api_calls"] = CALLS
+    (out / "result_fut.json").write_text(json.dumps(res, ensure_ascii=False, indent=1), encoding="utf-8")
+    (out / "notify.txt").write_text(("[KIS 선물 분봉]\n" + "\n".join(lines))[:200], encoding="utf-8")
+    return 0
+
+
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--out", default="kis_probe")
     ap.add_argument("--only", default="", help="after = 애프터마켓 분봉만 시험")
     a = ap.parse_args()
     out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
-    if a.only in ("after", "un", "rate"):
+    if a.only in ("after", "un", "rate", "fut"):
         res = {"run_at": datetime.now().isoformat(timespec="seconds"), "checks": {}, "notes": []}
         k = K("real")
         ok, msg = k.auth() if k.ok() else (False, "실전 키 없음")
         if not ok:
             (out / "notify.txt").write_text(f"[KIS 애프터마켓 분봉] 토큰 실패 {msg}"[:200], encoding="utf-8"); return 1
-        return {"after": run_after, "un": run_un, "rate": run_rate}[a.only](k, res, out)
+        return {"after": run_after, "un": run_un, "rate": run_rate, "fut": run_fut}[a.only](k, res, out)
     res = {"run_at": datetime.now().isoformat(timespec="seconds"), "checks": {}, "notes": []}
 
     real, mock = K("real"), K("mock")
