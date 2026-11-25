@@ -1,29 +1,29 @@
 {
- "run": "2026-11-26 05:31",
- "tag": "1840",
+ "run": "2026-11-26 08:23",
+ "tag": "0831",
  "kospi_last": "2026-11-25",
  "kofia_last": "2026-11-24",
  "vkospi_last": "2026-11-25",
- "night_last": "2026-11-25",
+ "night_last": "2026-11-26",
  "errors": [],
- "data_line": "주의 1건(야간선물_공개 수집)",
+ "data_line": "정상",
  "health": {
   "오류": 0,
   "정정": 0,
-  "주의": 1,
+  "주의": 0,
   "참고": 0,
   "정상": 14
  },
  "files": {
   "ai_feed": {
-   "sha256": "f468c817c3d407f5704d696c13c55c402fd0d0f1270406a4ec019d5cbb77fcfc",
-   "bytes": 2029,
+   "sha256": "06f57d9b96431fba32c9aec8e3899a2aea0b20fbded8d4fb7c188a05ff282a0d",
+   "bytes": 2026,
    "last_date": "crwv_px"
   },
   "ai_feed_hist": {
-   "sha256": "cb609b77145a5c98b77fd38ab5622fb592e86865d548b43d173d39b84673b599",
-   "bytes": 1884,
-   "last_date": "2026-11-24"
+   "sha256": "88c6bd11ceecc8ee2fa45acdc447fdbb227188bd38855621286cc769603332b9",
+   "bytes": 2187,
+   "last_date": "2026-11-25"
   },
   "alarms": {
    "sha256": "36d5738c0eb98314b33c99d1f9e6fd9fbd41ee798ade55a7864a546fc6d200e0",
@@ -36,27 +36,27 @@
    "last_date": "전체"
   },
   "am_daily": {
-   "sha256": "507afb4385475d45d14b77592dd3dc0427649a2a9cac0b54324f70426d5a06f4",
-   "bytes": 237973,
+   "sha256": "c500ecb46b454d554589366ac0bbbba64dcbde54a930fef21a0a640aded185ff",
+   "bytes": 237977,
    "last_date": "2026-11-25"
   },
   "am_now": {
-   "sha256": "1fe43a99896e9daddd3e116be105951fa103e177cc58075de1b88f069b1e5e74",
-   "bytes": 637,
+   "sha256": "2e63fac4e1d49a554293649c478eb90abe8ae22c539c411a9482a370b7cf3001",
+   "bytes": 650,
    "last_date": "2026-11-25"
   },
   "am_stats": {
-   "sha256": "4d45a4c07e5eedec6f42936a009624dd31a9daf448a460bc2755e7e30911b071",
+   "sha256": "b9f9e2556aa6e3765224689556b9e267bdc793b76b393ba3ed9073d178a76b1a",
    "bytes": 1263,
    "last_date": "기준일"
   },
   "am_stocks": {
-   "sha256": "4be6450bac079f279dc7b55993b591d243c733ddef56a0593b7e852cb3d1d375",
+   "sha256": "f5fa908eff31ae52f89e3fbb40024874cb4f71fbd89c90e1b807524bf92a38cd",
    "bytes": 3001,
    "last_date": "2026-11-25"
   },
   "buy3": {
-   "sha256": "6f61ed1c47093185676dbb9ababe025a0290ded215740248a42d93e8c529a04b",
+   "sha256": "7158ad684b7a8085990cf21e77879ed31430639ecf1cafebad32e613e236f48a",
    "bytes": 147071,
    "last_date": "2026-10-16"
   },
@@ -136,9 +136,9 @@
    "last_date": "row"
   },
   "fx_daily": {
-   "sha256": "741039d748a6963941133d69c62c6d18caa410a315761dc0a5194c4b408b0ecb",
-   "bytes": 572397,
-   "last_date": "2026-11-24"
+   "sha256": "1a4a22e4969d0a285aa93d517ee603b8213f4917375c7a4256901944757435e6",
+   "bytes": 572598,
+   "last_date": "2026-11-25"
   },
   "gap_table": {
    "sha256": "29a45d66335875b7aebf0ae8b4c36d3b84dcd8b424a16f1f05894cbe237ea817",
@@ -146,8 +146,8 @@
    "last_date": "전체"
   },
   "health": {
-   "sha256": "0fc4c2bd44f652dafc9161d0bbd4d9de7d29415776f7c92f86cb4c02cd8a36aa",
-   "bytes": 2213,
+   "sha256": "04fcad67999f4a676c11040ba7cf2d10012581445fa1a97e2a531375f7058f7a",
+   "bytes": 1995,
    "last_date": "web_cards"
   },
   "lab_sig": {
@@ -186,14 +186,14 @@
    "last_date": "2026-11"
   },
   "night_fut": {
-   "sha256": "40599496ceebfcc053d26bd2f49f3c9886dab1384af0ef8d3272fde0ae9fc68f",
-   "bytes": 50482,
-   "last_date": "2026-11-24"
+   "sha256": "a2ed313caba74664e0e9b3cf0628dd4ecb5ad61ac6beff39c2bad5537b5aaa48",
+   "bytes": 50703,
+   "last_date": "2026-11-25"
   },
   "overnight": {
-   "sha256": "6274f79e54fa84bfa001612c3725c3ac9af148ec27bf425db8095bd183180b43",
-   "bytes": 1173515,
-   "last_date": "2026-11-24"
+   "sha256": "92e4471c3c416c5e6c9fa137a9b65c144e3e676ab09ce4576ed4bec5cce35eb4",
+   "bytes": 1173977,
+   "last_date": "2026-11-25"
   },
   "overnight_stats": {
    "sha256": "4263fb63b2236639d5c9330c0a64ef4b4d693d362eb9ea49c8422b2fc2b30791",
@@ -246,7 +246,7 @@
    "last_date": "2026-11-05"
   },
   "sell3": {
-   "sha256": "37d24cc99b822967ae16be245f18b49ed52d8550bfd8dfb7236ac56f6034501d",
+   "sha256": "156924f2b77908457ac5b6feb189a9da2677c9b2c0ef70409c369f77b73ae370",
    "bytes": 748413,
    "last_date": "2026-11-24"
   },

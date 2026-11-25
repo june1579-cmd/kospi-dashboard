@@ -1,38 +1,24 @@
 {
- "checked_at": "2026-11-26 05:33",
- "tag": "1840",
- "level": "warn",
- "line": "주의 1건(야간선물_공개 수집)",
+ "checked_at": "2026-11-26 08:25",
+ "tag": "0831",
+ "level": "ok",
+ "line": "정상",
  "counts": {
   "오류": 0,
   "정정": 0,
-  "주의": 1,
+  "주의": 0,
   "참고": 0,
   "정상": 14
  },
- "issues": [
-  {
-   "key": "collectw_09b_야간선물_공개",
-   "status": "주의",
-   "name": "수집 주의: 09b_야간선물_공개",
-   "note": "대조용 공개 출처 실패: ValueError('일별 이력(historicalData)을 못 찾음 — 쪽 구조가 바뀜')"
-  }
- ],
- "new": [
-  {
-   "key": "collectw_09b_야간선물_공개",
-   "status": "주의",
-   "name": "수집 주의: 09b_야간선물_공개",
-   "note": "대조용 공개 출처 실패: ValueError('일별 이력(historicalData)을 못 찾음 — 쪽 구조가 바뀜')"
-  }
- ],
+ "issues": [],
+ "new": [],
  "resolved": [],
  "errors": [],
  "expected": {
   "kospi": "2026-11-25",
   "vkospi": "2026-11-25",
   "kofia": "2026-11-24",
-  "vix": "2026-11-24",
-  "night": "2026-11-25"
+  "vix": "2026-11-25",
+  "night": "2026-11-26"
  }
 }
