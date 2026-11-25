@@ -290,28 +290,17 @@ def fetch_fut(kis, code, d, session):
             if first <= "084500" or len(out) < len(allr): break
             hh = minus1(first)
     else:
-        hh = "235959"                                   # 18:00 ~ 24:00
-        for _ in range(6):
+        hh = "300000"                                   # 야간: 그날 날짜 + 30:00(다음 날 06:00)부터 18:00 까지 거슬러
+        for _ in range(12):
             allr = call(ds, hh, "CM")
             if allr is None: return None
-            out = [x for x in allr if x.get("stck_bsop_date") == ds and x["stck_cntg_hour"] <= "240000"]
-            if not out: break
-            for x in out: rows[x["stck_cntg_hour"]] = x
-            first = min(x["stck_cntg_hour"] for x in out)
-            if first <= "180000": break
-            hh = minus1(first)
-        nxt = (d + timedelta(days=1)).strftime("%Y%m%d"); hh = "060000"   # 24:00 ~ 30:00 (다음 날 날짜로 요청)
-        for _ in range(8):
-            allr = call(nxt, hh, "CM")
-            if allr is None: return None
-            out = [x for x in allr if x.get("stck_bsop_date") == ds and x["stck_cntg_hour"] > "240000"]
+            out = [x for x in allr if x.get("stck_bsop_date") == ds]
             if not out: break
             new = [x for x in out if x["stck_cntg_hour"] not in rows]
             for x in out: rows[x["stck_cntg_hour"]] = x
             first = min(x["stck_cntg_hour"] for x in out)
-            if first <= "240100" or not new: break
-            h = int(first[:2]) - 24
-            hh = minus1(f"{h:02d}{first[2:]}")
+            if first <= "180000" or len(out) < len(allr) or not new: break
+            hh = minus1(first)
     return list(rows.values())
 
 
