@@ -19,6 +19,7 @@
 """
 import os, re, json, math, time
 import numpy as np, pandas as pd
+import warnings; warnings.filterwarnings('ignore', category=RuntimeWarning)
 
 ROOT = os.path.dirname(os.path.abspath(__file__)); RAW = os.path.join(ROOT, 'raw'); OUT = os.path.join(ROOT, 'qv_out')
 os.makedirs(OUT, exist_ok=True)

@@ -17,6 +17,9 @@ import os, sys, json, time, traceback, datetime as dt
 import numpy as np, pandas as pd
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import screen as SCR
+import qv_live as QL
+QF = QL.formula()
+MODE = 'screen-keep-qv' if any(v.get('adopt') for v in QF.values() if isinstance(v, dict)) else 'screen-keep'
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 RAW = os.path.join(ROOT, 'raw'); REFD = os.path.join(ROOT, 'ref'); OUT = os.path.join(ROOT, 'stocks_out')
@@ -186,7 +189,7 @@ def main():
     pf = os.path.join(OUT, 'meta.json')
     if os.path.exists(pf):
         prev = json.load(open(pf))
-    if not LOCAL and prev.get('asof_ymd') == END and prev.get('ok') and prev.get('mode') == 'screen-keep' and '--force' not in sys.argv:
+    if not LOCAL and prev.get('asof_ymd') == END and prev.get('ok') and prev.get('mode') == MODE and '--force' not in sys.argv:
         log('이미 같은 기준일로 만들어 둠 — 건너뜀')
         prev['checked_at'] = now.isoformat(timespec='seconds'); prev['skipped'] = True
         prev['marker'] = open(os.path.join(ROOT, 'stocks_run.txt')).read().strip() if os.path.exists(os.path.join(ROOT, 'stocks_run.txt')) else ''
@@ -430,6 +433,18 @@ def main():
     A['sc_mix'] = ((5 * A.sc_flow.fillna(0) + 5 * A.sc_chk * 25) / 10).round(2)
     A['sc_big7'] = FL['big7'].reindex(A.index).round(2)
     A = A.sort_values(['sc_mix', 'sc_flow'], ascending=False, kind='stable'); A['sc_rank'] = range(1, len(A) + 1)
+    # 0-1) 새 점수식(검증 통과분, ref/qv_formula.json) — 대상은 그대로, 점수·순위만 바꿈(2026-11-25 사용자 지시)
+    LIVE = QL.Live(log) if MODE != 'screen-keep' else None
+    if LIVE and QF.get('st', {}).get('adopt'):
+        f_ = QF['st']; s_, _ = LIVE.score(f_['keys'], list(stU.index), list(stU.index), f_.get('sector_neutral'))
+        stU['st_score'] = pd.Series(s_).reindex(stU.index)
+        stU = stU.sort_values('st_score', ascending=False, kind='stable'); stU['st_rank'] = range(1, len(stU) + 1)
+        log('안정 관찰: 새 식', f_['keys'], '1위', NAMES.get(stU.index[0]), stU.st_score.iloc[0])
+    if LIVE and QF.get('sc', {}).get('adopt'):
+        f_ = QF['sc']; s_, _ = LIVE.score(f_['keys'], list(A.index), list(A.index), f_.get('sector_neutral'))
+        A['sc_mix'] = pd.Series(s_).reindex(A.index)
+        A = A.sort_values(['sc_mix', 'sc_chk'], ascending=False, kind='stable'); A['sc_rank'] = range(1, len(A) + 1)
+        log('점수 순위: 새 식', f_['keys'], '1위', NAMES.get(A.index[0]), A.sc_mix.iloc[0])
     yr25 = static.yr[2025]
     def ytd_of(c):
         m = mk.get(c); return float(YTD[m][c]) if (m and c in YTD[m].index) else None
@@ -505,6 +520,10 @@ def main():
         return dict(d1_def=round(d, 1), d1_hold=round(h, 1), d1_grow=round(g, 1), d1_flow=round(fl, 1), d1_com=round(cm, 1),
                     d1_total=round(0.30 * d + 0.20 * h + 0.20 * g + 0.15 * fl + 0.15 * cm, 1))
     SC = {c: score(X[c]) for c in X}
+    if LIVE and QF.get('d1', {}).get('adopt'):
+        f_ = QF['d1']; s_, _ = LIVE.score(f_['keys'], G, list(X), f_.get('sector_neutral'))
+        for c in X: SC[c]['d1_total'] = s_[c]
+        log('방어1: 새 식', f_['keys'])
     order = sorted(G, key=lambda c: -SC[c]['d1_total'])
     RANK = {c: i + 1 for i, c in enumerate(order)}
     d1100 = order[:100]
@@ -699,7 +718,7 @@ def main():
         for c, nm_ in changes['left_lists']: fh.write(f'{asof},명단 밖(유지),{c},{nm_},\n')
         for c, nm_, ls in changes['back_lists']: fh.write(f'{asof},명단 복귀,{c},{nm_},{ls}\n')
     log('오늘 세 명단', len(today), '· 유지', len(kept), '· 들어옴', len(added), '· 빠짐(문제)', len(removed), [x[:2] for x in removed][:5], '· 명단 밖으로', len(left), '· 복귀', len(back), '· 되살림', len(restored))
-    meta = dict(ok=True, mode='screen-keep', asof=asof, asof_ymd=END, asof_short=D[0]['asof_short'], asof_fund=d_fund, run_at=now.isoformat(timespec='seconds'),
+    meta = dict(ok=True, mode=MODE, formula={k: dict(adopt=v.get('adopt'), keys=v.get('keys'), labels=v.get('labels'), sector_neutral=v.get('sector_neutral'), check=v.get('check'), check_old=v.get('check_old')) for k, v in QF.items() if isinstance(v, dict)}, asof=asof, asof_ymd=END, asof_short=D[0]['asof_short'], asof_fund=d_fund, run_at=now.isoformat(timespec='seconds'),
                 marker=open(os.path.join(ROOT, 'stocks_run.txt')).read().strip() if os.path.exists(os.path.join(ROOT, 'stocks_run.txt')) else '',
                 n=len(D), d1_growth_n=len(G), universe=dict(stable=len(stU), analysis=len(A), growth=len(G0)), changes=changes, mdd_check=mdd_sum, d1_top5=top, warnings=WARN, minutes=round((time.time() - t0) / 60, 1), local=LOCAL)
     json.dump(meta, open(pf, 'w'), ensure_ascii=False, indent=1)
