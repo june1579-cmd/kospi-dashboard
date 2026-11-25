@@ -1,5 +1,5 @@
 {
- "built_at": "2026-11-25T20:27:59+09:00",
+ "built_at": "2026-11-25T20:55:52+09:00",
  "trigger": "workflow_run dashboard-update",
  "marker": "2026-11-25T19:38:49+09:00 저녁",
  "request_applied": false,
@@ -9,16 +9,8 @@
  "us_last_session": "2026-11-24",
  "kr_last_session": "2026-11-25",
  "stale": [],
- "changed": [
-  "VKOSPI 58.45→58.52(11.25)",
-  "외국인 코스피 20거래일 순매수 -16.77→-16.69(11.25)"
- ],
- "files_changed": [
-  "thresholds",
-  "indicators",
-  "history",
-  "runs"
- ],
+ "changed": [],
+ "files_changed": [],
  "files": {
   "thresholds": "a736fc0a228231f82d6b9cece8a533e9665cca8245ef6fd9bd06779146903fba",
   "indicators": "5d80e9ddafeb54e58a09a034e6586be2c736c24a088d4f9174bd19a7243d5ab2",
