@@ -106,8 +106,9 @@ def load_dart():
                 if pd.notna(x) and isinstance(code, str): put(code, int(y) - dy, 'op', float(x), fs)
     nmain = 0
     for f in sorted(os.listdir(RAW)):
-        if not re.match(r'dart_main_\d{4}\.csv\.gz$', f): continue
+        if not re.match(r'dart_main_\d{4}(\.partial)?\.csv\.gz$', f): continue
         df = pd.read_csv(os.path.join(RAW, f), dtype=str); nmain += len(df)
+        if f.endswith('.partial.csv.gz') and os.path.exists(os.path.join(RAW, f.replace('.partial', ''))): continue
         for col, dy in (('th', 0), ('fr', 1), ('bf', 2)):
             v = num(df[col])
             for code, y, fs, acc, x in zip(df['stock_code'], df['bsns_year'], df['fs_div'], df['acc'], v):

@@ -8,7 +8,7 @@
 이미 받은 연도는 건너뜀.
 """
 import os, sys, time, json
-import pandas as pd
+import numpy as np, pandas as pd
 
 ROOT = os.path.dirname(os.path.abspath(__file__)); RAW = os.path.join(ROOT, 'raw')
 SECRETS = [v for k, v in os.environ.items() if k.startswith('DKEY__') and v]
@@ -37,23 +37,34 @@ def main():
         seen |= set(pd.read_csv(os.path.join(RAW, 'weekly', f), dtype=str, usecols=['티커'])['티커'])
     codes = cp.loc[cp['stock_code'].isin(seen), 'corp_code'].drop_duplicates().tolist()
     log('대상 회사', len(codes), '주간 시세 종목', len(seen))
-    BATCH = 20; t0 = time.time()
-    for y in (2016, 2019, 2022, 2025):
-        yf = os.path.join(RAW, f'dart_main_{y}.csv.gz')
+    BATCH = 20; t0 = time.time(); BUDGET = float(os.environ.get('QV_DART_MIN', '20')) * 60
+    for y in (2025, 2022, 2019, 2016):           # 최근 연도부터(오늘 점수에 바로 쓰임)
+        yf = os.path.join(RAW, f'dart_main_{y}.csv.gz'); pf = os.path.join(RAW, f'dart_main_{y}.partial.csv.gz')
         if os.path.exists(yf):
             log(y, '이미 있음'); continue
-        rows, bad = [], 0
-        for i in range(0, len(codes), BATCH):
+        rows, bad = [], 0; start = 0
+        if os.path.exists(pf):
+            old = pd.read_csv(pf, dtype=str); rows = old.drop(columns=['_next']).to_dict('records'); start = int(old['_next'].iloc[0]) if len(old) else 0
+            log(y, '이어 받기', start, '/', len(codes))
+        slow = []
+        for i in range(start, len(codes), BATCH):
+            if time.time() - t0 > BUDGET:
+                d = pd.DataFrame(rows); d['_next'] = i; d.to_csv(pf, index=False, compression='gzip')
+                log(y, '시간 한도 — 부분 저장', i, '/', len(codes), f'호출 평균 {np.mean(slow) if slow else -1:.1f}초'); return
+            t1 = time.time()
             batch = ','.join(codes[i:i + BATCH]); js = {}
             for k in range(3):
                 try:
                     js = requests.get('https://opendart.fss.or.kr/api/fnlttMultiAcnt.json',
-                                      params={'crtfc_key': key, 'corp_code': batch, 'bsns_year': str(y), 'reprt_code': '11011'}, timeout=30).json()
+                                      params={'crtfc_key': key, 'corp_code': batch, 'bsns_year': str(y), 'reprt_code': '11011'}, timeout=15).json()
                     break
                 except Exception as e:
                     js = {'status': 'ERR', 'message': type(e).__name__}; time.sleep(3)
+            slow.append(time.time() - t1)
             st = js.get('status')
-            if i == 0: log(y, '첫 호출', st, str(js.get('message', ''))[:60])
+            if (i - start) // BATCH < 3 or ((i - start) // BATCH) % 25 == 0:
+                log(y, '묶음', i, st, f'{slow[-1]:.1f}초', f'누적 {(time.time() - t0) / 60:.1f}분')
+            if i == start: log(y, '첫 호출', st, str(js.get('message', ''))[:60], f'{slow[-1]:.1f}초')
             if st == '000':
                 for it in js.get('list', []):
                     nm = it.get('account_nm', '').replace(' ', '')
@@ -66,7 +77,8 @@ def main():
                     log('중단(키·한도)', st, str(js.get('message', ''))[:80]); return
             time.sleep(0.15)
         pd.DataFrame(rows).to_csv(yf, index=False, compression='gzip')
-        log(y, '행', len(rows), '실패 묶음', bad, f'누적 {(time.time() - t0) / 60:.1f}분')
+        if os.path.exists(pf): os.remove(pf)
+        log(y, '행', len(rows), '실패 묶음', bad, f'호출 평균 {np.mean(slow) if slow else -1:.1f}초', f'누적 {(time.time() - t0) / 60:.1f}분')
 
 
 if __name__ == '__main__':
