@@ -1,8 +1,8 @@
 {
- "built_at": "2026-11-25T16:13:11+09:00",
- "trigger": "push ",
+ "built_at": "2026-11-25T17:56:39+09:00",
+ "trigger": "workflow_run dashboard-update",
  "marker": "2026-11-25T16:12:54+09:00 오후",
- "request_applied": true,
+ "request_applied": false,
  "ok": true,
  "errors": [],
  "notes": [],
@@ -19,11 +19,7 @@
   }
  ],
  "changed": [],
- "files_changed": [
-  "thresholds",
-  "runs",
-  "news"
- ],
+ "files_changed": [],
  "files": {
   "thresholds": "fb57ec718f01b5222525e21c9e24e472597bf1e6c8a34ea87df71bff4d849665",
   "indicators": "ef3e4425a17fbcaf3278ef1ad2011f5ecb61041542055132eec14bb9158d5f9b",
