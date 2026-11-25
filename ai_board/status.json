@@ -1,5 +1,5 @@
 {
- "built_at": "2026-11-25T14:53:15+09:00",
+ "built_at": "2026-11-25T15:54:02+09:00",
  "trigger": "workflow_run dashboard-update",
  "marker": "2026-11-25T07:38:56+09:00 아침",
  "request_applied": false,
@@ -9,18 +9,33 @@
  "us_last_session": "2026-11-24",
  "kr_last_session": "2026-11-24",
  "stale": [],
- "changed": [],
- "files_changed": [],
+ "changed": [
+  "코스피 고점 대비 -45.08→-48.46(11.25)",
+  "미수 반대매매(하루) 111.47→136.75(11.24)",
+  "신용융자 잔고 1년 정점 대비 -32.85→-33.02(11.24)",
+  "외국인 코스피 20거래일 순매수 -14.1→-16.77(11.25)",
+  "투자자 예탁금 85.3조 원→82.0조 원(11.24)"
+ ],
+ "files_changed": [
+  "thresholds",
+  "indicators",
+  "market",
+  "margin",
+  "forced",
+  "macro",
+  "history",
+  "runs"
+ ],
  "files": {
-  "thresholds": "4188117d233e9c52aa8d27904a4935f87d75894429a162206dece664c65c1b45",
-  "indicators": "df67b024b3471fdeffc2c32cec6e128a619dc4dac5f572eea8bf8de2ab6e9db3",
-  "market": "c8de4f90ed2d234ec47834a4d7c5ea0e33c1670d29fcbc2e522fcaf0788ccae8",
-  "margin": "9cacd3f2fe6fa8ca65830963cf8247d9de0c9a52ac22df760e15cd094e91ed2c",
-  "forced": "faec6c1d739da776ed7ded8fd8b0e188689af205ab6287d36025f2400b02d56c",
-  "macro": "8b79596abda283c623755278b13a56371a0776c80eba535c9594448b1e818826",
+  "thresholds": "e295a7e39a5a75bda39e4adbae3d5edee9dd075c5dc5f3b94d079ab7765914ed",
+  "indicators": "ef3e4425a17fbcaf3278ef1ad2011f5ecb61041542055132eec14bb9158d5f9b",
+  "market": "940d20c0d2e541a58a0177e961f325651fca32e0efaf5c216fd823d25939a409",
+  "margin": "fb0b2d8af6b11f9b65f14b90c68e4f0d477976800460defd575e190b9bd1ddf9",
+  "forced": "108d3efadca2c88cb1d1266dec9f80ac4ba7fa3c04e46f2b6ccc66b31a754cb0",
+  "macro": "8cef6cb51808f4b1606efe151bf3b4550286daf116e88746c225a15c762f3880",
   "events": "2da1c3f061b0d8a30305e319101b6cc72e77c8bbe1a8d8aa2e806b0006a2c160",
-  "history": "944ce495790ee47a9c191605e7c1989f1f80f9ff9cf1c1a36ae9d5b0698c00fd",
-  "runs": "49f5c3d42ee5d7f3f9a1d6f4e75694a3f31525e7efe3803ed8374814f77e2a53",
+  "history": "c4e9f194b9ae15b23841e95db6c91af1924fffeec052c70bb767111ac3ea03f9",
+  "runs": "5571034545228b2d7b937385ef9feacc66c055c1cbd838274ace0a6ce237dcdc",
   "news": "3b526ac3d00ce06dfb2f0d86ed6bdd0c2d991bf3414485fef7198bd05f9edc7a",
   "scenarios": "0a76d773ea2dbd406498e38017ce08c0feadd77a001cd6d4ca2392882c2656eb",
   "episodes": "5fc42c60296afdbd24d0b7f7b1d774e337ab66d562bd9442f44a44b613b13e51"
@@ -78,10 +93,11 @@
   }
  },
  "near": [
+  "kospi_dd",
   "sox_dd"
  ],
  "flags": {
-  "신용 청산 진행": "신용잔고 정점 대비 −32.9%"
+  "신용 청산 진행": "신용잔고 정점 대비 −33.0%"
  },
  "alert": {
   "text": "",
