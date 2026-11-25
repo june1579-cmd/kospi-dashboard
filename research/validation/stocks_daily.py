@@ -19,6 +19,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import screen as SCR
 import qv_live as QL
 QF = QL.formula()
+import hashlib
+CODE_VER = hashlib.sha1(open(os.path.abspath(__file__), 'rb').read() + (open(QL.FORM, 'rb').read() if os.path.exists(QL.FORM) else b'')).hexdigest()[:12]
 MODE = 'screen-keep-qv' if any(v.get('adopt') for v in QF.values() if isinstance(v, dict)) else 'screen-keep'
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -189,7 +191,7 @@ def main():
     pf = os.path.join(OUT, 'meta.json')
     if os.path.exists(pf):
         prev = json.load(open(pf))
-    if not LOCAL and prev.get('asof_ymd') == END and prev.get('ok') and prev.get('mode') == MODE and '--force' not in sys.argv:
+    if not LOCAL and prev.get('asof_ymd') == END and prev.get('ok') and prev.get('mode') == MODE and prev.get('code_ver') == CODE_VER and '--force' not in sys.argv:
         log('이미 같은 기준일로 만들어 둠 — 건너뜀')
         prev['checked_at'] = now.isoformat(timespec='seconds'); prev['skipped'] = True
         prev['marker'] = open(os.path.join(ROOT, 'stocks_run.txt')).read().strip() if os.path.exists(os.path.join(ROOT, 'stocks_run.txt')) else ''
@@ -592,6 +594,9 @@ def main():
     dropped = [(c, probs[c]) for c in pool if c not in set(today) and probs[c]]
     members = today + kept
     D = [make_row(c) for c in members]
+    _k = ix['kospi']; _p0 = float(_k.loc['20260923']); _aft = _k[_k.index > '20260923']; _rec = _aft[_aft >= _p0]
+    C0923 = ('20260923', _rec.index[0] if len(_rec) else END, bool(len(_rec)))
+    log('9/23 급락 구간', C0923, '코스피', round((float(_k.loc[C0923[1]]) / _p0 - 1) * 100, 2), '%')
     D.sort(key=lambda r: (-r['n_lists'], r['st_rank'] if r['st_rank'] is not None else 1e9))
     MDDC = []
     for r in D:
@@ -645,6 +650,15 @@ def main():
         else:
             warn(f'{r["name"]} 일별 종가 없음 — 수익률·변동성 이전 값')
         r['asof'] = asof; r['asof_short'] = f'{d_short[:4]}-{d_short[4:6]}-{d_short[6:]}' if d_short else None
+        # 9/23 급락: 코스피가 9/23 종가를 되찾을 때까지 기준일까지로 매일 갱신, 되찾으면 그날로 고정(2026-11-25 사용자 지시)
+        cl = CL.get(c)
+        if cl is not None and C0923[0] in cl.index and C0923[1] in cl.index and cl[C0923[0]] > 0:
+            r['ret_0923'] = round(float(cl[C0923[1]] / cl[C0923[0]] - 1) * 100, 2); nn.pop('ret_0923', None)
+        elif cl is not None and cl.first_valid_index() is not None and cl.first_valid_index() > C0923[0]:
+            r['ret_0923'] = None; nn['ret_0923'] = '9/23 뒤 상장'
+        else:
+            nn['ret_0923'] = nn.get('ret_0923') or (f'{C0923[1]} 종가 없음 — 이전 값' if r.get('ret_0923') is not None else '확인 불가')
+        r['ret_0923_end'] = f'{C0923[1][:4]}-{C0923[1][4:6]}-{C0923[1][6:]}'; r['ret_0923_done'] = C0923[2]
 
 
     # 3) 방어1 칸
@@ -718,7 +732,7 @@ def main():
         for c, nm_ in changes['left_lists']: fh.write(f'{asof},명단 밖(유지),{c},{nm_},\n')
         for c, nm_, ls in changes['back_lists']: fh.write(f'{asof},명단 복귀,{c},{nm_},{ls}\n')
     log('오늘 세 명단', len(today), '· 유지', len(kept), '· 들어옴', len(added), '· 빠짐(문제)', len(removed), [x[:2] for x in removed][:5], '· 명단 밖으로', len(left), '· 복귀', len(back), '· 되살림', len(restored))
-    meta = dict(ok=True, mode=MODE, formula={k: dict(adopt=v.get('adopt'), keys=v.get('keys'), labels=v.get('labels'), sector_neutral=v.get('sector_neutral'), check=v.get('check'), check_old=v.get('check_old')) for k, v in QF.items() if isinstance(v, dict)}, asof=asof, asof_ymd=END, asof_short=D[0]['asof_short'], asof_fund=d_fund, run_at=now.isoformat(timespec='seconds'),
+    meta = dict(ok=True, mode=MODE, code_ver=CODE_VER, crash0923=dict(start='2026-09-23', end=C0923[1], recovered=C0923[2], kospi=round((float(ix['kospi'].loc[C0923[1]]) / float(ix['kospi'].loc['20260923']) - 1) * 100, 2)), formula={k: dict(adopt=v.get('adopt'), keys=v.get('keys'), labels=v.get('labels'), sector_neutral=v.get('sector_neutral'), check=v.get('check'), check_old=v.get('check_old')) for k, v in QF.items() if isinstance(v, dict)}, asof=asof, asof_ymd=END, asof_short=D[0]['asof_short'], asof_fund=d_fund, run_at=now.isoformat(timespec='seconds'),
                 marker=open(os.path.join(ROOT, 'stocks_run.txt')).read().strip() if os.path.exists(os.path.join(ROOT, 'stocks_run.txt')) else '',
                 n=len(D), d1_growth_n=len(G), universe=dict(stable=len(stU), analysis=len(A), growth=len(G0)), changes=changes, mdd_check=mdd_sum, d1_top5=top, warnings=WARN, minutes=round((time.time() - t0) / 60, 1), local=LOCAL)
     json.dump(meta, open(pf, 'w'), ensure_ascii=False, indent=1)
