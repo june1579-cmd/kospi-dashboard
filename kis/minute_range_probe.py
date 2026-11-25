@@ -152,9 +152,53 @@ def one_day_bars(k, code, d, mkt="J"):
     return {"date": d.isoformat(), "market": mkt, "bars": total, "calls": calls, "first": first, "last": last}
 
 
+def after_hours(k, code, d, mkt):
+    """20:00 부터 거슬러 받아 15:30 이후(애프터마켓) 봉이 몇 개, 몇 시부터 몇 시까지 있는지"""
+    hh, bars, calls, msg = "200000", {}, 0, ""
+    while calls < 6:
+        r = k.get("/uapi/domestic-stock/v1/quotations/inquire-time-dailychartprice", "FHKST03010230", {
+            "FID_COND_MRKT_DIV_CODE": mkt, "FID_INPUT_ISCD": code, "FID_INPUT_HOUR_1": hh,
+            "FID_INPUT_DATE_1": d.strftime("%Y%m%d"), "FID_PW_DATA_INCU_YN": "N", "FID_FAKE_TICK_INCU_YN": ""})
+        calls += 1; msg = f"{r.get('rt_cd')} {r.get('msg1','')}".strip()
+        rows = [x for x in rows_of(r) if x.get("stck_bsop_date") == d.strftime("%Y%m%d")]
+        if not rows: break
+        for x in rows: bars[x["stck_cntg_hour"]] = x.get("cntg_vol")
+        first = min(x["stck_cntg_hour"] for x in rows)
+        if first <= "153000": break
+        hh = (datetime.strptime(first, "%H%M%S") - timedelta(minutes=1)).strftime("%H%M%S")
+    aft = sorted(t for t in bars if t > "153000")
+    vol = sum(int(bars[t] or 0) for t in aft)
+    return {"code": code, "market": mkt, "after_bars": len(aft), "first": aft[0] if aft else None,
+            "last": aft[-1] if aft else None, "after_vol": vol,
+            "gap_1530_1600": len([t for t in aft if t < "160000"]), "calls": calls, "msg": msg}
+
+
+def run_after(k, res, out):
+    d = prev_weekday(date.today() - timedelta(days=1))
+    C = res["checks"]; lines = []
+    print(f"\n애프터마켓(15:30~20:00) 분봉 — {d}")
+    for code in ["005930", "000660"]:
+        for mkt in ["J", "UN", "NX"]:
+            v = after_hours(k, code, d, mkt); C[f"after_{code}_{mkt}"] = v; print("  ", v)
+            lines.append(f"{code}{mkt} {v['after_bars']}봉 {v['first'] or '-'}~{v['last'] or '-'}")
+    res["api_calls"] = CALLS
+    (out / "result_after.json").write_text(json.dumps(res, ensure_ascii=False, indent=1), encoding="utf-8")
+    (out / "notify.txt").write_text(("[KIS 애프터마켓 분봉]\n" + "\n".join(lines))[:200], encoding="utf-8")
+    return 0
+
+
 def main():
-    ap = argparse.ArgumentParser(); ap.add_argument("--out", default="kis_probe"); a = ap.parse_args()
+    ap = argparse.ArgumentParser(); ap.add_argument("--out", default="kis_probe")
+    ap.add_argument("--only", default="", help="after = 애프터마켓 분봉만 시험")
+    a = ap.parse_args()
     out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
+    if a.only == "after":
+        res = {"run_at": datetime.now().isoformat(timespec="seconds"), "checks": {}, "notes": []}
+        k = K("real")
+        ok, msg = k.auth() if k.ok() else (False, "실전 키 없음")
+        if not ok:
+            (out / "notify.txt").write_text(f"[KIS 애프터마켓 분봉] 토큰 실패 {msg}"[:200], encoding="utf-8"); return 1
+        return run_after(k, res, out)
     res = {"run_at": datetime.now().isoformat(timespec="seconds"), "checks": {}, "notes": []}
 
     real, mock = K("real"), K("mock")

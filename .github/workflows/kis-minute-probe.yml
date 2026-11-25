@@ -3,6 +3,10 @@
 name: kis-minute-probe
 on:
   workflow_dispatch:
+    inputs:
+      args:
+        description: '빈칸=전체 범위 시험, --only after = 애프터마켓 분봉만'
+        default: ''
   push:
     branches: [kis-probe-run]
 permissions:
@@ -27,7 +31,7 @@ jobs:
           KIS_REAL_APP_SECRET: ${{ secrets.KIS_REAL_APP_SECRET }}
           KIS_MOCK_APP_KEY: ${{ secrets.KIS_MOCK_APP_KEY }}
           KIS_MOCK_APP_SECRET: ${{ secrets.KIS_MOCK_APP_SECRET }}
-        run: python kis/minute_range_probe.py --out /tmp/kis_probe || true
+        run: python kis/minute_range_probe.py --out /tmp/kis_probe ${{ github.event.inputs.args }} || true
       - name: 결과 저장(kis-probe 가지)
         run: |
           git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
