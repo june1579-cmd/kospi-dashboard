@@ -90,8 +90,9 @@ jobs:
           cache: pip
       - run: pip install -q pandas==2.3.3 numpy==2.5.3 scipy==1.18.1 scikit-learn==1.9.1 requests==2.34.2
       - name: 미국 공개 자료 수집(CFTC·Cboe 풋/콜·VIX·야후 일봉)
-        if: ${{ github.event_name != 'workflow_run' }}   # 코스피 대시보드 갱신 직후 계산은 한국 자료만 새로 반영(미국 출처는 다시 두드리지 않음)
-        run: python fo/collect_us.py
+        # 코스피 대시보드 갱신 직후(workflow_run) 계산은 평소 한국 자료만 새로 반영하되, 미국 일봉이 하루 밀려 있으면(06:37 예약이 빠진 날) 그때만 미국도 받는다(2026-11-26)
+        run: |
+          if [ "${{ github.event_name }}" != "workflow_run" ] || python fo/us_due.py; then python fo/collect_us.py; else echo "미국 자료는 제때 들어와 있어 다시 받지 않음"; fi
       - name: 지표·방향 확률 계산 → 웹판 자료(docs/fo/data)
         run: if [ -f fo/build.py ]; then python fo/build.py --deriv _deriv/deriv/data; else echo "build.py 없음 — 수집만"; fi
       - name: 결과 저장(main)
