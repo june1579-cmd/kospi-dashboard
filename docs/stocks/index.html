@@ -147,9 +147,10 @@ td sup { color: var(--muted); font-size: 0.75em; margin-left: 1px; }
       <button class="tile" type="button" data-preset="sc"><b id="t-sc">—</b><span>점수 순위</span></button>
       <button class="tile" type="button" data-preset="d1"><b id="t-d1">—</b><span>방어 1번</span></button>
       <button class="tile" type="button" data-preset="multi"><b id="t-multi">—</b><span>겹침</span></button>
+      <button class="tile" type="button" data-preset="kept"><b id="t-kept">—</b><span>명단 밖 유지</span></button>
     </div>
   </div>
-  <p class="sub">세 명단을 합친 <b id="nAll">—</b>종목, <b id="asof">—</b> KRX 종가 기준(평일 20:25 자동 갱신, 세 명단 모두 매일 전체 종목에서 다시 뽑음)<span id="asofShort"></span><span id="newN"></span>. 칸 제목을 누르면 정렬, 종목 이름을 누르면 다음 금융 종목 화면이 열립니다. 이름 앞 ☆를 누른 뒤 표 왼쪽 위 <b>↻ 갱신</b>을 누르면 관심목록이 맨 위로 올라갑니다.</p>
+  <p class="sub">세 명단(각 1~100위)에 든 종목과 전에 들었던 종목을 합친 <b id="nAll">—</b>종목<span id="nSplit"></span>, <b id="asof">—</b> KRX 종가 기준(평일 20:25 자동 갱신, 세 명단 모두 매일 전체 종목에서 다시 뽑음)<span id="asofShort"></span><span id="newN"></span>. 칸 제목을 누르면 정렬, 종목 이름을 누르면 다음 금융 종목 화면이 열립니다. 이름 앞 ☆를 누른 뒤 표 왼쪽 위 <b>↻ 갱신</b>을 누르면 관심목록이 맨 위로 올라갑니다.</p>
   <div class="bar">
     <div class="count" id="count" aria-live="polite">—</div>
     <div class="row">
@@ -164,6 +165,7 @@ td sup { color: var(--muted); font-size: 0.75em; margin-left: 1px; }
       <button type="button" class="chip c-sc" id="f-sc" aria-pressed="true">점수 순위</button>
       <button type="button" class="chip c-d1" id="f-d1" aria-pressed="true">방어 1번</button>
       <button type="button" class="chip" id="f-multi" aria-pressed="false">겹친 종목만</button>
+      <button type="button" class="chip" id="f-kept" aria-pressed="true" title="전에 세 명단에 들었다가 지금은 1~100위 밖인 종목(문제없으면 계속 남김)">명단 밖 유지 종목</button>
     </div>
     <div class="row">
       <label for="q">종목 찾기<input type="search" id="q" placeholder="이름 또는 코드"></label>
@@ -193,6 +195,7 @@ td sup { color: var(--muted); font-size: 0.75em; margin-left: 1px; }
       <li><b>*</b> 표시: 다른 기준으로 채운 값(우선주 PBR·PER은 보통주 주당 값 기준, 외국 기업 PBR·PER·배당은 OpenDART 자본·주당순이익·주당배당금 기준). 글자 위에 올리면 기준이 보입니다. 금융사의 흑자 연수·영업이익은 OpenDART 회사별 전체 재무제표로 채웠습니다.</li>
       <li><b>2022~2025년·2026년</b>: 각 해 첫 거래일부터 마지막 거래일까지 KRX 수정 등락률(2026년은 기준일까지). 그해 중간에 상장한 종목은 상장 뒤부터, 상장 전 해는 비어 있습니다.</li>
       <li><b>6/22~7/30·9/23~11/9</b>: 2026년 두 급락 구간 수익률. 안정 관찰 순위를 매길 때 쓴 기록에 들어 있는 값입니다.</li>
+      <li><b>명단 유지</b>: 한 번이라도 세 명단 1~100위에 든 종목은 그 뒤 순위가 밀려도 지우지 않고 남깁니다('명단 밖 유지', 명단 칸에 '유지'). 상장폐지·거래정지(KRX 시세에서 사라짐)나 거래정지 의심(최근 13주 중 4주 이상 등락 없음)일 때만 뺍니다. 그래서 종목 수는 새 종목이 들어올수록 늘어납니다.</li>
       <li><b>관심목록</b>: 종목 이름 앞 ☆를 누르면 ★로 바뀌고, 표 왼쪽 위 '↻ 갱신'(고른 수가 함께 보임)을 누르거나 정렬·조건을 바꾸면 표 맨 위 '관심목록' 묶음에 들어갑니다(여러 개 고른 뒤 한 번에 올릴 수 있음). 어떤 칸으로 정렬해도 관심목록은 맨 위에 있고(묶음 안에서는 같은 기준으로 정렬), 표를 아래로 내려도 제목 줄 바로 밑에 붙어 계속 보입니다(관심목록이 표 높이의 절반을 넘으면 같이 스크롤), 명단·시장·업종·검색 조건과 상관없이 늘 보입니다. 아래 전체 명단의 원래 자리에도 그대로 남습니다. ★를 다시 누르면 빠집니다. 관심목록은 이 브라우저에 저장되어(웹판과 대시보드, 휴대폰과 컴퓨터는 따로) '처음 상태로'를 눌러도 지워지지 않습니다.</li>
       <li>'좋은 쪽부터' 정렬은 순위는 작은 값, 점수·덜 빠짐·배당·수익률은 큰 값, 변동성·베타·PBR·공매도는 작은 값부터 놓습니다. 빈 값(—)은 항상 맨 아래로 갑니다.</li>
     </ul>
@@ -254,9 +257,9 @@ td sup { color: var(--muted); font-size: 0.75em; margin-left: 1px; }
     { k: 'mcap', t: '시총 (억 원)', g: 'own', f: 'int', good: 1 },
   ];
   const PAGE = 20;
-  const DEF = { lists: { st: true, sc: true, d1: true }, multi: false, q: '', mkt: '', sec: '', sort: 'n_lists', dir: 'good', hide: [], page: 1 };
+  const DEF = { lists: { st: true, sc: true, d1: true }, multi: false, kept: true, keptOnly: false, q: '', mkt: '', sec: '', sort: 'n_lists', dir: 'good', hide: [], page: 1 };
   let S = JSON.parse(JSON.stringify(DEF));
-  try { const s = JSON.parse(localStorage.getItem('stocks-view') || 'null'); if (s && s.lists) { S = Object.assign(S, s); if (!Array.isArray(S.hide)) S.hide = []; delete S.groups; S.page = 1; } } catch (e) {}
+  try { const s = JSON.parse(localStorage.getItem('stocks-view') || 'null'); if (s && s.lists) { S = Object.assign(S, s); if (!Array.isArray(S.hide)) S.hide = []; delete S.groups; S.page = 1; if (S.kept === undefined) S.kept = true; S.keptOnly = !!S.keptOnly; } } catch (e) {}
   let DATA = [];
   const $ = (id) => document.getElementById(id);
   const num = (v) => (v === null || v === undefined || v === '' || Number.isNaN(Number(v))) ? null : Number(v);
@@ -295,8 +298,7 @@ td sup { color: var(--muted); font-size: 0.75em; margin-left: 1px; }
   function rows() {
     const q = S.q.trim().toLowerCase();
     const out = DATA.filter((r) =>
-      ((S.lists.st && r.in_st) || (S.lists.sc && r.in_sc) || (S.lists.d1 && r.in_d1)) &&
-      (!S.multi || r.n_lists >= 2) &&
+      (S.keptOnly ? r.n_lists === 0 : ((((S.lists.st && r.in_st) || (S.lists.sc && r.in_sc) || (S.lists.d1 && r.in_d1)) && (!S.multi || r.n_lists >= 2)) || (S.kept && !S.multi && r.n_lists === 0))) &&
       (!S.mkt || r.market === S.mkt) && (!S.sec || r.sector === S.sec) &&
       (!q || String(r.name).toLowerCase().includes(q) || r.code.includes(q)));
     return out.sort(sorter());
@@ -432,6 +434,7 @@ td sup { color: var(--muted); font-size: 0.75em; margin-left: 1px; }
           td.className = 'l';
           const bw = document.createElement('span'); bw.className = 'badges';
           bw.append(badge(r.in_st, 'st', '안', fmt.int(r.st_rank || 0), '안정 관찰'), badge(r.in_sc, 'sc', '점', fmt.int(r.sc_rank || 0), '점수 순위'), badge(r.in_d1, 'd1', '방', fmt.int(r.d1_rank || 0), '방어 1번'));
+          if (r.n_lists === 0) { const k = document.createElement('span'); k.className = 'b off'; k.textContent = '유지'; k.title = (r._n || {}).n_lists || '세 명단 1~100위 밖(유지)'; bw.append(k); }
           td.append(bw);
         } else if (c.text) { td.className = 'l sect'; td.textContent = r[c.k] || '—'; if (r[c.k]) td.title = r[c.k]; }
         else {
@@ -470,9 +473,9 @@ td sup { color: var(--muted); font-size: 0.75em; margin-left: 1px; }
   }
   function syncControls() {
     ['st', 'sc', 'd1'].forEach((k) => $('f-' + k).setAttribute('aria-pressed', String(!!S.lists[k])));
-    $('f-multi').setAttribute('aria-pressed', String(!!S.multi));
+    $('f-multi').setAttribute('aria-pressed', String(!!S.multi)); $('f-kept').setAttribute('aria-pressed', String(!!S.kept || !!S.keptOnly));
     $('q').value = S.q; $('mkt').value = S.mkt; $('sec').value = S.sec; $('sort').value = S.sort; $('dir').value = S.dir;
-    const preset = S.multi && S.lists.st && S.lists.sc && S.lists.d1 ? 'multi' : (S.lists.st && S.lists.sc && S.lists.d1 && !S.multi) ? 'all' : (!S.multi && ['st', 'sc', 'd1'].filter((k) => S.lists[k]).length === 1) ? ['st', 'sc', 'd1'].find((k) => S.lists[k]) : '';
+    const preset = S.keptOnly ? 'kept' : (!S.kept && S.lists.st && S.lists.sc && S.lists.d1 && !S.multi) ? '' : S.multi && S.lists.st && S.lists.sc && S.lists.d1 ? 'multi' : (S.lists.st && S.lists.sc && S.lists.d1 && !S.multi) ? 'all' : (!S.multi && ['st', 'sc', 'd1'].filter((k) => S.lists[k]).length === 1) ? ['st', 'sc', 'd1'].find((k) => S.lists[k]) : '';
     document.querySelectorAll('.tile').forEach((t) => t.classList.toggle('on', t.dataset.preset === preset));
   }
   function render() { syncControls(); renderCols(); renderHead(); renderBody(); save(); }
@@ -480,7 +483,8 @@ td sup { color: var(--muted); font-size: 0.75em; margin-left: 1px; }
 
   function wire() {
     ['st', 'sc', 'd1'].forEach((k) => $('f-' + k).addEventListener('click', () => { S.lists[k] = !S.lists[k]; if (!S.lists.st && !S.lists.sc && !S.lists.d1) S.lists[k] = true; refilter(); }));
-    $('f-multi').addEventListener('click', () => { S.multi = !S.multi; refilter(); });
+    $('f-multi').addEventListener('click', () => { S.multi = !S.multi; S.keptOnly = false; refilter(); });
+    $('f-kept').addEventListener('click', () => { if (S.keptOnly) { S.keptOnly = false; S.kept = false; } else S.kept = !S.kept; refilter(); });
     $('q').addEventListener('input', (e) => { S.q = e.target.value; S.page = 1; renderBody(); save(); });
     $('mkt').addEventListener('change', (e) => { S.mkt = e.target.value; refilter(); });
     $('sec').addEventListener('change', (e) => { S.sec = e.target.value; refilter(); });
@@ -497,9 +501,11 @@ td sup { color: var(--muted); font-size: 0.75em; margin-left: 1px; }
     $('cols-none').addEventListener('click', () => { S.hide = COLS.map((c) => c.k); render(); });
     document.querySelectorAll('.tile').forEach((t) => t.addEventListener('click', () => {
       const p = t.dataset.preset;
-      if (p === 'all') { S.lists = { st: true, sc: true, d1: true }; S.multi = false; S.sort = 'n_lists'; }
-      else if (p === 'multi') { S.lists = { st: true, sc: true, d1: true }; S.multi = true; S.sort = 'n_lists'; }
-      else { S.lists = { st: p === 'st', sc: p === 'sc', d1: p === 'd1' }; S.multi = false; S.sort = p + '_rank'; }
+      S.keptOnly = false;
+      if (p === 'all') { S.lists = { st: true, sc: true, d1: true }; S.multi = false; S.kept = true; S.sort = 'n_lists'; }
+      else if (p === 'multi') { S.lists = { st: true, sc: true, d1: true }; S.multi = true; S.kept = false; S.sort = 'n_lists'; }
+      else if (p === 'kept') { S.lists = { st: true, sc: true, d1: true }; S.multi = false; S.kept = true; S.keptOnly = true; S.sort = 'st_rank'; }
+      else { S.lists = { st: p === 'st', sc: p === 'sc', d1: p === 'd1' }; S.multi = false; S.kept = false; S.sort = p + '_rank'; }
       S.dir = 'good'; refilter();
     }));
     const headSort = (e) => {
@@ -526,6 +532,8 @@ td sup { color: var(--muted); font-size: 0.75em; margin-left: 1px; }
     $('t-sc').textContent = d.filter((r) => r.in_sc).length;
     $('t-d1').textContent = d.filter((r) => r.in_d1).length;
     $('t-multi').textContent = d.filter((r) => r.n_lists >= 2).length;
+    const nKept = d.filter((r) => r.n_lists === 0).length; $('t-kept').textContent = nKept;
+    $('nSplit').textContent = '(오늘 세 명단 ' + (d.length - nKept) + ' · 명단 밖 유지 ' + nKept + ')';
     const secs = [...new Set(d.map((r) => r.sector).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'ko'));
     secs.forEach((s) => { const o = document.createElement('option'); o.value = s; o.textContent = s; $('sec').append(o); });
     COLS.filter((c) => !c.nosort).forEach((c) => { const o = document.createElement('option'); o.value = c.k; o.textContent = c.t.replace(/\n/g, ' '); $('sort').append(o); });
