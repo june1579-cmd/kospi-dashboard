@@ -106,6 +106,7 @@ td.pin { position: sticky; z-index: 2; }
 td.pin.stick { z-index: 3; }
 tr.pin-last td { box-shadow: inset 0 -2px 0 var(--star); }
 .rf { font: inherit; font-size: 0.9em; font-weight: 600; padding: 2px 7px; border: 1px solid var(--line); border-radius: 5px; background: var(--bg); color: var(--ink); cursor: pointer; white-space: nowrap; }
+.nw { display: inline-block; margin-left: 4px; padding: 0 4px; font-size: 10px; font-weight: 700; line-height: 1.5; color: #fff; background: var(--up); border-radius: 3px; vertical-align: middle; }
 .rf.on { background: var(--star); border-color: var(--star); color: #1b1f24; }
 .rf:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 thead th { z-index: 4; }
@@ -148,7 +149,7 @@ td sup { color: var(--muted); font-size: 0.75em; margin-left: 1px; }
       <button class="tile" type="button" data-preset="multi"><b id="t-multi">—</b><span>겹침</span></button>
     </div>
   </div>
-  <p class="sub">세 명단을 합친 <b id="nAll">—</b>종목, <b id="asof">—</b> KRX 종가 기준(평일 20:25 자동 갱신)<span id="asofShort"></span>. 칸 제목을 누르면 정렬, 종목 이름을 누르면 다음 금융 종목 화면이 열립니다. 이름 앞 ☆를 누른 뒤 표 왼쪽 위 <b>↻ 갱신</b>을 누르면 관심목록이 맨 위로 올라갑니다.</p>
+  <p class="sub">세 명단을 합친 <b id="nAll">—</b>종목, <b id="asof">—</b> KRX 종가 기준(평일 20:25 자동 갱신, 세 명단 모두 매일 전체 종목에서 다시 뽑음)<span id="asofShort"></span><span id="newN"></span>. 칸 제목을 누르면 정렬, 종목 이름을 누르면 다음 금융 종목 화면이 열립니다. 이름 앞 ☆를 누른 뒤 표 왼쪽 위 <b>↻ 갱신</b>을 누르면 관심목록이 맨 위로 올라갑니다.</p>
   <div class="bar">
     <div class="count" id="count" aria-live="polite">—</div>
     <div class="row">
@@ -183,12 +184,12 @@ td sup { color: var(--muted); font-size: 0.75em; margin-left: 1px; }
   <div id="help" hidden>
     <ul>
       <li>명단 칸의 <b>안</b>=안정 관찰, <b>점</b>=점수 순위, <b>방</b>=방어 1번(흐린 글자는 그 명단 밖). 글자 위에 올리면 순위가 보입니다.</li>
-      <li><b>안정 관찰</b>: 시총 1,000억 원 이상·거래가 너무 적지 않은 848종목을 1년 변동성 낮음, 2년 베타 낮음, 2018년 이후 코스피 급락 22번에서 같은 시장 보통 종목보다 덜 빠진 비율로 각각 백분위를 매겨 같은 비중으로 평균한 순위입니다.</li>
-      <li><b>점수 순위</b>: 11/16에 고정한 수급 가중 점수(0~100)와 위험·가치 체크리스트(베타 0.6 미만·배당 2% 이상·4년 흑자·PBR 1.2 미만, 개당 25점)를 반씩 섞은 종합 점수 순위입니다(대시보드 '현재 점수 순위' 기본값).</li>
-      <li><b>방어 1번</b>: 11월 17일에 고정한 '방어종목 1번 결과물'(성장 종목 250개 중 방어 30·버틴 실적 20·성장 20·수급 15·공통점 15 비중의 종합 평가 1~100위)입니다. 명단 소속과 성장 조건 250종목 구성은 고정이고, 세부 점수·종합·순위는 매일 같은 식으로 KRX 자료에서 다시 계산합니다(백분위 기준은 그날 성장 종목 250개 분포, 급락 7구간 성적은 11/16까지 구간 고정). 성장 조건 밖 종목도 같은 기준으로 점수를 매깁니다(* 표시).</li>
+      <li><b>안정 관찰</b>: 그날 시총 1,000억 원 이상·거래가 너무 적지 않고 과거 급락을 10번 이상 겪은 종목(우선주·스팩·리츠 등 제외)을 1년 변동성 낮음, 2년 베타 낮음, 2018년 이후 코스피 급락 22번에서 같은 시장 보통 종목보다 덜 빠진 비율로 각각 백분위를 매겨 같은 비중으로 평균한 순위입니다.</li>
+      <li><b>점수 순위</b>: 분석 대상(2024-11-15 이전 상장, 시총 500억 원 이상, 하루 평균 거래대금 1억 원 이상) 전체에서 매일 다시 매긴 수급 가중 점수(0~100, KRX 투자자별 일별 순매수·외국인 보유율로 만든 지표 20개)와 위험·가치 체크리스트(베타 0.6 미만·배당 2% 이상·4년 흑자·PBR 1.2 미만, 개당 25점)를 반씩 섞은 종합 점수 순위입니다(대시보드 '현재 점수 순위' 기본값).</li>
+      <li><b>방어 1번</b>: '방어종목 1번 결과물'과 같은 식(분석 대상 중 2024-11-15 대비 +30% 이상이면서 2025년·올해 모두 오른 성장 조건 종목 안에서 방어 30·버틴 실적 20·성장 20·수급 15·공통점 15 비중의 종합 평가 1~100위)입니다. 성장 조건 판정·세부 점수·순위 모두 매일 KRX 자료로 다시 계산합니다(백분위 기준은 그날 성장 조건 종목 분포, 급락 7구간 성적은 11/16까지 구간 고정). 성장 조건 밖 종목도 같은 기준으로 점수를 매깁니다(* 표시).</li>
       <li><b>변동성·베타</b>: 주간 수정 등락률로 계산(변동성 1년, 베타 2년, 같은 시장 지수 대비). <b>최대 낙폭 2년</b>: 조사 기간(최근 104주) 동안 KRX 일별 수정 종가 기준 전고점 대비 가장 크게 빠진 폭(조사 시작 직전 종가 포함). 글자 위에 올리면 고점·저점 날짜가 보입니다. <b>과거 급락 덜 빠짐</b>: 22번 급락 중 그 종목이 겪은 급락에서 같은 시장 보통 종목(중앙값)보다 덜 빠진 비율.</li>
-      <li><b>PBR·PER·배당·외국인 보유율·공매도 잔고·종가·시총</b>: 기준일 KRX 단면(공매도 잔고는 KRX 공표가 2거래일 늦어 공표된 가장 최근 날 값). <b>안정 순위·점수 순위·과거 급락 기록·2022~2025년 수익률·흑자 연수</b>는 11/16 연구 결과로 고정입니다. <b>흑자 연수</b>: OpenDART 사업보고서 2022~2025년 영업이익이 플러스인 해의 수(금융사 등 영업이익 항목이 없는 회사는 비어 있음).</li>
-      <li><b>순위 칸</b>: 안정 순위는 848개 대상 안의 순위(명단은 1~100위), 점수 순위는 분석 대상 중 300위까지, 방어1 순위는 성장 조건을 넘은 250개 안의 순위입니다. 그 밖의 종목은 칸에 '848개 밖'·'300위 밖'·'성장 조건 밖'으로 적고, 글자 위에 올리면 사유가 보입니다.</li>
+      <li><b>PBR·PER·배당·외국인 보유율·공매도 잔고·종가·시총</b>: 기준일 KRX 단면(공매도 잔고는 KRX 공표가 2거래일 늦어 공표된 가장 최근 날 값). <b>세 명단의 소속·순위</b>는 매일 전체 종목에서 다시 뽑고(편입일 = 이번에 명단에 들어온 날, 이름 옆 '신규' = 오늘 들어옴), <b>과거 급락 기록·2022~2025년 수익률·흑자 연수</b>는 끝난 기간이라 고정 값입니다. <b>흑자 연수</b>: OpenDART 사업보고서 2022~2025년 영업이익이 플러스인 해의 수(금융사 등 영업이익 항목이 없는 회사는 비어 있음).</li>
+      <li><b>순위 칸</b>: 안정 순위는 그날 안정 관찰 대상 안의 순위(명단은 1~100위), 점수 순위는 분석 대상 중 300위까지, 방어1 순위는 그날 성장 조건을 넘은 종목 안의 순위입니다. 그 밖의 종목은 칸에 'n개 밖'·'300위 밖'·'성장 조건 밖'으로 적고, 글자 위에 올리면 사유가 보입니다.</li>
       <li><b>*</b> 표시: 다른 기준으로 채운 값(우선주 PBR·PER은 보통주 주당 값 기준, 외국 기업 PBR·PER·배당은 OpenDART 자본·주당순이익·주당배당금 기준). 글자 위에 올리면 기준이 보입니다. 금융사의 흑자 연수·영업이익은 OpenDART 회사별 전체 재무제표로 채웠습니다.</li>
       <li><b>2022~2025년·2026년</b>: 각 해 첫 거래일부터 마지막 거래일까지 KRX 수정 등락률(2026년은 기준일까지). 그해 중간에 상장한 종목은 상장 뒤부터, 상장 전 해는 비어 있습니다.</li>
       <li><b>6/22~7/30·9/23~11/9</b>: 2026년 두 급락 구간 수익률. 안정 관찰 순위를 매길 때 쓴 기록에 들어 있는 값입니다.</li>
@@ -212,6 +213,7 @@ td sup { color: var(--muted); font-size: 0.75em; margin-left: 1px; }
   const COLS = [
     { k: 'lists_badge', t: '명단', f: 'badge', nosort: true },
     { k: 'sector', t: '업종', f: 'text', good: -1, text: true },
+    { k: 'since', t: '편입일', g: 'base', f: 'text', good: 1, text: true },
     { k: 'n_lists', t: '겹침', g: 'base', f: 'int', good: 1 },
     { k: 'st_rank', t: '안정\n순위', g: 'lists', f: 'int', good: -1, grpStart: 'lists' },
     { k: 'st_score', t: '안정\n점수', g: 'lists', f: 'f1', good: 1 },
@@ -421,7 +423,9 @@ td sup { color: var(--muted); font-size: 0.75em; margin-left: 1px; }
       st.setAttribute('aria-pressed', String(on)); st.title = on ? '관심목록에서 빼기' : '관심목록에 추가';
       st.setAttribute('aria-label', r.name + (on ? ' 관심목록에서 빼기' : ' 관심목록에 추가'));
       st.addEventListener('click', () => toggleWL(r.code));
-      tdn.append(st, a, sm); tr.append(tdn);
+      tdn.append(st, a);
+      if (r.since && r.since === r.asof) { const nw = document.createElement('span'); nw.className = 'nw'; nw.textContent = '신규'; nw.title = r.since + ' 명단에 새로 들어옴'; tdn.append(nw); }
+      tdn.append(sm); tr.append(tdn);
       vc.forEach((c) => {
         const td = document.createElement('td');
         if (c.f === 'badge') {
@@ -515,6 +519,8 @@ td sup { color: var(--muted); font-size: 0.75em; margin-left: 1px; }
     if (a0.asof) { $('asof').textContent = md(a0.asof); const c = colOf('ret_ytd'); if (c) c.t = a0.asof.slice(0, 4) + '년\n(~' + md(a0.asof) + ', %)'; }
     if (a0.asof_short && a0.asof_short !== a0.asof) $('asofShort').textContent = ' · 공매도 잔고 ' + md(a0.asof_short) + ' 공표분';
     $('nAll').textContent = d.length;
+    const nNew = d.filter((r) => r.since && r.since === r.asof).length;
+    if (nNew && nNew < d.length) $('newN').textContent = ' · 오늘 새로 들어온 종목 ' + nNew + '개(이름 옆 신규)';
     $('t-all').textContent = d.length;
     $('t-st').textContent = d.filter((r) => r.in_st).length;
     $('t-sc').textContent = d.filter((r) => r.in_sc).length;
