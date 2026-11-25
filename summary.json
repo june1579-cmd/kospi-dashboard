@@ -1,58 +1,81 @@
 {
- "updated": "2026-11-25 04:45",
+ "updated": "2026-11-25 12:54",
  "started": "2026-11-24 15:50",
  "done": null,
  "sources": {
   "occ_flex": {
    "name": "OCC FLEX 미결제 보고서",
-   "last": "2026-11-23",
-   "checked": "2026-11-25 04:45",
+   "last": "2026-11-24",
+   "checked": "2026-11-25 12:53",
    "err": null,
-   "n": 0,
-   "median_kst": null,
-   "range_kst": null,
-   "events": []
+   "n": 1,
+   "median_kst": "12:02",
+   "range_kst": "12:02~12:02",
+   "events": [
+    {
+     "value": "2026-11-24",
+     "first_seen": "2026-11-25 12:02",
+     "prev_check": "2026-11-25 04:45"
+    }
+   ]
   },
   "occ_series": {
    "name": "OCC 시리즈 검색(SPY)",
-   "last": "a2c9b6687221",
-   "checked": "2026-11-25 04:45",
+   "last": "b7d773c1f742",
+   "checked": "2026-11-25 12:53",
    "err": null,
-   "n": 0,
-   "median_kst": null,
-   "range_kst": null,
-   "events": []
+   "n": 1,
+   "median_kst": "12:02",
+   "range_kst": "12:02~12:02",
+   "events": [
+    {
+     "value": "b7d773c1f742",
+     "first_seen": "2026-11-25 12:02",
+     "prev_check": "2026-11-25 04:45"
+    }
+   ]
   },
   "yahoo": {
    "name": "야후 SPY 월물 미결제 합",
-   "last": "2026-12-18:3861258",
-   "checked": "2026-11-25 04:45",
+   "last": "2026-12-18:3861950",
+   "checked": "2026-11-25 12:53",
    "err": null,
-   "n": 1,
-   "median_kst": "03:54",
-   "range_kst": "03:54~03:54",
+   "n": 2,
+   "median_kst": "12:02",
+   "range_kst": "03:54~12:02",
    "events": [
     {
      "value": "2026-12-18:3861258",
      "first_seen": "2026-11-25 03:54",
      "prev_check": "2026-11-24 15:50"
+    },
+    {
+     "value": "2026-12-18:3861950",
+     "first_seen": "2026-11-25 12:02",
+     "prev_check": "2026-11-25 04:45"
     }
    ]
   },
   "optioncharts": {
    "name": "OptionCharts 기준일",
-   "last": "Nov 23, 2026",
-   "checked": "2026-11-25 04:45",
+   "last": "Nov 24, 2026",
+   "checked": "2026-11-25 12:53",
    "err": null,
-   "n": 0,
-   "median_kst": null,
-   "range_kst": null,
-   "events": []
+   "n": 1,
+   "median_kst": "12:02",
+   "range_kst": "12:02~12:02",
+   "events": [
+    {
+     "value": "Nov 24, 2026",
+     "first_seen": "2026-11-25 12:02",
+     "prev_check": "2026-11-25 04:45"
+    }
+   ]
   },
   "spotgamma": {
    "name": "SpotGamma 레벨 페이지",
    "last": "2026-11-24T14:45:05+00:00",
-   "checked": "2026-11-25 04:45",
+   "checked": "2026-11-25 12:53",
    "err": null,
    "n": 1,
    "median_kst": "03:54",
@@ -67,23 +90,35 @@
   },
   "cboe_pc": {
    "name": "Cboe 풋/콜 날짜별 파일",
-   "last": "2026-11-23",
-   "checked": "2026-11-25 04:45",
+   "last": "2026-11-24",
+   "checked": "2026-11-25 12:53",
    "err": null,
-   "n": 0,
-   "median_kst": null,
-   "range_kst": null,
-   "events": []
+   "n": 1,
+   "median_kst": "12:02",
+   "range_kst": "12:02~12:02",
+   "events": [
+    {
+     "value": "2026-11-24",
+     "first_seen": "2026-11-25 12:02",
+     "prev_check": "2026-11-25 04:45"
+    }
+   ]
   },
   "cboe_vix": {
    "name": "Cboe VIX 이력 CSV",
-   "last": "11/23/2026",
-   "checked": "2026-11-25 04:45",
+   "last": "11/24/2026",
+   "checked": "2026-11-25 12:53",
    "err": null,
-   "n": 0,
-   "median_kst": null,
-   "range_kst": null,
-   "events": []
+   "n": 1,
+   "median_kst": "12:02",
+   "range_kst": "12:02~12:02",
+   "events": [
+    {
+     "value": "11/24/2026",
+     "first_seen": "2026-11-25 12:02",
+     "prev_check": "2026-11-25 04:45"
+    }
+   ]
   }
  }
 }
