@@ -5998,5 +5998,13 @@
   "text": "58.5(11.25, KRX)",
   "unit": "",
   "src": "https://github.com/june1579-cmd/kospi-dashboard/tree/main/out/market_daily.csv"
+ },
+ {
+  "date": "2026-11-24",
+  "key": "hy_oas",
+  "value": 3.72,
+  "text": "3.72%(11.24)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/BAMLH0A0HYM2"
  }
 ]
