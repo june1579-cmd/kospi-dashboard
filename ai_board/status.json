@@ -1,40 +1,34 @@
 {
- "built_at": "2026-11-25T19:39:21+09:00",
- "trigger": "push ",
+ "built_at": "2026-11-25T20:27:59+09:00",
+ "trigger": "workflow_run dashboard-update",
  "marker": "2026-11-25T19:38:49+09:00 저녁",
- "request_applied": true,
+ "request_applied": false,
  "ok": true,
  "errors": [],
  "notes": [],
  "us_last_session": "2026-11-24",
  "kr_last_session": "2026-11-25",
- "stale": [
-  {
-   "key": "vkospi",
-   "name": "VKOSPI",
-   "as_of": "2026-11-24",
-   "expected": "2026-11-25",
-   "level": "stale",
-   "why": "한국 마지막 거래일 종가(16:10 뒤)"
-  }
+ "stale": [],
+ "changed": [
+  "VKOSPI 58.45→58.52(11.25)",
+  "외국인 코스피 20거래일 순매수 -16.77→-16.69(11.25)"
  ],
- "changed": [],
  "files_changed": [
   "thresholds",
-  "macro",
-  "runs",
-  "news"
+  "indicators",
+  "history",
+  "runs"
  ],
  "files": {
-  "thresholds": "89c2bba8b7deac392f685c8d9efdad087cb4b8141be960f2ece54ee4e4cfba43",
-  "indicators": "ef3e4425a17fbcaf3278ef1ad2011f5ecb61041542055132eec14bb9158d5f9b",
+  "thresholds": "a736fc0a228231f82d6b9cece8a533e9665cca8245ef6fd9bd06779146903fba",
+  "indicators": "5d80e9ddafeb54e58a09a034e6586be2c736c24a088d4f9174bd19a7243d5ab2",
   "market": "940d20c0d2e541a58a0177e961f325651fca32e0efaf5c216fd823d25939a409",
   "margin": "fb0b2d8af6b11f9b65f14b90c68e4f0d477976800460defd575e190b9bd1ddf9",
   "forced": "108d3efadca2c88cb1d1266dec9f80ac4ba7fa3c04e46f2b6ccc66b31a754cb0",
   "macro": "2501a6cbefb7f409f7161f166fdbb51f10fa5178e535ea8498a764b49c44b671",
   "events": "2da1c3f061b0d8a30305e319101b6cc72e77c8bbe1a8d8aa2e806b0006a2c160",
-  "history": "c4e9f194b9ae15b23841e95db6c91af1924fffeec052c70bb767111ac3ea03f9",
-  "runs": "1d5e64b1c5eb048825ebb8817d64bc39aa1eb3e02c6d22883d7b42b99697f61c",
+  "history": "6dc2dff2db2484c867c1aece701de64f725d40c25858119d971d6ff977ceb2cc",
+  "runs": "531993ee6aa7fde4f4fcaea08c1639a507b2ba5b334608971e7a4c27112a3bd2",
   "news": "c1bd2aee2571ee61353b5f201cb852a3d533180c3d694008ab9ad3321ade51da",
   "scenarios": "0a76d773ea2dbd406498e38017ce08c0feadd77a001cd6d4ca2392882c2656eb",
   "episodes": "5fc42c60296afdbd24d0b7f7b1d774e337ab66d562bd9442f44a44b613b13e51"
