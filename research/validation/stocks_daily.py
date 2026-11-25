@@ -577,6 +577,15 @@ def main():
             r['st_rank'] = int(stU.at[c, 'st_rank']); r['st_score'] = round(float(stU.at[c, 'st_score']), 1)
         else:
             r['st_rank'] = None; r['st_score'] = None; nn['st_rank'] = f'{len(stU)}개 밖({st_reason(c)})'; nn['st_score'] = '—'
+            # 안정 대상 밖 종목도 같은 식·같은 기준(그날 안정 대상 분포)으로 점수 계산 — 식에 쓰는 값이 하나라도 없으면 비워 둠(2026-11-26 사용자 지시)
+            fq = QF.get('st', {})
+            if LIVE is not None and fq.get('adopt') and c in LIVE.F.index and all(k in LIVE.F and pd.notna(LIVE.F.at[c, k]) for k in fq['keys']):
+                s_, _ = LIVE.score(fq['keys'], list(stU.index), [c], fq.get('sector_neutral'))
+                r['st_score'] = s_[c]; nn.pop('st_score', None)
+                pos = 1 + int((stU.st_score > s_[c]).sum())
+                nn['st_score_x'] = f'안정 대상 밖({st_reason(c)}) 종목이라 순위는 없음. 같은 식·같은 기준(그날 안정 대상 {len(stU)}개 분포)으로 계산, 대상 사이에 넣으면 {pos}위 수준'
+            elif LIVE is not None and fq.get('adopt'):
+                nn['st_score'] = '자료 부족(새 식 입력 값이 모자람)'
         if c in A.index and A.at[c, 'sc_rank'] <= 300:
             r['sc_rank'] = int(A.at[c, 'sc_rank'])
             for k in ('sc_mix', 'sc_flow', 'sc_chk', 'sc_big7'):
