@@ -1,7 +1,7 @@
 {
  "ok": true,
  "mode": "screen-keep-qv",
- "code_ver": "7720278a0bd1",
+ "code_ver": "114fbe9dcb54",
  "crash0923": {
   "start": "2026-09-23",
   "end": "20261125",
@@ -196,8 +196,8 @@
  "asof_ymd": "20261125",
  "asof_short": "2026-11-23",
  "asof_fund": "20261125",
- "run_at": "2026-11-25T21:42:05+09:00",
- "marker": "2026-11-25T21:41:19+0900 방어1 자료 부족 종목 새 식 점수",
+ "run_at": "2026-11-26T08:09:59+09:00",
+ "marker": "2026-11-25T23:09:17Z",
  "n": 382,
  "d1_growth_n": 234,
  "universe": {
@@ -245,6 +245,6 @@
   ]
  ],
  "warnings": [],
- "minutes": 1.8,
+ "minutes": 1.7,
  "local": false
 }
