@@ -1,28 +1,28 @@
 {
- "run": "2026-11-25 20:52",
+ "run": "2026-11-26 05:31",
  "tag": "1840",
  "kospi_last": "2026-11-25",
  "kofia_last": "2026-11-24",
  "vkospi_last": "2026-11-25",
  "night_last": "2026-11-25",
  "errors": [],
- "data_line": "정상",
+ "data_line": "주의 1건(야간선물_공개 수집)",
  "health": {
   "오류": 0,
   "정정": 0,
-  "주의": 0,
+  "주의": 1,
   "참고": 0,
   "정상": 14
  },
  "files": {
   "ai_feed": {
-   "sha256": "f9c40ddcaf8fceae162d826ee4fe156f19120dea88ed14283681bce3d3a7af72",
+   "sha256": "f468c817c3d407f5704d696c13c55c402fd0d0f1270406a4ec019d5cbb77fcfc",
    "bytes": 2029,
    "last_date": "crwv_px"
   },
   "ai_feed_hist": {
-   "sha256": "780ee48a35b90b572c4dbc70fa94eceb72972074f30c8d58276ff33918d8e4d2",
-   "bytes": 1816,
+   "sha256": "cb609b77145a5c98b77fd38ab5622fb592e86865d548b43d173d39b84673b599",
+   "bytes": 1884,
    "last_date": "2026-11-24"
   },
   "alarms": {
@@ -46,7 +46,7 @@
    "last_date": "2026-11-25"
   },
   "am_stats": {
-   "sha256": "76f22b4dfeada13816febbebf7a49a807822cdc13f583ffddbc6b9dca7ce3d42",
+   "sha256": "4d45a4c07e5eedec6f42936a009624dd31a9daf448a460bc2755e7e30911b071",
    "bytes": 1263,
    "last_date": "기준일"
   },
@@ -146,8 +146,8 @@
    "last_date": "전체"
   },
   "health": {
-   "sha256": "c41d742d02020a6aae0ed44982cf7ffe4f557778ee9b7ffa953902fffc0cbfdf",
-   "bytes": 1995,
+   "sha256": "0fc4c2bd44f652dafc9161d0bbd4d9de7d29415776f7c92f86cb4c02cd8a36aa",
+   "bytes": 2213,
    "last_date": "web_cards"
   },
   "lab_sig": {
@@ -191,7 +191,7 @@
    "last_date": "2026-11-24"
   },
   "overnight": {
-   "sha256": "f0dd7b45cba0e46ff60a8b9d284da521b911d068cc496c827713455d15914acb",
+   "sha256": "6274f79e54fa84bfa001612c3725c3ac9af148ec27bf425db8095bd183180b43",
    "bytes": 1173515,
    "last_date": "2026-11-24"
   },
@@ -256,7 +256,7 @@
    "last_date": "2026-11-25"
   },
   "trend_champ_rules": {
-   "sha256": "059eadbd29daab3b9a068fd34ea4495046df28b09b65085011e3f0699d4e5a6f",
+   "sha256": "4a61e10ad0d093f0aedec3b0fd2b60739b542a35c19a9a7ace8f550f8268fa81",
    "bytes": 5037,
    "last_date": "2026"
   },
