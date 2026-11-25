@@ -38,7 +38,8 @@ def main():
     codes = cp.loc[cp['stock_code'].isin(seen), 'corp_code'].drop_duplicates().tolist()
     log('대상 회사', len(codes), '주간 시세 종목', len(seen))
     BATCH = 20; t0 = time.time(); BUDGET = float(os.environ.get('QV_DART_MIN', '20')) * 60
-    for y in (2025, 2022, 2019, 2016):           # 최근 연도부터(오늘 점수에 바로 쓰임)
+    YEARS = [int(x) for x in os.environ.get('QV_YEARS', '2025,2022,2019,2016').split(',')]
+    for y in YEARS:           # 최근 연도부터(오늘 점수에 바로 쓰임)
         yf = os.path.join(RAW, f'dart_main_{y}.csv.gz'); pf = os.path.join(RAW, f'dart_main_{y}.partial.csv.gz')
         if os.path.exists(yf):
             log(y, '이미 있음'); continue
@@ -88,4 +89,4 @@ if __name__ == '__main__':
         import traceback; log(traceback.format_exc())
     finally:
         os.makedirs(os.path.join(ROOT, 'qv_out'), exist_ok=True)
-        open(os.path.join(ROOT, 'qv_out', 'collect_log.txt'), 'w', encoding='utf-8').write('\n'.join(LOG))
+        open(os.path.join(ROOT, 'qv_out', 'collect_log_' + os.environ.get('QV_YEARS', 'all').replace(',', '_') + '.txt'), 'w', encoding='utf-8').write('\n'.join(LOG))

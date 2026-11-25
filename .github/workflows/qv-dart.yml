@@ -1,0 +1,76 @@
+name: quality-validation-dart
+# 새 평점 검증용 OpenDART 주요 재무를 연도별로 동시에 받은 뒤(호출 1번에 약 15초라 나눠 받음) 검증을 다시 돈다.
+# validation 가지에서 qv_dart_run.txt 를 push 하면 돈다. KRX 로그인 없음.
+on:
+  push:
+    branches: [validation]
+    paths:
+      - 'research/validation/qv_dart_run.txt'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: quality-validation-dart
+  cancel-in-progress: false
+jobs:
+  dart:
+    runs-on: ubuntu-latest
+    timeout-minutes: 110
+    strategy:
+      fail-fast: false
+      matrix:
+        year: ['2025', '2022', '2019', '2016']
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: validation
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -q requests pandas numpy
+      - name: DART 주요 재무 ${{ matrix.year }}
+        env:
+          QV_YEARS: ${{ matrix.year }}
+          QV_DART_MIN: '95'
+          DKEY__DART_API_KEY: ${{ secrets.DART_API_KEY }}
+          DKEY__OPENDART_API_KEY: ${{ secrets.OPENDART_API_KEY }}
+          DKEY__OPEN_DART_API_KEY: ${{ secrets.OPEN_DART_API_KEY }}
+          DKEY__DART_KEY: ${{ secrets.DART_KEY }}
+          DKEY__OPENDART_KEY: ${{ secrets.OPENDART_KEY }}
+          DKEY__OPEN_DART_KEY: ${{ secrets.OPEN_DART_KEY }}
+          DKEY__DART_CRTFC_KEY: ${{ secrets.DART_CRTFC_KEY }}
+          DKEY__CRTFC_KEY: ${{ secrets.CRTFC_KEY }}
+          DKEY__OPENDART: ${{ secrets.OPENDART }}
+          DKEY__DART: ${{ secrets.DART }}
+          DKEY__DART_TOKEN: ${{ secrets.DART_TOKEN }}
+          DKEY__OPENDART_TOKEN: ${{ secrets.OPENDART_TOKEN }}
+        run: python research/validation/qv_collect.py || true
+      - name: 저장
+        if: always()
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add research/validation/qv_out research/validation/raw/dart_main_${{ matrix.year }}* || true; git add -u research/validation/raw || true
+          git commit -q -m "새 평점 검증 DART ${{ matrix.year }} $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || echo "변경 없음"
+          for i in 1 2 3 4 5; do git pull --rebase -q origin validation && git push -q origin HEAD:validation && break; sleep $((RANDOM % 10 + 5)); done
+  qv:
+    needs: dart
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: validation
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -q pandas numpy
+      - name: 검증 계산
+        run: python research/validation/qv.py
+      - name: 저장
+        if: always()
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add research/validation/qv_out || true
+          git commit -q -m "새 평점 규칙 검증(재무 포함) $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || echo "변경 없음"
+          for i in 1 2 3; do git pull --rebase -q origin validation && git push -q origin HEAD:validation && break; sleep 5; done
