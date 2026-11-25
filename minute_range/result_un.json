@@ -1,0 +1,463 @@
+{
+ "run_at": "2026-11-25T20:08:37",
+ "checks": {
+  "un_005930": {
+   "name": "삼성전자",
+   "J": {
+    "total": 621,
+    "pre_0800_0900": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "regular_0900_1530": {
+     "bars": 381,
+     "first": "090000",
+     "last": "153000",
+     "vol": 15664380
+    },
+    "after_1530_2000": {
+     "bars": 240,
+     "first": "160000",
+     "last": "195900",
+     "vol": 1379544
+    },
+    "calls": 7,
+    "msg": "0 정상처리 되었습니다."
+   },
+   "UN": {
+    "total": 690,
+    "pre_0800_0900": {
+     "bars": 49,
+     "first": "080000",
+     "last": "084900",
+     "vol": 6439340
+    },
+    "regular_0900_1530": {
+     "bars": 381,
+     "first": "090000",
+     "last": "153000",
+     "vol": 22482714
+    },
+    "after_1530_2000": {
+     "bars": 260,
+     "first": "154000",
+     "last": "195900",
+     "vol": 4127877
+    },
+    "calls": 6,
+    "msg": "0 정상처리 되었습니다."
+   },
+   "NX": {
+    "total": 689,
+    "pre_0800_0900": {
+     "bars": 49,
+     "first": "080000",
+     "last": "084900",
+     "vol": 6439340
+    },
+    "regular_0900_1530": {
+     "bars": 380,
+     "first": "090000",
+     "last": "151900",
+     "vol": 6818334
+    },
+    "after_1530_2000": {
+     "bars": 260,
+     "first": "154000",
+     "last": "195900",
+     "vol": 2748333
+    },
+    "calls": 6,
+    "msg": "0 정상처리 되었습니다."
+   },
+   "regular_close_diff_bars": 69,
+   "regular_high_low_diff_bars": 52,
+   "regular_common_bars": 381,
+   "regular_only_in_J": 0
+  },
+  "un_069500": {
+   "name": "KODEX200(ETF)",
+   "J": {
+    "total": 381,
+    "pre_0800_0900": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "regular_0900_1530": {
+     "bars": 381,
+     "first": "090000",
+     "last": "153000",
+     "vol": 19504501
+    },
+    "after_1530_2000": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "calls": 5,
+    "msg": "0 정상처리 되었습니다."
+   },
+   "UN": {
+    "total": 0,
+    "pre_0800_0900": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "regular_0900_1530": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "after_1530_2000": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "calls": 1,
+    "msg": "0 정상처리 되었습니다."
+   },
+   "NX": {
+    "total": 0,
+    "pre_0800_0900": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "regular_0900_1530": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "after_1530_2000": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "calls": 1,
+    "msg": "0 정상처리 되었습니다."
+   },
+   "regular_close_diff_bars": 0,
+   "regular_high_low_diff_bars": 0,
+   "regular_common_bars": 0,
+   "regular_only_in_J": 381
+  },
+  "un_950130": {
+   "name": "엑세스바이오",
+   "J": {
+    "total": 463,
+    "pre_0800_0900": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "regular_0900_1530": {
+     "bars": 346,
+     "first": "090000",
+     "last": "153000",
+     "vol": 1195775
+    },
+    "after_1530_2000": {
+     "bars": 117,
+     "first": "160000",
+     "last": "195900",
+     "vol": 26666
+    },
+    "calls": 5,
+    "msg": "0 정상처리 되었습니다."
+   },
+   "UN": {
+    "total": 0,
+    "pre_0800_0900": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "regular_0900_1530": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "after_1530_2000": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "calls": 1,
+    "msg": "0 정상처리 되었습니다."
+   },
+   "NX": {
+    "total": 0,
+    "pre_0800_0900": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "regular_0900_1530": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "after_1530_2000": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "calls": 1,
+    "msg": "0 정상처리 되었습니다."
+   },
+   "regular_close_diff_bars": 0,
+   "regular_high_low_diff_bars": 0,
+   "regular_common_bars": 0,
+   "regular_only_in_J": 346
+  },
+  "un_033170": {
+   "name": "시그네틱스",
+   "J": {
+    "total": 194,
+    "pre_0800_0900": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "regular_0900_1530": {
+     "bars": 164,
+     "first": "090000",
+     "last": "153000",
+     "vol": 41708
+    },
+    "after_1530_2000": {
+     "bars": 30,
+     "first": "161800",
+     "last": "195800",
+     "vol": 5429
+    },
+    "calls": 3,
+    "msg": "0 정상처리 되었습니다."
+   },
+   "UN": {
+    "total": 0,
+    "pre_0800_0900": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "regular_0900_1530": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "after_1530_2000": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "calls": 1,
+    "msg": "0 정상처리 되었습니다."
+   },
+   "NX": {
+    "total": 0,
+    "pre_0800_0900": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "regular_0900_1530": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "after_1530_2000": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "calls": 1,
+    "msg": "0 정상처리 되었습니다."
+   },
+   "regular_close_diff_bars": 0,
+   "regular_high_low_diff_bars": 0,
+   "regular_common_bars": 0,
+   "regular_only_in_J": 164
+  },
+  "un_001520": {
+   "name": "동양",
+   "J": {
+    "total": 280,
+    "pre_0800_0900": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "regular_0900_1530": {
+     "bars": 244,
+     "first": "090000",
+     "last": "153000",
+     "vol": 99456
+    },
+    "after_1530_2000": {
+     "bars": 36,
+     "first": "160100",
+     "last": "195900",
+     "vol": 6115
+    },
+    "calls": 4,
+    "msg": "0 정상처리 되었습니다."
+   },
+   "UN": {
+    "total": 0,
+    "pre_0800_0900": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "regular_0900_1530": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "after_1530_2000": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "calls": 1,
+    "msg": "0 정상처리 되었습니다."
+   },
+   "NX": {
+    "total": 0,
+    "pre_0800_0900": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "regular_0900_1530": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "after_1530_2000": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "calls": 1,
+    "msg": "0 정상처리 되었습니다."
+   },
+   "regular_close_diff_bars": 0,
+   "regular_high_low_diff_bars": 0,
+   "regular_common_bars": 0,
+   "regular_only_in_J": 244
+  },
+  "un_900140": {
+   "name": "엘브이엠씨",
+   "J": {
+    "total": 0,
+    "pre_0800_0900": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "regular_0900_1530": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "after_1530_2000": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "calls": 1,
+    "msg": "0 정상처리 되었습니다."
+   },
+   "UN": {
+    "total": 0,
+    "pre_0800_0900": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "regular_0900_1530": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "after_1530_2000": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "calls": 1,
+    "msg": "0 정상처리 되었습니다."
+   },
+   "NX": {
+    "total": 0,
+    "pre_0800_0900": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "regular_0900_1530": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "after_1530_2000": {
+     "bars": 0,
+     "first": null,
+     "last": null,
+     "vol": 0
+    },
+    "calls": 1,
+    "msg": "0 정상처리 되었습니다."
+   },
+   "regular_close_diff_bars": 0,
+   "regular_high_low_diff_bars": 0,
+   "regular_common_bars": 0,
+   "regular_only_in_J": 0
+  }
+ },
+ "notes": [],
+ "api_calls": 47
+}
