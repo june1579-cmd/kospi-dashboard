@@ -1,0 +1,45 @@
+# 한국투자증권(KIS) Open API 연결 시험(2026-11-25). 수동 실행만 — 예약 없음, 다른 작업과 겹치지 않는다.
+# 조회만 한다(토큰·삼성전자 현재가·계좌 잔고·웹소켓 접속키). 주문 없음. KRX 로그인 안 씀. 자료·웹판은 건드리지 않는다.
+# 필요한 Secrets: KIS_REAL_APP_KEY, KIS_REAL_APP_SECRET, KIS_REAL_CANO, KIS_MOCK_APP_KEY, KIS_MOCK_APP_SECRET, KIS_MOCK_CANO
+name: kis-connect-test
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: '시험할 계좌 (both / real / mock)'
+        default: 'both'
+permissions:
+  contents: write
+concurrency:
+  group: kis-api
+  cancel-in-progress: false
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q requests cryptography
+      - name: KIS 연결 시험
+        id: t
+        env:
+          KIS_REAL_APP_KEY: ${{ secrets.KIS_REAL_APP_KEY }}
+          KIS_REAL_APP_SECRET: ${{ secrets.KIS_REAL_APP_SECRET }}
+          KIS_REAL_CANO: ${{ secrets.KIS_REAL_CANO }}
+          KIS_MOCK_APP_KEY: ${{ secrets.KIS_MOCK_APP_KEY }}
+          KIS_MOCK_APP_SECRET: ${{ secrets.KIS_MOCK_APP_SECRET }}
+          KIS_MOCK_CANO: ${{ secrets.KIS_MOCK_CANO }}
+        run: python kis/kis_connect_test.py ${{ github.event.inputs.mode || 'both' }} --notify /tmp/kis_notify.txt
+      - name: 카카오톡(결과 요약)
+        if: always()
+        env:
+          KAKAO_REST_KEY: ${{ secrets.KAKAO_REST_KEY }}
+          KAKAO_REFRESH_TOKEN: ${{ secrets.KAKAO_REFRESH_TOKEN }}
+          KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
+        run: |
+          [ -s /tmp/kis_notify.txt ] || echo "[KIS 연결] 시험이 중간에 멈춤 — Actions 로그 확인" > /tmp/kis_notify.txt
+          python kakao_send.py --file /tmp/kis_notify.txt || echo "카카오톡 발송 실패(위 로그 참고)"
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add -A state && git commit -m "카카오 토큰 연장" -q && git pull -q --rebase && git push -q || true

@@ -2,3 +2,7 @@ data/public/
 data/collect/*.zip
 __pycache__/
 *.pyc
+
+# KIS 키(로컬 전용)
+.env
+kis/.env
