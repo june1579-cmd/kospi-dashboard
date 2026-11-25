@@ -1,0 +1,36 @@
+# PC 분봉 수집기(C:\Users\Stan\Desktop\stocks\collector.py)가 보내는 알림을 카카오톡으로 전달 (2026-11-25, 사용자 요청).
+# PC 는 GitHub 토큰(이 저장소 Actions 실행 권한만)으로 이 워크플로를 부른다. 자료·웹판은 건드리지 않는다.
+name: pc-notify
+run-name: pc-notify ${{ inputs.kind }}
+on:
+  workflow_dispatch:
+    inputs:
+      kind:
+        description: 'start / progress / info / error / done'
+        default: 'info'
+      message:
+        description: '카카오톡으로 보낼 글 (200자 이내)'
+        default: ''
+permissions:
+  contents: write
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q requests cryptography
+      - name: 카카오톡
+        env:
+          MSG: ${{ inputs.message }}
+          KAKAO_REST_KEY: ${{ secrets.KAKAO_REST_KEY }}
+          KAKAO_REFRESH_TOKEN: ${{ secrets.KAKAO_REFRESH_TOKEN }}
+          KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
+        run: |
+          printf '%s' "$MSG" > /tmp/pc_msg.txt
+          [ -s /tmp/pc_msg.txt ] || echo "[분봉 수집] (빈 알림)" > /tmp/pc_msg.txt
+          python kakao_send.py --file /tmp/pc_msg.txt || echo "카카오톡 발송 실패"
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add -A state && git commit -m "카카오 토큰 연장" -q && git pull -q --rebase && git push -q || true

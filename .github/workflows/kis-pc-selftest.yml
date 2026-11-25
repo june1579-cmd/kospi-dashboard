@@ -1,0 +1,23 @@
+# PC 분봉 수집기(kis/pc/collector.py) 짧은 시험 — 수동 실행만. 선물 2일 + 주식 3종목 1일만 받아 형식을 확인한다.
+# 받은 자료는 저장소에 올리지 않는다(로그에 행 수·열 이름만).
+name: kis-pc-selftest
+on:
+  workflow_dispatch:
+concurrency:
+  group: kis-api
+  cancel-in-progress: false
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q requests pandas pyarrow
+      - name: 시험
+        env:
+          TZ: Asia/Seoul
+          KIS_REAL_APP_KEY: ${{ secrets.KIS_REAL_APP_KEY }}
+          KIS_REAL_APP_SECRET: ${{ secrets.KIS_REAL_APP_SECRET }}
+        run: python kis/pc/collector.py --selftest

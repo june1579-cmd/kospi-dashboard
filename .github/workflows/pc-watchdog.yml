@@ -1,0 +1,50 @@
+# PC 분봉 수집기 감시 (2026-11-25, 사용자 요청). 매일 07:05 KST — 수집이 시작된 뒤 26시간 넘게 PC 알림이 없으면 카카오톡.
+# 수집 완료(done) 알림이 온 뒤에는 아무것도 하지 않는다. KIS 를 부르지 않는다.
+name: pc-watchdog
+on:
+  schedule:
+    - cron: '5 22 * * *'    # 07:05 KST
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q requests cryptography
+      - name: 최근 PC 알림 확인
+        id: w
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run list -R ${{ github.repository }} -w pc-notify.yml -L 100 --json displayTitle,createdAt > /tmp/runs.json || echo "[]" > /tmp/runs.json
+          python - <<'EOF'
+          import json, os
+          from datetime import datetime, timezone
+          runs = json.load(open('/tmp/runs.json'))
+          titles = [r['displayTitle'] for r in runs]
+          started = any('start' in t for t in titles)
+          done = any(t.endswith('done') for t in titles)
+          last = max((datetime.fromisoformat(r['createdAt'].replace('Z', '+00:00')) for r in runs), default=None)
+          hours = (datetime.now(timezone.utc) - last).total_seconds() / 3600 if last else None
+          print('started', started, 'done', done, 'hours since last', hours)
+          send = started and not done and (hours is None or hours > 26)
+          if send:
+              open('/tmp/wd.txt', 'w').write(f"[분봉 수집] PC에서 {int(hours or 0)}시간 넘게 소식이 없습니다. PC 전원·절전·인터넷·Claude 앱을 확인해 주세요. 켜지면 자동으로 이어 받습니다.")
+          open(os.environ['GITHUB_OUTPUT'], 'a').write(f"send={'1' if send else '0'}\n")
+          EOF
+      - name: 카카오톡
+        if: steps.w.outputs.send == '1'
+        env:
+          KAKAO_REST_KEY: ${{ secrets.KAKAO_REST_KEY }}
+          KAKAO_REFRESH_TOKEN: ${{ secrets.KAKAO_REFRESH_TOKEN }}
+          KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
+        run: |
+          python kakao_send.py --file /tmp/wd.txt || echo "카카오톡 발송 실패"
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add -A state && git commit -m "카카오 토큰 연장" -q && git pull -q --rebase && git push -q || true
