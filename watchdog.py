@@ -9,6 +9,8 @@
   3 재시도로도 안 풀리면: 카카오톡으로 알리고(alerts/watchdog.txt) state/repair_request.json 에 수리 요청을 적는다.
      Claude 수리 에이전트(예약 작업)가 이 파일에 열린 요청이 있을 때만 일한다. 문제가 사라지면 요청을 지우고 '해결됨'을 알린다.
 비밀값은 읽지 않는다(GitHub 가 준 실행 토큰만 쓴다). 상태 파일은 문제 목록이 바뀔 때만 커밋되게 시각을 넣지 않는다.
+2026-11-26: 업그레이드 에이전트(UPGRADE_AGENT.md)가 ops/upgrade_queue.json 에 적은 요청 중 '열림(open)·승인됨(approved)'도 수리 요청에 함께 넣는다(키 upgrade:<번호>).
+  끝난 요청(done·failed 등)은 빠진다. `python3 watchdog.py --sync-only` 는 감시 점검 없이 수리 요청 파일만 다시 맞춘다(ops-sync.yml).
 """
 import datetime as dt
 import json
@@ -22,6 +24,8 @@ NOW = dt.datetime.now(KST)
 BAD = ('failure', 'timed_out', 'startup_failure')
 MAX_RERUN = 2
 STATE, REQ, MD, KAKAO = 'state/watchdog.json', 'state/repair_request.json', 'report/watchdog.md', 'alerts/watchdog.txt'
+QUEUE = 'ops/upgrade_queue.json'   # 2026-11-26 업그레이드 요청 대기열
+REQ_NOTE = '열린 요청이 있을 때만 Claude 수리 에이전트가 일한다(REPAIR_AGENT.md). 문제가 사라지면 watchdog.py 가 지운다. upgrade: 요청은 ops/upgrade_queue.json 에서 끝남으로 바뀌면 빠진다.'
 
 # 워크플로 실패 감시: need = 연속 실패 몇 번이면 문제로 보나, grace_h = 실패 뒤 주인이 스스로 고칠 시간, rerun = GitHub 에서 다시 돌려도 되는가(safe_jobs 가 있으면 그 작업만 실패했을 때)
 RUNS = [
@@ -144,6 +148,40 @@ def check_content():
     return out
 
 
+def upgrade_requests():
+    """2026-11-26: 업그레이드 대기열에서 수리 에이전트가 할 차례인 것(open = 위험 낮음 자동, approved = 사용자 승인)만 고른다."""
+    try: items = json.load(open(QUEUE, encoding='utf-8')).get('items', [])
+    except Exception: return []
+    out = []
+    for i in items:
+        if i.get('status') in ('open', 'approved'):
+            out.append(dict(key=f"upgrade:{i.get('id')}", label=f"업그레이드 {i.get('id')} · {i.get('system', '')}",
+                            text=f"{i.get('title', '')} — 할 일·확인 방법은 ops/upgrade_queue.json 의 {i.get('id')}(do·check) · 위험 {i.get('risk', '')}{' · 사용자 승인됨' if i.get('status') == 'approved' else ''}"[:300],
+                            since=i.get('created', '')))
+    return out
+
+
+def write_req(st):
+    """감시가 연 문제(repair=True) + 업그레이드 요청 → state/repair_request.json. 내용이 바뀐 때만 쓴다. 돌려주는 값: 바뀌었는지."""
+    opn = {k: v for k, v in st.items() if v.get('open')}
+    req = {'open': [dict(key=k, label=v['label'], text=v['text'], since=v['since']) for k, v in sorted(opn.items()) if v.get('repair')] + upgrade_requests(),
+           'note': REQ_NOTE}
+    new = json.dumps(req, ensure_ascii=False, indent=1)
+    old = open(REQ, encoding='utf-8').read() if os.path.exists(REQ) else ''
+    if new == old: return False
+    os.makedirs('state', exist_ok=True); open(REQ, 'w', encoding='utf-8').write(new)
+    return True
+
+
+def sync_only():
+    st = json.load(open(STATE, encoding='utf-8')) if os.path.exists(STATE) else {}
+    ch = write_req(st)
+    print(f"수리 요청 동기화: {'바뀜' if ch else '그대로'} · 업그레이드 요청 {len(upgrade_requests())}건")
+    out = os.environ.get('GITHUB_OUTPUT')
+    if out: open(out, 'a').write(f"changed={'1' if ch else '0'}\n")
+    return 0
+
+
 def main():
     st = json.load(open(STATE, encoding='utf-8')) if os.path.exists(STATE) else {}
     before = json.dumps(st, ensure_ascii=False, sort_keys=True); msgs = []; errs = []
@@ -175,19 +213,17 @@ def main():
     after = json.dumps(st, ensure_ascii=False, sort_keys=True)
     if after != before:
         json.dump(st, open(STATE, 'w', encoding='utf-8'), ensure_ascii=False, indent=1, sort_keys=True)
-        opn = {k: v for k, v in st.items() if v.get('open')}
-        json.dump({'open': [dict(key=k, label=v['label'], text=v['text'], since=v['since']) for k, v in sorted(opn.items()) if v.get('repair')],
-                   'note': '열린 요청이 있을 때만 Claude 수리 에이전트가 일한다(REPAIR_AGENT.md). 문제가 사라지면 watchdog.py 가 지운다.'}, open(REQ, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
         L = ['# 감시 상태', '', f'- 바뀐 시각: {NOW:%Y-%m-%d %H:%M} KST', '']
         L += [f"- {'열림' if v.get('open') else '다시 돌리는 중'} · {v.get('label')} · {v.get('text', '')} · {v.get('since')}부터 · 재시도 {v.get('reruns', 0)}번" for k, v in sorted(st.items())] or ['- 열린 문제 없음']
         open(MD, 'w', encoding='utf-8').write('\n'.join(L) + '\n')
+    req_changed = write_req(st)      # 2026-11-26: 감시 상태가 그대로여도 업그레이드 요청이 바뀌면 다시 쓴다
     cut = lambda m: m if len(m) <= 195 else m[:194] + '…'
     if msgs: open(KAKAO, 'w', encoding='utf-8').write('\n=====\n'.join(cut(m) for m in msgs[:5]) + '\n')
     for e in errs: print(e)
     print(f'감시: 항목 {len(RUNS) + len(FRESH)}개 · 열린 문제 {sum(1 for v in st.values() if v.get("open"))}개 · 알림 {len(msgs)}통 · 확인 불가 {len(errs)}개')
     out = os.environ.get('GITHUB_OUTPUT')
-    if out: open(out, 'a').write(f"send={'1' if msgs else '0'}\nchanged={'1' if after != before or msgs else '0'}\n")
+    if out: open(out, 'a').write(f"send={'1' if msgs else '0'}\nchanged={'1' if after != before or msgs or req_changed else '0'}\n")
 
 
 if __name__ == '__main__':
-    sys.exit(main())
+    sys.exit(sync_only() if '--sync-only' in sys.argv else main())

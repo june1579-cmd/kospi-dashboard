@@ -1,0 +1,37 @@
+# 업그레이드 요청 동기화(2026-11-26). ops/upgrade_queue.json 이 바뀌면(업그레이드 에이전트·수리 에이전트·승인한 대화가 push)
+#  ① 수리 요청 파일(state/repair_request.json)에 '열림·승인됨' 업그레이드 요청을 넣고 끝난 것은 뺀다(watchdog.py --sync-only — 감시 점검은 하지 않음)
+#  ② 웹판 '운영 점검'이 읽는 docs/ops/data/queue.json 을 같은 내용으로 맞춘다.
+# 감시(watchdog)와 같은 줄(concurrency watchdog)에 서서 수리 요청 파일을 동시에 고치지 않는다. Claude·KRX·카카오톡·비밀값 없음.
+name: ops-sync
+on:
+  push:
+    branches: [main]
+    paths: ['ops/upgrade_queue.json']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    concurrency:
+      group: watchdog
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main}
+      - name: 수리 요청에 넣기
+        id: w
+        run: |
+          python3 watchdog.py --sync-only
+          mkdir -p docs/ops/data && cp ops/upgrade_queue.json docs/ops/data/queue.json
+      - name: 저장
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add state/repair_request.json docs/ops/data/queue.json
+          git diff --cached --quiet && { echo "변경 없음"; exit 0; }
+          git commit -q -m "업그레이드 요청 동기화 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
+          for i in 1 2 3 4; do
+            if git pull -q --rebase; then git push -q && exit 0; else git rebase --abort 2>/dev/null || true; fi
+            sleep $((i * 5))
+          done
+          echo "저장 실패(4번 시도)"; exit 1

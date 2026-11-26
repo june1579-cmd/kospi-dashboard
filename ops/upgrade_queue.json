@@ -1,0 +1,5 @@
+{
+ "_note": "업그레이드 에이전트(UPGRADE_AGENT.md)가 쓰는 요청 대기열. status: open(위험 낮음 — 수리 에이전트가 바로 함) · needs_approval(사용자 승인 기다림) · approved(승인됨 — 수리 에이전트가 함) · in_progress · done · failed · rejected(사용자가 거절) · withdrawn(업그레이드 에이전트가 거둠). open·approved 만 state/repair_request.json 에 들어간다(watchdog.py).",
+ "next_seq": 1,
+ "items": []
+}

@@ -1,0 +1,53 @@
+# 운영 점검 자료(2026-11-26, 업그레이드 에이전트용). 숫자만 모은다 — 판단은 Claude 업그레이드 에이전트(UPGRADE_AGENT.md)가 한다.
+#  audit: ops/audit.py — 워크플로 성공률·걸린 시간·예약 지킴률·예약 지연, 자료 최신성, 가지·저장소 상태 → ops/out/audit_<기간>d.json, docs/ops/data/
+#  부르는 길: ① 매일 07:17 KST 예약(예비) ② 업그레이드 에이전트가 ops/trigger.txt 를 고쳐 push(첫 줄 = 기간 일수, 비우면 7) ③ 손으로 실행
+#  KRX 로그인·카카오톡·비밀값 없음. GitHub 가 준 실행 토큰으로 Actions 기록만 읽는다.
+name: ops-audit
+on:
+  schedule:
+    - cron: '17 22 * * *'    # 07:17 KST
+  push:
+    branches: [main]
+    paths: ['ops/trigger.txt']
+  workflow_dispatch:
+    inputs:
+      days:
+        description: '기간(일)'
+        default: '7'
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: ops-audit
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q croniter pyyaml
+      - name: 기간 정하기
+        id: d
+        run: |
+          D="${{ inputs.days }}"
+          if [ -z "$D" ] && [ "${{ github.event_name }}" = "push" ]; then D=$(head -1 ops/trigger.txt | tr -dc '0-9'); fi
+          echo "days=${D:-7}" >> "$GITHUB_OUTPUT"
+      - name: 점검
+        env:
+          GH_TOKEN: ${{ github.token }}
+          AUDIT_DAYS: ${{ steps.d.outputs.days }}
+        run: python3 ops/audit.py
+      - name: 저장
+        run: |
+          git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+          git add ops/out/audit_*d.json docs/ops/data/audit_*d.json
+          git diff --cached --quiet && { echo "변경 없음"; exit 0; }
+          git commit -q -m "운영 점검 자료 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M') (${{ steps.d.outputs.days }}일)"
+          for i in 1 2 3 4; do
+            if git pull -q --rebase; then git push -q && exit 0; else git rebase --abort 2>/dev/null || true; fi
+            sleep $((i * 5))
+          done
+          echo "저장 실패(4번 시도)"; exit 1

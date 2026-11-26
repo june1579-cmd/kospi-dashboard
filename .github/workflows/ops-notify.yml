@@ -1,0 +1,37 @@
+# 업그레이드 에이전트 카카오톡(2026-11-26). alerts/upgrade.txt 가 push 되면 그 글을 '나에게 보내기'로 보낸다.
+# 글마다 웹판 '운영 점검' 링크(버튼 '운영 점검 열기')를 붙인다. 한 통 200자 이내, 여러 통은 ===== 줄로 나눔.
+name: ops-notify
+on:
+  push:
+    branches: [main]
+    paths: ['alerts/upgrade.txt']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    concurrency:
+      group: dashboard-update     # 카카오 토큰 연장이 다른 알림과 겹치지 않게 같은 줄에 선다
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q requests cryptography
+      - name: 카카오톡(운영 점검)
+        env:
+          KAKAO_REST_KEY: ${{ secrets.KAKAO_REST_KEY }}
+          KAKAO_REFRESH_TOKEN: ${{ secrets.KAKAO_REFRESH_TOKEN }}
+          KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
+        run: |
+          git pull -q --rebase || true
+          if [ -s alerts/upgrade.txt ]; then
+            python kakao_send.py --file alerts/upgrade.txt --link "https://june1579-cmd.github.io/kospi-dashboard/ops/" --button "운영 점검 열기" || { echo "카카오톡 발송 실패(위 로그 참고)"; FAIL=1; }
+            git config user.name "dashboard-bot"; git config user.email "dashboard-bot@users.noreply.github.com"
+            git add -A state && git commit -m "카카오 토큰 연장" -q && git pull -q --rebase && git push -q || true
+            [ -z "$FAIL" ] || exit 1
+          else
+            echo "보낼 글 없음"
+          fi

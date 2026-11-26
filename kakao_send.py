@@ -34,6 +34,7 @@ def save_refresh(rest_key, token, env_token):
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument('--file', default='report/kakao.txt'); ap.add_argument('--alerts', default='report/alerts.json'); ap.add_argument('--link', default=os.environ.get('DASH_LINK', 'https://june1579-cmd.github.io/kospi-dashboard/'))
+    ap.add_argument('--button', default='', help='버튼 글자(2026-11-26 추가, 운영 점검 알림용). 비우면 전과 같음')
     a = ap.parse_args()
     key = os.environ.get('KAKAO_REST_KEY', '').strip(); secret = os.environ.get('KAKAO_CLIENT_SECRET', '').strip()
     if not key: print('KAKAO_REST_KEY 없음 — 카카오톡 발송 건너뜀'); return 0
@@ -50,6 +51,7 @@ def main():
     # 그래프·대시보드 버튼 없이 글만(매수·매도 신호 발생/미발생 + 결론)
     for m in msgs:
         tpl = {'object_type': 'text', 'text': m[:200], 'link': {'web_url': a.link, 'mobile_web_url': a.link}}   # link 는 템플릿 필수 항목(버튼 없음)
+        if a.button: tpl['button_title'] = a.button[:14]
         t = requests.post('https://kapi.kakao.com/v2/api/talk/memo/default/send', headers=H, data={'template_object': json.dumps(tpl, ensure_ascii=False)}, timeout=30)
         print('발송', t.status_code, t.text[:120]); sent += t.status_code == 200
     return 0 if sent == len(msgs) else 3
