@@ -35,3 +35,5 @@
 [05:03:49] inv OPK2I P 상세: 1행
 [05:03:50] 저장 inv_daily.csv.gz 40804행
 [05:04:00] 저장 inv_daily.csv.gz 41164행
+[05:04:01] == front
+[05:05:03] 저장 fut_front_daily.csv 7340행
