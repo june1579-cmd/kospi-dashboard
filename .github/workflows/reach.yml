@@ -1,23 +1,27 @@
 # 장중 도달 확률(코스피200 현물·근월물 선물, 전날 종가·시가 기준, 0.1% 단위) — 2026-11-26 사용자 요청
 #   model: 걷기 전진 검증(수정 기준 판정) + 전체 학습 → docs/reach/data/eval.json, reach/out/params.json (토 09:17 · 코드 바뀔 때 · 손으로)
-#   pre  : 평일 08:05(예비 08:22) — 전날 자료로 다시 학습 → 야간선물 들어올 때까지 기다렸다가(최대 40분) 08:30판 → docs/reach/data/pre.json
+#   pre  : 평일 06:40(예비 07:15·07:45·08:35) — 전날 자료로 다시 학습 → 08:30판 → docs/reach/data/pre.json
+#          야간선물은 KIS 1분봉에서 직접(06:00 마감 직후), 간밤 미국 일봉이 밀려 있으면 야후에서 직접 받아 계산(2026-11-26 '8시 전 자료' 요청)
+#          이미 오늘 것이 '정상'으로 있으면 예비 실행은 바로 끝난다.
 #   09:10판은 intraday-flow 오전 작업이 09:12:30 에 KIS 실시간 시가·고가·저가로 계산한다.
 name: reach
 on:
   schedule:
-    - cron: '5 23 * * 0-4'    # 08:05 KST 월~금 — 08:30판
-    - cron: '22 23 * * 0-4'   # 08:22 KST — 예비(같은 줄에 서서, 이미 됐으면 바로 끝남)
+    - cron: '40 21 * * 0-4'   # 06:40 KST 월~금 — 장 전 판(미국 일봉 확정 06:30 뒤)
+    - cron: '15 22 * * 0-4'   # 07:15 KST — 예비
+    - cron: '45 22 * * 0-4'   # 07:45 KST — 예비
+    - cron: '35 23 * * 0-4'   # 08:35 KST — 예비(코스피 대시보드 08:23 야간선물 수집 뒤)
     - cron: '17 0 * * 6'      # 토 09:17 KST — 검증 다시
   push:
     branches: [main]
     paths: ['reach/model.py']
   workflow_dispatch:
     inputs:
-      what: {description: 'model / pre', default: 'model'}
+      what: {description: 'model / pre / pre-test(야간선물 KIS 시험, 저장 안 함)', default: 'model'}
 permissions:
   contents: write
 concurrency:
-  group: reach-${{ (github.event.schedule == '5 23 * * 0-4' || github.event.schedule == '22 23 * * 0-4' || github.event.inputs.what == 'pre') && 'pre' || 'model' }}
+  group: reach-${{ (github.event.schedule != '17 0 * * 6' && github.event_name == 'schedule' || github.event.inputs.what == 'pre') && 'pre' || 'model' }}
   cancel-in-progress: false
 jobs:
   run:
@@ -34,21 +38,29 @@ jobs:
         with: {ref: deriv-research, path: _deriv, sparse-checkout: deriv/data}
       - uses: actions/setup-python@v5
         with: {python-version: '3.12', cache: pip}
-      - run: pip install -q pandas==2.3.3 numpy==2.5.3
+      - run: pip install -q pandas==2.3.3 numpy==2.5.3 requests==2.34.2
       - name: 계산
+        env:
+          KIS_REAL_APP_KEY: ${{ secrets.KIS_REAL_APP_KEY }}
+          KIS_REAL_APP_SECRET: ${{ secrets.KIS_REAL_APP_SECRET }}
         run: |
           git config --global user.name "dashboard-bot"; git config --global user.email "dashboard-bot@users.noreply.github.com"
-          W="${{ (github.event.schedule == '5 23 * * 0-4' || github.event.schedule == '22 23 * * 0-4' || github.event.inputs.what == 'pre') && 'pre' || 'model' }}"
+          W="${{ (github.event.schedule != '17 0 * * 6' && github.event_name == 'schedule' || github.event.inputs.what == 'pre') && 'pre' || 'model' }}"
+          if [ "${{ github.event.inputs.what }}" = "pre-test" ]; then
+            python reach/model.py --deriv _deriv/deriv/data && NIGHT_KIS_TEST=1 python reach/live.py --pre --deriv _deriv/deriv/data
+            git checkout -- docs/reach reach/out fo/data 2>/dev/null || true; exit 0
+          fi
           if [ "$W" = "pre" ]; then
             T=$(date +%F)
             if [ -f docs/reach/data/pre.json ] && python -c "import json,sys;d=json.load(open('docs/reach/data/pre.json'));sys.exit(0 if d.get('for_date')=='$T' and not d.get('status') else 1)"; then echo "오늘 08:30판 이미 있음"; exit 0; fi
             python reach/model.py --deriv _deriv/deriv/data
-            python reach/live.py --pre --wait 40 --deriv _deriv/deriv/data
+            python reach/live.py --pre --wait 12 --deriv _deriv/deriv/data
           else
             python reach/model.py --eval --deriv _deriv/deriv/data
           fi
       - name: 저장
         run: |
+          git checkout -- fo/data 2>/dev/null || true     # 계산용으로 받은 미국 자료는 올리지 않음(선물옵션 대시보드가 올림)
           git add -A reach/out docs/reach/data 2>/dev/null || true
           git diff --cached --quiet && { echo "변경 없음"; exit 0; }
           git commit -q -m "장중 도달 확률 $(date '+%Y-%m-%d %H:%M')"

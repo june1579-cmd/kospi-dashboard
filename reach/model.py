@@ -26,6 +26,14 @@ def load(DV):
     k = pd.read_csv(os.path.join(DV, 'k200_long.csv'), encoding='utf-8-sig'); k['date'] = k['날짜'].astype(str).str[:10]
     k = k.drop_duplicates('date', keep='last').set_index('date').sort_index()
     D = pd.DataFrame({'o': num(k['시가']), 'h': num(k['고가']), 'l': num(k['저가']), 'c': num(k['종가'])}, index=k.index)
+    # KRX 이어받기(19:17)가 늦은 날을 위해: 코스피 대시보드 수집 폴더(20:23 확정분)의 코스피200 일별로 빈 날짜를 채운다
+    import glob
+    for f in sorted(glob.glob(os.path.join(ROOT, 'data', 'collect', 'dashboard_*', '04_코스피200_일별.csv')))[-3:]:
+        try:
+            k2 = pd.read_csv(f, encoding='utf-8-sig'); k2['date'] = k2['날짜'].astype(str).str[:10]; k2 = k2.drop_duplicates('date', keep='last').set_index('date')
+            add = k2.index.difference(D.index)
+            if len(add): D = pd.concat([D, pd.DataFrame({'o': num(k2.loc[add, '시가']), 'h': num(k2.loc[add, '고가']), 'l': num(k2.loc[add, '저가']), 'c': num(k2.loc[add, '종가'])}, index=add)]).sort_index()
+        except Exception as e: print('대시보드 수집 코스피200 읽기 실패', f, repr(e)[:80])
     fr = pd.read_csv(os.path.join(DV, 'fut_front_daily.csv'), encoding='utf-8-sig', dtype=str)
     fd = fr[fr['TRD_DD'].str.contains('주간')].copy(); fd['date'] = fd['TRD_DD'].str[:10].str.replace('/', '-'); fd = fd.drop_duplicates('date', keep='last').set_index('date')
     F = pd.DataFrame({'fo': num(fd['TDD_OPNPRC']), 'fh': num(fd['TDD_HGPRC']), 'fl': num(fd['TDD_LWPRC']), 'fc': num(fd['TDD_CLSPRC']), 'fchg': num(fd['CMPPREVDD_PRC']),
@@ -34,6 +42,9 @@ def load(DV):
     ng = fr[fr['TRD_DD'].str.contains('야간')].copy(); ng['date'] = ng['TRD_DD'].str[:10].str.replace('/', '-'); ng['nc'] = num(ng['TDD_CLSPRC'])
     ng = ng.dropna(subset=['nc']).drop_duplicates('date', keep='last').set_index('date')['nc']
     D = D.join(F, how='left')
+    fdp = os.path.join(ROOT, 'out', 'fut_daily.csv')                                            # 선물 종가 예비(코스피 대시보드 수집)
+    if os.path.exists(fdp):
+        fdd = pd.read_csv(fdp).drop_duplicates('date', keep='last').set_index('date')['price']; D['fc'] = D['fc'].fillna(fdd.reindex(D.index))
     nf_p = os.path.join(ROOT, 'out', 'night_fut.csv')
     nf = pd.read_csv(nf_p).drop_duplicates('date', keep='last').set_index('date') if os.path.exists(nf_p) else pd.DataFrame(columns=['night_close', 'night_pct'])
     D['night_krx'] = pd.to_numeric(nf['night_pct'], errors='coerce').reindex(D.index)          # 날짜 D = D 저녁에 시작한 세션

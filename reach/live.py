@@ -55,27 +55,57 @@ def ladders(row, P, time, cond=None):
     return out
 
 
+def night_from_kis(t, fc):
+    """장 전 야간선물 종가: KIS 1분봉(시장 CM)에서 t 저녁 세션의 마지막 봉(06:00). 키가 없거나 실패하면 None"""
+    try:
+        from reach.kis import KIS, front_code, pick
+        k = KIS(gap=0.45)
+        if not k.ok() or not fc: return None, '키 없음'
+        code, _ = front_code(date.fromisoformat(t) + timedelta(days=1))
+        d1 = (date.fromisoformat(t) + timedelta(days=1)).strftime('%Y%m%d')
+        r = k.get('/uapi/domestic-futureoption/v1/quotations/inquire-time-fuopchartprice', 'FHKIF03020200', {'FID_COND_MRKT_DIV_CODE': 'CM', 'FID_INPUT_ISCD': code, 'FID_HOUR_CLS_CODE': '60',
+                  'FID_PW_DATA_INCU_YN': 'Y', 'FID_FAKE_TICK_INCU_YN': 'N', 'FID_INPUT_DATE_1': d1, 'FID_INPUT_HOUR_1': '060000'})
+        rows = [x for x in (r.get('output2') or []) if x.get('stck_bsop_date') == t.replace('-', '')]
+        if not rows: return None, f"KIS 야간 봉 없음({r.get('msg1', '')})"[:80]
+        last = max(rows, key=lambda x: x.get('stck_cntg_hour'))
+        if last.get('stck_cntg_hour') < '295500': return None, f"야간 세션이 아직 안 끝남(마지막 {last.get('stck_cntg_hour')})"
+        c = pick(last, 'prpr'); return (100 * (c / fc - 1) if c else None), f'KIS 야간 1분봉({code}) 종가 {c}'
+    except Exception as e:
+        return None, repr(e)[:80]
+
+
 def run_pre(wait=0, deriv=None):
-    hol = holidays(); deriv = deriv or os.path.join(ROOT, '_deriv', 'deriv', 'data')
+    hol = holidays(); deriv = deriv or os.path.join(ROOT, '_deriv', 'deriv', 'data'); night_src = '코스피 대시보드 수집(KRX)'
     today = (datetime.now(timezone.utc).replace(tzinfo=None) + timedelta(hours=9)).date()
     for_date = today if (today.weekday() < 5 and today.isoformat() not in hol) else next_trading(today, hol)
     t_exp = prev_trading(for_date, hol).isoformat()
+    # 간밤 미국 일봉이 밀려 있으면 직접 받아 둔다(저장소 fo/data 는 커밋하지 않음 — 이 계산에만 씀)
+    if subprocess.run([sys.executable, 'fo/us_due.py'], cwd=ROOT).returncode == 0:
+        subprocess.run([sys.executable, 'fo/collect_us.py', 'px', 'vix'], cwd=ROOT)
     t0 = time.time()
     while True:
         D = load(deriv); last = D.index[-1]
         night_ok = last == t_exp and not np.isnan(D['night'].iloc[-1])
         if night_ok or time.time() - t0 > wait * 60: break
+        if last == t_exp and np.isnan(D['night'].iloc[-1]):                 # 야간선물: KIS 에서 직접(대시보드 08:23 수집보다 빠름)
+            v, why = night_from_kis(last, D['fc'].iloc[-1]); print('야간선물 KIS:', v, why, flush=True)
+            if v is not None:
+                D.loc[last, 'night'] = v; night_src = why; break
         print(f'야간선물·전날 자료 기다림 (마지막 {last}, 야간 {D["night"].iloc[-1]})', flush=True); time.sleep(120)
-        subprocess.run(['git', 'pull', '-q', '--rebase'], cwd=ROOT)
+        subprocess.run(['git', 'stash', '-q'], cwd=ROOT); subprocess.run(['git', 'pull', '-q', '--rebase'], cwd=ROOT); subprocess.run(['git', 'stash', 'pop', '-q'], cwd=ROOT)
     if last >= for_date.isoformat():                                   # 장 마감 뒤 손으로 돌린 경우: 다음 거래일 것
         for_date = next_trading(date.fromisoformat(last), hol); t_exp = last
+    if os.environ.get('NIGHT_KIS_TEST'):
+        v, why = night_from_kis(last, D['fc'].iloc[-1]); print(f"[시험] KIS 야간선물 {v} ({why}) vs 저장소 값 {D['night'].iloc[-1]}", flush=True)
     P = params(); row = D.iloc[[-1]].copy(); st = []
     if last != t_exp: st.append(f'전날({t_exp}) 자료가 아직 없어 {last} 자료로 계산')
-    if np.isnan(row['night'].iloc[0]): st.append('야간선물 값이 없어 간밤 미국·VIX로 대신 계산')
+    if np.isnan(row['night'].iloc[0]): st.append('야간선물 값이 없어 간밤 미국·VIX로 대신 계산'); night_src = '없음'
+    us_dates = [d for d in pd.read_csv(os.path.join(ROOT, 'fo', 'data', 'px.csv')).query("sym == 'spx'")['date'] if d >= last]
+    if not us_dates and subprocess.run([sys.executable, 'fo/us_due.py'], cwd=ROOT).returncode == 0: st.append('간밤 미국 일봉을 받지 못함')
     lad = ladders(row, P, 'pre')
     g = lambda c: r1(row[c].iloc[0]) if c in row else None
     res = dict(kind='pre', label='08:30판', built=(datetime.now(timezone.utc).replace(tzinfo=None) + timedelta(hours=9)).strftime('%Y-%m-%d %H:%M KST'), for_date=for_date.isoformat(), base_date=last,
-               status=st, levels=[float(x) for x in LEVELS],
+               status=st, levels=[float(x) for x in LEVELS], night_source=night_src,
                ref_price={'S_c': g('c'), 'F_c': g('fc'), 'S_o': None, 'F_o': None},
                inputs={'야간선물(%)': g('night'), '간밤 S&P500(%)': g('us_on'), '간밤 VIX 변화(%)': g('vix_on'), '전날 코스피200(%)': g('own'), '20일 변동성(%)': g('rv20'),
                        '20일 평균 하루 폭(%)': g('park20'), '외국인 전날 순매수(평소 대비)': g('f1'), '외국인 야간 순매수(평소 대비)': g('n1')},
