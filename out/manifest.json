@@ -1,14 +1,16 @@
 {
- "run": "2026-11-27 05:20",
- "tag": "1840",
+ "run": "2026-11-27 08:23",
+ "tag": "0831",
  "kospi_last": "2026-11-26",
  "kofia_last": "2026-11-25",
  "vkospi_last": "2026-11-26",
- "night_last": "2026-11-26",
- "errors": [],
- "data_line": "정상",
+ "night_last": "2026-11-27",
+ "errors": [
+  "미국 VIX 날짜: 11/26 값이 들어 있음 — 뉴욕 장이 아직 끝나지 않은 날의 값(종가 아님)"
+ ],
+ "data_line": "오류 1건(VIX 날짜)",
  "health": {
-  "오류": 0,
+  "오류": 1,
   "정정": 0,
   "주의": 0,
   "참고": 0,
@@ -16,14 +18,14 @@
  },
  "files": {
   "ai_feed": {
-   "sha256": "df0e4afe37b77678bc9cc65e9c9e0e25cad730bb058aa460616c477b8b476806",
+   "sha256": "b9fb5936a54fc4fee8dbbf99109083407bf62bd9e6ec80f82910eef51fbfaf52",
    "bytes": 2026,
    "last_date": "crwv_px"
   },
   "ai_feed_hist": {
-   "sha256": "6bb01d33be2474351cb86a0d583b5e40181653cb92a744c162f725e495a231a9",
-   "bytes": 2187,
-   "last_date": "2026-11-25"
+   "sha256": "aeff932e928dfc21c1c1ff32a547174a727e74da3c6ddf158384745109fe4034",
+   "bytes": 2267,
+   "last_date": "2026-11-26"
   },
   "alarms": {
    "sha256": "36d5738c0eb98314b33c99d1f9e6fd9fbd41ee798ade55a7864a546fc6d200e0",
@@ -36,17 +38,17 @@
    "last_date": "전체"
   },
   "am_daily": {
-   "sha256": "afe8bbe23aeae2cc8a6650ef8e18e392876cc95e1a88dcbbb23322b0ce34b1a0",
-   "bytes": 238523,
+   "sha256": "abb342344ac1aa8d6eaa146629a1104dec1b76868212fc9356675f2bb231adc3",
+   "bytes": 238527,
    "last_date": "2026-11-26"
   },
   "am_now": {
-   "sha256": "a1c242447c2a577aa4e2a8914e30f801dffd3a1426b3fafe3fd4de9695bdc3e4",
-   "bytes": 644,
+   "sha256": "2ae1fd8c8cc48fe7507a062a8cce8aa3edf445040b7b691784c3be77bafe9867",
+   "bytes": 661,
    "last_date": "2026-11-26"
   },
   "am_stats": {
-   "sha256": "48bcba399015e1604be62cdf26b54abe2a39484871821059fb8630cd41df90e6",
+   "sha256": "154851008359f5159c90f92f61bdc5d66752458795765944f9d860281e37d326",
    "bytes": 1263,
    "last_date": "기준일"
   },
@@ -56,7 +58,7 @@
    "last_date": "2026-11-26"
   },
   "buy3": {
-   "sha256": "7158ad684b7a8085990cf21e77879ed31430639ecf1cafebad32e613e236f48a",
+   "sha256": "97347c805e811b58c56aabb2f92da922e75866a2342e981dc0e74ec512f7d636",
    "bytes": 147071,
    "last_date": "2026-10-16"
   },
@@ -146,8 +148,8 @@
    "last_date": "전체"
   },
   "health": {
-   "sha256": "f1766745611e877a2beec454cc6ab6b2a9f2856c004f32a2b473658fe7fb31a5",
-   "bytes": 1995,
+   "sha256": "a2b1e7695eab15dd5889cb6550654c685ce39b6afcef52c0d35833cc130d1218",
+   "bytes": 2170,
    "last_date": "web_cards"
   },
   "lab_sig": {
@@ -186,14 +188,14 @@
    "last_date": "2026-11"
   },
   "night_fut": {
-   "sha256": "dd4ef609ed03701ef6104843db8357d40aa4205238a8f0c31746339130652020",
-   "bytes": 50707,
-   "last_date": "2026-11-25"
+   "sha256": "bac99b08a961586c9f90fc42c7afb7a731a558c0694b1dc6a6c79d7033c0d1bc",
+   "bytes": 50927,
+   "last_date": "2026-11-26"
   },
   "overnight": {
-   "sha256": "a88f335a39736e42f060df82dd17e373c13a0f0d7e45e3f03bce0cb3b6352126",
-   "bytes": 1173976,
-   "last_date": "2026-11-25"
+   "sha256": "f74d28619a373d500f558b3d02cbd201b508f9dc42661c74099ebc2d0e6975fa",
+   "bytes": 1174134,
+   "last_date": "2026-11-26"
   },
   "overnight_stats": {
    "sha256": "4263fb63b2236639d5c9330c0a64ef4b4d693d362eb9ea49c8422b2fc2b30791",
@@ -246,7 +248,7 @@
    "last_date": "2026-11-05"
   },
   "sell3": {
-   "sha256": "fbcf208034dbe40a8731825d612d54cf0256999e2c77bd910804b686178e885f",
+   "sha256": "fd3c345b1e050c949e367016bdb5956474c2a21ddf941778e5f49472982d46c6",
    "bytes": 748413,
    "last_date": "2026-11-24"
   },

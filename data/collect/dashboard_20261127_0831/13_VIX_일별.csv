@@ -1,6 +1,4 @@
 ﻿date,close,source,n_src,spread,others
-2026-09-30,16.34,CBOE 공식 일별 파일(VIX_History.csv),3,0.0,Yahoo 16.34 | 네이버 16.34
-2026-10-01,16.39,CBOE 공식 일별 파일(VIX_History.csv),3,0.0,Yahoo 16.39 | 네이버 16.39
 2026-10-02,15.31,CBOE 공식 일별 파일(VIX_History.csv),3,0.0,Yahoo 15.31 | 네이버 15.31
 2026-10-05,15.52,CBOE 공식 일별 파일(VIX_History.csv),3,0.0,Yahoo 15.52 | 네이버 15.52
 2026-10-06,15.01,CBOE 공식 일별 파일(VIX_History.csv),3,0.0,Yahoo 15.01 | 네이버 15.01
@@ -39,3 +37,5 @@
 2026-11-20,35.89,CBOE 공식 일별 파일(VIX_History.csv),3,0.0,Yahoo 35.89 | 네이버 35.89
 2026-11-23,26.62,CBOE 공식 일별 파일(VIX_History.csv),3,0.0,Yahoo 26.62 | 네이버 26.62
 2026-11-24,26.36,CBOE 공식 일별 파일(VIX_History.csv),3,0.0,Yahoo 26.36 | 네이버 26.36
+2026-11-25,28.29,CBOE 공식 일별 파일(VIX_History.csv),3,0.0,Yahoo 28.29 | 네이버 28.29
+2026-11-26,26.8,Yahoo Finance ^VIX,2,0.0,네이버 26.8
