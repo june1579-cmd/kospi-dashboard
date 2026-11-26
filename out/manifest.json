@@ -1,5 +1,5 @@
 {
- "run": "2026-11-26 20:24",
+ "run": "2026-11-27 05:20",
  "tag": "1840",
  "kospi_last": "2026-11-26",
  "kofia_last": "2026-11-25",
@@ -16,12 +16,12 @@
  },
  "files": {
   "ai_feed": {
-   "sha256": "d7961b2775ecee997613b79811ef212719c4aec2237d07535da480958b9f853f",
+   "sha256": "df0e4afe37b77678bc9cc65e9c9e0e25cad730bb058aa460616c477b8b476806",
    "bytes": 2026,
    "last_date": "crwv_px"
   },
   "ai_feed_hist": {
-   "sha256": "eb9c270b2e3efa981264cb12a8d05036d9c52b5416367b002cd4ba82e1b369d4",
+   "sha256": "6bb01d33be2474351cb86a0d583b5e40181653cb92a744c162f725e495a231a9",
    "bytes": 2187,
    "last_date": "2026-11-25"
   },
@@ -36,8 +36,8 @@
    "last_date": "전체"
   },
   "am_daily": {
-   "sha256": "f4e3569e6c28c532d810a94253d29159669922abef2585d4f04b61f88a5fe885",
-   "bytes": 238521,
+   "sha256": "afe8bbe23aeae2cc8a6650ef8e18e392876cc95e1a88dcbbb23322b0ce34b1a0",
+   "bytes": 238523,
    "last_date": "2026-11-26"
   },
   "am_now": {
@@ -46,7 +46,7 @@
    "last_date": "2026-11-26"
   },
   "am_stats": {
-   "sha256": "96823fb9dc85bb70d6544737d144795df28e2de3240658958c7b932c1c10e855",
+   "sha256": "48bcba399015e1604be62cdf26b54abe2a39484871821059fb8630cd41df90e6",
    "bytes": 1263,
    "last_date": "기준일"
   },
@@ -146,7 +146,7 @@
    "last_date": "전체"
   },
   "health": {
-   "sha256": "bebd1a94ee2f49410329c9ebeb46fac3ca6cc8b020fcfed9de6b38325b413eb1",
+   "sha256": "f1766745611e877a2beec454cc6ab6b2a9f2856c004f32a2b473658fe7fb31a5",
    "bytes": 1995,
    "last_date": "web_cards"
   },
@@ -191,7 +191,7 @@
    "last_date": "2026-11-25"
   },
   "overnight": {
-   "sha256": "f66b49bbdd53edb2aa6473d3e70bbbdd2b49ab5b1993f7f79dc8b889b1e23e2f",
+   "sha256": "a88f335a39736e42f060df82dd17e373c13a0f0d7e45e3f03bce0cb3b6352126",
    "bytes": 1173976,
    "last_date": "2026-11-25"
   },
@@ -256,7 +256,7 @@
    "last_date": "2026-11-26"
   },
   "trend_champ_rules": {
-   "sha256": "23705169a899413e519bd11807270981ae1c78e67ad713a2675ae1c36da87dc7",
+   "sha256": "0e416dcc109e18614b2912e7befee89e617d502446988fb44c457ca38fb08d80",
    "bytes": 5037,
    "last_date": "2026"
   },
