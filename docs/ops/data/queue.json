@@ -5,66 +5,66 @@
   {
    "id": "U-1126-1",
    "created": "2026-11-26 11:35",
-   "by": "업그레이드 에이전트(첫 점검 — 시험 실행)",
+   "by": "사용자 승인 — 대화(2026-11-26 \"U-1126-3 제외 나머지 진행\") · 그 대화에서 Claude 가 진행",
    "system": "방어종목 명단",
    "kind": "추가",
    "risk": "낮음",
-   "status": "open",
+   "status": "done",
    "title": "감시에 방어종목 통합 명단 웹판 멈춤 감시 추가",
    "evidence": "watchdog.py 의 자료 멈춤 감시(FRESH 8줄)에 docs/stocks/stocks.json(통합 명단 웹판, stocks-daily 가 매 거래일 갱신)이 없음. 7일 stocks 묶음 성공률 91.7%(실패 2) — 멈춰도 알 길이 없음.",
    "do": "main 의 watchdog.py FRESH 목록 끝(stale:occwalls 줄 다음)에 한 줄만 추가: dict(key='stale:stocks', br='main', path='docs/stocks/stocks.json', label='방어종목 통합 명단 웹판', rule='age', max_h=80, repair=True). 80시간은 주말(금 저녁 갱신 → 월 저녁 갱신)을 넘기기 위함. 다른 줄·규칙·재시도 설정은 바꾸지 않음.",
    "check": "gh workflow run watchdog.yml -R june1579-cmd/kospi-dashboard 로 한 번 실행 → 로그 마지막 줄이 '감시: 항목 25개 · … · 확인 불가 0개' 이고 stale:stocks 가 열리지 않음(지금 자료는 최신).",
    "effect": "통합 명단 웹판이 80시간 넘게 멈추면 카톡 알림과 수리 요청이 자동으로 생김(지금은 아무도 모름).",
-   "result": "",
-   "updated": ""
+   "result": "watchdog.py FRESH 에 stale:stocks(80시간) 추가 · 커밋 663df3a · 감시 손 실행 45745228686 성공(항목 28개 — 같은 날 다른 세션이 감시 항목을 더해 25개가 아님, 열린 문제 0)",
+   "updated": "2026-11-26 12:02"
   },
   {
    "id": "U-1126-2",
    "created": "2026-11-26 11:35",
-   "by": "업그레이드 에이전트(첫 점검 — 시험 실행)",
+   "by": "사용자 승인 — 대화(2026-11-26 \"U-1126-3 제외 나머지 진행\")",
    "system": "감시·수리·업그레이드",
    "kind": "고장",
    "risk": "높음",
-   "status": "needs_approval",
+   "status": "in_progress",
    "title": "GitHub 예약 지연·빠짐 대책 — 정해진 시각에 바깥에서 깨우기",
    "evidence": "7일 예약 지킴 30.3%(예정 373번 중 113번). watchdog 7/70(10%), pub-watch 4/43, short-backfill 36/167, kofia-watch 3/19. 지연 최대 usk 699분·fo-dashboard 625분·dashboard-update 582분(중앙값 254분). kis-rate-recheck·pc-watchdog 는 첫 예약(11/26 아침)이 안 돎. 수리 기록 11/24·11/25·11/26 세 번 같은 원인으로 \"사용자 결정 필요\"로 남음.",
    "do": "승인되면: Cloudflare Workers 의 Cron Trigger(무료)로 정해진 시각에 GitHub API workflow_dispatch 를 부르는 작은 Worker 를 만든다. 대상 1차: watchdog(매시), us-walls(06:47), dashboard-update 아침(08:23), kis-rate-recheck, pc-watchdog, kofia-watch. 기존 GitHub 예약은 예비로 남기되, 같은 구분을 두 번 수집하지 않는지(이미 보낸 구분 건너뛰기) 워크플로마다 먼저 확인. KRX 로그인 작업은 지금의 대기 줄(concurrency)을 그대로 따라 동시 로그인이 생기지 않게 함. 사용자가 할 일: 이 저장소의 Actions 쓰기 권한만 가진 GitHub fine-grained 토큰을 만들어 Cloudflare 비밀값으로 넣기(대화에 붙이지 않음).",
    "check": "3일 동안 ops-audit 기준 대상 워크플로 예약 지킴 90% 이상, 지연 중앙값 10분 이하, 07:40 미국 옵션 카톡이 08:00 전에 도착.",
    "effect": "예약 지킴 30% → 90% 이상. 감시·자동 재시도가 제시간에 돌고, 아침 카톡·속도 재측정·PC 감시가 빠지지 않음.",
-   "result": "",
-   "updated": ""
+   "result": "장치 준비 끝: Cloudflare Worker 코드·배포 워크플로(wake-deploy)·대상 13개 워크플로에 slot 입력과 깨우기 중복 확인·감시의 깨우기 멈춤 점검. 남은 일: 사용자가 비밀값 3개(CLOUDFLARE_API_TOKEN·CLOUDFLARE_ACCOUNT_ID·WAKE_GITHUB_TOKEN)를 넣고 wake-deploy 실행 — ops/wake/README.md. 켜진 뒤 3일 동안 예약 지킴·지연으로 check 확인.",
+   "updated": "2026-11-26 12:02"
   },
   {
    "id": "U-1126-3",
    "created": "2026-11-26 11:35",
-   "by": "업그레이드 에이전트(첫 점검 — 시험 실행)",
+   "by": "사용자 제외 — 대화(2026-11-26 \"U-1126-3 제외 나머지 진행\")",
    "system": "분봉 수집기·한국투자 API",
    "kind": "개선",
    "risk": "높음",
-   "status": "needs_approval",
+   "status": "rejected",
    "title": "'장중 분봉 매일 쌓기' Claude 예약을 GitHub Actions 로 옮기기",
    "evidence": "이 Claude 예약(평일 16:13, Opus 5.5)은 intraday-data 가지에서 pip 설치 → python intraday.py daily → 커밋만 함(판단 없음, 11/25 실행 0.8분). Claude 세션이 저장소 코드를 직접 실행하는 유일한 수집 작업.",
    "do": "승인되면: intraday-data 가지에 워크플로(평일 16:13 KST 예약 + 수동 실행)를 추가해 같은 명령·같은 커밋 규칙으로 돌린다(KRX 로그인 없음 — Yahoo·네이버). 시험 실행 2번 성공 뒤, 사용자가 승인한 대화에서 Claude 예약 작업을 끈다. U-1126-2(예약 지연 대책)와 함께 하거나 그 뒤에 할 것 — 지금 GitHub 예약은 30%만 제시간에 돌아서 그냥 옮기면 오히려 빠질 수 있음.",
    "check": "intraday-data 가지에 워크플로 커밋 \"분봉 YYYY-MM-DD\" 가 이틀 연속 생기고 intraday/coverage.csv 끝 날짜가 그날.",
    "effect": "Claude 예약 하루 1번 줄임, Claude 세션에서 저장소 코드를 실행하지 않게 됨.",
-   "result": "",
-   "updated": ""
+   "result": "사용자가 이번에는 하지 않기로 함(14일 동안 같은 내용으로 다시 올리지 않음)",
+   "updated": "2026-11-26 12:02"
   },
   {
    "id": "U-1126-4",
    "created": "2026-11-26 11:35",
-   "by": "업그레이드 에이전트(첫 점검 — 시험 실행)",
+   "by": "사용자 승인 — 대화(2026-11-26 \"U-1126-3 제외 나머지 진행\")",
    "system": "코스피 대시보드",
    "kind": "개선",
    "risk": "높음",
-   "status": "needs_approval",
+   "status": "in_progress",
    "title": "코스피 대시보드 페이지 248.5KB — 256KB 한도의 97%",
    "evidence": "ops-audit: docs/page.html(= 아티팩트 files/index.html) 248.5KB. 11/08 기록 약 238KB → 18일 사이 약 10KB 늘어남. 이대로면 기능 2~3개만 더해도 한도를 넘어 게시가 실패할 수 있음.",
    "do": "승인되면: 페이지 안의 큰 스크립트 덩어리를 relief.js·lede.js 처럼 별도 파일(웹판 docs/*.js, 아티팩트 files/)로 옮겨 페이지를 200KB 아래로 줄인다. 화면·동작·결론 카드 자리(08:55 작업이 고치는 <section id=\"concl\">)는 그대로. 웹판과 claude.ai 대시보드 둘 다 같은 내용으로.",
    "check": "두 곳 모두 페이지가 열리고 콘솔 오류 없음, 한눈에 보기·결론 카드·신호 표시가 전과 같음, docs/page.html 200KB 미만, 다음 08:55 작업이 결론 카드를 정상으로 씀.",
    "effect": "한도까지 여유 약 56KB 이상 확보 — 다음 기능 추가 때 게시 실패 방지.",
-   "result": "",
-   "updated": ""
+   "result": "이 대화의 아티팩트 도구는 한 번에 64KB 까지만 써서 254KB 페이지를 못 나눔 → 큰 문서를 파일로 쓰는 도구가 있는 한 번짜리 예약(11/26 12:53, Opus 5.5)에 넘김. 웹판에서 미리 시험: 나눈 뒤 글자 수·그래프·표시 값 수 같고 오류 0.",
+   "updated": "2026-11-26 12:02"
   }
  ]
 }
