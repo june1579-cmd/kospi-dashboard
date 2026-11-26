@@ -31,7 +31,7 @@ details{margin:8px 0}summary{cursor:pointer;color:var(--mut)}
 <div class="w">
 <h1>장중 도달 확률 — 코스피200</h1>
 <p class="mut" id="sub">자료 읽는 중…</p>
-<div class="hitbox" id="hitbox"><b>날짜별 적중</b> <span class="mut">(현물·전날 종가 기준, ○ = 실제 고가·저가가 그 판의 10~90% 예상 범위 안)</span><div id="hitsum" class="mut">—</div>
+<div class="hitbox" id="hitbox"><b>날짜별 적중</b> <span class="mut">(현물·전날 종가 기준, %. 칸마다 예상(중간값) 고가/저가 → 차이 = 실제 − 예상, ○ = 실제가 그 판의 10~90% 예상 범위 안)</span><div id="hitsum" class="mut">—</div>
 <div class="tw" style="max-height:220px;margin-top:6px"><table><thead><tr><th class="l">날짜</th><th>실제 고가/저가</th><th>16:20판</th><th>08:30판</th><th>09:10판</th></tr></thead><tbody id="hitrows"></tbody></table></div></div>
 <div class="bar">
   <div class="seg" id="g-time"><button data-v="eve" aria-pressed="false">16:20판(전날 오후)</button><button data-v="pre" aria-pressed="true">08:30판(장 전)</button><button data-v="post" aria-pressed="false">09:10판(시가 뒤)</button></div>
@@ -66,10 +66,10 @@ details{margin:8px 0}summary{cursor:pointer;color:var(--mut)}
   const NM={S:'현물',F:'선물',c:'전날 종가 기준',o:'시가 기준',eve:'16:20판',pre:'08:30판',post:'09:10판'};
   function drawHits(){const H=D.hits,sum=document.getElementById('hitsum'),tb=document.getElementById('hitrows');tb.innerHTML='';
     if(!H){sum.textContent='적중표가 아직 없습니다(평일 16:20 계산 뒤 생김).';return;}
-    sum.textContent=`최근 ${H.n_sum}거래일 범위 적중률(정확하면 약 80%) — `+['eve','pre','post'].map(b=>{const v=H.summary[b];return v?`${NM[b]} 고가 ${v.hi_in}%·저가 ${v.lo_in}% (±1% 점수 ${v.brier_up1}/${v.brier_dn1}, 빈도로 찍으면 ${v.brier_up1_base}/${v.brier_dn1_base})`:''}).filter(Boolean).join(' · ')+` · 계산 ${H.built}`;
+    sum.textContent=`최근 ${H.n_sum}거래일 범위 적중률(정확하면 약 80%) — `+['eve','pre','post'].map(b=>{const v=H.summary[b];return v?`${NM[b]} 고가 ${v.hi_in}%·저가 ${v.lo_in}%, 평균 차이 ${v.mae_hi??'—'}/${v.mae_lo??'—'}%p (±1% 점수 ${v.brier_up1}/${v.brier_dn1}, 빈도로 찍으면 ${v.brier_up1_base}/${v.brier_dn1_base})`:''}).filter(Boolean).join(' · ')+` · 계산 ${H.built}`;
     H.rows.slice(0,20).forEach(r=>{const tr=document.createElement('tr');const td=(t,c)=>{const e=document.createElement('td');if(c)e.className=c;e.innerHTML=t;tr.appendChild(e);};
       td(r.date.slice(5),'l');td(`<span class="up">${r.hi>0?'+':''}${r.hi.toFixed(2)}</span> / <span class="dn">${r.lo.toFixed(2)}</span>`);
-      ['eve','pre','post'].forEach(b=>{const v=r.boards[b];if(!v||v.hi_in===undefined){td('—');return;}td(`고<span class="${v.hi_in?'o':'x'}">${v.hi_in?'○':'×'}</span> 저<span class="${v.lo_in?'o':'x'}">${v.lo_in?'○':'×'}</span> <span class="hs">${v.src==='기록'?'기록':'재'}</span>`);});
+      ['eve','pre','post'].forEach(b=>{const v=r.boards[b];if(!v||v.hi_in===undefined){td('—');return;}const sg=x=>x==null?'—':(x>0?'+':'')+(+x).toFixed(2);td(`예 <span class="up">${sg(v.hi_q50)}</span>/<span class="dn">${sg(v.lo_q50)}</span><br>차 ${sg(v.hi_diff)}<span class="${v.hi_in?'o':'x'}">${v.hi_in?'○':'×'}</span> / ${sg(v.lo_diff)}<span class="${v.lo_in?'o':'x'}">${v.lo_in?'○':'×'}</span> <span class="hs">${v.src==='기록'?'기록':'재'}</span>`);});
       tb.appendChild(tr);});}
   function seg(id,key){document.querySelectorAll('#'+id+' button').forEach(b=>b.onclick=()=>{S[key]=b.dataset.v;document.querySelectorAll('#'+id+' button').forEach(x=>x.setAttribute('aria-pressed',x===b));draw();});}
   seg('g-time','time');seg('g-inst','inst');seg('g-ref','ref');

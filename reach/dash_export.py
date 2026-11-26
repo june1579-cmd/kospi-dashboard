@@ -53,8 +53,10 @@ def main(out):
             row[f'{k}_hi'] = '' if 'hi_in' not in v else ('○' if v['hi_in'] else '×')
             row[f'{k}_lo'] = '' if 'lo_in' not in v else ('○' if v['lo_in'] else '×')
             row[f'{k}_src'] = v.get('src', '')
+            row[f'{k}_hi_pred'] = v.get('hi_q50', ''); row[f'{k}_lo_pred'] = v.get('lo_q50', '')
+            row[f'{k}_hi_diff'] = v.get('hi_diff', ''); row[f'{k}_lo_diff'] = v.get('lo_diff', '')
         hr.append(row)
-    hs = [dict(board=BL[k], n=v['n'], hi_in=v['hi_in'], lo_in=v['lo_in'], brier_up1=v['brier_up1'], brier_dn1=v['brier_dn1'], base_up1=v['brier_up1_base'], base_dn1=v['brier_dn1_base'], live=v['live'])
+    hs = [dict(board=BL[k], n=v['n'], hi_in=v['hi_in'], lo_in=v['lo_in'], brier_up1=v['brier_up1'], brier_dn1=v['brier_dn1'], base_up1=v['brier_up1_base'], base_dn1=v['brier_dn1_base'], live=v['live'], mae_hi=v.get('mae_hi', ''), mae_lo=v.get('mae_lo', ''))
           for k, v in ((H or {}).get('summary') or {}).items()]
     w(os.path.join(out, 'ladder.csv'), lad); w(os.path.join(out, 'quantiles.csv'), qs); w(os.path.join(out, 'eval.csv'), evr); w(os.path.join(out, 'info.csv'), info)
     w(os.path.join(out, 'hits.csv'), hr); w(os.path.join(out, 'hits_sum.csv'), hs)
