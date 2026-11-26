@@ -36,7 +36,10 @@ def main(out):
                     qs.append(dict(key=f'{b}|{NM[inst]}|{NM[ref]}|{side}', board=b, inst=NM[inst], ref=NM[ref], side=side, q10=L['q']['0.1'], q50=L['q']['0.5'], q90=L['q']['0.9'],
                                    seen='' if L.get('seen') is None else L['seen'], ref_price=rp if rp else ''))
         I = lambda item, value, kind='meta', use='y', need='y': info.append(dict(board=b, item=item, value='' if value is None else (round(value, 2) if isinstance(value, float) else value), kind=kind, use=use, need=need))
-        I('대상 날짜', B['for_date'], 'head'); I('계산 시각', B['built'], 'head'); I('상태', ' / '.join(B.get('status') or []) or '정상', 'head')
+        src_ = (B.get('observed') if k == 'post' else B.get('inputs')) or {}
+        miss_ = [kk for kk, v in src_.items() if v is None and not kk.startswith('외국인')]       # 빠진 입력이 있으면 '정상'이라 쓰지 않는다
+        st_ = list(B.get('status') or []) + ([f"빠진 입력: {'·'.join(miss_)} (과거 중앙값으로 대신)"] if miss_ and not any('빠진 입력' in s for s in (B.get('status') or [])) else [])
+        I('대상 날짜', B['for_date'], 'head'); I('계산 시각', B['built'], 'head'); I('상태', ' / '.join(st_) or '정상', 'head')
         if k == 'post': I('고가·저가 기준 시각', B.get('asof')); I('선물 종목 코드', B.get('fut_code'))
         else: I('기준 자료 날짜', B.get('base_date'))
         I('모형 학습 시각', B.get('params_fitted'))

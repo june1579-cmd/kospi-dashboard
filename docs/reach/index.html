@@ -142,7 +142,9 @@ details{margin:8px 0}summary{cursor:pointer;color:var(--mut)}
     const out={},r2=v=>typeof v==='number'&&!Number.isInteger(v)?Math.round(v*100)/100:v;
     const add=(b,item,value,kind='meta',use='y',need='y')=>{(out[b]=out[b]||[]).push({board:b,item,value:value==null?'':r2(value),kind,use,need});};
     [['eve','16:20판'],['pre','08:30판'],['post','09:10판']].forEach(([k,b])=>{const B=D[k];if(!B)return;
-      add(b,'대상 날짜',B.for_date,'head');add(b,'계산 시각',B.built,'head');add(b,'상태',(B.status||[]).join(' / ')||'정상','head');
+      const miss=Object.entries((k==='post'?B.observed:B.inputs)||{}).filter(([kk,v])=>v==null&&!kk.startsWith('외국인')).map(([kk])=>kk);
+      const stl=[...(B.status||[])];if(miss.length&&!stl.some(s=>s.includes('빠진 입력')))stl.push(`빠진 입력: ${miss.join('·')} (과거 중앙값으로 대신)`);
+      add(b,'대상 날짜',B.for_date,'head');add(b,'계산 시각',B.built,'head');add(b,'상태',stl.join(' / ')||'정상','head');
       if(k==='post'){add(b,'고가·저가 기준 시각',B.asof);add(b,'선물 종목 코드',B.fut_code);}else add(b,'기준 자료 날짜',B.base_date);
       add(b,'모형 학습 시각',B.params_fitted);const rp=B.ref_price||{};
       if(k==='post'){const mm=(B.status||[]).join(' ').match(/08:30판이 오늘 것이 아님\((\d{4}-\d{2}-\d{2})\)/),dep=mm?mm[1]:B.for_date,PI=(D.pre&&D.pre.for_date===dep&&D.pre.inputs)||{};
@@ -171,7 +173,7 @@ details{margin:8px 0}summary{cursor:pointer;color:var(--mut)}
       if(!['검증','적중표'].includes(b)){const w=document.createElement('div');w.className='mut';w.style.fontSize='11px';w.textContent=`대상 ${j.date||'—'} · 계산 ${j.built||'—'}`;c.appendChild(w);}
       j.items.forEach(i=>{const row=document.createElement('div');row.className='sti '+(i.k==='ok'?'g':i.k==='na'?'n':'r');[['',i.item],['v',i.value],['s',i.why]].forEach(([cl,tx])=>{const e=document.createElement('span');if(cl)e.className=cl;e.textContent=tx;row.appendChild(e);});c.appendChild(row);});});
     const all=js.flatMap(j=>j.items).filter(i=>i.k!=='na'),n=window.stCore.kst().iso;
-    document.getElementById('stsum').textContent=`수집 ${all.filter(i=>i.k==='ok').length} / ${all.length}개 · 정상 ${js.filter(j=>j.k==='ok').length} / ${CARDS.length} (지금 ${n.slice(5,10)} ${n.slice(11,16)} 한국 시각 기준)`;
+    document.getElementById('stsum').textContent=`수집 ${all.filter(i=>i.k==='ok').length} / ${all.length}개 · 다 수집된 판 ${js.filter(j=>j.k==='ok').length} / ${CARDS.length} (지금 ${n.slice(5,10)} ${n.slice(11,16)} 한국 시각 기준)`;
   }
   function seg(id,key){document.querySelectorAll('#'+id+' button').forEach(b=>b.onclick=()=>{S[key]=b.dataset.v;document.querySelectorAll('#'+id+' button').forEach(x=>x.setAttribute('aria-pressed',x===b));draw();});}
   seg('g-time','time');seg('g-inst','inst');seg('g-ref','ref');
@@ -182,7 +184,7 @@ details{margin:8px 0}summary{cursor:pointer;color:var(--mut)}
     if(!R){sub.textContent=NM[S.time]+' 자료가 아직 없습니다.';st.innerHTML='';document.querySelector('#lad tbody').innerHTML='';document.getElementById('sum').innerHTML='';return;}
     sub.textContent=`${R.for_date} 장 · ${R.label} · 계산 ${R.built}`+(R.base_date?` · 기준 자료 ${R.base_date}`:'')+(R.for_date!==new Date(Date.now()+9*3600e3).toISOString().slice(0,10)?' (오늘 것 아님)':'');
     const J=D.stj&&D.stj[NM[S.time]];st.replaceChildren();const sd=document.createElement('div');sd.className='st'+(J&&J.k==='ok'?' ok':'');
-    sd.textContent=(J?J.label:'상태 확인 불가')+((R.status&&R.status.length)?' · 계산 기록: '+R.status.join(' / '):'');st.appendChild(sd);
+    const rec=(R.status||[]).join(' / ');sd.textContent=(J?J.label:'상태 확인 불가')+(rec&&J&&!J.label.includes(rec)?' · 계산 기록: '+rec:'');st.appendChild(sd);
     const ku=`${S.inst}_${S.ref}_up`, kd=`${S.inst}_${S.ref}_dn`, U=R.ladders[ku], Dn=R.ladders[kd];
     const ref=R.ref_price[`${S.inst}_${S.ref}`];
     const price=(x,s)=>ref?(ref*(1+s*x/100)).toFixed(2):'—';
