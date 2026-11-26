@@ -24,12 +24,23 @@ th{position:sticky;top:0;background:var(--bg);font-weight:600;color:var(--mut)}t
 .pass{color:var(--ok);font-weight:700}.fail{color:var(--bad);font-weight:700}.kv{display:grid;grid-template-columns:auto auto;gap:2px 14px;font-size:13px}
 details{margin:8px 0}summary{cursor:pointer;color:var(--mut)}
 .hitbox{border:1px solid var(--bd);border-radius:10px;padding:8px 10px;margin:8px 0;font-size:12px}.hitbox b{font-size:13px}.hitbox table td,.hitbox table th{font-size:12px;padding:3px 5px}
+.stbox{border:1px solid var(--bd);border-radius:10px;padding:8px 10px;margin:8px 0}
+.stgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px;margin-top:6px}
+.stc{border:1px solid var(--bd);border-radius:8px;padding:6px 8px;font-size:12px}.stc .nm{font-size:14px;font-weight:700}
+.stb{font-weight:700;margin:2px 0}.stb.g{color:var(--ok)}.stb.r{color:var(--bad)}
+.sti{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:6px;padding:2px 5px;border-radius:4px;margin-top:2px;align-items:baseline}
+.sti.g{background:color-mix(in srgb,var(--ok) 12%,transparent)}.sti.r{background:color-mix(in srgb,var(--bad) 12%,transparent)}
+.sti .v{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}.sti .s{white-space:nowrap;font-weight:700}
+.sti.g .v,.sti.g .s{color:var(--ok)}.sti.r .v,.sti.r .s{color:var(--bad)}
 .o{color:var(--ok);font-weight:700}.x{color:var(--bad);font-weight:700}.hs{color:var(--mut);font-size:11px}
 </style>
 </head>
 <body>
 <div class="w">
 <h1>장중 도달 확률 — 코스피200</h1>
+<div class="stbox" id="stbox"><b>자료 수집·적용 상태</b> <span class="mut" id="stsum">자료 읽는 중…</span>
+<div class="stgrid" id="stgrid"></div>
+<p class="mut" style="margin:6px 0 0;font-size:12px"><span style="color:var(--ok)">녹색</span> = 그 판에 맞는 날짜의 값이 수집됨 · <span style="color:var(--bad)">빨강</span> = 아직 수집 전(값이 없거나, 지난 날짜·전날 값). 판 제목 줄은 계산 상태가 ‘정상’이고 모두 녹색일 때만 녹색. 대상 날짜는 지금 한국 시각 기준으로 보며 공휴일은 따지지 않습니다.</p></div>
 <p class="mut" id="sub">자료 읽는 중…</p>
 <div class="hitbox" id="hitbox"><b>날짜별 적중</b> <span class="mut">(현물·전날 종가 기준, %. 칸마다 예상(중간값) 고가/저가 → 차이 = 실제 − 예상, ○ = 실제가 그 판의 10~90% 예상 범위 안)</span><div id="hitsum" class="mut">—</div>
 <div class="tw" style="max-height:220px;margin-top:6px"><table><thead><tr><th class="l">날짜</th><th>실제 고가/저가</th><th>16:20판</th><th>08:30판</th><th>09:10판</th></tr></thead><tbody id="hitrows"></tbody></table></div></div>
@@ -71,6 +82,37 @@ details{margin:8px 0}summary{cursor:pointer;color:var(--mut)}
       td(r.date.slice(5),'l');td(`<span class="up">${r.hi>0?'+':''}${r.hi.toFixed(2)}</span> / <span class="dn">${r.lo.toFixed(2)}</span>`);
       ['eve','pre','post'].forEach(b=>{const v=r.boards[b];if(!v||v.hi_in===undefined){td('—');return;}const sg=x=>x==null?'—':(x>0?'+':'')+(+x).toFixed(2);td(`예 <span class="up">${sg(v.hi_q50)}</span>/<span class="dn">${sg(v.lo_q50)}</span><br>차 ${sg(v.hi_diff)}<span class="${v.hi_in?'o':'x'}">${v.hi_in?'○':'×'}</span> / ${sg(v.lo_diff)}<span class="${v.lo_in?'o':'x'}">${v.lo_in?'○':'×'}</span> <span class="hs">${v.src==='기록'?'기록':'재'}</span>`);});
       tb.appendChild(tr);});}
+  function drawStatus(){
+    const kst=()=>{const n=new Date(Date.now()+9*3600e3);return{d:n.toISOString().slice(0,10),m:n.getUTCHours()*60+n.getUTCMinutes(),iso:n.toISOString()};};
+    const sh=(ds,k)=>{const x=new Date(ds+'T00:00:00Z');x.setUTCDate(x.getUTCDate()+k);return x.toISOString().slice(0,10);};
+    const wd=ds=>{const w=new Date(ds+'T00:00:00Z').getUTCDay();return w!==0&&w!==6;};
+    const pw=ds=>{let x=sh(ds,-1);while(!wd(x))x=sh(x,-1);return x;}, nw=ds=>{let x=sh(ds,1);while(!wd(x))x=sh(x,1);return x;};
+    const n=kst(), lastAt=c=>wd(n.d)&&n.m>=c?n.d:pw(n.d);
+    const exp={pre:lastAt(400),post:lastAt(552),eve:(wd(n.d)&&n.m>=980)?nw(n.d):(wd(n.d)?n.d:nw(n.d))};
+    const SUB={eve:'전날 16:20 계산 → 다음 거래일',pre:'06:40~08:35 계산 → 오늘',post:'09:12 계산 → 오늘'};
+    const fUsed=b=>!!(D.eval&&D.eval.results.some(r=>r.time===b&&r.foreign_pass));
+    const grid=document.getElementById('stgrid');grid.replaceChildren();let ni=0,ng=0,nb=0,nok=0;
+    ['eve','pre','post'].forEach(b=>{
+      const R=D[b],c=document.createElement('div');c.className='stc';
+      const nm=document.createElement('div');nm.className='nm';nm.textContent=NM[b]+' ';const sm=document.createElement('span');sm.className='mut';sm.style.fontSize='11px';sm.style.fontWeight='400';sm.textContent=SUB[b];nm.appendChild(sm);c.appendChild(nm);
+      const bd=document.createElement('div');bd.className='stb r';c.appendChild(bd);grid.appendChild(c);nb++;
+      if(!R){bd.textContent='● 자료 없음';return;}
+      const st=(R.status||[]).join(' / '),date=R.for_date,stale=date<exp[b];
+      const bm=st.match(/(\d{4}-\d{2}-\d{2}) 자료로 계산/),baseOk=b==='eve'&&bm&&bm[1]===pw(date),fb=/아직 없어/.test(st)&&!baseOk;
+      const when=document.createElement('div');when.className='mut';when.style.fontSize='11px';when.textContent=`대상 ${date} · 계산 ${R.built}`;c.appendChild(when);
+      const src=b==='post'?(R.observed||{}):(R.inputs||{});let bad=0;
+      Object.entries(src).forEach(([k,v])=>{const has=v!=null;let g=true,why='수집';
+        if(!has){g=false;why='수집 전';}else if(stale){g=false;why=`수집 전(${date.slice(5)} 값)`;}else if(fb&&/^오늘/.test(k)){g=false;why='수집 전(전날 값)';}else if(/^외국인/.test(k)&&!fUsed(b))why='수집·계산엔 안 씀';
+        ni++;if(g)ng++;else bad++;
+        const row=document.createElement('div');row.className='sti '+(g?'g':'r');[['',k],['v',has?(+v).toFixed(2):'—'],['s',why]].forEach(([cl,tx])=>{const e=document.createElement('span');if(cl)e.className=cl;e.textContent=tx;row.appendChild(e);});c.appendChild(row);});
+      let ok=true,lb='정상 적용';
+      if(stale){ok=false;lb=`지난 자료 — 대상 ${date}, 지금은 ${exp[b]} 판이 있어야 함`;}
+      else if(baseOk)lb=`정상 적용 — ${bm[1]} 장 마감 자료로 계산`;
+      else if(st){ok=false;lb=st;}
+      else if(bad){ok=false;lb=`일부 수집 전 (${bad}개)`;}
+      if(ok)nok++;bd.className='stb '+(ok?'g':'r');bd.textContent='● '+lb;});
+    document.getElementById('stsum').textContent=`수집 ${ng} / ${ni}개 · 판 정상 ${nok} / ${nb} (지금 ${n.iso.slice(5,10)} ${n.iso.slice(11,16)} 한국 시각 기준)`;
+  }
   function seg(id,key){document.querySelectorAll('#'+id+' button').forEach(b=>b.onclick=()=>{S[key]=b.dataset.v;document.querySelectorAll('#'+id+' button').forEach(x=>x.setAttribute('aria-pressed',x===b));draw();});}
   seg('g-time','time');seg('g-inst','inst');seg('g-ref','ref');
   document.getElementById('btn-reload').onclick=load;document.getElementById('all').onchange=draw;
@@ -108,7 +150,7 @@ details{margin:8px 0}summary{cursor:pointer;color:var(--mut)}
        <div class="tw" style="max-height:none"><table><thead><tr><th class="l">칸</th><th>실제 빈도</th><th class="l">맞춤표(보류 구간): 모형 확률 구간별 실제 비율</th></tr></thead><tbody>${rel}</tbody></table></div>`;}).join('')+
       `<p class="mut">검증 계산 ${E.meta.built} · 자료 ${E.meta.data[0]}~${E.meta.data[1]} · 야간선물 있는 날 ${E.meta.night_days}일 · 씨앗값 ${E.meta.seed}</p>`;
   }
-  async function load(){const [a,b,c,e,h]=await Promise.all([get('data/pre.json'),get('data/post.json'),get('data/eval.json'),get('data/eve.json'),get('data/hits.json')]);D.pre=a;D.post=b;D.eval=c;D.eve=e;D.hits=h;drawHits();
+  async function load(){const [a,b,c,e,h]=await Promise.all([get('data/pre.json'),get('data/post.json'),get('data/eval.json'),get('data/eve.json'),get('data/hits.json')]);D.pre=a;D.post=b;D.eval=c;D.eve=e;D.hits=h;drawHits();drawStatus();
     const today=new Date(Date.now()+9*3600e3).toISOString().slice(0,10);
     if(b&&b.for_date===today&&S.time==='pre'&&!load.done){S.time='post';document.querySelectorAll('#g-time button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.v==='post'));}
     load.done=true;draw();}
