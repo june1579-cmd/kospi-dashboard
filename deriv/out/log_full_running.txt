@@ -34,3 +34,4 @@
 [05:03:47] 저장 inv_daily.csv.gz 40803행
 [05:03:49] inv OPK2I P 상세: 1행
 [05:03:50] 저장 inv_daily.csv.gz 40804행
+[05:04:00] 저장 inv_daily.csv.gz 41164행
