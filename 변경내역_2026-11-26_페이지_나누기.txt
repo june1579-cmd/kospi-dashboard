@@ -1,0 +1,3 @@
+무엇을: 대시보드 페이지(아티팩트 files/index.html = 웹판 docs/page.html)의 인라인 본체 스크립트(약 139.5KB)를 새 파일 dash.js(아티팩트 files/dash.js, 웹판 docs/dash.js)로 옮기고 페이지에는 <script src="dash.js"></script> 한 줄만 남김(U-1126-4). 화면·동작은 그대로.
+왜: 페이지 문서가 254.5KB(254,511바이트)로 문서 한도 256KB(262,144바이트)에 거의 닿아서 — 나눈 뒤 새 페이지 115.5KB + dash.js 139.5KB.
+고칠 때 주의: 본체 코드는 아티팩트 files/dash.js 와 웹판 docs/dash.js 를 같은 내용으로 같이 고친다. 08:55 작업(결론 카드)은 index.html 만 웹판으로 옮기므로 dash.js 변경은 따로 맞춰야 한다.
