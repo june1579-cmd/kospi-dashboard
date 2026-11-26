@@ -51,7 +51,6 @@ details{margin:8px 0}summary{cursor:pointer;color:var(--mut)}
   <div class="seg" id="g-ref"><button data-v="c" aria-pressed="true">전날 종가 기준</button><button data-v="o" aria-pressed="false">시가 기준</button></div>
   <div class="seg"><button id="btn-reload" aria-pressed="false">갱신</button></div>
 </div>
-<div id="status"></div>
 <div class="sum" id="sum"></div>
 <h2>0.1% 단위 도달 확률</h2>
 <p class="mut">“오를 확률” = 그날 고가가 기준점보다 +x% 이상 올라갈 확률, “내릴 확률” = 저가가 기준점보다 −x% 이하로 내려갈 확률. 둘은 같은 날 함께 일어날 수 있어 합이 100%가 아닙니다. 09:10판에서 이미 닿은 칸은 100%로 표시하고, 그 위 칸은 “지금까지 닿은 곳을 넘을” 조건부 확률입니다.</p>
@@ -180,7 +179,7 @@ details{margin:8px 0}summary{cursor:pointer;color:var(--mut)}
   document.getElementById('btn-reload').onclick=load;document.getElementById('all').onchange=draw;
   function draw(){
     const R=D[S.time], E=D.eval;
-    const sub=document.getElementById('sub'), st=document.getElementById('status');
+    const sub=document.getElementById('sub'), st=document.getElementById('status')||document.createElement('div');
     if(!R){sub.textContent=NM[S.time]+' 자료가 아직 없습니다.';st.innerHTML='';document.querySelector('#lad tbody').innerHTML='';document.getElementById('sum').innerHTML='';return;}
     sub.textContent=`${R.for_date} 장 · ${R.label} · 계산 ${R.built}`+(R.base_date?` · 기준 자료 ${R.base_date}`:'')+(R.for_date!==new Date(Date.now()+9*3600e3).toISOString().slice(0,10)?' (오늘 것 아님)':'');
     const J=D.stj&&D.stj[NM[S.time]];st.replaceChildren();const sd=document.createElement('div');sd.className='st'+(J&&J.k==='ok'?' ok':'');
