@@ -31,6 +31,7 @@ details{margin:8px 0}summary{cursor:pointer;color:var(--mut)}
 .sti{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:6px;padding:2px 5px;border-radius:4px;margin-top:2px;align-items:baseline}
 .sti.g{background:color-mix(in srgb,var(--ok) 12%,transparent)}.sti.r{background:color-mix(in srgb,var(--bad) 12%,transparent)}
 .sti .v{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}.sti .s{white-space:nowrap;font-weight:700}
+.stin{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;margin:4px 0 6px;font-size:12px}.stin .sti{margin:0;grid-template-columns:auto auto auto}.stin .stb{margin:0}
 .sti.g .v,.sti.g .s{color:var(--ok)}.sti.r .v,.sti.r .s{color:var(--bad)}.sti.n .v,.sti.n .s{color:var(--mut)}
 .o{color:var(--ok);font-weight:700}.x{color:var(--bad);font-weight:700}.hs{color:var(--mut);font-size:11px}
 </style>
@@ -40,9 +41,9 @@ details{margin:8px 0}summary{cursor:pointer;color:var(--mut)}
 <h1>장중 도달 확률 — 코스피200</h1>
 <div class="stbox" id="stbox"><b>자료 수집·적용 상태</b> <span class="mut" id="stsum">자료 읽는 중…</span>
 <div class="stgrid" id="stgrid"></div>
-<p class="mut" style="margin:6px 0 0;font-size:12px"><span style="color:var(--ok)">녹색</span> = 그 판에 맞는 날짜의 값이 수집됨 · <span style="color:var(--bad)">빨강</span> = 아직 수집 전(값이 없거나, 지난 날짜·전날 값) · 회색 = 그 판엔 해당 없음. 판 제목 줄은 계산 상태가 ‘정상’이고 빨강이 없을 때만 녹색. 검증은 8일 넘으면, 적중표는 마지막 장 마감 결과가 없으면 빨강. 대상 날짜는 지금 한국 시각 기준으로 보며 공휴일은 따지지 않습니다.</p></div>
+<p class="mut" style="margin:6px 0 0;font-size:12px"><span style="color:var(--ok)">녹색</span> = 그 판에 맞는 날짜의 값이 수집됨 · <span style="color:var(--bad)">빨강</span> = 아직 수집 전(값이 없거나, 지난 날짜·전날 값) · 회색 = 그 판엔 해당 없음. 판 제목 줄은 계산 상태가 ‘정상’이고 빨강이 없을 때만 녹색. 날짜별 적중표와 모형 검증의 수집 상태는 각 표 위에 있습니다. 대상 날짜는 지금 한국 시각 기준으로 보며 공휴일은 따지지 않습니다.</p></div>
 <p class="mut" id="sub">자료 읽는 중…</p>
-<div class="hitbox" id="hitbox"><b>날짜별 적중</b> <span class="mut">(현물·전날 종가 기준, %. 칸마다 예상(중간값) 고가/저가 → 차이 = 실제 − 예상, ○ = 실제가 그 판의 10~90% 예상 범위 안)</span><div id="hitsum" class="mut">—</div>
+<div class="hitbox" id="hitbox"><b>날짜별 적중</b> <span class="mut">(현물·전날 종가 기준, %. 칸마다 예상(중간값) 고가/저가 → 차이 = 실제 − 예상, ○ = 실제가 그 판의 10~90% 예상 범위 안)</span><div class="stin" id="st-hits"></div><div id="hitsum" class="mut">—</div>
 <div class="tw" style="max-height:220px;margin-top:6px"><table><thead><tr><th class="l">날짜</th><th>실제 고가/저가</th><th>16:20판</th><th>08:30판</th><th>09:10판</th></tr></thead><tbody id="hitrows"></tbody></table></div></div>
 <div class="bar">
   <div class="seg" id="g-time"><button data-v="eve" aria-pressed="false">16:20판(전날 오후)</button><button data-v="pre" aria-pressed="true">08:30판(장 전)</button><button data-v="post" aria-pressed="false">09:10판(시가 뒤)</button></div>
@@ -58,6 +59,7 @@ details{margin:8px 0}summary{cursor:pointer;color:var(--mut)}
 <label class="mut"><input type="checkbox" id="all"> 0.5% 미만 칸까지 모두 보기</label>
 <h2>입력값</h2><div class="kv" id="inputs"></div>
 <h2>모형 검증(걷기 전진, 표본밖)</h2>
+<div class="stin" id="st-eval"></div>
 <div id="eval" class="mut">—</div>
 <details><summary>읽는 법·한계</summary>
 <p class="mut">· 한 모형(위치·폭 + 실제 잔차 분포)에서 모든 칸을 계산해 위 칸일수록 확률이 항상 줄어듭니다. 0.1%는 표시 단위이고 정확도는 0.1~5% 칸 전체의 평균 점수(Brier)로 검증합니다.<br>
@@ -148,7 +150,12 @@ details{margin:8px 0}summary{cursor:pointer;color:var(--mut)}
   }
   function drawStatus(){
     const rows=stRows(),fu=b=>!!(D.eval&&D.eval.results.some(r=>r.time===({'16:20판':'eve','08:30판':'pre','09:10판':'post'})[b]&&r.foreign_pass));
-    const CARDS=[['16:20판','전날 16:20 계산 → 다음 거래일'],['08:30판','06:40~08:35 계산 → 오늘'],['09:10판','09:12 계산 → 오늘'],['검증','모형 검증 · 토 09:17·코드 바뀔 때'],['적중표','날짜별 적중표 · 평일 16:20 뒤']];
+    const CARDS=[['16:20판','전날 16:20 계산 → 다음 거래일'],['08:30판','06:40~08:35 계산 → 오늘'],['09:10판','09:12 계산 → 오늘']];
+    [['검증','st-eval','토 09:17·코드 바뀔 때 다시 계산, 8일 넘으면 빨강'],['적중표','st-hits','평일 16:20 뒤 계산, 마지막 장 마감 결과가 없으면 빨강']].forEach(([b,id,tip])=>{
+      const box=document.getElementById(id);box.replaceChildren();const lab=document.createElement('b');lab.textContent='수집 상태';lab.title=tip;box.appendChild(lab);
+      const j=window.stCore.judge(b,rows[b],fu),bd=document.createElement('span');if(!j){bd.className='stb r';bd.textContent='● 자료 없음';box.appendChild(bd);return;}
+      bd.className='stb '+(j.k==='ok'?'g':'r');bd.textContent='● '+j.label;box.appendChild(bd);
+      j.items.forEach(i=>{const row=document.createElement('span');row.className='sti '+(i.k==='ok'?'g':'r');[['',i.item],['v',i.value],['s',i.why]].forEach(([cl,tx])=>{const e=document.createElement('span');if(cl)e.className=cl;e.textContent=tx;row.appendChild(e);});box.appendChild(row);});});
     const grid=document.getElementById('stgrid');grid.replaceChildren();const js=[];
     CARDS.forEach(([b,sub])=>{const c=document.createElement('div');c.className='stc';
       const nm=document.createElement('div');nm.className='nm';nm.textContent=b+' ';const sm=document.createElement('span');sm.className='mut';sm.style.fontSize='11px';sm.style.fontWeight='400';sm.textContent=sub;nm.appendChild(sm);c.appendChild(nm);
