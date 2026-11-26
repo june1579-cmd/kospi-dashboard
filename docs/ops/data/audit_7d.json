@@ -1,17 +1,17 @@
 {
- "generated_at": "2026-11-26 12:03",
+ "generated_at": "2026-11-26 12:04",
  "days": 7,
- "since": "2026-11-19 12:03",
+ "since": "2026-11-19 12:04",
  "repo": "june1579-cmd/kospi-dashboard",
  "summary": {
   "workflows": 60,
-  "active": 53,
-  "runs": 786,
-  "completed": 738,
-  "success": 726,
+  "active": 54,
+  "runs": 791,
+  "completed": 740,
+  "success": 728,
   "success_rate": 98.4,
   "failures": 12,
-  "run_minutes": 4019.0,
+  "run_minutes": 4019.6,
   "flagged_workflows": 20,
   "stale_data": 0
  },
@@ -147,14 +147,14 @@
    "id": "ops",
    "label": "감시·수리·업그레이드",
    "workflows": 6,
-   "runs": 331,
-   "completed": 288,
-   "success": 288,
+   "runs": 336,
+   "completed": 290,
+   "success": 290,
    "success_rate": 100.0,
    "failures": 0,
-   "run_minutes": 210.8,
+   "run_minutes": 211.4,
    "flagged": [
-    "wake-deploy",
+    "ops-audit",
     "watchdog"
    ],
    "stale": []
@@ -1008,6 +1008,66 @@
    ]
   },
   {
+   "name": "ops-audit",
+   "path": ".github/workflows/ops-audit.yml",
+   "on_main": true,
+   "triggers": [
+    "schedule",
+    "push",
+    "workflow_dispatch"
+   ],
+   "crons": [
+    "17 22 * * *"
+   ],
+   "system": "ops",
+   "runs": 2,
+   "by_result": {
+    "in_progress": 1,
+    "success": 1
+   },
+   "completed": 1,
+   "success": 1,
+   "success_rate": 100.0,
+   "fail_streak": 0,
+   "reruns": 0,
+   "events": {
+    "workflow_dispatch": 1,
+    "push": 1
+   },
+   "last": {
+    "at": "2026-11-26 12:04",
+    "result": "in_progress",
+    "event": "workflow_dispatch",
+    "branch": "main",
+    "id": 45746559827
+   },
+   "last_success": "2026-11-26 11:31",
+   "last_failure": null,
+   "dur_median": 0.9,
+   "dur_p90": 0.9,
+   "dur_total": 0.9,
+   "dur_recent_median": 0.9,
+   "dur_older_median": null,
+   "branches": {
+    "main": 2
+   },
+   "schedule": {
+    "expected": 0,
+    "actual": 1,
+    "coverage": null,
+    "delay_median": 287.6,
+    "delay_max": 287.6,
+    "delay_over60": 1,
+    "min_gap": 1440.0,
+    "woken": 1,
+    "dup_cancelled": 0,
+    "delay_note": null
+   },
+   "flags": [
+    "예약 지연 최대 288분"
+   ]
+  },
+  {
    "name": "fpanic-yearly",
    "path": ".github/workflows/fpanic-yearly.yml",
    "on_main": true,
@@ -1174,47 +1234,17 @@
    ]
   },
   {
-   "name": "wake-deploy",
-   "path": ".github/workflows/wake-deploy.yml",
-   "on_main": true,
-   "triggers": [
-    "push",
-    "workflow_dispatch"
-   ],
-   "crons": [],
-   "system": "ops",
-   "runs": 0,
-   "by_result": {},
-   "completed": 0,
-   "success": 0,
-   "success_rate": null,
-   "fail_streak": 0,
-   "reruns": 0,
-   "events": {},
-   "last": null,
-   "last_success": null,
-   "last_failure": null,
-   "dur_median": null,
-   "dur_p90": null,
-   "dur_total": 0,
-   "dur_recent_median": null,
-   "dur_older_median": null,
-   "branches": {},
-   "flags": [
-    "7일 동안 실행 없음"
-   ]
-  },
-  {
    "name": "pages-build-deployment",
    "path": "dynamic/pages/pages-build-deployment",
    "on_main": false,
    "triggers": [],
    "crons": [],
    "system": "ops",
-   "runs": 312,
+   "runs": 314,
    "by_result": {
-    "success": 269,
-    "cancelled": 43
+    "in_progress": 1,
+    "cancelled": 44,
+    "success": 269
    },
    "completed": 269,
    "success": 269,
@@ -1222,14 +1252,14 @@
    "fail_streak": 0,
    "reruns": 0,
    "events": {
-    "dynamic": 312
+    "dynamic": 314
    },
    "last": {
-    "at": "2026-11-26 11:51",
-    "result": "success",
+    "at": "2026-11-26 12:04",
+    "result": "in_progress",
     "event": "dynamic",
     "branch": "main",
-    "id": 45745228319
+    "id": 45746548874
    },
    "last_success": "2026-11-26 11:52",
    "last_failure": null,
@@ -1239,7 +1269,7 @@
    "dur_recent_median": 0.7,
    "dur_older_median": 0.7,
    "branches": {
-    "main": 312
+    "main": 314
    },
    "flags": []
   },
@@ -1829,6 +1859,47 @@
    "flags": []
   },
   {
+   "name": "ops-sync",
+   "path": ".github/workflows/ops-sync.yml",
+   "on_main": true,
+   "triggers": [
+    "push",
+    "workflow_dispatch"
+   ],
+   "crons": [],
+   "system": "ops",
+   "runs": 3,
+   "by_result": {
+    "success": 3
+   },
+   "completed": 3,
+   "success": 3,
+   "success_rate": 100.0,
+   "fail_streak": 0,
+   "reruns": 0,
+   "events": {
+    "push": 3
+   },
+   "last": {
+    "at": "2026-11-26 12:04",
+    "result": "success",
+    "event": "push",
+    "branch": "main",
+    "id": 45746505129
+   },
+   "last_success": "2026-11-26 12:04",
+   "last_failure": null,
+   "dur_median": 0.6,
+   "dur_p90": 0.6,
+   "dur_total": 1.6,
+   "dur_recent_median": 0.6,
+   "dur_older_median": null,
+   "branches": {
+    "main": 3
+   },
+   "flags": []
+  },
+  {
    "name": "quality-validation",
    "path": ".github/workflows/qv.yml",
    "on_main": false,
@@ -2039,47 +2110,6 @@
    "flags": []
   },
   {
-   "name": "ops-sync",
-   "path": ".github/workflows/ops-sync.yml",
-   "on_main": true,
-   "triggers": [
-    "push",
-    "workflow_dispatch"
-   ],
-   "crons": [],
-   "system": "ops",
-   "runs": 2,
-   "by_result": {
-    "success": 2
-   },
-   "completed": 2,
-   "success": 2,
-   "success_rate": 100.0,
-   "fail_streak": 0,
-   "reruns": 0,
-   "events": {
-    "push": 2
-   },
-   "last": {
-    "at": "2026-11-26 11:36",
-    "result": "success",
-    "event": "push",
-    "branch": "main",
-    "id": 45743513171
-   },
-   "last_success": "2026-11-26 11:36",
-   "last_failure": null,
-   "dur_median": 0.6,
-   "dur_p90": 0.6,
-   "dur_total": 1.2,
-   "dur_recent_median": 0.6,
-   "dur_older_median": null,
-   "branches": {
-    "main": 2
-   },
-   "flags": []
-  },
-  {
    "name": "reach",
    "path": ".github/workflows/reach.yml",
    "on_main": true,
@@ -2283,8 +2313,8 @@
    "dur_median": 0.9,
    "dur_p90": 0.8,
    "dur_total": 1.7,
-   "dur_recent_median": 0.9,
-   "dur_older_median": 0.8,
+   "dur_recent_median": null,
+   "dur_older_median": 0.9,
    "branches": {
     "deriv-research": 2
    },
@@ -2480,62 +2510,6 @@
    "dur_older_median": 0.5,
    "branches": {
     "deriv-research": 1
-   },
-   "flags": []
-  },
-  {
-   "name": "ops-audit",
-   "path": ".github/workflows/ops-audit.yml",
-   "on_main": true,
-   "triggers": [
-    "schedule",
-    "push",
-    "workflow_dispatch"
-   ],
-   "crons": [
-    "17 22 * * *"
-   ],
-   "system": "ops",
-   "runs": 1,
-   "by_result": {
-    "success": 1
-   },
-   "completed": 1,
-   "success": 1,
-   "success_rate": 100.0,
-   "fail_streak": 0,
-   "reruns": 0,
-   "events": {
-    "push": 1
-   },
-   "last": {
-    "at": "2026-11-26 11:30",
-    "result": "success",
-    "event": "push",
-    "branch": "main",
-    "id": 45742837938
-   },
-   "last_success": "2026-11-26 11:31",
-   "last_failure": null,
-   "dur_median": 0.9,
-   "dur_p90": 0.9,
-   "dur_total": 0.9,
-   "dur_recent_median": 0.9,
-   "dur_older_median": null,
-   "branches": {
-    "main": 1
-   },
-   "schedule": {
-    "expected": 0,
-    "actual": 0,
-    "coverage": null,
-    "delay_median": null,
-    "delay_max": null,
-    "delay_over60": 0,
-    "min_gap": 1440.0,
-    "woken": 0,
-    "dup_cancelled": 0,
-    "delay_note": null
    },
    "flags": []
   },
@@ -2847,6 +2821,47 @@
     "deriv-research": 1
    },
    "flags": []
+  },
+  {
+   "name": "wake-deploy",
+   "path": ".github/workflows/wake-deploy.yml",
+   "on_main": true,
+   "triggers": [
+    "push",
+    "workflow_dispatch"
+   ],
+   "crons": [],
+   "system": "ops",
+   "runs": 1,
+   "by_result": {
+    "success": 1
+   },
+   "completed": 1,
+   "success": 1,
+   "success_rate": 100.0,
+   "fail_streak": 0,
+   "reruns": 0,
+   "events": {
+    "push": 1
+   },
+   "last": {
+    "at": "2026-11-26 12:04",
+    "result": "success",
+    "event": "push",
+    "branch": "main",
+    "id": 45746505089
+   },
+   "last_success": "2026-11-26 12:04",
+   "last_failure": null,
+   "dur_median": 0.2,
+   "dur_p90": 0.2,
+   "dur_total": 0.2,
+   "dur_recent_median": 0.2,
+   "dur_older_median": null,
+   "branches": {
+    "main": 1
+   },
+   "flags": []
   }
  ],
  "freshness": [
@@ -2896,7 +2911,7 @@
    "br": "main",
    "path": "docs/fo/data",
    "last": "2026-11-26 08:31",
-   "age_h": 3.5,
+   "age_h": 3.6,
    "max_h": 40,
    "stale": false
   },
@@ -2906,7 +2921,7 @@
    "br": "main",
    "path": "uswalls/latest.json",
    "last": "2026-11-26 09:49",
-   "age_h": 2.2,
+   "age_h": 2.3,
    "max_h": 40,
    "stale": false
   },
@@ -2916,7 +2931,7 @@
    "br": "main",
    "path": "uswalls/occ_latest.json",
    "last": "2026-11-25 17:30",
-   "age_h": 18.5,
+   "age_h": 18.6,
    "max_h": 40,
    "stale": false
   },
@@ -2936,7 +2951,7 @@
    "br": "main",
    "path": "docs/lab/data",
    "last": "2026-11-24 14:37",
-   "age_h": 45.4,
+   "age_h": 45.5,
    "max_h": 72,
    "stale": false
   },
@@ -3000,9 +3015,9 @@
   },
   {
    "name": "main",
-   "last": "2026-11-26 11:51",
+   "last": "2026-11-26 12:04",
    "age_d": 0.0,
-   "msg": "감시: 방어종목 통합 명단 웹판 멈춤 감시 추가(업그레이드 요청 U-1126-1)"
+   "msg": "업그레이드 요청 동기화 2026-11-26 12:04"
   },
   {
    "name": "krx-lock",
@@ -3156,8 +3171,8 @@
    "reach": 0.7,
    "(맨 위)": 0.4,
    "uswalls": 0.4,
-   "ops": 0.2,
    "nowcast": 0.1,
+   "ops": 0.1,
    "kis": 0.1
   },
   "total_mb": 55.9,
@@ -3173,14 +3188,7 @@
   "over_50mb": []
  },
  "ops": {
-  "repair_open": [
-   {
-    "key": "upgrade:U-1126-1",
-    "label": "업그레이드 U-1126-1 · 방어종목 명단",
-    "text": "감시에 방어종목 통합 명단 웹판 멈춤 감시 추가 — 할 일·확인 방법은 ops/upgrade_queue.json 의 U-1126-1(do·check) · 위험 낮음",
-    "since": "2026-11-26 11:35"
-   }
-  ],
+  "repair_open": [],
   "repair_log_in_window": 3,
   "repair_log_total": 3,
   "upgrade_queue": {
