@@ -65,8 +65,15 @@ def night_from_kis(t, fc):
         d1 = (date.fromisoformat(t) + timedelta(days=1)).strftime('%Y%m%d')
         r = k.get('/uapi/domestic-futureoption/v1/quotations/inquire-time-fuopchartprice', 'FHKIF03020200', {'FID_COND_MRKT_DIV_CODE': 'CM', 'FID_INPUT_ISCD': code, 'FID_HOUR_CLS_CODE': '60',
                   'FID_PW_DATA_INCU_YN': 'Y', 'FID_FAKE_TICK_INCU_YN': 'N', 'FID_INPUT_DATE_1': d1, 'FID_INPUT_HOUR_1': '060000'})
-        rows = [x for x in (r.get('output2') or []) if x.get('stck_bsop_date') == t.replace('-', '')]
-        if not rows: return None, f"KIS 야간 봉 없음({r.get('msg1', '')})"[:80]
+        allr = r.get('output2') or []
+        rows = [x for x in allr if x.get('stck_bsop_date') == t.replace('-', '')]
+        if not rows:   # 요청 방식 둘째: 세션 날짜 t, 시각 300000(24시 넘는 표기)
+            r2 = k.get('/uapi/domestic-futureoption/v1/quotations/inquire-time-fuopchartprice', 'FHKIF03020200', {'FID_COND_MRKT_DIV_CODE': 'CM', 'FID_INPUT_ISCD': code, 'FID_HOUR_CLS_CODE': '60',
+                       'FID_PW_DATA_INCU_YN': 'Y', 'FID_FAKE_TICK_INCU_YN': 'N', 'FID_INPUT_DATE_1': t.replace('-', ''), 'FID_INPUT_HOUR_1': '300000'})
+            all2 = r2.get('output2') or []; rows = [x for x in all2 if x.get('stck_bsop_date') == t.replace('-', '')]
+            if not rows:
+                seen = sorted({(x.get('stck_bsop_date'), x.get('stck_cntg_hour')) for x in allr + all2})
+                return None, f"KIS 야간 봉 없음({code}, 받은 {len(allr)}+{len(all2)}개 {seen[:1]}~{seen[-1:]})"[:160]
         last = max(rows, key=lambda x: x.get('stck_cntg_hour'))
         if last.get('stck_cntg_hour') < '295500': return None, f"야간 세션이 아직 안 끝남(마지막 {last.get('stck_cntg_hour')})"
         c = pick(last, 'prpr'); return (100 * (c / fc - 1) if c else None), f'KIS 야간 1분봉({code}) 종가 {c}'
