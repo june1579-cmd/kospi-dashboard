@@ -35,8 +35,28 @@ def main(out):
                 for side, L in (('고가', U), ('저가', Dn)):
                     qs.append(dict(key=f'{b}|{NM[inst]}|{NM[ref]}|{side}', board=b, inst=NM[inst], ref=NM[ref], side=side, q10=L['q']['0.1'], q50=L['q']['0.5'], q90=L['q']['0.9'],
                                    seen='' if L.get('seen') is None else L['seen'], ref_price=rp if rp else ''))
-        info += [dict(board=b, item='대상 날짜', value=B['for_date']), dict(board=b, item='계산 시각', value=B['built']), dict(board=b, item='상태', value=' / '.join(B.get('status') or []) or '정상')]
-        for kk, v in (B.get('observed') if k == 'post' else B.get('inputs') or {}).items(): info.append(dict(board=b, item=kk, value='' if v is None else round(v, 2)))
+        I = lambda item, value, kind='meta', use='y', need='y': info.append(dict(board=b, item=item, value='' if value is None else (round(value, 2) if isinstance(value, float) else value), kind=kind, use=use, need=need))
+        I('대상 날짜', B['for_date'], 'head'); I('계산 시각', B['built'], 'head'); I('상태', ' / '.join(B.get('status') or []) or '정상', 'head')
+        if k == 'post': I('고가·저가 기준 시각', B.get('asof')); I('선물 종목 코드', B.get('fut_code'))
+        else: I('기준 자료 날짜', B.get('base_date'))
+        I('모형 학습 시각', B.get('params_fitted'))
+        rp = B.get('ref_price') or {}
+        for kk, nm in (('S_c', '기준점: 현물 전날 종가'), ('F_c', '기준점: 선물 전날 종가'), ('S_o', '기준점: 현물 시가'), ('F_o', '기준점: 선물 시가')):
+            I(nm, rp.get(kk), 'ref', need='y' if (k == 'post' or kk.endswith('_c')) else 'n')
+        for kk, v in ((B.get('observed') if k == 'post' else B.get('inputs')) or {}).items(): I(kk, v, 'input', 'f' if kk.startswith('외국인') else 'y')
+        if k == 'pre':
+            F = B.get('features') or {}
+            I('외국인 전날 선물 평가손익(%)', F.get('pnl1'), 'input', 'f'); I('20일 선물 평균 하루 폭(%)', F.get('fpark20'), 'input', 'n')
+    E0 = rd('eval.json')
+    if E0:
+        m = E0.get('meta') or {}; b = '검증'
+        for item, value in (('계산 시각', m.get('built')), ('자료 기간', ' ~ '.join(m.get('data') or []) or None), ('표본 일수', m.get('n')), ('야간선물 있는 날', m.get('night_days'))):
+            info.append(dict(board=b, item=item, value='' if value is None else value, kind='head' if item == '계산 시각' else 'meta', use='y', need='y'))
+    H0 = rd('hits.json')
+    if H0:
+        b = '적중표'; rows0 = H0.get('rows') or []
+        for item, value in (('계산 시각', H0.get('built')), ('최근 날짜', rows0[0]['date'] if rows0 else None), ('요약 일수', H0.get('n_sum')), ('표에 있는 날', len(rows0))):
+            info.append(dict(board=b, item=item, value='' if value is None else value, kind='head' if item == '계산 시각' else 'meta', use='y', need='y'))
     E = rd('eval.json'); evr = []
     for r in (E or {}).get('results', []):
         g = lambda s, k: (r['detail'].get(s) or {}).get(k)
