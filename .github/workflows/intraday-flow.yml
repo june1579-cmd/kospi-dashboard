@@ -1,0 +1,46 @@
+# 장중 코스피200 선물 투자자별 수급 + 선물·현물 시세를 5초 간격으로 쌓는다(2026-11-26, 사용자 요청 '가능한 짧게').
+# 오전(08:40~12:10)·오후(12:10~15:50) 두 작업. GitHub 예약은 늦거나 빠질 때가 있어 각 작업마다 예약을 두 번 걸고, 같은 작업은 한 줄로 서서 두 번째는 시간이 지나 있으면 바로 끝난다.
+# 오전 작업은 09:12:30 에 '09:10판 장중 도달 확률'(reach/live.py)을 계산해 main 의 docs/reach/data 에 올린다.
+# 저장: intraday-flow 가지. KIS 키는 Secrets 이름으로만 쓴다.
+name: intraday-flow
+on:
+  schedule:
+    - cron: '20 23 * * 0-4'   # 08:20 KST 월~금 — 오전
+    - cron: '45 23 * * 0-4'   # 08:45 KST — 오전 예비
+    - cron: '35 2 * * 1-5'    # 11:35 KST — 오후
+    - cron: '58 2 * * 1-5'    # 11:58 KST — 오후 예비
+  workflow_dispatch:
+    inputs:
+      part: {description: 'am / pm / test', default: 'test'}
+      test_min: {description: 'test 일 때 몇 분', default: '3'}
+permissions:
+  contents: write
+concurrency:
+  group: intraday-flow-${{ (github.event.schedule == '20 23 * * 0-4' || github.event.schedule == '45 23 * * 0-4') && 'am' || ((github.event.schedule == '35 2 * * 1-5' || github.event.schedule == '58 2 * * 1-5') && 'pm' || github.event.inputs.part) }}
+  cancel-in-progress: false
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    env:
+      TZ: Asia/Seoul
+      PYTHONHASHSEED: '0'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with: {ref: intraday-flow, path: _flow}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -q requests pandas==2.3.3 numpy==2.5.3
+      - name: 수집
+        env:
+          KIS_REAL_APP_KEY: ${{ secrets.KIS_REAL_APP_KEY }}
+          KIS_REAL_APP_SECRET: ${{ secrets.KIS_REAL_APP_SECRET }}
+        run: |
+          git config --global user.name "dashboard-bot"; git config --global user.email "dashboard-bot@users.noreply.github.com"
+          P="${{ (github.event.schedule == '20 23 * * 0-4' || github.event.schedule == '45 23 * * 0-4') && 'am' || ((github.event.schedule == '35 2 * * 1-5' || github.event.schedule == '58 2 * * 1-5') && 'pm' || github.event.inputs.part) }}"
+          python reach/flow.py --part "$P" --out _flow --test-min "${{ github.event.inputs.test_min || '3' }}"
+      - name: 시험 결과 보기
+        if: ${{ github.event.inputs.part == 'test' }}
+        run: |
+          f=$(ls -t _flow/flow/*/*.csv 2>/dev/null | head -1); [ -n "$f" ] && { wc -l "$f"; head -3 "$f"; tail -3 "$f"; } || echo "파일 없음"
