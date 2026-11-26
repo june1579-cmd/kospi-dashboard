@@ -91,6 +91,7 @@ def run_pre(wait=0, deriv=None):
 def run_post(idx, fut, fut_code=None, asof=None):
     pre = json.load(open(os.path.join(OUT, 'pre.json'), encoding='utf-8')); P = params()
     today = (datetime.now(timezone.utc).replace(tzinfo=None) + timedelta(hours=9)).date().isoformat(); st = []
+    if asof and asof[11:16] > '09:30': st.append(f'정해진 09:12 계산이 아닌 시험 계산({asof[11:16]} 기준 고가·저가)')
     if pre.get('for_date') != today: st.append(f"08:30판이 오늘 것이 아님({pre.get('for_date')}) — 그 입력으로 계산")
     f = pre['features']; row = pd.DataFrame([f])
     row['night'] = f.get('night'); s_prev = (idx or {}).get('prev') or f.get('c'); f_prev = (fut or {}).get('prev') or f.get('fc')
