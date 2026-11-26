@@ -91,6 +91,8 @@ FOR = ['f1', 'pnl1', 'n1']
 
 
 def feats(time, inst, foreign):
+    if time == 'eve':                                    # 16:20판: 그날 장 마감 직후 알 수 있는 값만(야간선물·간밤 미국·외국인 확정치 없음)
+        return ['own', 'rv20', 'park20'], ['rv20', 'park20']
     mu = PRE + ([f'{inst}_gap'] if time == 'post' else []) + (FOR if foreign else [])
     sc = ['rv20', 'park20', 'abs_night'] + (['abs_gap'] if time == 'post' else [])
     return mu, sc
@@ -153,7 +155,8 @@ def hits(y, side, levels):
 
 
 TARGETS = [(inst, ref, side) for inst in ('S', 'F') for ref in ('c', 'o') for side in ('up', 'dn')]
-NAME = {'S': '현물', 'F': '선물', 'c': '전날 종가 기준', 'o': '시가 기준', 'up': '고가', 'dn': '저가', 'pre': '08:30판', 'post': '09:10판'}
+NAME = {'S': '현물', 'F': '선물', 'c': '전날 종가 기준', 'o': '시가 기준', 'up': '고가', 'dn': '저가', 'eve': '16:20판', 'pre': '08:30판', 'post': '09:10판'}
+TIMES = ('eve', 'pre', 'post')
 
 
 def walk(D, ycol, side, mk, start=750, step=21):
@@ -198,19 +201,18 @@ def evaluate(D):
     idx = D.index; segs = {'검증': (idx >= '2016-01-01') & (idx < '2021-06-24'), '보류': idx >= '2021-06-24', '2026': idx >= '2026-01-01', 'KRX 야간 시기': idx >= '2025-06-09'}
     segs = {k: np.asarray(v) for k, v in segs.items()}
     res = []
-    for time in ('pre', 'post'):
+    for time in TIMES:
         for inst, ref, side in TARGETS:
-            if time == 'post' and False: continue
             yc = f'{inst}_{side}_{ref}'; y = D[yc].to_numpy(float); H = hits(y, side, SCORE_LV); ok = ~np.isnan(y)
             mu, sc = feats(time, inst, False); muF, _ = feats(time, inst, True)
-            P_m = walk(D, yc, side, lambda: Dist(mu, sc, inst)); P_f = walk(D, yc, side, lambda: Dist(muF, sc, inst))
+            P_m = walk(D, yc, side, lambda: Dist(mu, sc, inst)); P_f = walk(D, yc, side, lambda: Dist(muF, sc, inst)) if time != 'eve' else None
             P_v = walk(D, yc, side, lambda: Dist([], ['rv20', 'park20'], inst)); P_c = clim(D, yc, side)
             br = lambda P: np.where(ok, np.nanmean((P - H) ** 2, 1), np.nan)
-            Bm, Bf, Bv, Bc = br(P_m), br(P_f), br(P_v), br(P_c)
+            Bm, Bv, Bc = br(P_m), br(P_v), br(P_c); Bf = br(P_f) if P_f is not None else None
             hold = segs['보류'] & ~np.isnan(Bm) & ~np.isnan(Bv) & ~np.isnan(Bc)
             best_is_v = np.nanmean(Bv[hold]) <= np.nanmean(Bc[hold]); Bb = Bv if best_is_v else Bc
             passed, det = judge(Bm, Bb, segs)
-            fpass, fdet = judge(Bf, Bm, segs)                       # 외국인 지표를 더했을 때 더 나은가(같은 기준)
+            fpass, fdet = judge(Bf, Bm, segs) if Bf is not None else (False, {})   # 외국인 지표를 더했을 때 더 나은가(같은 기준). 16:20판은 그 시각에 확정치가 없어 시험하지 않음
             # 대표 칸의 맞춤표(보류 구간)
             rel = {}
             for lv in REP:
@@ -229,7 +231,7 @@ def evaluate(D):
 
 def fit_all(D, ev=None):
     P = {}
-    for time in ('pre', 'post'):
+    for time in TIMES:
         for inst, ref, side in TARGETS:
             yc = f'{inst}_{side}_{ref}'
             fpass = any(r['foreign_pass'] for r in (ev or []) if r['ycol'] == yc and r['time'] == time)
@@ -246,7 +248,7 @@ def main():
     if a.eval:
         ev = evaluate(D)
         meta = dict(built=pd.Timestamp.now(tz='Asia/Seoul').strftime('%Y-%m-%d %H:%M KST'), data=[D.index[0], D.index[-1]], n=len(D), night_days=int(D['night'].notna().sum()),
-                    seed=SEED, rule='검증(2016-01~2021-06)·보류(2021-06-24~) 모두 가장 좋은 비교 대상보다 0.1~5% 칸 평균 Brier 3% 이상 낮음 + 보류 블록 부트스트랩 p<0.05 + 2026 90% 구간 상단 +5% 미만',
+                    seed=SEED, rule='16:20판은 그날 장 마감 직후 값만, 08:30판은 야간선물·간밤 미국까지, 09:10판은 시가까지. 검증(2016-01~2021-06)·보류(2021-06-24~) 모두 가장 좋은 비교 대상보다 0.1~5% 칸 평균 Brier 3% 이상 낮음 + 보류 블록 부트스트랩 p<0.05 + 2026 90% 구간 상단 +5% 미만',
                     versions=f'pandas {pd.__version__} · numpy {np.__version__}')
         json.dump(dict(meta=meta, results=ev), open(os.path.join(ROOT, 'docs', 'reach', 'data', 'eval.json'), 'w', encoding='utf-8'), ensure_ascii=False)
     else:

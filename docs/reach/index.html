@@ -23,14 +23,18 @@ th{position:sticky;top:0;background:var(--bg);font-weight:600;color:var(--mut)}t
 .up{color:var(--up)}.dn{color:var(--dn)}.hit{font-weight:700}.tw{max-height:70vh;overflow:auto;border:1px solid var(--bd);border-radius:10px}
 .pass{color:var(--ok);font-weight:700}.fail{color:var(--bad);font-weight:700}.kv{display:grid;grid-template-columns:auto auto;gap:2px 14px;font-size:13px}
 details{margin:8px 0}summary{cursor:pointer;color:var(--mut)}
+.hitbox{border:1px solid var(--bd);border-radius:10px;padding:8px 10px;margin:8px 0;font-size:12px}.hitbox b{font-size:13px}.hitbox table td,.hitbox table th{font-size:12px;padding:3px 5px}
+.o{color:var(--ok);font-weight:700}.x{color:var(--bad);font-weight:700}.hs{color:var(--mut);font-size:11px}
 </style>
 </head>
 <body>
 <div class="w">
 <h1>장중 도달 확률 — 코스피200</h1>
 <p class="mut" id="sub">자료 읽는 중…</p>
+<div class="hitbox" id="hitbox"><b>날짜별 적중</b> <span class="mut">(현물·전날 종가 기준, ○ = 실제 고가·저가가 그 판의 10~90% 예상 범위 안)</span><div id="hitsum" class="mut">—</div>
+<div class="tw" style="max-height:220px;margin-top:6px"><table><thead><tr><th class="l">날짜</th><th>실제 고가/저가</th><th>16:20판</th><th>08:30판</th><th>09:10판</th></tr></thead><tbody id="hitrows"></tbody></table></div></div>
 <div class="bar">
-  <div class="seg" id="g-time"><button data-v="pre" aria-pressed="true">08:30판(장 전)</button><button data-v="post" aria-pressed="false">09:10판(시가 뒤)</button></div>
+  <div class="seg" id="g-time"><button data-v="eve" aria-pressed="false">16:20판(전날 오후)</button><button data-v="pre" aria-pressed="true">08:30판(장 전)</button><button data-v="post" aria-pressed="false">09:10판(시가 뒤)</button></div>
   <div class="seg" id="g-inst"><button data-v="S" aria-pressed="true">현물</button><button data-v="F" aria-pressed="false">근월물 선물</button></div>
   <div class="seg" id="g-ref"><button data-v="c" aria-pressed="true">전날 종가 기준</button><button data-v="o" aria-pressed="false">시가 기준</button></div>
   <div class="seg"><button id="btn-reload" aria-pressed="false">갱신</button></div>
@@ -49,6 +53,7 @@ details{margin:8px 0}summary{cursor:pointer;color:var(--mut)}
 · 비교 대상: 지난 250일 실제 분포, 변동성만 쓴 모형. 통과 기준: 검증(2016~2021-06)·보류(2021-06-24~) 구간 모두 가장 좋은 비교 대상보다 3% 이상 낮은 점수, 보류 구간 블록 부트스트랩 p&lt;0.05, 2026년 90% 구간 상단 +5% 미만.<br>
 · 야간선물은 유렉스 시절(2009-11~2020)과 KRX 야간(2025-06~)만 있어, 빈 기간은 간밤 미국·VIX로 메워 학습합니다.<br>
 · 외국인 선물 지표(전날 순매수·그 수익·야간 순매수)는 같은 기준을 통과할 때만 자동으로 들어갑니다(2026-11-26 시험에서는 통과 못 함). 장중 외국인 수급은 intraday-flow 가지에 5초 간격으로 쌓이는 중이며 충분히 쌓인 뒤 다시 시험합니다.<br>
+· 16:20판은 평일 16:20에 그날 장 마감 직후 알 수 있는 값(그날 종가·고가·저가·변동성)만으로 다음 거래일을 계산합니다. 날짜별 적중표의 “기록”은 실제로 낸 값, “재”는 그날 전까지 자료로만 다시 계산한 값입니다(09:10판 재계산은 시가까지만 반영).<br>
 · 08:30판은 평일 06:40에 계산합니다(예비 07:15·07:45·08:35). 야간선물은 06:00 마감 직후 KIS에서 직접 받고, 간밤 미국 일봉이 늦으면 직접 받아 씁니다. 그래도 빠진 값이 있으면 위 상태 칸에 적습니다.<br>
 · 09:10판은 실제로는 09:12 무렵 계산합니다(09:07 KIS 호출 한도 재측정과 겹치지 않게).<br>
 · 투자 권유 아님.</p></details>
@@ -58,7 +63,14 @@ details{margin:8px 0}summary{cursor:pointer;color:var(--mut)}
   const S={time:'pre',inst:'S',ref:'c'}, D={};
   const get=u=>fetch(u+'?v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null);
   const f1=v=>v==null?'—':(+v).toFixed(1), f2=v=>v==null?'—':(+v).toFixed(2);
-  const NM={S:'현물',F:'선물',c:'전날 종가 기준',o:'시가 기준',pre:'08:30판',post:'09:10판'};
+  const NM={S:'현물',F:'선물',c:'전날 종가 기준',o:'시가 기준',eve:'16:20판',pre:'08:30판',post:'09:10판'};
+  function drawHits(){const H=D.hits,sum=document.getElementById('hitsum'),tb=document.getElementById('hitrows');tb.innerHTML='';
+    if(!H){sum.textContent='적중표가 아직 없습니다(평일 16:20 계산 뒤 생김).';return;}
+    sum.textContent=`최근 ${H.n_sum}거래일 범위 적중률(정확하면 약 80%) — `+['eve','pre','post'].map(b=>{const v=H.summary[b];return v?`${NM[b]} 고가 ${v.hi_in}%·저가 ${v.lo_in}% (±1% 점수 ${v.brier_up1}/${v.brier_dn1}, 빈도로 찍으면 ${v.brier_up1_base}/${v.brier_dn1_base})`:''}).filter(Boolean).join(' · ')+` · 계산 ${H.built}`;
+    H.rows.slice(0,20).forEach(r=>{const tr=document.createElement('tr');const td=(t,c)=>{const e=document.createElement('td');if(c)e.className=c;e.innerHTML=t;tr.appendChild(e);};
+      td(r.date.slice(5),'l');td(`<span class="up">${r.hi>0?'+':''}${r.hi.toFixed(2)}</span> / <span class="dn">${r.lo.toFixed(2)}</span>`);
+      ['eve','pre','post'].forEach(b=>{const v=r.boards[b];if(!v||v.hi_in===undefined){td('—');return;}td(`고<span class="${v.hi_in?'o':'x'}">${v.hi_in?'○':'×'}</span> 저<span class="${v.lo_in?'o':'x'}">${v.lo_in?'○':'×'}</span> <span class="hs">${v.src==='기록'?'기록':'재'}</span>`);});
+      tb.appendChild(tr);});}
   function seg(id,key){document.querySelectorAll('#'+id+' button').forEach(b=>b.onclick=()=>{S[key]=b.dataset.v;document.querySelectorAll('#'+id+' button').forEach(x=>x.setAttribute('aria-pressed',x===b));draw();});}
   seg('g-time','time');seg('g-inst','inst');seg('g-ref','ref');
   document.getElementById('btn-reload').onclick=load;document.getElementById('all').onchange=draw;
@@ -96,7 +108,7 @@ details{margin:8px 0}summary{cursor:pointer;color:var(--mut)}
        <div class="tw" style="max-height:none"><table><thead><tr><th class="l">칸</th><th>실제 빈도</th><th class="l">맞춤표(보류 구간): 모형 확률 구간별 실제 비율</th></tr></thead><tbody>${rel}</tbody></table></div>`;}).join('')+
       `<p class="mut">검증 계산 ${E.meta.built} · 자료 ${E.meta.data[0]}~${E.meta.data[1]} · 야간선물 있는 날 ${E.meta.night_days}일 · 씨앗값 ${E.meta.seed}</p>`;
   }
-  async function load(){const [a,b,c]=await Promise.all([get('data/pre.json'),get('data/post.json'),get('data/eval.json')]);D.pre=a;D.post=b;D.eval=c;
+  async function load(){const [a,b,c,e,h]=await Promise.all([get('data/pre.json'),get('data/post.json'),get('data/eval.json'),get('data/eve.json'),get('data/hits.json')]);D.pre=a;D.post=b;D.eval=c;D.eve=e;D.hits=h;drawHits();
     const today=new Date(Date.now()+9*3600e3).toISOString().slice(0,10);
     if(b&&b.for_date===today&&S.time==='pre'&&!load.done){S.time='post';document.querySelectorAll('#g-time button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.v==='post'));}
     load.done=true;draw();}

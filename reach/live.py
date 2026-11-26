@@ -81,6 +81,39 @@ def night_from_kis(t, fc):
         return None, repr(e)[:80]
 
 
+def log(res, board):
+    """날짜별 적중 분석용 기록: docs/reach/data/log/대상날짜_판.json(같은 날 다시 계산하면 덮어씀)"""
+    d = os.path.join(OUT, 'log'); os.makedirs(d, exist_ok=True)
+    keep = {k: res[k] for k in ('kind', 'label', 'built', 'for_date', 'status', 'ref_price', 'ladders') if k in res}
+    for v in keep['ladders'].values(): v['p'] = v['p'][:60]                    # 0.1~6% 만 남겨 가볍게
+    json.dump(keep, open(os.path.join(d, f"{res['for_date']}_{board}.json"), 'w', encoding='utf-8'), ensure_ascii=False)
+
+
+def run_eve(wait=0, deriv=None):
+    """16:20판: 오늘 장 마감 직후 알 수 있는 값(오늘 종가·고가·저가·변동성)만으로 다음 거래일 도달 확률"""
+    hol = holidays(); deriv = deriv or os.path.join(ROOT, '_deriv', 'deriv', 'data')
+    today = (datetime.now(timezone.utc).replace(tzinfo=None) + timedelta(hours=9)).date()
+    t0 = time.time()
+    while True:
+        D = load(deriv); last = D.index[-1]
+        if last >= today.isoformat() or time.time() - t0 > wait * 60: break
+        print(f'오늘 코스피200 자료 기다림 (마지막 {last})', flush=True); time.sleep(120)
+        subprocess.run(['git', 'pull', '-q', '--rebase'], cwd=ROOT)
+    for_date = next_trading(date.fromisoformat(last), hol); st = []
+    if last < today.isoformat() and today.weekday() < 5 and today.isoformat() not in hol: st.append(f'오늘({today}) 장 자료가 아직 없어 {last} 자료로 계산')
+    P = params(); row = D.iloc[[-1]].copy(); lad = ladders(row, P, 'eve')
+    g = lambda c: r1(row[c].iloc[0]) if c in row else None
+    res = dict(kind='eve', label='16:20판', built=(datetime.now(timezone.utc).replace(tzinfo=None) + timedelta(hours=9)).strftime('%Y-%m-%d %H:%M KST'), for_date=for_date.isoformat(),
+               base_date=last, status=st, levels=[float(x) for x in LEVELS], ref_price={'S_c': g('c'), 'F_c': g('fc'), 'S_o': None, 'F_o': None},
+               inputs={'오늘 코스피200(%)': g('own'), '20일 변동성(%)': g('rv20'), '20일 평균 하루 폭(%)': g('park20'), '오늘 종가': g('c'), '오늘 선물 종가': g('fc')},
+               ladders=lad, params_fitted=P.get('fitted'))
+    os.makedirs(OUT, exist_ok=True); json.dump(res, open(os.path.join(OUT, 'eve.json'), 'w', encoding='utf-8'), ensure_ascii=False); log(res, 'eve')
+    print('16:20판 저장', for_date, '· 상태', st or '정상', flush=True)
+    from reach import hits
+    hits.save(D)
+    return res
+
+
 def run_pre(wait=0, deriv=None):
     hol = holidays(); deriv = deriv or os.path.join(ROOT, '_deriv', 'deriv', 'data'); night_src = '코스피 대시보드 수집(KRX)'
     today = (datetime.now(timezone.utc).replace(tzinfo=None) + timedelta(hours=9)).date()
@@ -117,7 +150,7 @@ def run_pre(wait=0, deriv=None):
                inputs={'야간선물(%)': g('night'), '간밤 S&P500(%)': g('us_on'), '간밤 VIX 변화(%)': g('vix_on'), '전날 코스피200(%)': g('own'), '20일 변동성(%)': g('rv20'),
                        '20일 평균 하루 폭(%)': g('park20'), '외국인 전날 순매수(평소 대비)': g('f1'), '외국인 야간 순매수(평소 대비)': g('n1')},
                features={c: g(c) for c in ('night', 'us_on', 'vix_on', 'own', 'rv20', 'park20', 'fpark20', 'f1', 'pnl1', 'n1', 'c', 'fc')}, ladders=lad, params_fitted=P.get('fitted'))
-    os.makedirs(OUT, exist_ok=True); json.dump(res, open(os.path.join(OUT, 'pre.json'), 'w', encoding='utf-8'), ensure_ascii=False)
+    os.makedirs(OUT, exist_ok=True); json.dump(res, open(os.path.join(OUT, 'pre.json'), 'w', encoding='utf-8'), ensure_ascii=False); log(res, 'pre')
     print('08:30판 저장', for_date, '· 상태', st or '정상', flush=True)
     for kk in ('S_c_up', 'S_c_dn'):
         v = lad.get(kk)
@@ -148,11 +181,13 @@ def run_post(idx, fut, fut_code=None, asof=None):
                          '현물 갭(%)': r1(row['S_gap'].iloc[0]), '선물 갭(%)': r1(row['F_gap'].iloc[0])},
                ladders=lad, params_fitted=P.get('fitted'))
     json.dump(res, open(os.path.join(OUT, 'post.json'), 'w', encoding='utf-8'), ensure_ascii=False)
+    if not st or all('시험 계산' not in x for x in st): log(res, 'post')
     print('09:10판 저장', today, '· 상태', st or '정상', flush=True)
     return res
 
 
 if __name__ == '__main__':
-    ap = argparse.ArgumentParser(); ap.add_argument('--pre', action='store_true'); ap.add_argument('--wait', type=float, default=0); ap.add_argument('--deriv', default=None)
+    ap = argparse.ArgumentParser(); ap.add_argument('--pre', action='store_true'); ap.add_argument('--eve', action='store_true'); ap.add_argument('--wait', type=float, default=0); ap.add_argument('--deriv', default=None)
     a = ap.parse_args()
     if a.pre: run_pre(a.wait, a.deriv)
+    if a.eve: run_eve(a.wait, a.deriv)
