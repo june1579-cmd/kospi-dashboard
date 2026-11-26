@@ -40,6 +40,12 @@ def main(out):
         if k == 'post': I('고가·저가 기준 시각', B.get('asof')); I('선물 종목 코드', B.get('fut_code'))
         else: I('기준 자료 날짜', B.get('base_date'))
         I('모형 학습 시각', B.get('params_fitted'))
+        if k == 'post':                                   # 09:10판은 08:30판 입력(야간선물·간밤 미국 등)을 그대로 쓴다 → 그 날짜와 값
+            import re
+            m_ = re.search(r'08:30판이 오늘 것이 아님\((\d{4}-\d{2}-\d{2})\)', ' '.join(B.get('status') or [])); dep = m_.group(1) if m_ else B['for_date']
+            P0 = rd('pre.json'); PI = (P0 or {}).get('inputs') or {} if (P0 or {}).get('for_date') == dep else {}
+            I('08:30판 입력 날짜', dep, 'dep')
+            for kk in ('야간선물(%)', '간밤 S&P500(%)', '간밤 VIX 변화(%)', '전날 코스피200(%)', '20일 변동성(%)', '20일 평균 하루 폭(%)'): I('08:30판 입력: ' + kk, PI.get(kk), 'dep')
         rp = B.get('ref_price') or {}
         for kk, nm in (('S_c', '기준점: 현물 전날 종가'), ('F_c', '기준점: 선물 전날 종가'), ('S_o', '기준점: 현물 시가'), ('F_o', '기준점: 선물 시가')):
             I(nm, rp.get(kk), 'ref', need='y' if (k == 'post' or kk.endswith('_c')) else 'n')
