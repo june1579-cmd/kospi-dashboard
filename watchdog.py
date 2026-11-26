@@ -66,6 +66,8 @@ FRESH = [
     dict(key='stale:usk', br='deriv-research', path='deriv/us/out/dash.json', label='미국·한국 연동 자료(웹판 10절)', rule='age', max_h=40, repair=True),
     dict(key='stale:uswalls', br='main', path='uswalls/latest.json', label='미국 옵션 아침 추정(웹판 11절)', rule='us_am', repair=True),
     dict(key='stale:occwalls', br='main', path='uswalls/occ_latest.json', label='미국 옵션 공식 확정(웹판 11절)', rule='us_pm', repair=True),
+    # 2026-11-26 업그레이드 요청 U-1126-1: 방어종목 통합 명단 웹판(stocks-daily 가 매 거래일 갱신). 80시간 = 주말(금 저녁 → 월 저녁)을 넘기는 기준
+    dict(key='stale:stocks', br='main', path='docs/stocks/stocks.json', label='방어종목 통합 명단 웹판', rule='age', max_h=80, repair=True),
 ]
 
 
