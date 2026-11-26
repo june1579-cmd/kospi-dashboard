@@ -142,6 +142,11 @@ def run_pre(wait=0, deriv=None):
     if np.isnan(row['night'].iloc[0]): st.append('야간선물 값이 없어 간밤 미국·VIX로 대신 계산'); night_src = '없음'
     us_dates = [d for d in pd.read_csv(os.path.join(ROOT, 'fo', 'data', 'px.csv')).query("sym == 'spx'")['date'] if d >= last]
     if not us_dates and subprocess.run([sys.executable, 'fo/us_due.py'], cwd=ROOT).returncode == 0: st.append('간밤 미국 일봉을 받지 못함')
+    elif not us_dates: st.append('간밤 미국 장이 열리지 않음(휴장) — 간밤 S&P500·VIX 없이 계산')
+    # 빠진 입력은 모형이 학습 기간 중앙값으로 대신하므로 '정상'으로 두지 않고 적는다(2026-11-27 사용자 지적)
+    miss = [nm for c, nm in (('own', '전날 코스피200'), ('rv20', '20일 변동성'), ('park20', '20일 평균 하루 폭'), ('us_on', '간밤 S&P500'), ('vix_on', '간밤 VIX'))
+            if c in row and np.isnan(row[c].iloc[0])]
+    if miss: st.append('빠진 입력: ' + '·'.join(miss) + ' (과거 중앙값으로 대신)')
     lad = ladders(row, P, 'pre')
     g = lambda c: r1(row[c].iloc[0]) if c in row else None
     res = dict(kind='pre', label='08:30판', built=(datetime.now(timezone.utc).replace(tzinfo=None) + timedelta(hours=9)).strftime('%Y-%m-%d %H:%M KST'), for_date=for_date.isoformat(), base_date=last,

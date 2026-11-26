@@ -106,6 +106,7 @@ details{margin:8px 0}summary{cursor:pointer;color:var(--mut)}
     const items = rows.filter((r) => r.kind !== 'head' || b === '검증' || b === '적중표').map((r) => {
       let k = 'ok', why = '수집';
       if (empty(r.value) && r.need === 'n') { k = 'na'; why = '해당 없음(시가 전)'; }
+      else if (empty(r.value) && r.use === 'f' && !foreignUsed(b)) { k = 'na'; why = '값 없음·계산엔 안 씀'; }
       else if (empty(r.value)) { k = 'bad'; why = '수집 전'; }
       else if (stale) { k = 'bad'; why = b === '검증' ? '오래됨(8일 넘음)' : b === '적중표' ? `수집 전(${exp.slice(5)} 없음)` : `수집 전(${String(date).slice(5)} 값)`; }
       else if (fallback && /^오늘/.test(r.item)) { k = 'bad'; why = '수집 전(전날 값)'; }
