@@ -1,18 +1,18 @@
 {
- "generated_at": "2026-11-26 11:22",
+ "generated_at": "2026-11-26 11:30",
  "days": 7,
- "since": "2026-11-19 11:22",
+ "since": "2026-11-19 11:30",
  "repo": "june1579-cmd/kospi-dashboard",
  "summary": {
-  "workflows": 54,
-  "active": 48,
-  "runs": 766,
+  "workflows": 57,
+  "active": 50,
+  "runs": 769,
   "completed": 725,
   "success": 713,
   "success_rate": 98.3,
   "failures": 12,
   "run_minutes": 4010.4,
-  "flagged_workflows": 21,
+  "flagged_workflows": 20,
   "stale_data": 0
  },
  "systems": [
@@ -34,13 +34,13 @@
   {
    "id": "ai",
    "label": "AI 경고판",
-   "workflows": 2,
-   "runs": 39,
-   "completed": 39,
-   "success": 39,
+   "workflows": 3,
+   "runs": 44,
+   "completed": 44,
+   "success": 44,
    "success_rate": 100.0,
    "failures": 0,
-   "run_minutes": 25.8,
+   "run_minutes": 28.3,
    "flagged": [
     "ai-board"
    ],
@@ -146,14 +146,15 @@
   {
    "id": "ops",
    "label": "감시·수리·업그레이드",
-   "workflows": 1,
-   "runs": 14,
-   "completed": 14,
-   "success": 14,
+   "workflows": 5,
+   "runs": 318,
+   "completed": 278,
+   "success": 278,
    "success_rate": 100.0,
    "failures": 0,
-   "run_minutes": 10.9,
+   "run_minutes": 203.7,
    "flagged": [
+    "ops-notify",
     "watchdog"
    ],
    "stale": []
@@ -171,22 +172,6 @@
    "flagged": [
     "fpanic-yearly",
     "dart-keycheck"
-   ],
-   "stale": []
-  },
-  {
-   "id": "unmapped",
-   "label": "분류 안 됨",
-   "workflows": 2,
-   "runs": 306,
-   "completed": 269,
-   "success": 269,
-   "success_rate": 100.0,
-   "failures": 0,
-   "run_minutes": 195.3,
-   "flagged": [
-    "ai-feed",
-    "pages-build-deployment"
    ],
    "stale": []
   }
@@ -553,47 +538,6 @@
    ]
   },
   {
-   "name": "pages-build-deployment",
-   "path": "dynamic/pages/pages-build-deployment",
-   "on_main": false,
-   "triggers": [],
-   "crons": [],
-   "system": null,
-   "runs": 301,
-   "by_result": {
-    "success": 264,
-    "cancelled": 37
-   },
-   "completed": 264,
-   "success": 264,
-   "success_rate": 100.0,
-   "fail_streak": 0,
-   "reruns": 0,
-   "events": {
-    "dynamic": 301
-   },
-   "last": {
-    "at": "2026-11-26 10:02",
-    "result": "success",
-    "event": "dynamic",
-    "branch": "main",
-    "id": 45733021193
-   },
-   "last_success": "2026-11-26 10:03",
-   "last_failure": null,
-   "dur_median": 0.7,
-   "dur_p90": 0.8,
-   "dur_total": 192.8,
-   "dur_recent_median": 0.7,
-   "dur_older_median": 0.7,
-   "branches": {
-    "main": 301
-   },
-   "flags": [
-    "분류 안 됨(ops/systems.json)"
-   ]
-  },
-  {
    "name": "dashboard-update",
    "path": ".github/workflows/update.yml",
    "on_main": true,
@@ -648,9 +592,9 @@
     "main": 61
    },
    "schedule": {
-    "expected": 44,
+    "expected": 45,
     "actual": 45,
-    "coverage": 102.3,
+    "coverage": 100.0,
     "delay_median": 254.4,
     "delay_max": 582.5,
     "delay_over60": 35,
@@ -885,47 +829,6 @@
    },
    "flags": [
     "오래 걸림(p90 166.9분)"
-   ]
-  },
-  {
-   "name": "ai-feed",
-   "path": ".github/workflows/ai-feed.yml",
-   "on_main": false,
-   "triggers": [],
-   "crons": [],
-   "system": null,
-   "runs": 5,
-   "by_result": {
-    "success": 5
-   },
-   "completed": 5,
-   "success": 5,
-   "success_rate": 100.0,
-   "fail_streak": 0,
-   "reruns": 0,
-   "events": {
-    "schedule": 3,
-    "workflow_dispatch": 2
-   },
-   "last": {
-    "at": "2026-11-23 10:58",
-    "result": "success",
-    "event": "schedule",
-    "branch": "main",
-    "id": 45097519313
-   },
-   "last_success": "2026-11-23 10:59",
-   "last_failure": null,
-   "dur_median": 0.5,
-   "dur_p90": 0.5,
-   "dur_total": 2.5,
-   "dur_recent_median": null,
-   "dur_older_median": 0.5,
-   "branches": {
-    "main": 5
-   },
-   "flags": [
-    "분류 안 됨(ops/systems.json)"
    ]
   },
   {
@@ -1199,6 +1102,37 @@
    ]
   },
   {
+   "name": "ops-notify",
+   "path": ".github/workflows/ops-notify.yml",
+   "on_main": true,
+   "triggers": [
+    "push",
+    "workflow_dispatch"
+   ],
+   "crons": [],
+   "system": "ops",
+   "runs": 0,
+   "by_result": {},
+   "completed": 0,
+   "success": 0,
+   "success_rate": null,
+   "fail_streak": 0,
+   "reruns": 0,
+   "events": {},
+   "last": null,
+   "last_success": null,
+   "last_failure": null,
+   "dur_median": null,
+   "dur_p90": null,
+   "dur_total": 0,
+   "dur_recent_median": null,
+   "dur_older_median": null,
+   "branches": {},
+   "flags": [
+    "7일 동안 실행 없음"
+   ]
+  },
+  {
    "name": "pc-watchdog",
    "path": ".github/workflows/pc-watchdog.yml",
    "on_main": true,
@@ -1240,6 +1174,46 @@
    "flags": [
     "예약이 있는데 실행 없음"
    ]
+  },
+  {
+   "name": "pages-build-deployment",
+   "path": "dynamic/pages/pages-build-deployment",
+   "on_main": false,
+   "triggers": [],
+   "crons": [],
+   "system": "ops",
+   "runs": 302,
+   "by_result": {
+    "in_progress": 1,
+    "success": 264,
+    "cancelled": 37
+   },
+   "completed": 264,
+   "success": 264,
+   "success_rate": 100.0,
+   "fail_streak": 0,
+   "reruns": 0,
+   "events": {
+    "dynamic": 302
+   },
+   "last": {
+    "at": "2026-11-26 11:30",
+    "result": "in_progress",
+    "event": "dynamic",
+    "branch": "main",
+    "id": 45742837276
+   },
+   "last_success": "2026-11-26 10:03",
+   "last_failure": null,
+   "dur_median": 0.7,
+   "dur_p90": 0.8,
+   "dur_total": 192.8,
+   "dur_recent_median": 0.7,
+   "dur_older_median": 0.7,
+   "branches": {
+    "main": 302
+   },
+   "flags": []
   },
   {
    "name": "deriv-lab",
@@ -1485,6 +1459,45 @@
    "dur_older_median": null,
    "branches": {
     "main": 8
+   },
+   "flags": []
+  },
+  {
+   "name": "ai-feed",
+   "path": ".github/workflows/ai-feed.yml",
+   "on_main": false,
+   "triggers": [],
+   "crons": [],
+   "system": "ai",
+   "runs": 5,
+   "by_result": {
+    "success": 5
+   },
+   "completed": 5,
+   "success": 5,
+   "success_rate": 100.0,
+   "fail_streak": 0,
+   "reruns": 0,
+   "events": {
+    "schedule": 3,
+    "workflow_dispatch": 2
+   },
+   "last": {
+    "at": "2026-11-23 10:58",
+    "result": "success",
+    "event": "schedule",
+    "branch": "main",
+    "id": 45097519313
+   },
+   "last_success": "2026-11-23 10:59",
+   "last_failure": null,
+   "dur_median": 0.5,
+   "dur_p90": 0.5,
+   "dur_total": 2.5,
+   "dur_recent_median": null,
+   "dur_older_median": 0.5,
+   "branches": {
+    "main": 5
    },
    "flags": []
   },
@@ -2282,6 +2295,101 @@
    "flags": []
   },
   {
+   "name": "ops-audit",
+   "path": ".github/workflows/ops-audit.yml",
+   "on_main": true,
+   "triggers": [
+    "schedule",
+    "push",
+    "workflow_dispatch"
+   ],
+   "crons": [
+    "17 22 * * *"
+   ],
+   "system": "ops",
+   "runs": 1,
+   "by_result": {
+    "in_progress": 1
+   },
+   "completed": 0,
+   "success": 0,
+   "success_rate": null,
+   "fail_streak": 0,
+   "reruns": 0,
+   "events": {
+    "push": 1
+   },
+   "last": {
+    "at": "2026-11-26 11:30",
+    "result": "in_progress",
+    "event": "push",
+    "branch": "main",
+    "id": 45742837938
+   },
+   "last_success": null,
+   "last_failure": null,
+   "dur_median": null,
+   "dur_p90": null,
+   "dur_total": 0,
+   "dur_recent_median": null,
+   "dur_older_median": null,
+   "branches": {
+    "main": 1
+   },
+   "schedule": {
+    "expected": 0,
+    "actual": 0,
+    "coverage": null,
+    "delay_median": null,
+    "delay_max": null,
+    "delay_over60": 0,
+    "min_gap": 1440.0,
+    "delay_note": null
+   },
+   "flags": []
+  },
+  {
+   "name": "ops-sync",
+   "path": ".github/workflows/ops-sync.yml",
+   "on_main": true,
+   "triggers": [
+    "push",
+    "workflow_dispatch"
+   ],
+   "crons": [],
+   "system": "ops",
+   "runs": 1,
+   "by_result": {
+    "in_progress": 1
+   },
+   "completed": 0,
+   "success": 0,
+   "success_rate": null,
+   "fail_streak": 0,
+   "reruns": 0,
+   "events": {
+    "push": 1
+   },
+   "last": {
+    "at": "2026-11-26 11:30",
+    "result": "in_progress",
+    "event": "push",
+    "branch": "main",
+    "id": 45742837941
+   },
+   "last_success": null,
+   "last_failure": null,
+   "dur_median": null,
+   "dur_p90": null,
+   "dur_total": 0,
+   "dur_recent_median": null,
+   "dur_older_median": null,
+   "branches": {
+    "main": 1
+   },
+   "flags": []
+  },
+  {
    "name": "probe",
    "path": ".github/workflows/probe.yml",
    "on_main": true,
@@ -2557,7 +2665,7 @@
    "br": "main",
    "path": "docs/meta.json",
    "last": "2026-11-26 08:26",
-   "age_h": 2.9,
+   "age_h": 3.1,
    "max_h": 30,
    "stale": false
   },
@@ -2567,7 +2675,7 @@
    "br": "main",
    "path": "state/kakao_sent.json",
    "last": "2026-11-26 08:26",
-   "age_h": 2.9,
+   "age_h": 3.1,
    "max_h": 30,
    "stale": false
   },
@@ -2577,7 +2685,7 @@
    "br": "main",
    "path": "ai_board/status.json",
    "last": "2026-11-26 08:27",
-   "age_h": 2.9,
+   "age_h": 3.1,
    "max_h": 30,
    "stale": false
   },
@@ -2587,7 +2695,7 @@
    "br": "main",
    "path": "docs/ai/data",
    "last": "2026-11-26 08:27",
-   "age_h": 2.9,
+   "age_h": 3.1,
    "max_h": 30,
    "stale": false
   },
@@ -2597,7 +2705,7 @@
    "br": "main",
    "path": "docs/fo/data",
    "last": "2026-11-26 08:31",
-   "age_h": 2.8,
+   "age_h": 3.0,
    "max_h": 40,
    "stale": false
   },
@@ -2607,7 +2715,7 @@
    "br": "main",
    "path": "uswalls/latest.json",
    "last": "2026-11-26 09:49",
-   "age_h": 1.5,
+   "age_h": 1.7,
    "max_h": 40,
    "stale": false
   },
@@ -2617,7 +2725,7 @@
    "br": "main",
    "path": "uswalls/occ_latest.json",
    "last": "2026-11-25 17:30",
-   "age_h": 17.9,
+   "age_h": 18.0,
    "max_h": 40,
    "stale": false
   },
@@ -2627,7 +2735,7 @@
    "br": "deriv-research",
    "path": "deriv/us/out/dash.json",
    "last": "2026-11-26 05:08",
-   "age_h": 6.2,
+   "age_h": 6.4,
    "max_h": 40,
    "stale": false
   },
@@ -2637,7 +2745,7 @@
    "br": "main",
    "path": "docs/lab/data",
    "last": "2026-11-24 14:37",
-   "age_h": 44.7,
+   "age_h": 44.9,
    "max_h": 72,
    "stale": false
   },
@@ -2647,7 +2755,7 @@
    "br": "deriv-research",
    "path": "deriv/data",
    "last": "2026-11-26 05:18",
-   "age_h": 6.1,
+   "age_h": 6.2,
    "max_h": 48,
    "stale": false
   },
@@ -2657,7 +2765,7 @@
    "br": "kofia-watch",
    "path": "(가지 끝)",
    "last": "2026-11-25 15:11",
-   "age_h": 20.2,
+   "age_h": 20.3,
    "max_h": 48,
    "stale": false
   },
@@ -2667,7 +2775,7 @@
    "br": "main",
    "path": "docs/stocks/stocks.json",
    "last": "2026-11-26 08:11",
-   "age_h": 3.2,
+   "age_h": 3.3,
    "max_h": 30,
    "stale": false
   },
@@ -2677,7 +2785,7 @@
    "br": "intraday-data",
    "path": "(가지 끝)",
    "last": "2026-11-25 16:14",
-   "age_h": 19.1,
+   "age_h": 19.3,
    "max_h": 48,
    "stale": false
   },
@@ -2687,7 +2795,7 @@
    "br": "liq-nowcast",
    "path": "(가지 끝)",
    "last": "2026-11-24 11:57",
-   "age_h": 47.4,
+   "age_h": 47.5,
    "max_h": 72,
    "stale": false
   }
@@ -2700,16 +2808,16 @@
    "msg": "비움: short-backfill (main)"
   },
   {
+   "name": "main",
+   "last": "2026-11-26 11:30",
+   "age_d": 0.0,
+   "msg": "업그레이드 에이전트: 운영 점검(GitHub 숫자 수집) · 대기열 → 수리 요청 연결 · 웹판 운영 점검 · 카톡"
+  },
+  {
    "name": "short-history",
    "last": "2026-11-26 10:23",
    "age_d": 0.0,
    "msg": "공매도 10년치 2026-11-26 10:23"
-  },
-  {
-   "name": "main",
-   "last": "2026-11-26 10:02",
-   "age_d": 0.1,
-   "msg": "공매도 2026 자료 2026-11-26 10:02"
   },
   {
    "name": "pub-watch",
@@ -2855,7 +2963,7 @@
    "ops": 0.1,
    "ai_board": 0.1
   },
-  "total_mb": 55.0,
+  "total_mb": 55.1,
   "pages_kb": {
    "docs/page.html": 248.5,
    "docs/index.html": 10.7,
@@ -2871,7 +2979,7 @@
   "repair_open": [],
   "repair_log_in_window": 3,
   "repair_log_total": 3,
-  "upgrade_queue": null,
+  "upgrade_queue": {},
   "claude_tasks": null
  },
  "errors": [],
