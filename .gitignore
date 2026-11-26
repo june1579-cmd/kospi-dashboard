@@ -2,4 +2,3 @@ data/public/
 data/collect/*.zip
 __pycache__/
 *.pyc
-ops/wake/dist/

@@ -1,5 +1,5 @@
 {
- "run": "2026-11-26 08:23",
+ "run": "2026-11-26 14:09",
  "tag": "0831",
  "kospi_last": "2026-11-25",
  "kofia_last": "2026-11-24",
@@ -16,12 +16,12 @@
  },
  "files": {
   "ai_feed": {
-   "sha256": "06f57d9b96431fba32c9aec8e3899a2aea0b20fbded8d4fb7c188a05ff282a0d",
+   "sha256": "f3759c071024858373b37ff753c3f1980d526caf5b1a78cac079dc8f13c08a81",
    "bytes": 2026,
    "last_date": "crwv_px"
   },
   "ai_feed_hist": {
-   "sha256": "88c6bd11ceecc8ee2fa45acdc447fdbb227188bd38855621286cc769603332b9",
+   "sha256": "84724c1d717666721c205257bff55d48ae3ab3616ac552cf6aa4e5486cea98c1",
    "bytes": 2187,
    "last_date": "2026-11-25"
   },
@@ -46,7 +46,7 @@
    "last_date": "2026-11-25"
   },
   "am_stats": {
-   "sha256": "b9f9e2556aa6e3765224689556b9e267bdc793b76b393ba3ed9073d178a76b1a",
+   "sha256": "75d90363c287f598d272d0407498d049764f46614b5c287fc575fa3f90fb263e",
    "bytes": 1263,
    "last_date": "기준일"
   },
@@ -146,7 +146,7 @@
    "last_date": "전체"
   },
   "health": {
-   "sha256": "04fcad67999f4a676c11040ba7cf2d10012581445fa1a97e2a531375f7058f7a",
+   "sha256": "5f17225973a3ded25dc626d7259dac767a53be7474d5b0e0d814ae23cb6adfeb",
    "bytes": 1995,
    "last_date": "web_cards"
   },
@@ -186,13 +186,13 @@
    "last_date": "2026-11"
   },
   "night_fut": {
-   "sha256": "a2ed313caba74664e0e9b3cf0628dd4ecb5ad61ac6beff39c2bad5537b5aaa48",
+   "sha256": "d4f5d3bc55b2f79708917934b142901c133cfd211e2922319bd1940aea664cf9",
    "bytes": 50703,
    "last_date": "2026-11-25"
   },
   "overnight": {
-   "sha256": "92e4471c3c416c5e6c9fa137a9b65c144e3e676ab09ce4576ed4bec5cce35eb4",
-   "bytes": 1173977,
+   "sha256": "816e1239f4a01f82fd3c1e3d99b98a6e3b5c92ff160f8acf05fe2e2850697c44",
+   "bytes": 1173978,
    "last_date": "2026-11-25"
   },
   "overnight_stats": {

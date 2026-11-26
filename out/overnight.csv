@@ -69,7 +69,7 @@ date,symbol,name,close,chg_pct,source
 2026-11-22,ES=F,S&P500 선물,7098.0,2.35,Yahoo Finance
 2026-11-23,ES=F,S&P500 선물,7254.5,2.2,Yahoo Finance
 2026-11-24,ES=F,S&P500 선물,7217.5,-0.51,Yahoo Finance
-2026-11-25,ES=F,S&P500 선물,7198.25,-0.27,Yahoo Finance
+2026-11-25,ES=F,S&P500 선물,7195.75,-0.3,Yahoo Finance
 2007-01-08,QQQ,나스닥100 ETF(QQQ),43.88,,Twelve Data
 2007-01-09,QQQ,나스닥100 ETF(QQQ),44.1,0.5,Twelve Data
 2007-01-10,QQQ,나스닥100 ETF(QQQ),44.62,1.18,Twelve Data
@@ -20087,7 +20087,7 @@ date,symbol,name,close,chg_pct,source
 2026-11-23,USD/KRW,원달러,1342.17,-0.29,Twelve Data
 2026-11-24,USD/KRW,원달러,1342.226,0.0,Twelve Data
 2026-11-25,USD/KRW,원달러,1344.0987,0.14,Twelve Data
-2026-11-26,USD/KRW,원달러,1343.7878,-0.02,Twelve Data
+2026-11-26,USD/KRW,원달러,1342.8351,-0.09,Twelve Data
 2026-08-20,^GSPC,S&P500,7641.1602,,Yahoo Finance
 2026-08-21,^GSPC,S&P500,7674.3701,0.43,Yahoo Finance
 2026-08-24,^GSPC,S&P500,7652.8599,-0.28,Yahoo Finance
@@ -20225,7 +20225,7 @@ date,symbol,name,close,chg_pct,source
 2026-11-20,^SOX,필라델피아 반도체,8408.5898,-10.73,Yahoo Finance
 2026-11-23,^SOX,필라델피아 반도체,9588.0498,14.03,Yahoo Finance
 2026-11-24,^SOX,필라델피아 반도체,8832.5,-7.88,Yahoo Finance
-2026-11-25,^SOX,필라델피아 반도체,8774.8623,-0.65,Yahoo Finance
+2026-11-25,^SOX,필라델피아 반도체,8774.8604,-0.65,Yahoo Finance
 2026-08-19,^VIX,VIX,14.89,,Yahoo Finance
 2026-08-20,^VIX,VIX,16.01,7.52,Yahoo Finance
 2026-08-21,^VIX,VIX,15.13,-5.5,Yahoo Finance
