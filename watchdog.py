@@ -46,6 +46,9 @@ RUNS = [
     # 2026-11-24: 미국 옵션 아침 추정(화~토 07:40 카톡)과 공개 시각 측정
     dict(key='run:uswalls', wf='us-walls.yml', br='main', label='미국 옵션 아침 추정(07:40 카톡)', need=1, grace_h=0, rerun=True, repair=True, event='schedule'),
     dict(key='run:occwalls', wf='occ-walls.yml', br='main', label='미국 옵션 공식 확정(OCC, 낮 카톡)', need=1, grace_h=0, rerun=True, repair=True, event='schedule'),
+    # 2026-11-26: 장중 도달 확률(08:30판)·장중 선물 수급 수집(09:10판 포함)
+    dict(key='run:reach', wf='reach.yml', br='main', label='장중 도달 확률(08:30판·검증)', need=1, grace_h=0, rerun=True, repair=True),
+    dict(key='run:flow', wf='intraday-flow.yml', br='main', label='장중 선물 수급 수집·09:10판', need=1, grace_h=0, rerun=False, repair=True, event='schedule', why='수집 시간대가 지나면 다시 돌려도 의미 없음'),
     dict(key='run:pubwatch', wf='pub-watch.yml', br='main', label='미국 옵션 공개 시각 측정', need=2, grace_h=0, rerun=False, repair=True, why='한 시간마다 도는 다음 실행이 재시도 역할'),
 ]
 # 자료 멈춤 감시: rule = age(max_h 시간 넘게 그대로면 멈춤) | trading_am(거래일 11:30 뒤인데 오늘 갱신 없음) | weekday_pm(평일 21:30 뒤인데 오늘 19시 뒤 갱신 없음)
@@ -59,6 +62,7 @@ FRESH = [
     # dict(key='stale:lab-a', br='deriv-research', path='deriv/lab/state/latest_status.json', label='연구소 갈래 A(총괄 세션)', rule='age', max_h=15, repair=False, hint='Claude 예약 세션이 돌지 않음(사용량 한도일 수 있음)'),
     # dict(key='stale:lab-b', br='deriv-research', path='deriv/lab/state_b/latest_status.json', label='연구소 갈래 B(총괄 세션)', rule='age', max_h=16, repair=False, hint='Claude 예약 세션이 돌지 않음(사용량 한도일 수 있음)'),
     # dict(key='stale:lab-d', br='deriv-research', path='deriv/lab/state_d/latest_status.json', label='연구소 갈래 D(총괄 세션)', rule='age', max_h=12, repair=False, hint='Claude 예약 세션이 돌지 않음(사용량 한도일 수 있음)'),
+    dict(key='stale:reach', br='main', path='docs/reach/data/pre.json', label='장중 도달 확률 08:30판', rule='trading_am', repair=True),
     dict(key='stale:usk', br='deriv-research', path='deriv/us/out/dash.json', label='미국·한국 연동 자료(웹판 10절)', rule='age', max_h=40, repair=True),
     dict(key='stale:uswalls', br='main', path='uswalls/latest.json', label='미국 옵션 아침 추정(웹판 11절)', rule='us_am', repair=True),
     dict(key='stale:occwalls', br='main', path='uswalls/occ_latest.json', label='미국 옵션 공식 확정(웹판 11절)', rule='us_pm', repair=True),

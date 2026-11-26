@@ -1,0 +1,120 @@
+# 오늘의 장중 도달 확률표 — pre(08:30판, 장 전) · post(09:10판, 시가와 장 초반 고가·저가 반영)(2026-11-26).
+# pre : python reach/live.py --pre [--wait 40]   (야간선물이 아직 안 들어왔으면 git pull 하며 기다림, 끝내 없으면 간밤 미국으로 대체하고 표시)
+# post: reach/flow.py 가 09:12:30 에 run_post(idx, fut) 호출 — KIS 실시간 시가·고가·저가 사용
+import argparse, json, os, subprocess, sys, time
+from datetime import date, datetime, timedelta, timezone
+import numpy as np, pandas as pd
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, ROOT)
+from reach.model import Dist, LEVELS, TARGETS, NAME, load
+
+OUT = os.path.join(ROOT, 'docs', 'reach', 'data')
+QS = (0.1, 0.5, 0.9)
+
+
+def holidays():
+    try: return set(json.load(open(os.path.join(ROOT, 'pkg', 'holidays_kr.json'), encoding='utf-8'))['holidays'])
+    except Exception: return set()
+
+
+def next_trading(d, hol):
+    d = d + timedelta(days=1)
+    while d.weekday() >= 5 or d.isoformat() in hol: d += timedelta(days=1)
+    return d
+
+
+def prev_trading(d, hol):
+    d = d - timedelta(days=1)
+    while d.weekday() >= 5 or d.isoformat() in hol: d -= timedelta(days=1)
+    return d
+
+
+def params():
+    return json.load(open(os.path.join(ROOT, 'reach', 'out', 'params.json')))
+
+
+def r1(v): return None if v is None or (isinstance(v, float) and np.isnan(v)) else round(float(v), 4)
+
+
+def ladders(row, P, time, cond=None):
+    """row: 한 줄 DataFrame. cond: {(inst,ref,side): 이미 찍은 값(%)} — 장 초반에 이미 닿은 칸은 100%, 그 위는 조건부 확률"""
+    out = {}
+    for inst, ref, side in TARGETS:
+        key = f'{time}_{inst}_{side}_{ref}'
+        if key not in P['models']: continue
+        m = Dist.from_params(P['models'][key]); p = m.ladder(row, side, LEVELS)[0]
+        mu, s = m.loc_scale(row); q = {str(qq): r1(mu[0] + s[0] * np.interp(qq, np.linspace(0.0005, 0.9995, 2000), m.z)) for qq in QS}
+        seen = (cond or {}).get((inst, ref, side))
+        if seen is not None and not np.isnan(seen):
+            x = seen if side == 'up' else -seen                       # 이미 닿은 폭(양수, 반대 방향이면 음수)
+            if x > 0:
+                p_seen = m.ladder(row, side, [x])[0][0]
+                p = np.where(LEVELS <= x + 1e-9, 1.0, np.minimum(1.0, p / max(p_seen, 1e-6)))
+        out[f'{inst}_{ref}_{side}'] = dict(p=[round(float(v) * 100, 1) for v in p], q=q, seen=r1(seen), foreign=P['models'][key].get('foreign', False))
+    return out
+
+
+def run_pre(wait=0, deriv=None):
+    hol = holidays(); deriv = deriv or os.path.join(ROOT, '_deriv', 'deriv', 'data')
+    today = (datetime.now(timezone.utc).replace(tzinfo=None) + timedelta(hours=9)).date()
+    for_date = today if (today.weekday() < 5 and today.isoformat() not in hol) else next_trading(today, hol)
+    t_exp = prev_trading(for_date, hol).isoformat()
+    t0 = time.time()
+    while True:
+        D = load(deriv); last = D.index[-1]
+        night_ok = last == t_exp and not np.isnan(D['night'].iloc[-1])
+        if night_ok or time.time() - t0 > wait * 60: break
+        print(f'야간선물·전날 자료 기다림 (마지막 {last}, 야간 {D["night"].iloc[-1]})', flush=True); time.sleep(120)
+        subprocess.run(['git', 'pull', '-q', '--rebase'], cwd=ROOT)
+    if last >= for_date.isoformat():                                   # 장 마감 뒤 손으로 돌린 경우: 다음 거래일 것
+        for_date = next_trading(date.fromisoformat(last), hol); t_exp = last
+    P = params(); row = D.iloc[[-1]].copy(); st = []
+    if last != t_exp: st.append(f'전날({t_exp}) 자료가 아직 없어 {last} 자료로 계산')
+    if np.isnan(row['night'].iloc[0]): st.append('야간선물 값이 없어 간밤 미국·VIX로 대신 계산')
+    lad = ladders(row, P, 'pre')
+    g = lambda c: r1(row[c].iloc[0]) if c in row else None
+    res = dict(kind='pre', label='08:30판', built=(datetime.now(timezone.utc).replace(tzinfo=None) + timedelta(hours=9)).strftime('%Y-%m-%d %H:%M KST'), for_date=for_date.isoformat(), base_date=last,
+               status=st, levels=[float(x) for x in LEVELS],
+               ref_price={'S_c': g('c'), 'F_c': g('fc'), 'S_o': None, 'F_o': None},
+               inputs={'야간선물(%)': g('night'), '간밤 S&P500(%)': g('us_on'), '간밤 VIX 변화(%)': g('vix_on'), '전날 코스피200(%)': g('own'), '20일 변동성(%)': g('rv20'),
+                       '20일 평균 하루 폭(%)': g('park20'), '외국인 전날 순매수(평소 대비)': g('f1'), '외국인 야간 순매수(평소 대비)': g('n1')},
+               features={c: g(c) for c in ('night', 'us_on', 'vix_on', 'own', 'rv20', 'park20', 'fpark20', 'f1', 'pnl1', 'n1', 'c', 'fc')}, ladders=lad, params_fitted=P.get('fitted'))
+    os.makedirs(OUT, exist_ok=True); json.dump(res, open(os.path.join(OUT, 'pre.json'), 'w', encoding='utf-8'), ensure_ascii=False)
+    print('08:30판 저장', for_date, '· 상태', st or '정상', flush=True)
+    for kk in ('S_c_up', 'S_c_dn'):
+        v = lad.get(kk)
+        if v: print(' ', kk, '1%', v['p'][9], '2%', v['p'][19], '3%', v['p'][29], flush=True)
+    return res
+
+
+def run_post(idx, fut, fut_code=None, asof=None):
+    pre = json.load(open(os.path.join(OUT, 'pre.json'), encoding='utf-8')); P = params()
+    today = (datetime.now(timezone.utc).replace(tzinfo=None) + timedelta(hours=9)).date().isoformat(); st = []
+    if pre.get('for_date') != today: st.append(f"08:30판이 오늘 것이 아님({pre.get('for_date')}) — 그 입력으로 계산")
+    f = pre['features']; row = pd.DataFrame([f])
+    row['night'] = f.get('night'); s_prev = (idx or {}).get('prev') or f.get('c'); f_prev = (fut or {}).get('prev') or f.get('fc')
+    pct = lambda a, b: 100 * (a / b - 1) if (a is not None and b) else np.nan
+    so, sh, sl = (idx or {}).get('open'), (idx or {}).get('high'), (idx or {}).get('low')
+    fo, fh, fl = (fut or {}).get('open'), (fut or {}).get('high'), (fut or {}).get('low')
+    row['S_gap'] = pct(so, s_prev); row['F_gap'] = pct(fo, f_prev)
+    if np.isnan(row['S_gap'].iloc[0]): st.append('현물 시가를 받지 못함')
+    if np.isnan(row['F_gap'].iloc[0]): st.append('선물 시가를 받지 못함')
+    cond = {('S', 'c', 'up'): pct(sh, s_prev), ('S', 'c', 'dn'): pct(sl, s_prev), ('S', 'o', 'up'): pct(sh, so), ('S', 'o', 'dn'): pct(sl, so),
+            ('F', 'c', 'up'): pct(fh, f_prev), ('F', 'c', 'dn'): pct(fl, f_prev), ('F', 'o', 'up'): pct(fh, fo), ('F', 'o', 'dn'): pct(fl, fo)}
+    lad = ladders(row, P, 'post', cond)
+    res = dict(kind='post', label='09:10판', built=(datetime.now(timezone.utc).replace(tzinfo=None) + timedelta(hours=9)).strftime('%Y-%m-%d %H:%M KST'), asof=asof, for_date=today, status=st,
+               levels=[float(x) for x in LEVELS], fut_code=fut_code,
+               ref_price={'S_c': r1(s_prev), 'F_c': r1(f_prev), 'S_o': r1(so), 'F_o': r1(fo)},
+               observed={'현물 시가': r1(so), '현물 고가(지금까지)': r1(sh), '현물 저가(지금까지)': r1(sl), '선물 시가(08:45)': r1(fo), '선물 고가(지금까지)': r1(fh), '선물 저가(지금까지)': r1(fl),
+                         '현물 갭(%)': r1(row['S_gap'].iloc[0]), '선물 갭(%)': r1(row['F_gap'].iloc[0])},
+               ladders=lad, params_fitted=P.get('fitted'))
+    json.dump(res, open(os.path.join(OUT, 'post.json'), 'w', encoding='utf-8'), ensure_ascii=False)
+    print('09:10판 저장', today, '· 상태', st or '정상', flush=True)
+    return res
+
+
+if __name__ == '__main__':
+    ap = argparse.ArgumentParser(); ap.add_argument('--pre', action='store_true'); ap.add_argument('--wait', type=float, default=0); ap.add_argument('--deriv', default=None)
+    a = ap.parse_args()
+    if a.pre: run_pre(a.wait, a.deriv)

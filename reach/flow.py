@@ -39,12 +39,12 @@ def commit(cwd, paths, msg, branch):
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--part", default="auto"); ap.add_argument("--out", default="_flow"); ap.add_argument("--interval", type=float, default=5)
-    ap.add_argument("--test-min", type=float, default=3); a = ap.parse_args()
+    ap.add_argument("--test-min", type=float, default=3); ap.add_argument("--post-now", action="store_true"); a = ap.parse_args()
     t = now(); part = a.part
     if part == "auto": part = "am" if t.hour < 11 or (t.hour == 11 and t.minute < 50) else "pm"
     if part != "test" and not trading_day(t.date()):
         print("휴장일 — 수집 안 함"); return
-    k = KIS(gap=0.3)
+    k = KIS(gap=0.45)
     if not k.ok(): print("KIS 키 없음"); return
     code, ym = front_code(t.date())
     win = {"am": ("08:40", "12:10"), "pm": ("12:10", "15:50"), "test": (t.strftime("%H:%M"), (t + timedelta(minutes=a.test_min)).strftime("%H:%M"))}[part]
@@ -69,7 +69,7 @@ def main():
     try: meta = json.load(open(meta_p, encoding="utf-8"))
     except Exception: meta = {}
     meta[day + "_" + part] = {"flow_code": "/".join(flow_code) if flow_code else None, "fut_code": code, "probe": {kk: {x: v.get(x) for x in ("_msg", "_n", "frgn_ntby_qty")} for kk, v in probe.items()}}
-    post_done = part != "am"; last_commit = time.time(); n = 0; last_fut = last_idx = None
+    post_done = not (part == "am" or a.post_now); last_commit = time.time(); n = 0; last_fut = last_idx = None
     while now() < end:
         tick = time.time(); tn = now()
         if tn.replace(hour=9, minute=6, second=0) <= tn < tn.replace(hour=9, minute=12, second=0) and part != "test":
@@ -80,9 +80,10 @@ def main():
         if i.get("ok"): last_idx = i
         w.writerow([tn.strftime("%H:%M:%S"), part, code, f.get("cur"), f.get("open"), f.get("high"), f.get("low"), i.get("cur"), i.get("open"), i.get("high"), i.get("low")] + [fl.get(x) for x in FLOW_KEYS]); n += 1
         if n == 1: print("첫 행:", {"fut": f.get("cur"), "fut_open": f.get("open"), "k200": i.get("cur"), "k200_open": i.get("open"), "frgn": fl.get("frgn_ntby_qty"), "fut_msg": f.get("msg"), "idx_msg": i.get("msg"), "fut_fields": f.get("fields", [])[:25]}, flush=True)
-        if not post_done and tn >= tn.replace(hour=9, minute=12, second=30):
+        if not post_done and (tn >= tn.replace(hour=9, minute=12, second=30) or a.post_now) and n >= 2:
             fh.flush()
             try:
+                git(ROOT, "pull", "-q", "--rebase", "origin", "main")      # 08:30판(pre.json)·학습값을 최신으로
                 from reach import live
                 live.run_post(idx=last_idx, fut=last_fut, fut_code=code, asof=tn.strftime("%Y-%m-%d %H:%M"))
                 commit(ROOT, ["docs/reach/data"], f"장중 도달 확률 09:10판 {tn:%Y-%m-%d %H:%M}", "main")

@@ -13,6 +13,7 @@ on:
     inputs:
       part: {description: 'am / pm / test', default: 'test'}
       test_min: {description: 'test 일 때 몇 분', default: '3'}
+      post_now: {description: 'test 때 09:10판 계산도 바로 해 보기(yes/no)', default: 'no'}
 permissions:
   contents: write
 concurrency:
@@ -39,7 +40,7 @@ jobs:
         run: |
           git config --global user.name "dashboard-bot"; git config --global user.email "dashboard-bot@users.noreply.github.com"
           P="${{ (github.event.schedule == '20 23 * * 0-4' || github.event.schedule == '45 23 * * 0-4') && 'am' || ((github.event.schedule == '35 2 * * 1-5' || github.event.schedule == '58 2 * * 1-5') && 'pm' || github.event.inputs.part) }}"
-          python reach/flow.py --part "$P" --out _flow --test-min "${{ github.event.inputs.test_min || '3' }}"
+          python reach/flow.py --part "$P" --out _flow --test-min "${{ github.event.inputs.test_min || '3' }}" $([ "${{ github.event.inputs.post_now }}" = "yes" ] && echo --post-now)
       - name: 시험 결과 보기
         if: ${{ github.event.inputs.part == 'test' }}
         run: |
