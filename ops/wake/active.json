@@ -1,0 +1,4 @@
+{
+ "active": false,
+ "note": "깨우기 장치(Cloudflare Worker)가 배포되면 wake-deploy 워크플로가 true 로 바꾼다. false 면 guard.py 와 감시의 깨우기 점검이 아무것도 하지 않는다."
+}

@@ -144,7 +144,10 @@ def analyze_runs(runs, files, sysmap, api):
                     g = min((b - a).total_seconds() / 60 for a, b in zip(d, d[1:])) if len(d) > 1 else None
                     if g is not None: gap = g if gap is None else min(gap, g)
                 except Exception as ex: ERRS.append(f'예약 식 해석 실패 {name} {e}: {ex}')
-            sch = [r for r in rs if r['event'] == 'schedule']
+            # 2026-11-26: 깨우기 장치(ops/wake)가 부른 실행(이름에 '깨우기')도 예약 실행으로 센다. 늦게 와서 스스로 취소한 예약 실행(중복)은 빼고 따로 센다
+            wake = [r for r in rs if r['event'] == 'workflow_dispatch' and '깨우기' in (r.get('display_title') or '')]
+            dup = [r for r in rs if r['event'] == 'schedule' and r.get('conclusion') == 'cancelled' and wake]
+            sch = [r for r in rs if r['event'] == 'schedule' and r not in dup] + wake
             delays = []
             for r in sch:
                 c = t(r['created_at']); lt = last_tick(w['crons'], c)
@@ -152,7 +155,7 @@ def analyze_runs(runs, files, sysmap, api):
             w['schedule'] = dict(expected=len(ticks), actual=len(sch), coverage=pct(len(sch), len(ticks)) if ticks else None,
                                  delay_median=round(statistics.median(delays), 1) if delays else None,
                                  delay_max=max(delays) if delays else None,
-                                 delay_over60=sum(1 for d in delays if d >= 60), min_gap=gap,
+                                 delay_over60=sum(1 for d in delays if d >= 60), min_gap=gap, woken=len(wake), dup_cancelled=len(dup),
                                  delay_note='예약 간격이 짧아 지연은 간격보다 작게만 보임(지킴률을 볼 것)' if gap is not None and gap < 120 else None)
         flags = []
         if streak >= 2: flags.append(f'연속 실패 {streak}번')
@@ -254,7 +257,7 @@ def main():
     since = SINCE.strftime('%Y-%m-%dT%H:%M:%SZ')
     try:
         runs = gh_lines(f'repos/{REPO}/actions/runs?per_page=100&created=>={since}',
-                        '.workflow_runs[] | {id,name,path,head_branch,event,status,conclusion,created_at,run_started_at,updated_at,run_attempt}')
+                        '.workflow_runs[] | {id,name,path,head_branch,event,status,conclusion,created_at,run_started_at,updated_at,run_attempt,display_title}')
     except Exception as ex:
         ERRS.append(f'실행 목록 실패: {str(ex)[:150]}'); runs = []
     # 기본 가지 파일에 없고 기간 안 실행도 없는 워크플로(다른 가지에만 있는 것 포함)도 목록에 넣는다

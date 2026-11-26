@@ -2,11 +2,13 @@
 # 반영되면 SPY·QQQ·SPX 공식 콜벽·풋벽을 계산해 07:40 아침 추정과 비교한 글을 카카오톡으로 보낸다(2026-11-24). Claude 를 쓰지 않는다.
 # 실패하면 실패 알림을 보내고, watchdog 이 다시 돌리며, 안 풀리면 수리 에이전트가 고친다.
 name: occ-walls
+run-name: ${{ github.event.inputs.slot && format('{0} · 깨우기', github.workflow) || github.workflow }}
 on:
   schedule:
     - cron: '13 0 * * 2-6'    # 09:13 KST 화~토
   workflow_dispatch:
     inputs:
+      slot: {description: '깨우기 장치(ops/wake)가 넣는 예약 식 — 손으로 돌릴 때는 비워 둠', default: ''}
       test:
         description: '시험(true 면 기록을 남기지 않고 글 앞에 시험)'
         default: 'false'
@@ -17,6 +19,7 @@ on:
         description: 'OCC 반영을 기다릴 최대 분'
         default: '330'
 permissions:
+  actions: write
   contents: write
 concurrency:
   group: occ-walls
@@ -31,6 +34,11 @@ jobs:
       status: ${{ steps.c.outputs.status }}
     steps:
       - uses: actions/checkout@v4
+      - name: 깨우기 중복 확인(늦게 온 예약 실행이면 스스로 취소 — ops/wake, 2026-11-26)
+        if: ${{ github.event_name == 'schedule' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: curl -fsSL "https://raw.githubusercontent.com/${{ github.repository }}/main/ops/wake/guard.py" -o "$RUNNER_TEMP/wake_guard.py" && python3 "$RUNNER_TEMP/wake_guard.py" || true
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
       - run: pip install -q pandas numpy scipy yfinance requests

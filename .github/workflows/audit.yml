@@ -3,11 +3,15 @@
 #  lists  : validation 가지의 validate.py(급락 구간 고점일마다 그날까지 자료로 명단 다시 만들기) + random_check.py(무작위 명단 비교) → report/list_audit.md
 #  notify : 결과가 지난번과 달라졌을 때만 카카오톡
 name: audit
+run-name: ${{ github.event.inputs.slot && format('{0} · 깨우기', github.workflow) || github.workflow }}
 on:
   schedule:
     - cron: '13 18 * * 6'    # 일요일 03:13 KST
   workflow_dispatch:
+    inputs:
+      slot: {description: '깨우기 장치(ops/wake)가 넣는 예약 식 — 손으로 돌릴 때는 비워 둠', default: ''}
 permissions:
+  actions: write
   contents: write
 concurrency:
   group: audit
@@ -18,6 +22,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with: {fetch-depth: 0}
+      - name: 깨우기 중복 확인(늦게 온 예약 실행이면 스스로 취소 — ops/wake, 2026-11-26)
+        if: ${{ github.event_name == 'schedule' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: curl -fsSL "https://raw.githubusercontent.com/${{ github.repository }}/main/ops/wake/guard.py" -o "$RUNNER_TEMP/wake_guard.py" && python3 "$RUNNER_TEMP/wake_guard.py" || true
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
       - run: pip install -q -r requirements.txt

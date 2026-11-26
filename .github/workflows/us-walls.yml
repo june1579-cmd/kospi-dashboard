@@ -4,11 +4,13 @@
 #  실패하면 watchdog(한 시간마다)이 실패한 작업만 다시 돌리고, 그래도 안 되면 수리 요청 → 수리 에이전트(Claude 예약 작업)가 고친다.
 # 손으로 돌리기: Actions → us-walls → Run workflow (test=true 면 글 앞에 '시험', wait=true 면 07:40 까지 기다림)
 name: us-walls
+run-name: ${{ github.event.inputs.slot && format('{0} · 깨우기', github.workflow) || github.workflow }}
 on:
   schedule:
     - cron: '47 21 * * 1-5'   # 06:47 KST 화~토 (뉴욕 16:47 — 장 마감 뒤 거래량 확정)
   workflow_dispatch:
     inputs:
+      slot: {description: '깨우기 장치(ops/wake)가 넣는 예약 식 — 손으로 돌릴 때는 비워 둠', default: ''}
       test:
         description: '시험 발송(true / false)'
         default: 'true'
@@ -16,6 +18,7 @@ on:
         description: '07:40 KST 까지 기다렸다 보내기(true / false)'
         default: 'false'
 permissions:
+  actions: write
   contents: write
 concurrency:
   group: us-walls
@@ -29,6 +32,11 @@ jobs:
       err: ${{ steps.r.outputs.err }}
     steps:
       - uses: actions/checkout@v4
+      - name: 깨우기 중복 확인(늦게 온 예약 실행이면 스스로 취소 — ops/wake, 2026-11-26)
+        if: ${{ github.event_name == 'schedule' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: curl -fsSL "https://raw.githubusercontent.com/${{ github.repository }}/main/ops/wake/guard.py" -o "$RUNNER_TEMP/wake_guard.py" && python3 "$RUNNER_TEMP/wake_guard.py" || true
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -36,7 +44,7 @@ jobs:
       - name: 수집·계산(실패하면 2분 간격 3번까지)
         id: calc
         env:
-          USW_TEST: ${{ github.event.inputs.test == 'true' && '1' || '0' }}
+          USW_TEST: ${{ (github.event.inputs.test == 'true' && !github.event.inputs.slot) && '1' || '0' }}   # 깨우기(slot)는 예약과 같게: 시험 아님
         run: |
           for i in 1 2 3; do
             [ $i = 3 ] && export USW_LAST=1
@@ -51,7 +59,7 @@ jobs:
           git commit -q -m "미국 옵션 아침 추정 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')" || { echo "변경 없음"; exit 0; }
           for i in 1 2 3 4; do git pull -q --rebase && git push -q && exit 0; sleep 10; done; exit 1
       - name: 07:40 KST 까지 기다리기
-        if: ${{ success() && (github.event_name == 'schedule' || github.event.inputs.wait == 'true') }}
+        if: ${{ success() && (github.event_name == 'schedule' || github.event.inputs.slot || github.event.inputs.wait == 'true') }}
         run: |
           python3 - <<'EOF'
           import datetime as dt, time
@@ -95,7 +103,7 @@ jobs:
               *) STEP="작업 시작 전/기타";;
             esac
             T=""; NEXT="GitHub 감시가 한 시간 안에 다시 돌리고, 안 풀리면 수리 에이전트가 고칩니다"
-            [ "${{ github.event.inputs.test }}" = "true" ] && { T=" 시험"; NEXT="시험 실행이라 다시 돌리지 않습니다"; }
+            [ "${{ (github.event.inputs.test == 'true' && !github.event.inputs.slot) && 'true' || 'false' }}" = "true" ] && { T=" 시험"; NEXT="시험 실행이라 다시 돌리지 않습니다"; }
             ERR="${{ needs.calc.outputs.err }}"; [ -n "$ERR" ] && ERR=" · 원인: $ERR"
             printf '[미국옵션 07:40 실패%s] %s · 멈춘 단계: %s%s · 실행 %s · %s\n' "$T" "$(TZ=Asia/Seoul date '+%m/%d %H:%M')" "$STEP" "$ERR" "${{ github.run_id }}" "$NEXT" > /tmp/msg.txt
           fi

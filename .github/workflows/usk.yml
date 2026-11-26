@@ -1,4 +1,5 @@
 name: usk
+run-name: ${{ github.event.inputs.slot && format('{0} · 깨우기', github.workflow) || github.workflow }}
 # 미국·한국 선물옵션 연동 연구(2026-11-22) — 미국 공개 자료 수집 → 지표 → 연구소 기준 검증 → 대시보드 자료. KRX 로그인 없음(저장소의 한국 자료만 읽음).
 # 기본 가지(main)의 이 파일은 GitHub 일정으로 스스로 돈다(2026-11-23 — Claude 예약 갱신을 대신함). deriv-research 가지의 같은 파일은 deriv/us/trigger.txt 를 push 하면 돈다. 첫 줄: 단계(collect / study / all), 둘째 줄: 수집 항목(빈칸이면 전부).
 on:
@@ -6,7 +7,10 @@ on:
     - cron: '17 22 * * 1-5'   # 화~토 07:17 KST — 미국 장 마감 뒤, 한국 개장 전
     - cron: '27 10 * * 1-5'   # 월~금 19:27 KST — KRX 당일 확정치 수집(19:17) 뒤
   workflow_dispatch:
+    inputs:
+      slot: {description: '깨우기 장치(ops/wake)가 넣는 예약 식 — 손으로 돌릴 때는 비워 둠', default: ''}
 permissions:
+  actions: write
   contents: write
 concurrency:
   group: usk
@@ -18,6 +22,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with: {ref: deriv-research}
+      - name: 깨우기 중복 확인(늦게 온 예약 실행이면 스스로 취소 — ops/wake, 2026-11-26)
+        if: ${{ github.event_name == 'schedule' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: curl -fsSL "https://raw.githubusercontent.com/${{ github.repository }}/main/ops/wake/guard.py" -o "$RUNNER_TEMP/wake_guard.py" && python3 "$RUNNER_TEMP/wake_guard.py" || true
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
       - run: pip install -q pandas numpy scipy scikit-learn yfinance requests
@@ -25,7 +34,7 @@ jobs:
         id: t
         run: |
           S=$(sed -n 1p deriv/us/trigger.txt | tr -d '\r'); A=$(sed -n 2p deriv/us/trigger.txt | tr -d '\r')
-          if [ "${{ github.event_name }}" = "schedule" ]; then S=all; A=""; fi
+          if [ "${{ (github.event_name == 'schedule' || github.event.inputs.slot) && 'schedule' || github.event_name }}" = "schedule" ]; then S=all; A=""; fi   # 깨우기(slot)도 예약과 같게
           echo "stage=${S:-all}" >> $GITHUB_OUTPUT; echo "args=$A" >> $GITHUB_OUTPUT
       - name: 수집
         if: steps.t.outputs.stage != 'study'

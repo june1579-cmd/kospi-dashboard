@@ -3,6 +3,7 @@
 #  부르는 길: ① 매일 07:17 KST 예약(예비) ② 업그레이드 에이전트가 ops/trigger.txt 를 고쳐 push(첫 줄 = 기간 일수, 비우면 7) ③ 손으로 실행
 #  KRX 로그인·카카오톡·비밀값 없음. GitHub 가 준 실행 토큰으로 Actions 기록만 읽는다.
 name: ops-audit
+run-name: ${{ github.event.inputs.slot && format('{0} · 깨우기', github.workflow) || github.workflow }}
 on:
   schedule:
     - cron: '17 22 * * *'    # 07:17 KST
@@ -11,12 +12,13 @@ on:
     paths: ['ops/trigger.txt']
   workflow_dispatch:
     inputs:
+      slot: {description: '깨우기 장치(ops/wake)가 넣는 예약 식 — 손으로 돌릴 때는 비워 둠', default: ''}
       days:
         description: '기간(일)'
         default: '7'
 permissions:
   contents: write
-  actions: read
+  actions: write
 concurrency:
   group: ops-audit
 jobs:
@@ -26,6 +28,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with: {ref: main}
+      - name: 깨우기 중복 확인(늦게 온 예약 실행이면 스스로 취소 — ops/wake, 2026-11-26)
+        if: ${{ github.event_name == 'schedule' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: curl -fsSL "https://raw.githubusercontent.com/${{ github.repository }}/main/ops/wake/guard.py" -o "$RUNNER_TEMP/wake_guard.py" && python3 "$RUNNER_TEMP/wake_guard.py" || true
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
       - run: pip install -q croniter pyyaml

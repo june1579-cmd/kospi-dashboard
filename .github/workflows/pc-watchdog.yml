@@ -1,19 +1,27 @@
 # PC 분봉 수집기 감시 (2026-11-25, 사용자 요청). 매일 07:05 KST — 수집이 시작된 뒤 26시간 넘게 PC 알림이 없으면 카카오톡.
 # 수집 완료(done) 알림이 온 뒤에는 아무것도 하지 않는다. KIS 를 부르지 않는다.
 name: pc-watchdog
+run-name: ${{ github.event.inputs.slot && format('{0} · 깨우기', github.workflow) || github.workflow }}
 on:
   schedule:
     - cron: '5 22 * * *'    # 07:05 KST
   workflow_dispatch:
+    inputs:
+      slot: {description: '깨우기 장치(ops/wake)가 넣는 예약 식 — 손으로 돌릴 때는 비워 둠', default: ''}
 permissions:
   contents: write
-  actions: read
+  actions: write
 jobs:
   watch:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
+      - name: 깨우기 중복 확인(늦게 온 예약 실행이면 스스로 취소 — ops/wake, 2026-11-26)
+        if: ${{ github.event_name == 'schedule' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: curl -fsSL "https://raw.githubusercontent.com/${{ github.repository }}/main/ops/wake/guard.py" -o "$RUNNER_TEMP/wake_guard.py" && python3 "$RUNNER_TEMP/wake_guard.py" || true
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
       - run: pip install -q requests cryptography

@@ -2,11 +2,15 @@
 # 매일 09:07 KST. 한 단계에서 거절이 30%를 넘으면 그 위는 돌리지 않는다. PC 분봉 수집기는 09:05~09:15 에 쉬어 측정과 겹치지 않게 한다.
 # 수집·자료·웹판은 건드리지 않는다.
 name: kis-rate-recheck
+run-name: ${{ github.event.inputs.slot && format('{0} · 깨우기', github.workflow) || github.workflow }}
 on:
   schedule:
     - cron: '7 0 * * *'   # 매일 09:07 KST
   workflow_dispatch:
+    inputs:
+      slot: {description: '깨우기 장치(ops/wake)가 넣는 예약 식 — 손으로 돌릴 때는 비워 둠', default: ''}
 permissions:
+  actions: write
   contents: write
 concurrency:
   group: kis-api
@@ -17,6 +21,11 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+      - name: 깨우기 중복 확인(늦게 온 예약 실행이면 스스로 취소 — ops/wake, 2026-11-26)
+        if: ${{ github.event_name == 'schedule' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: curl -fsSL "https://raw.githubusercontent.com/${{ github.repository }}/main/ops/wake/guard.py" -o "$RUNNER_TEMP/wake_guard.py" && python3 "$RUNNER_TEMP/wake_guard.py" || true
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
       - run: pip install -q requests cryptography

@@ -2,6 +2,7 @@
 #  check : watchdog.py — 워크플로 실패·자료 멈춤을 보고, 안전한 것은 실패한 작업만 다시 돌리고(최대 2번), 안 풀리면 수리 요청(state/repair_request.json)과 알림 글을 만든다
 #  notify: 알림 글이 있을 때만 카카오톡 '나에게 보내기'. 수리 에이전트(Claude 예약 작업)가 alerts/repair.txt 를 push 하면 그 글을 보낸다
 name: watchdog
+run-name: ${{ github.event.inputs.slot && format('{0} · 깨우기', github.workflow) || github.workflow }}
 on:
   schedule:
     - cron: '37 * * * *'
@@ -9,6 +10,8 @@ on:
     branches: [main]
     paths: ['alerts/repair.txt']
   workflow_dispatch:
+    inputs:
+      slot: {description: '깨우기 장치(ops/wake)가 넣는 예약 식 — 손으로 돌릴 때는 비워 둠', default: ''}
 permissions:
   contents: write
   actions: write
@@ -23,6 +26,11 @@ jobs:
       send: ${{ steps.w.outputs.send }}
     steps:
       - uses: actions/checkout@v4
+      - name: 깨우기 중복 확인(늦게 온 예약 실행이면 스스로 취소 — ops/wake, 2026-11-26)
+        if: ${{ github.event_name == 'schedule' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: curl -fsSL "https://raw.githubusercontent.com/${{ github.repository }}/main/ops/wake/guard.py" -o "$RUNNER_TEMP/wake_guard.py" && python3 "$RUNNER_TEMP/wake_guard.py" || true
       - name: 감시
         id: w
         env:

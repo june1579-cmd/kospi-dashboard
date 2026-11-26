@@ -89,8 +89,12 @@ def trading_day(d):
 
 def check_run(c, st):
     """돌려주는 값: (문제 글 or None, 방금 다시 돌렸는지)"""
-    ev = f'&event={c["event"]}' if c.get('event') else ''   # event 가 있으면 그 실행만 본다(예: 손으로 돌린 시험 실행은 빼기)
-    rs = gh('api', f'repos/{REPO}/actions/workflows/{c["wf"]}/runs?branch={c["br"]}&per_page=6{ev}').get('workflow_runs', [])
+    if c.get('event') == 'schedule':   # 예약 실행만 본다(손으로 돌린 시험 실행은 빼기). 2026-11-26: 깨우기 장치(ops/wake)가 부른 실행(이름에 '깨우기')도 예약 실행으로 본다
+        rs = gh('api', f'repos/{REPO}/actions/workflows/{c["wf"]}/runs?branch={c["br"]}&per_page=20').get('workflow_runs', [])
+        rs = [r for r in rs if r['event'] == 'schedule' or (r['event'] == 'workflow_dispatch' and '깨우기' in (r.get('display_title') or ''))][:6]
+    else:
+        ev = f'&event={c["event"]}' if c.get('event') else ''   # event 가 있으면 그 실행만 본다
+        rs = gh('api', f'repos/{REPO}/actions/workflows/{c["wf"]}/runs?branch={c["br"]}&per_page=6{ev}').get('workflow_runs', [])
     if not rs: return None, False
     if rs[0]['status'] != 'completed': return ('__keep__' if c['key'] in st else None), False     # 지금 도는 중(재시도 포함) — 판단 미룸
     done = [r for r in rs if r['status'] == 'completed' and r['conclusion'] != 'cancelled'][:c['need']]
@@ -154,6 +158,24 @@ def check_content():
     return out
 
 
+def check_wake():
+    """2026-11-26(U-1126-2): 깨우기 장치(Cloudflare Worker)가 켜져 있으면(ops/wake/active.json) 감시 자신이 최근 3시간 안에 깨워졌는지 본다.
+    장치가 멈추면(토큰 만료·Cloudflare 문제) GitHub 예비 예약만 남아 다시 몇 시간씩 늦어지므로 알린다."""
+    try: A = json.load(open('ops/wake/active.json', encoding='utf-8'))
+    except Exception: return {}
+    if not A.get('active'): return {}
+    try:
+        on = dt.datetime.strptime(A.get('since', ''), '%Y-%m-%d %H:%M').replace(tzinfo=KST)
+        if (NOW - on).total_seconds() < 3 * 3600: return {}                 # 막 켰으면 기다린다
+    except Exception: pass
+    rs = gh('api', f'repos/{REPO}/actions/workflows/watchdog.yml/runs?event=workflow_dispatch&per_page=20').get('workflow_runs', [])
+    w = [r for r in rs if '깨우기' in (r.get('display_title') or '')]
+    last = t(w[0]['created_at']) if w else None
+    if last and (NOW - last).total_seconds() < 3 * 3600: return {'wake:down': ('정해진 시각 깨우기 장치', None)}
+    head = f"마지막 깨우기 {last:%m/%d %H:%M}" if last else '깨운 기록 없음'
+    return {'wake:down': ('정해진 시각 깨우기 장치', f"정해진 시각 깨우기(Cloudflare Worker) 멈춤 — {head} · 비밀값 WAKE_GITHUB_TOKEN(만료?)·Cloudflare 계정 확인 필요, 그동안은 GitHub 예비 예약만 돎")}
+
+
 def upgrade_requests():
     """2026-11-26: 업그레이드 대기열에서 수리 에이전트가 할 차례인 것(open = 위험 낮음 자동, approved = 사용자 승인)만 고른다."""
     try: items = json.load(open(QUEUE, encoding='utf-8')).get('items', [])
@@ -191,7 +213,9 @@ def sync_only():
 def main():
     st = json.load(open(STATE, encoding='utf-8')) if os.path.exists(STATE) else {}
     before = json.dumps(st, ensure_ascii=False, sort_keys=True); msgs = []; errs = []
-    extra = [dict(key=k, label=lab, text=txt, repair=True, content=True) for k, (lab, txt) in check_content().items()]
+    try: wake = check_wake()
+    except Exception as ex: wake = {}; errs.append(f'깨우기 장치: 확인 불가({str(ex)[:80]})')
+    extra = [dict(key=k, label=lab, text=txt, repair=True, content=True) for k, (lab, txt) in {**check_content(), **wake}.items()]
     for c in RUNS + FRESH + extra:
         try:
             if c.get('content'): txt = c['text']

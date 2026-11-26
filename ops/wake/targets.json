@@ -1,0 +1,6 @@
+{
+ "_note": "정해진 시각 깨우기(U-1126-2) 대상 워크플로. 각 파일의 GitHub 예약(cron)을 그대로 읽어 같은 시각에 workflow_dispatch(inputs.slot = 예약 식)로 부른다. 대상 파일에는 workflow_dispatch 입력 slot 과 깨우기 중복 확인 단계(ops/wake/guard.py)가 있어야 한다(build.py 가 확인하고, 없으면 빼고 알린다). 뺀 것: short-backfill(KRX 로그인이 한 시간마다라 횟수가 늘면 계정 위험), uni-lab(연구 멈춤), fpanic-yearly(1년 1번), intraday-flow·reach(11/26 다른 세션이 만드는 중 — 끝나면 넣을지 업그레이드 에이전트가 제안).",
+ "repo": "june1579-cmd/kospi-dashboard",
+ "ref": "main",
+ "targets": ["watchdog.yml", "pub-watch.yml", "kofia-watch.yml", "update.yml", "fo-dashboard.yml", "usk.yml", "us-walls.yml", "occ-walls.yml", "ai-board.yml", "kis-rate-recheck.yml", "pc-watchdog.yml", "audit.yml", "ops-audit.yml"]
+}

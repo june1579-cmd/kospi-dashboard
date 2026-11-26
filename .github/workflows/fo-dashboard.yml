@@ -1,4 +1,5 @@
 name: fo-dashboard
+run-name: ${{ github.event.inputs.slot && format('{0} · 깨우기', github.workflow) || github.workflow }}
 # 미국·한국 선물옵션 대시보드 — 수집·계산·웹판 게시를 전부 GitHub 안에서 한다.
 #   1) krx   : KRX 로그인 자료(투자자별·베이시스·풋/콜·내재변동성·옵션 행사가별)를 deriv-research 가지에 이어받기
 #   2) build : 미국 공개 자료(CFTC·Cboe·VIX·야후) 수집 → 지표·방향 확률 계산 → docs/fo/ (웹판) 갱신
@@ -14,14 +15,16 @@ on:
     types: [completed]
   workflow_dispatch:
     inputs:
+      slot: {description: '깨우기 장치(ops/wake)가 넣는 예약 식 — 손으로 돌릴 때는 비워 둠', default: ''}
       krx:
         description: 'KRX 로그인 자료도 새로 받기(true / false)'
         default: 'true'
 permissions:
+  actions: write
   contents: write
 jobs:
   krx:
-    if: ${{ github.event.schedule == '17 10 * * 1-5' || github.event.inputs.krx == 'true' }}
+    if: ${{ (github.event.schedule || github.event.inputs.slot) == '17 10 * * 1-5' || (github.event.inputs.krx == 'true' && !github.event.inputs.slot) }}   # 깨우기(slot)는 예약과 같게: 19:17 칸만 KRX
     runs-on: ubuntu-latest
     timeout-minutes: 150
     concurrency:
@@ -31,6 +34,11 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: deriv-research
+      - name: 깨우기 중복 확인(늦게 온 예약 실행이면 스스로 취소 — ops/wake, 2026-11-26)
+        if: ${{ github.event_name == 'schedule' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: curl -fsSL "https://raw.githubusercontent.com/${{ github.repository }}/main/ops/wake/guard.py" -o "$RUNNER_TEMP/wake_guard.py" && python3 "$RUNNER_TEMP/wake_guard.py" || true
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
