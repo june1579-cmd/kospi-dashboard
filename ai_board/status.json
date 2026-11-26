@@ -1,6 +1,6 @@
 {
- "built_at": "2026-11-26T12:46:13+09:00",
- "trigger": "schedule 41 21 * * *",
+ "built_at": "2026-11-26T13:05:42+09:00",
+ "trigger": "schedule 7 22 * * *",
  "marker": "2026-11-26T07:41:05+09:00 아침",
  "request_applied": false,
  "ok": true,
@@ -9,13 +9,8 @@
  "us_last_session": "2026-11-25",
  "kr_last_session": "2026-11-25",
  "stale": [],
- "changed": [
-  "WTI 유가 83.90달러→83.68달러(11.25)"
- ],
- "files_changed": [
-  "macro",
-  "runs"
- ],
+ "changed": [],
+ "files_changed": [],
  "files": {
   "thresholds": "50d8b0d0010f5ab4584dcc7b045f7aa464573c09311b32eae31c590cc6e74bb0",
   "indicators": "887cfb9a14e34e30c60e4ed92a43ab6b780b4adb1326bee0e71f4f25a99f5e1c",
