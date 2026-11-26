@@ -6030,5 +6030,37 @@
   "text": "오라클 5년 CDS 356bp(11.25, 사상 최고 — 로이터 인용 슈퍼파워 데일리 1곳; 야후 파이낸스는 '사상 최고'만)",
   "unit": "bp",
   "src": "https://superpowerdaily.com/posts/investors-push-ai-debt-insurance-costs-to-records-as-cash-flow-doubts-deepen"
+ },
+ {
+  "date": "2026-11-26",
+  "key": "kospi_dd",
+  "value": -48.31,
+  "text": "−48.3%(11.26, 4,711.21)",
+  "unit": "%",
+  "src": "https://github.com/june1579-cmd/kospi-dashboard/tree/main/out/market_daily.csv"
+ },
+ {
+  "date": "2026-11-25",
+  "key": "forced_liq",
+  "value": 84.03,
+  "text": "84억 원(11.25, 미수 대비 0.9%)",
+  "unit": "억 원",
+  "src": "https://github.com/june1579-cmd/kospi-dashboard/tree/main/out/liq_daily.csv"
+ },
+ {
+  "date": "2026-11-25",
+  "key": "margin_dd",
+  "value": -34.22,
+  "text": "−34.2%(11.25, 25.41조 원 / 6.24 정점 38.63조 원)",
+  "unit": "%",
+  "src": "https://github.com/june1579-cmd/kospi-dashboard/tree/main/out/credit.csv"
+ },
+ {
+  "date": "2026-11-26",
+  "key": "foreign20",
+  "value": -17.47,
+  "text": "−17.5조 원(10.30~11.26, 잠정 포함)",
+  "unit": "조 원",
+  "src": "https://github.com/june1579-cmd/kospi-dashboard/tree/main/out/flows_daily.csv"
  }
 ]
