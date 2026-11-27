@@ -1,12 +1,12 @@
 {
- "updated": "2026-11-27 10:28",
+ "updated": "2026-11-27 19:33",
  "started": "2026-11-24 15:50",
  "done": null,
  "sources": {
   "occ_flex": {
    "name": "OCC FLEX 미결제 보고서",
    "last": "2026-11-25",
-   "checked": "2026-11-27 10:27",
+   "checked": "2026-11-27 19:33",
    "err": null,
    "n": 2,
    "median_kst": "14:06",
@@ -27,7 +27,7 @@
   "occ_series": {
    "name": "OCC 시리즈 검색(SPY)",
    "last": "4430c5457355",
-   "checked": "2026-11-27 10:27",
+   "checked": "2026-11-27 19:33",
    "err": null,
    "n": 2,
    "median_kst": "14:06",
@@ -47,11 +47,11 @@
   },
   "yahoo": {
    "name": "야후 SPY 월물 미결제 합",
-   "last": "2026-12-18:3655144",
-   "checked": "2026-11-27 10:27",
+   "last": "2026-12-18:130",
+   "checked": "2026-11-27 19:33",
    "err": null,
-   "n": 3,
-   "median_kst": "12:02",
+   "n": 4,
+   "median_kst": "18:42",
    "range_kst": "03:54~21:58",
    "events": [
     {
@@ -68,13 +68,18 @@
      "value": "2026-12-18:3655144",
      "first_seen": "2026-11-25 21:58",
      "prev_check": "2026-11-25 12:53"
+    },
+    {
+     "value": "2026-12-18:130",
+     "first_seen": "2026-11-27 18:42",
+     "prev_check": "2026-11-27 10:27"
     }
    ]
   },
   "optioncharts": {
    "name": "OptionCharts 기준일",
    "last": "Nov 25, 2026",
-   "checked": "2026-11-27 10:27",
+   "checked": "2026-11-27 19:33",
    "err": null,
    "n": 2,
    "median_kst": "14:06",
@@ -95,7 +100,7 @@
   "spotgamma": {
    "name": "SpotGamma 레벨 페이지",
    "last": "2026-11-26T14:45:06+00:00",
-   "checked": "2026-11-27 10:27",
+   "checked": "2026-11-27 19:33",
    "err": null,
    "n": 3,
    "median_kst": "03:54",
@@ -121,7 +126,7 @@
   "cboe_pc": {
    "name": "Cboe 풋/콜 날짜별 파일",
    "last": "2026-11-25",
-   "checked": "2026-11-27 10:27",
+   "checked": "2026-11-27 19:33",
    "err": null,
    "n": 2,
    "median_kst": "14:06",
@@ -142,7 +147,7 @@
   "cboe_vix": {
    "name": "Cboe VIX 이력 CSV",
    "last": "11/25/2026",
-   "checked": "2026-11-27 10:27",
+   "checked": "2026-11-27 19:33",
    "err": null,
    "n": 2,
    "median_kst": "14:06",
