@@ -1,0 +1,12 @@
+# 장중 도달 확률 정시 시계 — 배포는 .github/workflows/cfclock-deploy.yml 이 한다.
+name = "kospi-reach-clock"
+main = "worker.js"
+compatibility_date = "2026-11-01"
+workers_dev = false
+
+[triggers]
+# UTC. 한국 06:43~16:45 사이 할 일 시각(분)만 깨운다. 평일·시각 판단은 코드가 한국 시각으로 한다.
+crons = ["2,13,15,20,21,30,43,45 21-23,0-7 * * *"]
+
+[observability]
+enabled = true
