@@ -37,3 +37,5 @@
 [19:55:02] 저장 inv_daily.csv.gz 41178행
 [19:55:04] == front
 [19:56:16] 저장 fut_front_daily.csv 7341행
+[19:56:18] == basis
+[19:57:11] 저장 basis_daily.csv.gz 27657행
