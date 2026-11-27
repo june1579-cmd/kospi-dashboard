@@ -366,17 +366,31 @@ def wait_krx_final(today, out, limit=dt.time(16, 4), step=45):
 #   11/2~11/13 값이 전부 틀렸고(11/5 16.83 ↔ 실제 28.18), 11/13 「최적화 2위」 매수 신호가 잘못 켜졌다.
 #   → ① 뉴욕 시각으로 장이 끝난 날(16:30 이후)까지만 받는다 ② 출처 여러 곳(CBOE 공식 파일·야후·네이버·FRED)을 모두 받아 서로 대조한다
 #     ③ 우선순위는 CBOE 공식 > FRED(CBOE 종가) > 야후 > 네이버, 출처끼리 0.05 넘게 다르면 README·status.json 에 적는다(stooq 는 봇 차단으로 뺌).
-def us_final_date(now_utc=None):
-    """미국 정규장이 끝나 종가가 확정된 마지막 날짜(뉴욕 기준). VIX 는 16:15 마감 → 16:30 이후면 오늘, 아니면 어제."""
+# 2026-11-27 고침(U-1127-1): 미국 휴장일(11/26 추수감사절)에 야후가 준 값(26.8)이 그날 종가로 들어갔다 — "뉴욕 16:30 지남 = 끝난 날"로만 보고 주말·휴장일을 몰랐기 때문.
+#   → 토·일·휴장일 날짜의 값은 받지 않고, 확정 기준일도 그 앞 미국 영업일로 물러난다.
+# health_check.py/dashboard_collect.py 의 미국 휴장일 목록은 서로 맞출 것
+US_HOLIDAYS = {  # 뉴욕 증시 휴장일(VIX 종가 없음)
+    '2026-01-01', '2026-01-19', '2026-02-16', '2026-04-03', '2026-05-25', '2026-06-19', '2026-07-03', '2026-09-07', '2026-11-26', '2026-12-25',
+    '2027-01-01', '2027-01-18', '2027-02-15', '2027-03-26', '2027-05-31', '2027-06-18', '2027-07-05', '2027-09-06', '2027-11-25', '2027-12-24'}
+def us_closed(d):
+    """뉴욕 증시가 쉬는 날(토·일·휴장일)인가. d = date 또는 'YYYY-MM-DD'. 날짜로 읽을 수 없으면 쉬는 날로 본다(값을 받지 않는다)."""
+    try: d = d if isinstance(d, dt.date) else dt.date.fromisoformat(str(d)[:10])
+    except Exception: return True
+    return d.weekday() >= 5 or d.isoformat() in US_HOLIDAYS
+def us_final_date(now_utc=None, skip_closed=True):
+    """미국 정규장이 끝나 종가가 확정된 마지막 날짜(뉴욕 기준). VIX 는 16:15 마감 → 16:30 이후면 오늘, 아니면 어제.
+       그 날이 토·일·휴장일이면 그 앞 미국 영업일로 물러난다(skip_closed=False 면 물러나지 않음 — 유가 칸용, 전과 같음)."""
     from zoneinfo import ZoneInfo
     n = (now_utc or dt.datetime.now(dt.timezone.utc)).astimezone(ZoneInfo('America/New_York'))
-    return n.date() if n.time() >= dt.time(16, 30) else n.date() - dt.timedelta(days=1)
+    d = n.date() if n.time() >= dt.time(16, 30) else n.date() - dt.timedelta(days=1)
+    while skip_closed and us_closed(d): d -= dt.timedelta(days=1)
+    return d
 def _vix_sources(cut):
-    """출처별 {날짜: 종가}. cut(뉴욕 기준 확정된 마지막 날짜) 뒤 날짜는 버린다."""
+    """출처별 {날짜: 종가}. cut(뉴욕 기준 확정된 마지막 날짜) 뒤 날짜와 토·일·미국 휴장일 날짜는 버린다."""
     import io
     from zoneinfo import ZoneInfo
     src = {}; ny = ZoneInfo('America/New_York')
-    def keep(d): return bool(d) and d <= cut.isoformat()
+    def keep(d): return bool(d) and d <= cut.isoformat() and not us_closed(d)
     try:   # CBOE 공식 일별 파일(DATE MM/DD/YYYY, OPEN, HIGH, LOW, CLOSE)
         r = requests.get('https://cdn.cboe.com/api/global/us_indices/daily_prices/VIX_History.csv', headers={'User-Agent': UA}, timeout=40); r.raise_for_status()
         d = pd.read_csv(io.StringIO(r.text)); d.columns = [c.strip().upper() for c in d.columns]
@@ -428,7 +442,7 @@ def vix_fetch(out, days=40, now_utc=None):
 # ---------------------------------------------------------------- 14 유가(참고 칸, 계산에는 안 씀): WTI·브렌트 선물 근월물 종가(야후 CL=F·BZ=F) — 끝난 날만
 # 「참고_VIX_유가」 시트의 유가 칸이 2026-10-14(EIA 현물가)에서 멈춰 있었다. 자동 경로가 없던 칸이라 선물 근월물 종가로 이어 붙인다(기준이 다르므로 출처 칸에 적는다).
 def oil_fetch(out, days=45, now_utc=None):
-    fn = '14_유가_일별'; cut = us_final_date(now_utc); cols = {}
+    fn = '14_유가_일별'; cut = us_final_date(now_utc, skip_closed=False); cols = {}      # 유가 칸은 전과 같은 기준일(U-1127-1 은 VIX 만 고침)
     from zoneinfo import ZoneInfo
     ny = ZoneInfo('America/New_York')
     for name, sym in (('wti', 'CL%3DF'), ('brent', 'BZ%3DF')):
