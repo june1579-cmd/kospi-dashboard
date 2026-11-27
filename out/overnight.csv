@@ -70,7 +70,7 @@ date,symbol,name,close,chg_pct,source
 2026-11-23,ES=F,S&P500 선물,7254.5,2.2,Yahoo Finance
 2026-11-24,ES=F,S&P500 선물,7217.5,-0.51,Yahoo Finance
 2026-11-25,ES=F,S&P500 선물,7195.75,-0.3,Yahoo Finance
-2026-11-26,ES=F,S&P500 선물,7241.5,0.64,Yahoo Finance
+2026-11-26,ES=F,S&P500 선물,7317.5,1.69,Yahoo Finance
 2007-01-08,QQQ,나스닥100 ETF(QQQ),43.88,,Twelve Data
 2007-01-09,QQQ,나스닥100 ETF(QQQ),44.1,0.5,Twelve Data
 2007-01-10,QQQ,나스닥100 ETF(QQQ),44.62,1.18,Twelve Data
@@ -20089,7 +20089,7 @@ date,symbol,name,close,chg_pct,source
 2026-11-24,USD/KRW,원달러,1342.226,0.0,Twelve Data
 2026-11-25,USD/KRW,원달러,1344.0987,0.14,Twelve Data
 2026-11-26,USD/KRW,원달러,1343.5713,-0.04,Twelve Data
-2026-11-27,USD/KRW,원달러,1344.4196,0.06,Twelve Data
+2026-11-27,USD/KRW,원달러,1339.6183,-0.29,Twelve Data
 2026-08-20,^GSPC,S&P500,7641.1602,,Yahoo Finance
 2026-08-21,^GSPC,S&P500,7674.3701,0.43,Yahoo Finance
 2026-08-24,^GSPC,S&P500,7652.8599,-0.28,Yahoo Finance

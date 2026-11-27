@@ -1,7 +1,7 @@
 {
  "date": "2026-11-26",
  "tag": "0831",
- "run_at": "2026-11-27 08:40",
+ "run_at": "2026-11-27 14:09",
  "prelim": false,
  "values": {
   "kospi": 4711.21,
@@ -37,14 +37,14 @@
   "night": "2026-11-27"
  },
  "health": {
-  "checked_at": "2026-11-27 08:40",
+  "checked_at": "2026-11-27 14:09",
   "tag": "0831",
   "level": "error",
-  "line": "오류 1건(VIX 날짜)",
+  "line": "오류 1건·주의 2건(VIX 날짜, 금투협_증시자금 수집 등)",
   "counts": {
    "오류": 1,
    "정정": 0,
-   "주의": 0,
+   "주의": 2,
    "참고": 0,
    "정상": 14
   },
@@ -54,14 +54,32 @@
     "status": "오류",
     "name": "미국 VIX 날짜",
     "note": "11/26 값이 들어 있음 — 뉴욕 장이 아직 끝나지 않은 날의 값(종가 아님)"
+   },
+   {
+    "key": "collect_07_금투협_증시자금추",
+    "status": "주의",
+    "name": "수집 실패(예비 출처로 채움): 07_금투협_증시자금추이",
+    "note": "JSONDecodeError('Expecting value: line 1 column 1 (char 0)')"
+   },
+   {
+    "key": "collect_08_금투협_신용공여잔",
+    "status": "주의",
+    "name": "수집 실패(예비 출처로 채움): 08_금투협_신용공여잔고추이",
+    "note": "JSONDecodeError('Expecting value: line 1 column 1 (char 0)')"
    }
   ],
   "new": [
    {
-    "key": "vix_future",
-    "status": "오류",
-    "name": "미국 VIX 날짜",
-    "note": "11/26 값이 들어 있음 — 뉴욕 장이 아직 끝나지 않은 날의 값(종가 아님)"
+    "key": "collect_07_금투협_증시자금추",
+    "status": "주의",
+    "name": "수집 실패(예비 출처로 채움): 07_금투협_증시자금추이",
+    "note": "JSONDecodeError('Expecting value: line 1 column 1 (char 0)')"
+   },
+   {
+    "key": "collect_08_금투협_신용공여잔",
+    "status": "주의",
+    "name": "수집 실패(예비 출처로 채움): 08_금투협_신용공여잔고추이",
+    "note": "JSONDecodeError('Expecting value: line 1 column 1 (char 0)')"
    }
   ],
   "resolved": [],
@@ -78,7 +96,7 @@
  },
  "retractions": [],
  "update_summary": {
-  "run": "2026-11-27 08:39 0831",
+  "run": "2026-11-27 14:08 0831",
   "kospi_last": "2026-11-26",
   "kofia_last": "2026-11-25",
   "vkospi_last": "2026-11-26",
@@ -151,18 +169,13 @@
    ],
    [
     "VIX",
-    "미국 VIX 종가 Yahoo Finance ^VIX(새 값·교체 1건, 그중 정정 0건)",
-    "참고_VIX_유가"
-   ],
-   [
-    "유가",
-    "WTI·브렌트 선물 근월물 종가(야후, 채운 날 1)",
+    "미국 VIX 종가 CBOE 공식 일별 파일(VIX_History.csv)(새 값·교체 0건, 그중 정정 0건)",
     "참고_VIX_유가"
    ]
   ],
   "warnings": []
  },
- "changes_n": 26,
+ "changes_n": 3,
  "kakao": [
   "[11/26 아침 확정] 코스피 4,711 (+0.29%)\n자료: @@DATA@@\n매수 없음 · 매도 없음\n특이\n· 국면 하락 추세→고변동 청산(시장 상태 바뀜)\n외인 −886억 개인 −1.1조 기관 +7,535억\n신용 25.4조(−4,660억) 반대매매 84억·0.9% (11/25)\n▶대시보드 확인"
  ],

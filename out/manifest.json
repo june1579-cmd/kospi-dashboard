@@ -1,5 +1,5 @@
 {
- "run": "2026-11-27 08:23",
+ "run": "2026-11-27 14:06",
  "tag": "0831",
  "kospi_last": "2026-11-26",
  "kofia_last": "2026-11-25",
@@ -8,22 +8,22 @@
  "errors": [
   "미국 VIX 날짜: 11/26 값이 들어 있음 — 뉴욕 장이 아직 끝나지 않은 날의 값(종가 아님)"
  ],
- "data_line": "오류 1건(VIX 날짜)",
+ "data_line": "오류 1건·주의 2건(VIX 날짜, 금투협_증시자금 수집 등)",
  "health": {
   "오류": 1,
   "정정": 0,
-  "주의": 0,
+  "주의": 2,
   "참고": 0,
   "정상": 14
  },
  "files": {
   "ai_feed": {
-   "sha256": "b9fb5936a54fc4fee8dbbf99109083407bf62bd9e6ec80f82910eef51fbfaf52",
+   "sha256": "dbd3116b5aea42e3700973e5e4fefcb9e30de9c896dabae3cdb70221170a2771",
    "bytes": 2026,
    "last_date": "crwv_px"
   },
   "ai_feed_hist": {
-   "sha256": "aeff932e928dfc21c1c1ff32a547174a727e74da3c6ddf158384745109fe4034",
+   "sha256": "bfa4711c9a781f3878491b4c3f7fbf5420fe7f4e61b3f3fba721126fbca0f7be",
    "bytes": 2267,
    "last_date": "2026-11-26"
   },
@@ -48,7 +48,7 @@
    "last_date": "2026-11-26"
   },
   "am_stats": {
-   "sha256": "154851008359f5159c90f92f61bdc5d66752458795765944f9d860281e37d326",
+   "sha256": "e69567ac87758ab8dcd97af048b562cef3e9bc98e45e01954a20614919de1d8e",
    "bytes": 1263,
    "last_date": "기준일"
   },
@@ -148,8 +148,8 @@
    "last_date": "전체"
   },
   "health": {
-   "sha256": "a2b1e7695eab15dd5889cb6550654c685ce39b6afcef52c0d35833cc130d1218",
-   "bytes": 2170,
+   "sha256": "5f08fc98b19ce1c503c133cf26aa3acd48a54ea62c23da51faf7d2e8d6a30487",
+   "bytes": 2578,
    "last_date": "web_cards"
   },
   "lab_sig": {
@@ -193,7 +193,7 @@
    "last_date": "2026-11-26"
   },
   "overnight": {
-   "sha256": "f74d28619a373d500f558b3d02cbd201b508f9dc42661c74099ebc2d0e6975fa",
+   "sha256": "be09f86668a9483e8d0a5ba1dbd9db4ec03859db292cdc64c9c1c958e24dd422",
    "bytes": 1174134,
    "last_date": "2026-11-26"
   },
