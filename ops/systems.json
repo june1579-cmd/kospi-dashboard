@@ -200,10 +200,10 @@
    ],
    "fresh": [
     {
-     "br": "liq-nowcast",
-     "path": "",
-     "label": "예정치 시험 가지",
-     "max_h": 72
+     "br": "main",
+     "path": "state/liq_nowcast_live.csv",
+     "label": "예정치 기록(대시보드 갱신 때마다, 11/27 시험 가지에서 바꿈)",
+     "max_h": 70
     }
    ]
   },
