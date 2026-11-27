@@ -6,6 +6,8 @@
 """
 import argparse, glob, json, os, re, datetime as dt
 import numpy as np, pandas as pd
+# 미국 휴장일 목록은 health_check.py 의 것을 그대로 쓴다(health_check.py/dashboard_collect.py 의 목록은 서로 맞출 것) — 2026-11-27 U-1127-2
+from health_check import US_HOLIDAYS
 
 KST = dt.timezone(dt.timedelta(hours=9))
 changes, files_in, warnings = [], [], []      # warnings: 출처 간 불일치·대조 탈락 등 — update_summary.json 에 적혀 자료 점검(health_check.py)·알림 「자료:」 줄로 간다
@@ -427,6 +429,7 @@ def main():
             for _, r in vx.iterrows():
                 v = num(r[vcol[0]]); d = pd.Timestamp(r[dcol[0]])
                 if pd.isna(v) or pd.isna(d): continue
+                if d.weekday() >= 5 or f'{d:%Y-%m-%d}' in US_HOLIDAYS: continue   # 2026-11-27(U-1127-2): 미국 휴장일·주말 값은 수집 파일에 있어도 넣지 않음
                 vs = str(r['source']) if 'source' in vx.columns and isinstance(r['source'], str) else 'FRED VIXCLS(CBOE 종가)'; src_last = vs
                 if (vv['일자'] == d).any():
                     i = vv.index[vv['일자'] == d][0]; old = vv.at[i, 'VIX 종가']; osrc = str(vv.at[i, '출처'])

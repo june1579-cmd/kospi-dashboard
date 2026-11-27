@@ -11,6 +11,9 @@
   cboe_pc     : Cboe 일별 시장 통계(풋/콜) 날짜별 파일이 처음 보인 날짜
   cboe_vix    : Cboe VIX 이력 CSV 의 마지막 날짜
 가볍게 읽는다(출처마다 10분에 한 번, 작은 요청). 5거래일치가 모이거나 시작 뒤 8일이 지나면 카카오톡으로 한 번 요약하고 스스로 멈춘다.
+2026-11-27 고침(U-1127-5, 사용자 승인): GitHub 예약이 몇 시간씩 밀려 '직전 확인 ~ 처음 본 시각' 간격이 5~9시간인 기록이 많았다.
+  → 간격이 60분(GAP_MAX)을 넘는 기록은 중앙값·범위·5거래일 조건에서 빼고, 뺀 수를 summary.json·카톡에 적는다.
+  → 8일 종료는 깨우기 장치(ops/wake/active.json)가 켜진 날부터 센다(장치가 꺼져 있으면 8일로 끝내지 않음).
 """
 import csv
 import datetime as dt
@@ -27,7 +30,25 @@ OUT = sys.argv[1] if len(sys.argv) > 1 else 'pw'
 LOOP_MIN = int(os.environ.get('LOOP_MIN', '55')); STEP = int(os.environ.get('STEP_SEC', '600'))
 KST = dt.timezone(dt.timedelta(hours=9)); now = lambda: dt.datetime.now(KST)
 UA = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36', 'Accept': '*/*'}
-NEED_EVENTS = 5; MAX_DAYS = 8
+NEED_EVENTS = 5; MAX_DAYS = 8; GAP_MAX = 60   # GAP_MAX: 직전 확인 ~ 처음 본 시각 간격(분). 넘으면 공개 시각 계산에서 뺀다
+WAKE = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'ops', 'wake', 'active.json')
+
+
+def wake_since():
+    """깨우기 장치가 켜진 시각(KST datetime). 꺼져 있거나 읽을 수 없으면 None."""
+    try:
+        w = json.load(open(WAKE, encoding='utf-8'))
+        if w.get('active') and w.get('since'): return dt.datetime.strptime(w['since'], '%Y-%m-%d %H:%M').replace(tzinfo=KST)
+    except Exception: pass
+    return None
+
+
+def gap_min(r):
+    """직전 확인 ~ 처음 본 시각(분). 직전 확인이 없으면 None(정밀도 모름 → 뺌)."""
+    try:
+        a = dt.datetime.strptime(r['prev_check'][:16], '%Y-%m-%d %H:%M'); b = dt.datetime.strptime(r['first_seen'][:16], '%Y-%m-%d %H:%M')
+        return int((b - a).total_seconds() // 60)
+    except Exception: return None
 try:
     from zoneinfo import ZoneInfo; NY = ZoneInfo('America/New_York')
 except Exception: NY = dt.timezone(dt.timedelta(hours=-5))
@@ -125,12 +146,15 @@ def summarize(st, rows):
             S['sources'][k] = {'name': nm, 'last': st.get(k, {}).get('last'), 'checked': st.get(k, {}).get('checked'), 'err': st.get(k, {}).get('err'),
                                'n': len(ev), 'median_kst': None, 'range_kst': None, 'noisy': True, 'events': []}
             continue
-        mins = sorted(int(hm(r['first_seen'])[:2]) * 60 + int(hm(r['first_seen'])[3:]) for r in ev if hm(r['first_seen']) != '?')
+        ok = [r for r in ev if gap_min(r) is not None and gap_min(r) <= GAP_MAX]   # 간격 60분 안 기록만 공개 시각 계산에 씀
+        mins = sorted(int(hm(r['first_seen'])[:2]) * 60 + int(hm(r['first_seen'])[3:]) for r in ok if hm(r['first_seen']) != '?')
         med = mins[len(mins) // 2] if mins else None
         S['sources'][k] = {'name': nm, 'last': st.get(k, {}).get('last'), 'checked': st.get(k, {}).get('checked'), 'err': st.get(k, {}).get('err'),
-                           'n': len(ev), 'median_kst': (f'{med // 60:02d}:{med % 60:02d}' if med is not None else None),
+                           'n': len(ok), 'n_all': len(ev), 'gap_excluded': len(ev) - len(ok), 'gap_max_min': GAP_MAX,
+                           'median_kst': (f'{med // 60:02d}:{med % 60:02d}' if med is not None else None),
                            'range_kst': (f'{mins[0] // 60:02d}:{mins[0] % 60:02d}~{mins[-1] // 60:02d}:{mins[-1] % 60:02d}' if mins else None),
-                           'events': [{'value': r['value'], 'first_seen': r['first_seen'], 'prev_check': r['prev_check']} for r in ev[-12:]]}
+                           'events': [{'value': r['value'], 'first_seen': r['first_seen'], 'prev_check': r['prev_check'], 'gap_min': gap_min(r),
+                                       'used': r in ok} for r in ev[-12:]]}
     return S
 
 
@@ -164,7 +188,9 @@ def main():
     S = summarize(st, rows)
     n = {k: v['n'] for k, v in S['sources'].items()}
     age = (now() - dt.datetime.strptime(st['started'], '%Y-%m-%d %H:%M').replace(tzinfo=KST)).days
-    if (min(n['occ_flex'], n['yahoo'], n['spotgamma']) >= NEED_EVENTS or age >= MAX_DAYS) and not st.get('done'):
+    ws = wake_since(); wake_age = (now() - ws).days if ws else None   # 8일은 깨우기 장치가 켜진 날부터(꺼져 있으면 8일로 끝내지 않음)
+    S['wake_since'] = ws.strftime('%Y-%m-%d %H:%M') if ws else None; S['wake_age_days'] = wake_age
+    if (min(n['occ_flex'], n['yahoo'], n['spotgamma']) >= NEED_EVENTS or (wake_age is not None and wake_age >= MAX_DAYS)) and not st.get('done'):
         st['done'] = now().strftime('%Y-%m-%d %H:%M'); S['done'] = st['done']
         L1 = [f"[미국옵션 공개 시각 {age}일 측정·KST]"]
         for k in ('occ_flex', 'yahoo', 'optioncharts', 'spotgamma'):
@@ -173,7 +199,9 @@ def main():
         for k in ('cboe_pc', 'cboe_vix', 'occ_series'):
             v = S['sources'][k]; L2.append(f"{v['name']}: " + (f"보통 {v['median_kst']}({v['range_kst']})" if v['median_kst'] else '확인 못 함'))
         L2.append('측정 끝 — 기록은 pub-watch 가지')
-        open(os.path.join(OUT, 'notify.txt'), 'w', encoding='utf-8').write('\n'.join(L1)[:195] + '\n=====\n' + '\n'.join(L2)[:195] + '\n')
+        L3 = [f'[공개 시각 3] 확인 간격 {GAP_MAX}분 넘어 뺀 수/쓴 수']   # U-1127-5: 뺀 수는 따로 한 통
+        L3 += [f"{S['sources'][k]['name']}: {S['sources'][k].get('gap_excluded', 0)}/{S['sources'][k]['n']}" for k in SRC if not S['sources'][k].get('noisy')]
+        open(os.path.join(OUT, 'notify.txt'), 'w', encoding='utf-8').write('\n'.join(L1)[:195] + '\n=====\n' + '\n'.join(L2)[:195] + '\n=====\n' + '\n'.join(L3)[:195] + '\n')
         if os.environ.get('GITHUB_OUTPUT'): open(os.environ['GITHUB_OUTPUT'], 'a').write('send=1\n')
     json.dump(st, open(sp, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     json.dump(S, open(os.path.join(OUT, 'summary.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
