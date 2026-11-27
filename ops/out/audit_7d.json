@@ -1,18 +1,18 @@
 {
- "generated_at": "2026-11-27 08:35",
+ "generated_at": "2026-11-27 13:14",
  "days": 7,
- "since": "2026-11-20 08:35",
+ "since": "2026-11-20 13:14",
  "repo": "june1579-cmd/kospi-dashboard",
  "summary": {
   "workflows": 60,
-  "active": 55,
-  "runs": 900,
-  "completed": 837,
+  "active": 53,
+  "runs": 899,
+  "completed": 836,
   "success": 827,
-  "success_rate": 98.8,
-  "failures": 10,
-  "run_minutes": 4645.6,
-  "flagged_workflows": 23,
+  "success_rate": 98.9,
+  "failures": 9,
+  "run_minutes": 4388.2,
+  "flagged_workflows": 25,
   "stale_data": 0
  },
  "systems": [
@@ -21,12 +21,13 @@
    "label": "코스피 대시보드",
    "workflows": 3,
    "runs": 73,
-   "completed": 72,
-   "success": 70,
-   "success_rate": 97.2,
+   "completed": 73,
+   "success": 71,
+   "success_rate": 97.3,
    "failures": 2,
-   "run_minutes": 331.7,
+   "run_minutes": 343.6,
    "flagged": [
+    "market-extra",
     "reach",
     "dashboard-update"
    ],
@@ -36,12 +37,12 @@
    "id": "ai",
    "label": "AI 경고판",
    "workflows": 3,
-   "runs": 61,
-   "completed": 61,
-   "success": 61,
+   "runs": 62,
+   "completed": 62,
+   "success": 62,
    "success_rate": 100.0,
    "failures": 0,
-   "run_minutes": 38.5,
+   "run_minutes": 39.6,
    "flagged": [
     "ai-board"
    ],
@@ -51,12 +52,12 @@
    "id": "fo",
    "label": "선물옵션·미국 옵션",
    "workflows": 5,
-   "runs": 78,
-   "completed": 76,
-   "success": 73,
-   "success_rate": 96.1,
+   "runs": 82,
+   "completed": 80,
+   "success": 77,
+   "success_rate": 96.2,
    "failures": 3,
-   "run_minutes": 703.5,
+   "run_minutes": 759.5,
    "flagged": [
     "fo-dashboard",
     "occ-walls",
@@ -70,12 +71,12 @@
    "id": "lab",
    "label": "연구소·Signal A",
    "workflows": 16,
-   "runs": 166,
-   "completed": 166,
-   "success": 162,
-   "success_rate": 97.6,
+   "runs": 158,
+   "completed": 158,
+   "success": 154,
+   "success_rate": 97.5,
    "failures": 4,
-   "run_minutes": 1639.6,
+   "run_minutes": 1602.0,
    "flagged": [
     "uni-lab",
     "deriv-scan"
@@ -86,12 +87,12 @@
    "id": "collect",
    "label": "원자료 수집(KRX·금투협·공매도)",
    "workflows": 5,
-   "runs": 52,
-   "completed": 52,
-   "success": 52,
+   "runs": 47,
+   "completed": 47,
+   "success": 47,
    "success_rate": 100.0,
    "failures": 0,
-   "run_minutes": 1121.2,
+   "run_minutes": 661.7,
    "flagged": [
     "deriv-research",
     "kofia-watch",
@@ -104,12 +105,12 @@
    "id": "stocks",
    "label": "방어종목 명단",
    "workflows": 4,
-   "runs": 24,
-   "completed": 23,
-   "success": 22,
-   "success_rate": 95.7,
-   "failures": 1,
-   "run_minutes": 117.2,
+   "runs": 22,
+   "completed": 21,
+   "success": 21,
+   "success_rate": 100.0,
+   "failures": 0,
+   "run_minutes": 95.6,
    "flagged": [],
    "stale": []
   },
@@ -117,12 +118,12 @@
    "id": "kis",
    "label": "분봉 수집기·한국투자 API",
    "workflows": 7,
-   "runs": 31,
-   "completed": 31,
-   "success": 31,
+   "runs": 33,
+   "completed": 33,
+   "success": 33,
    "success_rate": 100.0,
    "failures": 0,
-   "run_minutes": 267.3,
+   "run_minutes": 454.7,
    "flagged": [
     "intraday-flow",
     "kis-connect-test",
@@ -135,14 +136,15 @@
    "id": "liq",
    "label": "반대매매 당일 예정치",
    "workflows": 2,
-   "runs": 3,
-   "completed": 2,
-   "success": 2,
+   "runs": 2,
+   "completed": 1,
+   "success": 1,
    "success_rate": 100.0,
    "failures": 0,
-   "run_minutes": 88.0,
+   "run_minutes": 87.5,
    "flagged": [
-    "liq-nowcast"
+    "liq-nowcast",
+    "liq-lines"
    ],
    "stale": []
   },
@@ -150,12 +152,12 @@
    "id": "ops",
    "label": "감시·수리·업그레이드",
    "workflows": 6,
-   "runs": 400,
-   "completed": 342,
-   "success": 342,
+   "runs": 408,
+   "completed": 349,
+   "success": 349,
    "success_rate": 100.0,
    "failures": 0,
-   "run_minutes": 251.0,
+   "run_minutes": 256.4,
    "flagged": [
     "ops-audit",
     "watchdog"
@@ -224,9 +226,9 @@
     "main": 7
    },
    "schedule": {
-    "expected": 25,
+    "expected": 30,
     "actual": 5,
-    "coverage": 20.0,
+    "coverage": 16.7,
     "delay_median": 55.7,
     "delay_max": 222.8,
     "delay_over60": 2,
@@ -236,138 +238,72 @@
     "delay_note": "예약 간격이 짧아 지연은 간격보다 작게만 보임(지킴률을 볼 것)"
    },
    "flags": [
-    "예약 지킴 20.0%(5/25)",
+    "예약 지킴 16.7%(5/30)",
     "예약 지연 최대 223분",
     "걸린 시간 늘어남(0.3→25.7분)"
    ]
   },
   {
-   "name": "us-walls",
-   "path": ".github/workflows/us-walls.yml",
+   "name": "intraday-flow",
+   "path": ".github/workflows/intraday-flow.yml",
    "on_main": true,
    "triggers": [
     "schedule",
     "workflow_dispatch"
    ],
    "crons": [
-    "47 21 * * 1-5"
+    "20 23 * * 0-4",
+    "45 23 * * 0-4",
+    "35 2 * * 1-5",
+    "58 2 * * 1-5"
    ],
-   "system": "fo",
-   "runs": 4,
+   "system": "kis",
+   "runs": 5,
    "by_result": {
-    "success": 3,
-    "failure": 1
+    "success": 5
    },
-   "completed": 4,
-   "success": 3,
-   "success_rate": 75.0,
-   "fail_streak": 0,
-   "reruns": 0,
-   "events": {
-    "schedule": 2,
-    "workflow_dispatch": 2
-   },
-   "last": {
-    "at": "2026-11-26 12:47",
-    "result": "success",
-    "event": "schedule",
-    "branch": "main",
-    "id": 45751194098
-   },
-   "last_success": "2026-11-26 12:49",
-   "last_failure": {
-    "at": "2026-11-24 15:55",
-    "id": 45343384312
-   },
-   "dur_median": 2.8,
-   "dur_p90": 3.9,
-   "dur_total": 12.1,
-   "dur_recent_median": 1.7,
-   "dur_older_median": 5.1,
-   "branches": {
-    "main": 4
-   },
-   "schedule": {
-    "expected": 3,
-    "actual": 2,
-    "coverage": 66.7,
-    "delay_median": 386.0,
-    "delay_max": 411.0,
-    "delay_over60": 2,
-    "min_gap": 1440.0,
-    "woken": 0,
-    "dup_cancelled": 0,
-    "delay_note": null
-   },
-   "flags": [
-    "성공률 75.0%",
-    "예약 지킴 66.7%(2/3)",
-    "예약 지연 최대 411분"
-   ]
-  },
-  {
-   "name": "ai-board",
-   "path": ".github/workflows/ai-board.yml",
-   "on_main": true,
-   "triggers": [
-    "push",
-    "workflow_run",
-    "schedule",
-    "workflow_dispatch"
-   ],
-   "crons": [
-    "41 21 * * *",
-    "7 22 * * *",
-    "23 22 * * *"
-   ],
-   "system": "ai",
-   "runs": 53,
-   "by_result": {
-    "success": 53
-   },
-   "completed": 53,
-   "success": 53,
+   "completed": 5,
+   "success": 5,
    "success_rate": 100.0,
    "fail_streak": 0,
    "reruns": 0,
    "events": {
-    "push": 9,
-    "workflow_run": 36,
-    "schedule": 6,
-    "workflow_dispatch": 2
+    "workflow_dispatch": 4,
+    "schedule": 1
    },
    "last": {
-    "at": "2026-11-27 07:39",
+    "at": "2026-11-27 09:02",
     "result": "success",
-    "event": "push",
+    "event": "workflow_dispatch",
     "branch": "main",
-    "id": 45906207713
+    "id": 45914429084
    },
-   "last_success": "2026-11-27 07:40",
+   "last_success": "2026-11-27 12:10",
    "last_failure": null,
-   "dur_median": 0.6,
-   "dur_p90": 0.8,
-   "dur_total": 34.5,
-   "dur_recent_median": 0.6,
-   "dur_older_median": 0.6,
+   "dur_median": 2.4,
+   "dur_p90": 187.2,
+   "dur_total": 436.6,
+   "dur_recent_median": 2.4,
+   "dur_older_median": null,
    "branches": {
-    "main": 53
+    "main": 5
    },
    "schedule": {
-    "expected": 9,
-    "actual": 6,
-    "coverage": 66.7,
-    "delay_median": 360.7,
-    "delay_max": 394.1,
-    "delay_over60": 6,
+    "expected": 5,
+    "actual": 1,
+    "coverage": 20.0,
+    "delay_median": 539.3,
+    "delay_max": 539.3,
+    "delay_over60": 1,
     "min_gap": 1440.0,
     "woken": 0,
     "dup_cancelled": 0,
     "delay_note": null
    },
    "flags": [
-    "예약 지킴 66.7%(6/9)",
-    "예약 지연 최대 394분"
+    "예약 지킴 20.0%(1/5)",
+    "예약 지연 최대 539분",
+    "오래 걸림(p90 187.2분)"
    ]
   },
   {
@@ -382,41 +318,41 @@
     "17 * * * *"
    ],
    "system": "collect",
-   "runs": 36,
+   "runs": 33,
    "by_result": {
-    "success": 36
+    "success": 33
    },
-   "completed": 36,
-   "success": 36,
+   "completed": 33,
+   "success": 33,
    "success_rate": 100.0,
    "fail_streak": 0,
    "reruns": 0,
    "events": {
-    "schedule": 34,
+    "schedule": 31,
     "workflow_dispatch": 2
    },
    "last": {
-    "at": "2026-11-27 04:39",
+    "at": "2026-11-27 11:52",
     "result": "success",
     "event": "schedule",
     "branch": "main",
-    "id": 45885289437
+    "id": 45930897599
    },
-   "last_success": "2026-11-27 05:00",
+   "last_success": "2026-11-27 12:13",
    "last_failure": null,
    "dur_median": 0.6,
    "dur_p90": 20.4,
-   "dur_total": 218.4,
+   "dur_total": 236.4,
    "dur_recent_median": 20.6,
    "dur_older_median": 0.6,
    "branches": {
-    "main": 36
+    "main": 33
    },
    "schedule": {
     "expected": 167,
-    "actual": 34,
-    "coverage": 20.4,
-    "delay_median": 27.8,
+    "actual": 31,
+    "coverage": 18.6,
+    "delay_median": 27.6,
     "delay_max": 59.5,
     "delay_over60": 0,
     "min_gap": 60.0,
@@ -425,7 +361,7 @@
     "delay_note": "예약 간격이 짧아 지연은 간격보다 작게만 보임(지킴률을 볼 것)"
    },
    "flags": [
-    "예약 지킴 20.4%(34/167)",
+    "예약 지킴 18.6%(31/167)",
     "걸린 시간 늘어남(0.6→20.6분)"
    ]
   },
@@ -448,43 +384,102 @@
     "17 0 * * 6"
    ],
    "system": "kospi",
-   "runs": 9,
+   "runs": 13,
    "by_result": {
-    "success": 9
+    "success": 13
    },
-   "completed": 9,
-   "success": 9,
+   "completed": 13,
+   "success": 13,
+   "success_rate": 100.0,
+   "fail_streak": 0,
+   "reruns": 0,
+   "events": {
+    "schedule": 4,
+    "push": 4,
+    "workflow_dispatch": 5
+   },
+   "last": {
+    "at": "2026-11-27 13:12",
+    "result": "success",
+    "event": "schedule",
+    "branch": "main",
+    "id": 45938552074
+   },
+   "last_success": "2026-11-27 13:12",
+   "last_failure": null,
+   "dur_median": 3.0,
+   "dur_p90": 26.8,
+   "dur_total": 121.3,
+   "dur_recent_median": 3.0,
+   "dur_older_median": null,
+   "branches": {
+    "main": 13
+   },
+   "schedule": {
+    "expected": 6,
+    "actual": 4,
+    "coverage": 66.7,
+    "delay_median": 437.6,
+    "delay_max": 604.2,
+    "delay_over60": 4,
+    "min_gap": 1440.0,
+    "woken": 0,
+    "dup_cancelled": 0,
+    "delay_note": null
+   },
+   "flags": [
+    "예약 지킴 66.7%(4/6)",
+    "예약 지연 최대 604분"
+   ]
+  },
+  {
+   "name": "occ-walls",
+   "path": ".github/workflows/occ-walls.yml",
+   "on_main": true,
+   "triggers": [
+    "schedule",
+    "workflow_dispatch"
+   ],
+   "crons": [
+    "13 0 * * 2-6"
+   ],
+   "system": "fo",
+   "runs": 3,
+   "by_result": {
+    "success": 3
+   },
+   "completed": 3,
+   "success": 3,
    "success_rate": 100.0,
    "fail_streak": 0,
    "reruns": 0,
    "events": {
     "schedule": 2,
-    "workflow_dispatch": 4,
-    "push": 3
+    "workflow_dispatch": 1
    },
    "last": {
-    "at": "2026-11-27 02:54",
+    "at": "2026-11-26 17:14",
     "result": "success",
     "event": "schedule",
     "branch": "main",
-    "id": 45871591041
+    "id": 45781439328
    },
-   "last_success": "2026-11-27 03:42",
+   "last_success": "2026-11-26 17:15",
    "last_failure": null,
-   "dur_median": 3.0,
-   "dur_p90": 26.9,
-   "dur_total": 116.3,
-   "dur_recent_median": 3.0,
-   "dur_older_median": null,
+   "dur_median": 1.5,
+   "dur_p90": 1.5,
+   "dur_total": 4.9,
+   "dur_recent_median": 1.7,
+   "dur_older_median": 1.5,
    "branches": {
-    "main": 9
+    "main": 3
    },
    "schedule": {
-    "expected": 4,
+    "expected": 3,
     "actual": 2,
-    "coverage": 50.0,
-    "delay_median": 601.1,
-    "delay_max": 604.2,
+    "coverage": 66.7,
+    "delay_median": 488.8,
+    "delay_max": 496.5,
     "delay_over60": 2,
     "min_gap": 1440.0,
     "woken": 0,
@@ -492,67 +487,8 @@
     "delay_note": null
    },
    "flags": [
-    "예약 지킴 50.0%(2/4)",
-    "예약 지연 최대 604분"
-   ]
-  },
-  {
-   "name": "pub-watch",
-   "path": ".github/workflows/pub-watch.yml",
-   "on_main": true,
-   "triggers": [
-    "schedule",
-    "workflow_dispatch"
-   ],
-   "crons": [
-    "13 * * * *"
-   ],
-   "system": "fo",
-   "runs": 7,
-   "by_result": {
-    "success": 7
-   },
-   "completed": 7,
-   "success": 7,
-   "success_rate": 100.0,
-   "fail_streak": 0,
-   "reruns": 0,
-   "events": {
-    "schedule": 6,
-    "workflow_dispatch": 1
-   },
-   "last": {
-    "at": "2026-11-27 00:19",
-    "result": "success",
-    "event": "schedule",
-    "branch": "main",
-    "id": 45847912316
-   },
-   "last_success": "2026-11-27 01:11",
-   "last_failure": null,
-   "dur_median": 51.7,
-   "dur_p90": 51.8,
-   "dur_total": 311.4,
-   "dur_recent_median": 51.7,
-   "dur_older_median": 26.2,
-   "branches": {
-    "main": 7
-   },
-   "schedule": {
-    "expected": 64,
-    "actual": 6,
-    "coverage": 9.4,
-    "delay_median": 43.0,
-    "delay_max": 53.1,
-    "delay_over60": 0,
-    "min_gap": 60.0,
-    "woken": 0,
-    "dup_cancelled": 0,
-    "delay_note": "예약 간격이 짧아 지연은 간격보다 작게만 보임(지킴률을 볼 것)"
-   },
-   "flags": [
-    "예약 지킴 9.4%(6/64)",
-    "걸린 시간 늘어남(26.2→51.7분)"
+    "예약 지킴 66.7%(2/3)",
+    "예약 지연 최대 496분"
    ]
   },
   {
@@ -595,6 +531,37 @@
    ],
    "crons": [],
    "system": "probe",
+   "runs": 0,
+   "by_result": {},
+   "completed": 0,
+   "success": 0,
+   "success_rate": null,
+   "fail_streak": 0,
+   "reruns": 0,
+   "events": {},
+   "last": null,
+   "last_success": null,
+   "last_failure": null,
+   "dur_median": null,
+   "dur_p90": null,
+   "dur_total": 0,
+   "dur_recent_median": null,
+   "dur_older_median": null,
+   "branches": {},
+   "flags": [
+    "7일 동안 실행 없음",
+    "기본 가지에 파일 없음"
+   ]
+  },
+  {
+   "name": "liq-lines",
+   "path": ".github/workflows/liq-lines.yml",
+   "on_main": false,
+   "triggers": [
+    "(기본 가지에 파일 없음)"
+   ],
+   "crons": [],
+   "system": "liq",
    "runs": 0,
    "by_result": {},
    "completed": 0,
@@ -668,9 +635,8 @@
     "23 13 * * 1-5"
    ],
    "system": "kospi",
-   "runs": 61,
+   "runs": 60,
    "by_result": {
-    "in_progress": 1,
     "success": 58,
     "failure": 2
    },
@@ -681,35 +647,35 @@
    "reruns": 0,
    "events": {
     "workflow_dispatch": 16,
-    "schedule": 45
+    "schedule": 44
    },
    "last": {
     "at": "2026-11-27 08:23",
-    "result": "in_progress",
+    "result": "success",
     "event": "workflow_dispatch",
     "branch": "main",
     "id": 45910617555
    },
-   "last_success": "2026-11-27 07:26",
+   "last_success": "2026-11-27 08:40",
    "last_failure": {
     "at": "2026-11-25 08:26",
     "id": 45509503264
    },
    "dur_median": 1.4,
-   "dur_p90": 10.1,
-   "dur_total": 211.5,
+   "dur_p90": 10.5,
+   "dur_total": 222.3,
    "dur_recent_median": 1.4,
-   "dur_older_median": 1.4,
+   "dur_older_median": 1.3,
    "branches": {
-    "main": 61
+    "main": 60
    },
    "schedule": {
-    "expected": 44,
-    "actual": 45,
-    "coverage": 102.3,
-    "delay_median": 271.3,
+    "expected": 45,
+    "actual": 44,
+    "coverage": 97.8,
+    "delay_median": 280.1,
     "delay_max": 582.5,
-    "delay_over60": 35,
+    "delay_over60": 34,
     "min_gap": 1440.0,
     "woken": 0,
     "dup_cancelled": 0,
@@ -717,6 +683,70 @@
    },
    "flags": [
     "예약 지연 최대 582분"
+   ]
+  },
+  {
+   "name": "ai-board",
+   "path": ".github/workflows/ai-board.yml",
+   "on_main": true,
+   "triggers": [
+    "push",
+    "workflow_run",
+    "schedule",
+    "workflow_dispatch"
+   ],
+   "crons": [
+    "41 21 * * *",
+    "7 22 * * *",
+    "23 22 * * *"
+   ],
+   "system": "ai",
+   "runs": 56,
+   "by_result": {
+    "success": 56
+   },
+   "completed": 56,
+   "success": 56,
+   "success_rate": 100.0,
+   "fail_streak": 0,
+   "reruns": 0,
+   "events": {
+    "schedule": 8,
+    "workflow_run": 37,
+    "push": 9,
+    "workflow_dispatch": 2
+   },
+   "last": {
+    "at": "2026-11-27 13:06",
+    "result": "success",
+    "event": "schedule",
+    "branch": "main",
+    "id": 45937963725
+   },
+   "last_success": "2026-11-27 13:06",
+   "last_failure": null,
+   "dur_median": 0.6,
+   "dur_p90": 0.8,
+   "dur_total": 36.5,
+   "dur_recent_median": 0.6,
+   "dur_older_median": 0.6,
+   "branches": {
+    "main": 56
+   },
+   "schedule": {
+    "expected": 9,
+    "actual": 8,
+    "coverage": 88.9,
+    "delay_median": 346.4,
+    "delay_max": 394.1,
+    "delay_over60": 8,
+    "min_gap": 1440.0,
+    "woken": 0,
+    "dup_cancelled": 0,
+    "delay_note": null
+   },
+   "flags": [
+    "예약 지연 최대 394분"
    ]
   },
   {
@@ -734,49 +764,49 @@
     "47 1 * * 2-6"
    ],
    "system": "fo",
-   "runs": 50,
+   "runs": 52,
    "by_result": {
-    "success": 47,
+    "success": 49,
     "skipped": 2,
     "failure": 1
    },
-   "completed": 48,
-   "success": 47,
-   "success_rate": 97.9,
+   "completed": 50,
+   "success": 49,
+   "success_rate": 98.0,
    "fail_streak": 0,
    "reruns": 0,
    "events": {
-    "workflow_run": 34,
-    "schedule": 9,
+    "schedule": 10,
+    "workflow_run": 35,
     "workflow_dispatch": 7
    },
    "last": {
-    "at": "2026-11-27 07:26",
+    "at": "2026-11-27 12:44",
     "result": "success",
-    "event": "workflow_run",
+    "event": "schedule",
     "branch": "main",
-    "id": 45904839926
+    "id": 45935921145
    },
-   "last_success": "2026-11-27 07:28",
+   "last_success": "2026-11-27 12:46",
    "last_failure": {
     "at": "2026-11-22 19:22",
     "id": 45012049668
    },
    "dur_median": 1.9,
    "dur_p90": 3.6,
-   "dur_total": 223.8,
+   "dur_total": 226.9,
    "dur_recent_median": 1.8,
    "dur_older_median": 2.0,
    "branches": {
-    "main": 50
+    "main": 52
    },
    "schedule": {
-    "expected": 11,
-    "actual": 9,
-    "coverage": 81.8,
-    "delay_median": 278.6,
+    "expected": 12,
+    "actual": 10,
+    "coverage": 83.3,
+    "delay_median": 221.9,
     "delay_max": 624.7,
-    "delay_over60": 7,
+    "delay_over60": 8,
     "min_gap": 1440.0,
     "woken": 0,
     "dup_cancelled": 0,
@@ -799,42 +829,42 @@
     "37 * * * *"
    ],
    "system": "ops",
-   "runs": 17,
+   "runs": 18,
    "by_result": {
-    "success": 17
+    "success": 18
    },
-   "completed": 17,
-   "success": 17,
+   "completed": 18,
+   "success": 18,
    "success_rate": 100.0,
    "fail_streak": 0,
    "reruns": 0,
    "events": {
-    "schedule": 9,
+    "schedule": 10,
     "workflow_dispatch": 5,
     "push": 3
    },
    "last": {
-    "at": "2026-11-27 04:15",
+    "at": "2026-11-27 11:23",
     "result": "success",
     "event": "schedule",
     "branch": "main",
-    "id": 45882340894
+    "id": 45928050884
    },
-   "last_success": "2026-11-27 04:16",
+   "last_success": "2026-11-27 11:24",
    "last_failure": null,
-   "dur_median": 0.4,
+   "dur_median": 0.5,
    "dur_p90": 1.2,
-   "dur_total": 11.8,
-   "dur_recent_median": 0.5,
+   "dur_total": 13.0,
+   "dur_recent_median": 0.6,
    "dur_older_median": 0.4,
    "branches": {
-    "main": 17
+    "main": 18
    },
    "schedule": {
-    "expected": 91,
-    "actual": 9,
-    "coverage": 9.9,
-    "delay_median": 39.0,
+    "expected": 96,
+    "actual": 10,
+    "coverage": 10.4,
+    "delay_median": 42.8,
     "delay_max": 59.3,
     "delay_over60": 0,
     "min_gap": 60.0,
@@ -843,7 +873,7 @@
     "delay_note": "예약 간격이 짧아 지연은 간격보다 작게만 보임(지킴률을 볼 것)"
    },
    "flags": [
-    "예약 지킴 9.9%(9/91)"
+    "예약 지킴 10.4%(10/96)"
    ]
   },
   {
@@ -912,43 +942,61 @@
    ]
   },
   {
-   "name": "deriv-research",
-   "path": ".github/workflows/deriv-research.yml",
-   "on_main": false,
-   "triggers": [],
-   "crons": [],
-   "system": "collect",
-   "runs": 7,
+   "name": "pub-watch",
+   "path": ".github/workflows/pub-watch.yml",
+   "on_main": true,
+   "triggers": [
+    "schedule",
+    "workflow_dispatch"
+   ],
+   "crons": [
+    "13 * * * *"
+   ],
+   "system": "fo",
+   "runs": 8,
    "by_result": {
-    "success": 7
+    "success": 8
    },
-   "completed": 7,
-   "success": 7,
+   "completed": 8,
+   "success": 8,
    "success_rate": 100.0,
    "fail_streak": 0,
    "reruns": 0,
    "events": {
-    "push": 7
+    "schedule": 7,
+    "workflow_dispatch": 1
    },
    "last": {
-    "at": "2026-11-21 18:07",
+    "at": "2026-11-27 09:36",
     "result": "success",
-    "event": "push",
-    "branch": "deriv-research",
-    "id": 44888105472
+    "event": "schedule",
+    "branch": "main",
+    "id": 45917719065
    },
-   "last_success": "2026-11-21 18:38",
+   "last_success": "2026-11-27 10:28",
    "last_failure": null,
-   "dur_median": 83.0,
-   "dur_p90": 166.9,
-   "dur_total": 741.9,
-   "dur_recent_median": null,
-   "dur_older_median": 83.0,
+   "dur_median": 51.7,
+   "dur_p90": 51.8,
+   "dur_total": 362.9,
+   "dur_recent_median": 51.7,
+   "dur_older_median": 51.5,
    "branches": {
-    "deriv-research": 7
+    "main": 8
+   },
+   "schedule": {
+    "expected": 69,
+    "actual": 7,
+    "coverage": 10.1,
+    "delay_median": 41.3,
+    "delay_max": 53.1,
+    "delay_over60": 0,
+    "min_gap": 60.0,
+    "woken": 0,
+    "dup_cancelled": 0,
+    "delay_note": "예약 간격이 짧아 지연은 간격보다 작게만 보임(지킴률을 볼 것)"
    },
    "flags": [
-    "오래 걸림(p90 166.9분)"
+    "예약 지킴 10.1%(7/69)"
    ]
   },
   {
@@ -996,9 +1044,9 @@
     "deriv-research": 3
    },
    "schedule": {
-    "expected": 3,
+    "expected": 4,
     "actual": 3,
-    "coverage": 100.0,
+    "coverage": 75.0,
     "delay_median": 375.1,
     "delay_max": 458.2,
     "delay_over60": 3,
@@ -1012,122 +1060,105 @@
    ]
   },
   {
-   "name": "intraday-flow",
-   "path": ".github/workflows/intraday-flow.yml",
-   "on_main": true,
-   "triggers": [
-    "schedule",
-    "workflow_dispatch"
-   ],
-   "crons": [
-    "20 23 * * 0-4",
-    "45 23 * * 0-4",
-    "35 2 * * 1-5",
-    "58 2 * * 1-5"
-   ],
-   "system": "kis",
-   "runs": 4,
+   "name": "deriv-research",
+   "path": ".github/workflows/deriv-research.yml",
+   "on_main": false,
+   "triggers": [],
+   "crons": [],
+   "system": "collect",
+   "runs": 5,
    "by_result": {
-    "success": 4
+    "success": 5
    },
-   "completed": 4,
-   "success": 4,
+   "completed": 5,
+   "success": 5,
    "success_rate": 100.0,
    "fail_streak": 0,
    "reruns": 0,
    "events": {
-    "schedule": 1,
-    "workflow_dispatch": 3
+    "push": 5
    },
    "last": {
-    "at": "2026-11-26 20:57",
+    "at": "2026-11-21 18:07",
     "result": "success",
-    "event": "schedule",
-    "branch": "main",
-    "id": 45815168033
+    "event": "push",
+    "branch": "deriv-research",
+    "id": 44888105472
    },
-   "last_success": "2026-11-26 20:57",
+   "last_success": "2026-11-21 18:38",
    "last_failure": null,
-   "dur_median": 1.9,
-   "dur_p90": 2.4,
-   "dur_total": 249.4,
-   "dur_recent_median": 1.9,
-   "dur_older_median": null,
+   "dur_median": 33.0,
+   "dur_p90": 83.0,
+   "dur_total": 264.4,
+   "dur_recent_median": null,
+   "dur_older_median": 33.0,
    "branches": {
-    "main": 4
-   },
-   "schedule": {
-    "expected": 1,
-    "actual": 1,
-    "coverage": 100.0,
-    "delay_median": 539.3,
-    "delay_max": 539.3,
-    "delay_over60": 1,
-    "min_gap": 1440.0,
-    "woken": 0,
-    "dup_cancelled": 0,
-    "delay_note": null
+    "deriv-research": 5
    },
    "flags": [
-    "예약 지연 최대 539분"
+    "오래 걸림(p90 83.0분)"
    ]
   },
   {
-   "name": "occ-walls",
-   "path": ".github/workflows/occ-walls.yml",
+   "name": "us-walls",
+   "path": ".github/workflows/us-walls.yml",
    "on_main": true,
    "triggers": [
     "schedule",
     "workflow_dispatch"
    ],
    "crons": [
-    "13 0 * * 2-6"
+    "47 21 * * 1-5"
    ],
    "system": "fo",
-   "runs": 3,
+   "runs": 5,
    "by_result": {
-    "success": 3
+    "success": 4,
+    "failure": 1
    },
-   "completed": 3,
-   "success": 3,
-   "success_rate": 100.0,
+   "completed": 5,
+   "success": 4,
+   "success_rate": 80.0,
    "fail_streak": 0,
    "reruns": 0,
    "events": {
-    "schedule": 2,
-    "workflow_dispatch": 1
+    "schedule": 3,
+    "workflow_dispatch": 2
    },
    "last": {
-    "at": "2026-11-26 17:14",
+    "at": "2026-11-27 12:49",
     "result": "success",
     "event": "schedule",
     "branch": "main",
-    "id": 45781439328
+    "id": 45936346109
    },
-   "last_success": "2026-11-26 17:15",
-   "last_failure": null,
-   "dur_median": 1.5,
-   "dur_p90": 1.5,
-   "dur_total": 4.9,
-   "dur_recent_median": 1.7,
-   "dur_older_median": 1.5,
+   "last_success": "2026-11-27 12:50",
+   "last_failure": {
+    "at": "2026-11-24 15:55",
+    "id": 45343384312
+   },
+   "dur_median": 1.7,
+   "dur_p90": 3.9,
+   "dur_total": 13.5,
+   "dur_recent_median": 1.5,
+   "dur_older_median": 5.1,
    "branches": {
-    "main": 3
+    "main": 5
    },
    "schedule": {
-    "expected": 2,
-    "actual": 2,
+    "expected": 3,
+    "actual": 3,
     "coverage": 100.0,
-    "delay_median": 488.8,
-    "delay_max": 496.5,
-    "delay_over60": 2,
+    "delay_median": 362.0,
+    "delay_max": 411.0,
+    "delay_over60": 3,
     "min_gap": 1440.0,
     "woken": 0,
     "dup_cancelled": 0,
     "delay_note": null
    },
    "flags": [
-    "예약 지연 최대 496분"
+    "예약 지연 최대 411분"
    ]
   },
   {
@@ -1143,51 +1174,52 @@
     "17 22 * * *"
    ],
    "system": "ops",
-   "runs": 3,
+   "runs": 4,
    "by_result": {
     "in_progress": 1,
-    "success": 2
+    "success": 3
    },
-   "completed": 2,
-   "success": 2,
+   "completed": 3,
+   "success": 3,
    "success_rate": 100.0,
    "fail_streak": 0,
    "reruns": 0,
    "events": {
+    "schedule": 1,
     "push": 2,
     "workflow_dispatch": 1
    },
    "last": {
-    "at": "2026-11-27 08:35",
+    "at": "2026-11-27 13:14",
     "result": "in_progress",
-    "event": "push",
+    "event": "schedule",
     "branch": "main",
-    "id": 45911795667
+    "id": 45938734013
    },
-   "last_success": "2026-11-26 12:05",
+   "last_success": "2026-11-27 08:36",
    "last_failure": null,
    "dur_median": 1.0,
-   "dur_p90": 0.9,
-   "dur_total": 2.0,
+   "dur_p90": 1.0,
+   "dur_total": 3.0,
    "dur_recent_median": 1.0,
    "dur_older_median": null,
    "branches": {
-    "main": 3
+    "main": 4
    },
    "schedule": {
     "expected": 1,
-    "actual": 1,
-    "coverage": 100.0,
-    "delay_median": 287.6,
-    "delay_max": 287.6,
-    "delay_over60": 1,
+    "actual": 2,
+    "coverage": 200.0,
+    "delay_median": 322.4,
+    "delay_max": 357.1,
+    "delay_over60": 2,
     "min_gap": 1440.0,
     "woken": 1,
     "dup_cancelled": 0,
     "delay_note": null
    },
    "flags": [
-    "예약 지연 최대 288분"
+    "예약 지연 최대 357분"
    ]
   },
   {
@@ -1232,6 +1264,63 @@
    ]
   },
   {
+   "name": "pc-watchdog",
+   "path": ".github/workflows/pc-watchdog.yml",
+   "on_main": true,
+   "triggers": [
+    "schedule",
+    "workflow_dispatch"
+   ],
+   "crons": [
+    "5 22 * * *"
+   ],
+   "system": "kis",
+   "runs": 2,
+   "by_result": {
+    "success": 2
+   },
+   "completed": 2,
+   "success": 2,
+   "success_rate": 100.0,
+   "fail_streak": 0,
+   "reruns": 0,
+   "events": {
+    "schedule": 2
+   },
+   "last": {
+    "at": "2026-11-27 13:06",
+    "result": "success",
+    "event": "schedule",
+    "branch": "main",
+    "id": 45937942497
+   },
+   "last_success": "2026-11-27 13:06",
+   "last_failure": null,
+   "dur_median": 0.2,
+   "dur_p90": 0.2,
+   "dur_total": 0.5,
+   "dur_recent_median": 0.2,
+   "dur_older_median": null,
+   "branches": {
+    "main": 2
+   },
+   "schedule": {
+    "expected": 2,
+    "actual": 2,
+    "coverage": 100.0,
+    "delay_median": 360.7,
+    "delay_max": 361.1,
+    "delay_over60": 2,
+    "min_gap": 1440.0,
+    "woken": 0,
+    "dup_cancelled": 0,
+    "delay_note": null
+   },
+   "flags": [
+    "예약 지연 최대 361분"
+   ]
+  },
+  {
    "name": "kis-rate-recheck",
    "path": ".github/workflows/kis-rate-recheck.yml",
    "on_main": true,
@@ -1273,9 +1362,9 @@
     "main": 1
    },
    "schedule": {
-    "expected": 1,
+    "expected": 2,
     "actual": 1,
-    "coverage": 100.0,
+    "coverage": 50.0,
     "delay_median": 473.4,
     "delay_max": 473.4,
     "delay_over60": 1,
@@ -1286,63 +1375,6 @@
    },
    "flags": [
     "예약 지연 최대 473분"
-   ]
-  },
-  {
-   "name": "pc-watchdog",
-   "path": ".github/workflows/pc-watchdog.yml",
-   "on_main": true,
-   "triggers": [
-    "schedule",
-    "workflow_dispatch"
-   ],
-   "crons": [
-    "5 22 * * *"
-   ],
-   "system": "kis",
-   "runs": 1,
-   "by_result": {
-    "success": 1
-   },
-   "completed": 1,
-   "success": 1,
-   "success_rate": 100.0,
-   "fail_streak": 0,
-   "reruns": 0,
-   "events": {
-    "schedule": 1
-   },
-   "last": {
-    "at": "2026-11-26 13:05",
-    "result": "success",
-    "event": "schedule",
-    "branch": "main",
-    "id": 45752960179
-   },
-   "last_success": "2026-11-26 13:05",
-   "last_failure": null,
-   "dur_median": 0.3,
-   "dur_p90": 0.3,
-   "dur_total": 0.3,
-   "dur_recent_median": 0.3,
-   "dur_older_median": null,
-   "branches": {
-    "main": 1
-   },
-   "schedule": {
-    "expected": 2,
-    "actual": 1,
-    "coverage": 50.0,
-    "delay_median": 360.3,
-    "delay_max": 360.3,
-    "delay_over60": 1,
-    "min_gap": 1440.0,
-    "woken": 0,
-    "dup_cancelled": 0,
-    "delay_note": null
-   },
-   "flags": [
-    "예약 지연 최대 360분"
    ]
   },
   {
@@ -1422,42 +1454,71 @@
    ]
   },
   {
+   "name": "market-extra",
+   "path": ".github/workflows/market-extra.yml",
+   "on_main": true,
+   "triggers": [
+    "workflow_dispatch"
+   ],
+   "crons": [],
+   "system": "kospi",
+   "runs": 0,
+   "by_result": {},
+   "completed": 0,
+   "success": 0,
+   "success_rate": null,
+   "fail_streak": 0,
+   "reruns": 0,
+   "events": {},
+   "last": null,
+   "last_success": null,
+   "last_failure": null,
+   "dur_median": null,
+   "dur_p90": null,
+   "dur_total": 0,
+   "dur_recent_median": null,
+   "dur_older_median": null,
+   "branches": {},
+   "flags": [
+    "7일 동안 실행 없음"
+   ]
+  },
+  {
    "name": "pages-build-deployment",
    "path": "dynamic/pages/pages-build-deployment",
    "on_main": false,
    "triggers": [],
    "crons": [],
    "system": "ops",
-   "runs": 374,
+   "runs": 378,
    "by_result": {
-    "in_progress": 1,
-    "success": 317,
-    "cancelled": 56
+    "success": 320,
+    "cancelled": 58
    },
-   "completed": 317,
-   "success": 317,
+   "completed": 320,
+   "success": 320,
    "success_rate": 100.0,
    "fail_streak": 0,
    "reruns": 0,
    "events": {
-    "dynamic": 374
+    "dynamic": 378
    },
    "last": {
-    "at": "2026-11-27 08:35",
-    "result": "in_progress",
+    "at": "2026-11-27 13:06",
+    "result": "success",
     "event": "dynamic",
     "branch": "main",
-    "id": 45911794489
+    "id": 45938017385
    },
-   "last_success": "2026-11-27 08:30",
+   "last_success": "2026-11-27 13:07",
    "last_failure": null,
    "dur_median": 0.7,
    "dur_p90": 0.8,
-   "dur_total": 234.3,
+   "dur_total": 236.2,
    "dur_recent_median": 0.7,
    "dur_older_median": 0.7,
    "branches": {
-    "main": 374
+    "main": 378
    },
    "flags": []
   },
@@ -1468,18 +1529,18 @@
    "triggers": [],
    "crons": [],
    "system": "lab",
-   "runs": 47,
+   "runs": 44,
    "by_result": {
-    "success": 45,
+    "success": 42,
     "failure": 2
    },
-   "completed": 47,
-   "success": 45,
-   "success_rate": 95.7,
+   "completed": 44,
+   "success": 42,
+   "success_rate": 95.5,
    "fail_streak": 0,
    "reruns": 0,
    "events": {
-    "push": 47
+    "push": 44
    },
    "last": {
     "at": "2026-11-23 23:53",
@@ -1493,13 +1554,13 @@
     "at": "2026-11-23 12:28",
     "id": 45105061374
    },
-   "dur_median": 11.7,
+   "dur_median": 11.8,
    "dur_p90": 14.5,
-   "dur_total": 547.2,
+   "dur_total": 525.8,
    "dur_recent_median": null,
-   "dur_older_median": 11.7,
+   "dur_older_median": 11.8,
    "branches": {
-    "deriv-research": 47
+    "deriv-research": 44
    },
    "flags": []
   },
@@ -1510,18 +1571,18 @@
    "triggers": [],
    "crons": [],
    "system": "lab",
-   "runs": 44,
+   "runs": 42,
    "by_result": {
-    "success": 43,
+    "success": 41,
     "failure": 1
    },
-   "completed": 44,
-   "success": 43,
-   "success_rate": 97.7,
+   "completed": 42,
+   "success": 41,
+   "success_rate": 97.6,
    "fail_streak": 0,
    "reruns": 0,
    "events": {
-    "push": 44
+    "push": 42
    },
    "last": {
     "at": "2026-11-23 23:30",
@@ -1535,13 +1596,13 @@
     "at": "2026-11-20 13:56",
     "id": 44676709623
    },
-   "dur_median": 13.9,
+   "dur_median": 14.2,
    "dur_p90": 21.4,
-   "dur_total": 668.2,
+   "dur_total": 653.2,
    "dur_recent_median": null,
-   "dur_older_median": 13.9,
+   "dur_older_median": 14.2,
    "branches": {
-    "deriv-research": 44
+    "deriv-research": 42
    },
    "flags": []
   },
@@ -1552,18 +1613,18 @@
    "triggers": [],
    "crons": [],
    "system": "lab",
-   "runs": 39,
+   "runs": 36,
    "by_result": {
-    "success": 38,
+    "success": 35,
     "failure": 1
    },
-   "completed": 39,
-   "success": 38,
-   "success_rate": 97.4,
+   "completed": 36,
+   "success": 35,
+   "success_rate": 97.2,
    "fail_streak": 0,
    "reruns": 0,
    "events": {
-    "push": 39
+    "push": 36
    },
    "last": {
     "at": "2026-11-24 00:07",
@@ -1579,11 +1640,11 @@
    },
    "dur_median": 0.5,
    "dur_p90": 0.6,
-   "dur_total": 19.0,
+   "dur_total": 17.8,
    "dur_recent_median": null,
    "dur_older_median": 0.5,
    "branches": {
-    "deriv-research": 39
+    "deriv-research": 36
    },
    "flags": []
   },
@@ -1594,18 +1655,17 @@
    "triggers": [],
    "crons": [],
    "system": "stocks",
-   "runs": 18,
+   "runs": 16,
    "by_result": {
-    "success": 17,
-    "failure": 1
+    "success": 16
    },
-   "completed": 18,
-   "success": 17,
-   "success_rate": 94.4,
+   "completed": 16,
+   "success": 16,
+   "success_rate": 100.0,
    "fail_streak": 0,
    "reruns": 0,
    "events": {
-    "push": 18
+    "push": 16
    },
    "last": {
     "at": "2026-11-26 20:26",
@@ -1615,17 +1675,14 @@
     "id": 45810591946
    },
    "last_success": "2026-11-26 20:29",
-   "last_failure": {
-    "at": "2026-11-20 09:17",
-    "id": 44641882336
-   },
+   "last_failure": null,
    "dur_median": 2.1,
-   "dur_p90": 3.0,
-   "dur_total": 54.9,
-   "dur_recent_median": 2.1,
-   "dur_older_median": 1.5,
+   "dur_p90": 2.9,
+   "dur_total": 33.3,
+   "dur_recent_median": 2.2,
+   "dur_older_median": 1.7,
    "branches": {
-    "validation": 18
+    "validation": 16
    },
    "flags": []
   },
@@ -1749,45 +1806,6 @@
    "flags": []
   },
   {
-   "name": "ai-feed",
-   "path": ".github/workflows/ai-feed.yml",
-   "on_main": false,
-   "triggers": [],
-   "crons": [],
-   "system": "ai",
-   "runs": 5,
-   "by_result": {
-    "success": 5
-   },
-   "completed": 5,
-   "success": 5,
-   "success_rate": 100.0,
-   "fail_streak": 0,
-   "reruns": 0,
-   "events": {
-    "schedule": 3,
-    "workflow_dispatch": 2
-   },
-   "last": {
-    "at": "2026-11-23 10:58",
-    "result": "success",
-    "event": "schedule",
-    "branch": "main",
-    "id": 45097519313
-   },
-   "last_success": "2026-11-23 10:59",
-   "last_failure": null,
-   "dur_median": 0.5,
-   "dur_p90": 0.5,
-   "dur_total": 2.5,
-   "dur_recent_median": null,
-   "dur_older_median": 0.5,
-   "branches": {
-    "main": 5
-   },
-   "flags": []
-  },
-  {
    "name": "evolve-gate",
    "path": ".github/workflows/evolve-gate.yml",
    "on_main": false,
@@ -1839,34 +1857,34 @@
    ],
    "crons": [],
    "system": "ops",
-   "runs": 4,
+   "runs": 5,
    "by_result": {
-    "success": 4
+    "success": 5
    },
-   "completed": 4,
-   "success": 4,
+   "completed": 5,
+   "success": 5,
    "success_rate": 100.0,
    "fail_streak": 0,
    "reruns": 0,
    "events": {
-    "push": 4
+    "push": 5
    },
    "last": {
-    "at": "2026-11-26 12:55",
+    "at": "2026-11-27 09:04",
     "result": "success",
     "event": "push",
     "branch": "main",
-    "id": 45751961529
+    "id": 45914538100
    },
-   "last_success": "2026-11-26 12:56",
+   "last_success": "2026-11-27 09:04",
    "last_failure": null,
    "dur_median": 0.6,
    "dur_p90": 0.6,
-   "dur_total": 2.1,
+   "dur_total": 2.7,
    "dur_recent_median": 0.6,
    "dur_older_median": null,
    "branches": {
-    "main": 4
+    "main": 5
    },
    "flags": []
   },
@@ -1906,6 +1924,44 @@
    "dur_p90": 0.5,
    "dur_total": 1.5,
    "dur_recent_median": 0.5,
+   "dur_older_median": 0.5,
+   "branches": {
+    "main": 3
+   },
+   "flags": []
+  },
+  {
+   "name": "ai-feed",
+   "path": ".github/workflows/ai-feed.yml",
+   "on_main": false,
+   "triggers": [],
+   "crons": [],
+   "system": "ai",
+   "runs": 3,
+   "by_result": {
+    "success": 3
+   },
+   "completed": 3,
+   "success": 3,
+   "success_rate": 100.0,
+   "fail_streak": 0,
+   "reruns": 0,
+   "events": {
+    "schedule": 3
+   },
+   "last": {
+    "at": "2026-11-23 10:58",
+    "result": "success",
+    "event": "schedule",
+    "branch": "main",
+    "id": 45097519313
+   },
+   "last_success": "2026-11-23 10:59",
+   "last_failure": null,
+   "dur_median": 0.5,
+   "dur_p90": 0.5,
+   "dur_total": 1.6,
+   "dur_recent_median": null,
    "dur_older_median": 0.5,
    "branches": {
     "main": 3
@@ -1985,46 +2041,6 @@
    "dur_older_median": 1.1,
    "branches": {
     "deriv-research": 3
-   },
-   "flags": []
-  },
-  {
-   "name": "market-extra",
-   "path": ".github/workflows/market-extra.yml",
-   "on_main": true,
-   "triggers": [
-    "workflow_dispatch"
-   ],
-   "crons": [],
-   "system": "kospi",
-   "runs": 3,
-   "by_result": {
-    "success": 3
-   },
-   "completed": 3,
-   "success": 3,
-   "success_rate": 100.0,
-   "fail_streak": 0,
-   "reruns": 0,
-   "events": {
-    "workflow_dispatch": 3
-   },
-   "last": {
-    "at": "2026-11-20 11:27",
-    "result": "success",
-    "event": "workflow_dispatch",
-    "branch": "main",
-    "id": 44660961170
-   },
-   "last_success": "2026-11-20 11:30",
-   "last_failure": null,
-   "dur_median": 0.4,
-   "dur_p90": 0.4,
-   "dur_total": 3.9,
-   "dur_recent_median": null,
-   "dur_older_median": 0.4,
-   "branches": {
-    "main": 3
    },
    "flags": []
   },
@@ -2239,6 +2255,47 @@
    "flags": []
   },
   {
+   "name": "ops-notify",
+   "path": ".github/workflows/ops-notify.yml",
+   "on_main": true,
+   "triggers": [
+    "push",
+    "workflow_dispatch"
+   ],
+   "crons": [],
+   "system": "ops",
+   "runs": 2,
+   "by_result": {
+    "success": 2
+   },
+   "completed": 2,
+   "success": 2,
+   "success_rate": 100.0,
+   "fail_streak": 0,
+   "reruns": 0,
+   "events": {
+    "push": 2
+   },
+   "last": {
+    "at": "2026-11-27 09:04",
+    "result": "success",
+    "event": "push",
+    "branch": "main",
+    "id": 45914538114
+   },
+   "last_success": "2026-11-27 09:04",
+   "last_failure": null,
+   "dur_median": 0.6,
+   "dur_p90": 0.6,
+   "dur_total": 1.3,
+   "dur_recent_median": 0.6,
+   "dur_older_median": null,
+   "branches": {
+    "main": 2
+   },
+   "flags": []
+  },
+  {
    "name": "screen-collect",
    "path": ".github/workflows/screen-collect.yml",
    "on_main": false,
@@ -2269,8 +2326,8 @@
    "dur_median": 28.8,
    "dur_p90": 27.8,
    "dur_total": 57.5,
-   "dur_recent_median": 28.8,
-   "dur_older_median": null,
+   "dur_recent_median": 29.7,
+   "dur_older_median": 27.8,
    "branches": {
     "validation": 2
    },
@@ -2504,85 +2561,6 @@
    "dur_older_median": 0.5,
    "branches": {
     "deriv-research": 1
-   },
-   "flags": []
-  },
-  {
-   "name": "liq-lines",
-   "path": ".github/workflows/liq-lines.yml",
-   "on_main": false,
-   "triggers": [],
-   "crons": [],
-   "system": "liq",
-   "runs": 1,
-   "by_result": {
-    "success": 1
-   },
-   "completed": 1,
-   "success": 1,
-   "success_rate": 100.0,
-   "fail_streak": 0,
-   "reruns": 0,
-   "events": {
-    "push": 1
-   },
-   "last": {
-    "at": "2026-11-20 08:51",
-    "result": "success",
-    "event": "push",
-    "branch": "deriv-research",
-    "id": 44641164893
-   },
-   "last_success": "2026-11-20 08:52",
-   "last_failure": null,
-   "dur_median": 0.5,
-   "dur_p90": 0.5,
-   "dur_total": 0.5,
-   "dur_recent_median": null,
-   "dur_older_median": 0.5,
-   "branches": {
-    "deriv-research": 1
-   },
-   "flags": []
-  },
-  {
-   "name": "ops-notify",
-   "path": ".github/workflows/ops-notify.yml",
-   "on_main": true,
-   "triggers": [
-    "push",
-    "workflow_dispatch"
-   ],
-   "crons": [],
-   "system": "ops",
-   "runs": 1,
-   "by_result": {
-    "success": 1
-   },
-   "completed": 1,
-   "success": 1,
-   "success_rate": 100.0,
-   "fail_streak": 0,
-   "reruns": 0,
-   "events": {
-    "push": 1
-   },
-   "last": {
-    "at": "2026-11-26 11:36",
-    "result": "success",
-    "event": "push",
-    "branch": "main",
-    "id": 45743513149
-   },
-   "last_success": "2026-11-26 11:36",
-   "last_failure": null,
-   "dur_median": 0.6,
-   "dur_p90": 0.6,
-   "dur_total": 0.6,
-   "dur_recent_median": 0.6,
-   "dur_older_median": null,
-   "branches": {
-    "main": 1
    },
    "flags": []
   },
@@ -2902,8 +2880,8 @@
    "label": "웹판 자료",
    "br": "main",
    "path": "docs/meta.json",
-   "last": "2026-11-27 05:22",
-   "age_h": 3.2,
+   "last": "2026-11-27 08:40",
+   "age_h": 4.6,
    "max_h": 30,
    "stale": false
   },
@@ -2912,8 +2890,8 @@
    "label": "카톡 발송 기록",
    "br": "main",
    "path": "state/kakao_sent.json",
-   "last": "2026-11-26 20:27",
-   "age_h": 12.1,
+   "last": "2026-11-27 08:40",
+   "age_h": 4.6,
    "max_h": 30,
    "stale": false
   },
@@ -2922,8 +2900,8 @@
    "label": "계산 결과",
    "br": "main",
    "path": "ai_board/status.json",
-   "last": "2026-11-27 07:39",
-   "age_h": 0.9,
+   "last": "2026-11-27 13:06",
+   "age_h": 0.1,
    "max_h": 30,
    "stale": false
   },
@@ -2932,8 +2910,8 @@
    "label": "웹판 자료",
    "br": "main",
    "path": "docs/ai/data",
-   "last": "2026-11-27 07:39",
-   "age_h": 0.9,
+   "last": "2026-11-27 13:06",
+   "age_h": 0.1,
    "max_h": 30,
    "stale": false
   },
@@ -2942,8 +2920,8 @@
    "label": "선물옵션 웹판 자료",
    "br": "main",
    "path": "docs/fo/data",
-   "last": "2026-11-27 07:28",
-   "age_h": 1.1,
+   "last": "2026-11-27 12:46",
+   "age_h": 0.5,
    "max_h": 40,
    "stale": false
   },
@@ -2952,8 +2930,8 @@
    "label": "미국 옵션 아침 추정",
    "br": "main",
    "path": "uswalls/latest.json",
-   "last": "2026-11-26 12:48",
-   "age_h": 19.8,
+   "last": "2026-11-27 12:49",
+   "age_h": 0.4,
    "max_h": 40,
    "stale": false
   },
@@ -2963,7 +2941,7 @@
    "br": "main",
    "path": "uswalls/occ_latest.json",
    "last": "2026-11-26 17:14",
-   "age_h": 15.3,
+   "age_h": 20.0,
    "max_h": 40,
    "stale": false
   },
@@ -2973,7 +2951,7 @@
    "br": "deriv-research",
    "path": "deriv/us/out/dash.json",
    "last": "2026-11-27 04:50",
-   "age_h": 3.7,
+   "age_h": 8.4,
    "max_h": 40,
    "stale": false
   },
@@ -2983,7 +2961,7 @@
    "br": "main",
    "path": "docs/lab/data",
    "last": "2026-11-24 14:37",
-   "age_h": 66.0,
+   "age_h": 70.6,
    "max_h": 72,
    "stale": false
   },
@@ -2993,7 +2971,7 @@
    "br": "deriv-research",
    "path": "deriv/data",
    "last": "2026-11-27 05:19",
-   "age_h": 3.3,
+   "age_h": 7.9,
    "max_h": 48,
    "stale": false
   },
@@ -3003,7 +2981,7 @@
    "br": "kofia-watch",
    "path": "(가지 끝)",
    "last": "2026-11-26 17:02",
-   "age_h": 15.5,
+   "age_h": 20.2,
    "max_h": 48,
    "stale": false
   },
@@ -3013,7 +2991,7 @@
    "br": "main",
    "path": "docs/stocks/stocks.json",
    "last": "2026-11-26 20:29",
-   "age_h": 12.1,
+   "age_h": 16.7,
    "max_h": 30,
    "stale": false
   },
@@ -3023,110 +3001,110 @@
    "br": "intraday-data",
    "path": "(가지 끝)",
    "last": "2026-11-26 16:15",
-   "age_h": 16.3,
+   "age_h": 21.0,
    "max_h": 48,
    "stale": false
   },
   {
    "system": "liq",
-   "label": "예정치 시험 가지",
-   "br": "liq-nowcast",
-   "path": "(가지 끝)",
-   "last": "2026-11-24 11:57",
-   "age_h": 68.6,
-   "max_h": 72,
+   "label": "예정치 기록(대시보드 갱신 때마다, 11/27 시험 가지에서 바꿈)",
+   "br": "main",
+   "path": "state/liq_nowcast_live.csv",
+   "last": "2026-11-27 08:40",
+   "age_h": 4.6,
+   "max_h": 70,
    "stale": false
   }
  ],
  "branches": [
   {
-   "name": "krx-lock",
-   "last": "2026-11-27 08:23",
+   "name": "intraday-flow",
+   "last": "2026-11-27 12:10",
    "age_d": 0.0,
-   "msg": "잡음: dashboard-update (main)"
+   "msg": "장중 선물 수급 2026-11-27 12:10 (am)"
+  },
+  {
+   "name": "krx-lock",
+   "last": "2026-11-27 12:12",
+   "age_d": 0.0,
+   "msg": "비움: short-backfill (main)"
   },
   {
    "name": "main",
-   "last": "2026-11-27 08:35",
+   "last": "2026-11-27 13:06",
    "age_d": 0.0,
-   "msg": "업그레이드 에이전트 2026-11-27 08:35 점검 숫자 요청(ops-audit 7일)"
+   "msg": "AI 경고판 계산 2026-11-27 13:06 (schedule)"
+  },
+  {
+   "name": "short-history",
+   "last": "2026-11-27 12:12",
+   "age_d": 0.0,
+   "msg": "공매도 10년치 2026-11-27 12:12"
+  },
+  {
+   "name": "pub-watch",
+   "last": "2026-11-27 10:28",
+   "age_d": 0.1,
+   "msg": "공개 시각 확인 2026-11-27 10:28"
   },
   {
    "name": "deriv-research",
    "last": "2026-11-27 05:19",
-   "age_d": 0.1,
-   "msg": "선물옵션 대시보드용 KRX 이어받기 2026-11-27 05:19"
-  },
-  {
-   "name": "short-history",
-   "last": "2026-11-27 05:00",
-   "age_d": 0.1,
-   "msg": "공매도 10년치 2026-11-27 05:00"
-  },
-  {
-   "name": "pub-watch",
-   "last": "2026-11-27 01:10",
    "age_d": 0.3,
-   "msg": "공개 시각 확인 2026-11-27 01:10"
+   "msg": "선물옵션 대시보드용 KRX 이어받기 2026-11-27 05:19"
   },
   {
    "name": "validation",
    "last": "2026-11-26 20:29",
-   "age_d": 0.5,
+   "age_d": 0.7,
    "msg": "통합 명단 매일 갱신 2026-11-26 20:29"
   },
   {
    "name": "kofia-watch",
    "last": "2026-11-26 17:02",
-   "age_d": 0.6,
+   "age_d": 0.8,
    "msg": "금투협 공표 확인 2026-11-26 17:02"
   },
   {
    "name": "intraday-data",
    "last": "2026-11-26 16:15",
-   "age_d": 0.7,
+   "age_d": 0.9,
    "msg": "분봉 2026-11-26"
-  },
-  {
-   "name": "intraday-flow",
-   "last": "2026-11-26 15:50",
-   "age_d": 0.7,
-   "msg": "장중 선물 수급 2026-11-26 15:50 (pm)"
   },
   {
    "name": "kis-probe",
    "last": "2026-11-25 21:27",
-   "age_d": 1.5,
+   "age_d": 1.7,
    "msg": "KIS 분봉 범위 시험 2026-11-25 21:27"
   },
   {
    "name": "probe",
    "last": "2026-11-24 16:58",
-   "age_d": 2.7,
+   "age_d": 2.8,
    "msg": "probe 결과 2026-11-24 16:58"
   },
   {
    "name": "liq-nowcast",
    "last": "2026-11-24 11:57",
-   "age_d": 2.9,
+   "age_d": 3.1,
    "msg": "liq-nowcast 시험 결과 2026-11-24 11:57 (all)"
   },
   {
    "name": "evolve/20261122-gate-check-lock",
    "last": "2026-11-22 21:34",
-   "age_d": 4.5,
+   "age_d": 4.7,
    "msg": "진화 시험 확인: 잠금 파일을 건드리면 탈락하는지"
   },
   {
    "name": "evolve/20261122-gate-check-ok",
    "last": "2026-11-22 21:34",
-   "age_d": 4.5,
+   "age_d": 4.7,
    "msg": "진화 시험 확인: 새 에이전트 실행 시간도 기록에 찍음"
   },
   {
    "name": "keycheck",
    "last": "2026-11-17 16:00",
-   "age_d": 9.7,
+   "age_d": 9.9,
    "msg": "DART 이름 재확인"
   }
  ],
@@ -3142,11 +3120,11 @@
    },
    {
     "path": "fo/data/px.csv",
-    "kb": 2453
+    "kb": 2454
    },
    {
     "path": "data/통합_원자료.xlsx",
-    "kb": 1461
+    "kb": 1463
    },
    {
     "path": "docs/lab/data/trades.json",
@@ -3195,7 +3173,7 @@
   ],
   "dirs_mb": {
    "data": 27.0,
-   "docs": 11.2,
+   "docs": 11.3,
    "out": 5.8,
    "pkg": 5.2,
    "fo": 3.9,
@@ -3207,9 +3185,9 @@
    "ops": 0.1,
    "kis": 0.1
   },
-  "total_mb": 56.4,
+  "total_mb": 56.5,
   "pages_kb": {
-   "docs/page.html": 112.8,
+   "docs/page.html": 113.5,
    "docs/index.html": 10.7,
    "docs/ai/page.html": 67.2,
    "docs/ai/index.html": 8.6,
@@ -3220,21 +3198,42 @@
   "over_50mb": []
  },
  "ops": {
-  "repair_open": [],
+  "repair_open": [
+   {
+    "key": "stale:uswalls",
+    "label": "미국 옵션 아침 추정(웹판 11절)",
+    "text": "미국 옵션 아침 추정(웹판 11절) 멈춤(마지막 갱신 11/26 12:48, 23시간 전)",
+    "since": "2026-11-27 11:23"
+   },
+   {
+    "key": "upgrade:U-1127-1",
+    "label": "업그레이드 U-1127-1 · 코스피 대시보드",
+    "text": "VIX 수집이 미국 휴장일(11/26) 값을 확정 종가로 받음 — 할 일·확인 방법은 ops/upgrade_queue.json 의 U-1127-1(do·check) · 위험 낮음",
+    "since": "2026-11-27 08:50"
+   },
+   {
+    "key": "upgrade:U-1127-3",
+    "label": "업그레이드 U-1127-3 · 코스피 대시보드",
+    "text": "자정 넘어 돈 확정(1840) 실행의 수집 폴더가 다음 날 날짜로 붙음 — 할 일·확인 방법은 ops/upgrade_queue.json 의 U-1127-3(do·check) · 위험 낮음",
+    "since": "2026-11-27 08:50"
+   }
+  ],
   "repair_log_in_window": 3,
   "repair_log_total": 3,
   "upgrade_queue": {
    "done": 2,
    "in_progress": 1,
-   "rejected": 1
+   "rejected": 1,
+   "open": 2,
+   "needs_approval": 3
   },
   "claude_tasks": {
-   "at": "2026-11-26 11:35",
-   "total": 22,
-   "enabled": 14,
+   "at": "2026-11-27 08:49",
+   "total": 26,
+   "enabled": 16,
    "failed_recent": []
   }
  },
  "errors": [],
- "repo_size_mb": 481.4
+ "repo_size_mb": 487.9
 }
