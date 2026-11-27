@@ -1,6 +1,6 @@
 {
- "built_at": "2026-11-28T07:21:01+09:00",
- "trigger": "workflow_run dashboard-update",
+ "built_at": "2026-11-28T07:24:13+09:00",
+ "trigger": "workflow_dispatch 23 22 * * *",
  "marker": "2026-11-27T20:41:49+09:00 저녁",
  "request_applied": false,
  "ok": true,
