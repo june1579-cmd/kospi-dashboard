@@ -81,6 +81,25 @@ def night_from_kis(t, fc):
         return None, repr(e)[:80]
 
 
+def kis_fill(day):
+    """코스피200 일봉(KRX 이어받기·대시보드 수집)이 늦은 날: KIS 지수 현재가(장 전이면 그 전 장 값)·선물 1분봉으로 그날 시가·고가·저가·종가·선물 종가를 받아
+    reach/out/kis_spot.csv 에 적는다(model.load 가 빈 날짜에만 씀). 성공하면 설명 문자열, 실패하면 None"""
+    try:
+        from reach.kis import KIS, index_now, fut_bars_today, front_code
+        k = KIS(gap=0.45)
+        if not k.ok(): return None
+        i = index_now(k)
+        if not i.get('ok') or not i.get('open'): return None
+        code, _ = front_code(date.fromisoformat(day)); fb = fut_bars_today(k, code, d=date.fromisoformat(day))
+        row = dict(date=day, 시가=i['open'], 고가=i['high'], 저가=i['low'], 종가=i['cur'], 날짜=day, fc=fb.get('cur') if fb.get('ok') else None)
+        p = os.path.join(ROOT, 'reach', 'out', 'kis_spot.csv'); os.makedirs(os.path.dirname(p), exist_ok=True)
+        old = pd.read_csv(p) if os.path.exists(p) else pd.DataFrame()
+        pd.concat([old, pd.DataFrame([row])]).drop_duplicates('date', keep='last').to_csv(p, index=False)
+        return f"KIS 실시간 값으로 {day} 코스피200 시고저종({i['open']}/{i['high']}/{i['low']}/{i['cur']})·선물 종가({row['fc']}) 채움"
+    except Exception as e:
+        print('KIS 일봉 채우기 실패:', repr(e)[:120], flush=True); return None
+
+
 def log(res, board):
     """날짜별 적중 분석용 기록: docs/reach/data/log/대상날짜_판.json(같은 날 다시 계산하면 덮어씀)"""
     d = os.path.join(OUT, 'log'); os.makedirs(d, exist_ok=True)
@@ -93,10 +112,13 @@ def run_eve(wait=0, deriv=None):
     """16:20판: 오늘 장 마감 직후 알 수 있는 값(오늘 종가·고가·저가·변동성)만으로 다음 거래일 도달 확률"""
     hol = holidays(); deriv = deriv or os.path.join(ROOT, '_deriv', 'deriv', 'data')
     today = (datetime.now(timezone.utc).replace(tzinfo=None) + timedelta(hours=9)).date()
-    t0 = time.time()
+    t0 = time.time(); kis_note = None
     while True:
         D = load(deriv); last = D.index[-1]
         if last >= today.isoformat() or time.time() - t0 > wait * 60: break
+        if today.weekday() < 5 and today.isoformat() not in hol and kis_note is None:   # 기다리지 말고 KIS 로 바로 채움(정해진 시각에 나오도록)
+            kis_note = kis_fill(today.isoformat()) or ''
+            if kis_note: print(kis_note, flush=True); continue
         print(f'오늘 코스피200 자료 기다림 (마지막 {last})', flush=True); time.sleep(120)
         subprocess.run(['git', 'pull', '-q', '--rebase'], cwd=ROOT)
     for_date = next_trading(date.fromisoformat(last), hol); st = []
@@ -104,7 +126,7 @@ def run_eve(wait=0, deriv=None):
     P = params(); row = D.iloc[[-1]].copy(); lad = ladders(row, P, 'eve')
     g = lambda c: r1(row[c].iloc[0]) if c in row else None
     res = dict(kind='eve', label='16:20판', built=(datetime.now(timezone.utc).replace(tzinfo=None) + timedelta(hours=9)).strftime('%Y-%m-%d %H:%M KST'), for_date=for_date.isoformat(),
-               base_date=last, status=st, levels=[float(x) for x in LEVELS], ref_price={'S_c': g('c'), 'F_c': g('fc'), 'S_o': None, 'F_o': None},
+               base_date=last, status=st, notes=[x for x in [kis_note] if x], levels=[float(x) for x in LEVELS], ref_price={'S_c': g('c'), 'F_c': g('fc'), 'S_o': None, 'F_o': None},
                inputs={'오늘 코스피200(%)': g('own'), '20일 변동성(%)': g('rv20'), '20일 평균 하루 폭(%)': g('park20'), '오늘 종가': g('c'), '오늘 선물 종가': g('fc')},
                ladders=lad, params_fitted=P.get('fitted'))
     os.makedirs(OUT, exist_ok=True); json.dump(res, open(os.path.join(OUT, 'eve.json'), 'w', encoding='utf-8'), ensure_ascii=False); log(res, 'eve')
@@ -122,9 +144,12 @@ def run_pre(wait=0, deriv=None):
     # 간밤 미국 일봉이 밀려 있으면 직접 받아 둔다(저장소 fo/data 는 커밋하지 않음 — 이 계산에만 씀)
     if subprocess.run([sys.executable, 'fo/us_due.py'], cwd=ROOT).returncode == 0:
         subprocess.run([sys.executable, 'fo/collect_us.py', 'px', 'vix'], cwd=ROOT)
-    t0 = time.time()
+    t0 = time.time(); kis_note = None
     while True:
         D = load(deriv); last = D.index[-1]
+        if last < t_exp and kis_note is None:                                   # 전날 일봉이 아직 없으면 KIS 로(장 전 지수 현재가 = 전날 값)
+            kis_note = kis_fill(t_exp) or ''
+            if kis_note: print(kis_note, flush=True); continue
         night_ok = last == t_exp and not np.isnan(D['night'].iloc[-1])
         if night_ok or time.time() - t0 > wait * 60: break
         if last == t_exp and np.isnan(D['night'].iloc[-1]):                 # 야간선물: KIS 에서 직접(대시보드 08:23 수집보다 빠름)
@@ -150,7 +175,7 @@ def run_pre(wait=0, deriv=None):
     lad = ladders(row, P, 'pre')
     g = lambda c: r1(row[c].iloc[0]) if c in row else None
     res = dict(kind='pre', label='08:30판', built=(datetime.now(timezone.utc).replace(tzinfo=None) + timedelta(hours=9)).strftime('%Y-%m-%d %H:%M KST'), for_date=for_date.isoformat(), base_date=last,
-               status=st, levels=[float(x) for x in LEVELS], night_source=night_src,
+               status=st, notes=[x for x in [kis_note] if x], levels=[float(x) for x in LEVELS], night_source=night_src,
                ref_price={'S_c': g('c'), 'F_c': g('fc'), 'S_o': None, 'F_o': None},
                inputs={'야간선물(%)': g('night'), '간밤 S&P500(%)': g('us_on'), '간밤 VIX 변화(%)': g('vix_on'), '전날 코스피200(%)': g('own'), '20일 변동성(%)': g('rv20'),
                        '20일 평균 하루 폭(%)': g('park20'), '외국인 전날 순매수(평소 대비)': g('f1'), '외국인 야간 순매수(평소 대비)': g('n1')},

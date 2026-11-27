@@ -28,7 +28,9 @@ def load(DV):
     D = pd.DataFrame({'o': num(k['시가']), 'h': num(k['고가']), 'l': num(k['저가']), 'c': num(k['종가'])}, index=k.index)
     # KRX 이어받기(19:17)가 늦은 날을 위해: 코스피 대시보드 수집 폴더(20:23 확정분)의 코스피200 일별로 빈 날짜를 채운다
     import glob
-    for f in sorted(glob.glob(os.path.join(ROOT, 'data', 'collect', 'dashboard_*', '04_코스피200_일별.csv')))[-3:]:
+    ks = os.path.join(ROOT, 'reach', 'out', 'kis_spot.csv')                 # 그래도 빠진 날: 계산 직전에 KIS 실시간 값으로 받아 둔 것(live.kis_fill)
+    srcs = sorted(glob.glob(os.path.join(ROOT, 'data', 'collect', 'dashboard_*', '04_코스피200_일별.csv')))[-3:] + ([ks] if os.path.exists(ks) else [])
+    for f in srcs:
         try:
             k2 = pd.read_csv(f, encoding='utf-8-sig'); k2['date'] = k2['날짜'].astype(str).str[:10]; k2 = k2.drop_duplicates('date', keep='last').set_index('date')
             add = k2.index.difference(D.index)
@@ -42,6 +44,9 @@ def load(DV):
     ng = fr[fr['TRD_DD'].str.contains('야간')].copy(); ng['date'] = ng['TRD_DD'].str[:10].str.replace('/', '-'); ng['nc'] = num(ng['TDD_CLSPRC'])
     ng = ng.dropna(subset=['nc']).drop_duplicates('date', keep='last').set_index('date')['nc']
     D = D.join(F, how='left')
+    if os.path.exists(ks):                                                     # KIS 로 받은 그날 선물 종가(같은 월물)
+        kk = pd.read_csv(ks).drop_duplicates('date', keep='last').set_index('date')
+        if 'fc' in kk: D['fc'] = D['fc'].fillna(pd.to_numeric(kk['fc'], errors='coerce').reindex(D.index))
     fdp = os.path.join(ROOT, 'out', 'fut_daily.csv')                                            # 선물 종가 예비(코스피 대시보드 수집)
     if os.path.exists(fdp):
         fdd = pd.read_csv(fdp).drop_duplicates('date', keep='last').set_index('date')['price']; D['fc'] = D['fc'].fillna(fdd.reindex(D.index))

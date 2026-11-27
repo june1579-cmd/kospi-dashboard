@@ -1,6 +1,6 @@
 # 장중 코스피200 선물 투자자별(외국인·개인·기관) 누적 순매수 + 선물·현물 시세를 가능한 짧은 간격(기본 5초)으로 쌓는다(2026-11-26).
 # 하루를 오전(08:40~12:10)·오후(12:10~15:50) 두 작업으로 나눈다(GitHub 작업 한 번 최대 6시간).
-# 09:06~09:12 은 매일 09:07 KIS 호출 한도 재측정과 겹치지 않게 쉰다. 오전 작업은 09:12:30 에 '09:10판 장중 도달 확률'을 계산해 main 에 올린다.
+# 09:06~09:12 은 매일 09:07 KIS 호출 한도 재측정과 겹치지 않게 쉰다. 오전 작업은 09:05:20 에(09:10 전, 09:07 한도 재측정 전) '09:10판 장중 도달 확률'을 계산해 main 에 올린다.
 # 저장: intraday-flow 가지의 flow/YYYY-MM/YYYY-MM-DD.csv (30분마다·끝날 때 커밋). 키 값은 어디에도 남기지 않는다.
 import argparse, csv, json, os, subprocess, sys, time
 from datetime import datetime, date, timedelta
@@ -80,7 +80,7 @@ def main():
         if i.get("ok"): last_idx = i
         w.writerow([tn.strftime("%H:%M:%S"), part, code, f.get("cur"), f.get("open"), f.get("high"), f.get("low"), i.get("cur"), i.get("open"), i.get("high"), i.get("low")] + [fl.get(x) for x in FLOW_KEYS]); n += 1
         if n == 1: print("첫 행:", {"fut": f.get("cur"), "fut_open": f.get("open"), "k200": i.get("cur"), "k200_open": i.get("open"), "frgn": fl.get("frgn_ntby_qty"), "fut_msg": f.get("msg"), "idx_msg": i.get("msg"), "fut_fields": f.get("fields", [])[:25]}, flush=True)
-        if not post_done and (tn >= tn.replace(hour=9, minute=12, second=30) or a.post_now) and n >= 2:
+        if not post_done and (tn >= tn.replace(hour=9, minute=5, second=20) or a.post_now) and n >= 2:   # 09:10 전에 나오도록(09:07 호출 한도 재측정 전)
             fh.flush()
             try:
                 git(ROOT, "pull", "-q", "--rebase", "origin", "main")      # 08:30판(pre.json)·학습값을 최신으로
