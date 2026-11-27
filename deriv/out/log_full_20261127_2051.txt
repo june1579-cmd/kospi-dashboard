@@ -1,0 +1,52 @@
+[19:50:51] 시작 full ['index', 'inv', 'front', 'basis', 'iv', 'pcr', 'chainx', 'chainwt', 'chainwm'] — 로그인 계정 설정 있음
+[19:50:51] == index
+[19:51:22] 저장 kospi_long.csv 7757행
+[19:51:44] 저장 k200_long.csv 7757행
+[19:51:47] == inv
+[19:51:47] inv ('FUK2I', 'ALL', '', '야간') 불완전(360행 < 4588) — 다시 받음
+[19:51:47] inv ('OPWKI', 'C', '', '정규') 불완전(1431행 < 1757) — 다시 받음
+[19:51:47] inv ('OPWKI', 'P', '', '정규') 불완전(1431행 < 1757) — 다시 받음
+[19:51:47] inv ('OPWKM', 'C', '', '정규') 불완전(809행 < 827) — 다시 받음
+[19:51:47] inv ('OPWKM', 'P', '', '정규') 불완전(809행 < 827) — 다시 받음
+[19:51:52] inv FUK2I ALL : 1행
+[19:51:52] 저장 inv_daily.csv.gz 36325행
+[19:51:57] inv OPK2I C : 1행
+[19:51:57] 저장 inv_daily.csv.gz 36326행
+[19:52:02] inv OPK2I P : 1행
+[19:52:02] 저장 inv_daily.csv.gz 36327행
+[19:52:44] inv OPWKI C : 1432행
+[19:52:44] 저장 inv_daily.csv.gz 37759행
+[19:53:26] inv OPWKI P : 1432행
+[19:53:27] 저장 inv_daily.csv.gz 39191행
+[19:53:51] inv OPWKM C : 810행
+[19:53:52] 저장 inv_daily.csv.gz 40001행
+[19:54:17] inv OPWKM P : 810행
+[19:54:18] 저장 inv_daily.csv.gz 40811행
+[19:54:23] inv FUMKI ALL : 1행
+[19:54:24] 저장 inv_daily.csv.gz 40812행
+[19:54:28] inv OPMKI C : 1행
+[19:54:29] 저장 inv_daily.csv.gz 40813행
+[19:54:33] inv OPMKI P : 1행
+[19:54:34] 저장 inv_daily.csv.gz 40814행
+[19:54:39] inv FUK2I ALL 상세: 1행
+[19:54:40] 저장 inv_daily.csv.gz 40815행
+[19:54:44] inv OPK2I C 상세: 1행
+[19:54:45] 저장 inv_daily.csv.gz 40816행
+[19:54:49] inv OPK2I P 상세: 1행
+[19:54:50] 저장 inv_daily.csv.gz 40817행
+[19:55:02] 저장 inv_daily.csv.gz 41178행
+[19:55:04] == front
+[19:56:16] 저장 fut_front_daily.csv 7341행
+[19:56:18] == basis
+[19:57:11] 저장 basis_daily.csv.gz 27657행
+[19:57:12] == iv
+[19:57:24] 저장 iv_daily.csv 4662행
+[19:57:25] == pcr
+[19:59:37] 저장 pcr_daily.csv 4662행
+[19:59:38] == chainx
+[20:05:45] 저장 opt_chainx_daily.csv.gz 1574358행
+[20:05:49] == chainwt
+[20:15:00] 대시보드 수집 시간대 — 20:45 KST 까지 대기
+[20:49:54] 저장 opt_chainwt_daily.csv.gz 121992행
+[20:49:56] == chainwm
+[20:51:29] 저장 opt_chainwm_daily.csv.gz 100558행
