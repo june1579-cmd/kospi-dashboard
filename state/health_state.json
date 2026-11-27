@@ -1,11 +1,23 @@
 {
- "at": "2026-11-27 08:23",
+ "at": "2026-11-27 15:43",
  "issues": [
   {
    "key": "vix_future",
    "status": "오류",
    "name": "미국 VIX 날짜",
    "note": "11/26 값이 들어 있음 — 뉴욕 장이 아직 끝나지 않은 날의 값(종가 아님)"
+  },
+  {
+   "key": "collect_07_금투협_증시자금추",
+   "status": "주의",
+   "name": "수집 실패(예비 출처로 채움): 07_금투협_증시자금추이",
+   "note": "JSONDecodeError('Expecting value: line 1 column 1 (char 0)')"
+  },
+  {
+   "key": "collect_08_금투협_신용공여잔",
+   "status": "주의",
+   "name": "수집 실패(예비 출처로 채움): 08_금투협_신용공여잔고추이",
+   "note": "JSONDecodeError('Expecting value: line 1 column 1 (char 0)')"
   }
  ]
 }
