@@ -16,5 +16,14 @@
   "new_items": 5,
   "success_rate": 98.8,
   "schedule_coverage": 30.5
+ },
+ {
+  "date": "2026-11-28",
+  "정상": 5,
+  "개선 여지": 4,
+  "문제": 1,
+  "new_items": 5,
+  "success_rate": 99.2,
+  "schedule_coverage": 34.0
  }
 ]

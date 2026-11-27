@@ -7,7 +7,8 @@
    "workflows": [
     "dashboard-update",
     "market-extra",
-    "reach"
+    "reach",
+    "cfclock-deploy"
    ],
    "fresh": [
     {
