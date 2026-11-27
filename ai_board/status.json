@@ -1,6 +1,6 @@
 {
- "built_at": "2026-11-28T06:30:03+09:00",
- "trigger": "workflow_run dashboard-update",
+ "built_at": "2026-11-28T06:42:08+09:00",
+ "trigger": "workflow_dispatch 41 21 * * *",
  "marker": "2026-11-27T20:41:49+09:00 저녁",
  "request_applied": false,
  "ok": true,
@@ -9,19 +9,8 @@
  "us_last_session": "2026-11-27",
  "kr_last_session": "2026-11-27",
  "stale": [],
- "changed": [
-  "SOX 고점 대비 -40.04→-37.23(11.27)",
-  "미국 10년물 금리 4.91%→4.85%(11.25)",
-  "WTI 유가 85.79달러→83.08달러(11.27)"
- ],
- "files_changed": [
-  "thresholds",
-  "indicators",
-  "market",
-  "macro",
-  "history",
-  "runs"
- ],
+ "changed": [],
+ "files_changed": [],
  "files": {
   "thresholds": "56c4f21f1c8b5028e03d2cd1c69c22f4cdacf6c0b470fa2a2489fb0c0194be15",
   "indicators": "85d0d65f5ea023bfaf4bf051692de643dfac36620c392e63b060c36883fcf2ca",
@@ -94,7 +83,7 @@
   "항복 완료 후보": "외국인 20일 합 −14.7→−14.7조 원(5회 전 대비 개선)"
  },
  "alert": {
-  "text": "[AI 경고판 11/28 06:30] 종합 1.79 주의 (경고 3·주의 6·정상 1)\n단계: 7번 SOX·코스피 위험→경고\n측정값: SOX 고점 대비 위험→경고(−37.2%)\n조건: A+5 조건(7번 위험) 풀림\n원인: SOX 고점 대비 -40.04→-37.23(11.27)",
-  "kakao": "written"
+  "text": "",
+  "kakao": "none"
  }
 }
