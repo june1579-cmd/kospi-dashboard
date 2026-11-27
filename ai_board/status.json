@@ -1,8 +1,8 @@
 {
- "built_at": "2026-11-27T18:46:53+09:00",
- "trigger": "workflow_run dashboard-update",
- "marker": "2026-11-27T16:40:05+09:00 오후",
- "request_applied": false,
+ "built_at": "2026-11-27T20:42:11+09:00",
+ "trigger": "push ",
+ "marker": "2026-11-27T20:41:49+09:00 저녁",
+ "request_applied": true,
  "ok": true,
  "errors": [],
  "notes": [],
@@ -19,18 +19,23 @@
   }
  ],
  "changed": [],
- "files_changed": [],
+ "files_changed": [
+  "thresholds",
+  "macro",
+  "runs",
+  "news"
+ ],
  "files": {
-  "thresholds": "9573978924f8c9f39c5f5b5953739a98fe37b8ad9186e5a8013de7e0359133f1",
+  "thresholds": "da54da19f19d2d8edb0596a492ebf8185649e93ab6ce43ffbb83a1096fc66ea4",
   "indicators": "c2f1e71fb098be0deeabaa77fd408500caeb5926043e3b05de52052405d2ddf1",
   "market": "8dde499f0f7f98e0ac08c6fcea1ca62e10289ae9e16be288321f54f6174895b0",
   "margin": "040b3e26e7ff6e5d1cf3141f73106e5b2d7eb05b963962a0aa9cac284824ba87",
   "forced": "541c751475111e003dcd9b6719b231837c58fd1ba5f4a1adca413484abdb5a08",
-  "macro": "6a38ce81c96febd05f7035cf757bf84e3462a2cd95bd4d4dde6c980fbb0df172",
+  "macro": "f0c55a5009c090abc6ef245f4f76a0eb3ed1ce0d5c227d08a6f3154ff1eec0d8",
   "events": "0f1125b134f03012767119b1ebf00bcf3b2deb0073315170c49610b7568bddad",
   "history": "bba69981a6abcca1291d59c372eb7246673308cde84bee3b6819b87cf70bebcc",
-  "runs": "fb3e4837dbce96b2b98da07ad17917e5a90ee922442aa649997ec09cf8acd89f",
-  "news": "7ab937390beea58d116f731071264dd5ae2880a8401ff3d99954abcddb90291d",
+  "runs": "306b474254cf4d50b85368761f762ce06e1942ebdfedfab6a53d3e47e1802c39",
+  "news": "1e27c1556fa7b96ebcfce1ff996131e972f54e3df43e2d8503f379bea93039df",
   "scenarios": "0a76d773ea2dbd406498e38017ce08c0feadd77a001cd6d4ca2392882c2656eb",
   "episodes": "5fc42c60296afdbd24d0b7f7b1d774e337ab66d562bd9442f44a44b613b13e51"
  },
