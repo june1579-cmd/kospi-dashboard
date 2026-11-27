@@ -1,6 +1,6 @@
-수집 2026-11-27 21:24 KST · 기간 2026-11-05~2026-11-27
-성공: ['15_지수_대조(네이버·다음 실시간 종가)', '01_코스피_일별시세', '04_코스피200_일별', '03_코스피_투자자별_순매수_거래대금', '06_ETF투자자별_122630_KODEX 레버리지', '05_ETF상세_122630_KODEX 레버리지', '09_야간선물_일별', '09b_야간선물_공개', '10_VKOSPI_일별', '10b_VKOSPI_KRX화면', '13_VIX_일별(뉴욕 기준 2026-11-25까지 확정분, 출처 3곳)', '14_유가_일별']
-실패: [('04_ETF시세_122630_KODEX 레버리지', "KeyError('날짜')"), ('07_금투협_증시자금추이', "JSONDecodeError('Expecting value: line 1 column 1 (char 0)')"), ('08_금투협_신용공여잔고추이', "JSONDecodeError('Expecting value: line 1 column 1 (char 0)')")]
+수집 2026-11-27 22:24 KST · 기간 2026-11-05~2026-11-27
+성공: ['15_지수_대조(네이버·다음 실시간 종가)', '01_코스피_일별시세', '04_코스피200_일별', '03_코스피_투자자별_순매수_거래대금', '04_ETF시세_122630_KODEX 레버리지', '06_ETF투자자별_122630_KODEX 레버리지', '05_ETF상세_122630_KODEX 레버리지', '09_야간선물_일별', '09b_야간선물_공개', '10_VKOSPI_일별', '10b_VKOSPI_KRX화면', '13_VIX_일별(뉴욕 기준 2026-11-25까지 확정분, 출처 3곳)', '14_유가_일별']
+실패: [('07_금투협_증시자금추이', "JSONDecodeError('Expecting value: line 1 column 1 (char 0)')"), ('08_금투협_신용공여잔고추이', "JSONDecodeError('Expecting value: line 1 column 1 (char 0)')")]
 주의: []
 참고: [('13_VIX FRED', 'ReadTimeout(ReadTimeoutError("HTTPSConnectionPool(host=\'fred.stlouisfed.org\', po')]
 오늘 날짜 줄은 18:30 이후 실행분만 확정치로 포함(그 전 실행은 어제까지). 15:40 실행은 KRX 화면이 마감 값으로 바뀐 것을 실시간 출처와 대조해 확인한 뒤에만 오늘 줄을 넣는다.

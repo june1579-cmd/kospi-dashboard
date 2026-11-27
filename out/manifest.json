@@ -1,27 +1,27 @@
 {
- "run": "2026-11-27 21:24",
+ "run": "2026-11-27 22:24",
  "tag": "1840",
  "kospi_last": "2026-11-27",
  "kofia_last": "2026-11-26",
  "vkospi_last": "2026-11-27",
  "night_last": "2026-11-27",
  "errors": [],
- "data_line": "주의 3건(금투협_신용공여 수집, ETF시세_12 수집 등)",
+ "data_line": "주의 2건(금투협_증시자금 수집, 금투협_신용공여 수집)",
  "health": {
   "오류": 0,
   "정정": 0,
-  "주의": 3,
+  "주의": 2,
   "참고": 0,
   "정상": 14
  },
  "files": {
   "ai_feed": {
-   "sha256": "9bfabfafc1b42371599b48c3aa46fde26d17f2d51045a564031d0178b8a9b1a9",
+   "sha256": "82950e416760ee232dab57dea53f04250986668f92794bee9085e7f3791e7240",
    "bytes": 2026,
    "last_date": "crwv_px"
   },
   "ai_feed_hist": {
-   "sha256": "9416b47a3481457d4b95c7ffcc1f56e76df6aa6ed41fe87c1a42858cb1f45893",
+   "sha256": "0715c4fa3ebd08541cb11f5b074077b9a776fb1733c5e04e82dc820459e0f07b",
    "bytes": 2267,
    "last_date": "2026-11-26"
   },
@@ -46,7 +46,7 @@
    "last_date": "2026-11-27"
   },
   "am_stats": {
-   "sha256": "328e9d3417026c7e326a84a28ef1f00fb4087f4ff773345c3dae868b14854914",
+   "sha256": "1ad6b2bd6c665be65e1f11e920240dfd01c6ca87aa02f1462022b8b1006f8b93",
    "bytes": 1263,
    "last_date": "기준일"
   },
@@ -146,8 +146,8 @@
    "last_date": "전체"
   },
   "health": {
-   "sha256": "19716fdc6c9512e0ac70ef20bc4c2d20bfc3a897d24544b28c325efba0f90387",
-   "bytes": 2557,
+   "sha256": "6c914480b5b30cc493b9350924e09e294d58a657044ed26b3ccab9a07b99fc3c",
+   "bytes": 2403,
    "last_date": "web_cards"
   },
   "lab_sig": {
@@ -191,7 +191,7 @@
    "last_date": "2026-11-26"
   },
   "overnight": {
-   "sha256": "2e21c396677ce302a82b4c93b140173c7c476bce66093a5b77c6c2c6143ccc24",
+   "sha256": "72144ddb7dea864406f9293ab310656ff22941dbe2e590ccb4ef1625732d07c9",
    "bytes": 1174135,
    "last_date": "2026-11-26"
   },

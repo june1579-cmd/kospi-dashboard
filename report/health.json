@@ -1,43 +1,30 @@
 {
- "checked_at": "2026-11-27 21:26",
+ "checked_at": "2026-11-27 22:26",
  "tag": "1840",
  "level": "warn",
- "line": "주의 3건(금투협_신용공여 수집, ETF시세_12 수집 등)",
+ "line": "주의 2건(금투협_증시자금 수집, 금투협_신용공여 수집)",
  "counts": {
   "오류": 0,
   "정정": 0,
-  "주의": 3,
+  "주의": 2,
   "참고": 0,
   "정상": 14
  },
  "issues": [
   {
-   "key": "collect_08_금투협_신용공여잔",
-   "status": "주의",
-   "name": "수집 실패(예비 출처로 채움): 08_금투협_신용공여잔고추이",
-   "note": "JSONDecodeError('Expecting value: line 1 column 1 (char 0)')"
-  },
-  {
-   "key": "collect_04_ETF시세_122",
-   "status": "주의",
-   "name": "수집 실패(예비 출처로 채움): 04_ETF시세_122630_KODEX 레버리지",
-   "note": "KeyError('날짜')"
-  },
-  {
    "key": "collect_07_금투협_증시자금추",
    "status": "주의",
    "name": "수집 실패(예비 출처로 채움): 07_금투협_증시자금추이",
    "note": "JSONDecodeError('Expecting value: line 1 column 1 (char 0)')"
-  }
- ],
- "new": [
+  },
   {
-   "key": "collect_04_ETF시세_122",
+   "key": "collect_08_금투협_신용공여잔",
    "status": "주의",
-   "name": "수집 실패(예비 출처로 채움): 04_ETF시세_122630_KODEX 레버리지",
-   "note": "KeyError('날짜')"
+   "name": "수집 실패(예비 출처로 채움): 08_금투협_신용공여잔고추이",
+   "note": "JSONDecodeError('Expecting value: line 1 column 1 (char 0)')"
   }
  ],
+ "new": [],
  "resolved": [
   {
    "key": "vix_future",
