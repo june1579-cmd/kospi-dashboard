@@ -48,3 +48,5 @@
 [20:05:49] == chainwt
 [20:15:00] 대시보드 수집 시간대 — 20:45 KST 까지 대기
 [20:49:54] 저장 opt_chainwt_daily.csv.gz 121992행
+[20:49:56] == chainwm
+[20:51:29] 저장 opt_chainwm_daily.csv.gz 100558행
