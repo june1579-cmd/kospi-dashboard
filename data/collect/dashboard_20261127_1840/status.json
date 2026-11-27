@@ -1,5 +1,5 @@
 {
- "run": "2026-11-27 05:20",
+ "run": "2026-11-27 20:43",
  "tag": "1840",
  "allow_today": false,
  "krx_today_ok": null,
@@ -13,14 +13,24 @@
   "05_ETF상세_122630_KODEX 레버리지",
   "09_야간선물_일별",
   "09b_야간선물_공개",
-  "10_VKOSPI_일별",
   "10b_VKOSPI_KRX화면",
-  "07_금투협_증시자금추이",
-  "08_금투협_신용공여잔고추이",
   "13_VIX_일별(뉴욕 기준 2026-11-25까지 확정분, 출처 3곳)",
   "14_유가_일별"
  ],
- "fail": [],
+ "fail": [
+  [
+   "10_VKOSPI_일별",
+   "ValueError('응답에 변동성지수 행 없음')"
+  ],
+  [
+   "07_금투협_증시자금추이",
+   "JSONDecodeError('Expecting value: line 1 column 1 (char 0)')"
+  ],
+  [
+   "08_금투협_신용공여잔고추이",
+   "JSONDecodeError('Expecting value: line 1 column 1 (char 0)')"
+  ]
+ ],
  "warn": [],
  "info": [
   [
