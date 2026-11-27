@@ -1,33 +1,31 @@
 {
- "built_at": "2026-11-27T15:54:35+09:00",
- "trigger": "workflow_run dashboard-update",
- "marker": "2026-11-27T07:39:38+09:00 아침",
- "request_applied": false,
+ "built_at": "2026-11-27T16:40:28+09:00",
+ "trigger": "push ",
+ "marker": "2026-11-27T16:40:05+09:00 오후",
+ "request_applied": true,
  "ok": true,
  "errors": [],
  "notes": [],
  "us_last_session": "2026-11-25",
- "kr_last_session": "2026-11-26",
- "stale": [],
- "changed": [
-  "코스피 고점 대비 -48.31→-46.07(11.27)",
-  "미수 반대매매(하루) 84.03→60.25(11.26)",
-  "신용융자 잔고 1년 정점 대비 -34.22→-35.18(11.26)",
-  "외국인 코스피 20거래일 순매수 -17.44→-14.7(11.27)",
-  "투자자 예탁금 83.5조 원→85.1조 원(11.26)"
+ "kr_last_session": "2026-11-27",
+ "stale": [
+  {
+   "key": "vkospi",
+   "name": "VKOSPI",
+   "as_of": "2026-11-26",
+   "expected": "2026-11-27",
+   "level": "stale",
+   "why": "한국 마지막 거래일 종가(16:10 뒤)"
+  }
  ],
+ "changed": [],
  "files_changed": [
   "thresholds",
-  "indicators",
-  "market",
-  "margin",
-  "forced",
-  "macro",
-  "history",
-  "runs"
+  "runs",
+  "news"
  ],
  "files": {
-  "thresholds": "361fcb76b487ce86c36bef552a163633ad7655e78269d9e9f7cec5c281c6652c",
+  "thresholds": "9573978924f8c9f39c5f5b5953739a98fe37b8ad9186e5a8013de7e0359133f1",
   "indicators": "c2f1e71fb098be0deeabaa77fd408500caeb5926043e3b05de52052405d2ddf1",
   "market": "8dde499f0f7f98e0ac08c6fcea1ca62e10289ae9e16be288321f54f6174895b0",
   "margin": "040b3e26e7ff6e5d1cf3141f73106e5b2d7eb05b963962a0aa9cac284824ba87",
@@ -35,8 +33,8 @@
   "macro": "6a38ce81c96febd05f7035cf757bf84e3462a2cd95bd4d4dde6c980fbb0df172",
   "events": "0f1125b134f03012767119b1ebf00bcf3b2deb0073315170c49610b7568bddad",
   "history": "bba69981a6abcca1291d59c372eb7246673308cde84bee3b6819b87cf70bebcc",
-  "runs": "4fb4800040358397b43fe8007ef1ad85472c472aaeaf7b18cf05bebeea02d7b3",
-  "news": "4b5b1544a306c03907fd58922a3b94ab0b1db8947add6c811c99cfd5d6c58932",
+  "runs": "fb3e4837dbce96b2b98da07ad17917e5a90ee922442aa649997ec09cf8acd89f",
+  "news": "7ab937390beea58d116f731071264dd5ae2880a8401ff3d99954abcddb90291d",
   "scenarios": "0a76d773ea2dbd406498e38017ce08c0feadd77a001cd6d4ca2392882c2656eb",
   "episodes": "5fc42c60296afdbd24d0b7f7b1d774e337ab66d562bd9442f44a44b613b13e51"
  },
@@ -99,7 +97,7 @@
   "A+5 조건(7번 위험)": "7번 SOX·코스피 위험 → 제안 25/34/25/16"
  },
  "alert": {
-  "text": "[AI 경고판 11/27 15:54] 종합 1.81 주의 (위험 1·경고 2·주의 6·정상 1)\n단계: 지표 단계 변화 없음\n조건: 항복 완료 후보 새로 생김: 외국인 20일 합 −14.7→−14.7조 원(5회 전 대비 개선)\n원인: 코스피 고점 대비 -48.31→-46.07(11.27)",
-  "kakao": "written"
+  "text": "",
+  "kakao": "none"
  }
 }
