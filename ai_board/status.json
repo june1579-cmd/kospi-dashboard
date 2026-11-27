@@ -1,5 +1,5 @@
 {
- "built_at": "2026-11-28T03:27:26+09:00",
+ "built_at": "2026-11-28T05:04:28+09:00",
  "trigger": "workflow_run dashboard-update",
  "marker": "2026-11-27T20:41:49+09:00 저녁",
  "request_applied": false,
@@ -9,16 +9,8 @@
  "us_last_session": "2026-11-25",
  "kr_last_session": "2026-11-27",
  "stale": [],
- "changed": [
-  "미국 하이일드 스프레드 3.77→3.77(11.26)",
-  "미국 하이일드 스프레드 3.77%→3.77%(11.26)"
- ],
- "files_changed": [
-  "thresholds",
-  "macro",
-  "history",
-  "runs"
- ],
+ "changed": [],
+ "files_changed": [],
  "files": {
   "thresholds": "5cb88b2f26f5af1bc7998c2834ca27559df1d12ea91bd585607c08a61e700a82",
   "indicators": "2cade5c81b39985a46be1cd081b2c6063d1174ac93462ecfb779decb02aec004",
