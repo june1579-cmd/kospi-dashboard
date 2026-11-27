@@ -1,4 +1,22 @@
 {
- "active": false,
- "note": "깨우기 장치(Cloudflare Worker)가 배포되면 wake-deploy 워크플로가 true 로 바꾼다. false 면 guard.py 와 감시의 깨우기 점검이 아무것도 하지 않는다."
+ "active": true,
+ "note": "깨우기 장치(Cloudflare Worker)가 배포되면 wake-deploy 워크플로가 true 로 바꾼다. false 면 guard.py 와 감시의 깨우기 점검이 아무것도 하지 않는다.",
+ "workflows": [
+  "ai-board.yml",
+  "audit.yml",
+  "fo-dashboard.yml",
+  "kis-rate-recheck.yml",
+  "kofia-watch.yml",
+  "occ-walls.yml",
+  "ops-audit.yml",
+  "pc-watchdog.yml",
+  "pub-watch.yml",
+  "update.yml",
+  "us-walls.yml",
+  "usk.yml",
+  "watchdog.yml"
+ ],
+ "entries": 27,
+ "skipped": [],
+ "since": "2026-11-27 20:28"
 }
