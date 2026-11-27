@@ -1,7 +1,7 @@
 # 정해진 시각 깨우기 장치 배포(2026-11-26, 업그레이드 요청 U-1126-2). GitHub 예약이 몇 시간씩 늦거나 빠져서(7일 예약 지킴 30%),
 # Cloudflare Worker(무료 Cron Trigger, 매분)가 정해진 시각에 workflow_dispatch 로 워크플로를 부른다. GitHub 예약은 예비로 남고,
 # 늦게 온 예약 실행은 각 워크플로의 깨우기 중복 확인(ops/wake/guard.py)이 스스로 취소한다. 설명·사용자 할 일: ops/wake/README.md
-#  필요한 저장소 비밀값(사용자가 넣음, 대화에 붙이지 않음): CLOUDFLARE_API_TOKEN · CLOUDFLARE_ACCOUNT_ID · WAKE_GITHUB_TOKEN
+#  필요한 저장소 비밀값(사용자가 넣음, 대화에 붙이지 않음): CLOUDFLARE_API_TOKEN · CLOUDFLARE_ACCOUNT_ID · WAKE_GITHUB_TOKEN(없으면 정시 시계용 CF_GH_DISPATCH_TOKEN 을 같이 씀, 2026-11-27)
 #  비밀값이 없으면 배포하지 않고 '비밀값 없음'만 남긴다(실패로 치지 않음). 배포가 되면 ops/wake/active.json 을 켠다.
 name: wake-deploy
 on:
@@ -36,7 +36,7 @@ jobs:
         env:
           A: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           B: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          C: ${{ secrets.WAKE_GITHUB_TOKEN }}
+          C: ${{ secrets.WAKE_GITHUB_TOKEN || secrets.CF_GH_DISPATCH_TOKEN }}
         run: |
           miss=""; [ -n "$A" ] || miss="$miss CLOUDFLARE_API_TOKEN"; [ -n "$B" ] || miss="$miss CLOUDFLARE_ACCOUNT_ID"; [ -n "$C" ] || miss="$miss WAKE_GITHUB_TOKEN"
           if [ -n "$miss" ]; then echo "비밀값 없음:$miss — 배포하지 않음(ops/wake/README.md 의 사용자 할 일)"; echo "ok=0" >> "$GITHUB_OUTPUT"; else echo "ok=1" >> "$GITHUB_OUTPUT"; fi
@@ -49,7 +49,7 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          WAKE_GITHUB_TOKEN: ${{ secrets.WAKE_GITHUB_TOKEN }}
+          WAKE_GITHUB_TOKEN: ${{ secrets.WAKE_GITHUB_TOKEN || secrets.CF_GH_DISPATCH_TOKEN }}
         run: |
           npx --yes wrangler@3 deploy
           printf '%s' "$WAKE_GITHUB_TOKEN" | npx --yes wrangler@3 secret put GH_TOKEN
