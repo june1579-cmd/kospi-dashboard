@@ -6070,5 +6070,37 @@
   "text": "58.4(11.26, KRX)",
   "unit": "",
   "src": "https://github.com/june1579-cmd/kospi-dashboard/tree/main/out/market_daily.csv"
+ },
+ {
+  "date": "2026-11-27",
+  "key": "kospi_dd",
+  "value": -46.07,
+  "text": "−46.1%(11.27, 4,915.68)",
+  "unit": "%",
+  "src": "https://github.com/june1579-cmd/kospi-dashboard/tree/main/out/market_daily.csv"
+ },
+ {
+  "date": "2026-11-26",
+  "key": "forced_liq",
+  "value": 60.25,
+  "text": "60억 원(11.26, 미수 대비 0.6%)",
+  "unit": "억 원",
+  "src": "https://github.com/june1579-cmd/kospi-dashboard/tree/main/out/liq_daily.csv"
+ },
+ {
+  "date": "2026-11-26",
+  "key": "margin_dd",
+  "value": -35.18,
+  "text": "−35.2%(11.26, 25.04조 원 / 6.24 정점 38.63조 원)",
+  "unit": "%",
+  "src": "https://github.com/june1579-cmd/kospi-dashboard/tree/main/out/credit.csv"
+ },
+ {
+  "date": "2026-11-27",
+  "key": "foreign20",
+  "value": -14.7,
+  "text": "−14.7조 원(11.2~11.27, 잠정 포함)",
+  "unit": "조 원",
+  "src": "https://github.com/june1579-cmd/kospi-dashboard/tree/main/out/flows_daily.csv"
  }
 ]
