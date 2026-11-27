@@ -1,6 +1,6 @@
 {
- "built_at": "2026-11-28T06:42:08+09:00",
- "trigger": "workflow_dispatch 41 21 * * *",
+ "built_at": "2026-11-28T07:08:10+09:00",
+ "trigger": "workflow_dispatch 7 22 * * *",
  "marker": "2026-11-27T20:41:49+09:00 저녁",
  "request_applied": false,
  "ok": true,
@@ -10,9 +10,11 @@
  "kr_last_session": "2026-11-27",
  "stale": [],
  "changed": [],
- "files_changed": [],
+ "files_changed": [
+  "thresholds"
+ ],
  "files": {
-  "thresholds": "56c4f21f1c8b5028e03d2cd1c69c22f4cdacf6c0b470fa2a2489fb0c0194be15",
+  "thresholds": "1b4e45c9cc74de9deeadcefdf166ee9b4625130f7d4dcb956aa69e715a6b7585",
   "indicators": "85d0d65f5ea023bfaf4bf051692de643dfac36620c392e63b060c36883fcf2ca",
   "market": "bef06bd2256d2e6a8842dbd2690a4d8c39116fcda6e18c9c302ff603447cb001",
   "margin": "040b3e26e7ff6e5d1cf3141f73106e5b2d7eb05b963962a0aa9cac284824ba87",
