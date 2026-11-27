@@ -1,6 +1,6 @@
 {
- "built_at": "2026-11-28T07:08:10+09:00",
- "trigger": "workflow_dispatch 7 22 * * *",
+ "built_at": "2026-11-28T07:21:01+09:00",
+ "trigger": "workflow_run dashboard-update",
  "marker": "2026-11-27T20:41:49+09:00 저녁",
  "request_applied": false,
  "ok": true,
@@ -10,9 +10,7 @@
  "kr_last_session": "2026-11-27",
  "stale": [],
  "changed": [],
- "files_changed": [
-  "thresholds"
- ],
+ "files_changed": [],
  "files": {
   "thresholds": "1b4e45c9cc74de9deeadcefdf166ee9b4625130f7d4dcb956aa69e715a6b7585",
   "indicators": "85d0d65f5ea023bfaf4bf051692de643dfac36620c392e63b060c36883fcf2ca",
