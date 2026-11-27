@@ -6118,5 +6118,13 @@
   "text": "3.77%(11.25)",
   "unit": "%",
   "src": "https://fred.stlouisfed.org/series/BAMLH0A0HYM2"
+ },
+ {
+  "date": "2026-11-26",
+  "key": "hy_oas",
+  "value": 3.77,
+  "text": "3.77%(11.26)",
+  "unit": "%",
+  "src": "https://fred.stlouisfed.org/series/BAMLH0A0HYM2"
  }
 ]

@@ -1,5 +1,5 @@
 {
- "built_at": "2026-11-28T02:39:45+09:00",
+ "built_at": "2026-11-28T03:27:26+09:00",
  "trigger": "workflow_run dashboard-update",
  "marker": "2026-11-27T20:41:49+09:00 저녁",
  "request_applied": false,
@@ -10,8 +10,8 @@
  "kr_last_session": "2026-11-27",
  "stale": [],
  "changed": [
-  "미국 하이일드 스프레드 3.72→3.77(11.25)",
-  "미국 하이일드 스프레드 3.72%→3.77%(11.25)"
+  "미국 하이일드 스프레드 3.77→3.77(11.26)",
+  "미국 하이일드 스프레드 3.77%→3.77%(11.26)"
  ],
  "files_changed": [
   "thresholds",
@@ -20,15 +20,15 @@
   "runs"
  ],
  "files": {
-  "thresholds": "43765fff9bb23cf7e7e2ae3fee18be22483b35d2dc49aae6dbaef71a9afe4328",
+  "thresholds": "5cb88b2f26f5af1bc7998c2834ca27559df1d12ea91bd585607c08a61e700a82",
   "indicators": "2cade5c81b39985a46be1cd081b2c6063d1174ac93462ecfb779decb02aec004",
   "market": "8dde499f0f7f98e0ac08c6fcea1ca62e10289ae9e16be288321f54f6174895b0",
   "margin": "040b3e26e7ff6e5d1cf3141f73106e5b2d7eb05b963962a0aa9cac284824ba87",
   "forced": "541c751475111e003dcd9b6719b231837c58fd1ba5f4a1adca413484abdb5a08",
-  "macro": "9b77672468c8c9d0716e760ec02c3531c06e71b2ba334efa26ef5f2cf0be917b",
+  "macro": "9ebab7f93f5a32161436975605593cfba25de1099123b514d24c740b1ea50c6f",
   "events": "0f1125b134f03012767119b1ebf00bcf3b2deb0073315170c49610b7568bddad",
-  "history": "1152f239d389fe5ca3bdb6914030ac0c84623ff428b8497766c5d7ba25273f1e",
-  "runs": "b423de4016f4f71bf61370ed898f89f36a168b644077a628ad18f0deeb9f09f3",
+  "history": "de5becc45c739979eed51014e8c6e79fac7926a59782d849eb0de415fdefa3f5",
+  "runs": "9497fb3423e1d96576e13fc96a0dccee4691043b25317ac16e5a4fa226ea9bd2",
   "news": "1e27c1556fa7b96ebcfce1ff996131e972f54e3df43e2d8503f379bea93039df",
   "scenarios": "0a76d773ea2dbd406498e38017ce08c0feadd77a001cd6d4ca2392882c2656eb",
   "episodes": "5fc42c60296afdbd24d0b7f7b1d774e337ab66d562bd9442f44a44b613b13e51"
