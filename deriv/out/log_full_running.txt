@@ -30,3 +30,5 @@
 [19:54:34] 저장 inv_daily.csv.gz 40814행
 [19:54:39] inv FUK2I ALL 상세: 1행
 [19:54:40] 저장 inv_daily.csv.gz 40815행
+[19:54:44] inv OPK2I C 상세: 1행
+[19:54:45] 저장 inv_daily.csv.gz 40816행
