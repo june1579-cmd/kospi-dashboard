@@ -1,169 +1,240 @@
 {
- "updated": "2026-11-27 19:33",
+ "updated": "2026-11-27 20:59",
  "started": "2026-11-24 15:50",
  "done": null,
  "sources": {
   "occ_flex": {
    "name": "OCC FLEX 미결제 보고서",
    "last": "2026-11-25",
-   "checked": "2026-11-27 19:33",
+   "checked": "2026-11-27 20:59",
    "err": null,
-   "n": 2,
-   "median_kst": "14:06",
-   "range_kst": "12:02~14:06",
+   "n": 0,
+   "n_all": 2,
+   "gap_excluded": 2,
+   "gap_max_min": 60,
+   "median_kst": null,
+   "range_kst": null,
    "events": [
     {
      "value": "2026-11-24",
      "first_seen": "2026-11-25 12:02",
-     "prev_check": "2026-11-25 04:45"
+     "prev_check": "2026-11-25 04:45",
+     "gap_min": 437,
+     "used": false
     },
     {
      "value": "2026-11-25",
      "first_seen": "2026-11-26 14:06",
-     "prev_check": "2026-11-26 08:25"
+     "prev_check": "2026-11-26 08:25",
+     "gap_min": 341,
+     "used": false
     }
    ]
   },
   "occ_series": {
    "name": "OCC 시리즈 검색(SPY)",
    "last": "4430c5457355",
-   "checked": "2026-11-27 19:33",
+   "checked": "2026-11-27 20:59",
    "err": null,
-   "n": 2,
-   "median_kst": "14:06",
-   "range_kst": "12:02~14:06",
+   "n": 0,
+   "n_all": 2,
+   "gap_excluded": 2,
+   "gap_max_min": 60,
+   "median_kst": null,
+   "range_kst": null,
    "events": [
     {
      "value": "b7d773c1f742",
      "first_seen": "2026-11-25 12:02",
-     "prev_check": "2026-11-25 04:45"
+     "prev_check": "2026-11-25 04:45",
+     "gap_min": 437,
+     "used": false
     },
     {
      "value": "4430c5457355",
      "first_seen": "2026-11-26 14:06",
-     "prev_check": "2026-11-26 08:25"
+     "prev_check": "2026-11-26 08:25",
+     "gap_min": 341,
+     "used": false
     }
    ]
   },
   "yahoo": {
    "name": "야후 SPY 월물 미결제 합",
-   "last": "2026-12-18:130",
-   "checked": "2026-11-27 19:33",
+   "last": "2026-12-18:1212889",
+   "checked": "2026-11-27 20:59",
    "err": null,
-   "n": 4,
-   "median_kst": "18:42",
-   "range_kst": "03:54~21:58",
+   "n": 0,
+   "n_all": 5,
+   "gap_excluded": 5,
+   "gap_max_min": 60,
+   "median_kst": null,
+   "range_kst": null,
    "events": [
     {
      "value": "2026-12-18:3861258",
      "first_seen": "2026-11-25 03:54",
-     "prev_check": "2026-11-24 15:50"
+     "prev_check": "2026-11-24 15:50",
+     "gap_min": 724,
+     "used": false
     },
     {
      "value": "2026-12-18:3861950",
      "first_seen": "2026-11-25 12:02",
-     "prev_check": "2026-11-25 04:45"
+     "prev_check": "2026-11-25 04:45",
+     "gap_min": 437,
+     "used": false
     },
     {
      "value": "2026-12-18:3655144",
      "first_seen": "2026-11-25 21:58",
-     "prev_check": "2026-11-25 12:53"
+     "prev_check": "2026-11-25 12:53",
+     "gap_min": 545,
+     "used": false
     },
     {
      "value": "2026-12-18:130",
      "first_seen": "2026-11-27 18:42",
-     "prev_check": "2026-11-27 10:27"
+     "prev_check": "2026-11-27 10:27",
+     "gap_min": 495,
+     "used": false
+    },
+    {
+     "value": "2026-12-18:1212889",
+     "first_seen": "2026-11-27 20:59",
+     "prev_check": "2026-11-27 19:33",
+     "gap_min": 86,
+     "used": false
     }
    ]
   },
   "optioncharts": {
    "name": "OptionCharts 기준일",
    "last": "Nov 25, 2026",
-   "checked": "2026-11-27 19:33",
+   "checked": "2026-11-27 20:59",
    "err": null,
-   "n": 2,
-   "median_kst": "14:06",
-   "range_kst": "12:02~14:06",
+   "n": 0,
+   "n_all": 2,
+   "gap_excluded": 2,
+   "gap_max_min": 60,
+   "median_kst": null,
+   "range_kst": null,
    "events": [
     {
      "value": "Nov 24, 2026",
      "first_seen": "2026-11-25 12:02",
-     "prev_check": "2026-11-25 04:45"
+     "prev_check": "2026-11-25 04:45",
+     "gap_min": 437,
+     "used": false
     },
     {
      "value": "Nov 25, 2026",
      "first_seen": "2026-11-26 14:06",
-     "prev_check": "2026-11-26 08:25"
+     "prev_check": "2026-11-26 08:25",
+     "gap_min": 341,
+     "used": false
     }
    ]
   },
   "spotgamma": {
    "name": "SpotGamma 레벨 페이지",
    "last": "2026-11-26T14:45:06+00:00",
-   "checked": "2026-11-27 19:33",
+   "checked": "2026-11-27 20:59",
    "err": null,
-   "n": 3,
-   "median_kst": "03:54",
-   "range_kst": "00:19~07:34",
+   "n": 0,
+   "n_all": 3,
+   "gap_excluded": 3,
+   "gap_max_min": 60,
+   "median_kst": null,
+   "range_kst": null,
    "events": [
     {
      "value": "2026-11-24T14:45:05+00:00",
      "first_seen": "2026-11-25 03:54",
-     "prev_check": "2026-11-24 15:50"
+     "prev_check": "2026-11-24 15:50",
+     "gap_min": 724,
+     "used": false
     },
     {
      "value": "2026-11-25T14:45:04+00:00",
      "first_seen": "2026-11-26 07:34",
-     "prev_check": "2026-11-25 22:49"
+     "prev_check": "2026-11-25 22:49",
+     "gap_min": 525,
+     "used": false
     },
     {
      "value": "2026-11-26T14:45:06+00:00",
      "first_seen": "2026-11-27 00:19",
-     "prev_check": "2026-11-26 14:57"
+     "prev_check": "2026-11-26 14:57",
+     "gap_min": 562,
+     "used": false
     }
    ]
   },
   "cboe_pc": {
    "name": "Cboe 풋/콜 날짜별 파일",
    "last": "2026-11-25",
-   "checked": "2026-11-27 19:33",
+   "checked": "2026-11-27 20:59",
    "err": null,
-   "n": 2,
-   "median_kst": "14:06",
-   "range_kst": "12:02~14:06",
+   "n": 0,
+   "n_all": 2,
+   "gap_excluded": 2,
+   "gap_max_min": 60,
+   "median_kst": null,
+   "range_kst": null,
    "events": [
     {
      "value": "2026-11-24",
      "first_seen": "2026-11-25 12:02",
-     "prev_check": "2026-11-25 04:45"
+     "prev_check": "2026-11-25 04:45",
+     "gap_min": 437,
+     "used": false
     },
     {
      "value": "2026-11-25",
      "first_seen": "2026-11-26 14:06",
-     "prev_check": "2026-11-26 08:25"
+     "prev_check": "2026-11-26 08:25",
+     "gap_min": 341,
+     "used": false
     }
    ]
   },
   "cboe_vix": {
    "name": "Cboe VIX 이력 CSV",
-   "last": "11/25/2026",
-   "checked": "2026-11-27 19:33",
+   "last": "11/26/2026",
+   "checked": "2026-11-27 20:59",
    "err": null,
-   "n": 2,
-   "median_kst": "14:06",
-   "range_kst": "12:02~14:06",
+   "n": 0,
+   "n_all": 3,
+   "gap_excluded": 3,
+   "gap_max_min": 60,
+   "median_kst": null,
+   "range_kst": null,
    "events": [
     {
      "value": "11/24/2026",
      "first_seen": "2026-11-25 12:02",
-     "prev_check": "2026-11-25 04:45"
+     "prev_check": "2026-11-25 04:45",
+     "gap_min": 437,
+     "used": false
     },
     {
      "value": "11/25/2026",
      "first_seen": "2026-11-26 14:06",
-     "prev_check": "2026-11-26 08:25"
+     "prev_check": "2026-11-26 08:25",
+     "gap_min": 341,
+     "used": false
+    },
+    {
+     "value": "11/26/2026",
+     "first_seen": "2026-11-27 20:59",
+     "prev_check": "2026-11-27 19:33",
+     "gap_min": 86,
+     "used": false
     }
    ]
   }
- }
+ },
+ "wake_since": "2026-11-27 20:28",
+ "wake_age_days": 0
 }
