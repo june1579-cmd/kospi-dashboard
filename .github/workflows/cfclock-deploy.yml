@@ -7,6 +7,8 @@ on:
     branches: [main]
     paths: ['cfclock/**', '.github/workflows/cfclock-deploy.yml']
   workflow_dispatch:
+    inputs:
+      test_dispatch: {description: '토큰으로 실제 실행 요청 시험(reach.yml what 값: eve/pre, 비우면 안 함)', default: ''}
 permissions:
   contents: read
 concurrency:
@@ -46,3 +48,11 @@ jobs:
             c=$(curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $GH_DISPATCH" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/${{ github.repository }}/$p")
             echo "$p → $c"; [ "$c" = "200" ] || echo "::error::토큰으로 $p 를 읽지 못함($c) — 토큰 권한(Contents 읽기·Actions 읽기쓰기, 이 저장소)을 확인하세요."
           done
+      - name: 실행 요청 시험(손으로 고른 때만)
+        if: ${{ github.event.inputs.test_dispatch != '' }}
+        env:
+          GH_DISPATCH: ${{ secrets.CF_GH_DISPATCH_TOKEN }}
+        run: |
+          c=$(curl -s -o /dev/null -w '%{http_code}' -X POST -H "Authorization: Bearer $GH_DISPATCH" -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/workflows/reach.yml/dispatches" -d '{"ref":"main","inputs":{"what":"${{ github.event.inputs.test_dispatch }}"}}')
+          echo "reach.yml what=${{ github.event.inputs.test_dispatch }} → $c"; [ "$c" = "204" ] || { echo "::error::실행 요청 실패($c) — 토큰의 Actions 권한이 Read and write 인지 확인"; exit 1; }
