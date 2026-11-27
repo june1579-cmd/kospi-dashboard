@@ -16,19 +16,19 @@
    "key": "upgrade:U-1128-1",
    "label": "업그레이드 U-1128-1 · 감시·수리·업그레이드",
    "text": "점검 숫자(ops/audit.py)가 GitHub 실행 목록 1000개 한도에 잘림 — 할 일·확인 방법은 ops/upgrade_queue.json 의 U-1128-1(do·check) · 위험 낮음",
-   "since": "2026-11-28 09:05"
+   "since": "2026-11-28 08:51"
   },
   {
    "key": "upgrade:U-1128-2",
    "label": "업그레이드 U-1128-2 · AI 경고판",
    "text": "ai-board 가 취소된 dashboard-update 뒤에도 다시 계산·커밋 — 할 일·확인 방법은 ops/upgrade_queue.json 의 U-1128-2(do·check) · 위험 낮음",
-   "since": "2026-11-28 09:05"
+   "since": "2026-11-28 08:51"
   },
   {
    "key": "upgrade:U-1128-3",
    "label": "업그레이드 U-1128-3 · 원자료 수집(KRX·금투협·공매도)",
    "text": "감시에 선물·옵션 원자료(deriv/data) 멈춤 감시 추가 — 할 일·확인 방법은 ops/upgrade_queue.json 의 U-1128-3(do·check) · 위험 낮음",
-   "since": "2026-11-28 09:05"
+   "since": "2026-11-28 08:51"
   }
  ],
  "note": "열린 요청이 있을 때만 Claude 수리 에이전트가 일한다(REPAIR_AGENT.md). 문제가 사라지면 watchdog.py 가 지운다. upgrade: 요청은 ops/upgrade_queue.json 에서 끝남으로 바뀌면 빠진다."
