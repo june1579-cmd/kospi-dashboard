@@ -1,5 +1,5 @@
 {
- "trials_total": 32604,
+ "trials_total": 35112,
  "holdout_peeks": 0,
  "rounds": [
   {
@@ -153,8 +153,20 @@
    "cross_pass": 0,
    "hold_pass": 0,
    "goal_rule": "전체 35거래·85%, 앞·뒤 각 12거래·80%"
+  },
+  {
+   "round": 1,
+   "mode": "cross",
+   "candidates": 2508,
+   "sel_fwd": 0,
+   "sel_rev": 5,
+   "fwd_pass": 0,
+   "rev_pass": 0,
+   "cross_pass": 0,
+   "hold_pass": 0,
+   "goal_rule": "전체 35거래·85%, 앞·뒤 각 12거래·80%"
   }
  ],
  "note": "갈래 C(미국·한국 연동, 2026-11-22 시작) — 질문이 달라 원장을 새로 셈",
- "cross_tests": 62
+ "cross_tests": 67
 }
