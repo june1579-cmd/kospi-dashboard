@@ -81,7 +81,7 @@ def main():
     if tag == '0831' and not a.no_wait: wait_vkospi(limit_min=30 if a.attempt <= 1 else 10)
     os.makedirs('data/collect', exist_ok=True); os.makedirs('out', exist_ok=True); os.makedirs('report', exist_ok=True)
     # 1 수집
-    cdir = f'data/collect/dashboard_{today:%Y%m%d}_{tag}'
+    cdir = f'data/collect/dashboard_{sess_day(today, now.time(), tag):%Y%m%d}_{tag}'      # 폴더 이름은 장 날짜(자정 넘어 돈 확정 실행은 전날) — dashboard_collect.py main() 과 같은 규칙
     if a.no_collect: cdir = a.collect_dir          # 옛 수집 폴더를 모르고 쓰지 않도록
     if not a.no_collect:
         cmd = [sys.executable, 'dashboard_collect.py', '--days', str(a.days), '--out', 'data/collect', '--tag', tag]

@@ -463,7 +463,9 @@ def main():
     a = ap.parse_args(); now = dt.datetime.now(KST); today = now.date()
     global ALLOW_TODAY; ALLOW_TODAY = a.allow_today
     start = today - dt.timedelta(days=int(a.days * 1.6) + 3); s8, e8 = start.strftime('%Y%m%d'), today.strftime('%Y%m%d')
-    tag = today.strftime('%Y%m%d') + (('_' + a.tag) if a.tag else ''); out = os.path.join(a.out, f'dashboard_{tag}'); os.makedirs(out, exist_ok=True)
+    # 2026-11-27 고침(U-1127-3): 폴더 이름은 달력 날짜가 아니라 장 날짜 — 확정(1840) 실행이 자정을 넘겨 06:00 전에 돌면 전날 장의 것(run_pipeline.py 의 sess_day 와 같은 규칙). 수집 기간(start~today)은 그대로
+    fday = today - dt.timedelta(days=1) if (a.tag == '1840' and now.time() < dt.time(6, 0)) else today
+    tag = fday.strftime('%Y%m%d') + (('_' + a.tag) if a.tag else ''); out = os.path.join(a.out, f'dashboard_{tag}'); os.makedirs(out, exist_ok=True)
     log(f'기간 {start}~{today} (장중이면 오늘 줄 제외) → {out}')
     # 15:40 실행: KRX 화면에 장 마감 값이 반영될 때까지 기다린다(실시간 출처와 대조). 그 밖의 실행: 대조 자료만 받는다
     ref = {}
