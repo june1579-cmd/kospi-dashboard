@@ -45,3 +45,6 @@
 [19:59:37] 저장 pcr_daily.csv 4662행
 [19:59:38] == chainx
 [20:05:45] 저장 opt_chainx_daily.csv.gz 1574358행
+[20:05:49] == chainwt
+[20:15:00] 대시보드 수집 시간대 — 20:45 KST 까지 대기
+[20:49:54] 저장 opt_chainwt_daily.csv.gz 121992행
