@@ -1,7 +1,7 @@
 {
- "built_at": "2026-11-28T16:41:19+09:00",
+ "built_at": "2026-11-28T20:40:11+09:00",
  "trigger": "push ",
- "marker": "2026-11-28T16:40:58+09:00 오후",
+ "marker": "2026-11-28T20:39:56+09:00 저녁",
  "request_applied": true,
  "ok": true,
  "errors": [],
@@ -16,7 +16,7 @@
   "news"
  ],
  "files": {
-  "thresholds": "64f21550c307905163abddd88c960c71f41b81f2b7d576d5fdf34321c3b8d832",
+  "thresholds": "56db2fb30717041f1549f3963503883f3ceb63d47bb68138f7d90a96873c3e12",
   "indicators": "85d0d65f5ea023bfaf4bf051692de643dfac36620c392e63b060c36883fcf2ca",
   "market": "bef06bd2256d2e6a8842dbd2690a4d8c39116fcda6e18c9c302ff603447cb001",
   "margin": "040b3e26e7ff6e5d1cf3141f73106e5b2d7eb05b963962a0aa9cac284824ba87",
@@ -24,8 +24,8 @@
   "macro": "e77f5f65e5c516890af5a545f9de7500739b8171a42b3c0a6fae7674ccc52651",
   "events": "18245564b73a3434f997e30bead9b0efa5159f94558df15a1b1bb98613c9fa5f",
   "history": "ca309eb6723c09c1a710273e8ca4664d55f888e5445743d0a510d9f4de9ab368",
-  "runs": "ece07d447002b09470146e7f7d8a2196e1dfcc32030d0c7bbf6aa0609e8816de",
-  "news": "9bce5b2b863f77fd0b0be3290d7311710824b3c969f657f62056e68db5f89e1b",
+  "runs": "0bbd6b28fe79b62331f95d5e3ec909d6a7df48c9e88cf3a5f1c387d4efbea951",
+  "news": "4454a8915e2018323da359654ed244234833577be9033c49af68729094292e66",
   "scenarios": "0a76d773ea2dbd406498e38017ce08c0feadd77a001cd6d4ca2392882c2656eb",
   "episodes": "5fc42c60296afdbd24d0b7f7b1d774e337ab66d562bd9442f44a44b613b13e51"
  },
@@ -87,7 +87,7 @@
   "항복 완료 후보": "외국인 20일 합 −14.7→−14.7조 원(5회 전 대비 개선)"
  },
  "alert": {
-  "text": "[AI 경고판 11/28 16:41] 종합 1.79 주의 (경고 3·주의 6·정상 1)\n단계: 지표 단계 변화 없음\n조건: C−4 해제 후보(주시): 텍사스 TCEQ 데이터센터 허가 재개(11.17 보도) — 9번 중단 시행 3→2곳 가능, 11.30 아침 매주 점검에서 확인",
-  "kakao": "written"
+  "text": "",
+  "kakao": "none"
  }
 }
