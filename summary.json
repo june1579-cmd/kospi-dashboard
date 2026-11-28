@@ -1,12 +1,12 @@
 {
- "updated": "2026-11-29 01:05",
+ "updated": "2026-11-29 02:05",
  "started": "2026-11-24 15:50",
  "done": null,
  "sources": {
   "occ_flex": {
    "name": "OCC FLEX 미결제 보고서",
    "last": "2026-11-27",
-   "checked": "2026-11-29 01:05",
+   "checked": "2026-11-29 02:05",
    "err": null,
    "n": 1,
    "n_all": 3,
@@ -41,7 +41,7 @@
   "occ_series": {
    "name": "OCC 시리즈 검색(SPY)",
    "last": "d066675bb2aa",
-   "checked": "2026-11-29 01:05",
+   "checked": "2026-11-29 02:05",
    "err": null,
    "n": 1,
    "n_all": 3,
@@ -76,7 +76,7 @@
   "yahoo": {
    "name": "야후 SPY 월물 미결제 합",
    "last": "2026-12-18:1666267",
-   "checked": "2026-11-29 01:05",
+   "checked": "2026-11-29 02:05",
    "err": null,
    "n": 1,
    "n_all": 6,
@@ -132,7 +132,7 @@
   "optioncharts": {
    "name": "OptionCharts 기준일",
    "last": "Nov 27, 2026",
-   "checked": "2026-11-29 01:05",
+   "checked": "2026-11-29 02:05",
    "err": null,
    "n": 1,
    "n_all": 3,
@@ -167,7 +167,7 @@
   "spotgamma": {
    "name": "SpotGamma 레벨 페이지",
    "last": "2026-11-27T14:45:03+00:00",
-   "checked": "2026-11-29 01:05",
+   "checked": "2026-11-29 02:05",
    "err": null,
    "n": 1,
    "n_all": 4,
@@ -209,7 +209,7 @@
   "cboe_pc": {
    "name": "Cboe 풋/콜 날짜별 파일",
    "last": "2026-11-27",
-   "checked": "2026-11-29 01:05",
+   "checked": "2026-11-29 02:05",
    "err": null,
    "n": 1,
    "n_all": 3,
@@ -244,7 +244,7 @@
   "cboe_vix": {
    "name": "Cboe VIX 이력 CSV",
    "last": "11/27/2026",
-   "checked": "2026-11-29 01:05",
+   "checked": "2026-11-29 02:05",
    "err": null,
    "n": 1,
    "n_all": 4,
