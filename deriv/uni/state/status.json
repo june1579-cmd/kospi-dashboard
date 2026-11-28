@@ -1,9 +1,9 @@
 {
- "made": "2026-11-27 13:41",
- "data_end": "2026-11-26",
+ "made": "2026-11-28 13:26",
+ "data_end": "2026-11-27",
  "eval": [
   "2016-01-04",
-  "2026-11-26"
+  "2026-11-27"
  ],
  "candidates": 342,
  "strategies": 135,
@@ -15,14 +15,14 @@
  "strat_watch": 0,
  "strat_held": 0,
  "family_chance": {
-  "signal_pass": 0.064,
-  "signal_watch": 0.332,
+  "signal_pass": 0.05,
+  "signal_watch": 0.352,
   "strat_pass": 0.0
  },
  "registered": 2,
  "new": [],
  "placebo_draws": 500,
- "seconds": 61,
+ "seconds": 81,
  "rule_candidates": 42,
- "rules_note": "규칙 후보 42개 · 바탕 신호: reproduce 정의 그대로(자료 끝 2026-11-26) · 조건 후보 해마다 2106개(지표 351개)"
+ "rules_note": "규칙 후보 42개 · 바탕 신호: reproduce 정의 그대로(자료 끝 2026-11-27) · 조건 후보 해마다 2106개(지표 351개)"
 }

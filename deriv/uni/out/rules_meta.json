@@ -1,6 +1,6 @@
 {
- "made": "2026-11-27 13:40",
- "base_note": "reproduce 정의 그대로(자료 끝 2026-11-26)",
+ "made": "2026-11-28 13:25",
+ "base_note": "reproduce 정의 그대로(자료 끝 2026-11-27)",
  "pool_features": 351,
  "conditions_per_year": 2106,
  "candidates": 42,
@@ -22,6 +22,6 @@
  },
  "years_no_pick": 34,
  "year_rows": 462,
- "seconds": 3,
+ "seconds": 5,
  "timing": "바탕 신호·지표 모두 t일 장 마감 뒤~다음 개장 전에 아는 값. 조건 문턱·고르기는 시험 해 이전(결과가 끝난 날)만. 진입은 t+1일 종가"
 }
